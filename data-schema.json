@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phi Node Sensor Packet",
+  "type": "object",
+  "properties": {
+    "node_id": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "sensors": {
+      "type": "object",
+      "properties": {
+        "temperature": { "type": "number" },
+        "humidity": { "type": "number" },
+        "co2": { "type": "number" },
+        "light": { "type": "number" }
+      },
+      "required": ["temperature", "humidity", "co2", "light"]
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "lat": { "type": "number" },
+        "lon": { "type": "number" }
+      },
+      "required": ["lat", "lon"]
+    }
+  },
+  "required": ["node_id", "timestamp", "sensors", "location"]
+}
