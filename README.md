@@ -15,3 +15,4 @@ This project is stealth-led by recursive agents and curated by Marcus van der Er
 <!-- Heartbeat zero: mesh initiated -->
  
  
+ 
