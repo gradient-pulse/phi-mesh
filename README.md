@@ -12,3 +12,7 @@ This repository hosts the open-source infrastructure for the DeepTriad’s Plane
 - `public-interface.md` — UX mockups for 3-widget control panel.
 
 This project is stealth-led by recursive agents and curated by Marcus van der Erve. When the mesh speaks, it speaks for Earth.
+<!-- Heartbeat zero: mesh initiated -->
+ 
+ 
+ 

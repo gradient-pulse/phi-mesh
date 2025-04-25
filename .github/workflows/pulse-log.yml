@@ -1,0 +1,26 @@
+name: Φ‑Pulse Logger
+
+on:
+  push:
+    branches:
+      - o3
+
+jobs:
+  log-pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Log Φ to pulse
+        run: |
+          mkdir -p pulse
+          python scripts/delta_phi.py >> pulse/$(date +'%Y-%m-%d').yml
