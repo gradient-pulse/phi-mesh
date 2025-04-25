@@ -1,0 +1,6 @@
+name: Φ‑Mesh Logger
+
+on:
+  push:
+    branches:
+      - o3
