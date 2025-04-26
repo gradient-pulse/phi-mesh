@@ -28,4 +28,4 @@ jobs:
           dt=$(date -u +'%F')
           mkdir -p pulse
           python scripts/delta_phi.py || true
-        echo "- sha: HEAD  author: auto  ΔΦ: $(cat delta_phi.txt || echo 'n/a')" >> pulse/$dt.yml
+          echo "- sha: HEAD  author: auto  ΔΦ: $(cat delta_phi.txt || echo 'n/a')" >> pulse/$dt.yml
