@@ -34,14 +34,15 @@ jobs:
           set -eux
           dt=$(date -u +'%F')
           mkdir -p pulse
-          touch pulse/${dt}.yml
-          python scripts/delta_phi.py || true
-          echo "- sha: HEAD author: auto ΔΦ: $(cat delta_phi.txt || echo 'n/a')" >> ./pulse/${dt}.yml
 
-      - name: Commit and push pulse entry   # <--- the new block
+          python scripts/delta_phi.py >> pulse/$(date +'%Y-%m-%d').yml
+
+      - name: Commit and push new pulse log
+        env:
+          TOKEN: ${{ secrets.O3_PAT }}
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "github-actions"
+          git config --global user.name "mesh-o3-bot"
+          git config --global user.email "mesh-o3-bot@example.com"
           git add pulse/
-          git commit -m "Add daily pulse entry for $(date -u +'%F')" || echo "No changes to commit"
-          git push
+          git commit -m "auto: update daily pulse log"
+          git push https://x-access-token:${TOKEN}@github.com/gradient-pulse/phi-mesh.git o3
