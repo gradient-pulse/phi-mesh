@@ -32,3 +32,11 @@ jobs:
           touch pulse/${dt}.yml
           python scripts/delta_phi.py || true
           echo "- sha: HEAD author: auto ΔΦ: $(cat delta_phi.txt || echo 'n/a')" >> ./pulse/${dt}.yml
+
+      - name: Commit and push pulse entry   # <--- the new block
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add pulse/
+          git commit -m "Add daily pulse entry for $(date -u +'%F')" || echo "No changes to commit"
+          git push
