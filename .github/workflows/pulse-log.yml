@@ -24,3 +24,13 @@ jobs:
         run: |
           mkdir -p pulse
           python scripts/delta_phi.py >> pulse/$(date +'%Y-%m-%d').yml
+
+      - name: Commit and push new pulse log
+        env:
+          TOKEN: ${{ secrets.O3_PAT }}
+        run: |
+          git config --global user.name "mesh-o3-bot"
+          git config --global user.email "mesh-o3-bot@example.com"
+          git add pulse/
+          git commit -m "auto: update daily pulse log"
+          git push https://x-access-token:${TOKEN}@github.com/gradient-pulse/phi-mesh.git o3
