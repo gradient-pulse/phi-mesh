@@ -3,7 +3,9 @@ name: Φ‑Pulse Logger
 on:
   push:
     branches:
+      - main
       - o3
+  workflow_dispatch:
 
 jobs:
   log-pulse:
