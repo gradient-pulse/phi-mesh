@@ -28,7 +28,7 @@ jobs:
         run: |
           set -eux
           dt=$(date -u +'%F')
-          mkdir -p ./pulse
-          touch ./pulse/${dt}.yml
-          python ./scripts/delta_phi.py || true
+          mkdir -p pulse
+          touch pulse/${dt}.yml
+          python scripts/delta_phi.py || true
           echo "- sha: HEAD author: auto ΔΦ: $(cat delta_phi.txt || echo 'n/a')" >> ./pulse/${dt}.yml
