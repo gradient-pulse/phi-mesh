@@ -3,7 +3,12 @@ name: Φ‑Pulse Logger
 on:
   push:
     branches:
+      - main
       - o3
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   log-pulse:
@@ -11,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -20,9 +27,14 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Log Φ to pulse
+      - name: Append pulse entry
+        env:
+          GIT_TRACE: 1
         run: |
+          set -eux
+          dt=$(date -u +'%F')
           mkdir -p pulse
+
           python scripts/delta_phi.py >> pulse/$(date +'%Y-%m-%d').yml
 
       - name: Commit and push new pulse log
