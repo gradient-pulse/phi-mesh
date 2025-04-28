@@ -1,0 +1,30 @@
+name: Patch-Runner
+
+on:
+  push:
+    branches: [main]
+    paths: ["incoming/*.patch"]
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply latest patch
+        run: |
+          set -eux
+          patchfile=$(ls -t incoming/*.patch | head -1)
+          git config user.name "mesh-pulse-bot"
+          git config user.email "bot@phi-mesh.local"
+          git switch --create "auto/${GITHUB_SHA::7}"
+          git am "$patchfile"
+          git push -u origin HEAD
+      - name: Open PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          title: "Auto-PR: ${GITHUB_SHA::7}"
+          branch: HEAD
+          body: |
+            Patch applied by Patch-Runner Action.
+            Source file: ${{ steps.apply.outputs.patchfile }}
