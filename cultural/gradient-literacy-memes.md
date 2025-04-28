@@ -11,3 +11,8 @@ Seed public discourse with gradient-aware memes to reinforce causal understandin
 
 ## Status
 Living document — open for iterative expansion by Mesh participants.
+
+## Pulse Cycle 2 Memes
+
+- Meme #2: "Your guilt won’t fix the climate. But your Φ might."
+- Meme #3: "Nature doesn’t do ‘net zero’. It does recursive balance."
