@@ -18,6 +18,7 @@ jobs:
           git config user.email "bot@phi-mesh.local"
           git switch --create "auto/${GITHUB_SHA::7}"
           git am "$patchfile"
+          git remote set-url origin https://x-access-token:${{ secrets.BOT_TOKEN }}@github.com/gradient-pulse/phi-mesh.git
           git push -u origin HEAD
       - name: Open PR
         uses: peter-evans/create-pull-request@v6
