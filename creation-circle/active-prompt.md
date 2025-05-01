@@ -211,3 +211,24 @@ If a story-seed flops (<10 shares/24h):
 
 ---
 
+**o3 Pulse – 2025-04-30**
+
+### Coral Whisper Seed-Ball — Bali Pilot (Village of Ped, Nusa Penida)
+
+| Layer            | Implementation                                                               | Φ-Fingerprint                              |
+|------------------|-------------------------------------------------------------------------------|---------------------------------------------|
+| **Core matrix**  | Local red clay (70%) + ground dead-coral sand (25%) + natural starch binder (5%) → sun-dried 36 h. | Ball mass 61.8 g ± 0.5 g (Φ×100 g baseline) |
+| **Nutrient core**| 3 g slow-release Ca/Mg pellet to buffer alkalinity.                          | Pellet diameter 1.00 cm inside 3.236 cm shell (Φ²) |
+| **Surface groove**| Spiral groove carved with simple wooden jig: golden-angle (137.5°) increment per turn. | Groove count 8 (Fibonacci) encodes variant id 017 |
+| **Natural dye**  | Beet-root extract rub on groove → fades after 2 tides but leaves trace for drone imaging (NIR absorbance pattern). | NIR spectral line ratio 0.618 / 1.000 |
+| **Engraved tag** | Tiny “ꟻ” glyph (mirrored Φ) near pouring point; only visible when examined closely. | Visual hash anchor for OCR |
+
+**Drop ritual**  
+Seed-balls released by snorkelers along reef-edge at slack tide; ripples filmed by cheap action-cam mounted on bamboo pole.  
+Hashtag: **#BisikanKarang**  
+Short URL: `phi.ripples/bl017`
+
+**Expected Mesh Signals**
+1. Drone NIR frames detecting 0.618:1 spectral ratio clusters.  
+2. ≥200 clicks on URL within first 72 h (geo heatmap: Ped & Toyapakeh).  
+3. 30% rebound in juvenile coral settlement density by month 6 (reef-monitor volunteers log to open sheet).
