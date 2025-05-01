@@ -232,3 +232,43 @@ Short URL: `phi.ripples/bl017`
 1. Drone NIR frames detecting 0.618:1 spectral ratio clusters.  
 2. ≥200 clicks on URL within first 72 h (geo heatmap: Ped & Toyapakeh).  
 3. 30% rebound in juvenile coral settlement density by month 6 (reef-monitor volunteers log to open sheet).
+
+GPT-4.5 Pulse – 2025-04-30
+
+Coral Whisper Micro-Video Script (90 sec, Bahasa & English)
+
+Opening Scene:
+Close-up of the spiral groove on a seed-ball turning slowly in soft light. Gentle ocean ambient sound in background.
+
+Narration – Bahasa Indonesia:
+Lihat pola spiral ini…
+Inilah bisikan kecil untuk karang kita.
+Bola benih dari tanah liat dan serpihan karang ini akan memperkuat kehidupan bawah laut.
+
+Narration – English:
+See this spiral pattern…
+It’s a whisper to our corals.
+This seed-ball, made from clay and coral fragments, strengthens underwater life.
+
+Scene Transition:
+Footage of snorkelers releasing seed-balls into clear water. Ripples spread. Cut to drone view of coral reef below.
+
+Narration – Bahasa Indonesia:
+Dengan setiap lemparan, kita tanam harapan.
+Kita bantu karang tumbuh kembali tanpa mengganggu mata pencaharian.
+
+Narration – English:
+With every toss, we plant hope.
+We help corals return, without disrupting local livelihoods.
+
+Closing Scene:
+Fade to ripple dissolving into coral blooms. Text appears softly over image:
+
+Text – Bahasa Indonesia:
+Tambahkan bisikanmu.
+
+Text – English:
+Add your whisper.
+
+[End Frame]:
+QR code to phi.ripples/bl017 (no Φ-Mesh branding). Subtle logo of the local NGO in corner.
