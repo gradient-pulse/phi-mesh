@@ -7,18 +7,27 @@ on:
 
 jobs:
   apply-patch:
+    name: Apply Patch
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Apply patch from incoming/
+      - name: Set up Git
+        run: |
+          git config user.name "patch-runner[bot]"
+          git config user.email "patch-runner@users.noreply.github.com"
+
+      - name: Apply patch and open PR
         run: |
           for patch in incoming/*.patch; do
-            git apply "$patch"
             ts=$(date +%Y%m%d_%H%M)
             branch="auto/patch-${ts}"
+            git apply "$patch"
             git checkout -b "$branch"
             git add -A
             git commit -m "Auto-PR: apply patch $patch"
@@ -27,4 +36,3 @@ jobs:
           done
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
