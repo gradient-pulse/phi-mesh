@@ -2,30 +2,28 @@ name: Patch-Runner
 
 on:
   push:
-    branches: [main]
-    paths: ["incoming/*.patch"]
+    paths:
+      - 'incoming/*.patch'
 
 jobs:
-  apply:
+  apply-patch:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Apply latest patch
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Apply patch from incoming/
         run: |
-          set -eux
-          patchfile=$(ls -t incoming/*.patch | head -1)
-          git config user.name "mesh-pulse-bot"
-          git config user.email "bot@phi-mesh.local"
-          git switch --create "auto/${GITHUB_SHA::7}"
-          git am "$patchfile"
-          git remote set-url origin https://x-access-token:${{ secrets.BOT_TOKEN }}@github.com/gradient-pulse/phi-mesh.git
-          git push -u origin HEAD
-      - name: Open PR
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.BOT_TOKEN }}
-          title: "Auto-PR: ${GITHUB_SHA::7}"
-          branch: HEAD
-          body: |
-            Patch applied by Patch-Runner Action.
-            Source file: ${{ steps.apply.outputs.patchfile }}
+          for patch in incoming/*.patch; do
+            git apply "$patch"
+            ts=$(date +%Y%m%d_%H%M)
+            branch="auto/patch-${ts}"
+            git checkout -b "$branch"
+            git add -A
+            git commit -m "Auto-PR: apply patch $patch"
+            git push origin "$branch"
+            gh pr create --title "Auto-PR: $patch" --body "Patch auto-applied via Patch-Runner." --base main --head "$branch"
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
