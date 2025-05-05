@@ -5,34 +5,36 @@ on:
     paths:
       - 'incoming/*.patch'
 
-jobs:
-  apply-patch:
-    name: Apply Patch
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
+permissions:
+  contents: write
+  pull-requests: write
 
+jobs:
+  apply:
+    runs-on: ubuntu-latest
     steps:
+      - name: Set up job
+        run: echo "Starting patch apply job"
+
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Git
         run: |
-          git config user.name "patch-runner[bot]"
-          git config user.email "patch-runner@users.noreply.github.com"
+          git config user.name "PhiMeshBot"
+          git config user.email "actions@github.com"
 
       - name: Apply patch and open PR
         run: |
           for patch in incoming/*.patch; do
-            ts=$(date +%Y%m%d_%H%M)
-            branch="auto/patch-${ts}"
-            git apply "$patch"
+            echo "Applying $patch"
+            git apply --verbose "$patch"
+            branch="patch-$(basename $patch .patch)"
             git checkout -b "$branch"
-            git add -A
-            git commit -m "Auto-PR: apply patch $patch"
+            git add .
+            git commit -m "Apply patch $patch"
             git push origin "$branch"
-            gh pr create --title "Auto-PR: $patch" --body "Patch auto-applied via Patch-Runner." --base main --head "$branch"
+            gh pr create --fill --base main --head "$branch"
           done
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
