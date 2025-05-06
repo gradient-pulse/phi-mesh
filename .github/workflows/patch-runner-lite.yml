@@ -20,7 +20,9 @@ jobs:
           git config user.name  "MeshBot"
           git config user.email "meshbot@local"
           git switch -c "pr/${{ github.sha }}"
-          git am "$latest"
+          git apply "$latest"
+          git add -A
+          git commit -m "Apply $latest"
           git push -u origin HEAD
 
       - name: Open PR
