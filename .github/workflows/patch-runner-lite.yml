@@ -13,21 +13,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Apply newest patch
-        run: |
-          latest=$(ls -t incoming/*.patch | head -1)
-          echo "Applying $latest"
-          git config user.name  "MeshBot"
-          git config user.email "meshbot@local"
-          git switch -c "pr/${{ github.sha }}"
-          git apply "$latest"
-          git add -A
-          git commit -m "Apply $latest"
-          git push -u origin HEAD
+  - name: Apply newest patch
+    id: apply
+    run: |
+      latest=$(ls -t incoming/*.patch | head -1)
+      echo "Applying $latest"
+      git config user.name  "MeshBot"
+      git config user.email "meshbot@local"
+      git switch -c "pr/${{ github.sha }}"
+      git apply "$latest"
+      git add -A
+      git commit -m "Apply $latest"
+      git push -u origin HEAD
 
-      - name: Open PR
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: HEAD
-          title: "Auto‑PR: ${{ github.sha }}"
-          merge: false
+  - name: Open PR
+    uses: peter-evans/create-pull-request@v6
+    with:
+      branch: HEAD
+      title: "Auto‑PR: ${{ github.sha }}"
+      merge: false
+
+  - name: Move applied patch to archive
+    if: steps.apply.outcome == 'success'
+    run: |
+      mkdir -p merged-patches
+      latest=$(ls -t incoming/*.patch | head -1)
+      echo "Archiving $latest"
+      mv "$latest" merged-patches/
+      git add -A
+      git commit --amend --no-edit   # fold move into existing commit
+      git push --force
