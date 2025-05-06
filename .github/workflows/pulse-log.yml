@@ -2,9 +2,7 @@ name: Φ‑Pulse Logger
 
 on:
   push:
-    branches:
-      - main
-      - o3
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -45,4 +43,5 @@ jobs:
           git config --global user.email "mesh-o3-bot@example.com"
           git add pulse/
           git commit -m "auto: update daily pulse log"
-          git push https://x-access-token:${TOKEN}@github.com/gradient-pulse/phi-mesh.git o3
+          git push https://x-access-token:${TOKEN}@github.com/gradient-pulse/phi-mesh.git HEAD:main
+
