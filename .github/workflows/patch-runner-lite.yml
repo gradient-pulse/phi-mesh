@@ -1,0 +1,31 @@
+name: Patch‑Runner‑Lite
+
+on:
+  push:
+    paths: ["incoming/*.patch"]
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Apply newest patch
+        run: |
+          latest=$(ls -t incoming/*.patch | head -1)
+          echo "Applying $latest"
+          git config user.name  "MeshBot"
+          git config user.email "meshbot@local"
+          git switch -c "pr/${{ github.sha }}"
+          git am "$latest"
+          git push -u origin HEAD
+
+      - name: Open PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: HEAD
+          title: "Auto‑PR: ${{ github.sha }}"
+          merge: false
