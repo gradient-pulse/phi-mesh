@@ -2,8 +2,10 @@ name: Φ‑Pulse Logger
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches: [ main ]          # still allowed
+  schedule:
+    - cron: '0 0 * * *'         # run at 00:00 UTC every day
+  workflow_dispatch:            # keep the “Run workflow” button
 
 permissions:
   contents: write
