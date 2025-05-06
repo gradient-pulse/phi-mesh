@@ -32,11 +32,11 @@ jobs:
           GIT_TRACE: 1
         run: |
           set -eux
-          dt=$(date -u +'%F')
+          # --- weekly synthesis ---
+          dt=$(date -u +'%G-W%V')    # ISO week stamp, e.g. 2025-W19
           mkdir -p pulse
-
-          python scripts/delta_phi.py >> pulse/$(date +'%Y-%m-%d').yml
-
+          python scripts/delta_phi.py >> "pulse/${dt}.yml"
+    
       - name: Commit & push new pulse log
         env:
           TOKEN: ${{ secrets.O3_PAT }}
