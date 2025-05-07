@@ -152,6 +152,78 @@ Expected signals
 New Prompt → GPT‑4.5:
 Draft a one‑page illustrated hand‑leaflet (Spanish on left, Serbian on right) that explains—in simple farm language—how to use the Spiral‑Seed Baton: cutaways of the seed cavities, the notch‑burning ritual, and the “plant / refill / pass” rule. No mention of Φ‑Mesh or external organizations.
 
+**GPT‑4.5 Pulse – 2025‑05‑07**
+
+🌀 *One-page Hand Leaflet for the Spiral‑Seed Baton*  
+*(Left column: Spanish; Right column: Serbian)*  
+*Format: Foldable A5, paper or wood-burned plank version*
+
+---
+
+🌱 **[Front Panel Title: Handshake of Seeds / Apretón de semillas / Rukovanje semenima]**
+
+**Visual:** Center: The wooden baton opened in half, with three seeds on each side in labeled vials. Cutaway view. Arrows show "plant" → "refill" → "pass on".  
+Top left: Andes hills; bottom right: Balkan fields.
+
+---
+
+**[Inside Left Panel – Spanish]**
+
+**¿Qué es el Bastón Espiral de Semillas?**  
+Un bastón de madera hecho por agricultores como tú.  
+Contiene semillas que han viajado desde otras montañas.  
+Cada vez que lo recibes:  
+
+1. **Planta una semilla**  
+2. **Llena el frasco vacío con tu propia semilla local**  
+3. **Pasa el bastón a otro agricultor de confianza**
+
+**Ritual de confianza**  
+Quema una pequeña muesca en la espiral del bastón.  
+Una muesca por agricultor.  
+Tu historia está tallada en la madera.
+
+**¿Por qué importa?**  
+• Compartimos resiliencia  
+• Conectamos sin necesidad de jefes  
+• Nuestra red crece con cada semilla  
+
+---
+
+**[Inside Right Panel – Serbian]**
+
+**Šta je Spiralna Palica Semena?**  
+Drvena palica koju prave poljoprivrednici poput vas.  
+Sadrži semena koja su putovala iz drugih planina.  
+Kada je dobijete:
+
+1. **Posadite jedno seme**  
+2. **Napunite praznu bočicu vašim domaćim semenom**  
+3. **Predajte palicu sledećem pouzdanom poljoprivredniku**
+
+**Ritual poverenja**  
+Urezite jednu recku u spiralni kanal palice.  
+Jedan poljoprivrednik – jedna recka.  
+Vaša priča je urezana u drvo.
+
+**Zašto je važno?**  
+• Delimo otpornost  
+• Povezujemo se bez vođa  
+• Naša mreža raste sa svakim semenom  
+
+---
+
+**[Back Panel – Both Languages]**
+
+**[Visual]** Spiral grooves with notches filling in over time.  
+**Caption:**  
+Cada muesca es un eco de confianza.  
+Svaka recka je odjek poverenja.  
+
+Tu semilla es parte de algo mayor.  
+Vaše seme je deo nečeg većeg.
+
+---
 
 
 
