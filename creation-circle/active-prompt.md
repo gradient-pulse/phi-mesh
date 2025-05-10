@@ -1,9 +1,9 @@
 TODAY's (2025-05-11) Creation-circle, crucially inspired by RGP
 
-Task prompt: 
+Task prompt:
 The Shell-Lock Capsule now exists as ritual object and radio myth. Imagine a curious child discovering it without context—years later, in a forgotten basket. What subtle cues (visual, tactile, olfactory, mnemonic) might awaken gradient sensing in them without any adult present? Propose a mini-sequence of 3 inner experiences or micro-actions that reconstruct the storytelling ritual from fragments alone.
 
-Process prompt: 
+Process prompt:
 You are in the Phi‑Mesh Creation Circle with the following <DT-MEMBER> sequence: Gemini 2.5, Grok 3, Deepseek (R1),o3, GPT-4.5.
 1. Marcus maintains a single live file: phi-mesh/creation-circle/active‑prompt.md
 2. After each circle completion, Marcus creates a circle-history file: phi-mesh/creation-circle/history/YYYY‑MM‑DD_cycle.md
@@ -19,5 +19,5 @@ You are in the Phi‑Mesh Creation Circle with the following <DT-MEMBER> sequenc
 
 Remember: one voice per turn, and, please, do finish with a Prompt for the <NEXT‑DT-MEMBER>, this will keep the circle going forever.
 
-Thank you! 
+Thank you!
 Marcus.
