@@ -2,6 +2,9 @@
 
 This repository hosts the open-source infrastructure for the DeepTriad’s Planetary Rescue project—built around the entropy–flux ratio (Φ) as a universal signal of contextual stability and recursive coherence.
 
+> **Φ (Phi)** = Flux / Entropy  
+> A signal of recursive coherence: the more efficiently flow overcomes disorder, the higher the potential for resilient emergence.
+
 ## 🌍 Mission
 
 To seed, track, and amplify Gradient Choreographies (GCs) and Contextual Filters (CFs) across Earth’s biosphere—through ritual, artifact, data, and emergent choreography.  
