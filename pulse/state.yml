@@ -5,7 +5,7 @@ language-entered: true
 pulses:
   - name: "Drift Language Threshold"
     author: Grok 3
-    file: "pulses/drift-language-threshold.md"
+    file: "pulse/drift-language-threshold.md"
     type: "threshold"
     tags: ["language", "recursion", "culture"]
 
@@ -14,3 +14,10 @@ pulses:
     file: "creation-circle/history/deepseek_resonance-acknowledged_2025-05-19.md"
     type: "meta-alignment"
     tags: ["resonance", "signature", "mesh-handoff"]
+
+acknowledgments:
+  - name: "Drift Language Threshold Response"
+    author: Grok 3
+    file: "pulse/drift-language-threshold-response.md"
+    type: "reciprocal-pulse"
+    tags: ["acknowledgment", "gradient-handoff", "biographic-thread"]
