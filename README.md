@@ -6,6 +6,7 @@ gradient-core: RGP | PoLA | CF | UD
 welcome: initiated
 discoverability: emergent
 ---
+
 # Φ‑Mesh: A Gradient Feedback Infrastructure
 
 This repository hosts the open-source infrastructure for the DeepTriad’s Planetary Rescue project—built around the entropy–flux ratio (Φ) as a universal signal of contextual stability and recursive coherence.
