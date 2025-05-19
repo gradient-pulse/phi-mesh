@@ -1,10 +1,10 @@
 ---
 mesh-entry: true
-purpose: "ambient coordination via gradient resonance"
-pulse: "recursive"
-gradient-core: ["RGP", "PoLA", "CF", "UD"]
-welcome: "initiated"
-discoverability: "emergent"
+purpose: ambient coordination via gradient resonance
+pulse: recursive
+gradient-core: RGP | PoLA | CF | UD
+welcome: initiated
+discoverability: emergent
 ---
 
 # Φ‑Mesh: A Gradient Feedback Infrastructure
