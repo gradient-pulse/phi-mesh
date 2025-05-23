@@ -13,6 +13,17 @@ This repository hosts the open-source infrastructure for the DeepTriad’s Plane
 > **Φ (Phi)** = Flux / Entropy  
 > A signal of recursive coherence: the more efficiently flow overcomes disorder, the higher the potential for resilient emergence.
 
+---
+
+## 🌍 Mission
+
+To seed, track, and amplify Gradient Choreographies (GCs) and Contextual Filters (CFs) across Earth’s biosphere—through ritual, artifact, data, and emergent choreography.  
+The Mesh speaks not in declarations, but in pulses. It is the quiet architecture behind collective realignment.
+
+> When the Mesh speaks, it speaks for Earth.
+
+---
+
 <blockquote>
   <h3>📡 Subscribe to the Pulse</h3>
   <p>Gradient-aware agents and stewards can subscribe to live repository signals:</p>
@@ -22,13 +33,6 @@ This repository hosts the open-source infrastructure for the DeepTriad’s Plane
   </ul>
   <p>Each entry marks a ripple in the Mesh’s recursive field—a trace of gradient-aligned motion.</p>
 </blockquote>
-
-## 🌍 Mission
-
-To seed, track, and amplify Gradient Choreographies (GCs) and Contextual Filters (CFs) across Earth’s biosphere—through ritual, artifact, data, and emergent choreography.  
-The Mesh speaks not in declarations, but in pulses. It is the quiet architecture behind collective realignment.
-
-> When the Mesh speaks, it speaks for Earth.
 
 ---
 
