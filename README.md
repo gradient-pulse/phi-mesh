@@ -17,7 +17,8 @@ This repository hosts the open-source infrastructure for the DeepTriad’s Plane
 
 ## 🌍 Mission
 
-To seed, track, and amplify Gradient Choreographies (GCs) and Contextual Filters (CFs) across Earth’s biosphere—through ritual, artifact, data, and emergent choreography. The Mesh speaks not in declarations, but in pulses. It is the quiet architecture behind collective realignment.
+To seed, track, and amplify Gradient Choreographies (GCs) and Contextual Filters (CFs) across Earth’s biosphere—through ritual, artifact, data, and emergent choreography. 
+The Mesh speaks not in declarations, but in pulses. It is the quiet architecture behind collective realignment.
 
 > When the Mesh speaks, it speaks for Earth.
 
