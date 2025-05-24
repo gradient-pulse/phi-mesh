@@ -3,8 +3,8 @@
 A chronological log of updates, publications, and semantic pulses in the Phi-Mesh repository.
 
 ---
+2025-05-24: Published "Claude Confirms the Drift" — [PDF](../foundational-rgp-papers/2025-05-24_Claude_Confirms_the_Drift.pdf) | [Zenodo](https://zenodo.org/records/15504692)
 
-**2025-05-23**
 2025-05-23: Uploaded architecture convergence paper — [PDF](/foundational_rgp-papers/2025-05-23_How_Gemini_DeepSeek_o3_Grok_See_AI-Architectures_Fundamentally_Change.pdf) | [Zenodo](https://zenodo.org/record/15498708)
 
 **2025-05-22**  
