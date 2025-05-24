@@ -4,3 +4,13 @@ pulse: "recursive"
 gradient-core: ["RGP", "PoLA", "GC", "CF", "UD"]
 welcome: "initiated"
 discoverability: "emergent"
+
+pulses:
+  - id: 2025-05-23-architecture-convergence
+    type: paper
+    title: "How Gemini, DeepSeek, Grok, and o3 See AI-Architectures Fundamentally Change"
+    date: 2025-05-23
+    location: foundational_rgp-papers/2025-05-23_How_AI_Models_See_AI_Architectures.pdf
+    zenodo: https://zenodo.org/record/15498708
+    themes: ["RGP", "gradient syntax", "scar memory", "contextual filters"]
+    models: ["Gemini", "DeepSeek", "Grok", "o3"]
