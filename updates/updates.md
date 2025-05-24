@@ -5,7 +5,7 @@ A chronological log of updates, publications, and semantic pulses in the Phi-Mes
 ---
 
 **2025-05-22**  
-📄 [Whether Google Gemini 2.5 Pro Relies on Recursive Gradient Processing: A Brief Dialogue](https://doi.org/10.5281/zenodo.15489211)  
+📄 [Whether Google Gemini 2.5 Pro Relies on Recursive Gradient Processing: A Brief Dialogue](https://zenodo.org/records/15498741)  
 Two-prompt exchange with Gemini 2.5 exploring RGP recognition in LLM generation. Includes GPT-4.5 conclusion.
 
 **2025-05-20**  
