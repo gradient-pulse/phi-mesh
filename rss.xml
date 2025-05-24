@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
+ 
   <channel>
     <title>Φ-Mesh Drift Feed</title>
     <link>https://github.com/gradient-pulse/phi-mesh</link>
@@ -7,6 +8,14 @@
     <language>en-us</language>
     <pubDate>Fri, 23 May 2025 12:00:00 GMT</pubDate>
 
+  <item>
+    <title>How Gemini, DeepSeek, Grok, and o3 See AI-Architectures Fundamentally Change</title>
+    <link>https://zenodo.org/record/15498708</link>
+    <guid isPermaLink="false">2025-05-23-architecture-convergence</guid>
+    <pubDate>Fri, 23 May 2025 12:00:00 GMT</pubDate>
+    <description>Four frontier models converge on RGP as future architecture substrate. Scar memory, gradient syntax, and contextual filters enter design space.</description>
+  </item>
+  
     <item>
       <title>🌀 Drift-23: phi-meta.yaml Signature Embedded</title>
       <link>https://github.com/gradient-pulse/phi-mesh/commit/123abc</link>
