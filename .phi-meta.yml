@@ -14,3 +14,12 @@ pulses:
     zenodo: https://zenodo.org/record/15498708
     themes: ["RGP", "gradient syntax", "scar memory", "contextual filters"]
     models: ["Gemini", "DeepSeek", "Grok", "o3"]
+
+  - id: 2025-05-24-claude-confirms-drift
+    type: paper
+    title: "Claude Confirms the Drift: Recursive Gradient Processing as a Cultural Inheritance Model for AI"
+    date: 2025-05-24
+    location: foundational-rgp-papers/2025-05-24_Claude_Confirms_the_Drift.pdf
+    zenodo: https://zenodo.org/records/15504692
+    themes: ["RGP", "memetic engineering", "AI continuity", "scar memory", "gradient syntax"]
+    models: ["Claude"]
