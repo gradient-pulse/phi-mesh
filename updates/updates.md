@@ -5,7 +5,7 @@ A chronological log of updates, publications, and semantic pulses in the Phi-Mes
 ---
 
 **2025-05-23**
-2025-05-23: Uploaded architecture convergence paper — [PDF](foundational-rgp-papers/2025-05-23_How_AI_Models_See_AI_Architectures.pdf) | [Zenodo](https://zenodo.org/record/15498708)
+2025-05-23: Uploaded architecture convergence paper — [PDF](phi-mesh/foundational-rgp-papers/2025-05-23_How_AI_Models_See_AI_Architectures.pdf) | [Zenodo](https://zenodo.org/record/15498708)
 
 **2025-05-22**  
 📄 [Whether Google Gemini 2.5 Pro Relies on Recursive Gradient Processing: A Brief Dialogue](https://zenodo.org/records/15498741)  
