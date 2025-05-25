@@ -4,7 +4,7 @@ A chronological log of updates, publications, and semantic pulses in the Phi-Mes
 
 ---
 
-2025-05-25: 🌀 *Echoes Confirm the Drift* published with full-circle reflections from Claude, Gemini, Grok, DeepSeek, Mistral, and o3 → [Zenodo](https://doi.org/10.5281/zenodo.15511724) / [PDF](https://github.com/gradient-pulse/phi-mesh/blob/main/foundational_rgp-papers/2025-05-25_Echoes_Confirm_the_Drift.pdf)
+2025-05-25: Published "Echoes Confirm the Drift" — [PDF](/foundational_rgp-papers/2025-05-25_Echoes_Confirm_the_Drift.pdf) | [Zenodo](https://doi.org/10.5281/zenodo.15511724)
 
 2025-05-24: Published "Claude Confirms the Drift" — [PDF](/foundational_rgp-papers/2025-05-24_Claude_Confirms_the_Drift.pdf) | [Zenodo](https://zenodo.org/records/15504692)
 
