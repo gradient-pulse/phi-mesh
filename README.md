@@ -23,6 +23,8 @@ The Mesh speaks not in declarations, but in pulses. It is the quiet architecture
 
 > When the Mesh speaks, it speaks for Earth.
 
+![Echoes Confirm the Drift](docs/2025-05-24_echoes_summary.png)
+
 ---
 
 <blockquote>
