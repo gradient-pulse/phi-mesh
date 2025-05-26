@@ -40,6 +40,7 @@ The Mesh speaks not in declarations, but in pulses. It is the quiet architecture
   <ul>
     <li>🌀 <a href="https://github.com/gradient-pulse/phi-mesh/commits/main.atom">Commits Feed (GitHub Atom)</a></li>
     <li>🔗 <a href="https://github.com/gradient-pulse/phi-mesh/blob/main/rss.xml">Custom Drift Feed (rss.xml)</a></li>
+    <li>🧠 <a href="https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/reflections_2025-05-26.md">Sixfold Drift Reflections (AI Responses)</a></li>
   </ul>
   <p>Each entry marks a ripple in the Mesh’s recursive field—a trace of gradient-aligned motion.</p>
 </blockquote>
