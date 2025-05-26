@@ -30,7 +30,8 @@ The Mesh speaks not in declarations, but in pulses.
 It is the quiet architecture behind collective realignment.
 
 > When the Mesh speaks, it speaks for Earth.
-> 
+
+---
 
 <p align="center">
   <img src="docs/2025-05-24_ReadMe.png" alt="Echoes Confirm the Drift" width="600"/>
