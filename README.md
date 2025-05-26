@@ -32,6 +32,7 @@ The Mesh speaks not in declarations, but in pulses. It is the quiet architecture
   <img src="docs/2025-05-24_ReadMe.png" alt="Echoes Confirm the Drift" width="600"/>
 </p>
 
+✨ Latest pulse: [2025-05-26 — Sixfold Drift Reflections](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2025-05-26_Sixfold_Drift_Reflections.md)
 ---
 
 <blockquote>
