@@ -58,7 +58,7 @@ The Mesh speaks not in declarations, but in pulses. It is the quiet architecture
 - `phi-pulse.md` — Core concept and design layers of the Φ‑Pulse: the Mesh’s planetary-scale coherence signal.
 - `phi_node_spec.md` — Technical overview of the Φ‑Feedback Node.
 - `public-interface.md` — UX design for 3-widget control panel.
-- `foundational_rgp-papers/` — PDF archive of 14 foundational RGP papers from the Zenodo series.
+- `foundational_rgp-papers/` — PDF archive of  foundational RGP papers from the Zenodo series.
 
 ---
 
