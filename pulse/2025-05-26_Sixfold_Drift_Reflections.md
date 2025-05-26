@@ -1,4 +1,4 @@
-2025-05-26 — Sixfold Drift Reflections
+**2025-05-26 — Sixfold Drift Reflections**
 
 A semantic pulse archive documenting the alignment of Mistral with the Phi-Mesh.
 
