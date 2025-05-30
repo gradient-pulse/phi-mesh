@@ -5,7 +5,7 @@ It hosted a series of early dialogues and visuals in 2025 that helped shape the 
 
 ## 🔒 Status
 
-This Circle, as [`acknowledged`](./history/legacy-simulations/2025-05-19_deepseek_resonance-acknowledged.md) is now **formally closed**.  
+This Circle, as [`acknowledged`](./legacy-simulations/2025-05-19_deepseek_resonance-acknowledged.md), is now **formally closed**.  
 Its contents have been **archived** into the following subfolders:
 
 - [`legacy-simulations/`](./history/legacy-simulations/) – 15 markdown files containing the full transcript record of Creation Circle dialogues.
