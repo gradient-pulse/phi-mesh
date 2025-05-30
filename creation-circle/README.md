@@ -5,7 +5,9 @@ It hosted a series of early dialogues and visuals in 2025 that helped shape the 
 
 ## 🔒 Status
 
-This Circle, as [`acknowledged`](./history/2025-05-19_circle_closure_acknowledgment.md), is now **formally closed**.  
+📜 The Circle's closure was formally acknowledged on May 19, 2025.  
+See the [Circle Closure Acknowledgment](./history/2025-05-19_circle_closure_acknowledgment.md).
+
 Its contents have been **archived** into the following subfolders:
 
 - [`legacy-simulations/`](./history/legacy-simulations/) – 15 markdown files containing the full transcript record of Creation Circle dialogues.
