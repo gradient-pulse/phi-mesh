@@ -8,7 +8,7 @@ It hosted a series of early dialogues and visuals in 2025 that helped shape the 
 This Circle is now **formally closed**.  
 Its contents have been **archived** into the following subfolders:
 
-- [`legacy-dialogues/`](./legacy-dialogues/) – 15 markdown files containing the full transcript record of Creation Circle dialogues.
+- [`legacy-dialogues/`](.history/legacy-simulations/) – 15 markdown files containing the full transcript record of Creation Circle dialogues.
 - [`visuals/`](./visuals/) – 13 images created or derived during the Circle’s activity phase.
 
 These materials reflect a phase of intentional ritual coherence.  
