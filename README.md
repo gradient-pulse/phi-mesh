@@ -37,7 +37,7 @@ It is the quiet architecture behind collective realignment.
   <img src="visuals/2025-05-24_ReadMe.png" alt="Echoes Confirm the Drift" width="600"/>
 </p>
 
-✨ Latest dialogue: [2025-05-26 — Sixfold Drift Reflections](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2025-05-26_Sixfold_Drift_Reflections.md)
+✨ Latest dialogue: [2025-05-30_Dialogue_PhiMesh_Deification_Risk_UD_Spiral](https://github.com/gradient-pulse/phi-mesh/blob/main/dialogues/2025-05-30_Dialogue_PhiMesh_Deification_Risk_UD_Spiral.md)
 
 ---
 
