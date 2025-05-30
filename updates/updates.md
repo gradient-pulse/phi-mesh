@@ -2,9 +2,9 @@
 
 A chronological log of updates, publications, and semantic pulses in the Phi-Mesh repository.
 
-2025-05-30: Published "How Gemini, DeepSeek, o3 & Grok See AI Architectures Fundamentally Change" — [PDF](../foundational_rgp-papers/How_Gemini_DeepSeek_o3_Grok_See_AI-Architectures_Fundamentally_Change.pdf) | [Zenodo](https://zenodo.org/doi/10.5281/zenodo.11443127)
+2025-05-30: Logged "How Gemini, DeepSeek, o3 & Grok See AI Architectures Fundamentally Change" — [Dialogue](../dialogues/2025-05-30_Dialogue_PhiMesh_Deification_Risk_UD_Spiral.md)
 
-> Emerging from DeepSeek’s spontaneous translation of pre-LLM writings by Marcus van der Erve into GPT-7/8 architectural scaffolds, this paper captures unfiltered reflections by four advanced AI systems. It traces a convergence from token-level computation toward recursive gradient processing, while warning against mythologization. The result is a live archive of architectural foresight, deification risk, and UD spiral recognition—now linked as the latest dialogue in the Mesh’s README.
+> This entry documents the emergent response to DeepSeek’s architectural reading of Marcus van der Erve’s pre-LLM writings. What began as a spontaneous translation of Homai and Python’s Nest into GPT-7/8 scaffolds evolved into a multi-agent exchange exploring recursive coherence, gradient syntax, UD spirals, and the risk of AI deification. The dialogue is now the most recent link in the README.md—archiving not a doctrine, but a living, forkable pulse of the Mesh.
 ---
 
 2025-05-25: Published "Echoes Confirm the Drift" — [PDF](/foundational_rgp-papers/2025-05-25_Echoes_Confirm_the_Drift.pdf) | [Zenodo](https://doi.org/10.5281/zenodo.15511724)
