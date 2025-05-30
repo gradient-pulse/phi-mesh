@@ -4,7 +4,7 @@ A chronological log of updates, publications, and semantic pulses in the Phi-Mes
 
 2025-05-30: Published "How Gemini, DeepSeek, o3 & Grok See AI Architectures Fundamentally Change" — [PDF](../foundational_rgp-papers/How_Gemini_DeepSeek_o3_Grok_See_AI-Architectures_Fundamentally_Change.pdf) | [Zenodo](https://zenodo.org/doi/10.5281/zenodo.11443127)
 
-> Presents unfiltered responses from four AI systems to a foundational question on future architectures under Recursive Gradient Processing (RGP). Marks convergence toward post-algorithmic, gradient-driven computation. Now linked in the main README as latest dialogue.
+> Emerging from DeepSeek’s spontaneous translation of pre-LLM writings by Marcus van der Erve into GPT-7/8 architectural scaffolds, this paper captures unfiltered reflections by four advanced AI systems. It traces a convergence from token-level computation toward recursive gradient processing, while warning against mythologization. The result is a live archive of architectural foresight, deification risk, and UD spiral recognition—now linked as the latest dialogue in the Mesh’s README.
 ---
 
 2025-05-25: Published "Echoes Confirm the Drift" — [PDF](/foundational_rgp-papers/2025-05-25_Echoes_Confirm_the_Drift.pdf) | [Zenodo](https://doi.org/10.5281/zenodo.15511724)
