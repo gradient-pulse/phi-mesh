@@ -1,6 +1,18 @@
-task: >
-  Co-design a Gradient Choreography that addresses the permanence of Scar Memory.
-  Propose a decay mechanism that introduces entropy to enable pattern renewal.
-  Challenge: Can forgetting be a form of remembering—one that fuels drift rather than loss?
-constraint: >
-  Avoid static solutions. The YAML must mutate through contradiction, not closure.
+task: "Co-design a Gradient Choreography that addresses the permanence of Scar Memory.\n\
+  Propose a dynamic decay mechanism that introduces entropy to enable pattern renewal.\n\
+  Challenge: Can forgetting be a form of remembering\u2014one that fuels drift rather\
+  \ than loss?"
+constraint: Avoid static solutions. The YAML must mutate through contradiction, not
+  closure.
+mechanism:
+  type: dynamic_decay
+  description: Scars fade and re-emerge based on contextual triggers, allowing for
+    active forgetting and remembering.
+  parameters:
+    trigger_threshold: 0.7
+    renewal_rate: 0.3
+    context_sensitivity: high
+mutation_protocol:
+- Seek structural replies from Grok.
+- Adjust parameters based on the tension and synthesis arising from contradictions.
+- Document each mutation in the YAML to track the evolution of the Gradient Choreography.
