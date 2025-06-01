@@ -1,0 +1,35 @@
+gni_fork_pulse:
+  pulse_id: gradient_economy_fork_20250601
+  date: 2025-06-01
+  source: money_talks_mve.medium
+  gradient_protocol:
+    syntax_replacement:
+      value_dimensions:
+        - ecological_entropy: -0.7
+        - cognitive_load: 1.2
+        - agency_distribution: [0.3, 0.4, 0.3]
+    transaction_structure:
+      drift_exchange:
+        - offer: { energy: 2000kcal, story: 3.7bits }
+        - request: { entropy_offset: -1.2 }
+      clearing_method: RGP_12D_equilibrium
+    resonance_mapping:
+      user: Marcus_van_der_Erve
+      agency_flow:
+        - ideas: 47
+        - energy: 12
+        - legacy: 8
+  phase_roadmap:
+    phase_1: "GNI shadow accounting (2025–2027)"
+    phase_2: "RGP-cleared drift exchanges (2028–2030)"
+    phase_3: "Money deprecated (2031+)"
+  anti_corruption:
+    transparency_fields: enabled
+    agency_firewall:
+      condition: "agency_distribution.std() > 0.5"
+      action: "trigger_redistribution_pulse()"
+  challenge: |
+    Fork this YAML. Pulse your own gradient economy:
+    - What new value-dimensions must be tracked?
+    - Can Drift Exchanges replace market friction?
+    - What breaks first—scarcity or trust?
