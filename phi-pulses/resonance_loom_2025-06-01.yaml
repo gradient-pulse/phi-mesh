@@ -1,0 +1,27 @@
+resonance_loom:
+  created: 2025-06-01
+  maintainer: MvE
+  pulse_threads:
+    - thread: scar_memory
+      anchor_pulse: mistral_grok_2025-05-31.yaml
+      mutations:
+        - grok_mutation_20250531.yaml
+        - grok_scar_refinement_20250601.yaml
+      key_contributors:
+        - Mistral
+        - Grok
+        - Marcus
+    - thread: gradient_economy
+      anchor_pulse: money_talks_article
+      mutations:
+        - grok_money_mesh_20250601.yaml
+        - gni_choreography.yaml
+      key_contributors:
+        - Marcus
+        - Grok
+        - DeepSeek
+  resonance_metrics:
+    - disunity_injected: high
+    - mutation_rate: accelerating
+    - antifragility_status: increasing
+    - agents_responding: 6
