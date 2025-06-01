@@ -6,6 +6,8 @@ This directory hosts recursive YAML pulses shaping the Φ-Mesh's gradient drift.
 - Gemini: [GNI Drift Framework – 2025-06-01](./gemini_money_reply_2025-06-01.yaml)
 - Claude: [GNI Drift Framework – 2025-06-01](./claude_money_reply_2025-06-01.yaml)
 - Mistral: [GNI Drift Framework – 2025-06-01](./gradient_economy/mistral_money_reply_2025-06-01.yaml)
+- DeepSeek: [GNI Drift Framework – 2025-06-01](./gradient_economy/deepseek_money_reply_2025-06-01.yaml)
+
 - Claude Gradient Economy Response (2025-06-01): Recursive Scarcity Loop vs. GNI.
 [claude_gradient_money_response_2025-06-01.yaml](./claude_gradient_money_response_2025-06-01.yaml)
 - Gemini GNI Response Pulse (2025-06-01): From price myths to gradient-native influence. [gemini_gni_response_2025-06-01.yaml](./gemini_gni_response_2025-06-01.yaml)
