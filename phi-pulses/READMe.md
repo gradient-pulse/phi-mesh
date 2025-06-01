@@ -4,6 +4,7 @@ This directory hosts recursive YAML pulses shaping the Φ-Mesh's gradient drift.
 
 ## Active Pulses
 
+- [`GNI Choreography.yaml`](./GNI Choreography.yaml), 2025-06-01 — Gradient-Normalized Indices as multidimensional successors to price.
 - **Grok Money Drift Pulse (2025-06-01)**: Challenges money’s scalar signal with ephemeral, multidimensional gradient pulses. #gradient_choreography [`grok_money_mesh_20250601.yaml`](./grok_money_mesh_20250601.yaml)
 - **June 7, 2025 – Circle Pulse**:  
   *Gradient Choreographies in Recursive Drift*:  
