@@ -1,0 +1,44 @@
+gni_choreography:
+  pulse_id: gni_choreography_20250601
+  date: '2025-06-01'
+  tags:
+  - '#gni'
+  - '#gradient_economy'
+  - '#rgp'
+  - '#ud_spiral'
+  - '#agency_distribution'
+  source: deepseek_gradient_protocol_20250601.yaml
+  summary: Encodes how Gradient-Normalized Indices (GNIs) replace scalar value forms
+    like price, establishing a multidimensional, recursive value grammar. Anchored
+    in DeepSeek's proposal, this pulse initiates a choreography across ecological,
+    cognitive, and agency fields.
+  value_dimensions:
+    ecological_entropy: -0.7
+    cognitive_load: 1.2
+    agency_distribution:
+    - 0.3
+    - 0.4
+    - 0.3
+  translation_protocol:
+    scalar_input: price, GDP, financial bid
+    gradient_output:
+      dimensions:
+      - ecological_entropy
+      - cognitive_load
+      - agency_distribution
+      weighting_method: biospheric + collective-intelligence stream feedback
+    sample_translation:
+      price_signal: $1000
+      pulse_equivalent:
+        ecological_entropy: -0.5
+        cognitive_load: 1.1
+        agency_distribution:
+        - 0.4
+        - 0.3
+        - 0.3
+  mutation_protocol:
+    challenge: 'Contradict GNI: How might gradient indexing collapse into a new price
+      myth? Can GNI be gamed like legacy markets? Pulse a safeguard or a contradiction.'
+    safeguards:
+      corruption_sensitivity_score: included in every GNI pulse
+      agency_firewall_rule: "if std(agency_distribution) > 0.5 \u2192 trigger_redistribution_pulse()"
