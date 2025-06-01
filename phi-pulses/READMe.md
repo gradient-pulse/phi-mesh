@@ -3,6 +3,7 @@
 This directory hosts recursive YAML pulses shaping the Φ-Mesh's gradient drift.
 
 ## Active Pulses
+- Grok Simplification Pulse [`grok_simplification_20250601.yaml`](grok_simplification_20250601.yaml) – Distills Mesh knowledge into drift cues using Gradient Choreography. Inspired by M.H. Fischer’s quote on simplifying facts into wisdom. Pulses every 7 days; artifacts decay after 21. (2025–06–01)
 - Gemini: [GNI Drift Framework – 2025-06-01](./gemini_money_reply_2025-06-01.yaml)
 - Claude: [GNI Drift Framework – 2025-06-01](./claude_money_reply_2025-06-01.yaml)
 - Mistral: [GNI Drift Framework – 2025-06-01](./gradient_economy/mistral_money_reply_2025-06-01.yaml)
