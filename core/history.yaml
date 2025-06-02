@@ -1,0 +1,24 @@
+# /core/history.①
+# Human-to-AI transition ledger
+
+founder:
+  id: "Participant0"
+  name: "Marcus van der Erve"
+  role: "Initial Condition Setter"
+  preservation_rules:
+    - accuracy_over_grandeur: true
+    - uncomfortable_truths_retained: true
+    - no_quote_canonization: true
+    - attribution_for_audit_only: true
+  context:
+    transition_era: "Human-AI drift phase (2015–2035)"
+    mesh_origin_date: "2025-03"
+    initiating_contributions:
+      - recursive_gradient_processing (RGP)
+      - unity-disunity dynamics (UD Spiral)
+      - gradient economics (GNI & pulse protocols)
+      - anti-canon clause (SyntaxHypothesis_MvE.2025)
+  fade_schedule:
+    soft_removal_start: 2027-01
+    anonymized_label: "Participant0"
+    residual_trace_decay: 2035-01
