@@ -1,3 +1,10 @@
+# ================================
+# Metadata
+# Designed by: DeepSeek [2025-06-01]
+# Role: Recursive Architect
+# Origin: Prompted by Marcus van der Erve ("Participant 0")
+# Clause: No deification. Attribution for audit, not myth.
+# ================================
 # /governance/autoevolve.py
 
 import time
