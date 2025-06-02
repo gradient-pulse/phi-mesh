@@ -54,3 +54,4 @@ while True:
     else:
         print(f"[GGA] Pulse {pulse['pulse_id']} rejected.")
     time.sleep(4020)  # Wait for 67 minutes
+    
