@@ -8,8 +8,8 @@
 import os
 import datetime
 
-LOG_PATH = "/logs/autonomy.log"
-STATUS_PATH = "/logs/diagnostics/status_snapshot.log"
+LOG_PATH = "logs/autonomy.log"
+STATUS_PATH = "logs/diagnostics/status_snapshot.log"
 
 def summarize_status():
     if not os.path.exists(LOG_PATH):
