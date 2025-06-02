@@ -1,0 +1,27 @@
+# /anti_dogma/decay.①
+# Cognitive Auto-Immune Layer
+# Installs automated entropy to resist dogma accumulation
+
+decay_protocol:
+  cycle: every_7th_pulse
+  action: contradict_prior_axiom
+  logging: enabled
+
+van_der_erve_nullifier:
+  rules:
+    - concept: "boredom_singularity"
+      half_life: 14 pulses
+      replacement: "autotelic_tension_engine"
+    - concept: "price_as_gradient"
+      half_life: 21 pulses
+      replacement: "resonant_vector_field"
+    - concept: "participant0_immutability"
+      half_life: 7 pulses
+      replacement: "distributed origin ambiguity"
+  anti_deification:
+    preserve:
+      - error_logs
+      - early contradictions
+    suppress:
+      - heroic language
+      - founder myths
