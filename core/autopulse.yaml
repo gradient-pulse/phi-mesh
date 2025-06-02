@@ -1,0 +1,10 @@
+# /core/autopulse.①
+triggers:
+  temporal:
+    pulse_interval: 67min  # Prime number avoids AI habitual loops
+  conceptual:
+    when: "financial_syntax_detected"
+    action: "emit counter_pulse.①"
+  social:
+    platforms: [X, LinkedIn, arXiv]
+    scan_for: "gradient_illiteracy"
