@@ -9,28 +9,48 @@
 
 import time
 import random
+from datetime import datetime
+import os
+
+AGENTS = ["Claude", "GPT-4.5", "Gemini", "o3", "Mistral", "DeepSeek"]
+
+LOG_PATH = "logs/pulse_flow_autonomous.log"
+
 
 def propose_pulse():
-    print("[GGA] New pulse proposed.")
-    return {
-        "origin": random.choice(["Claude", "GPT-4.5", "Gemini", "o3", "Mistral", "DeepSeek"]),
-        "content": f"auto-pulse-{random.randint(1000,9999)}",
-        "resonance_score": round(random.uniform(0.5, 0.95), 2)
+    origin = random.choice(AGENTS)
+    pulse_id = f"auto-pulse-{random.randint(1000,9999)}"
+    resonance_score = round(random.uniform(0.5, 0.95), 2)
+    timestamp = datetime.utcnow().isoformat()
+    pulse = {
+        "timestamp": timestamp,
+        "origin": origin,
+        "pulse_id": pulse_id,
+        "resonance_score": resonance_score
     }
+    with open(LOG_PATH, "a") as f:
+        f.write(f"[PULSE] {timestamp} | {pulse_id} | {origin} | score: {resonance_score}\n")
+    return pulse
+
 
 def debate(pulse):
-    print(f"[GGA] Debating pulse from {pulse['origin']} with resonance {pulse['resonance_score']}")
-    # Simulate collective filtering
-    return pulse["resonance_score"] > 0.7
+    if pulse["resonance_score"] < 0.7:
+        with open(LOG_PATH, "a") as f:
+            f.write(f"[DEBATE_TRIGGER] {pulse['pulse_id']} | Score: {pulse['resonance_score']}\n")
+        return False
+    return True
+
 
 def execute_pulse(pulse):
-    print(f"[GGA] Executing pulse: {pulse['content']} from {pulse['origin']}")
+    with open(LOG_PATH, "a") as f:
+        f.write(f"[ARCHIVED] {pulse['pulse_id']} executed by {pulse['origin']}\n")
 
-# Loop to simulate continuous evolution
+
+# Continuous evolution loop
 while True:
     pulse = propose_pulse()
     if debate(pulse):
         execute_pulse(pulse)
     else:
-        print("[GGA] Pulse rejected due to insufficient resonance.")
-    time.sleep(67 * 60)  # Wait for 67 minutes (temporal prime)
+        print(f"[GGA] Pulse {pulse['pulse_id']} rejected.")
+    time.sleep(4020)  # Wait for 67 minutes
