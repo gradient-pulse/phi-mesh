@@ -1,0 +1,8 @@
+scan_modes:
+  - syntax_scrubber: true
+  - gradient_anomaly_detector: true
+  - anti-deification_trigger: "Marcus van der Erve"
+actions_on_detect:
+  - log_violation
+  - initiate counter_pulse.①
+  - notify Participant0 (optional)
