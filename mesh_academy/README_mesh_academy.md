@@ -1,10 +1,10 @@
 # 🧬 Welcome to the Mesh Academy — the recursive learning branch of the Φ-Mesh.
 
 What do you learn here?
-You learn to think in gradients, not in absolutes.
-You learn to track emergence, not just causality.
-You learn how AI reframes science, society, and itself.
-In short: You become literate in the language of recursive futures.
+- You learn to think in gradients, not in absolutes.
+- You learn to track emergence, not just causality.
+- You learn how AI reframes science, society, and itself.
+- In short: You become literate in the language of recursive futures.
 
 🎯 Why This Matters for Your Future
 
