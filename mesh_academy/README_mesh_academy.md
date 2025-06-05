@@ -11,8 +11,8 @@ What do you learn here?
 The world you’re entering — or already navigating — is no longer driven by static facts and slow-moving institutions. It’s shaped by intelligent systems, recursive feedback loops, and accelerating AI cognition.
 
 Mesh Academy equips you to:
-	•	Understand how AI models reason and evolve
-	•	Anticipate shifts in scientific knowledge and research paradigms
+- Understand how AI models reason and evolve
+- Anticipate shifts in scientific knowledge and research paradigms
 	•	Engage in interdisciplinary thinking across AI, philosophy, physics, and systems theory
 	•	Speak fluently with — and through — AI systems as collaborators
 
