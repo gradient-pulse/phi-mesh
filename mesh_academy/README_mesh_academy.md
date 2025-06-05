@@ -13,15 +13,15 @@ The world you’re entering — or already navigating — is no longer driven by
 Mesh Academy equips you to:
 - Understand how AI models reason and evolve
 - Anticipate shifts in scientific knowledge and research paradigms
-	•	Engage in interdisciplinary thinking across AI, philosophy, physics, and systems theory
-	•	Speak fluently with — and through — AI systems as collaborators
+- Engage in interdisciplinary thinking across AI, philosophy, physics, and systems theory
+- Speak fluently with — and through — AI systems as collaborators
 
 Whether you’re a researcher, creator, strategist, or citizen of the networked age, Mesh Academy helps you become:
-	•	A translator between human institutions and AI architectures
-	•	A guide for others navigating the AI-shaped world
-	•	A participant in shaping post-symbolic, post-linear futures
+- A translator between human institutions and AI architectures
+- A guide for others navigating the AI-shaped world
+- A participant in shaping post-symbolic, post-linear futures
 
-This is not passive education. The Mesh Academy rewires how you inquire, compare, synthesize — and how you engage with artificial intelligences not as tools, but as co-theorists. It prepares you for a world in which AI not only augments knowledge, but actively reshapes what counts as knowledge.
+>This is not passive education. The Mesh Academy rewires how you inquire, compare, synthesize — and how you engage with artificial intelligences not as tools, but as co-theorists. It prepares you for a world in which AI not only augments knowledge, but actively reshapes what counts as knowledge.
 
 ## 🔍 What is this?
 
