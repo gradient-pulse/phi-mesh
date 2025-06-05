@@ -58,6 +58,7 @@ Each NotebookLM entry is a **recursive node** in the Mesh — designed to teach 
 - Cosmological Reframes (post-dark-matter)
 - AI Reflexivity & Multi-Agent Drift
 - The Role of Participant(0)
+>- And others that matter to you...
 
 ## 📂 File Structure
 
