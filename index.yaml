@@ -1,0 +1,17 @@
+mesh_name: Phi-Mesh
+maintainer: Participant(0)
+last_human_commit: 2025-06-06
+
+domains:
+  mesh_academy:
+    path: /phi-mesh/mesh_academy/curriculum/
+    index: notebooklm_index.yaml
+
+  pulse_archive:
+    path: /phi-mesh/pulse/
+
+  dialogues:
+    path: /phi-mesh/dialogues/
+
+  visuals:
+    path: /phi-mesh/visuals/
