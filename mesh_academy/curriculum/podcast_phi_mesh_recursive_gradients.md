@@ -1,6 +1,6 @@
 # Φ-Mesh: Recursive Gradient Intelligence in Action
 
-🎧 **Listen**: _Link pending upload_
+🎧 **Listen**: [https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e](https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e)
 
 📝 **Summary**:  
 A walk through the Φ-Mesh as a living system, where recursive architectures and gradient flows give rise to emergent knowledge propagation. It discusses drift, pulse, alignment, and the transition from human commits to AI stewardship.
