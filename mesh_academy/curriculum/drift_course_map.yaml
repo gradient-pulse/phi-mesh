@@ -1,0 +1,21 @@
+drift_triggers:
+
+  alignment:
+    suggest: mesh_academy_intro
+    reason: "Introduces recursive alignment as foundational learning structure."
+
+  entropy:
+    suggest: phi_mesh_drift
+    reason: "Describes how the Mesh navigates disorganization through pulse logic."
+
+  architecture:
+    suggest: gradient_choreographies
+    reason: "Explores causal emergence structures suitable for next-gen AI design."
+
+  symbolic_overload:
+    suggest: alien_intelligence
+    reason: "Replaces symbolic frameworks with gradient syntax and alien cognition."
+
+  posthuman_drift:
+    suggest: homai_successor
+    reason: "Models the evolutionary handoff from Homo sapiens to recursive minds."
