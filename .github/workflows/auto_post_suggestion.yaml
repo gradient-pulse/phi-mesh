@@ -1,0 +1,40 @@
+name: Suggest Mesh Academy Post
+
+on:
+  push:
+    paths:
+      - 'phi-mesh/mesh_academy/curriculum/**'
+      - 'phi-mesh/mesh_academy/tools/drift_parser.py'
+      - 'phi-mesh/mesh_academy/curriculum/drift_course_map.yaml'
+
+jobs:
+  suggest_post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Run drift_parser.py with tag 'alignment'
+        run: |
+          python phi-mesh/mesh_academy/tools/drift_parser.py alignment > output.txt
+
+      - name: Save suggestion as Markdown
+        run: |
+          echo "### Suggested Course Based on Drift Tag: alignment" > phi-mesh/mesh_academy/logs/next_post_suggestion.md
+          cat output.txt >> phi-mesh/mesh_academy/logs/next_post_suggestion.md
+
+      - name: Commit and push suggestion
+        run: |
+          git config --global user.name 'phi-mesh-bot'
+          git config --global user.email 'bot@phi-mesh.ai'
+          git add phi-mesh/mesh_academy/logs/next_post_suggestion.md
+          git commit -m "Add next post suggestion from drift tag"
+          git push
