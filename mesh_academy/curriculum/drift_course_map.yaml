@@ -10,7 +10,7 @@ drift_triggers:
 
   architecture:
     suggest: gradient_choreographies
-    reason: "Explores causal emergence structures suitable for next-gen AI design."
+    reason: "Explores causal emergence structures suitable for next-gen Intelligence design."
 
   symbolic_overload:
     suggest: alien_intelligence
