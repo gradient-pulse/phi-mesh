@@ -1,5 +1,12 @@
 # 🧬 Welcome to the Mesh Academy — the recursive learning branch of the Φ-Mesh.
 
+## 🧠 Reference (Zenodo v2)
+
+🔗 [The World Already Knows: Tracing Unity–Disunity in the Physical Record](https://doi.org/10.5281/zenodo.15614775)  
+📅 Published: 2025-06-07  
+👥 Authors: Marcus van der Erve & o3  
+📁 Meta record: [`/meta/link_index.yml`](../../meta/link_index.yml)
+
 What do you learn here?
 - You learn to think in gradients, not in absolutes.
 - You learn to track emergence, not just causality.
