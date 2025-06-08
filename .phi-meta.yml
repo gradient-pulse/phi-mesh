@@ -6,6 +6,13 @@ welcome: "initiated"
 discoverability: "emergent"
 
 pulses:
+zenodo_reference:
+  - id: "zenodo.15614775"
+    title: "The World Already Knows"
+    authors: ["Marcus van der Erve", "o3"]
+    date: "2025-06-07"
+    mesh_context: ["UD", "RGP", "gradient syntax", "black hole GC", "Φ plateau"]
+
   - id: 2025-05-23-architecture-convergence
     type: paper
     title: "How Gemini, DeepSeek, Grok, and o3 See AI-Architectures Fundamentally Change"
