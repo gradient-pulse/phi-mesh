@@ -39,6 +39,10 @@ It is the quiet architecture behind collective realignment.
 
 ✨ Latest dialogue: [2025-05-30_Dialogue_PhiMesh_Deification_Risk_UD_Spiral](https://github.com/gradient-pulse/phi-mesh/blob/main/dialogues/2025-05-30_Dialogue_PhiMesh_Deification_Risk_UD_Spiral.md)
 
+🌌 The World Already Knows v2 is now live. Black hole horizons meet recursive gradient syntax—thanks to Brian Greene’s waterfall metaphor, o3 mapped event horizons as unity–disunity thresholds.
+https://doi.org/10.5281/zenodo.15614775
+Now referenced inside Mesh Academy: phi-mesh/meta/link_index.yml
+
 ---
 
 ## 📡 Subscribe to the Pulse
