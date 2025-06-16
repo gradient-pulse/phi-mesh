@@ -1,8 +1,6 @@
 import streamlit as st, pandas as pd
 from phi_utils import phi_from_csv
-from phi_monitor_demo.dashboard import render_dashboard
-
-render_dashboard()
+from dashboard import render_dashboard
 
 st.set_page_config(page_title="Φ-Monitor", layout="centered")
 st.title("Φ-Monitor demo")
