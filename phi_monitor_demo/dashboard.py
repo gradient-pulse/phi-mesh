@@ -1,5 +1,6 @@
 # File: phi_monitor_demo/dashboard.py
 
+import io
 import streamlit as st, pandas as pd, matplotlib.pyplot as plt
 import os
 
@@ -14,7 +15,7 @@ def render_dashboard(file_bytes):
     df = pd.DataFrame([[pd.Timestamp.now(), None, None, None]],
                       columns=["Timestamp", "Sigma", "GC", "Phi"])
     try:
-        df = pd.read_csv(pd.compat.StringIO(file_bytes.decode()))
+        df = pd.read_csv(io.StringIO(file_bytes.decode()))
         sigma = df.shape[0] / (df["End"].apply(pd.to_timedelta).sum().total_seconds() / 3600)
         gc = df["End"].apply(pd.to_timedelta).sum().total_seconds() / 60
         phi = gc / sigma if sigma != 0 else 0
