@@ -1,10 +1,11 @@
+import io
 import pandas as pd
 import numpy as np
 
 DISTRACT = {"Email", "Slack", "News", "Social"}
 
 def phi_from_csv(file_bytes):
-    df = pd.read_csv(pd.compat.StringIO(file_bytes.decode()))
+    df = pd.read_csv(io.StringIO(file_bytes.decode()))
     df["Start"] = pd.to_datetime(df["Start"])
     df["End"] = pd.to_datetime(df["End"])
     df["Duration"] = (df["End"] - df["Start"]).dt.total_seconds() / 60
