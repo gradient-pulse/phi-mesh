@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 from phi_utils import phi_from_csv
-from dashboard import render_dashboard  # import is correct now
+from dashboard import render_dashboard
 
-# ✅ This must be FIRST Streamlit command
+# ✅ This must be the first Streamlit command
 st.set_page_config(page_title="Φ-Monitor", layout="centered")
 
 st.title("Φ-Monitor demo")
