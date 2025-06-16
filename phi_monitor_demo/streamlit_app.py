@@ -1,6 +1,6 @@
 import streamlit as st, pandas as pd
 import matplotlib.pyplot as plt
-from .phi_utils import phi_from_csv
+from phi_monitor_demo.phi_utils import phi_from_csv
 
 st.title("Φ-Monitor demo")
 up = st.file_uploader("Upload time-log CSV", type="csv")
