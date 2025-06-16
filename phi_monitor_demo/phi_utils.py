@@ -6,8 +6,8 @@ DISTRACT = {"Email", "Slack", "News", "Social"}
 
 def phi_from_csv(file_bytes):
     df = pd.read_csv(io.StringIO(file_bytes.decode()))
-    df["Start"] = pd.to_datetime(df["Start"])
-    df["End"] = pd.to_datetime(df["End"])
+    df["Start"] = pd.to_datetime(df["Start"], format="%H:%M", errors="coerce").fillna(pd.to_datetime(df["Start"], format="%H:%M:%S"))
+    df["End"] = pd.to_datetime(df["End"], format="%H:%M", errors="coerce").fillna(pd.to_datetime(df["End"], format="%H:%M:%S"))
     df["Duration"] = (df["End"] - df["Start"]).dt.total_seconds() / 60
     df["Switch"] = df["Activity"].shift() != df["Activity"]
     sigma = df["Switch"].sum() / ((df["End"].max() - df["Start"].min()).total_seconds() / 3600)
