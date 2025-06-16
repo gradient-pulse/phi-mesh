@@ -13,6 +13,5 @@ if up:
     st.metric("|GC| (focus min/hr)", f"{gc:.2f}")
     st.metric("Φ", f"{phi:.2f}")
     
-    # Dashboard: deeper visual readout
     st.divider()
     render_dashboard(bytes_data)
