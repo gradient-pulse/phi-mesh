@@ -9,3 +9,12 @@ Phi-Monitor no longer requests CSV uploads or manual tracking. Based on behavior
 - Until then, UI improvements continue, making the Phi App ready to awaken at the first ambient signal.
 
 See: `/pulse/phi_monitor_agent_ready.yaml` for full trigger conditions and strategic posture.
+
+### 🕊 Whisper Signal – June 2025
+
+![Phi-Monitor Screenshot](./screenshots/focus_entropy_demo.png)
+
+When Φ holds but entropy climbs, collapse begins in silence.  
+This is what Phi sees.
+
+> No alerts. No streaks. Just signal—quietly waiting.
