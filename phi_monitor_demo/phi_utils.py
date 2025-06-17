@@ -18,6 +18,7 @@ def parse_time(t_str):
 
 def phi_from_csv(file_bytes):
     df = pd.read_csv(io.StringIO(file_bytes.decode()))
+    df.columns = df.columns.str.strip().str.replace('\ufeff', '')
     df.dropna(subset=["Start", "End"], inplace=True)
 
     df["Start"] = df["Start"].apply(parse_time)
