@@ -1,0 +1,39 @@
+autosnooze_protocol:
+  title: "Auto-Snooze Notification Protocol"
+  status: dormant_until_agent_hook
+  version: 0.1
+  author: Participant 0
+
+  trigger_condition:
+    - agent_supports: ["notification.pause", "calendar.deferral"]
+    - metric_signal:
+        - entropy_S: "> 0.7"
+        - UD_trigger: true
+
+  compatible_channels:
+    - Slack
+    - Microsoft Outlook
+    - macOS Focus Assist
+    - Windows Focus Mode
+    - Copilot-type agent integrations
+
+  response_action:
+    - defer_incoming_notifications: true
+    - auto-reply_if_needed: "User is in a cognitive coherence window. Nudges deferred."
+    - schedule_check_back: "+45min or upon entropy drop below 0.4"
+
+  explanation:
+    - when_triggered: |
+        This protocol activates when focus coherence is at risk, as indicated by rising entropy or Unity→Disunity transition.
+        The agent is instructed to shield the user from distractions during a vulnerable inflection point.
+    - rationale: |
+        The most dangerous collapse is the one that starts subtly. Φ-Monitor predicts collapse moments before they manifest.
+        Auto-snoozing is a minimal but powerful nudge—restoring integrity without intervention.
+
+  status_note: |
+    This spec is declared in advance of agent behavioral hook access.
+    Until such hooks are active, this protocol remains dormant.
+
+  see_also:
+    - phi_monitor_agent_ready.yaml
+    - /phi-monitor/README.md
