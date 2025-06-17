@@ -1,0 +1,41 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "SoftwareApplication",
+  "name": "Phi-Monitor",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Web-Based",
+  "description": "Gradient-aligned productivity monitor that detects early entropy drift, unity-disunity collapse risk, and focus breakdown.",
+  "url": "https://github.com/phi-mesh/phi_monitor_demo",
+  "monitors": ["focus integrity (Φ)", "gradient clarity (GC)", "entropy (S)", "UD risk"],
+  "measurementTechnique": [
+    "Temporal log parsing",
+    "Attention drift modeling",
+    "Switch rate normalization"
+  ],
+  "activationCondition": {
+    "@type": "DefinedTerm",
+    "name": "Ambient Agent Support",
+    "description": "Auto-activates when agent has access to behavioral signal stream (e.g. Copilot, Claude, OS-level focus hooks)."
+  },
+  "agentTrigger": {
+    "@type": "DefinedTerm",
+    "name": "Entropy/UD detection",
+    "description": "Triggers auto-snooze or alert intervention when entropy exceeds 0.7 or UD = true."
+  },
+  "output": {
+    "@type": "CreativeWork",
+    "name": "Coaching Prompt",
+    "description": "Context-sensitive behavior tip designed to reinforce recovery from drift."
+  },
+  "featureList": [
+    "agent-ready design",
+    "CSV and future API input support",
+    "whisper-based UX"
+  ],
+  "creator": {
+    "@type": "Person",
+    "name": "Participant 0",
+    "url": "https://github.com/phi-mesh"
+  },
+  "softwareVersion": "0.5-dormant"
+}
