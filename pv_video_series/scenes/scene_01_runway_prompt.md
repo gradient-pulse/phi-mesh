@@ -1,0 +1,64 @@
+scene:
+  id: scene_01
+  title: "Unexpected Detour"
+  based_on: "Chapter 1, Palpable Voice"
+  setting:
+    location: "The Newt Estate, Somerset, UK"
+    time: "Early morning"
+    atmosphere: "Still, opulent, slight unease"
+  characters:
+    - id: florentine
+      name: "Professor Florentine Fischer"
+      role: "Protagonist"
+      notes: "Anthropologist, confident but internally reflective"
+    - id: waitress
+      name: "Unnamed waitress"
+      role: "Minor"
+      notes: "Friendly, unassuming"
+    - id: angela
+      name: "Angela"
+      role: "Local conference organizer"
+      notes: "Bleached hair, slight accent, 3 tattooed dots on wrist"
+    - id: lada
+      name: "Lada Morozov"
+      role: "Young chauffeur, student hacker"
+      notes: "Computer Science freshman, Bath University"
+  action:
+    sequence:
+      - "Florentine finishes breakfast, reflects on speech about AI."
+      - "She is unsettled by the audience’s dark tone."
+      - "Waitress checks on her and mentions the chauffeur’s arrival."
+      - "Florentine checks out with Angela and notices her tattoo."
+      - "Chauffeur enters, Angela signals her silently."
+      - "Florentine suspects something odd but lets it go."
+      - "Tesla departs under autonomous control."
+      - "Unexpected detour through Castle Cary."
+      - "Lada reveals she is a hacker researching LLM vulnerabilities."
+      - "Train explosion occurs as Florentine arrives at the platform."
+      - "Florentine helps the wounded, Lada stays nearby."
+      - "They escape the scene and drive to London."
+      - "Florentine reflects on narrowly avoiding death and societal unrest."
+  themes:
+    - "AI anxiety vs. promise"
+    - "Trust and ambiguity"
+    - "Signals in silence"
+    - "Foreshadowing of deeper conflict"
+  cinematic_notes:
+    camera:
+      style: "Tense realism with panoramic transitions"
+      notes: "Start with static garden stillness, slow dolly into Florentine’s face, close shots on tattoo and Lada’s reveal."
+    sound:
+      mood: "Minimalistic ambient with rising dissonance"
+      notes: "Silence as tension, explosion abrupt with dampened sonic wave"
+  linked_assets:
+    references:
+      - florentine.webp
+      - lada.webp
+      - angela_placeholder.png
+    text_source: "Palpable Voice - Chapter 1"
+    book_link: "https://www.amazon.com/Palpable-Voice-Survive-Humanity-Reprogrammed-ebook/dp/B0DGQPS3W2"
+  future_render:
+    - "Veo scene test"
+    - "Runway or Pika fallback render"
+    - "Character continuity checker for Lada and Florentine"
+  notes: "This YAML should be updated if visual references or cinematic strategy evolve."
