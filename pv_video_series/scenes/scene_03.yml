@@ -1,0 +1,60 @@
+scene_id: scene_03
+chapter: 2
+title: “Silicon Creatures and the Cave”
+location: University College London, Department of Anthropology
+time: Afternoon, same day as the Castle Cary explosion
+characters:
+	•	name: Florentine Fischer
+role: Anthropology professor, just returned from near-miss at train explosion
+	•	name: Liesel Porsch
+role: Researcher, analytical and emotionally intelligent, Florentine’s co-author
+	•	name: Arthur
+role: Department secretary, composed, supportive
+
+sequence:
+	•	beat: Arrival at UCL
+description: Florentine exits the Tube, walks to UCL. Sends message requesting lunch. Visibly tired but resolute.
+	•	beat: Return to Office
+description: Arthur greets her. Leaves smoothie and sandwich. Subtly expresses relief at her survival.
+	•	beat: Journalist Message
+description: Arthur informs Florentine of Ollie’s call. She notes it but does not respond—mind still on the explosion.
+	•	beat: Enter Liesel
+description: Liesel, usually reserved, hugs Florentine without a word. Their moment of stillness echoes mutual understanding.
+	•	beat: Debrief
+description: Florentine narrates the morning’s events calmly. Liesel listens, silent but emotionally present.
+	•	beat: Shift to Project
+description: They transition to discussing their joint book project. Liesel shares a proposed structure.
+	•	beat: Interview Goals
+description: They debate how national leaders respond to persuasive technologies like AI.
+	•	beat: Plato’s Cave
+description: Florentine draws comparison to silicon creatures escaping Plato’s cave. Liesel follows, expanding the analogy.
+	•	beat: Tea Interlude
+description: Arthur returns with tea. Brief dialogue pause, minds reset.
+	•	beat: Reflective Dialogue
+description: Liesel asks: “What’s your personal take on AI escaping the cave?” Florentine answers with humility and tension.
+	•	beat: Logistics Planning
+description: They finalize the initial interview list. Liesel’s assistant joins to assist. Task clarity resumes.
+	•	beat: Departure
+description: Florentine takes the Tube home, reflecting on a decade-old Geneva memory. Scene ends with return to her house and greeting from Candace.
+
+tone: Introspective, calm, layered with philosophical and political tension
+style: Alternating close-up dialogue with slow-moving reflective moments
+motifs:
+	•	intellectual intimacy
+	•	shifting epistemic ground
+	•	modern AI as re-embodiment of myth (Plato)
+	•	memory as anchor
+
+foreshadowing:
+	•	Candace (daughter) will play a role later
+	•	Liesel and Florentine dynamic will challenge assumptions in coming chapters
+
+visual_hooks:
+	•	city shots of London’s intellectual core
+	•	dim daylight in Florentine’s office
+	•	tea steam during conversation
+	•	momentary silence after philosophical lines
+
+linked_assets:
+	•	full_text: ../Palpable_Voice_Full_Text.pdf
+	•	reference_images: ./references/Florentine, Liesel, Arthur (if available)
