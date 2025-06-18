@@ -1,0 +1,56 @@
+scene:
+  id: scene_02
+  title: "Train Blast Aftermath Echoes"
+  based_on: "Chapter 2, Palpable Voice (Newsroom segment)"
+  setting:
+    location: "The British Herald newsroom, London"
+    time: "Mid-morning, day of explosion"
+    atmosphere: "Buzzing, sharp, layered tension"
+  characters:
+    - id: ollie
+      name: "Oliver Blackwood"
+      role: "Investigative journalist"
+      notes: "Bright, bold, politically astute, fascinated by AI and inequality"
+    - id: ian
+      name: "Ian Fletcher"
+      role: "Veteran news editor"
+      notes: "Shrewd, no-nonsense, values journalistic integrity"
+    - id: amanda
+      name: "Amanda (receptionist at The Newt)"
+      role: "Unwitting source"
+      notes: "Innocent, cordial, easily cornered"
+  action:
+    sequence:
+      - "Ollie receives assignment from Ian Fletcher."
+      - "He investigates Castle Cary explosion for political angles."
+      - "Attempts to extract info from Somerset police."
+      - "Uses AI agents to gather event venue data."
+      - "Phones The Newt, speaks to Amanda, confirms Florentine Fischer’s presence."
+      - "Finds her university details and calls UCL Anthropology."
+      - "Leaves message with secretary for Florentine."
+      - "Drafts provocative op-ed headline and internal piece."
+      - "Reflects on Ian’s standards vs. clickbait pull."
+  themes:
+    - "Media's ethical tightrope"
+    - "AI-assisted journalism"
+    - "Curiosity as catalyst"
+    - "Framing power and narrative control"
+  cinematic_notes:
+    camera:
+      style: "Snappy editorial realism"
+      notes: "Tracking shots through newsroom, handheld over Ollie’s shoulder, terminal glow reflections"
+    sound:
+      mood: "Typing, printer hum, light office bustle"
+      notes: "AI ping tones, subtle score under phone calls"
+  linked_assets:
+    references:
+      - ollie_placeholder.png
+      - ian_placeholder.png
+      - amanda_placeholder.png
+    text_source: "Palpable Voice - Chapter 2 (newsroom segment)"
+    book_link: "https://www.amazon.com/Palpable-Voice-Survive-Humanity-Reprogrammed-ebook/dp/B0DGQPS3W2"
+  future_render:
+    - "Runway newsroom simulation"
+    - "AI-agent screen overlays in post-production"
+    - "Multi-line inner monologue with cutaway reactions"
+  notes: "Ollie is an emergent character to watch — his role may amplify over future episodes."
