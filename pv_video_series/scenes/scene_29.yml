@@ -1,0 +1,27 @@
+scene_number: 29
+scene_title: Berlin Arrival
+location: Berlin Brandenburg Airport and Government Vehicle
+time: Late Afternoon
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Security Officers (2, unnamed)
+  - Driver (optional, non-speaking)
+description: >
+  Florentine and Liesel arrive at Berlin Brandenburg Airport via government jet. They are received by two courteous but serious security officers. The airport terminal is nearly empty—discreet, echoing the clandestine nature of their visit. The women are guided into a sleek black vehicle with tinted windows. As the car departs the airport, Berlin’s skyline looms in the distance, both promising and opaque.
+
+mood: Controlled tension, anticipation, quiet reflection
+themes:
+  - Transition from theory to diplomacy
+  - Tension between secrecy and visibility
+  - Commitment without full knowledge
+
+camera_notes: >
+  Begin with a long shot of the jet taxiing and slowing to a halt. Use tight shots on the faces of Florentine and Liesel as they disembark—minimal dialogue, emphasis on eyes and posture. Medium tracking shot as they walk toward the waiting officers. Conclude with a slow-moving interior car shot, the skyline reflected in the car’s window glass.
+
+music_cue: Ambient orchestral strings building tension, with subtle industrial undertones—conveying the seriousness of state power.
+
+dialogue_snippets: >
+  - (Officer 1) “Welcome to Berlin, Professor Fischer. Dr. Porsch.”
+  - (Florentine, quietly to Liesel) “No way back now.”
+  - (Liesel, nodding) “Not that I’d want one.”
