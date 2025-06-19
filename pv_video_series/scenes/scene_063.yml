@@ -3,10 +3,10 @@ scene_title: The Chancellor’s Entrance
 location: Ministry for Economic Affairs and Energy, Conference Hall A
 time: Wednesday morning, just past 10:00
 characters:
-  - Chancellor (unnamed, presence-heavy)
+  - Chancellor Georg Milster
   - Florentine Fischer
   - Liesel Porsch
-  - Dr. Weber
+  - Dr. Karl Weber
   - Lukas Schmidt
   - Julia Vogel
   - Henrik Bauer
@@ -20,20 +20,22 @@ props:
   - Large display screen showing session title
   - GenAI listening devices (subtle, embedded)
 description: >
-  A sudden hush falls over the room as the Chancellor enters through the side door, escorted by two security guards. All participants stand. Her presence is commanding yet composed, a mix of solemnity and hope. She walks slowly, acknowledging key figures with brief nods, and steps behind the podium. 
+  A sudden hush descends over the large conference hall as Chancellor Milster enters through a discrete side door, flanked by two guards. His presence, familiar now to Florentine and Liesel after their earlier closed-door briefing, takes on a different aura here—more deliberate, more symbolic.
 
-  The large screen behind her displays: “AI-Empowered Societal Transformation: Strategic Foundations.” The room falls into full silence. She begins to speak, without a teleprompter, laying out in clear and deliberate words the stakes of the initiative. Her tone is measured, almost maternal—but with razor-sharp precision.
+  Everyone rises. He nods at the audience without theatricality, stepping behind the sleek podium where the screen behind him now reads: “AI-Empowered Societal Transformation: Strategic Foundations.” No teleprompter. His words are composed, deliberate. He distills the stakes—economic fragility, climate urgency, cognitive fragmentation—into one cohesive arc. His voice, deeper and more public-facing than before, carries clarity and implicit resolve.
 
-  As she finishes, she steps away from the podium and quietly joins the front row, flanked by senior advisors. A subtle cue is given. Florentine is next.
+  The subtext is clear to those who were at the earlier session: this is not just an announcement—it’s a declaration of directional shift. The Chancellor ends with a nod toward the future and steps down, joining the front row beside other advisors.
+
+  A pause. Then all eyes shift to Florentine as a soft cue is given.
 
 camera_directions: >
-  Medium-wide shot capturing the entrance door as it opens, slowly tracking the Chancellor’s walk toward the podium. Cut to reaction shots: Florentine steadying her breath, Lukas clutching a pen, Liesel glancing at the flags. Over-the-shoulder angle as the Chancellor speaks. Camera lingers briefly on her face during key phrases. As she finishes, tracking shot back to her seat. Steady cam floats toward Florentine.
+  Begin with a wide-angle shot of the grand hall. Cut to the door creaking open. Track the Chancellor’s walk from a low angle, enhancing presence. Intercut with close-ups: Liesel blinking once, Florentine’s expression sharpening. Over-the-shoulder as the Chancellor speaks. Medium pan to audience faces absorbing his every word. As he returns to his seat, camera slowly moves to frame Florentine as she rises.
 
 sound_design: >
-  The soft shuffle of chairs as everyone stands. Quiet, rhythmic breath. The room’s ambient tone lowers to highlight her voice. A subtle low-frequency pulse during her key declaration. Fade into silence just before Florentine takes the stage.
+  Chair rustles as everyone stands. Echo dampened by carpeted flooring. A distinct silence wraps the Chancellor’s opening line. His voice is unamplified yet resonant. A subtle synthesized undertone builds under key phrases. Silence reclaims the room before Florentine begins.
 
 music_cue: >
-  Orchestral underswell as the Chancellor enters—minimal and reverent. Crescendo at the climax of her speech, then dissolve into a suspenseful silence before the next speaker.
+  Low orchestral swell on entrance—dignified, restrained. Gradual lift as the Chancellor delivers his turning-point remarks. The final line ends on silence, holding breath before the transfer of attention.
 
 mood: >
-  Gravitas. Ceremony meets foresight. A turning point. A room filled with both historical weight and future consequence.
+  Historic without pomp. This is staged transition—a deliberate shift from internal consensus to national orchestration. Every moment feels like it could echo into policy.
