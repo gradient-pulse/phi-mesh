@@ -1,0 +1,33 @@
+scene_number: 27
+chapter: 6
+title: Midnight Contact
+setting:
+  - location: Liesel’s apartment, London
+    time: Late night
+    ambience: Quiet, dimly lit, slight urban hum outside
+characters:
+  - name: Liesel Porsch
+    role: Researcher and confidante of Florentine
+  - name: Oliver Blackwood (voice only)
+    role: British Herald journalist
+plot:
+  summary: >
+    After a warm evening at Florentine’s home, Liesel returns to her apartment and reflects on the deepening trust and emotional resonance she now feels in their collaboration. Just as she’s settling in, her phone rings. It’s Oliver Blackwood, calling gently and respectfully to confirm her number. The moment signals the start of a future collaboration and leaves Liesel quietly intrigued.
+  key_actions:
+    - Liesel sits by her window, recalling the laughter, food, and conversation at Florentine’s home
+    - The night’s calm is interrupted by a call from an unfamiliar number
+    - Oliver Blackwood introduces himself gently and asks if he may call tomorrow
+    - Liesel, surprised, agrees softly
+    - The call ends; she remains still for a moment, then allows a small, knowing smile
+visual_cues:
+  - City lights outside, framing Liesel’s silhouette
+  - Warm highlights from desk lamp or hallway light
+  - Close-up on Liesel’s hand holding the phone, reaction to the unexpected voice
+  - Quiet tension followed by warmth as recognition and curiosity spark
+audio:
+  - Faint background city noise through window
+  - Liesel’s soft breath and pause before answering
+  - Oliver’s voice: calm, respectful, British accent
+  - Ending tone: subtle musical motif signaling new connection
+theme: >
+  Trust earned through personal attention; beginnings of unexpected alliances.
