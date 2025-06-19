@@ -1,7 +1,3 @@
-Here is the scene_34_runway_prompt.md:
-
-⸻
-
 scene_34_runway_prompt.md
 
 Prompt:
