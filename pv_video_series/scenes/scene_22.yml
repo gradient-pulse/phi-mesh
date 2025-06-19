@@ -1,0 +1,40 @@
+scene_number: 22
+scene_title: Anonymous Tip
+chapter_reference: Chapter 5
+setting:
+  location: London Metropolitan Police Call Center
+  time: Evening
+  atmosphere: Functional, anonymous, a sense of latent tension
+characters:
+  - name: Police Operator
+    role: Calm, procedural voice on the line
+  - name: Anonymous Caller (off-screen)
+    role: Informant, voice only, deliberate and ambiguous
+description: |
+  A phone rings at the non-emergency desk of the Metropolitan Police. The operator answers with the usual detached professionalism. On the other end, a heavily distorted voice speaks clearly and slowly: "Martin Thornick had coffee this morning at Starbucks with documentary producer, Jack Keller."
+
+  Before the operator can respond properly or ask for identifying details, the line goes dead.
+
+  The operator hesitates, then logs the call into the system, typing Keller’s name with a brief pause — perhaps sensing the weight of what just occurred.
+
+visual_cues:
+  - Fluorescent-lit office, neutral colors, quiet ambiance
+  - Close-up of operator's headset and computer screen
+  - Anonymous voice sounds filtered, untraceable
+  - Screen shows log entry: “Caller reports Martin Thornick met with Jack Keller prior to death”
+
+camera_notes:
+  - Static wide shot of empty call center shifting to operator
+  - Tight close-up during voice call
+  - Slight zoom as operator types the final log entry
+
+music_and_sound:
+  - Low ambient hum
+  - Clicks of typing, distant phones
+  - Disembodied, processed voice from caller
+  - Sudden silence after line drops
+
+dialogue:
+  - Police Operator: “London police, non-emergency inquiries. Is there anything that you’d like to report?”
+  - Anonymous Caller: “Martin Thornick had coffee this morning at Starbucks with documentary producer, Jack Keller.”
+  - Police Operator: “Who is speaking?... Hello, who is speaking?”
