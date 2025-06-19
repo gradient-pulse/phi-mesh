@@ -1,0 +1,41 @@
+scene_number: 43
+title: Walk in Bloomsbury
+chapter: 7
+location: London – From UCL to Russell Square
+time: Early evening
+
+characters:
+  - name: Florentine Fischer
+    role: Professor, protagonist
+  - name: Lada Morozov
+    role: Observer, daughter of oligarch, curious and composed
+
+summary: >
+  After their coffee, Florentine and Lada exit the Print Room Café and take a brief walk together through Bloomsbury. They pass by historic buildings, their conversation turning philosophical. Lada probes deeper into Florentine’s worldview, particularly her sense of agency in a world increasingly influenced by AI. Florentine, in turn, subtly gauges Lada’s motives.
+
+beat_structure:
+  - They exit the café, thanking the barista.
+  - Lada walks slightly ahead, then slows to match Florentine's pace.
+  - Lada asks why Florentine chose to pursue her societal model despite its inherent political risks.
+  - Florentine replies that true progress often requires risking misunderstanding.
+  - They pass Russell Square, the wind rustling the leaves; symbolic silence follows.
+  - Lada stops briefly, turns to face Florentine, and says, “Do you ever fear being used?”
+  - Florentine answers calmly, “Yes, but I fear irrelevance more.”
+  - They nod to each other, parting at the Bloomsbury intersection.
+
+themes:
+  - Quiet suspicion meets mutual respect
+  - Political ambition versus scientific duty
+  - Philosophical clarity amid geopolitical ambiguity
+
+camera_directions:
+  - Wide-angle establishing shot of them leaving the café.
+  - Medium tracking shot as they walk side-by-side.
+  - Close-up of Lada’s face during her question.
+  - Cut to over-the-shoulder shot showing Florentine’s restrained expression.
+  - Final slow dolly out as they part ways under a line of tall London plane trees.
+
+soundscape:
+  - Background: distant traffic, footsteps on pavement, rustling leaves
+  - Dialogue mixed with atmospheric silence
+  - Soft, melancholic string notes (non-intrusive) during their parting
