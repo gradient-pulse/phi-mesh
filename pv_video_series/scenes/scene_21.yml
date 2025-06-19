@@ -1,0 +1,23 @@
+scene_number: 21
+title: Candace’s Discovery
+chapter: 5
+setting: Online newsroom, late at night
+characters:
+  - Candace (young, sharp digital news editor)
+  - Candace’s father (off-screen, text recipient)
+
+description: >
+  In the dimly lit newsroom, Candace is finishing her shift. Her eyes scan the screen without expectation, until a familiar name pops up: “Martin Thornick found dead.” She takes a photo of the screen with her phone and sends it to her father with a short, probing message.
+
+dialogue:
+  - Candace: (muttering) “No way...”
+  - (Text message, on screen): "Political consultant, Martin Thornick, found dead in his house by his wife. Probable cause: heart attack."
+  - (Text message, from Candace to her father): “Isn’t that one of your business relations, dad?”
+
+visual_notes: >
+  - Quiet, nearly empty newsroom bathed in screen glow.
+  - Candace’s face, lit by monitor light, suddenly sharpens with recognition.
+  - Focus on her phone as she types, then cut to message delivery confirmation.
+  - Music: subtle cue suggesting tension or connection.
+
+runway_prompt_file: scene_21_runway_prompt.md
