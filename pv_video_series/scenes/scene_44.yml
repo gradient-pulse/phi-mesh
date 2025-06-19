@@ -1,0 +1,24 @@
+scene_number: 44
+title: The Gutenberg Trap
+chapter: 7
+location: UCL Office, London – then interior GenAI interface
+time: Midday
+characters:
+  - Florentine Fischer
+  - GenAI Assistant (voice interface)
+  - Henrik Bauer (voice, later in scene)
+props:
+  - Florentine’s laptop
+  - NDA documents
+  - Blank notebook page
+  - GenAI slide previews
+description: >
+  Florentine sits alone in her office, her brow furrowed in deep thought. With precise intent, she initiates a new GenAI session. She vocalizes her observations and critiques, receiving structured counter-arguments and refinements in return. The interface becomes a sparring partner, visualizing complex theories of participatory governance and data ethics into slides. A pop-up from Henrik Bauer interrupts: he’s reviewed her NDA amendment request and agrees to send it shortly. The tension lifts; Florentine saves her work and leaves a cryptic paper on her desk—'Gutenberg project'—before stepping out.
+conflict: >
+  Balancing intellectual ambition with legal and ethical constraints; Florentine must navigate governmental boundaries while preserving conceptual integrity.
+theme: >
+  The entanglement of emergent AI collaboration with legacy institutional safeguards. When preparing for governance shifts, trust must be designed, not assumed.
+camera_notes: >
+  Begin with an over-the-shoulder angle showing the GenAI interface adapting live. Occasionally show GenAI’s reflections as brief slide flashes. Shift to close-up as Florentine contemplates and verbalizes pivotal lines. Cut to Bauer’s popup as visual intrusion. End with a symbolic close-up of the 'Gutenberg project' note left on the desk.
+music_cue: >
+  Minimalist piano with sparse electronic textures, symbolizing synthetic cognition unfolding in quiet. Tension releases subtly at the popup.
