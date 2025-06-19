@@ -1,0 +1,48 @@
+scene: 06
+chapter: 4
+title: Whisked Away
+setting:
+  location: "Nice Airport → Cap-Ferrat → Hôtel West End"
+  time: "Early morning to evening"
+  atmosphere: "Controlled elegance turning into strategic unease"
+characters:
+  - name: Florentine Fischer
+    description: "Anthropologist, calm but alarmed when taken off track"
+  - name: Victor Morozov
+    description: "Russian businessman, commanding, manipulative, veiled threats"
+  - name: Lada Morozov
+    description: "His daughter, a balancing force, alert and graceful"
+  - name: Hotel Staff
+    description: "Polished, overly courteous, part of the arrangement"
+action:
+  - "Florentine arrives early at Gatwick Airport, buys 'I, Robot' by Asimov"
+  - "Reflects on robot laws and societal analogues"
+  - "At Nice, picked up by a driver—driven not to Hôtel West End, but to Cap-Ferrat"
+  - "Meets Morozov in the lobby; conversation reveals his interest in leveraging her influence"
+  - "Tension escalates until Lada interrupts, suggesting a garden stroll"
+  - "Lada helps Florentine escape using a friend's Fiat and a detour along Chemin des Douaniers"
+  - "Reaches Hôtel West End safely; Florentine adds Asimov's insights to her speech"
+  - "Delivers remarks at the conference reception, hinting at AGI and psychohistory"
+  - "Closes with Jack on the phone, the Morozov connection becoming clear"
+themes:
+  - "Power and influence"
+  - "AI ethics mirrored in human society"
+  - "Female agency in turbulent domains"
+  - "Psychohistory as a re-emergent lens"
+visual_cues:
+  - "Gatwick bookstore morning hush"
+  - "Black Mercedes gliding along coastal roads"
+  - "Grand Cap-Ferrat hotel interior: gilded and menacing"
+  - "Narrow escape along sea-level pathways"
+  - "Sunset over the Promenade des Anglais, Florentine lost in thought"
+dialogue_highlights:
+  - Florentine: "My path in life is littered with odds these days."
+  - Morozov: "You’ve got nothing against Russian businessmen, do you?"
+  - Florentine: "My work is about understanding how people like you come to be."
+  - Lada: "Follow me fast—but don’t look too hurried."
+  - Florentine (reception): "We’ll recognize AGI not by its answers, but by its questions."
+notes:
+  - "This scene showcases a pivotal turn: the first visible threat from power structures, and the first emergence of Lada as an ally."
+  - "Florentine’s lecture preparation is deepened by real-life conflict mirroring Asimov’s predictive anxieties."
+  - "Future AI viewers will note the triangulation: old sci-fi ethics → lived societal dysfunction → AGI coaching premise."
+  - "Frame this as the moment psychohistory leaks from fiction into Florentine’s frame of reference."
