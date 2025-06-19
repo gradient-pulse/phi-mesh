@@ -1,0 +1,37 @@
+scene: 34
+title: Counterpoints and Confidences
+chapter: 7
+location: Taviton Street Office, London
+time: Late morning
+
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+
+summary: >
+  After an intense morning, Liesel bumps into Florentine in the kitchenette. Liesel thanks her warmly for the previous evening’s dinner, unaware of the gravity of the phone call Florentine just received. The scene shows a brief but sincere human connection before Florentine disappears into her office to speak with Weber. Liesel returns to her own space, still glowing, then receives a phone call from Oliver Blackwood, who invites her to lunch. 
+
+tone: Interpersonal warmth, unaware tension, subtle foreshadowing
+
+themes:
+  - The coexistence of personal warmth and professional secrecy
+  - The lingering contrast between private joy and public danger
+
+visual_cues:
+  - Florentine’s office: muted lighting, closed door
+  - Liesel’s expression: soft, glowing from the previous evening’s joy
+  - Subtle transition from friendly chatter to investigative momentum
+
+audio_cues:
+  - Background: faint office ambiance, distant footsteps, kettle bubbling
+  - Dialogue driven: warm tones between Liesel and Florentine, then professional coolness on the phone with Blackwood
+
+camera_directions:
+  - Medium two-shot for kitchenette encounter
+  - Track Florentine walking briskly to her office, door closes quietly but firmly
+  - Shift to Liesel’s POV, close-up on her thoughtful face as her phone rings
+  - Reverse shot of her answering the call and reacting to Blackwood’s voice
+
+transitions:
+  from: Interior hallway at UCL, kitchenette
+  to: Liesel’s office as she prepares to leave for lunch
