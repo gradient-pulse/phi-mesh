@@ -1,0 +1,37 @@
+scene_number: 12
+title: Private Call – End of a Long Day
+location: Hôtel West End, Nice – Florentine’s Room
+time: Night – Post-conference reception
+characters:
+  - Florentine Fischer
+  - Jack Fischer (voice only)
+atmosphere: 
+  mood: reflective, intimate
+  lighting: warm bedside lamp, night tones
+  audio: muffled city sounds, quiet room ambiance
+description: >
+  After an emotionally charged day, Florentine returns to her hotel room. 
+  She prepares for bed, her routine deliberate and unhurried. 
+  Just as she finishes, her phone rings—it's Jack. She smiles softly and picks up.
+
+dialogue:
+  - character: Florentine
+    line: "Hi Jack, you’re the only one I want to speak to now."
+  - character: Narration
+    line: >
+      She recounts the day—being diverted, her confrontation with Morozov, Lada's intervention, 
+      the speech, and the unexpected resonance it created.
+  - character: Jack
+    line: "Martin Thornick invited you to The Newt. If Morozov’s his client... I know enough."
+  - character: Florentine
+    line: "Jack, please, be careful."
+
+visual_cues:
+  - Soft lighting from the bedside lamp reflecting off the window.
+  - Subtle slow zoom on Florentine’s face as she speaks with Jack.
+  - Her reflection in the window superimposed with city lights below.
+
+theme: Trust, intimacy, aftermath
+notes: >
+  This scene contrasts public impact with personal vulnerability. It anchors Florentine in 
+  her relationship and reveals the deeper stakes as private and public realms intertwine.
