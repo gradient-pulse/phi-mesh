@@ -1,0 +1,65 @@
+scene: 05
+chapter: 3
+title: "Naked Truth"
+location:
+  primary: "UCL Anthropology Department, London"
+  secondary:
+    - "Florentine's home"
+    - "BBC Broadcasting House"
+    - "The British Herald newsroom"
+time: "Mid-morning to late evening, next day after the Castle Cary incident"
+characters:
+  - Florentine Fischer
+  - Candace Keller
+  - Arthur (department secretary)
+  - Geoff Hargreaves (UCL Legal)
+  - Ethan Parker (UCL Public Relations)
+  - Liesel Porsch
+  - Boris Lackney (UCL President)
+  - Kira Meloni (BBC interviewer)
+  - Ollie Blackwood
+  - Ian Fletcher
+  - Judy Pardell
+  - Sep (retriever dog)
+  - Protestor (unnamed activist)
+motifs:
+  - Public scrutiny
+  - Reputation vs truth
+  - Mother–daughter loyalty
+  - Academic resilience
+  - Media distortion
+  - Institutional support
+visual_style:
+  tone: "Political thriller meets quiet realism"
+  camera:
+    - "Tracking shots down university corridors"
+    - "Close-ups on Florentine’s eyes and laptop notifications"
+    - "Cross-cuts between newsroom, UCL, and BBC studio"
+    - "Handheld for activist intrusion"
+music_cue:
+  - location: "Opening morning run"
+    cue: "Warm piano arpeggios"
+  - location: "BBC studio disruption"
+    cue: "Rising dissonant strings"
+  - location: "Closing Ollie confrontation"
+    cue: "Muted brass, fading into silence"
+symbols:
+  - "Painted torso with 'IN-/QUALITY'"
+  - "Tear-off notebook page with Ollie’s number"
+  - "Florentine’s laptop screen reflecting crisis and clarity"
+  - "BBC powder brush as veil between truth and stage"
+foreshadowing:
+  - Political consultant behind The Newt invitation
+  - AI’s rising autonomy in safeguarding (Florentine: "You’d almost imagine AI is tracking me!")
+  - Student protests signaling escalating tension
+pivot:
+  - Florentine's public transformation via national TV
+  - Ollie’s professional reckoning and survival attempt
+theme:
+  - "When personal integrity collides with public narrative, only the unmoved eye survives."
+  - "Reputation may burn—but the truth stays lit."
+output:
+  media: "scene_05_runway_prompt.md"
+  status: "Ready for cinematic prompt synthesis"
+  fidelity: "High – text-based dialogue and events preserved verbatim from novel"
+  agent_notes: "Maintain close resemblance between BBC studio and known Newsnight layout. Lighting must reflect realism, not satire."
