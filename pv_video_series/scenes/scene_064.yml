@@ -1,0 +1,39 @@
+scene_number: 064
+scene_title: Florentine's Opening Address
+location: Conference Hall A, Ministry for Economic Affairs and Energy, Berlin
+time: Wednesday morning, shortly after the Chancellor’s introduction
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Dr. Weber
+  - Lukas Schmidt
+  - Julia Vogel
+  - Henrik Bauer
+  - Government Attendees (ministers, staff, selected advisors)
+  - GenAI Systems (voice or screen interface, non-human presence)
+props:
+  - Podium with integrated microphone
+  - Projection screen (with title slide: "Navigating Societal Unity–Disunity")
+  - Tablet or remote for slide control
+  - GenAI display interface for summaries
+  - Audience seating, nameplates
+description: >
+  Florentine rises from her seat and approaches the podium, composed and dignified. The title slide appears behind her. She begins by thanking the Chancellor and acknowledging the symbolic weight of being invited to speak on matters of national renewal. Her delivery is clear and segmented.
+
+  She outlines her societal unity-disunity model, emphasizing how societal coherence fluctuates over time and how AI, used wisely, can enhance pulse-based governance. She pauses after key points to allow questions or reactions, as pre-arranged.
+
+  Liesel manages real-time GenAI summarizations on a tablet, highlighting core takeaways that are shared discreetly with attendees. The tone is visionary but grounded.
+
+  Toward the end of Part I, Florentine transitions into the role of AI—not as overlord, but as sensor, integrator, and educator. She ends this segment with a question posed to the room: “What kind of society do you believe can remain stable without recalibrating itself in real time?”
+
+camera_directions: >
+  Medium close-up of Florentine at the podium. Occasional cutaways to audience reactions—focused, intrigued, some taking notes. Insert shot of GenAI interface generating summaries. Pull back to wide shot at emotional punctuation moments (e.g., when Florentine poses her closing question).
+
+sound_design: >
+  Quiet room tone. Occasional sound of stylus tapping or seats shifting. Amplified clarity of Florentine’s voice through the room’s PA system. Soft GenAI notification pings when summaries are approved for attendee display.
+
+music_cue: >
+  Sparse underscore—a swelling synth pad enters as Florentine describes society as an “ever-pulsing gradient.” Fades under the weight of her final rhetorical question.
+
+mood: >
+  Poised. Inspirational. The beginning of intellectual momentum. The room is attentive and suspended between curiosity and cautious belief.
