@@ -31,6 +31,4 @@ Capture Florentine’s introspective walk as she processes the implications of c
 **Mood**: Reflective, calm but charged with unseen tension  
 **Sound Design**: Light ambient park noise (birds, distant conversations), underscored by soft piano or ambient synths. Optionally, include voiceover fragments from her earlier conversation: “Transparency is power… but control is survival.”
 
----
 
-Let me know when you're ready for `scene_40.yml`.
