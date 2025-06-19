@@ -1,0 +1,29 @@
+scene_number: 059
+title: Morning Briefing
+location: Hotel Adlon Kempinski, Berlin
+time: Wednesday, 08:45 AM
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Karl (security officer)
+  - Hotel staff
+description: >
+  Florentine and Liesel are collected from the Adlon Kempinski by Karl, who is visibly alert and formal. As the car pulls out into central Berlin, Florentine and Liesel mentally rehearse their roles. The car drives past historical buildings—Reichstag, Bundeskanzleramt—adding symbolic weight to the scene. The sense of national stakes builds as they approach the ministry.
+
+dialogue:
+  - speaker: Karl
+    line: "Good morning. Everything is on schedule. We'll be there in ten minutes. Please be aware the press has not been informed."
+  - speaker: Liesel
+    line: "Understood. I assume we’ll enter through a secure side entrance?"
+  - speaker: Karl
+    line: "Correct. The meeting is classified until after the minister’s debriefing."
+  - speaker: Florentine
+    line: "I’ve been reviewing my notes, but I realize... this is not just about facts. It’s about tone. Trust."
+  - speaker: Liesel
+    line: "And about questions. The ones that linger after we leave."
+
+camera_directions: >
+  The camera rides inside the car with Florentine and Liesel, occasionally cutting to wide angles of Berlin's government quarter. Close-ups on their faces show concentration and tension. The mood is sober but determined. A subtle orchestral underscore begins to swell.
+
+notes: >
+  This scene visually reinforces the stakes of Florentine’s presentation. It should lean into subtle psychological buildup—more internal than external tension. The atmosphere is of calm before potential political storm.
