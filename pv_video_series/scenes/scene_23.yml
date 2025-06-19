@@ -1,0 +1,23 @@
+scene: 23
+chapter: 5
+title: Liesel Answers Germany
+location: British news network studio & remote office in Berlin
+time: Late afternoon, London time
+characters:
+  - Liesel Porsch – German AI-policy advisor, precise, formal, articulate
+  - Arthur – Network producer, efficient and supportive
+  - Unnamed German official (voice only) – calm and bureaucratic
+summary: |
+  Liesel Porsch receives a routed call from Berlin while working late at the London office of the international news network. Arthur, a producer, routes the call to her. She picks up with composed clarity. The German official requests a briefing on Professor Fischer’s keynote and whether it aligns with emerging EU AI policy. Liesel affirms that it does, and suggests they prepare a dossier for internal circulation. The conversation is short, professional, and indicative of geopolitical interest building around Florentine’s model.
+visual_cues: |
+  - Dimly lit office with Liesel illuminated by her desk lamp and two monitors
+  - Call interface displayed on screen: “Incoming Secure Line – Berlin”
+  - Split screen or over-the-shoulder showing Arthur's producer booth
+  - Liesel’s demeanor: calm, intelligent, focused
+tone: Subtle, tense undertone beneath professional dialogue
+music_cue: Low ambient synth beneath the call, suggesting deeper stakes
+transitions:
+  from: Scene 22 – Police tip about Jack Keller
+  to: Scene 24 – Candace reacts to Thornick's death
+notes: |
+  This scene deepens the sense that Florentine’s ideas are being studied at high levels of government, especially within Europe. It balances the previous covert surveillance with institutional legitimacy.
