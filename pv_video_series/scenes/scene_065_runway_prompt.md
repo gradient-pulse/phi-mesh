@@ -1,7 +1,7 @@
 RUNWAY PROMPT — Scene 065: Post-Presentation Reactions
 
 Title: Post-Presentation Reactions
-Location: Conference Hall A, Ministry for Economic Affairs and Energy, Berlin
+Location: Chancellor’s Conference Room, Berlin
 Time of Day: Mid-morning
 
 Characters in Scene:
@@ -10,38 +10,37 @@ Characters in Scene:
 	•	Lukas Schmidt (preparing to present next)
 	•	Julia Vogel (observing political dynamics)
 	•	Henrik Bauer (security/intelligence liaison)
-	•	Government advisors and ministry staff (audience)
+	•	Senior government advisors (audience)
 	•	GenAI interface (non-human system)
 
 Visual Style:
-	•	Wide-angle shot from the back of the hall capturing the moment applause begins.
-	•	Slow push-in on Florentine stepping down from the stage.
-	•	Medium close-ups of officials exchanging glances and taking notes.
-	•	Insert shot of Liesel’s tablet with the real-time GenAI summary: keyword clusters (“Feasibility,” “Cross-Ministerial Flow,” “Ethical Overlap,” “Implementation Timeline”).
-	•	Intimate two-shot of Florentine and Liesel sharing a quiet, satisfied glance.
-	•	Reaction shot of Julia, composed but scanning the room like a strategist.
-	•	Henrik nods once, noting faces and nonverbal cues.
-	•	Lukas adjusting his jacket, shifting forward in his seat, preparing to stand.
+	•	Wide-angle shot from the far side of the Chancellor’s private conference room, showing the ornate yet modern space filled with high-ranking officials seated in semicircular formation.
+	•	Slow push-in on Florentine stepping back from the polished wooden podium.
+	•	Medium close-ups of ministers and advisors exchanging glances, jotting down notes.
+	•	Insert shot of Liesel’s tablet displaying real-time GenAI summary: keyword clusters like “Feasibility,” “Cross-Ministerial Flow,” “Ethical Overlap,” “Implementation Timeline.”
+	•	Two-shot of Florentine and Liesel sharing a quiet, grounded look of mutual calibration.
+	•	Julia sits poised, absorbing the room’s temperature with seasoned precision.
+	•	Henrik quietly observes reactions from a peripheral seat, unreadable.
+	•	Lukas subtly shifts forward, adjusting his posture, preparing to enter the flow.
 
 Dialogue Cues (minimal):
 	•	Liesel (whispering, showing tablet): “Top three concerns. Just came in.”
-	•	Florentine (smiles): “As expected.”
+	•	Florentine (smiling): “As expected.”
 	•	Julia (murmuring to herself): “They’re not rejecting it. That’s good.”
-	•	Henrik (to himself): “Now we watch.”
+	•	Henrik (low voice): “Now we watch.”
 
 Mood Keywords:
-Tension turned inward, strategic calm, decision time approaches, quietly electric.
+Strategic quiet, institutional momentum, early consensus forming, reflective readiness.
 
 Audio Elements:
-	•	Fading applause
-	•	Quiet hum of GenAI terminals
-	•	Whispered conversations
-	•	Chair shifting, tablet taps
-	•	Lukas’s breath as he prepares to speak
+	•	Polite, fading applause against soft acoustics of the Chancellor’s high-ceilinged room.
+	•	Low GenAI system tones as queries are parsed and categorized.
+	•	Subdued whispers, paper shuffles, tablet taps.
+	•	Lukas’s steady breath before rising.
 
 Music Direction:
-	•	Subtle orchestral layer (strings + ambient tones) beneath GenAI audio cues.
-	•	Music gently recedes as Lukas rises to take the floor.
+	•	Muted orchestral layer (strings and ambient textures) fades in under the applause.
+	•	Music dissolves into near silence as the next segment begins.
 
 Prompt Notes for Runway:
-The tone is not celebratory—it’s weighted and reflective. Focus on the silent power of high-level decision-making just after a compelling proposal. Think bridge between persuasion and action. Subtext matters more than action here. Use light and angles to convey tension giving way to traction.
+The room feels like a national cockpit—private, pivotal, charged. Subtext is everything: focus on expression, posture, and the flow of unspoken consensus. This is a hinge moment, not a climax. Subtle framing and soft lighting should highlight both hierarchy and the gentle shifting of alignment.
