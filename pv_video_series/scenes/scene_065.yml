@@ -1,0 +1,35 @@
+scene_number: 065
+scene_title: Post-Presentation Reactions
+location: Conference Hall A, Ministry for Economic Affairs and Energy, Berlin
+time: Wednesday mid-morning, following Florentine's address
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Lukas Schmidt
+  - Julia Vogel
+  - Henrik Bauer
+  - Senior Government Advisors (various)
+  - GenAI Summary Display (non-character system element)
+props:
+  - GenAI summary terminals
+  - Slide projector (fading to idle mode)
+  - Notepads, tablets
+  - Coffee and water service quietly arranged at side tables
+description: >
+  The scene picks up seconds after Florentine finishes her final slide and steps down from the podium. The room remains silent for a brief moment before polite but sincerely engaged applause begins. Attendees exchange murmurs and nods; several make notes on their GenAI-linked tablets. A few visibly impacted ministers whisper to their aides.
+
+  Liesel briefly shows Florentine the GenAI summary of questions received so far: several around feasibility, ethics, and cross-agency coordination. Lukas leans forward, eager to build on Florentine’s momentum with his infrastructure proposal. Julia looks around, reading reactions, already anticipating who will be allies and who will need convincing.
+
+camera_directions: >
+  Start with a slow dolly back from Florentine’s podium as applause begins. Cut to Liesel holding out the tablet with summary questions. Insert close-ups on key officials whispering or scribbling notes. Over-the-shoulder view of the GenAI display showing auto-grouped inquiries. Medium shot on Lukas preparing to rise.
+
+  Transition with a silent pause on Julia, framed between the rows of attendees and the light from the rear windows. She subtly adjusts her watch and nods to Henrik across the room.
+
+sound_design: >
+  Fading applause. Low murmurs of discussion. The faint tap-tap of typing. Ambient hum of ventilation. Soft system tones from the GenAI interfaces. Footsteps as Lukas stands.
+
+music_cue: >
+  A quiet orchestral bridge swells just after the applause, then fades beneath ambient room tone. No dominant melody—just atmosphere.
+
+mood: >
+  Cautious optimism. Thoughtful momentum. The tension of a room beginning to tip toward agreement, yet held by institutional inertia. A political moment charged with the possibility of transformation.
