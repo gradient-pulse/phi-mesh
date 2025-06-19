@@ -1,7 +1,7 @@
 scene_number: 062
 scene_title: The Reaction Chamber
 location: Ministry – Side Briefing Room
-time: Wednesday late morning, immediately after Chancellor's session
+time: Wednesday late morning, immediately after Chancellor’s session
 characters:
   - Florentine Fischer
   - Liesel Porsch
@@ -18,22 +18,22 @@ props:
   - Flipchart with sketches from Florentine’s model
   - Projection of murmuration frozen mid-flight
 description: >
-  Immediately following the Chancellor’s private briefing, a smaller group reconvenes in a secondary room to digest what was said and plan actionable next steps. The tone is less formal, more fluid—intellectually charged. Some are energized, others cautious. 
+  After the unexpected audience at the Chancellery, Florentine and Liesel are escorted to a secondary strategy room inside the Ministry building—a change of venue that reflects the transition from vision to execution. The shift in tone is immediate: less ceremonial, more analytical.
 
-  Lukas pulls up infrastructure readiness maps. Julia pushes hiring timelines forward. Clara insists on layering in public communication milestones. Rudolf raises ethical-legal speed bumps. Henrik calmly states early signs of alignment resistance. Meanwhile, Florentine and Liesel field questions but also listen carefully, mapping social dynamics. Tensions are productive.
+  A select team of senior ministry advisors and agency leads reconvene to debrief and translate insights into operational strategy. Lukas shares updated infrastructure readiness overlays, Julia pushes forward talent acquisition timelines. Clara emphasizes narrative coherence for the public. Rudolf, ever the skeptic, flags regulatory and political latency. Henrik gives a brief but pointed assessment of resistance patterns already surfacing in media and civil society.
 
-  The frozen murmuration on-screen becomes a touchstone: each dot a node, each line a possibility.
+  Florentine and Liesel absorb it all, chiming in when needed but also scanning for alignment bottlenecks. The frozen murmuration on the projection screen—arrested mid-flight—becomes a symbolic node-map for this very moment: paused yet full of latent direction.
 
 camera_directions: >
-  Begin with mid-shot of doors closing behind them. Switch to over-the-shoulder shots as participants take seats or stand in animated stances. Use occasional wide-angle to show entire flow-space of the room—movement matters here.
+  Open with close tracking shot of Florentine and Liesel entering from the bright hallway, blinking slightly at the colder fluorescent light. Mid-shot of doors closing behind them. Switch to over-the-shoulder angles as figures gather, exchanging clipped words and prepping visuals. Periodic wide shots show the kinetic group dynamic—standing, pacing, gesturing.
 
-  Close-ups on reactions to each idea. Subtle rack-focus shifts between foreground disagreement and background contemplation.
+  Insert close-ups: Clara’s raised brow, Rudolf’s tapping pen, Henrik’s steely eyes. Rack-focus toggles between speakers and silent processors.
 
 sound_design: >
-  Tapping of stylus on screen. Murmured interjections. One outburst from Rudolf. The soft buzz of screen electronics. Faint background traffic outside the building—Berlin is alive beyond these walls.
+  Stylus taps. Tablet swipes. One sharp intake of breath during debate. Background murmur of urgent Berlin traffic filtering in through double-glazed windows. Soft hum from the digital projection. Distant church bell, barely audible.
 
 music_cue: >
-  Low string ostinato builds during Lukas' infrastructure talk. A brief dissonance when Rudolf challenges. Return to clarity when Liesel reframes the murmuration metaphor.
+  Quiet low string ostinato begins under Lukas’s infrastructure map walkthrough. Crescendo of subtle dissonance as Rudolf voices concern. Return to tonal clarity when Liesel reframes murmuration metaphor. Music tapers off as the group nods in cautious consensus.
 
 mood: >
-  Electric tension. Minds colliding. Urgency without panic. The room feels like a nerve center—this is where vision sharpens into directive.
+  Strategically kinetic. The choreography of friction. Ideas clash not to divide, but to crystallize. The air is charged with purpose—what was vision hours ago now begins to solidify.
