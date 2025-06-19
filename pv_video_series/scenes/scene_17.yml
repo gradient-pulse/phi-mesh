@@ -1,0 +1,35 @@
+scene: 17
+title: Lunch Discussions & Secret Note
+chapter: 5
+location: Hôtel West End, Nice – conference dining area
+time: Afternoon
+
+summary: >
+  During a working lunch, Florentine is seated among German and Eastern European delegates. The conversation centers around the use of AI to counter Russian disinformation campaigns. In the midst of this, a waiter discreetly delivers a handwritten note from Lada to Florentine—an emotional, private thank-you that interrupts the diplomatic tension with a touch of personal grace.
+
+characters:
+  - name: Florentine Fischer
+    description: Calm, thoughtful, still processing the emotional weight of her keynote.
+  - name: German Delegate
+    description: Energetic, intent on leveraging AI diplomatically.
+  - name: Ukrainian & Eastern European Delegates
+    description: Serious, pragmatic, concerned with real-world risks.
+  - name: Waiter
+    description: Polite, discreet, serves the note with professional grace.
+  - name: Lada Morozov (mentioned only via note)
+
+key_events:
+  - Delegates share personal anecdotes of disinformation attacks on their countries.
+  - Florentine listens and occasionally adds her views about proactive AI ethics.
+  - A waiter delivers a folded handwritten note to Florentine.
+  - The note reads: “Dear Florentine, Thank you so much! Your speech will stay with me forever. Until we meet again, Lada.”
+  - Florentine smiles subtly; the moment recharges her amid the political talk.
+
+visual_elements:
+  - Elegant Belle Époque architecture as soft backdrop
+  - Glasses clinking, notebooks open, discreet sidebar conversations
+  - Note delivery shot from two angles: over-the-shoulder of Florentine and wide from the room's corner
+  - Close-up of the handwritten message
+
+atmosphere: >
+  Reflective, diplomatic, with a sudden intimate pause brought on by Lada’s message. A fusion of geopolitical concern and personal gratitude.
