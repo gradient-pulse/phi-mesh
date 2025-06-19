@@ -1,0 +1,44 @@
+scene: 09
+chapter: 4
+title: "The Unexpected Guest"
+location: "The Grand Hotel du Cap-Ferrat, Lobby"
+time: "Late morning"
+description: |
+  Florentine, feeling a growing unease, is introduced to Victor Morozov — the man responsible for redirecting her car from the airport. Their conversation is cordial but fraught, revealing his interest in her research for questionable motives. The tension spikes when Morozov’s daughter, Lada, appears unexpectedly. The atmosphere shifts from threat to ambiguity.
+
+  The elegant hotel lobby becomes a space of performative civility and veiled intentions. Florentine maintains her composure, suspicious yet careful. Lada’s entrance feels like a lifeline but comes with her own family entanglements. Florentine begins to understand how deep and strange her work's implications reach.
+
+beats:
+  - beat: Florentine is escorted into the hotel lobby by the reception manager.
+  - beat: She is asked to wait; the space is rich, opulent, but foreign.
+  - beat: Victor Morozov enters, greets her, apologizes for the detour.
+  - beat: A strained conversation reveals Morozov's interest in Florentine's research.
+  - beat: Morozov subtly offers support in exchange for influence.
+  - beat: Florentine resists, citing the integrity and aim of her work.
+  - beat: Unexpectedly, Lada enters the lobby and addresses Morozov as "Papa."
+  - beat: Recognition between Florentine and Lada — surprised but warm.
+  - beat: Morozov mentions they already know each other.
+  - beat: Tension eases slightly but undercurrent of manipulation remains.
+
+emotional_tone: "Tense with moments of ironic relief and quiet resilience"
+
+visual_style: "Rich hotel interior, soft morning sunlight filtering through high windows, emphasizing luxury and discomfort in contrast"
+
+characters:
+  - name: "Florentine Fischer"
+    role: "Protagonist, cautious and observant"
+  - name: "Victor Morozov"
+    role: "Antagonist with ambiguous motives"
+  - name: "Lada Morozov"
+    role: "Bridge character, emotionally complex, potentially an ally"
+
+camera_directions:
+  - direction: "Start with wide shot of hotel lobby, tracking Florentine's entrance."
+  - direction: "Switch to mid-shot of Florentine seated, hands clenched in her lap."
+  - direction: "Over-the-shoulder shots during dialogue with Morozov."
+  - direction: "Cut to Lada entering from the far end, slight slow motion for emphasis."
+  - direction: "Close-ups on facial reactions as identities and tensions unfold."
+
+music_cue: "Muted string ensemble with subtle dissonance; transitions to lighter piano motif upon Lada’s entrance"
+
+narrative_function: "Heightens the moral conflict and sets up Lada as a key pivot in the unfolding political drama."
