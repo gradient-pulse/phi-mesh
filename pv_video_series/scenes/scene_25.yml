@@ -1,0 +1,26 @@
+scene_number: 25
+title: Anonymous Tip
+location: London Metropolitan Police Call Center
+time: Night
+characters:
+  - Operator (London Police, calm and procedural)
+  - Anonymous Caller (voice only, composed, deliberate)
+summary: >
+  A call comes into the London Police non-emergency line. The operator calmly answers, only to hear a chilling, matter-of-fact statement: Martin Thornick had coffee this morning with documentary producer Jack Keller. The caller hangs up without revealing their identity. A new line of investigation is about to begin.
+
+beats:
+  - Operator answers the phone in a quiet office: “London Police, non-emergency inquiries. Is there anything that you’d like to report?”
+  - Anonymous voice: “Martin Thornick had coffee this morning at Starbucks with documentary producer, Jack Keller.”
+  - Operator straightens up slightly, sensing the importance.
+  - Operator asks: “Who is speaking?... Hello, who is speaking?”
+  - Line goes dead. The operator stares at the phone, alert now.
+  - Cut to a silent moment in the call center, tension lingering in the air.
+
+visual_cues:
+  - Dim lighting, focus on softly glowing monitors.
+  - Tight camera angle on operator’s headset and monitor.
+  - Shadowed bokeh of empty desks behind.
+  - Dramatic pause after the call disconnects.
+
+dialogue_tone: Minimalist, suspenseful, procedural
+foreshadowing: Hints at unseen forces tracking the Keller connection.
