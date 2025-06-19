@@ -24,6 +24,3 @@ Include subtle ambient music (low piano notes, soft synth) and a minimalist digi
 
 This scene should quietly propel narrative tension forward, hinting that threads from Jack Keller’s world are about to unravel in front of his daughter.
 
----
-
-Let me know when you're ready for Scene 25.
