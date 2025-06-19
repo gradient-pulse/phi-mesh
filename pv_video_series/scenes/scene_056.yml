@@ -1,0 +1,39 @@
+scene_number: 056
+title: "Morning of the Mission"
+location: Hotel Adlon Kempinski, Berlin – Florentine and Liesel’s Suite
+time: Early Wednesday Morning
+
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Karl (security official, off-screen reference)
+
+summary: >
+  Florentine and Liesel prepare for the pivotal meeting ahead. The scene offers a glimpse into their morning routine, underscoring the tension, excitement, and quiet determination before the day begins. There is a brief reflection on what’s at stake and the symbolic gravity of their mission.
+
+dialogue:
+  - speaker: Florentine
+    line: "Sleep well?"
+  - speaker: Liesel
+    line: "Surprisingly, yes. But now it’s real, isn’t it?"
+  - speaker: Florentine
+    line: "Very real. Let’s get ready. I want to go over a few last-minute notes."
+  - speaker: Liesel
+    line: "I’ll check the GenAI summaries too—just in case we can use them right after the segments."
+  - speaker: Florentine
+    line: "Good. And remember, be yourself. You belong in that room."
+
+action:
+  - Florentine adjusts her blazer in the mirror, her expression calm but focused.
+  - Liesel opens her laptop, quickly scanning AI-generated briefing highlights.
+  - A soft knock is heard—Karl’s note slid under the door is visible, reminding them of the 8:45 pickup.
+  - Both women gather their materials, nod to one another, and walk toward the suite’s door with quiet resolve.
+
+visual_notes: >
+  Morning light filters through sheer curtains; the atmosphere is serene yet expectant. Close-ups of hands preparing, eyes focused. Subtle use of soft natural tones in costuming and makeup to underscore sincerity and clarity of purpose.
+
+emotional_tone: > 
+  Composed, anticipatory, quietly brave.
+
+transition: >
+  Cut to black car gliding through Berlin’s government quarter. On-screen text: “Wednesday 8:55 AM – Ministry for Economic Affairs and Energy”
