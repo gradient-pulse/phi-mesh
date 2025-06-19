@@ -1,0 +1,40 @@
+scene: 33
+title: Gutenberg Traps
+chapter: 7
+location: Florentine’s Office, Taviton Street, London
+time: Mid-morning
+
+characters:
+  - name: Florentine Fischer
+    role: Anthropologist, project lead
+    mood: Focused, tactical
+  - name: Dr. Weber (voice only)
+    role: German official, Economic Affairs Ministry
+    mood: Calm, cautious
+
+summary: >
+  Florentine speaks with Dr. Weber about the threatening call traced to the UK. In a calculated move, she proposes using distinct code names for the project depending on whom she's talking to—Leibnitz, Bismarck, Gutenberg, Humboldt. Weber appreciates the idea and agrees. Florentine suggests checking legal implications and refers to UCL’s lawyer, Hargreaves, surprising Weber with her insight. A counter-intelligence subplot begins to take shape.
+
+events:
+  - Florentine receives Weber’s call.
+  - He informs her the threat call came from the UK.
+  - She quickly shifts to strategy: proposes code name differentiation.
+  - Florentine uses GenAI to generate four German heritage names.
+  - Weber applauds the tactic and agrees to implementation.
+  - She warns about NDA constraints and asks legal advice.
+  - Weber agrees and offers to follow up with Bauer.
+  - Florentine ends the call with sharpened intent.
+
+visual_style: >
+  Dim, low-saturated tones inside Florentine’s office. Gradual close-up as the code names are mentioned. Highlight her fingers typing “Gutenberg” as a faint piano underscore rises. Tone of strategic tension.
+
+dialogue_highlights:
+  - “We could assign different project names depending on who we speak with.”
+  - “Leibnitz, Bismarck, Gutenberg, Humboldt…”
+  - “I’ll check with our UCL lawyer, Dr. Hargreaves, before proceeding.”
+  - “You just surprised me again, Professor Fischer.”
+
+themes:
+  - Information asymmetry
+  - Tactical paranoia
+  - Trust vs secrecy
