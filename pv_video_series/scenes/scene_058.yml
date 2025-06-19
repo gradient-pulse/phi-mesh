@@ -1,0 +1,49 @@
+scene: 058
+scene_title: Berlin Briefing
+location: Ministry for Economic Affairs and Energy, Berlin
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Dr. Weber
+  - Lukas Schmidt
+  - Julia Vogel
+  - Henrik Bauer
+  - High Government Official
+  - Minister for Economic Affairs
+  - Selected Ministry Staff
+  - GenAI System
+
+description: >
+  On the morning of the pivotal briefing in Berlin, Florentine and Liesel are escorted
+  from the Adlon Kempinski to the Ministry for Economic Affairs. They are joined by top
+  officials including Dr. Weber, project leads, and political figures. Florentine presents
+  her AI-enabled societal model, followed by technological and implementation briefs by
+  Schmidt and Vogel. GenAI passively monitors the room for potential dissent or threats,
+  triggering new operational protocols. The societal model, its ethical framing, and the
+  practical implications of nationwide AI deployment are critically discussed.
+
+beats:
+  - Florentine and Liesel are picked up by Karl and driven to the Ministry under tight security.
+  - Arrival at the Ministry; greeted by Julia Vogel and ushered through a secured private entrance.
+  - The meeting room is set up with active GenAI monitoring and translation systems.
+  - A high government official opens the session with a speech emphasizing national urgency.
+  - Florentine presents Part I: The Unity–Disunity Model — key principles, cycles, and social implications.
+  - Brief Q&A; Liesel provides clarification in fluent German.
+  - Florentine presents Part II: AI as Enabler — scaling ethical intelligence, predicting swings, public interface.
+  - Schmidt follows with the infrastructure vision: modular AI data centers, edge compliance, energy concerns.
+  - Julia Vogel outlines operational staffing: AI creators, AI controllers, and integrity checks.
+  - GenAI flags a participant for anomalous behavior; Bauer quietly intervenes.
+  - Florentine presents Part III: Ethics & Control — societal buy-in, local pilot gossip models, and regulatory parity.
+  - Final round of questions; Weber wraps up emphasizing the national stakes and follow-up roadmap.
+  - Liesel formally proposes renaming the initiative "Projekt Goethe" — receiving approving nods around the room.
+
+narrative_function: >
+  This is a turning point scene where the German government aligns itself with the AI-driven societal model.
+  The Unity–Disunity model is now a legitimate national policy blueprint. Tensions emerge quietly, suggesting
+  internal resistance. The renaming to "Projekt Goethe" roots the initiative in cultural and philosophical heritage,
+  anchoring it in collective German identity while amplifying its forward-looking mandate.
+
+visual_style: >
+  Cinematic realism with bureaucratic cool tones — steel, glass, and institutional lighting. Facial reactions and
+  digital overlays (GenAI feedback) punctuate key emotional beats. Subtle music swells as Florentine hits peak
+  moments in her talk; silence when GenAI intervenes. Framing mimics a high-stakes diplomatic session.
