@@ -1,0 +1,38 @@
+scene_number: 28
+chapter: 6
+title: Return to Resolve
+setting:
+  location: University College London, Taviton Street offices
+  time: Early morning, next day
+  atmosphere: Crisp, clear morning after a night of drizzle; a quiet determination in the air
+characters:
+  - name: Florentine Fischer
+    role: Anthropologist, protagonist
+    emotional_state: Steeled resolve, contemplative
+  - name: Liesel Porsch
+    role: Researcher, assistant to Florentine
+    emotional_state: Refocused, grounded after dinner with Florentine
+  - name: Arthur
+    role: Supportive staff member, background presence
+plot_summary: >
+  Florentine and Liesel return to the office, each with renewed clarity. Florentine finalizes the Non-Disclosure Agreement and confirms travel details with Dr. Weber. Liesel begins drafting preliminary briefing materials for the German government delegation, guided by Florentine’s strategic notes. In a short exchange, Arthur subtly notes that “London seems less grey today”—a quiet nod to the shift in tone and purpose. Florentine smiles, acknowledging the strange comfort of momentum after uncertainty.
+
+visual_cues:
+  - Early morning sunlight hitting the windows of the UCL office
+  - Florentine calmly reviewing documents, signing NDA
+  - Liesel typing thoughtfully, a cup of tea steaming beside her
+  - Arthur passing by, offering a knowing glance
+  - Calendar on the wall showing the upcoming Berlin visit marked with a discreet red dot
+
+soundscape:
+  - Soft clack of keyboard
+  - City sounds gently muted by double-glazed windows
+  - Occasional page flip, phone notification ping
+  - Subtle score: light piano underscoring focus and quiet anticipation
+
+dialogue_highlights:
+  - Florentine: “This isn’t just another academic collaboration… this feels like history, Liesel.”
+  - Liesel: “Let’s make sure it remembers us well.”
+
+cut_to: >
+  A discreet envelope being handed over to a courier—marked “Confidential: To Dr. M. Weber, Berlin.”
