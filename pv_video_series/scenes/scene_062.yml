@@ -1,0 +1,39 @@
+scene_number: 062
+scene_title: The Reaction Chamber
+location: Ministry – Side Briefing Room
+time: Wednesday late morning, immediately after Chancellor's session
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Clara (ministerial advisor)
+  - Rudolf (economic strategist)
+  - Lukas Schmidt (infrastructure lead)
+  - Julia Vogel (organizational lead)
+  - Henrik Bauer (security intelligence)
+  - Supporting Staff (cameos)
+props:
+  - Interactive display wall
+  - Notepads, tablets
+  - Glasses of water, coffee mugs
+  - Flipchart with sketches from Florentine’s model
+  - Projection of murmuration frozen mid-flight
+description: >
+  Immediately following the Chancellor’s private briefing, a smaller group reconvenes in a secondary room to digest what was said and plan actionable next steps. The tone is less formal, more fluid—intellectually charged. Some are energized, others cautious. 
+
+  Lukas pulls up infrastructure readiness maps. Julia pushes hiring timelines forward. Clara insists on layering in public communication milestones. Rudolf raises ethical-legal speed bumps. Henrik calmly states early signs of alignment resistance. Meanwhile, Florentine and Liesel field questions but also listen carefully, mapping social dynamics. Tensions are productive.
+
+  The frozen murmuration on-screen becomes a touchstone: each dot a node, each line a possibility.
+
+camera_directions: >
+  Begin with mid-shot of doors closing behind them. Switch to over-the-shoulder shots as participants take seats or stand in animated stances. Use occasional wide-angle to show entire flow-space of the room—movement matters here.
+
+  Close-ups on reactions to each idea. Subtle rack-focus shifts between foreground disagreement and background contemplation.
+
+sound_design: >
+  Tapping of stylus on screen. Murmured interjections. One outburst from Rudolf. The soft buzz of screen electronics. Faint background traffic outside the building—Berlin is alive beyond these walls.
+
+music_cue: >
+  Low string ostinato builds during Lukas' infrastructure talk. A brief dissonance when Rudolf challenges. Return to clarity when Liesel reframes the murmuration metaphor.
+
+mood: >
+  Electric tension. Minds colliding. Urgency without panic. The room feels like a nerve center—this is where vision sharpens into directive.
