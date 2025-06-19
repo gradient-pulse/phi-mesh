@@ -1,0 +1,32 @@
+scene_number: 10
+scene_title: Florentine’s Reception Speech
+source_chapter: 4
+setting:
+  location: Hôtel West End, Nice
+  time: Early evening, formal conference reception
+  atmosphere: Elegant, intellectual, anticipatory
+characters:
+  - name: Florentine Fischer
+    role: Keynote speaker, AI researcher
+  - name: International delegates
+    role: Listeners and future collaborators
+visual_description: >
+  A grand hotel ballroom lit by soft chandeliers. Florentine stands confidently
+  at a sleek podium in formal evening attire. International delegates sit at round
+  tables, dressed in evening wear, sipping champagne and listening attentively.
+  French hosts nod approvingly. Waiters circulate in the background.
+emotional_tone: Empowering, prophetic, inspirational
+conflict: None overt; the tension lies in the gravity of her words and the political
+  stakes that will ripple from her speech.
+plot_advance: Florentine outlines the philosophical heart of her mission—AI as
+  catalyst for accelerating human insight and questioning—planting the seeds of
+  global alliances and future invitations.
+symbolism: Her reminder that AGI will be known not by its answers but by its
+  questions serves as a reflective mirror to human self-awareness.
+key_dialogue:
+  - "Our task is not just to provide answers to our world, but especially also questions."
+  - "We’ll recognize AGI not by the answers that it provides but by its questions. These reveal its self-awareness, as they reveal ours."
+notes: >
+  This scene is a narrative fulcrum. It reorients the audience from personal peril
+  back to vision and purpose, signaling the series’ recurring theme: the convergence
+  of personal risk and societal foresight through AI.
