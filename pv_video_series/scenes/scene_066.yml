@@ -1,6 +1,6 @@
 scene_number: 066
 scene_title: Lukas Schmidt Presents AI Infrastructure Vision
-location: Conference Hall A, Ministry for Economic Affairs and Energy, Berlin
+location: Chancellor’s Conference Room, Berlin
 time: Wednesday morning, immediately after Florentine’s session
 characters:
   - Lukas Schmidt
@@ -17,12 +17,12 @@ props:
   - Tablet with projected GDP/ROI graphs
   - Lighting controls for ambient transition
 description: >
-  Lukas steps up with measured confidence, transitioning from the societal model to its technical backbone. 
-  He begins with a striking quote about AI's global momentum, citing recent calls for multi-trillion dollar investments. 
-  A rotating 3D infrastructure model appears behind him—data hubs, energy plants, secure comms nodes. 
-  He maps out the modular layers of Germany's national AI-infrastructure blueprint, explaining how it can integrate existing assets, meet strategic autonomy goals, and scale with minimal bureaucratic friction. 
-  He paces his speech calmly, referencing Florentine’s earlier themes to show alignment. 
-  Florentine and Liesel exchange glances as GenAI highlights overlap with the unity-disunity framework. 
+  Lukas steps up with measured confidence, transitioning from the societal model to its technical backbone.
+  He begins with a striking quote about AI’s global momentum, citing recent calls for multi-trillion dollar investments.
+  A rotating 3D infrastructure model appears behind him—data hubs, energy plants, secure comms nodes.
+  He maps out the modular layers of Germany’s national AI-infrastructure blueprint, explaining how it can integrate existing assets, meet strategic autonomy goals, and scale with minimal bureaucratic friction.
+  He paces his speech calmly, referencing Florentine’s earlier themes to show alignment.
+  Florentine and Liesel exchange glances as GenAI highlights overlap with the unity–disunity framework.
   Julia Vogel nods silently—this is the piece she needed to make the operational case stick.
 
 camera_directions: >
@@ -41,4 +41,4 @@ music_cue: >
   Music punctuates each phase of infrastructure reveal, hinting at scale and urgency.
 
 mood: >
-  Visionary. Grounded ambition. A critical moment of convergence—where political will meets technical clarity.
+  Technical clarity with visionary tone. The shift from philosophical to infrastructural feels seamless—like gears clicking into place. The room settles into focused anticipation.
