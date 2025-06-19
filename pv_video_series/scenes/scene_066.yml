@@ -1,0 +1,44 @@
+scene_number: 066
+scene_title: Lukas Schmidt Presents AI Infrastructure Vision
+location: Conference Hall A, Ministry for Economic Affairs and Energy, Berlin
+time: Wednesday morning, immediately after Florentine’s session
+characters:
+  - Lukas Schmidt
+  - Florentine Fischer (audience)
+  - Liesel Porsch (audience)
+  - Julia Vogel (audience)
+  - Henrik Bauer (audience)
+  - High government officials (audience)
+  - GenAI assistant (system interface, projected)
+props:
+  - Digital podium
+  - Multi-screen GenAI display
+  - Interactive 3D model of proposed infrastructure
+  - Tablet with projected GDP/ROI graphs
+  - Lighting controls for ambient transition
+description: >
+  Lukas steps up with measured confidence, transitioning from the societal model to its technical backbone. 
+  He begins with a striking quote about AI's global momentum, citing recent calls for multi-trillion dollar investments. 
+  A rotating 3D infrastructure model appears behind him—data hubs, energy plants, secure comms nodes. 
+  He maps out the modular layers of Germany's national AI-infrastructure blueprint, explaining how it can integrate existing assets, meet strategic autonomy goals, and scale with minimal bureaucratic friction. 
+  He paces his speech calmly, referencing Florentine’s earlier themes to show alignment. 
+  Florentine and Liesel exchange glances as GenAI highlights overlap with the unity-disunity framework. 
+  Julia Vogel nods silently—this is the piece she needed to make the operational case stick.
+
+camera_directions: >
+  Begin with a steady cam tracking Lukas from his seat to the podium.
+  Cut to low-angle close-up as he begins speaking, silhouetted against the infrastructure projection.
+  Occasional wide shots reveal audience reactions, dimmed ambient lighting focusing attention on stage.
+  Insert shots of key terms and models on-screen: “Resilience Mesh,” “Gradient Load Zones,” “Autonomous Verification Nodes.”
+
+sound_design: >
+  Crisp click of Lukas’ tablet triggering screen changes.
+  Low ambient hums from infrastructure visuals.
+  Audience murmurs fade as the vision becomes clear.
+
+music_cue: >
+  Subtle electronic underscore builds as Lukas outlines vision.
+  Music punctuates each phase of infrastructure reveal, hinting at scale and urgency.
+
+mood: >
+  Visionary. Grounded ambition. A critical moment of convergence—where political will meets technical clarity.
