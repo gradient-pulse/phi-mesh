@@ -1,0 +1,31 @@
+scene: 24
+title: Candace’s Discovery
+chapter: 5
+location: Online news service office, London
+time: Late evening
+characters:
+  - name: Candace Keller
+    role: Online journalist, daughter of Jack Keller
+    intent: Stumbles upon breaking news that links to her father’s past associations
+  - name: Jack Keller (mentioned)
+    role: Documentary producer
+  - name: Martin Thornick (referenced)
+    role: Deceased political consultant
+summary: >
+  Candace is finishing up her late shift at the online news desk. While doing a routine scan of the news wire, she notices the name “Martin Thornick” in a breaking story. Intrigued, she confirms that this is the same man connected to her father's past. She snaps a picture of the headline and texts it to her father, hinting at a possible connection and triggering the next layer of narrative tension.
+
+tone: Subtle tension, unease, quiet revelation
+visual_style: Dim lighting, computer screen glow, close-up on Candace’s focused eyes
+camera_notes: >
+  Slow pan across newsroom, zoom into Candace’s screen as the headline loads.
+  Insert close-up of her thumb sending the message with the photo and a short caption.
+  Fade out on her unreadable expression.
+
+music_cue: Sparse piano notes + ambient synth
+keywords:
+  - breaking news
+  - Martin Thornick
+  - journalism
+  - family thread
+  - digital footprint
+  - indirect revelation
