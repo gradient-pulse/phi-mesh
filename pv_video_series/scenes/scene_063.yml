@@ -1,0 +1,39 @@
+scene_number: 063
+scene_title: The Chancellor’s Entrance
+location: Ministry for Economic Affairs and Energy, Conference Hall A
+time: Wednesday morning, just past 10:00
+characters:
+  - Chancellor (unnamed, presence-heavy)
+  - Florentine Fischer
+  - Liesel Porsch
+  - Dr. Weber
+  - Lukas Schmidt
+  - Julia Vogel
+  - Henrik Bauer
+  - Senior Government Advisors
+  - Security Guards (background)
+  - Technical Assistant (cameo)
+props:
+  - Podium with embedded screen
+  - Conference table with nameplates
+  - National and European Union flags
+  - Large display screen showing session title
+  - GenAI listening devices (subtle, embedded)
+description: >
+  A sudden hush falls over the room as the Chancellor enters through the side door, escorted by two security guards. All participants stand. Her presence is commanding yet composed, a mix of solemnity and hope. She walks slowly, acknowledging key figures with brief nods, and steps behind the podium. 
+
+  The large screen behind her displays: “AI-Empowered Societal Transformation: Strategic Foundations.” The room falls into full silence. She begins to speak, without a teleprompter, laying out in clear and deliberate words the stakes of the initiative. Her tone is measured, almost maternal—but with razor-sharp precision.
+
+  As she finishes, she steps away from the podium and quietly joins the front row, flanked by senior advisors. A subtle cue is given. Florentine is next.
+
+camera_directions: >
+  Medium-wide shot capturing the entrance door as it opens, slowly tracking the Chancellor’s walk toward the podium. Cut to reaction shots: Florentine steadying her breath, Lukas clutching a pen, Liesel glancing at the flags. Over-the-shoulder angle as the Chancellor speaks. Camera lingers briefly on her face during key phrases. As she finishes, tracking shot back to her seat. Steady cam floats toward Florentine.
+
+sound_design: >
+  The soft shuffle of chairs as everyone stands. Quiet, rhythmic breath. The room’s ambient tone lowers to highlight her voice. A subtle low-frequency pulse during her key declaration. Fade into silence just before Florentine takes the stage.
+
+music_cue: >
+  Orchestral underswell as the Chancellor enters—minimal and reverent. Crescendo at the climax of her speech, then dissolve into a suspenseful silence before the next speaker.
+
+mood: >
+  Gravitas. Ceremony meets foresight. A turning point. A room filled with both historical weight and future consequence.
