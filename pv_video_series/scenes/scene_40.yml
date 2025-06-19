@@ -1,0 +1,30 @@
+scene_number: 40
+scene_title: Hargreaves' Advice
+location: Florentine's Office, University College London
+time_of_day: Early evening
+characters:
+  - Florentine Fischer
+  - Dr. Hargreaves (voice only)
+summary: >
+  Florentine speaks with Dr. Hargreaves, UCL's legal advisor, about the implications of using multiple project codenames as a counter-intelligence measure. Hargreaves reassures her that they should wait for the Germans to suggest an NDA addendum. Florentine reflects on the subtle influence Dr. Weber seems to have and regains her focus on her upcoming lecture and Berlin trip.
+
+dialogue:
+  - Florentine: "Good day, Hargreaves, I guess you know why I call..."
+  - Hargreaves: "Indeed, Dr. Weber informed me. Just doing my part to protect you and the University."
+  - Florentine: "So, we wait for their legal team?"
+  - Hargreaves: "Yes. Let them propose the addendum. No risk on our side that way."
+  - Florentine: "I see. Thanks for making this clear."
+  - Hargreaves: "My pleasure. Keep me in the loop."
+
+emotional_tone: Calm, mildly intrigued, professionally resolved
+camera_directions:
+  - Establishing shot of Florentine in her office, lit by early evening light through the windows
+  - Over-the-shoulder shot as she dials Hargreaves
+  - Subtle zoom on her face as she reacts to the conversation
+  - Slow fade to black as she looks at her planner, realigning focus on future tasks
+
+symbolism: >
+  The conversation reinforces the theme of layered control and institutional diplomacy.
+  Florentine’s sense of agency is strengthened by relying on trusted legal counsel.
+
+cut_to_next: Florentine sketching her AI model refinements on GenAI before lecture preparation
