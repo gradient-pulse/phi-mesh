@@ -1,0 +1,41 @@
+scene: 11
+chapter: 4
+title: "Diplomatic Currents"
+location: "Hotel West End, Nice – Conference Room & Evening Terrace"
+time: "Evening, post-dinner"
+description: |
+  Following her stirring reception speech, Florentine engages in informal yet pivotal conversations
+  with national delegates. The scene oscillates between genuine intellectual camaraderie and veiled
+  geopolitical interests. Meanwhile, Lada quietly observes, sensing the broader chessboard into which
+  Florentine is stepping.
+
+  The terrace lights glimmer over the sea as influential attendees gather in clusters. Florentine finds
+  herself navigating soft power currents—receiving subtle proposals, invitations, and warnings.
+
+  Lada, blending into the shadows, captures expressions and intentions, mentally noting how societies
+  still orbit personalities, prestige, and the art of persuasive uncertainty.
+
+  The scene ends with Florentine staring out over the Mediterranean, whispering to herself:
+  “Let the questions speak first.”
+
+characters:
+  - Florentine Fischer
+  - Lada Morozov
+  - Delegates from Argentina, Germany, Indonesia, and others
+
+emotional_tone: "Reflective, charged with hidden agendas"
+
+cinematic_cues:
+  - Warm golden lighting contrasts with cool sea-blue shadows
+  - Overheard snippets in multiple languages
+  - Cutaways to facial reactions as veiled intentions surface
+  - Subtle background score with string ensemble hinting at elegance and tension
+
+symbolic_elements:
+  - The shifting sea as metaphor for global tides
+  - Wine glasses as reflective surfaces
+  - Lada in semi-darkness, signaling her transition from daughter to observer
+
+pivot_line: "Let the questions speak first."
+
+runway_prompt: "scene_11_runway_prompt.md"
