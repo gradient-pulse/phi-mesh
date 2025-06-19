@@ -1,0 +1,39 @@
+scene_number: 060
+scene_title: Arrival at the Ministry
+location: Ministry for Economic Affairs and Energy, Berlin
+time: Wednesday morning, shortly before 09:00
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Karl (security official)
+  - Security Guards (extras)
+  - Ministry Receptionist (cameo)
+  - Elevator Attendant (optional)
+props:
+  - Security checkpoint
+  - ID badges
+  - Elevator panel
+  - Monitors showing internal schedules
+  - Polished floors, minimalist artwork
+description: >
+  Florentine and Liesel arrive with Karl at the Ministry building. The atmosphere is formal but not cold. Security guards at the entrance quickly verify their identities and wave them through. The Ministry interior is sleek, functional—high ceilings, light gray tones, clean design. An assistant receptionist hands out temporary access badges. Karl remains at a distance but ensures they are guided in without delay. 
+
+  As they approach the elevators, Florentine looks briefly at a wall screen displaying internal schedules. One entry stands out: “Strategic Session: AI-Empowered Societal Transformation – Conference Hall A.”
+
+  Inside the elevator, Florentine adjusts her posture. Liesel looks over and says softly, “You’re ready.”
+
+  Florentine smiles faintly, “We are.”
+
+  As the elevator doors close, the camera lingers on the reflection of both women in the polished metal.
+
+camera_directions: >
+  Begin with wide exterior shot of the Ministry facade bathed in early morning light. Follow car arrival, low-angle shot as doors open. Track movement through security with a steady cam. Interior shots in the lobby are fluid, emphasizing scale and state-modern aesthetics. Close-ups during elevator ride with soft focus background.
+
+sound_design: >
+  Quiet footsteps on marble. Distant hum of fluorescent lighting. Short melodic cue as Florentine reads the internal schedule. Elevator chime as doors close.
+
+music_cue: >
+  Subtle piano motif builds softly as they enter the building. Slight swell when the screen flashes their session title. Music fades as elevator ascends.
+
+mood: >
+  Resolute. The anticipation of high stakes. No panic—just precision. Like the prelude to a diplomatic summit.
