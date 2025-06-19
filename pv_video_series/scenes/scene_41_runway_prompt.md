@@ -39,6 +39,4 @@ Close-ups capture their facial expressions—cordial but probing. The café prov
 ## Music Direction:
 Start with warm string melodies, adding light ambient piano as they enter the café. A subtle undercurrent of tension in the score as the scene progresses—something left unsaid.
 
----
 
-Let me know when you're ready for `scene_42.yml`.
