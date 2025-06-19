@@ -1,0 +1,43 @@
+scene_number: 067
+scene_title: Chancellor’s Private Sidebar
+location: Chancellor’s Office, Berlin
+time: Wednesday late morning, after presentations conclude
+characters:
+  - Chancellor Georg Milster
+  - Florentine Fischer
+  - Liesel Porsch
+  - Dr. Karl Weber
+  - Henrik Bauer (briefly)
+props:
+  - Antique wood desk
+  - Leather armchairs
+  - Framed photograph of German reunification
+  - Holographic GenAI console (on side table)
+  - Thick drapes, soft afternoon light filtering in
+  - Old mechanical clock ticking softly
+  - Tea service
+
+description: >
+  As the formal session winds down and ministers begin dispersing, the Chancellor quietly requests that Florentine and Liesel stay behind. Dr. Weber joins briefly. They move from the conference room to the Chancellor’s private office—smaller, more intimate. The heavy door closes with a soft thud.
+
+  The Chancellor offers tea. No assistants. He leans forward and, in an unusually candid tone, admits the weight of the moment: "What you’ve presented will either make history or fracture the remnants of what holds us together." There’s no performance here—just a statesman laying his last card on the table.
+
+  Florentine responds not with certainty but with clarity. She says the pulse model is not predictive—it’s attuned. She explains why the Mesh must begin with integrity, not speed. Liesel quietly adds that early interference by entrenched ministries is the real threat.
+
+  Henrik appears briefly with an update: initial reactions are mixed, but most departments are stunned silent. He leaves.
+
+  The Chancellor looks out the window toward the Reichstag. He nods slowly. "We begin with silence, then. Let the first echo be truthful."
+
+  The scene ends as he places his hand over a notecard—simple, handwritten, bearing one word: "Breathe."
+
+camera_directions: >
+  Soft handheld as they move through corridors into the private office. Static camera as they sit—emphasis on subtle body language. Close-up of Chancellor’s hand trembling slightly as he pours tea. Over-shoulder on Florentine as she speaks. Insert of notecard. Final wide shot from behind the Chancellor, silhouette framed by the window.
+
+sound_design: >
+  Soft ticking of mechanical clock. Tea being poured. Muffled voices fading as the door shuts. Long silences held with ambient room tone.
+
+music_cue: >
+  Sparse piano chords beneath dialogue—dissonant but resolving. Faint, almost imperceptible crescendo as the Chancellor looks to the window.
+
+mood: >
+  Private. Historic without ceremony. This is the human moment behind the national pivot—a pause before irrevocable steps.
