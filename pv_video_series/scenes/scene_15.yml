@@ -1,0 +1,33 @@
+Scene 15 covers the opening of Chapter 5 and can be split into a pair of files for the pv\_video\_series folder:
+
+---
+
+**scene\_15.yml**
+
+```yaml
+scene_number: 15
+title: Restless Night, Ruthless Links
+chapter: 5
+location: Victor Morozov's bedroom, pre-dawn
+characters:
+  - Victor Morozov
+  - Martin Thornick (dream sequence)
+time: 4:00 AM
+visual_style: Dimly lit room, warm shadows, sweat-drenched bedsheets, flickering light from phone screen
+emotional_tone: Anxiety, guilt, paranoia
+summary: |
+  Victor Morozov wakes up from a disturbing dream drenched in sweat. In the dream, political consultant Martin Thornick appears as a linking threat between Victor, Florentine, and Jack Keller. Fearing exposure, Victor grabs his phone and contacts Thornick via Telegram's Secret Chat. The audience sees only the first name typed, but the subtext is clear: clean-up has begun.
+
+camera_directions:
+  - Close-up on Victor’s eyes snapping open
+  - Tilt down to reveal his soaked shirt and trembling hand
+  - Insert shot: Telegram app interface, fingers typing "Thornick"
+  - Cut to black before message sends
+notes:
+  - Sound design should include rapid breathing, distant city noise, and a subtle phone buzz
+  - Lighting should reflect mental claustrophobia; warm but oppressive
+```
+
+---
+
+Let me know when you're ready for the accompanying `scene_15_runway_prompt.md` file or if you’d prefer to continue batching next scenes together.
