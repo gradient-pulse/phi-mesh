@@ -1,0 +1,43 @@
+scene: 16
+chapter: 5
+title: Ollie’s Redemption Offer
+location: University College London, Administrative Wing – Conference Room
+time: Early afternoon
+
+characters:
+  - name: Oliver Blackwood
+    role: Journalist, visibly nervous but sincere
+  - name: Geoffrey Hargreaves
+    role: University legal representative, reserved, sharp
+  - name: Admin Assistant
+    role: Efficient, unobtrusive
+
+summary: >
+  Oliver Blackwood meets with Geoffrey Hargreaves at University College London to
+  atone for the damage done by his misleading article on Florentine. He proposes
+  transforming the retracted piece into the opening of a redemptive series on AI,
+  fake news, and Professor Fischer’s research. Hargreaves listens coldly, then
+  surprisingly produces a ready-to-sign agreement—crafted, it seems, by AI.
+
+beats:
+  - Ollie checks in at reception; slight awkwardness
+  - Escorted to small meeting room; left alone with his thoughts
+  - Geoffrey Hargreaves enters, stern and unreadable
+  - Ollie nervously proposes a public redemption arc
+  - Hargreaves listens in silence, leaves briefly
+  - Returns with a prepared legal document already capturing Ollie’s offer
+  - Ollie signs; realization dawns that AI drafted the contract in real time
+  - Hargreaves departs efficiently, leaving Ollie stunned but relieved
+
+themes:
+  - Reputation and atonement
+  - AI as a silent institutional actor
+  - Legal automation and deep listening
+
+visual_notes: >
+  Natural daylight from a high window. Static framing, almost documentary-style.
+  Emphasize the subtle unease and emotional shift in Ollie’s expression. Cutaways
+  to the AI-signed document scrolling through on a nearby printer or screen, eerie
+  in its precision.
+
+emotional_tone: Tense → Reflective → Resigned relief
