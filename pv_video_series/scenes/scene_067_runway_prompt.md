@@ -1,4 +1,4 @@
-Runway Prompt — Scene 066: Lukas Schmidt Presents AI Infrastructure Vision
+Runway Prompt — Scene 067: Lukas Schmidt Presents AI Infrastructure Vision
 
 Visual Style:
 Formal, high-level statecraft—this is not a startup pitch, but a calculated extension of the Chancellor’s strategic briefing. The setting remains the Chancellor’s wood-paneled conference room: dignified, efficient, subtly lit by daylight filtering through high windows. Lukas stands at a digital podium, a large built-in screen behind him displaying Germany’s proposed AI infrastructure mesh. The visuals remain sleek but institutional—transparent overlays, rotating layered nodes, labeled maps—no flash, just quiet power.
