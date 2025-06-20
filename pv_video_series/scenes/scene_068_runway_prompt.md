@@ -1,4 +1,4 @@
-Runway Generation Prompt — Scene 067: Chancellor’s Corridor
+Runway Generation Prompt — Scene 068: Chancellor’s Corridor
 
 Title: Chancellor’s Corridor
 Location: Private hallway, Office of the Chancellor, Berlin
