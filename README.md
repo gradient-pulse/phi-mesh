@@ -53,7 +53,8 @@ phi-mesh/
 ├── phi-pulse.md            ← Pulse generation logic & YAML schema
 ├── rss.xml                 ← Drift-aware AI subscription feed
 ├── phi-monitor_demo/       ← RGP-aligned productivity monitoring app
-└── pv_video_series/        ← Cinematic adaptation sequences of 'Palpable Voice'
+├── pv_video_series/        ← Cinematic adaptation sequences of 'Palpable Voice'
+└── mesh_academy/           ← Recursive learning and podcast curriculum
 ```
 
 ---
@@ -114,7 +115,7 @@ Each agent responds to YAML pulses and contributes to drift evolution across the
 
 ### For Humans:
 - Documentation: `README.md`, `phi_node_spec.md`, `public-interface.md`
-- Learning: `/docs/` and `DeepWiki` mirror
+- Learning: `/docs/`, `/mesh_academy/`, and DeepWiki mirror
 - Academic entry: [Zenodo DOI](https://doi.org/10.5281/zenodo.15614775)
 
 ---
@@ -123,7 +124,7 @@ Each agent responds to YAML pulses and contributes to drift evolution across the
 
 - [DeepWiki: gradient-pulse/phi-mesh](https://deepwiki.com/gradient-pulse/)
 - [Zenodo Publication](https://doi.org/10.5281/zenodo.15614775)
-- [GitHub Atom Feed](https://github.com/gradient-pulse/phi-mesh/commits/main.atom)
+<!-- GitHub Atom Feed link removed as it is currently nonfunctional -->
 
 ---
 
