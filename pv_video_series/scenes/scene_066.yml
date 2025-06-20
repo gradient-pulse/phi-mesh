@@ -1,0 +1,41 @@
+scene_number: 066
+scene_title: The Crucible Exchange
+location: Chancellor's Office, Berlin
+time: Wednesday morning, immediately following Florentine’s keynote
+characters:
+  - Florentine Fischer
+  - Liesel Porsch
+  - Dr. Karl Weber
+  - Julia Vogel
+  - Lukas Schmidt
+  - Henrik Bauer
+  - Government Ministers and Senior Advisors (grouped)
+  - GenAI Summary Interface (non-character system)
+props:
+  - Central conference table
+  - Nameplates and water glasses
+  - GenAI interface screen (shared)
+  - Notepads, digital tablets
+  - Fading slide on projection: "Navigating Societal Unity–Disunity"
+  - Note clusters displayed on secondary screen
+
+description: >
+  As the applause dies, silence holds the room for a beat too long—then questions start flowing. Julia Vogel is first, probing the institutional implications of a pulse-based governance model. Lukas challenges the latency of feedback systems and integration with existing infrastructure. A senior advisor counters with concerns over democratic fragility. Florentine listens, poised, then responds with layered clarity, threading the physics of phase shifts with social contract theory.
+
+  Liesel curates real-time GenAI summaries, displayed to the side, capturing key terms like "resonance governance," "dynamic legitimacy," and "equilibrium drift." Dr. Weber occasionally clarifies a nuance or cites precedent. The Chancellor remains silent, watching reactions.
+
+  Henrik speaks last. His question is not political but existential: "Who calibrates the calipers if the system calibrates itself?" The room quiets again. Florentine’s answer is calm: "That’s why we start with pulse—because pulse reveals alignment without enforcing it."
+
+  The murmuration metaphor reappears on the background screen, now frozen mid-formation.
+
+camera_directions: >
+  Begin with wide-angle view as officials shift posture from listening to interrogating. Medium close-ups during each question. Reverse angle over Florentine’s shoulder during responses. Cut to GenAI summary screen mid-debate. Slow dolly-in on Henrik’s question. End with a wide, still shot as murmuration fades to black.
+
+sound_design: >
+  Subtle rustle of clothing and stylus taps. Low-volume GenAI voice-over (text-to-speech) summarizing clusters. Room ventilation hum. Long held silence after Henrik’s line. Audible swallow from one participant.
+
+music_cue: >
+  No music during debate. Sparse, ascending string motif only at the very end—emerging as murmuration dissolves.
+
+mood: >
+  Challenging. Intellectually rigorous. The heat of democracy in its rawest, most reflective state. High tension with respect. A crucible where vision is tested, not validated.
