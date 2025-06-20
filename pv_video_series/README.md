@@ -19,5 +19,7 @@ The full manuscript is preserved here as a reference anchor for AI rendering, ch
 >- All scenes maintain literal dialogue and action fidelity from the novel.
 >- Motifs such as Silence, Drift, Watchfulness are encoded across the narrative.
 >- Character reference images and roles are linked in context YAML.
->- The author appears once—unspoken—in Chapter 12, as a silent observer aboard a government aircraft. "They were not the only ones on the plane. They passed a man with sparse gray hair and brown-rimmed glasses in the front section. He nodded politely, which gesture they returned. Another diplomat, they assumed. The nature of their business was such, however, that any interaction would be inappropriate."
+>- The author appears once—unspoken—in Chapter 12, as a silent observer aboard a government aircraft.
+
+>"They were not the only ones on the plane. They passed a man with sparse gray hair and brown-rimmed glasses in the front section. He nodded politely, which gesture they returned. Another diplomat, they assumed. The nature of their business was such, however, that any interaction would be inappropriate."
 
