@@ -1,5 +1,10 @@
-scene: 34
+scene: 034
 title: Counterpoints and Confidences
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 7
 location: Taviton Street Office, London
 time: Late morning
