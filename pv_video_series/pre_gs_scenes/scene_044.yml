@@ -1,5 +1,10 @@
-scene_number: 44
+scene_number: 044
 title: The Gutenberg Trap
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 7
 location: UCL Office, London – then interior GenAI interface
 time: Midday
