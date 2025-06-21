@@ -1,5 +1,10 @@
-scene_number: 31
+scene_number: 031
 title: "The Origin of the Threat"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: "Federal Ministry for Economic Affairs and Energy, Berlin"
 time: "Early morning"
 characters:
