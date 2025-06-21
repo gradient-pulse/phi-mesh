@@ -1,6 +1,11 @@
-scene_id: scene_03
+scene_id: scene_003
 chapter: 2
 title: “Silicon Creatures and the Cave”
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: University College London, Department of Anthropology
 time: Afternoon, same day as the Castle Cary explosion
 characters:
