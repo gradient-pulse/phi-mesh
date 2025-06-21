@@ -1,6 +1,11 @@
-scene: 26
-chapter: 6
+scene: 026
 title: "Non-Disclosure"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
+chapter: 6
 location: "University College London (UCL), Florentine's office; Berlin, Federal Ministry"
 time: "Morning into evening"
 description: |
