@@ -1,5 +1,10 @@
-scene_number: 22
+scene_number: 022
 scene_title: Anonymous Tip
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter_reference: Chapter 5
 setting:
   location: London Metropolitan Police Call Center
