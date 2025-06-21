@@ -1,5 +1,10 @@
 scene_number: 069
 scene_title: Jack Keller's Solitary Ride
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Countryside road outside London
 time_of_day: Early morning, pre-dawn
 
