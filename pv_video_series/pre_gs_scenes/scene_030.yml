@@ -1,5 +1,10 @@
-scene_number: 30
+scene_number: 030
 scene_title: The NDA and the Chancellor’s Shadow
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 6
 location: Berlin – Federal Ministry for Economic Affairs and Energy
 time_of_day: Early Evening
