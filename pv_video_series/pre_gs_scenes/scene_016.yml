@@ -1,6 +1,11 @@
-scene: 16
-chapter: 5
+scene: 016
 title: Ollie’s Redemption Offer
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
+chapter: 5
 location: University College London, Administrative Wing – Conference Room
 time: Early afternoon
 
