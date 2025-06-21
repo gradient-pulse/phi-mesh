@@ -1,6 +1,11 @@
-scene: 08
+scene: 008
 chapter: 4
 title: "Arrival and Speech"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: "Hôtel West End, Nice"
 characters:
   - Florentine Fischer
