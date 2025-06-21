@@ -1,6 +1,11 @@
-scene: 45
-chapter: 8
+scene: 045
 title: "Tea in Bed and Fake News Realities"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
+chapter: 8
 location: "Keller residence, London – bedroom, morning"
 time: "Saturday morning"
 characters:
