@@ -1,9 +1,11 @@
 scene:
   id: scene_01
+  title: "Unexpected Detour"
+
   gs_status: pre_gs
 note: >
   This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
-  title: "Unexpected Detour"
+  
   based_on: "Chapter 1, Palpable Voice"
   setting:
     location: "The Newt Estate, Somerset, UK"
