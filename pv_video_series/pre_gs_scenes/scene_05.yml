@@ -1,6 +1,11 @@
-scene: 05
+scene: 005
 chapter: 3
 title: "Naked Truth"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location:
   primary: "UCL Anthropology Department, London"
   secondary:
