@@ -1,6 +1,11 @@
 scene_number: 053
 chapter: 8
 title: "Train Departure and Reflection"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: London Underground Station / Train Interior
 time: Sunday Evening
 
