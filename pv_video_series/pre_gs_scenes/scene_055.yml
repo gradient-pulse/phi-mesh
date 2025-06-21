@@ -1,6 +1,11 @@
 scene_number: 055
 chapter: 9
 scene_title: Brasserie Quarré Briefing
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Hotel Adlon Kempinski, Berlin
 time: Evening
 
