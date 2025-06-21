@@ -1,6 +1,11 @@
-scene: 07
+scene: 007
 chapter: 4
 title: "Whisked Away"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: "Grand-Hôtel du Cap-Ferrat & Chemin des Douaniers, France"
 characters:
   - Florentine Fischer
