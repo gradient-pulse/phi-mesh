@@ -1,5 +1,10 @@
 scene_number: 070
 scene_title: Lada's Call
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: LSE Study Room, London
 characters:
   - Lada Morozova
