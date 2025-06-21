@@ -1,5 +1,10 @@
 scene_number: 052
 title: "Monday Morning Run"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 8
 setting: Hampstead Heath, early morning
 characters:
