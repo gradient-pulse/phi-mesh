@@ -1,5 +1,10 @@
 scene_number: 049
 scene_title: Hampstead Heath Tradition
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter_source: 8
 location: Hampstead Heath, London
 time: Sunday morning
