@@ -1,6 +1,11 @@
-scene: 09
+scene: 009
 chapter: 4
 title: "The Unexpected Guest"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: "The Grand Hotel du Cap-Ferrat, Lobby"
 time: "Late morning"
 description: |
