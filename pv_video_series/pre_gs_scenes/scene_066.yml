@@ -1,5 +1,10 @@
 scene_number: 066
 scene_title: The Crucible Exchange
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Chancellor's Office, Berlin
 time: Wednesday morning, immediately following Florentine’s keynote
 characters:
