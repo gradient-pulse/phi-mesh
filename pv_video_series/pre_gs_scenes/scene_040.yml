@@ -1,5 +1,10 @@
-scene_number: 40
+scene_number: 040
 scene_title: Hargreaves' Advice
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Florentine's Office, University College London
 time_of_day: Early evening
 characters:
