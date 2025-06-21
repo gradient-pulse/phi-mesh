@@ -1,5 +1,10 @@
-filename: scene_37.yml
+filename: scene_037.yml
 scene_title: The Journalist’s Prep
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter_reference: Chapter 7
 location: The British Herald, London
 time: Late morning
