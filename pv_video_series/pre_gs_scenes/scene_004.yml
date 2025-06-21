@@ -1,6 +1,11 @@
-scene: 04
+scene: 004
 slug: ollie_article_impact
 chapter_source: Chapter 2, end
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: The British Herald newsroom, UCL courtyard, social media feed
 
 summary: |
