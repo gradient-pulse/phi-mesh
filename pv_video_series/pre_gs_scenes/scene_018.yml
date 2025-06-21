@@ -1,5 +1,10 @@
-scene_number: 18
+scene_number: 018
 title: Jack and Thornick – A Cup of Coffee
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 5
 setting:
   location: Starbucks café, London suburb
