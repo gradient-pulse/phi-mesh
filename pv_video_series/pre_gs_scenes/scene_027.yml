@@ -1,6 +1,11 @@
-scene_number: 27
-chapter: 6
+scene_number: 027
 title: Midnight Contact
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
+chapter: 6
 setting:
   - location: Liesel’s apartment, London
     time: Late night
