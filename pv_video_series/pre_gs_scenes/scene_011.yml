@@ -1,6 +1,11 @@
-scene: 11
+scene: 011
 chapter: 4
 title: "Diplomatic Currents"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: "Hotel West End, Nice – Conference Room & Evening Terrace"
 time: "Evening, post-dinner"
 description: |
