@@ -1,5 +1,10 @@
 scene_number: 065
 scene_title: Post-Presentation Reactions
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Conference Hall A, Ministry for Economic Affairs and Energy, Berlin
 time: Wednesday mid-morning, following Florentine's address
 characters:
