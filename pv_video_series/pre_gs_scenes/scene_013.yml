@@ -1,5 +1,10 @@
-scene: 13
+scene: 013
 title: "Echoes of Influence"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 4
 location: Hôtel West End, Nice – Evening Lecture Hall
 time: Evening, post-dinner
