@@ -1,12 +1,10 @@
-Scene 15 covers the opening of Chapter 5 and can be split into a pair of files for the pv\_video\_series folder:
-
----
-
-**scene\_15.yml**
-
-```yaml
-scene_number: 15
+scene_number: 015
 title: Restless Night, Ruthless Links
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 5
 location: Victor Morozov's bedroom, pre-dawn
 characters:
