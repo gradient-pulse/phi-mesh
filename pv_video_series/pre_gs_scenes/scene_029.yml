@@ -1,5 +1,10 @@
-scene_number: 29
+scene_number: 029
 scene_title: Berlin Arrival
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Berlin Brandenburg Airport and Government Vehicle
 time: Late Afternoon
 characters:
