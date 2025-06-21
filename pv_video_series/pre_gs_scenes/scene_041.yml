@@ -1,5 +1,10 @@
-scene_number: 41
+scene_number: 041
 title: Encounter at the Print Room Café
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 7
 location: University College London, Print Room Café (exterior and interior)
 time_of_day: Early evening
