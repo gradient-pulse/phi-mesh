@@ -1,5 +1,10 @@
-scene_number: 42
+scene_number: 042
 title: The Café Conversation
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 7
 location: Print Room Café, University College London
 time: Early evening
