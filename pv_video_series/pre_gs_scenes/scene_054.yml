@@ -1,5 +1,10 @@
 scene_number: 054
 scene_title: Departure to Berlin
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Taviton Street, London
 time: Tuesday morning
 characters:
