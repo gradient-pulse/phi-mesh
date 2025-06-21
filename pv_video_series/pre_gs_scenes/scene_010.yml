@@ -1,5 +1,10 @@
-scene_number: 10
+scene_number: 010
 scene_title: Florentine’s Reception Speech
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 source_chapter: 4
 setting:
   location: Hôtel West End, Nice
