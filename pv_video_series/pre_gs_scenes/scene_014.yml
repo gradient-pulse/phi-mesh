@@ -1,5 +1,10 @@
-scene: 14
+scene: 014
 title: "Signals and Sentiments"
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 4
 location: Hôtel West End, Florentine’s Hotel Room – Night
 time: Late evening, just before bed
