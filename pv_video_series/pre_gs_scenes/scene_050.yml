@@ -1,5 +1,10 @@
 scene_number: 050
 scene_title: Tea, Scones, and Fake News
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter_source: Chapter 8 – FAKE NEWS
 location: Keller residence, London – afternoon tea in the living room
 time: Sunday afternoon
