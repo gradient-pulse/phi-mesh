@@ -1,5 +1,10 @@
-filename: scene_36.yml
+filename: scene_036.yml
 scene_title: Russell Square Reflections
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 7
 location: Russell Square Gardens and walk to Zizzi restaurant, London
 time: Late morning
