@@ -1,5 +1,10 @@
-scene: 17
+scene: 017
 title: Lunch Discussions & Secret Note
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 5
 location: Hôtel West End, Nice – conference dining area
 time: Afternoon
