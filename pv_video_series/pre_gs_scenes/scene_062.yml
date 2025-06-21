@@ -1,5 +1,10 @@
 scene_number: 062
 scene_title: The Reaction Chamber
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Ministry – Side Briefing Room
 time: Wednesday late morning, immediately after Chancellor’s session
 characters:
