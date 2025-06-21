@@ -1,5 +1,10 @@
-scene_number: 43
+scene_number: 043
 title: Walk in Bloomsbury
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 7
 location: London – From UCL to Russell Square
 time: Early evening
