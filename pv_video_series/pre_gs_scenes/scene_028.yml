@@ -1,6 +1,11 @@
-scene_number: 28
-chapter: 6
+scene_number: 028
 title: Return to Resolve
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
+chapter: 6
 setting:
   location: University College London, Taviton Street offices
   time: Early morning, next day
