@@ -1,5 +1,10 @@
 scene: 058
 scene_title: Berlin Briefing
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Ministry for Economic Affairs and Energy, Berlin
 characters:
   - Florentine Fischer
