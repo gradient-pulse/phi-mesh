@@ -1,5 +1,10 @@
-scene_number: 12
+scene_number: 012
 title: Private Call – End of a Long Day
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Hôtel West End, Nice – Florentine’s Room
 time: Night – Post-conference reception
 characters:
