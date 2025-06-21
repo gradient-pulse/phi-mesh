@@ -1,5 +1,10 @@
-scene: 39
+scene: 039
 title: Strategic Walk Through Russell Square
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 7
 location: London – Russell Square Gardens to University College London
 time: Late afternoon
