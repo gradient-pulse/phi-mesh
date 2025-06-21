@@ -1,6 +1,9 @@
 scene:
   id: scene_02
   title: "Train Blast Aftermath Echoes"
+  gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
   based_on: "Chapter 2, Palpable Voice (Newsroom segment)"
   setting:
     location: "The British Herald newsroom, London"
