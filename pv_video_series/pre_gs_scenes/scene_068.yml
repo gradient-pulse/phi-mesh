@@ -1,5 +1,10 @@
 scene_number: 068
 scene_title: Chancellor’s Private Sidebar
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Chancellor’s Office, Berlin
 time: Wednesday late morning, after presentations conclude
 characters:
