@@ -1,5 +1,10 @@
 scene_number: 063
 scene_title: The Chancellor’s Entrance
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Ministry for Economic Affairs and Energy, Conference Hall A
 time: Wednesday morning, just past 10:00
 characters:
