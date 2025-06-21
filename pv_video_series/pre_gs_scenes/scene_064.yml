@@ -1,5 +1,10 @@
 scene_number: 064
 scene_title: Florentine's Opening Address
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 location: Conference Hall A, Ministry for Economic Affairs and Energy, Berlin
 time: Wednesday morning, shortly after the Chancellor’s introduction
 characters:
