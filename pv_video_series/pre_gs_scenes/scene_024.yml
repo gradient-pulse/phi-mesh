@@ -1,5 +1,10 @@
-scene: 24
+scene: 024
 title: Candace’s Discovery
+
+gs_status: pre_gs
+note: >
+  This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues.
+
 chapter: 5
 location: Online news service office, London
 time: Late evening
