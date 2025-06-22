@@ -1,5 +1,7 @@
 ## Runway Prompt — Scene 050: Tea, Scones, and Fake News
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Environment & Mood:**  
 Set in the warm, softly lit living room of the Keller residence on a Sunday afternoon. The room exudes domestic calm: lace curtains, soft armchairs, fresh flowers, and a low fireplace glow. A teapot steams gently in the middle of a rustic wooden table, surrounded by scones and condiments. The tone is intimate, reflective, intellectually charged.
 
