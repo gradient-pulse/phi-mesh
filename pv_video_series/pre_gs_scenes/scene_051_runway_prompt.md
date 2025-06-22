@@ -1,5 +1,7 @@
 # Scene 051 – Sparks and Signals
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 ## Visual Prompt for Runway / Veo / AI Video Model
 
 **Setting:**  
