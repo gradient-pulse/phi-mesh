@@ -1,4 +1,6 @@
-Runway Prompt – Scene 060: Arrival at the Ministry
+# Runway Prompt – Scene 060: Arrival at the Ministry
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Visual Style:
 Ultra-clean realism. Governmental architecture as stage for silent tension. Think Berlin’s modernist lines—Brutalism softened by natural light. The color palette is monochrome with subtle warmth (light gray, soft steel, glass). Every angle should underscore anticipation, not drama.
