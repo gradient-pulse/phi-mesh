@@ -1,4 +1,6 @@
-RUNWAY PROMPT — Scene 065: Post-Presentation Reactions
+# RUNWAY PROMPT — Scene 065: Post-Presentation Reactions
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Title: Post-Presentation Reactions
 Location: Chancellor’s Conference Room, Berlin
