@@ -1,4 +1,6 @@
-Runway Prompt — Scene 38: Lunch Meeting on Charlotte Street
+# Scene 038: Lunch Meeting on Charlotte Street
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Scene Overview:
 Capture a warm, naturalistic restaurant setting in central London. It’s midday. Liesel Porsch and Ollie Blackwood meet for lunch at a quiet Italian restaurant on Charlotte Street. This is their first real opportunity to connect on both a professional and personal level. There’s a gentle undercurrent of flirtation, but the conversation remains intellectually engaging. The setting should feel open yet intimate. Unexpectedly, Florentine Fischer enters the restaurant and briefly joins the scene, shifting its emotional rhythm.
