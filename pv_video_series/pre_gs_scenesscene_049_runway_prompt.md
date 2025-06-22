@@ -1,5 +1,7 @@
 ## Runway Prompt – Scene 049: Hampstead Heath Tradition
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Visual Style**:  
 A calm, naturalistic scene. Use morning light to cast soft shadows across Hampstead Heath. The Keller family is seen walking through an open trail flanked by tall trees and dewy grass. Colors are crisp but subdued—earth tones, with the occasional red or green highlight from nature. Think early morning BBC drama tone.
 
