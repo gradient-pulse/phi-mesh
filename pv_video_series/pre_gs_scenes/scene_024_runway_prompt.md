@@ -1,6 +1,8 @@
-# Scene 24 – Runway Prompt
-
+# Scene 024 – Runway Prompt
 **Title:** Candace’s Discovery  
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Setting:** Online news service office, late evening  
 **Visual Style:** Dimly lit office space, a solitary screen glowing in an otherwise quiet newsroom.  
 **Mood:** Tension emerging from calm routine; subtle but impactful.
