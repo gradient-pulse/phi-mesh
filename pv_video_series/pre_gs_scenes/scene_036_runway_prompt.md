@@ -1,5 +1,8 @@
-filename: scene_36_runway_prompt.md
+# Scene_036_runway_prompt.md
 scene_title: Russell Square Reflections
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 scene_style: Cinematic, introspective, natural lighting
 
 prompt for Runway or other AI video generator:
