@@ -1,4 +1,6 @@
-## Runway Prompt – Scene 062: The Reaction Chamber
+# Runway Prompt – Scene 062: The Reaction Chamber
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Visual Style Prompt**:
 A sleek, high-ceilinged side chamber within the Chancellery—formerly used for internal coordination, now repurposed for historic recalibration. The space exudes understated power: brushed steel, acoustic paneling, and tall windows filtering soft Berlin light. The air still hums from the Chancellor’s unprecedented endorsement. Florentine and Liesel stand near a translucent projection wall, where a murmuration of starlings remains frozen mid-flight—each node a symbolic societal pressure point.
