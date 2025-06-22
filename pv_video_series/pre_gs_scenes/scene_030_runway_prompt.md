@@ -1,6 +1,8 @@
-## Scene 30 — Runway Prompt
-
+# Scene 030 — Runway Prompt
 **Project Title:** Palpable Voice — Cinematic Series  
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Episode:** Chapter 6 – Non-Disclosure  
 **Scene:** 30  
 **Title:** The NDA and the Chancellor’s Shadow
