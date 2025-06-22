@@ -1,5 +1,7 @@
-File: scene_26_runway_prompt.md
+# Scene_026_runway_prompt.md
 Location: phi-mesh/pv_video_series/
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ⸻
 
