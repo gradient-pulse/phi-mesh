@@ -1,5 +1,7 @@
 # Runway Prompt — Scene 054: Departure to Berlin
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 ## Style
 Cinematic realism with subtle dramatic undertones. Use warm natural lighting for London morning exteriors, cool neutral tones inside the office, and sleek luxury visual language for the government jet sequence.
 
