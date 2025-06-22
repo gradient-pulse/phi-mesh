@@ -1,5 +1,7 @@
 Runway Prompt for Scene 058
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Scene Title: “Arrival and Anticipation”
 
 Visual Style: Cinematic realism with slight warm-toned contrast; natural indoor and urban daylight; Berlin architectural textures and warm hotel interior hues.
