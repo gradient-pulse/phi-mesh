@@ -1,4 +1,6 @@
-## Runway Prompt — Scene 19: Jack’s Documentary Idea
+# Runway Prompt — Scene 019: Jack’s Documentary Idea
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Scene Objective:**  
 Depict Jack Keller alone in his office, grappling with the desire to protect his wife, Florentine. He arrives at the idea of producing a documentary to raise her public profile, possibly shielding her from harm. The scene should suggest quiet urgency and inner resolve.
