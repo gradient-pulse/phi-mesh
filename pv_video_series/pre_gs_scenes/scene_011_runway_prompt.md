@@ -1,5 +1,8 @@
-Runway Prompt – Scene 11
+# Runway Prompt – Scene 011
 Title: Conference Welcome Reception & Florentine’s Message
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Visual Style: Elegant, formal ambiance with a slight golden hue. Low ambient background music, chatter, and clinking of glasses. French sophistication.
 
 ⸻
