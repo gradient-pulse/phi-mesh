@@ -1,4 +1,6 @@
-## Runway Prompt — Scene 33: Gutenberg Traps
+# Runway Prompt — Scene 033: Gutenberg Traps
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Visual Style**:  
 Florentine’s office is quiet, naturally lit but slightly cool in tone. Focus on her face—alert, calm, precise. Use gentle handheld camera movements to follow her as she walks to the window, pauses, then returns to her desk. The GenAI screen glows with scrolling names. Minimalist, intellectual atmosphere with subtle tension. Background audio: soft ticking clock, the hum of London beyond the window.
