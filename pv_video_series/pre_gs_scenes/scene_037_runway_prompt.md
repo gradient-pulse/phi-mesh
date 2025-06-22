@@ -1,6 +1,8 @@
-Runway Prompt for Scene 37 — The Journalist’s Prep
-
+# Scene 037 — The Journalist’s Prep
 Scene Title: The Journalist’s Prep
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Style Reference: Light drama with slight romantic undercurrent — think The Newsroom meets Before Sunrise
 
 ⸻
