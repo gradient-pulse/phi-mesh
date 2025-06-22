@@ -1,4 +1,6 @@
-# Runway Prompt – Scene 09: Lada Returns to Face Her Father
+# Runway Prompt – Scene 009: Lada Returns to Face Her Father
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Scene Summary:**  
 After helping Florentine escape, Lada returns to the Grand Hotel du Cap-Ferrat to face her father. She attempts to defuse the situation, plays innocent, and shifts the conversation to Florentine’s work and ideas. Her father's irritation gradually softens, ending in a rare moment of mutual understanding.
