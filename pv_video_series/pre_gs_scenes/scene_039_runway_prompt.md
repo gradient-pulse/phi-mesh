@@ -1,6 +1,8 @@
-# Runway Prompt — Scene 39
-
+# Runway Prompt — Scene 039
 **Title**: Strategic Walk Through Russell Square  
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Location**: London – Russell Square Gardens to University College London  
 **Time of Day**: Late afternoon, golden hour lighting preferred
 
