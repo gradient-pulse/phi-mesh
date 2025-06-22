@@ -1,4 +1,6 @@
-**Runway Prompt – Scene 13: Post-Lecture Conversations**
+# Runway Prompt – Scene 013: Post-Lecture Conversations
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Title**: Scene 13 – Aftermath of the Lecture
 
