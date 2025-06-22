@@ -1,4 +1,6 @@
-**Runway Prompt: Scene 12 — Reception & Reflections**
+# Runway Prompt: Scene 012 — Reception & Reflections
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Scene Summary:**
 Evening reception after the conference speeches. Elegant lighting, wine glasses, and mingling intellectuals. Florentine, still in her formal dress, navigates small clusters of delegates congratulating her. Laughter, curiosity, and future invitations mix with a faint undertone of strategic interest.
