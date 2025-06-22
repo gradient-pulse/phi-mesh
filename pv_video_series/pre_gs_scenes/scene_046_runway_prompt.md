@@ -1,5 +1,7 @@
 # Scene 046 – Runway Prompt
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 ## Visual Goal
 Create an intimate yet strategically charged bedroom scene set on a serene Saturday morning. The setting should convey warmth, mutual respect, and inspiration as Jack proposes a documentary about Florentine’s work. The scene should visually transition from affection to reflection, culminating in Florentine’s redirection toward a documentary on fake news.
 
