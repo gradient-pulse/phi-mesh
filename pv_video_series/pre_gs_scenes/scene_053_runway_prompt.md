@@ -1,5 +1,7 @@
 # Runway Prompt — Scene 053
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Scene Title:** Train Departure and Reflection  
 **Setting:** London Underground station and train interior, evening light fading  
 **Visual Style:** Moody, naturalistic, handheld shots for intimacy, reflective tones in the final moments
