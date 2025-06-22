@@ -1,4 +1,6 @@
-Runway Generation Prompt — Scene 068: Chancellor’s Corridor
+# Runway Generation Prompt — Scene 068: Chancellor’s Corridor
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Title: Chancellor’s Corridor
 Location: Private hallway, Office of the Chancellor, Berlin
