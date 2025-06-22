@@ -1,5 +1,7 @@
 # Runway Prompt — Scene 059: Morning Briefing
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 ## Scene Overview
 **Setting**: Interior of a black government car traveling from Hotel Adlon Kempinski to a government ministry building in central Berlin. Early morning light, clear skies. Subtle orchestral music rising.  
 **Mood**: Quiet determination, formal tension, the gravity of national stakes.  
