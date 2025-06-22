@@ -1,4 +1,6 @@
-## Scene 23 – Runway Prompt
+# Scene 023 – Runway Prompt
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Core cinematic instruction:**  
 Create a moody, dialogue-driven short scene set inside a modern British news network office, late afternoon. Focus on character interaction between Liesel Porsch and a remote caller from Berlin. Highlight the geopolitical significance of Florentine Fischer's keynote speech being monitored and discussed at the EU policy level.
