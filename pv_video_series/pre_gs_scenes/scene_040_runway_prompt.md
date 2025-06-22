@@ -1,6 +1,8 @@
-Scene 40 – Runway Prompt
-
+# Scene 040 – Runway Prompt
 Title: Hargreaves’ Advice
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Setting: Florentine’s office, early evening. The soft light of sunset filters through the tall windows of University College London. The space is quiet—books, papers, a laptop, and the faint background hum of the city beyond.
 Characters:
 	•	Florentine Fischer (speaking)
