@@ -1,5 +1,7 @@
 ## Runway Prompt — Scene 052: “Monday Morning Run”
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Visual Style:**  
 Naturalistic and cinematic, with early morning golden light filtering through the trees of Hampstead Heath. Cool tones for emotional clarity. Intimate handheld or steadycam for close conversation shots.
 
