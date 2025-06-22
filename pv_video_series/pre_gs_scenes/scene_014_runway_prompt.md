@@ -1,7 +1,9 @@
-# Runway Prompt — Scene 14
+# Runway Prompt — Scene 014
 
 ## Title
 Signals and Sentiments
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ## Scene Summary
 Florentine, finally alone in her hotel room after an overwhelming day, sits on her bed under the soft glow of a bedside lamp. She answers a call from her husband, Jack. The conversation is quiet, tender, and charged with unspoken tension. Outside, unseen by her, a black Mercedes from earlier in the day glides slowly past the hotel entrance before disappearing into the Nice night.
