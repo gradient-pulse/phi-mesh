@@ -1,4 +1,4 @@
-#Scene: 004
+Scene: 004
 slug: ollie_article_impact
 
 > ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
