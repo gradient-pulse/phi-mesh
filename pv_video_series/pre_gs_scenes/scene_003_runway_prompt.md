@@ -1,6 +1,9 @@
-🎬 Scene 03 — Runway Prompt
+🎬 Scene 003 — Runway Prompt
 
 Scene Title: Silicon Creatures and the Cave
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Source: Chapter 2, Palpable Voice
 Location: Florentine’s office, UCL Anthropology Department, London
 
