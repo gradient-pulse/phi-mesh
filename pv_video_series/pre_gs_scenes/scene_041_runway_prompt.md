@@ -1,7 +1,8 @@
-# Scene 41 – Runway Prompt
-
+# Scene 041 – Runway Prompt
 ## Title:
 Encounter at the Print Room Café
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ## Visual Style Prompt:
 A soft golden-hour scene transitions into warm interior lighting. The exterior of Taviton Street shows Florentine exiting a classic academic building to meet Lada Morozov, who waits casually but alertly. As they greet each other with polite warmth, the camera follows them walking through the campus grounds of University College London—light dappling through trees, students and staff in the background. They enter the Print Room Café, a quiet, warmly lit space filled with wooden furniture, books, and the quiet hum of conversation.
