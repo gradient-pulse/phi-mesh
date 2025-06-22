@@ -1,5 +1,7 @@
 # Runway Prompt — Scene 048: The Morozovs Over Breakfast
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 ## Characters
 - **Victor Morozov**: A composed but calculating figure. A man who operates in the shadows of European power structures.
 - **Lada Morozov**: His intelligent and assertive daughter, eager to step into the world of influence with strategic charm.
