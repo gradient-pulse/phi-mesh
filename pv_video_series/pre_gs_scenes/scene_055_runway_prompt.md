@@ -1,5 +1,7 @@
 Runway Prompt for Scene 055 — Brasserie Quarré Briefing
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Visual Style: European political thriller meets intimate character drama. Set in the opulent yet discreet dining area of Hotel Adlon Kempinski’s Brasserie Quarré. Mood: low-key tension, calm before the storm.
 
 Setting:
