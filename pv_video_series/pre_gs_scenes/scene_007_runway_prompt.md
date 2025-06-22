@@ -1,4 +1,4 @@
-# scene_007_runway_prompt.md
+# Scene_007_runway_prompt.md
 
 > ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
