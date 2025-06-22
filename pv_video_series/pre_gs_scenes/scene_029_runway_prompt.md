@@ -1,6 +1,8 @@
-# Runway Prompt — Scene 29
-
+# Runway Prompt — Scene 029
 ## Scene Title: Berlin Arrival  
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Location:** Berlin Brandenburg Airport → Government Vehicle  
 **Time of Day:** Late Afternoon  
 **Visual Style:** Cinematic realism with subdued color palette (greys, muted blues, steely blacks); discreet security tones.
