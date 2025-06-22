@@ -1,7 +1,8 @@
-scene_31_runway_prompt.md
-
+# Scene_031_runway_prompt.md
 Title: The Origin of the Threat
-Scene Number: 31
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Setting:
 Interior – Berlin – Federal Ministry for Economic Affairs and Energy – Early morning.
 Sparse light enters a sleek, modern office. The city skyline glows dimly behind vertical blinds.
