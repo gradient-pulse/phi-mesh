@@ -1,5 +1,7 @@
-scene_35_runway_prompt.md
+# Scene_035_runway_prompt.md
 Title: The Codename Trap
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Florentine sits in her UCL office, mid-morning light filtering through the blinds. She’s on a call with Dr. Weber (voice only), the tone serious yet composed. As they speak, she proposes a classic counter-intelligence tactic: using unique project codenames when speaking to different contacts.
 
