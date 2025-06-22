@@ -1,5 +1,7 @@
----
-title: Scene 05 — Runway Prompt
+# Scene 005 — Runway Prompt
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 source: Palpable Voice — Chapter 3
 location: UCL Anthropology Department + BBC Broadcasting House + British Herald Newsroom
 characters:
