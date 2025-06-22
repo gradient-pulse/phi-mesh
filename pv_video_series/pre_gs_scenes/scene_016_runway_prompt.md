@@ -1,4 +1,6 @@
-## Runway Video Generation Prompt – Scene 16
+## Runway Video Generation Prompt – Scene 016
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ### Summary
 Create a realistic, dialogue-driven office scene at University College London. A young journalist (Oliver Blackwood) enters a quiet administration building and meets with a stern university official (Geoffrey Hargreaves) to discuss reparation for a damaging article. The scene focuses on subtle tension, institutional authority, and the surprising presence of AI.
