@@ -1,5 +1,7 @@
-File: scene_27_runway_prompt.md
+# Scene_027_runway_prompt.md
 Purpose: Generate a short cinematic scene based on Chapter 6, Scene 27 of Palpable Voice
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ⸻
 
