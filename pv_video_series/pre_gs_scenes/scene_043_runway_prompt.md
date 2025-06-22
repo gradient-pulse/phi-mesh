@@ -1,6 +1,8 @@
-Runway Prompt – Scene 43: Walk in Bloomsbury
-
+# Scene 043: Walk in Bloomsbury
 Scene Title: Walk in Bloomsbury
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 Location: London – From UCL to Russell Square
 Time of Day: Early evening, golden hour light
 
