@@ -1,4 +1,6 @@
-# Runway Prompt for Scene 21 — Candace’s Discovery
+# Runway Prompt for Scene 021 — Candace’s Discovery
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ## Summary
 This scene captures a quiet but pivotal moment in the online newsroom. Candace, a young editor working late, stumbles across the breaking news of Martin Thornick’s death. The discovery prompts her to send a cryptic but revealing message to her father, suggesting a deeper personal connection to the deceased. This brief moment subtly weaves multiple storylines together and hints at a deeper intrigue.
