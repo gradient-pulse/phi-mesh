@@ -1,4 +1,6 @@
-# Runway Prompt: Scene 15 — The Golden Rule
+# Runway Prompt: Scene 015 — The Golden Rule
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Scene Context:**  
 This is a multilayered speech-and-dialogue scene featuring Professor Florentine Fischer as the keynote speaker at an international peace conference. She introduces her "Unity-Disunity" (UD) societal model—a foundational AI ethics and strategy framework. Her delivery is calm, rational, and quietly forceful. The audience contains delegates, scholars, and political observers.
