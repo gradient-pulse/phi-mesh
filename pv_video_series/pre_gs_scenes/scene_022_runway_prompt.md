@@ -1,4 +1,6 @@
-## Runway Prompt for Scene 22: Anonymous Tip
+# Runway Prompt for Scene 022: Anonymous Tip
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ### Core Prompt:
 Generate a cinematic scene set in the London Metropolitan Police non-emergency call center at night. The camera focuses on a single police operator who answers a routine call. An anonymous, filtered voice delivers a chilling and concise tip: “Martin Thornick had coffee this morning at Starbucks with documentary producer, Jack Keller.” Before the operator can reply, the line disconnects. The operator, now alert, logs the call into the system. The scene ends on a close-up of the computer screen displaying Keller’s name.
