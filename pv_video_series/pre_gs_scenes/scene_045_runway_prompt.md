@@ -1,4 +1,6 @@
-# Runway Prompt — Scene 45
+# Scene 045
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ## Scene Summary
 INT. KELLER HOUSE – BEDROOM – SATURDAY MORNING
