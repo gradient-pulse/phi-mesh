@@ -1,4 +1,6 @@
-Runway Generation Prompt — Scene 069: Jack Keller’s Ride
+# Runway Generation Prompt — Scene 069: Jack Keller’s Ride
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Title: Jack Keller’s Ride
 Location: Outskirts of Greater London, suburban roads and countryside
