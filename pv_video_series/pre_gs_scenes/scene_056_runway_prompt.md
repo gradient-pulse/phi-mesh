@@ -1,4 +1,6 @@
-Runway Prompt for Scene 056: “Morning of the Mission”
+# Runway Prompt for Scene 056: “Morning of the Mission”
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Visual Style:
 Naturalistic lighting with a dignified, cinematic tone. Use soft morning sunlight filtering through sheer curtains. Subtle camera movement to create a calm but anticipatory rhythm. Prioritize close-up details of preparation—hands zipping a bag, eyes checking notes, steam rising from a teacup.
