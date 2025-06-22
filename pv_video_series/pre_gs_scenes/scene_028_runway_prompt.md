@@ -1,4 +1,6 @@
-# Runway Prompt — Scene 28
+# Runway Prompt — Scene 028
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ## Visual Style
 Grounded realism with subtle cinematic poise. Light streams into the university office, casting elongated morning shadows and signaling a tonal shift toward action and commitment. Natural hues dominate: beige walls, sunlight glinting on polished wood, steam from tea curling in the foreground. The vibe is calm, mature, deliberate.
