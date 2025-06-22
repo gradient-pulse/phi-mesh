@@ -1,4 +1,6 @@
-# Runway Prompt for Scene 42: The Café Conversation
+# Scene 042: The Café Conversation
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ## Format
 Cinematic scene, 16:9, color graded for early evening London light.
