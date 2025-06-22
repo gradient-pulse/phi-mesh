@@ -1,7 +1,7 @@
-# Scene 32 – Runway Prompt
+# Scene 032 – Runway Prompt
+## Title: Liesel on Cloud Nine
 
-## Title
-Liesel on Cloud Nine
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 ## Visual Style
 Warm natural morning light. Slight lens blur on background. Gentle hallway reflections. Camera follows Liesel from behind, tracking her gentle pace before the near-collision with Florentine. Mood contrast builds subtly.
