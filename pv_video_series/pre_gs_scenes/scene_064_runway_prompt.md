@@ -1,4 +1,6 @@
-## Runway Prompt – Scene 064: Florentine's Opening Address
+# Runway Prompt – Scene 064: Florentine's Opening Address
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Setting**: Chancellor’s Office, Berlin – Grand Conference Hall  
 **Time**: Wednesday morning, shortly after the Chancellor’s surprise introduction  
