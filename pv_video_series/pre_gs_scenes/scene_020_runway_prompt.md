@@ -1,6 +1,8 @@
-## Runway Prompt — Scene 20: Berlin Response
+# Runway Prompt — Scene 020: Berlin Response
+**Scene Title:** Berlin Response 
 
-**Scene Title:** Berlin Response  
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Setting:** Editorial office of The British Herald, London — late afternoon  
 **Characters:**  
 - Liesel Porsch (sharp German journalist, multilingual, pragmatic)  
