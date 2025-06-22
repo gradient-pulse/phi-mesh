@@ -1,4 +1,6 @@
-RUNWAY PROMPT — Scene 066: The Crucible Exchange
+# RUNWAY PROMPT — Scene 066: The Crucible Exchange
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Title: The Crucible Exchange
 Location: Chancellor’s Office, Berlin
