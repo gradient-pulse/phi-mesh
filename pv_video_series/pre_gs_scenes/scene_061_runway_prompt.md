@@ -1,4 +1,6 @@
-scene_061_runway_prompt.md
+# scene_061_runway_prompt.md
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 Prompt for Runway Scene Generation
 
