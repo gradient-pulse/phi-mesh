@@ -1,5 +1,8 @@
-scene: 04
+#Scene: 004
 slug: ollie_article_impact
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 chapter_source: Chapter 2, end
 location: The British Herald newsroom, UCL courtyard, social media feed
 
