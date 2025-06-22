@@ -1,5 +1,7 @@
 # Runway Prompt — Scene 057: The Arrival
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 ## Visual Style & Tone
 Set the tone as ceremonial and anticipatory. The lighting should be soft morning light—subdued, natural, but with a faint golden hue to signal importance. Architecture is a character in itself here: clean, modern lines of the Ministry contrasted with the historic texture of Berlin seen from the car. The pacing is deliberate, with minimal dialogue. Use silence and glances to convey rising tension and purpose.
 
