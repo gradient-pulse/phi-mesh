@@ -1,4 +1,6 @@
-  **Runway Prompt: Scene 06 — Whisked Away**
+# Runway Prompt: Scene 006 — Whisked Away
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Scene Description:**
 Florentine, our protagonist, arrives early at Gatwick Airport en route to a pivotal AI conference in Nice. As she waits for her flight, she stumbles upon a copy of Asimov's *I, Robot* at a bookshop. This triggers a rich internal monologue about the robot laws, their limitations, and the parallels with societal laws. We see her flight to Nice and arrival at the airport where she is unexpectedly picked up by a chauffeur and whisked away to a luxurious hotel—not her intended destination. There, she’s confronted by a mysterious Russian oligarch, Victor Morozov, who offers to fund her work in exchange for subtle public influence. Lada, his daughter, intervenes and helps Florentine escape the awkward entrapment. They flee down the scenic Chemin des Douaniers, eventually reaching safety. Later that evening, Florentine delivers a thought-provoking speech at the conference’s welcome dinner, positioning the philosophical role of AI as future mentor—not answer giver but question asker.
