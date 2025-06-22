@@ -1,4 +1,6 @@
-## Runway Generation Prompt — Scene 063: The Chancellor’s Entrance
+# Runway Generation Prompt — Scene 063: The Chancellor’s Entrance
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Visual Style**:  
 Prestige-level political cinematography in the spirit of *The West Wing*, *The Crown*, or *Borgen*. This is the seat of executive power—subtle opulence, procedural discipline, and symbolic depth. The Chancellery’s main conference chamber feels less theatrical, more calibrated—designed for permanence rather than press.
