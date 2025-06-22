@@ -1,4 +1,6 @@
-# Scene 08 – Arrival and Speech
+# Scene 008 – Arrival and Speech
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
 
 **Visual Style**:  
 Elegant and cerebral. Think Wes Anderson lighting meets BBC political drama. Golden-hour tones with deep focus on facial expressions and gestures during the reception. Linger on intellectual tension and earned poise.
