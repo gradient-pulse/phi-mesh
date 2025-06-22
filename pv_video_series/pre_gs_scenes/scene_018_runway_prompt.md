@@ -1,6 +1,8 @@
-## Runway Prompt — Scene 18
-
+# Runway Prompt — Scene 018
 **Scene Title:** Jack and Thornick – A Cup of Coffee  
+
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 **Location:** Starbucks café, suburban London  
 **Visual Style:** Naturalistic realism, warm muted tones  
 **Mood:** Tense conversation disguised as casual reunion  
