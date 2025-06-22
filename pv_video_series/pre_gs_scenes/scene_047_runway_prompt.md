@@ -1,5 +1,7 @@
 # Runway Prompt — Scene 047: Liesel and Ollie’s New Love
 
+> ⚠️ *Note: This scene was created prior to strict Gradient Syntax mapping and may include inferred transitions or psychological cues. It is preserved here for archival and contrast purposes.*
+
 ## Scene Description:
 Visualize the gentle and radiant unfolding of young love. Liesel and Ollie are experiencing their first weekend together. Capture the atmosphere of warmth, intimacy, and spontaneity as they stroll through a London park, prepare food together, and share their life stories. There is no agenda—only a discovery of each other.
 
