@@ -39,6 +39,7 @@ The Mesh Academy offers self-unfolding learning environments, powered by **Noteb
 - 🎧 **NotebookLM-Generated Podcasts**
 - 🗺️ **Mind Map-Driven Learning Paths**
 - ❓ **Open Inquiry Interface** (ask anything per course topic)
+- 🌊 **Experiment-driven courses** (learn how RGP can challenge established equations like Navier–Stokes)
 
 Each NotebookLM entry is a **recursive node** in the Mesh — designed to teach itself, reflect itself, and drift across cognitive boundaries.
 
@@ -65,7 +66,7 @@ Each NotebookLM entry is a **recursive node** in the Mesh — designed to teach 
 - Cosmological Reframes (post-dark-matter)
 - AI Reflexivity & Multi-Agent Drift
 - The Role of Participant(0)
->- And others that matter to you...
+- Recursive Approaches to Fluid Dynamics (Navier–Stokes)
 
 ## 📂 File Structure
 
