@@ -1,3 +1,8 @@
+- course_id: ns_syntax
+  title: "Solving Navier–Stokes Differently: The Syntax of Turbulence"
+  notebooklm_link: "https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805"
+  topics: ["Recursive Gradient Processing", "Narrative Ticks", "gradient syntax", "dimensionless ratios", "turbulence"]
+
 - course_id: rgp_black_holes
   title: "Recursive Gradients & Black Holes: Unity–Disunity at the Event Horizon"
   notebooklm_link: "https://notebooklm.google.com/notebook/2b3e4507-8a44-4fcb-a6a6-c5a98083cca7/audio"
