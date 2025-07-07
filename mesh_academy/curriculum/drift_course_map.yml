@@ -1,5 +1,9 @@
 drift_triggers:
 
+turbulence_syntax:
+  suggest: ns_syntax
+  reason: "Shows how dimensionless patterns can reveal turbulence coherence beyond classic Navier-Stokes solvers."
+  
   alignment:
     suggest: mesh_academy_intro
     reason: "Introduces recursive alignment as foundational learning structure."
