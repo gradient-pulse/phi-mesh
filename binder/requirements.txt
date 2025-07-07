@@ -1,1 +1,1 @@
--r rgp_ns_prototype/requirements.txt
+-r ../rgp_ns_prototype/requirements.txt
