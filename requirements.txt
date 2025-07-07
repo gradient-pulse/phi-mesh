@@ -1,1 +1,5 @@
-numpy scipy matplotlib h5py streamlit
+numpy
+scipy
+matplotlib
+h5py
+streamlit
