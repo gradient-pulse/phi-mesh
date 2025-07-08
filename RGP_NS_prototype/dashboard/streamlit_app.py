@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
-from dashboard import render_dashboard  # renders the five KPI bars
+from render_dashboard import render_dashboard      # same-folder import
+# or (if Python complains again) use explicit relative import:
+# from .render_dashboard import render_dashboard
 
 # ✅ This must be the first Streamlit command
 st.set_page_config(page_title="NT Metrics Dashboard", layout="centered")
