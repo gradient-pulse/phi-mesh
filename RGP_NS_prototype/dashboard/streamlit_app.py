@@ -1,14 +1,16 @@
 import streamlit as st
 import pandas as pd
-from render_dashboard import render_dashboard      # same-folder import
-# or (if Python complains again) use explicit relative import:
-# from .render_dashboard import render_dashboard
+import matplotlib.pyplot as plt
 
-# ✅ This must be the first Streamlit command
+# -------------------------------------------------
+# Streamlit page config
+# -------------------------------------------------
 st.set_page_config(page_title="NT Metrics Dashboard", layout="centered")
-
 st.title("NT Metrics Dashboard")
 
+# -------------------------------------------------
+# File upload
+# -------------------------------------------------
 uploaded = st.file_uploader(
     "Upload KPI CSV (see results/kpi_columns.txt for schema)",
     type="csv",
@@ -26,6 +28,23 @@ if uploaded is None:
     )
     st.stop()
 
-# Load the CSV into a DataFrame and render the dashboard
+# -------------------------------------------------
+# Load CSV and display metrics
+# -------------------------------------------------
 df = pd.read_csv(uploaded)
-render_dashboard(df)
+
+if df.empty:
+    st.warning("Uploaded file contains no data.")
+    st.stop()
+
+# Expecting a single-row CSV with 5 KPI columns
+metrics = df.iloc[0]
+
+st.subheader("Five KPI metrics")
+st.dataframe(df)
+
+# Horizontal bar chart
+fig, ax = plt.subplots()
+metrics.plot(kind="barh", ax=ax, color="skyblue")
+ax.set_xlabel("Value")
+st.pyplot(fig)
