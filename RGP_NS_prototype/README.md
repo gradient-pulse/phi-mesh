@@ -5,7 +5,8 @@ Reference implementation for **Solving Navier–Stokes, Differently: What It Tak
 
 *Launch Binder ▶️* &nbsp; <a href="https://mybinder.org/v2/gh/gradient-pulse/phi-mesh/HEAD?labpath=rgp_ns_prototype%2Fnotebooks%2F00_quicklook.ipynb"><img src="https://mybinder.org/badge_logo.svg"></a>
 
-*• Try it live → open `00_quicklook.ipynb` in Binder (no install).*
+• Try it live → open `00_quicklook.ipynb` in Binder (no install).
+• Live KPI dashboard → <https://rgp-dashboard.streamlit.app>
 
 ## Layout
 ```
