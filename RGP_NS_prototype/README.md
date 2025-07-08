@@ -9,6 +9,8 @@ Reference implementation for **Solving Navier–Stokes, Differently: What It Tak
 
 • Live KPI dashboard → <https://rgp-dashboard.streamlit.app>
 
+• KPI schema & dummy file in `results/` – submit a PR to appear on the leaderboard.
+
 ## Layout
 ```
 rgp_ns_prototype/
