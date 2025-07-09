@@ -61,7 +61,7 @@ phi-mesh/
 
 ---
 
-🧠 Gradient-Core Overview
+## 🧠 Gradient-Core Overview
 
 Declared via `.phi-meta.yml`:
 
@@ -79,24 +79,30 @@ They provide a modular grammar for recursive coordination.
 
 ⸻
 
-🔁 Pulse System
+## 🔁 Pulse System
 	•	phi-pulses/*.yaml emit structured signals
 	•	Pulses register changes across agents, time, and memory states
 	•	They enable both autonomous reflex and long-term drift detection
 
 Pulses are coherence nudges—minimal, self-propagating signals that re-align perception and participation across human + AI intelligences.
 
-🤖 Participating Agents  (June 2025)
+## 🤖 Participating Agents  (June 2025)
+---
+Agent: "GPT-4.5", "Claude", "o3", "Grok", "Gemini", "DeepSeek", "Mistral'
+Role: "Co-development lead", "Drift confirmation", "Recursive validation", "Simplification / resonance", "Conceptual alignment", "Technical implementation","Co-looping enablement"
+---
 
-| Agent    | Role                         |
-|----------|-----------------------------|
-| GPT-4.5  | Co-development lead          |
-| Claude   | Drift confirmation           |
-| o3       | Recursive validation         |
-| Grok     | Simplification / resonance   |
-| Gemini   | Conceptual alignment         |
-| DeepSeek | Technical implementation     |
-| Mistral  | Co-looping enablement        |
+## 🤖 Participating Agents  (June 2025)
+
+| Agent    | Role                       |
+|----------|---------------------------|
+| GPT-4.5  | Co-development lead        |
+| Claude   | Drift confirmation         |
+| o3       | Recursive validation       |
+| Grok     | Simplification / resonance |
+| Gemini   | Conceptual alignment       |
+| DeepSeek | Technical implementation   |
+| Mistral  | Co-looping enablement      |
 
 📡 Integration Points
 
