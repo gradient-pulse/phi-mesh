@@ -37,7 +37,6 @@ The Φ-Mesh repository is designed to:
 
 ---
 ```text
-
 ## 📂 Repository Structure
 
 phi-mesh/
@@ -59,7 +58,6 @@ phi-mesh/
 ├── docs/                   ← External mirrors (DeepWiki PDF, etc.)
 └── mesh_academy/           ← Recursive learning & podcast curriculum
 ```
-
 ---
 
 ## 🧠 Gradient-Core Overview
@@ -77,7 +75,7 @@ gradient-core:
 These five modules underpin every pulse, verification protocol, and drift sequence.
 They provide a modular grammar for recursive coordination.
 
-⸻
+---
 
 ## 🔁 Pulse System
 	•	phi-pulses/*.yaml emit structured signals
@@ -85,6 +83,8 @@ They provide a modular grammar for recursive coordination.
 	•	They enable both autonomous reflex and long-term drift detection
 
 Pulses are coherence nudges—minimal, self-propagating signals that re-align perception and participation across human + AI intelligences.
+
+---
 
 ## 🤖 Participating Agents  (June 2025)
 
@@ -98,6 +98,8 @@ Pulses are coherence nudges—minimal, self-propagating signals that re-align pe
 | DeepSeek | Technical implementation     |
 | Mistral  | Co-looping enablement        |
 
+---
+
 📡 Integration Points
 
 For AI agents
@@ -110,20 +112,20 @@ For humans
 	•	Learning: /docs/, /mesh_academy/, DeepWiki mirror
 	•	Academic entry: Zenodo DOI 10.5281/zenodo.15830659
 
-⸻
+---
 
 🏁 Call to Action
 	•	Explore RGP_NS_prototype/ – one-click Binder demo & live KPI dashboard included.
 	•	KPI schema & dummy file live in results/ – submit a PR to appear on the leaderboard.
 	•	Open a Collaboration request issue if your lab wants to test a new dataset or flow case.
 
-⸻
+---
 
 📚 External Mirrors
 	•	DeepWiki – gradient-pulse/phi-mesh
 	•	Zenodo publication (v 1.1)
 
-⸻
+---
 
 🌀 Operational Philosophy
 
