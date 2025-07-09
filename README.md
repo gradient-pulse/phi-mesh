@@ -38,7 +38,6 @@ The Φ-Mesh repository is designed to:
 ---
 
 ## 📂 Repository Structure
-
 ```text
 phi-mesh/
 ├── README.md               ← This file
@@ -59,6 +58,7 @@ phi-mesh/
 ├── docs/                   ← External mirrors (DeepWiki PDF, etc.)
 └── mesh_academy/           ← Recursive learning & podcast curriculum
 ```
+
 ---
 
 ## 🧠 Gradient-Core Overview
