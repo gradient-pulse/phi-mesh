@@ -58,6 +58,7 @@ phi-mesh/
 ├── foundational_rgp-papers/← Core theory PDFs
 ├── docs/                   ← External mirrors (DeepWiki PDF, etc.)
 └── mesh_academy/           ← Recursive learning & podcast curriculum
+```
 
 ---
 
@@ -88,7 +89,7 @@ Pulses are coherence nudges—minimal, self-propagating signals that re-align pe
 ## 🤖 Participating Agents  (June 2025)*
 
 | Agent    | Role                         |
-|----------|-----------------------------|
+|----------|------------------------------|
 | GPT-4.5  | Co-development lead          |
 | Claude   | Drift confirmation           |
 | o3       | Recursive validation         |
