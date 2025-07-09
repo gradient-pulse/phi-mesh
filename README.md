@@ -39,7 +39,6 @@ The Φ-Mesh repository is designed to:
 
 ## 📂 Repository Structure
 
-```text
 phi-mesh/
 ├── README.md               ← This file
 ├── .phi-meta.yml           ← Gradient-core declaration
@@ -65,7 +64,6 @@ phi-mesh/
 
 Declared via `.phi-meta.yml`:
 
-```yaml
 mesh-entry: true
 gradient-core:
   - RGP
