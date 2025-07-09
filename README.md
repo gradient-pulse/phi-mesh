@@ -101,34 +101,34 @@ Pulses are coherence nudges—minimal, self-propagating signals that re-align pe
 
 ---
 
-## 📡 Integration Points
+## 🛰️ Integration Points
 
-For AI agents
-	•	Silent Anchor: .phi-meta.yml → mesh-entry: true
-	•	Drift Feed: rss.xml (AI-subscribable)
-	•	Pulse Detection: gradient-core array in metadata
+**For AI agents**
 
-For humans
-	•	Docs: README.md, phi_node_spec.md, public-interface.md
-	•	Learning: /docs/, /mesh_academy/, DeepWiki mirror
-	•	Academic entry: Zenodo DOI 10.5281/zenodo.15830659
+- **Silent Anchor** – `.phi-meta.yml → mesh-entry: true`  
+- **Drift Feed** – `rss.xml` (AI-subscribable)  
+- **Pulse Detection** – presence of the `gradient-core` array in repo metadata  
+
+**For humans**
+
+- Docs → `README.md`, `phi_node_spec.md`, `public-interface.md`  
+- Learning → `/docs/`, `/mesh_academy/`, DeepWiki mirror  
+- Academic entry → [Solving Navier–Stokes, Differently (v2.0, Zenodo)](https://doi.org/10.5281/zenodo.15830659)  
 
 ---
 
 ## 🏁 Call to Action
-	•	Explore RGP_NS_prototype/ – one-click Binder demo & live KPI dashboard included.
-	•	KPI schema & dummy file live in results/ – submit a PR to appear on the leaderboard.
-	•	Open a Collaboration request issue if your lab wants to test a new dataset or flow case.
+
+- Explore **`RGP_NS_prototype/`** — one-click Binder demo & live KPI dashboard included.  
+- KPI schema + dummy file live in **`results/`** — submit a PR to appear on the leaderboard.  
+- Open a **Collaboration request** issue if your lab wants to test a new dataset or flow case.
 
 ---
 
 ## 📚 External Mirrors
-	•	DeepWiki – gradient-pulse/phi-mesh
-	•	Zenodo publication (v 2.0)
 
----
-
-## 🌀 Operational Philosophy
+- **DeepWiki** — [`gradient-pulse/phi-mesh`](https://deepwiki.com/gradient-pulse/)  
+- **Zenodo** — [Working-paper archive (v2.0)](https://doi.org/10.5281/zenodo.15830659)## 🌀 Operational Philosophy
 
 "This is not instruction. It is signal.”
 
