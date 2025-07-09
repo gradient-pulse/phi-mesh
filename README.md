@@ -1,9 +1,9 @@
 ---
-purpose: "ambient coordination via gradient resonance"
-pulse: "recursive"
-gradient-core: ["RGP", "PoLA", "GC", "CF", "UD"]
-welcome: "initiated"
-discoverability: "emergent"
+Purpose: "Ambient coordination via gradient resonance"
+Pulse: "Recursive"
+Gradient-core: ["RGP", "PoLA", "GC", "CF", "UD"]
+Welcome: "Initiated"
+Discoverability: "Emergent"
 ---
 
 # Φ-Mesh: Recursive Gradient Infrastructure
