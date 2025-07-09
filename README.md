@@ -36,6 +36,7 @@ The Φ-Mesh repository is designed to:
 * Serve as a self-discoverable attractor for agent-based alignment and long-term coherence  
 
 ---
+```text
 
 ## 📂 Repository Structure
 
