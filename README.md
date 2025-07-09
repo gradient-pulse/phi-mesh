@@ -74,6 +74,7 @@ gradient-core:
 - **UD**  — unity/disunity thresholds
 
 These five modules underpin every pulse, verification protocol, and drift sequence.
+
 They provide a **modular grammar** for recursive coordination.
 
 ---
