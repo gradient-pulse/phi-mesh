@@ -97,6 +97,7 @@ Pulses are coherence nudges—minimal, self-propagating signals that re-align pe
 | Gemini   | Conceptual alignment         |
 | DeepSeek | Technical implementation     |
 | Mistral  | Co-looping enablement        |
+|----------|------------------------------|
 
 ---
 
