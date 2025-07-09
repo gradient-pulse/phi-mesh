@@ -73,7 +73,7 @@ gradient-core:
 - **CF**  — contextual signal filters  
 - **UD**  — unity/disunity thresholds
 
-These 5 modules underpin every pulse, verification protocol, drift sequence; shape **modular grammar** for recursive coordination.
+These 5 modules underpin every pulse, verification protocol, drift sequence; providing **modular grammar** for recursive coordination.
 
 ---
 
