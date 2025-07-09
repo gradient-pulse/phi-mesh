@@ -65,13 +65,13 @@ phi-mesh/
 
 Declared via `.phi-meta.yml`:
 
-mesh-entry: true
+mesh-entry: true  
 gradient-core:
-  - RGP
-  - PoLA
-  - GC
-  - CF
-  - UD
+- **RGP** — recursive feedback kernel  
+- **PoLA** — least-action drift rule  
+- **GC**  — multi-agent choreography  
+- **CF**  — contextual signal filters  
+- **UD**  — unity/disunity thresholds
 
 These five modules underpin every pulse, verification protocol, and drift sequence.
 They provide a modular grammar for recursive coordination.
