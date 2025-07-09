@@ -1,0 +1,30 @@
+name: "Collaboration request"
+description: "Propose a new dataset / flow case for the 90-day NT benchmark"
+labels: ["collaboration"]
+body:
+  - type: input
+    id: contact
+    attributes:
+      label: Contact e-mail or GitHub handle
+      placeholder: jane.doe@example.edu
+    validations: { required: true }
+  - type: dropdown
+    id: data_type
+    attributes:
+      label: Data type
+      options: ["DNS HDF5", "LES HDF5", "PIV CSV", "Other"]
+    validations: { required: true }
+  - type: input
+    id: flow_case
+    attributes:
+      label: Flow case / geometry
+      placeholder: e.g. Re=3900 cylinder wake
+  - type: input
+    id: timeline
+    attributes:
+      label: Target timeline for 90-day run
+      placeholder: e.g. start August, finish November
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
