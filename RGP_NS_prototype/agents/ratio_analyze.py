@@ -1,22 +1,17 @@
-#!/usr/bin/env python3
 """
-ratio_analyze.py – compute successive NT–NT-distance ratios
-Usage:
-    python ratio_analyze.py nt_times.txt --out ratios.csv
+ratio_analyze.py – compute successive NT-distance ratios
 """
-import numpy as np, argparse, pandas as pd
 
-def ratios(nt):
-    dt = np.diff(nt)
-    return dt[1:] / dt[:-1]
+import numpy as np
 
-if __name__ == "__main__":
-    p = argparse.ArgumentParser()
-    p.add_argument("file", help="nt_times.txt produced by nt_detect.py")
-    p.add_argument("--out", default="ratios.csv")
-    args = p.parse_args()
+def ratios(nt_idx: np.ndarray | list[int]) -> np.ndarray:
+    """
+    Given an ordered array of Narrative-Tick indices,
+    return r_i =  Δt_{i+1} / Δt_i  (len = len(nt_idx)-2).
+    """
+    nt_idx = np.asarray(nt_idx, dtype=float)
+    if nt_idx.size < 3:
+        return np.array([], dtype=float)
 
-    nts   = np.loadtxt(args.file)
-    r     = ratios(nts)
-    pd.Series(r, name="ratio").to_csv(args.out, index=False)
-    print(f"[✔] Saved {len(r)} ratios to {args.out}")
+    d = np.diff(nt_idx)          # Δt sequence
+    return d[1:] / d[:-1]        # element-wise ratio
