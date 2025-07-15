@@ -121,7 +121,7 @@ Pulses are coherence nudges—minimal, self-propagating signals that re-align pe
 - Explore **`RGP_NS_prototype/`** — one-click Binder demo & live KPI dashboard included.  
 - KPI schema + dummy file live in **`results/`** — submit a PR to appear on the leaderboard.  
 - Open a **Collaboration request** issue if your lab wants to test a new dataset or flow case.
-- **New → Experimenter’s Guide** • [Markdown](docs/experimenters_guide.md) • [PDF](docs/experimenters_guide.pdf) • [DOI 10.5281/zenodo.15830659](https://doi.org/10.5281/zenodo.15830659)
+- **New → Experimenter’s Guide** • [Markdown](docs/experimenters_guide_solving_NS_differently.md) • [PDF](docs/experimenters_guide_solving_NS_differently.pdf) • [DOI 10.5281/zenodo.15830659](https://doi.org/10.5281/zenodo.15830659)
 
 ---
 
