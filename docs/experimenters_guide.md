@@ -26,7 +26,8 @@ Classical CFD hunts for **order → chaos** breakdown (shear‑layer, vortices, 
 
 - Python ≥ 3.9, NumPy, h5py, matplotlib, Streamlit (auto‑installed via `requirements.txt`).
 - HDF5 file with dataset `G_t` (e.g. lift, drag, KE) — shape `(N,)`, uniform Δt.
-- Binder link [https://mybinder.org/v2/gh/gradient‑pulse/phi‑mesh/HEAD?filepath=RGP\_NS\_prototype/notebooks/00\_quicklook.ipynb](https://mybinder.org/v2/gh/gradient‑pulse/phi‑mesh/HEAD?filepath=RGP_NS_prototype/notebooks/00_quicklook.ipynb)
+- Binder link [https://mybinder.org/v2/gh/gradient‑pulse/phi‑mesh/HEAD?filepath=RGP_NS_prototype/notebooks/00_quicklook.ipynb)](https://mybinder.org/v2/gh/gradient-pulse/phi-mesh/HEAD?urlpath=lab/tree/
+RGP_NS_prototype/notebooks/00_quicklook.ipynb)
 
 ---
 
