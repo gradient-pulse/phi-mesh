@@ -30,3 +30,16 @@ pip install -r requirements.txt
 python agents/nt_detect.py data/example_G.h5 --sigma 1.5
 streamlit run dashboard/app.py
 ```
+---
+### Batch mode (CLI)
+
+```bash
+# 1. Detect Narrative Ticks
+python agents/nt_detect.py path/to/G_t.h5 --sigma 1.5
+
+# 2. Compute successive-distance ratios (writes *_ratios.txt)
+python agents/nt_ratio_cli.py nt_times.txt --outdir results --sigma 1.5
+
+python agents/nt_ratio_cli.py nt_times_run1.txt nt_times_run2.txt \
+       --outdir results/ratios_run --sigma 1.5
+```
