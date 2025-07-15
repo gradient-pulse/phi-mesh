@@ -43,3 +43,4 @@ python agents/nt_ratio_cli.py nt_times.txt --outdir results --sigma 1.5
 python agents/nt_ratio_cli.py nt_times_run1.txt nt_times_run2.txt \
        --outdir results/ratios_run --sigma 1.5
 ```
+➡️  For a 1-page walkthrough see the [Experimenter’s Guide](../docs/experimenters_guide.md).
