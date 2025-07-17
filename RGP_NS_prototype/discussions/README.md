@@ -3,12 +3,6 @@
 This folder archives external reactions, experimenter notes, and ad-hoc meeting
 summaries so that everything stays version-controlled and searchable.
 
-discussions/
-├── README.md              # the guide (includes the stub in a <details> tag)
-├── 2025-07-21-note_NASA.md
-├── 2025-07-22-note_Brown.md
-└── attachments/
-
 ---
 
 ## 1. File-naming rule
@@ -49,5 +43,4 @@ Copy-paste the template below ⬇️
 
 _MvdE_
 ```
-</details>
 
