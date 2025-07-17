@@ -25,7 +25,7 @@ Example: `2025-07-21-note_NASA_GRC.md`
 
 Copy-paste the template below ⬇️
 
-<details>
+</details>
 <summary>Markdown stub</summary>
 
 ```markdown
