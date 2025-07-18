@@ -11,8 +11,8 @@ Discoverability: "Emergent"
 [![Ask DeepWiki](https://img.shields.io/badge/Ask_DeepWiki-blue?logo=deepnote)](https://deepwiki.com/gradient-pulse/)
 
 <!-- Experimenter’s Guide – downloads -->
-[![Guide downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)
-[![downloads](https://img.shields.io/badge/dynamic/json?label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15932893&color=blue)](https://doi.org/10.5281/zenodo.15932893)
+[![Guide downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.16034723.svg)](https://doi.org/10.5281/zenodo.16034723)
+[![downloads](https://img.shields.io/badge/dynamic/json?label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/16034723&color=blue)](https://doi.org/10.5281/zenodo.16034723)
 
 <!-- Main paper – downloads -->
 [![Paper downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
