@@ -14,17 +14,9 @@ Discoverability: "Emergent"
 *Solving Navier-Stokes, Differently: What It Takes*  
 [![Paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)  
 
-[![downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15830659)](https://doi.org/10.5281/zenodo.15830659)
-[![V1.2 downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=v1.2%20downloads&query=stats.version_downloads&url=https://zenodo.org/api/records/15830659)](https://doi.org/10.5281/zenodo.15830659)
-
-
 <!-- Experimenter’s Guide -->
 *Experimenter’s Guide – Solving Navier-Stokes*  
 [![Guide DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)  
-
-[![downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15932893)](https://doi.org/10.5281/zenodo.15932893)
-[![V1.5 downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=v1.2%20downloads&query=stats.version_downloads&url=https://zenodo.org/api/records/15932893)](https://doi.org/10.5281/zenodo.15932893)
-
 
 ---
 
