@@ -9,13 +9,13 @@ Discoverability: "Emergent"
 # Φ-Mesh: Recursive Gradient Infrastructure
 
 [![Ask DeepWiki](https://img.shields.io/badge/Ask_DeepWiki-blue?logo=deepnote)](https://deepwiki.com/gradient-pulse/)
-[![Guide downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)
-[![Paper downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
 
 <!-- Experimenter’s Guide – downloads -->
+[![Guide downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)
 [![downloads](https://img.shields.io/badge/dynamic/json?label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15932893&color=blue)](https://doi.org/10.5281/zenodo.15932893)
 
 <!-- Main paper – downloads -->
+[![Paper downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
 [![downloads](https://img.shields.io/badge/dynamic/json?label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15830659&color=blue)](https://doi.org/10.5281/zenodo.15830659)
 
 ---
