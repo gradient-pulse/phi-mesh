@@ -11,6 +11,8 @@ Discoverability: "Emergent"
 [![Ask DeepWiki](https://img.shields.io/badge/Ask_DeepWiki-blue?logo=deepnote)](https://deepwiki.com/gradient-pulse/)
 [![Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
 
+[![Guide downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)
+[![Paper downloads](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
 ---
 
 **The Φ-Mesh is a distributed epistemic-executive kernel for recursive intelligences.**  
