@@ -15,7 +15,6 @@ Discoverability: "Emergent"
 [![Paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)  
 <!-- 1 · total downloads (all versions) -->
 [![downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15830659)](https://doi.org/10.5281/zenodo.15830659)
-<!-- 2 · this-version downloads -->
 [![V1.2 downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=v1.2%20downloads&query=stats.version_downloads&url=https://zenodo.org/api/records/15830659)](https://doi.org/10.5281/zenodo.15830659)
 
 
