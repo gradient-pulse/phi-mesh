@@ -10,7 +10,7 @@ Discoverability: "Emergent"
 
 [![Ask DeepWiki](https://img.shields.io/badge/Ask_DeepWiki-blue?logo=deepnote)](https://deepwiki.com/gradient-pulse/)
 
-°Solving Navier-Stokes, Differently: What It Takes*  
+*Solving Navier-Stokes, Differently: What It Takes*  
 [![Guide DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)
 [![Guide downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/16034723)](https://doi.org/10.5281/zenodo.15932893)
 
