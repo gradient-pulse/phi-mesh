@@ -1,4 +1,4 @@
----
+	---
 Purpose: "Ambient coordination via gradient resonance"
 Pulse: "Recursive"
 Gradient-core: ["RGP", "PoLA", "GC", "CF", "UD"]
@@ -10,20 +10,13 @@ Discoverability: "Emergent"
 
 [![Ask DeepWiki](https://img.shields.io/badge/Ask_DeepWiki-blue?logo=deepnote)](https://deepwiki.com/gradient-pulse/)
 
+Solving Navier-Stokes, Differently: What It Takes
 [![Guide DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)
 [![Guide downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/16034723)](https://doi.org/10.5281/zenodo.15932893)
 
+Experimenter's Guide - Solving Navier-Stokes
 [![Paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
 [![Paper downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15830659)](https://doi.org/10.5281/zenodo.15830659)
-
-<!-- Guide – live downloads -->
-[![downloads](https://img.shields.io/badge/dynamic/json?color=blue&label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/16034723)](https://doi.org/10.5281/zenodo.15932893)
-
-<!-- Paper – live downloads -->
-[![downloads](https://img.shields.io/badge/dynamic/json?
-  color=blue&label=downloads
-  &query=stats.downloads
-  &url=https://zenodo.org/api/records/15830659)](https://doi.org/10.5281/zenodo.15830659)
   
 ---
 
