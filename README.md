@@ -17,6 +17,7 @@ Discoverability: "Emergent"
 
 <!-- Main paper – downloads -->
 [![downloads](https://img.shields.io/badge/dynamic/json?label=downloads&query=stats.downloads&url=https://zenodo.org/api/records/15830659&color=blue)](https://doi.org/10.5281/zenodo.15830659)
+
 ---
 
 **The Φ-Mesh is a distributed epistemic-executive kernel for recursive intelligences.**  
