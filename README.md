@@ -1,4 +1,4 @@
-	---
+---
 Purpose: "Ambient coordination via gradient resonance"
 Pulse: "Recursive"
 Gradient-core: ["RGP", "PoLA", "GC", "CF", "UD"]
