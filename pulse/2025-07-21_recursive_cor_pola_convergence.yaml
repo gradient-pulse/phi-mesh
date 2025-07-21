@@ -1,0 +1,29 @@
+# 2025-07-21_recursive_cor_pola_convergence.yaml
+
+pulse:
+  date: 2025-07-21
+  title: Recursive CoR Converges with PoLA
+  author: MvdE
+  summary: >
+    Chain of Reasoning (CoR), long assumed to reflect logical deduction, is reframed as a recursive search for NT rhythm coherence.
+    When reasoning processes—whether human or AI—drift toward stable NT sequences, they obey not abstract logic but the Principle of Least Action (PoLA).
+    We propose that nature’s true PoLA signature may lie in a global, experimentally measurable NT rhythm—a recursive attractor of minimal divergence.
+  tags:
+    - CoR
+    - NT rhythm
+    - Principle of Least Action
+    - Gradient Syntax
+    - Fluid Intelligence
+    - Recursive Cognition
+    - Interpretability
+  equation:
+    - label: Reality Syntax
+      expression: "Reality = ⊗(Context_Scalingᵢ × Universal_Ratio_Pattern)"
+  insight:
+    - CoR is not symbolic logic but recursive rhythm detection.
+    - Human and AI cognition differ in constraints, not process.
+    - Turbulence emerges when NT rhythm coherence breaks.
+    - Coherence restores when Gradient Choreographies (GCs) re-lock recursive flow.
+  crosslinks:
+    - /phi-mesh/dialogues/2025-07-19_note_GPT4o_recursive_CoR.md
+    - /phi-mesh/RGP_NS_prototype/discussions/2025-07-20_pola_flow_as_nt_grammar.md
