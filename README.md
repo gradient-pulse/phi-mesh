@@ -135,7 +135,7 @@ Pulses are coherence nudges—minimal, self-propagating signals that re-align pe
 ## 📚 External Mirrors
 
 - **DeepWiki** — [`gradient-pulse/phi-mesh`](https://deepwiki.com/gradient-pulse/)  
-- **Zenodo** — [`Working-paper archive (v2.0)`](https://doi.org/10.5281/zenodo.15830659)
+- **Zenodo** — [`Working-paper archive (V1.2)`](https://doi.org/10.5281/zenodo.15830659)
 
 ---
 
