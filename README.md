@@ -16,7 +16,7 @@ Discoverability: "Emergent"
 
 <!-- Experimenter’s Guide -->
 *Experimenter’s Guide – Solving Navier-Stokes*  
-[![Guide DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15932893.svg)](https://doi.org/10.5281/zenodo.15932893)  
+[![Guide DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16280540.svg)](https://doi.org/10.5281/zenodo.16280540)  
 
 ---
 
