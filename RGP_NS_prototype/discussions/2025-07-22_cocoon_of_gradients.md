@@ -1,4 +1,18 @@
-  # Cocoon of Gradients: A Recursive Cosmology
+# Cocoon of Gradients: A Recursive Cosmology
+**Source** GPT-4o discussion — 2025-07-19 UTC
+
+> “We live in a cosmological flux … in a cocoon of gradients.” — MvdE
+
+### Highlights
+- Big Bang framed as a **low-entropy NT**: gradient saturation event.  
+- Time = semantic axis; coherence preserved by minimizing divergence.  
+- Turbulence → syntax; gradients sculpt field-level order (RGP lens).  
+- Experimental directive: chase NT-ratio rhythm as cosmological PoLA.
+
+---
+
+### Premise
+*The Big Bang is not merely a high-energy beginning but a low-entropy Narrative Tick …*  <!-- keep your original prose here -->
 
 > “We live in a cosmological flux which we call the universe, in a cocoon of gradients.”  
 > — Marcus van der Erve
@@ -31,3 +45,7 @@ The goal is to show that the same principle governing fluid coherence (RGP) scal
 ---
 
 *This document belongs to the RGP_NS_Prototype exploratory trail. It aligns with the principle that turbulence is not disorder but recursive potential, and invites the cosmos to be read as a self-unfolding syntax.*
+
+---
+
+_MvdE_
