@@ -1,4 +1,4 @@
-# Cocoon of Gradients: A Recursive Cosmology
+# 2025-07-22 Pulse — Cocoon of Gradients: A Recursive Cosmology
 
 > “We live in a cosmological flux which we call the universe, in a cocoon of gradients.”  
 > — Marcus van der Erve
@@ -50,4 +50,4 @@ Therefore, the entire discussion around Λ can be **set aside**. What remains is
 
 ---
 
-*This discussion belongs to the RGP_NS_Prototype trail and proposes a cosmology without constants—only choreographies.*
+*Filed under pulse. This note formalizes a cosmological reframing within the RGP_NS_Prototype context. Λ becomes unnecessary when coherence is treated as recursive syntax, not scalar force.*
