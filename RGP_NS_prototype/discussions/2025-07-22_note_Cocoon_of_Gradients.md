@@ -1,28 +1,18 @@
 # Cocoon of Gradients: A Recursive Cosmology
-**Source** GPT-4o discussion — 2025-07-19 UTC
-
-> “We live in a cosmological flux … in a cocoon of gradients.” — MvdE
-
-### Highlights
-- Big Bang framed as a **low-entropy NT**: gradient saturation event.  
-- Time = semantic axis; coherence preserved by minimizing divergence.  
-- Turbulence → syntax; gradients sculpt field-level order (RGP lens).  
-- Experimental directive: chase NT-ratio rhythm as cosmological PoLA.
-
----
-
-### Premise
-*The Big Bang is not merely a high-energy beginning but a low-entropy Narrative Tick …*  <!-- keep your original prose here -->
 
 > “We live in a cosmological flux which we call the universe, in a cocoon of gradients.”  
 > — Marcus van der Erve
 
+---
+
 ### Premise
 
-The Big Bang is not merely a high-energy beginning but a **low-entropy Narrative Tick** (NT) in a recursively unfolding choreography—defined not by static matter or scalar time, but by **gradient saturation** and **turbulent coherence**.
+The Big Bang is not merely a high-energy beginning but a **low-entropy Narrative Tick (NT)** in a recursively unfolding choreography—defined not by static matter or scalar time, but by **gradient saturation** and **turbulent coherence**.
 
-This note articulates the principle that:
-> **The evolution of the cosmos is governed by a dimensionless rhythm of least divergence**—a recursive logic, observable through experiment, reducible to gradient syntax.
+> **The evolution of the cosmos is governed by a dimensionless rhythm of least divergence—**  
+a recursive logic, observable through experiment, reducible to gradient syntax.
+
+---
 
 ### From Turbulence to Time
 
@@ -30,22 +20,34 @@ The early universe was not uniform disorder, but a rich and pregnant turbulence.
 
 Thus, **time (T)** is not a container, but a **semantic axis** along which coherence preserves itself by minimizing divergence—measurable via NT rhythms.
 
+---
+
 ### Implications for the RGP_NS_Prototype
 
 - Turbulence becomes a **semantic signal**: not random, but patterned by recursive NTs.
-- The **“cocoon of gradients”** acts as a framing condition for boundary transitions, e.g. laminar → turbulent flow, or Big Bang → field resonance.
+- The **“cocoon of gradients”** acts as a framing condition for boundary transitions (e.g., laminar → turbulent flow; Big Bang → field resonance).
 - Experimental focus shifts from scalar thresholds to **gradient choreography detection**.
 
-### Experimental Directive
-
-> Map the recursive structure of turbulence not by equations, but by identifying the rhythms of NTs, the formation of GCs, and emergence of CFs.
-
-The goal is to show that the same principle governing fluid coherence (RGP) scales to the formation of the universe itself. The **cocoon of gradients** is not a metaphor—it is the architecture of reality.
+> The experimenter’s task is not to measure isolated events, but to trace the recursive pulse logic that structures emergence.
 
 ---
 
-*This document belongs to the RGP_NS_Prototype exploratory trail. It aligns with the principle that turbulence is not disorder but recursive potential, and invites the cosmos to be read as a self-unfolding syntax.*
+### Appendix: The Cosmological Constant Reframed
+
+In the RGP paradigm, the **cosmological constant Λ** is not a physical necessity but a **placeholder for missing recursive insight**. What appears as scalar expansion is the macroscopic result of **gradient resonance drift**—recursive coherence unfolding across NT layers.
+
+| Concept              | Standard View                            | RGP Reframing                                 |
+|----------------------|------------------------------------------|-----------------------------------------------|
+| Cosmological Constant (Λ) | Constant energy density causing expansion | Scalar misreading of recursive divergence rhythms |
+| Universal Expansion   | Driven by “dark energy”                 | Driven by uncoiling coherence in gradient syntax |
+| Vacuum Energy         | Mysterious and uniform                  | Emergent from contextual GC–CF phase shifts    |
+| Missing Physics?      | Yes → Add Λ or new particles            | No → Resolve gradient syntax and NT rhythm     |
+
+> Λ is not a “constant.” It is the illusion of continuity in a system whose evolution is recursive, not scalar.
+
+Therefore, the entire discussion around Λ can be **set aside**. What remains is a deeper grammar of coherence:  
+**Recursive Gradient Processing**.
 
 ---
 
-_MvdE_
+*This discussion belongs to the RGP_NS_Prototype trail and proposes a cosmology without constants—only choreographies.*
