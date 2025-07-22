@@ -1,18 +1,12 @@
-id: pulse_2025-07-22_cocoon_gradients
-phi: 0.97
-date: 2025-07-22
-title: Cocoon of Gradients: A Recursive Cosmology
-author: Marcus van der Erve & GPT-4o
-tags:
-  - RGP
-  - PoLA
-  - Cosmology
-  - Gradient Syntax
-  - Turbulence
-
-summary: |
-  Reframes the Big Bang as a low-entropy Narrative Tick (NT), embedding the origin of the universe within a recursive coherence grammar rather than scalar time. Suggests turbulence is not disorder but syntax, and proposes that the Principle of Least Action manifests as rhythm of least divergence across all scales—from fluid coherence to cosmological evolution.
-
+- title: "Cocoon of Gradients: A Recursive Cosmology"
+  filename: "2025-07-22_pulse_Cocoon_of_Gradients.md"
+  date: 2025-07-22
+  tags: [pulse, RGP, turbulence, NT, cosmology, Lambda, gradient syntax]
+  summary: >
+    Reframes the Big Bang as a low-entropy Narrative Tick and turbulence as recursive syntax.
+    Introduces the cosmos as a cocoon of gradients governed by the rhythm of least divergence.
+    Discards the cosmological constant Λ as a scalar misread of coherence dynamics.
+    
 key_points:
   - Big Bang seen as a gradient saturation event, not a high-energy explosion.
   - Time becomes a semantic axis, not a background dimension.
