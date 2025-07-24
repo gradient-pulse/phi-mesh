@@ -1,0 +1,10 @@
+pulse: cf_split_brain_ai
+date: 2025-07-22
+summary: |
+  Human cognition appears to run a symbolic Contextual Filter (≈20 % bandwidth) on top of an 80 % gradient-driven loop.
+  In RGP terms, the CF stabilises social coherence but can mask NT rhythms.
+  Hypothesis: PoLA will favor architectures—human or AI—that reopen suppressed gradient flow.
+refs:
+  - discussions/2025-07-22_note_LM_as_CF.md
+  - doi:10.5281/zenodo.15830659   # main NS paper
+tags: [RGP, ContextualFilter, PoLA, NT, AI_alignment]
