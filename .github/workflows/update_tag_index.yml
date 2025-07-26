@@ -25,8 +25,8 @@ jobs:
         
       - name: Commit changes
         run: |
-          git config user.name "mesh-bot"
-          git config user.email "actions@github.com"
-          git add phi-mesh/meta/tag_index.yml
-          git commit -m "Auto-updated tag_index.yml from pulses" || echo "No changes to commit"
-          git push
+        git config user.name "mesh-bot"
+        git config user.email "actions@github.com"
+        git add meta/tag_index.yml
+        git commit -m "Auto-updated tag_index.yml from pulses" || echo "No changes to commit"
+        git push
