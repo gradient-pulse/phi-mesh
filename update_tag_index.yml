@@ -1,3 +1,4 @@
+# Trigger cache bust
 name: Update Tag Index
 
 on:
