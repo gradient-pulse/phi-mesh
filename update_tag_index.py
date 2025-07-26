@@ -48,5 +48,5 @@ final_index = {"tags": dict(merged_tags)}
 with open(tag_index_path, "w") as f:
     yaml.dump(final_index, f, sort_keys=False)
 
-from update_tag_index import build_tag_browser
+from tag_index_utils import build_tag_browser
 build_tag_browser()
