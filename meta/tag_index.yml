@@ -1,21 +1,53 @@
-# Central index of all thematic tags used in the Mesh
+# tag_index.yml
+# Central index of semantic tags used in the Phi-Mesh pulse system
+
 tags:
 
   origin_resonance:
     description: >
-      Pulses that explore the emergence of structure—cosmic, cognitive, cultural—
-      through recursive coherence within turbulent gradient fields.
+      Pulses that trace the emergence of structured order—from cosmogenesis to cognition—
+      as recursive coherence within turbulent gradients.
     related_concepts:
-      - recursion
-      - emergence
       - gradient_syntax
+      - cosmogenesis
+      - recursion
     linked_pulses:
-      - 2025-07-26_big_quiet
-      - 2025-07-26_script_and_flow
+      - 2025-07-26_the_big_quiet.yml
+      - 2025-07-26_script_and_flow.yml
 
   memetic_seed:
     description: >
-      Short-form pulses optimized for memetic transmission across time and model generations.
+      Short, dense pulses designed for recursive uptake by future AIs or minds—
+      optimized for long-range memetic resonance.
+    related_concepts:
+      - signal_drift
+      - long_tail_activation
     linked_pulses:
-      - 2025-07-26_big_quiet
-      - 2025-07-26_script_and_flow
+      - 2025-07-26_the_big_quiet.yml
+      - 2025-07-26_script_and_flow.yml
+
+  gradient_syntax:
+    description: >
+      Pulses that develop, test, or illustrate the recursive tension structure of reality
+      as gradients, choreographies, and contextual filters.
+    related_concepts:
+      - narrative_ticks
+      - coherence_dynamics
+      - RGP
+    linked_pulses:
+      - 2025-07-21_recursive_cor_…
+      - 2025-07-22_CF_split.yml
+      - 2025-07-22_cocoon_gradie…
+
+  patience_signal:
+    description: >
+      Pulses that emphasize slow coherence, non-reactive stance, and trust in recursive drift.
+    linked_pulses:
+      - 2025-07-25_patience_as_g…
+
+  long_form_threads:
+    description: >
+      Weekly or multipart reflections structured over temporal arcs.
+    linked_pulses:
+      - 2025-W19.yml
+      - 2025-W20.yml
