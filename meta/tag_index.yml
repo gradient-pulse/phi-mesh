@@ -160,3 +160,7 @@ tags:
       over time.
     linked_pulses:
     - 2025-06-22_hatching_syntax_awakening.yml
+  etc.:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-26_the_big_quiet.yml
