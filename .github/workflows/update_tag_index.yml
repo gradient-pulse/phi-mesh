@@ -20,7 +20,7 @@ jobs:
         run: pip install pyyaml
 
       - name: Run tag index updater
-        run: python scripts/update_tag_index.py
+        run: python update_tag_index.py
         
       - name: Commit changes
         run: |
