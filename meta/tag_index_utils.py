@@ -2,6 +2,14 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
     import yaml
     from pathlib import Path
     from datetime import datetime
+    import re
+
+    def extract_date(filename):
+        match = re.match(r"(\d{4}-\d{2}-\d{2})", filename)
+        return match.group(1) if match else "0000-00-00"
+
+    def is_test_tag(tag_name):
+        return tag_name.lower().startswith("test run")
 
     tag_data = yaml.safe_load(Path(tag_index_path).read_text())
 
@@ -27,6 +35,9 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
     ]
 
     for tag, info in sorted(tag_data.items()):
+        if is_test_tag(tag):
+            continue  # skip test run tags
+
         html.append("  <div class='tag-section'>")
         html.append(f"    <div class='tag-name'>📌 {tag}</div>")
         desc = info.get("description", "TODO: Add description")
@@ -34,9 +45,11 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
 
         pulses = info.get("linked_pulses", [])
         if pulses:
+            # sort pulses by descending date
+            sorted_pulses = sorted(pulses, key=extract_date, reverse=True)
             html.append("    <div><strong>📂 Linked Pulses:</strong>")
             html.append("      <div class='pulses'>")
-            for pulse in pulses:
+            for pulse in sorted_pulses:
                 html.append(f"        <span class='pulse'>• {pulse}</span>")
             html.append("      </div>")
             html.append("    </div>")
