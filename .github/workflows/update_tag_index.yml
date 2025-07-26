@@ -20,8 +20,8 @@ jobs:
         run: pip install pyyaml
 
       - name: Run tag index updater
-        run: python scripts/update_tag_index.py
-
+        run: python phi-mesh/scripts/update_tag_index.py
+        
       - name: Commit changes
         run: |
           git config user.name "mesh-bot"
