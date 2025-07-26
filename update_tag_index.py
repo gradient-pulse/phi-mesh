@@ -5,7 +5,7 @@ from collections import defaultdict
 
 # Paths
 pulse_dir = "pulse"
-tag_index_path = "phi-mesh/meta/tag_index.yml"
+tag_index_path = "meta/tag_index.yml"
 
 # Load existing tag index
 if os.path.exists(tag_index_path):
