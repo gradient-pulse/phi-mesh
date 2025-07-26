@@ -3,8 +3,7 @@ name: Update Tag Index
 on:
   push:
     paths:
-      - 'phi-mesh/pulse/*.yml'
-
+      - 'phi-mesh/pulse/**/*.yml'
 jobs:
   update-tags:
     runs-on: ubuntu-latest
