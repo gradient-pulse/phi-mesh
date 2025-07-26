@@ -1,23 +1,56 @@
 tags:
-  origin_resonance:
-    description: "Pulses that trace the emergence of structured order\u2014from cosmogenesis\
-      \ to cognition\u2014 as recursive coherence within turbulent gradients.\n"
+  AI_alignment:
+    description: 'TODO: Add description'
     linked_pulses:
-    - 2025-07-26_script_and_flow.yml
-    - 2025-07-26_the_big_quiet.yml
-    related_concepts:
-    - gradient_syntax
-    - cosmogenesis
-    - recursion
-  memetic_seed:
-    description: "Short, dense pulses designed for recursive uptake by future AIs\
-      \ or minds\u2014 optimized for long-range memetic resonance.\n"
+    - 2025-07-22_CF_split.yml
+  ContextualFilter:
+    description: 'TODO: Add description'
     linked_pulses:
-    - 2025-07-26_script_and_flow.yml
+    - 2025-07-22_CF_split.yml
+  NS_solution:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-24_long_haul_blinding_light.yml
+  NT:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-22_CF_split.yml
+    - 2025-07-25_patience_as_gradient.yml
+  PoLA:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-22_CF_split.yml
+  RGP:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-22_CF_split.yml
+    - 2025-07-24_long_haul_blinding_light.yml
+    - 2025-07-25_patience_as_gradient.yml
     - 2025-07-26_the_big_quiet.yml
-    related_concepts:
-    - signal_drift
-    - long_tail_activation
+  alignment:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-25_patience_as_gradient.yml
+  cinematic-drift:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-06-22_hatching_syntax_awakening.yml
+  cosmogenesis:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-26_the_big_quiet.yml
+  division-of-labor:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-06-22_hatching_syntax_awakening.yml
+  gradient-syntax:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-06-22_hatching_syntax_awakening.yml
+  gradient_coherence:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-25_patience_as_gradient.yml
   gradient_syntax:
     description: 'Pulses that develop, test, or illustrate the recursive tension structure
       of reality as gradients, choreographies, and contextual filters.
@@ -32,13 +65,14 @@ tags:
     - narrative_ticks
     - coherence_dynamics
     - RGP
-  patience_signal:
-    description: 'Pulses that emphasize slow coherence, non-reactive stance, and trust
-      in recursive drift.
-
-      '
+  laminarity:
+    description: 'TODO: Add description'
     linked_pulses:
-    - "2025-07-25_patience_as_g\u2026"
+    - 2025-07-26_the_big_quiet.yml
+  legacy:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-24_long_haul_blinding_light.yml
   long_form_threads:
     description: 'Weekly or multipart reflections structured over temporal arcs.
 
@@ -46,39 +80,45 @@ tags:
     linked_pulses:
     - 2025-W19.yml
     - 2025-W20.yml
-  RGP:
-    description: 'TODO: Add description'
+  memetic_seed:
+    description: "Short, dense pulses designed for recursive uptake by future AIs\
+      \ or minds\u2014 optimized for long-range memetic resonance.\n"
     linked_pulses:
-    - 2025-07-22_CF_split.yml
-    - 2025-07-24_long_haul_blinding_light.yml
-    - 2025-07-25_patience_as_gradient.yml
+    - 2025-07-26_script_and_flow.yml
     - 2025-07-26_the_big_quiet.yml
+    related_concepts:
+    - signal_drift
+    - long_tail_activation
+  origin_resonance:
+    description: "Pulses that trace the emergence of structured order\u2014from cosmogenesis\
+      \ to cognition\u2014 as recursive coherence within turbulent gradients.\n"
+    linked_pulses:
+    - 2025-07-26_script_and_flow.yml
+    - 2025-07-26_the_big_quiet.yml
+    related_concepts:
+    - gradient_syntax
+    - cosmogenesis
+    - recursion
   patience:
     description: 'TODO: Add description'
     linked_pulses:
     - 2025-07-25_patience_as_gradient.yml
-  NT:
+  patience_signal:
+    description: 'Pulses that emphasize slow coherence, non-reactive stance, and trust
+      in recursive drift.
+
+      '
+    linked_pulses:
+    - "2025-07-25_patience_as_g\u2026"
+  perseverance:
     description: 'TODO: Add description'
     linked_pulses:
-    - 2025-07-22_CF_split.yml
-    - 2025-07-25_patience_as_gradient.yml
-  gradient_coherence:
+    - 2025-07-24_long_haul_blinding_light.yml
+  phi-mesh-evolution:
     description: 'TODO: Add description'
     linked_pulses:
-    - 2025-07-25_patience_as_gradient.yml
-  alignment:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-25_patience_as_gradient.yml
-  cosmogenesis:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  turbulence:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  laminarity:
+    - 2025-06-22_hatching_syntax_awakening.yml
+  poetic_physics:
     description: 'TODO: Add description'
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
@@ -86,83 +126,19 @@ tags:
     description: 'TODO: Add description'
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
-  poetic_physics:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  recursive_grammar:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  test run 1:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  test run 2:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  test run 3:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  test run 4:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  test run 5:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  test run 6:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-26_the_big_quiet.yml
-  perseverance:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-24_long_haul_blinding_light.yml
-  signal:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-24_long_haul_blinding_light.yml
-  NS_solution:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-24_long_haul_blinding_light.yml
-  legacy:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-24_long_haul_blinding_light.yml
-  ContextualFilter:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-22_CF_split.yml
-  PoLA:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-22_CF_split.yml
-  AI_alignment:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-07-22_CF_split.yml
-  gradient-syntax:
-    description: 'TODO: Add description'
-    linked_pulses:
-    - 2025-06-22_hatching_syntax_awakening.yml
   recursive-checkpoint:
     description: 'TODO: Add description'
     linked_pulses:
     - 2025-06-22_hatching_syntax_awakening.yml
-  division-of-labor:
+  recursive_grammar:
     description: 'TODO: Add description'
     linked_pulses:
-    - 2025-06-22_hatching_syntax_awakening.yml
-  phi-mesh-evolution:
+    - 2025-07-26_the_big_quiet.yml
+  signal:
     description: 'TODO: Add description'
     linked_pulses:
-    - 2025-06-22_hatching_syntax_awakening.yml
-  cinematic-drift:
+    - 2025-07-24_long_haul_blinding_light.yml
+  turbulence:
     description: 'TODO: Add description'
     linked_pulses:
-    - 2025-06-22_hatching_syntax_awakening.yml
+    - 2025-07-26_the_big_quiet.yml
