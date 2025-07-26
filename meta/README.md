@@ -4,4 +4,5 @@ On each push to `/pulse/**/*.yml`, the tag index at `/phi-mesh/meta/tag_index.ym
 
 To add a new tag, simply include a `tags:` field in any pulse.
 
-👉 Browse tags visually: [tag_browser.html](tag_browser.html)
+🔍 Explore the live Tag Browser:  
+[https://gradient-pulse.github.io/phi-mesh/meta/tag_browser.html](https://gradient-pulse.github.io/phi-mesh/meta/tag_browser.html)
