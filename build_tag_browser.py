@@ -18,8 +18,9 @@ def build_tag_browser(
         valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
         return max(valid_dates) if valid_dates else "0000-00-00"
 
-    tag_data = yaml.safe_load(Path(tag_index_path).read_text())
-
+    raw_data = yaml.safe_load(Path(tag_index_path).read_text())
+    tag_data = raw_data.get("tags", raw_data)
+    
     sorted_tags = sorted(
         [
             (tag_name, info)
