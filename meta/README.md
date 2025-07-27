@@ -4,11 +4,4 @@ On each push to `/pulse/**/*.yml`, the tag index at `/phi-mesh/meta/tag_index.ym
 
 [![Tag Browser](https://img.shields.io/badge/🧠%20Phi--Mesh%20Tag%20Browser-online-brightgreen)](https://gradient-pulse.github.io/phi-mesh/tag_browser.html)
 
-Explore the full Phi-Mesh tag structure via our [interactive tag browser](https://gradient-pulse.github.io/phi-mesh/tag_browser.html), automatically generated from `tag_index.yml`.
-
-Explore the full Phi-Mesh tag structure via our [interactive tag browser](https://<your-username>.github.io/phi-mesh/tag_browser.html), automatically generated from the `tag_index.yml`.
-
 To add a new tag, simply include a `tags:` field in any pulse. 
-
-🔍 Explore the live Tag Browser: [https://gradient-pulse.github.io/phi-mesh/docs/tag_browser.html](https://gradient-pulse.github.io/phi-mesh/docs/tag_browser.html)
-
