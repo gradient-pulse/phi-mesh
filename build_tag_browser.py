@@ -5,7 +5,6 @@ import re
 
 def build_tag_browser(
     tag_index_path="meta/tag_index.yml",
-    pulse_folder="pulse/",
     output_path="docs/tag_browser.html"
 ):
     def extract_date(filename):
@@ -19,19 +18,8 @@ def build_tag_browser(
         valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
         return max(valid_dates) if valid_dates else "0000-00-00"
 
-    def get_pulse_snippet(pulse_file):
-        pulse_path = Path(pulse_folder) / pulse_file
-        if not pulse_path.exists():
-            return ""
-        content = pulse_path.read_text(encoding="utf-8")
-        match = re.search(r"post:\s*\|\s*\n(\s+.+\n)+", content)
-        if match:
-            lines = match.group(0).splitlines()
-            snippet = next((line.strip() for line in lines[1:] if line.strip()), "")
-            return snippet[:200] + ("..." if len(snippet) > 200 else "")
-        return ""
-
-    tag_data = yaml.safe_load(Path(tag_index_path).read_text())
+    # ✅ FIX: Access the nested "tags" dictionary
+    tag_data = yaml.safe_load(Path(tag_index_path).read_text())["tags"]
 
     sorted_tags = sorted(
         [
@@ -57,7 +45,6 @@ def build_tag_browser(
         "    .description { margin: 10px 0; color: #333; }",
         "    .pulses, .concepts { margin: 5px 0 15px 20px; }",
         "    .pulse, .concept { display: block; margin: 2px 0; }",
-        "    .snippet { margin-left: 20px; font-size: 0.9em; color: #666; font-style: italic; }",
         "    .footer { margin-top: 50px; font-size: 0.9em; color: #777; }",
         "  </style>",
         "</head>",
@@ -69,8 +56,9 @@ def build_tag_browser(
         html.append("<div class='tag-section'>")
         html.append(f"  <div class='tag-name'>📌 {tag_name}</div>")
 
-        description = info.get("description", "TODO: Add description")
-        html.append(f"  <div class='description'>{description}</div>")
+        description = info.get("description", "")
+        if description:
+            html.append(f"  <div class='description'>{description.strip()}</div>")
 
         pulses = info.get("linked_pulses", [])
         if pulses:
@@ -78,10 +66,7 @@ def build_tag_browser(
             html.append("  <div><strong>📂 Linked Pulses:</strong>")
             html.append("    <div class='pulses'>")
             for pulse in sorted_pulses:
-                snippet = get_pulse_snippet(pulse)
                 html.append(f"      <span class='pulse'>• {pulse}</span>")
-                if snippet:
-                    html.append(f"      <div class='snippet'>{snippet}</div>")
             html.append("    </div></div>")
 
         concepts = info.get("related_concepts", [])
@@ -98,8 +83,10 @@ def build_tag_browser(
     html.append(f"<div class='footer'>Last generated: {now}</div>")
     html.append("</body></html>")
 
-    Path(output_path).write_text("\n".join(html), encoding="utf-8")
+    Path(output_path).write_text("\n".join(html))
     print(f"[✓] HTML tag browser written to {output_path}")
 
+
+# Run if this file is executed directly
 if __name__ == "__main__":
     build_tag_browser()
