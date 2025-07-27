@@ -1,4 +1,4 @@
-name: Update Tag Index
+name: Update Tag Index and Browser
 
 on:
   push:
@@ -23,12 +23,15 @@ jobs:
       - name: Run tag index updater
         run: python update_tag_index.py
 
+      - name: Run tag browser HTML builder
+        run: python build_tag_browser.py
+
       - name: Commit changes
         run: |
           git config user.name "mesh-bot"
           git config user.email "actions@github.com"
-          git add meta/tag_index.yml
-          git commit -m "Auto-updated tag_index.yml from pulses" || echo "No changes to commit"
+          git add meta/tag_index.yml docs/tag_browser.html
+          git commit -m "Auto-updated tag_index.yml and tag_browser.html from pulses" || echo "No changes to commit"
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
