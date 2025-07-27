@@ -164,3 +164,7 @@ tags:
     description: 'TODO: Add description'
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
+  Big Bang:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-26_the_big_quiet.yml
