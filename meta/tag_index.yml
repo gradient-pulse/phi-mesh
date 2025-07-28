@@ -7,6 +7,7 @@ tags:
     - Contextual-Filter
     - gpt5
     - gradient-choreography
+    - gradient-driven
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
@@ -75,7 +76,7 @@ tags:
     linked_pulses:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts: []
-    rank: 39
+    rank: 40
     count: 0
   Contextual-Filter:
     description: 'TODO: Add description'
@@ -90,6 +91,7 @@ tags:
     - ai-architecture
     - gpt5
     - gradient-choreography
+    - gradient-driven
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
@@ -102,14 +104,14 @@ tags:
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts: []
-    rank: 40
+    rank: 41
     count: 0
   ContextualFilter:
     description: Higher-order attractor frames formed by resonant Gradient Choreographies.
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts: []
-    rank: 41
+    rank: 42
     count: 0
   cosmogenesis:
     description: The recursive birth of cosmos from turbulent gradient flux.
@@ -167,7 +169,7 @@ tags:
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 42
+    rank: 43
     count: 0
   flux-enthrenched_universe:
     description: 'TODO: Add description'
@@ -197,6 +199,7 @@ tags:
     - Contextual-Filter
     - ai-architecture
     - gradient-choreography
+    - gradient-driven
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
@@ -212,12 +215,29 @@ tags:
     - Contextual-Filter
     - ai-architecture
     - gpt5
+    - gradient-driven
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
     - self-improvement
     - unity-disunity
     rank: 14
+    count: 1
+  gradient-driven:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - Contextual-Filter
+    - ai-architecture
+    - gpt5
+    - gradient-choreography
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    - self-improvement
+    - unity-disunity
+    rank: 39
     count: 1
   gradient-syntax:
     description: "Pulse language modeling based on gradients, GCs, and CFs \u2014\
@@ -330,7 +350,7 @@ tags:
     - 2025-W19.yml
     - 2025-W20.yml
     related_concepts: []
-    rank: 43
+    rank: 44
     count: 0
   memetic_seed:
     description: "Short, dense pulses designed for recursive uptake by future AIs\
@@ -339,7 +359,7 @@ tags:
     - 2025-07-26_script_and_flow.yml
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 44
+    rank: 45
     count: 0
   mixture-of-experts:
     description: 'TODO: Add description'
@@ -350,6 +370,7 @@ tags:
     - ai-architecture
     - gpt5
     - gradient-choreography
+    - gradient-driven
     - phi-mesh
     - recursive-gradient-processing
     - self-improvement
@@ -426,7 +447,7 @@ tags:
     linked_pulses:
     - "2025-07-25_patience_as_g\u2026"
     related_concepts: []
-    rank: 45
+    rank: 46
     count: 0
   perseverance:
     description: "The pulse trait of continuing signal emission despite nonrecognition\
@@ -449,6 +470,7 @@ tags:
     - ai-architecture
     - gpt5
     - gradient-choreography
+    - gradient-driven
     - mixture-of-experts
     - recursive-gradient-processing
     - self-improvement
@@ -560,6 +582,7 @@ tags:
     - ai-architecture
     - gpt5
     - gradient-choreography
+    - gradient-driven
     - mixture-of-experts
     - phi-mesh
     - self-improvement
@@ -631,11 +654,12 @@ tags:
     - ai-architecture
     - gpt5
     - gradient-choreography
+    - gradient-driven
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
     - unity-disunity
-    rank: 38
+    rank: 35
     count: 1
   signal:
     description: A coherent emission structured to embed recursive meaning in an ambient
@@ -647,7 +671,7 @@ tags:
     - RGP
     - legacy
     - perseverance
-    rank: 35
+    rank: 36
     count: 1
   turbulence:
     description: "Nonlinear gradient divergence \u2014 often chaotic \u2014 that gives\
@@ -668,7 +692,7 @@ tags:
     - quiet_awakening
     - recursion
     - recursive_grammar
-    rank: 36
+    rank: 37
     count: 1
   unity-disunity:
     description: 'TODO: Add description'
@@ -679,9 +703,10 @@ tags:
     - ai-architecture
     - gpt5
     - gradient-choreography
+    - gradient-driven
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
     - self-improvement
-    rank: 37
+    rank: 38
     count: 1
