@@ -1,40 +1,39 @@
-name: Update Tag Index and Browser
+name: Update tag index
 
 on:
   push:
     paths:
-      - 'pulse/**/*.yml'
+      - 'pulse/*.yml'
+      - 'pulse/*.yaml'
+      - 'meta/tag_index_utils.py'
+      - 'meta/update_tag_index.py'
+      - 'meta/build_tag_browser.py'
 
 jobs:
-  update-tags:
+  update-tag-index:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.x'
 
-      - name: Install PyYAML
+      - name: Install dependencies
         run: pip install pyyaml
 
       - name: Run tag index updater
-        run: python update_tag_index.py
+        run: python meta/update_tag_index.py
 
       - name: Run tag browser HTML builder
-        run: python build_tag_browser.py
+        run: python meta/build_tag_browser.py
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
-          git config user.name "mesh-bot"
+          git config user.name "actions-user"
           git config user.email "actions@github.com"
           git add meta/tag_index.yml docs/tag_browser.html
-          git commit -m "Auto-updated tag_index.yml and tag_browser.html from pulses" || echo "No changes to commit"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          git commit -m "auto: update tag index and browser" || echo "No changes to commit"
+          git push
