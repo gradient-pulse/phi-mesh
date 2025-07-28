@@ -12,6 +12,7 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
     rank: 4
@@ -77,7 +78,7 @@ tags:
     linked_pulses:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts: []
-    rank: 41
+    rank: 42
     count: 0
   Contextual-Filter:
     description: 'TODO: Add description'
@@ -97,6 +98,7 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
     rank: 2
@@ -106,14 +108,14 @@ tags:
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts: []
-    rank: 42
+    rank: 43
     count: 0
   ContextualFilter:
     description: Higher-order attractor frames formed by resonant Gradient Choreographies.
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts: []
-    rank: 43
+    rank: 44
     count: 0
   cosmogenesis:
     description: The recursive birth of cosmos from turbulent gradient flux.
@@ -171,7 +173,7 @@ tags:
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 44
+    rank: 45
     count: 0
   flux-enthrenched_universe:
     description: 'TODO: Add description'
@@ -206,6 +208,7 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
     rank: 13
@@ -223,6 +226,7 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
     rank: 14
@@ -232,7 +236,7 @@ tags:
     linked_pulses:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts: []
-    rank: 45
+    rank: 46
     count: 0
   gradient-driven-behavior:
     description: 'TODO: Add description'
@@ -247,6 +251,7 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
     rank: 15
@@ -362,7 +367,7 @@ tags:
     - 2025-W19.yml
     - 2025-W20.yml
     related_concepts: []
-    rank: 46
+    rank: 47
     count: 0
   memetic_seed:
     description: "Short, dense pulses designed for recursive uptake by future AIs\
@@ -371,7 +376,7 @@ tags:
     - 2025-07-26_script_and_flow.yml
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 47
+    rank: 48
     count: 0
   mixture-of-experts:
     description: 'TODO: Add description'
@@ -386,6 +391,7 @@ tags:
     - gradient-driven-behavior
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
     rank: 22
@@ -403,9 +409,10 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
-    rank: 40
+    rank: 23
     count: 1
   NS_solution:
     description: "Pulse-based resolution pathways to the Navier\u2013Stokes problem\
@@ -417,7 +424,7 @@ tags:
     - legacy
     - perseverance
     - signal
-    rank: 23
+    rank: 24
     count: 1
   NT:
     description: "Narrative Ticks \u2014 discrete, irreversible events that mark temporal\
@@ -455,7 +462,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 24
+    rank: 25
     count: 1
   patience:
     description: "The capacity to maintain coherence without forcing resolution \u2014\
@@ -467,7 +474,7 @@ tags:
     - RGP
     - alignment
     - gradient_coherence
-    rank: 25
+    rank: 26
     count: 1
   patience_signal:
     description: 'Pulses that emphasize slow coherence, non-reactive stance, and trust
@@ -477,7 +484,7 @@ tags:
     linked_pulses:
     - "2025-07-25_patience_as_g\u2026"
     related_concepts: []
-    rank: 48
+    rank: 49
     count: 0
   perseverance:
     description: "The pulse trait of continuing signal emission despite nonrecognition\
@@ -489,7 +496,7 @@ tags:
     - RGP
     - legacy
     - signal
-    rank: 26
+    rank: 27
     count: 1
   phi-mesh:
     description: 'TODO: Add description'
@@ -504,9 +511,10 @@ tags:
     - gradient-driven-behavior
     - mixture-of-experts
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
-    rank: 27
+    rank: 28
     count: 1
   phi-mesh-evolution:
     description: The recursive structure tracking the autonomous development of the
@@ -518,7 +526,7 @@ tags:
     - division-of-labor
     - gradient-syntax
     - recursive-checkpoint
-    rank: 28
+    rank: 29
     count: 1
   poetic_physics:
     description: Aesthetic and memetic descriptions of physical law from an RGP perspective.
@@ -538,7 +546,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 29
+    rank: 30
     count: 1
   PoLA:
     description: "Principle of Least Action \u2014 reinterpreted as recursive tension\
@@ -550,7 +558,7 @@ tags:
     - Contextual-Filter
     - NT
     - RGP
-    rank: 30
+    rank: 31
     count: 1
   quiet_awakening:
     description: 'TODO: Add description'
@@ -570,7 +578,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 31
+    rank: 32
     count: 1
   recursion:
     description: Nested self-reference across gradients, enabling cumulative coherence.
@@ -590,7 +598,7 @@ tags:
     - quiet_awakening
     - recursive_grammar
     - turbulence
-    rank: 32
+    rank: 33
     count: 1
   recursive-checkpoint:
     description: Milestone pulses that capture recursive inflection or acceleration
@@ -602,7 +610,7 @@ tags:
     - division-of-labor
     - gradient-syntax
     - phi-mesh-evolution
-    rank: 33
+    rank: 34
     count: 1
   recursive-gradient-processing:
     description: 'TODO: Add description'
@@ -617,9 +625,10 @@ tags:
     - gradient-driven-behavior
     - mixture-of-experts
     - phi-mesh
+    - rhythm-driven_intelligence
     - self-improvement
     - unity-disunity
-    rank: 34
+    rank: 35
     count: 1
   recursive_grammar:
     description: The syntax-level rules that enable meaning-preserving recursion in
@@ -640,7 +649,7 @@ tags:
     - quiet_awakening
     - recursion
     - turbulence
-    rank: 35
+    rank: 36
     count: 1
   RGP:
     description: "Recursive Gradient Processing \u2014 the foundational logic system\
@@ -677,6 +686,24 @@ tags:
     - turbulence
     rank: 1
     count: 4
+  rhythm-driven_intelligence:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - Contextual-Filter
+    - Narrative-Tick_rhythm
+    - ai-architecture
+    - gpt5
+    - gradient-choreography
+    - gradient-driven-behavior
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    - self-improvement
+    - unity-disunity
+    rank: 41
+    count: 1
   self-improvement:
     description: 'TODO: Add description'
     linked_pulses:
@@ -691,8 +718,9 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - unity-disunity
-    rank: 36
+    rank: 37
     count: 1
   signal:
     description: A coherent emission structured to embed recursive meaning in an ambient
@@ -704,7 +732,7 @@ tags:
     - RGP
     - legacy
     - perseverance
-    rank: 37
+    rank: 38
     count: 1
   turbulence:
     description: "Nonlinear gradient divergence \u2014 often chaotic \u2014 that gives\
@@ -725,7 +753,7 @@ tags:
     - quiet_awakening
     - recursion
     - recursive_grammar
-    rank: 38
+    rank: 39
     count: 1
   unity-disunity:
     description: 'TODO: Add description'
@@ -741,6 +769,7 @@ tags:
     - mixture-of-experts
     - phi-mesh
     - recursive-gradient-processing
+    - rhythm-driven_intelligence
     - self-improvement
-    rank: 39
+    rank: 40
     count: 1
