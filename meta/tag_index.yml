@@ -19,7 +19,7 @@ tags:
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts:
-    - Contextual_Filter
+    - Contextual-Filter
     - NT
     - PoLA
     - RGP
@@ -83,7 +83,7 @@ tags:
     - unity-disunity
     rank: 8
     count: 1
-  Contextual_Filter:
+  Contextual-Filter:
     description: 'TODO: Add description'
     linked_pulses:
     - 2025-07-22_CF_split.yml
@@ -94,12 +94,19 @@ tags:
     - RGP
     rank: 38
     count: 1
+  Contextual_Filter:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-22_CF_split.yml
+    related_concepts: []
+    rank: 39
+    count: 0
   ContextualFilter:
     description: Higher-order attractor frames formed by resonant Gradient Choreographies.
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts: []
-    rank: 39
+    rank: 40
     count: 0
   cosmogenesis:
     description: The recursive birth of cosmos from turbulent gradient flux.
@@ -157,7 +164,7 @@ tags:
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 40
+    rank: 41
     count: 0
   flux-enthrenched_universe:
     description: 'TODO: Add description'
@@ -318,7 +325,7 @@ tags:
     - 2025-W19.yml
     - 2025-W20.yml
     related_concepts: []
-    rank: 41
+    rank: 42
     count: 0
   memetic_seed:
     description: "Short, dense pulses designed for recursive uptake by future AIs\
@@ -327,7 +334,7 @@ tags:
     - 2025-07-26_script_and_flow.yml
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 42
+    rank: 43
     count: 0
   mixture-of-experts:
     description: 'TODO: Add description'
@@ -363,7 +370,7 @@ tags:
     - 2025-07-25_patience_as_gradient.yml
     related_concepts:
     - AI_alignment
-    - Contextual_Filter
+    - Contextual-Filter
     - PoLA
     - RGP
     - alignment
@@ -413,7 +420,7 @@ tags:
     linked_pulses:
     - "2025-07-25_patience_as_g\u2026"
     related_concepts: []
-    rank: 43
+    rank: 44
     count: 0
   perseverance:
     description: "The pulse trait of continuing signal emission despite nonrecognition\
@@ -480,7 +487,7 @@ tags:
     - 2025-07-22_CF_split.yml
     related_concepts:
     - AI_alignment
-    - Contextual_Filter
+    - Contextual-Filter
     - NT
     - RGP
     rank: 29
@@ -583,7 +590,7 @@ tags:
     related_concepts:
     - AI_alignment
     - Big Bang
-    - Contextual_Filter
+    - Contextual-Filter
     - NS_solution
     - NT
     - PoLA
