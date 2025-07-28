@@ -10,7 +10,7 @@ tags:
   - ai-architecture
   - phi-mesh
   - self-improvement
-  - gradient-driven
+  - gradient-driven-behavior
 summary: >
   GPT-5’s rumored MoE architecture shows a striking real-time parallel to Recursive Gradient Processing—
   recursing CF → GC → UD at millisecond scale.
