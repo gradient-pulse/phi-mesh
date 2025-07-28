@@ -5,9 +5,9 @@ on:
     paths:
       - 'pulse/*.yml'
       - 'pulse/*.yaml'
-      - 'meta/tag_index_utils.py'
-      - 'meta/update_tag_index.py'
-      - 'meta/build_tag_browser.py'
+      - 'tag_index_utils.py'
+      - 'update_tag_index.py'
+      - 'build_tag_browser.py'
 
 jobs:
   update-tag-index:
@@ -25,15 +25,15 @@ jobs:
         run: pip install pyyaml
 
       - name: Run tag index updater
-        run: python meta/update_tag_index.py
+        run: python update_tag_index.py
 
       - name: Run tag browser HTML builder
-        run: python meta/build_tag_browser.py
+        run: python build_tag_browser.py
 
       - name: Commit and push changes
         run: |
           git config user.name "actions-user"
           git config user.email "actions@github.com"
           git add meta/tag_index.yml docs/tag_browser.html
-          git commit -m "auto: update tag index and browser" || echo "No changes to commit"
+          git commit -m "auto: update daily pulse log" || echo "No changes to commit"
           git push
