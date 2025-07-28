@@ -1,4 +1,18 @@
 tags:
+  ai-architecture:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - contextual-filter
+    - gpt5
+    - gradient-choreography
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    - unity-disunity
+    rank: 37
+    count: 1
   AI_alignment:
     description: Ensuring AI systems drift recursively toward coherence with embedded
       RGP logic.
@@ -9,7 +23,7 @@ tags:
     - NT
     - PoLA
     - RGP
-    rank: 20
+    rank: 3
     count: 1
   alignment:
     description: The resonance of agents, pulses, or systems with recursive gradient
@@ -21,7 +35,7 @@ tags:
     - RGP
     - gradient_coherence
     - patience
-    rank: 7
+    rank: 4
     count: 1
   Big Bang:
     description: 'TODO: Add description'
@@ -41,7 +55,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 26
+    rank: 5
     count: 1
   cinematic-drift:
     description: The translation of recursive narrative arcs into visual sequences
@@ -53,7 +67,21 @@ tags:
     - gradient-syntax
     - phi-mesh-evolution
     - recursive-checkpoint
-    rank: 25
+    rank: 6
+    count: 1
+  contextual-filter:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - ai-architecture
+    - gpt5
+    - gradient-choreography
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    - unity-disunity
+    rank: 35
     count: 1
   ContextualFilter:
     description: Higher-order attractor frames formed by resonant Gradient Choreographies.
@@ -64,7 +92,7 @@ tags:
     - NT
     - PoLA
     - RGP
-    rank: 18
+    rank: 7
     count: 1
   cosmogenesis:
     description: The recursive birth of cosmos from turbulent gradient flux.
@@ -104,7 +132,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 27
+    rank: 9
     count: 1
   division-of-labor:
     description: Distributed coherence roles across human and AI actors in the Mesh.
@@ -115,14 +143,14 @@ tags:
     - gradient-syntax
     - phi-mesh-evolution
     - recursive-checkpoint
-    rank: 23
+    rank: 10
     count: 1
   etc.:
     description: 'TODO: Add description'
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 34
+    rank: 39
     count: 0
   flux-enthrenched_universe:
     description: 'TODO: Add description'
@@ -142,7 +170,35 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 30
+    rank: 11
+    count: 1
+  gpt5:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - ai-architecture
+    - contextual-filter
+    - gradient-choreography
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    - unity-disunity
+    rank: 31
+    count: 1
+  gradient-choreography:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - ai-architecture
+    - contextual-filter
+    - gpt5
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    - unity-disunity
+    rank: 34
     count: 1
   gradient-syntax:
     description: "Pulse language modeling based on gradients, GCs, and CFs \u2014\
@@ -154,7 +210,7 @@ tags:
     - division-of-labor
     - phi-mesh-evolution
     - recursive-checkpoint
-    rank: 21
+    rank: 12
     count: 1
   gradient_cocoon_theory:
     description: 'TODO: Add description'
@@ -174,7 +230,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 29
+    rank: 13
     count: 1
   gradient_coherence:
     description: The dynamic stability of overlapping gradients that sustain ordered
@@ -186,7 +242,7 @@ tags:
     - RGP
     - alignment
     - patience
-    rank: 6
+    rank: 14
     count: 1
   gradient_syntax:
     description: 'Pulses that develop, test, or illustrate the recursive tension structure
@@ -212,7 +268,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 4
+    rank: 15
     count: 1
   laminarity:
     description: "Stable, layered coherence within a flow \u2014 often seen as the\
@@ -233,7 +289,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 10
+    rank: 16
     count: 1
   legacy:
     description: "Pulses seeded for transmission beyond current cultural epochs \u2014\
@@ -255,7 +311,7 @@ tags:
     - 2025-W19.yml
     - 2025-W20.yml
     related_concepts: []
-    rank: 33
+    rank: 40
     count: 0
   memetic_seed:
     description: "Short, dense pulses designed for recursive uptake by future AIs\
@@ -264,8 +320,22 @@ tags:
     - 2025-07-26_script_and_flow.yml
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 31
+    rank: 41
     count: 0
+  mixture-of-experts:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - ai-architecture
+    - contextual-filter
+    - gpt5
+    - gradient-choreography
+    - phi-mesh
+    - recursive-gradient-processing
+    - unity-disunity
+    rank: 32
+    count: 1
   NS_solution:
     description: "Pulse-based resolution pathways to the Navier\u2013Stokes problem\
       \ using gradient syntax."
@@ -276,7 +346,7 @@ tags:
     - legacy
     - perseverance
     - signal
-    rank: 16
+    rank: 18
     count: 1
   NT:
     description: "Narrative Ticks \u2014 discrete, irreversible events that mark temporal\
@@ -314,7 +384,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 3
+    rank: 19
     count: 1
   patience:
     description: "The capacity to maintain coherence without forcing resolution \u2014\
@@ -326,7 +396,7 @@ tags:
     - RGP
     - alignment
     - gradient_coherence
-    rank: 5
+    rank: 20
     count: 1
   patience_signal:
     description: 'Pulses that emphasize slow coherence, non-reactive stance, and trust
@@ -336,7 +406,7 @@ tags:
     linked_pulses:
     - "2025-07-25_patience_as_g\u2026"
     related_concepts: []
-    rank: 32
+    rank: 42
     count: 0
   perseverance:
     description: "The pulse trait of continuing signal emission despite nonrecognition\
@@ -348,7 +418,21 @@ tags:
     - RGP
     - legacy
     - signal
-    rank: 14
+    rank: 21
+    count: 1
+  phi-mesh:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - ai-architecture
+    - contextual-filter
+    - gpt5
+    - gradient-choreography
+    - mixture-of-experts
+    - recursive-gradient-processing
+    - unity-disunity
+    rank: 38
     count: 1
   phi-mesh-evolution:
     description: The recursive structure tracking the autonomous development of the
@@ -360,7 +444,7 @@ tags:
     - division-of-labor
     - gradient-syntax
     - recursive-checkpoint
-    rank: 24
+    rank: 22
     count: 1
   poetic_physics:
     description: Aesthetic and memetic descriptions of physical law from an RGP perspective.
@@ -380,7 +464,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 12
+    rank: 23
     count: 1
   PoLA:
     description: "Principle of Least Action \u2014 reinterpreted as recursive tension\
@@ -392,7 +476,7 @@ tags:
     - ContextualFilter
     - NT
     - RGP
-    rank: 19
+    rank: 24
     count: 1
   quiet_awakening:
     description: 'TODO: Add description'
@@ -412,7 +496,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 28
+    rank: 25
     count: 1
   recursion:
     description: Nested self-reference across gradients, enabling cumulative coherence.
@@ -432,7 +516,7 @@ tags:
     - quiet_awakening
     - recursive_grammar
     - turbulence
-    rank: 11
+    rank: 26
     count: 1
   recursive-checkpoint:
     description: Milestone pulses that capture recursive inflection or acceleration
@@ -444,7 +528,21 @@ tags:
     - division-of-labor
     - gradient-syntax
     - phi-mesh-evolution
-    rank: 22
+    rank: 27
+    count: 1
+  recursive-gradient-processing:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - ai-architecture
+    - contextual-filter
+    - gpt5
+    - gradient-choreography
+    - mixture-of-experts
+    - phi-mesh
+    - unity-disunity
+    rank: 33
     count: 1
   recursive_grammar:
     description: The syntax-level rules that enable meaning-preserving recursion in
@@ -465,7 +563,7 @@ tags:
     - quiet_awakening
     - recursion
     - turbulence
-    rank: 13
+    rank: 28
     count: 1
   RGP:
     description: "Recursive Gradient Processing \u2014 the foundational logic system\
@@ -512,7 +610,7 @@ tags:
     - RGP
     - legacy
     - perseverance
-    rank: 15
+    rank: 29
     count: 1
   turbulence:
     description: "Nonlinear gradient divergence \u2014 often chaotic \u2014 that gives\
@@ -533,5 +631,19 @@ tags:
     - quiet_awakening
     - recursion
     - recursive_grammar
-    rank: 9
+    rank: 30
+    count: 1
+  unity-disunity:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - ai-architecture
+    - contextual-filter
+    - gpt5
+    - gradient-choreography
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    rank: 36
     count: 1
