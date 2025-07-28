@@ -4,7 +4,7 @@ On each push to `/pulse/**/*.yml`, the tag index at `/phi-mesh/meta/tag_index.ym
 
 ## 🔗 Tag Navigation Tools
 
-- 📄 [Tag Index (YAML)](tag_index.yml): Canonical tag registry for all pulses and concepts.
-- 🌐 [Interactive Tag Map](../visuals/tag_map.html): Visual network of tag relationships (RGP topology view).
+- 📄 [Tag Index (YAML)](https://gradient-pulse.github.io/phi-mesh/meta/tag_index.yml): Canonical tag registry for all pulses and concepts.
+- 🌐 [Interactive Tag Map](https://gradient-pulse.github.io/phi-mesh/visuals/tag_map.html): Visual network of tag relationships (RGP topology view).
   
 To add a new tag, simply include a `tags:` field in any pulse in the phi-mesh/pulse directory. 
