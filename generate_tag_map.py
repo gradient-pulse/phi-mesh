@@ -34,6 +34,8 @@ for tag, info in tags.items():
         if rel in tags:
             g.add_edge(tag, rel, color='#ccc')
 
-# Output
-os.makedirs("visuals", exist_ok=True)
-g.write_html("visuals/tag_map.html")
+# Ensure output directory exists
+os.makedirs("docs", exist_ok=True)
+
+# Write the map to GitHub Pages-visible location
+g.write_html("docs/tag_map.html")
