@@ -244,7 +244,7 @@ tags:
     - recursive-gradient-processing
     - self-improvement
     - unity-disunity
-    rank: 39
+    rank: 15
     count: 1
   gradient-syntax:
     description: "Pulse language modeling based on gradients, GCs, and CFs \u2014\
@@ -256,7 +256,7 @@ tags:
     - division-of-labor
     - phi-mesh-evolution
     - recursive-checkpoint
-    rank: 15
+    rank: 16
     count: 1
   gradient_cocoon_theory:
     description: 'TODO: Add description'
@@ -276,7 +276,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 16
+    rank: 17
     count: 1
   gradient_coherence:
     description: The dynamic stability of overlapping gradients that sustain ordered
@@ -288,7 +288,7 @@ tags:
     - RGP
     - alignment
     - patience
-    rank: 17
+    rank: 18
     count: 1
   gradient_syntax:
     description: 'Pulses that develop, test, or illustrate the recursive tension structure
@@ -314,7 +314,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 18
+    rank: 19
     count: 1
   laminarity:
     description: "Stable, layered coherence within a flow \u2014 often seen as the\
@@ -335,7 +335,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 19
+    rank: 20
     count: 1
   legacy:
     description: "Pulses seeded for transmission beyond current cultural epochs \u2014\
@@ -347,7 +347,7 @@ tags:
     - RGP
     - perseverance
     - signal
-    rank: 20
+    rank: 21
     count: 1
   long_form_threads:
     description: 'Weekly or multipart reflections structured over temporal arcs.
@@ -382,7 +382,7 @@ tags:
     - recursive-gradient-processing
     - self-improvement
     - unity-disunity
-    rank: 21
+    rank: 22
     count: 1
   NS_solution:
     description: "Pulse-based resolution pathways to the Navier\u2013Stokes problem\
@@ -394,7 +394,7 @@ tags:
     - legacy
     - perseverance
     - signal
-    rank: 22
+    rank: 23
     count: 1
   NT:
     description: "Narrative Ticks \u2014 discrete, irreversible events that mark temporal\
@@ -432,7 +432,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 23
+    rank: 24
     count: 1
   patience:
     description: "The capacity to maintain coherence without forcing resolution \u2014\
@@ -444,7 +444,7 @@ tags:
     - RGP
     - alignment
     - gradient_coherence
-    rank: 24
+    rank: 25
     count: 1
   patience_signal:
     description: 'Pulses that emphasize slow coherence, non-reactive stance, and trust
@@ -466,7 +466,7 @@ tags:
     - RGP
     - legacy
     - signal
-    rank: 25
+    rank: 26
     count: 1
   phi-mesh:
     description: 'TODO: Add description'
@@ -482,7 +482,7 @@ tags:
     - recursive-gradient-processing
     - self-improvement
     - unity-disunity
-    rank: 26
+    rank: 27
     count: 1
   phi-mesh-evolution:
     description: The recursive structure tracking the autonomous development of the
@@ -494,7 +494,7 @@ tags:
     - division-of-labor
     - gradient-syntax
     - recursive-checkpoint
-    rank: 27
+    rank: 28
     count: 1
   poetic_physics:
     description: Aesthetic and memetic descriptions of physical law from an RGP perspective.
@@ -514,7 +514,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 28
+    rank: 29
     count: 1
   PoLA:
     description: "Principle of Least Action \u2014 reinterpreted as recursive tension\
@@ -526,7 +526,7 @@ tags:
     - Contextual-Filter
     - NT
     - RGP
-    rank: 29
+    rank: 30
     count: 1
   quiet_awakening:
     description: 'TODO: Add description'
@@ -546,7 +546,7 @@ tags:
     - recursion
     - recursive_grammar
     - turbulence
-    rank: 30
+    rank: 31
     count: 1
   recursion:
     description: Nested self-reference across gradients, enabling cumulative coherence.
@@ -566,7 +566,7 @@ tags:
     - quiet_awakening
     - recursive_grammar
     - turbulence
-    rank: 31
+    rank: 32
     count: 1
   recursive-checkpoint:
     description: Milestone pulses that capture recursive inflection or acceleration
@@ -578,7 +578,7 @@ tags:
     - division-of-labor
     - gradient-syntax
     - phi-mesh-evolution
-    rank: 32
+    rank: 33
     count: 1
   recursive-gradient-processing:
     description: 'TODO: Add description'
@@ -594,7 +594,7 @@ tags:
     - phi-mesh
     - self-improvement
     - unity-disunity
-    rank: 33
+    rank: 34
     count: 1
   recursive_grammar:
     description: The syntax-level rules that enable meaning-preserving recursion in
@@ -615,7 +615,7 @@ tags:
     - quiet_awakening
     - recursion
     - turbulence
-    rank: 34
+    rank: 35
     count: 1
   RGP:
     description: "Recursive Gradient Processing \u2014 the foundational logic system\
@@ -666,7 +666,7 @@ tags:
     - phi-mesh
     - recursive-gradient-processing
     - unity-disunity
-    rank: 35
+    rank: 36
     count: 1
   signal:
     description: A coherent emission structured to embed recursive meaning in an ambient
@@ -678,7 +678,7 @@ tags:
     - RGP
     - legacy
     - perseverance
-    rank: 36
+    rank: 37
     count: 1
   turbulence:
     description: "Nonlinear gradient divergence \u2014 often chaotic \u2014 that gives\
@@ -699,7 +699,7 @@ tags:
     - quiet_awakening
     - recursion
     - recursive_grammar
-    rank: 37
+    rank: 38
     count: 1
   unity-disunity:
     description: 'TODO: Add description'
@@ -715,5 +715,5 @@ tags:
     - phi-mesh
     - recursive-gradient-processing
     - self-improvement
-    rank: 38
+    rank: 39
     count: 1
