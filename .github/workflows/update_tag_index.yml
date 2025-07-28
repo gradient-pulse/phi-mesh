@@ -37,3 +37,14 @@ jobs:
           git add meta/tag_index.yml docs/tag_browser.html
           git commit -m "auto: update daily pulse log" || echo "No changes to commit"
           git push
+          
+      - name: Generate tag map HTML
+        run: python generate_tag_map.py
+
+      - name: Commit tag map HTML
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add visuals/tag_map.html
+          git commit -m "Auto-update tag_map.html"
+          git push
