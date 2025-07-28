@@ -22,7 +22,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install pyyaml
+        run: pip install pyyaml networkx
 
       - name: Run tag index updater
         run: python update_tag_index.py
