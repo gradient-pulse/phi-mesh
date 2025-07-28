@@ -1,23 +1,39 @@
+import os
 import yaml
-import networkx as nx
+import pyvis
 from pyvis.network import Network
+from jinja2 import Environment, FileSystemLoader
 
-# Load tag_index.yml
-with open("meta/tag_index.yml", "r") as f:
-    tag_data = yaml.safe_load(f)
+# Manually register Jinja2 environment for pyvis
+template_dir = os.path.join(os.path.dirname(pyvis.__file__), 'templates')
+if not os.path.exists(template_dir):
+    raise FileNotFoundError("Pyvis template folder not found. This prevents rendering the HTML file.")
 
-# Create a graph
-G = nx.Graph()
-for tag, data in tag_data.get('tags', {}).items():
-    G.add_node(tag, title=data.get('description', 'No description'))
-    for related in data.get('related_concepts', []):
-        if related != tag:
-            G.add_edge(tag, related)
+env = Environment(loader=FileSystemLoader(template_dir))
 
-# Create Pyvis interactive network
-net = Network(height="800px", width="100%", bgcolor="#ffffff", font_color="black")
-net.from_nx(G)
-net.repulsion(node_distance=150, central_gravity=0.33)
+# Load tag data
+tag_file = "meta/tag_index.yml"
+with open(tag_file, 'r') as f:
+    tags = yaml.safe_load(f).get("tags", {})
 
-# Save HTML to visuals/tag_map.html
-net.show("visuals/tag_map.html")
+# Initialize network
+g = Network(height='900px', width='100%', bgcolor='#111111', font_color='white')
+g.force_atlas_2based()
+
+# Add nodes
+for tag, info in tags.items():
+    description = info.get("description", "")
+    count = info.get("count", 0)
+    size = 10 + 4 * count
+    g.add_node(tag, label=tag, title=description, size=size, color='#86e0f3')
+
+# Add edges based on related_concepts
+for tag, info in tags.items():
+    related = info.get("related_concepts", [])
+    for rel in related:
+        if rel in tags:
+            g.add_edge(tag, rel, color='#ccc')
+
+# Output
+os.makedirs("visuals", exist_ok=True)
+g.write_html("visuals/tag_map.html")
