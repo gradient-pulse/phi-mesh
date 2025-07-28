@@ -5,6 +5,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - gpt5
     - gradient-choreography
     - gradient-driven-behavior
@@ -76,7 +77,7 @@ tags:
     linked_pulses:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts: []
-    rank: 40
+    rank: 41
     count: 0
   Contextual-Filter:
     description: 'TODO: Add description'
@@ -86,6 +87,7 @@ tags:
     related_concepts:
     - AI_alignment
     - NT
+    - Narrative-Tick_rhythm
     - PoLA
     - RGP
     - ai-architecture
@@ -104,14 +106,14 @@ tags:
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts: []
-    rank: 41
+    rank: 42
     count: 0
   ContextualFilter:
     description: Higher-order attractor frames formed by resonant Gradient Choreographies.
     linked_pulses:
     - 2025-07-22_CF_split.yml
     related_concepts: []
-    rank: 42
+    rank: 43
     count: 0
   cosmogenesis:
     description: The recursive birth of cosmos from turbulent gradient flux.
@@ -169,7 +171,7 @@ tags:
     linked_pulses:
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 43
+    rank: 44
     count: 0
   flux-enthrenched_universe:
     description: 'TODO: Add description'
@@ -197,6 +199,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gradient-choreography
     - gradient-driven-behavior
@@ -213,6 +216,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gpt5
     - gradient-driven-behavior
@@ -228,7 +232,7 @@ tags:
     linked_pulses:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts: []
-    rank: 44
+    rank: 45
     count: 0
   gradient-driven-behavior:
     description: 'TODO: Add description'
@@ -236,6 +240,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gpt5
     - gradient-choreography
@@ -357,7 +362,7 @@ tags:
     - 2025-W19.yml
     - 2025-W20.yml
     related_concepts: []
-    rank: 45
+    rank: 46
     count: 0
   memetic_seed:
     description: "Short, dense pulses designed for recursive uptake by future AIs\
@@ -366,7 +371,7 @@ tags:
     - 2025-07-26_script_and_flow.yml
     - 2025-07-26_the_big_quiet.yml
     related_concepts: []
-    rank: 46
+    rank: 47
     count: 0
   mixture-of-experts:
     description: 'TODO: Add description'
@@ -374,6 +379,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gpt5
     - gradient-choreography
@@ -383,6 +389,23 @@ tags:
     - self-improvement
     - unity-disunity
     rank: 22
+    count: 1
+  Narrative-Tick_rhythm:
+    description: 'TODO: Add description'
+    linked_pulses:
+    - 2025-07-28_moe_as_microcosm.yml
+    related_concepts:
+    - Contextual-Filter
+    - ai-architecture
+    - gpt5
+    - gradient-choreography
+    - gradient-driven-behavior
+    - mixture-of-experts
+    - phi-mesh
+    - recursive-gradient-processing
+    - self-improvement
+    - unity-disunity
+    rank: 40
     count: 1
   NS_solution:
     description: "Pulse-based resolution pathways to the Navier\u2013Stokes problem\
@@ -454,7 +477,7 @@ tags:
     linked_pulses:
     - "2025-07-25_patience_as_g\u2026"
     related_concepts: []
-    rank: 47
+    rank: 48
     count: 0
   perseverance:
     description: "The pulse trait of continuing signal emission despite nonrecognition\
@@ -474,6 +497,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gpt5
     - gradient-choreography
@@ -586,6 +610,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gpt5
     - gradient-choreography
@@ -658,6 +683,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gpt5
     - gradient-choreography
@@ -707,6 +733,7 @@ tags:
     - 2025-07-28_moe_as_microcosm.yml
     related_concepts:
     - Contextual-Filter
+    - Narrative-Tick_rhythm
     - ai-architecture
     - gpt5
     - gradient-choreography
