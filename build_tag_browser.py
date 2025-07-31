@@ -1,75 +1,88 @@
 import os
-import json
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'meta')))
+import yaml
+from pathlib import Path
+from datetime import datetime
+import re
 
-from tag_index_utils import get_all_tags_and_links
+def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag_browser.html"):
+    # Extract YYYY-MM-DD from filenames
+    def extract_date(filename):
+        match = re.match(r"(\d{4}-\d{2}-\d{2})", filename)
+        return match.group(1) if match else "0000-00-00"
 
-def generate_tag_map_html(output_file="docs/tag_map.html"):
-    tags_data = get_all_tags_and_links()
+    # Identify tags starting with "test run"
+    def is_test_tag(tag_name):
+        return tag_name.strip().lower().startswith("test run")
 
-    # Separate tag nodes and edges
-    tag_nodes = [{"id": tag, "label": tag, "shape": "dot", "font": {"size": 16}} for tag in tags_data]
-    tag_edges = []
-    for source, links in tags_data.items():
-        for link in links.get("tag_links", []):
-            tag_edges.append({"from": source, "to": link, "arrows": "to", "color": "#ccc"})
-        for paper in links.get("papers", []):
-            tag_nodes.append({"id": f"📄 {paper}", "label": f"📄 {paper}", "shape": "box", "color": "#c0ffc0", "font": {"size": 14}})
-            tag_edges.append({"from": source, "to": f"📄 {paper}", "arrows": "to", "color": "#9ccc9c"})
-        for podcast in links.get("podcasts", []):
-            tag_nodes.append({"id": f"🎧 {podcast}", "label": f"🎧 {podcast}", "shape": "ellipse", "color": "#cce0ff", "font": {"size": 14}})
-            tag_edges.append({"from": source, "to": f"🎧 {podcast}", "arrows": "to", "color": "#99bbee"})
+    # Find latest date in a tag's pulse list
+    def get_latest_pulse_date(pulse_list):
+        valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
+        return max(valid_dates) if valid_dates else "0000-00-00"
 
-    html_content = f"""
-<!doctype html>
-<html>
-<head>
-  <title>Phi-Mesh Tag Map</title>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
-  <style type="text/css">
-    #network {{
-      width: 100%;
-      height: 92vh;
-      background-color: #111;
-      border: 1px solid lightgray;
-    }}
-  </style>
-</head>
-<body>
-  <h2 style="text-align:center;color:white;">Phi-Mesh Interactive Tag Map</h2>
-  <div id="network"></div>
-  <script type="text/javascript">
-    var nodes = new vis.DataSet({json.dumps(tag_nodes)});
-    var edges = new vis.DataSet({json.dumps(tag_edges)});
-    var container = document.getElementById('network');
-    var data = {{ nodes: nodes, edges: edges }};
-    var options = {{
-      nodes: {{
-        color: '#ffffff',
-        font: {{ color: '#ffffff' }},
-        borderWidth: 2
-      }},
-      edges: {{
-        color: {{ color: '#888' }}
-      }},
-      physics: {{
-        stabilization: true
-      }},
-      layout: {{
-        improvedLayout: true
-      }}
-    }};
-    var network = new vis.Network(container, data, options);
-  </script>
-</body>
-</html>
-    """
+    # Load the YAML tag index
+    tag_data = yaml.safe_load(Path(tag_index_path).read_text())
 
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    with open(output_file, "w") as f:
-        f.write(html_content)
+    # Filter out test tags and sort tags by most recent pulse (descending)
+    sorted_tags = sorted(
+        [(tag_name, info) for tag_name, info in tag_data.items() if not is_test_tag(tag_name)],
+        key=lambda item: get_latest_pulse_date(item[1].get("linked_pulses", [])),
+        reverse=True
+    )
 
+    html = [
+        "<!DOCTYPE html>",
+        "<html lang='en'>",
+        "<head>",
+        "  <meta charset='UTF-8'>",
+        "  <title>Phi-Mesh Tag Browser</title>",
+        "  <style>",
+        "    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f8f8f8; }",
+        "    h1 { color: #333; }",
+        "    .tag-section { margin-bottom: 40px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }",
+        "    .tag-name { font-size: 1.5em; color: #004466; }",
+        "    .description { margin: 10px 0; color: #333; }",
+        "    .pulses, .concepts { margin: 5px 0 15px 20px; }",
+        "    .pulse, .concept { display: block; margin: 2px 0; }",
+        "    .footer { margin-top: 50px; font-size: 0.9em; color: #777; }",
+        "  </style>",
+        "</head>",
+        "<body>",
+        "<h1>🧠 Phi-Mesh Tag Browser</h1>"
+    ]
+
+    for tag_name, info in sorted_tags:
+        html.append("<div class='tag-section'>")
+        html.append(f"  <div class='tag-name'>📌 {tag_name}</div>")
+        description = info.get("description", "")
+        if description:
+            html.append(f"  <div class='description'>{description}</div>")
+
+        pulses = info.get("linked_pulses", [])
+        if pulses:
+            sorted_pulses = sorted(pulses, key=extract_date, reverse=True)
+            html.append("  <div><strong>📂 Linked Pulses:</strong>")
+            html.append("    <div class='pulses'>")
+            for pulse in sorted_pulses:
+                html.append(f"      <span class='pulse'>• {pulse}</span>")
+            html.append("    </div></div>")
+
+        concepts = info.get("related_concepts", [])
+        if concepts:
+            html.append("  <div><strong>🔗 Related Concepts:</strong>")
+            html.append("    <div class='concepts'>")
+            for concept in concepts:
+                html.append(f"      <span class='concept'>• {concept}</span>")
+            html.append("    </div></div>")
+
+        html.append("</div>")
+
+    html.append(f"<div class='footer'>Last generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC</div>")
+    html.append("</body></html>")
+
+    Path(output_path).write_text("\n".join(html))
+    print(f"✅ Tag browser updated: {output_path}")
+
+# Entry point if needed for local testing
 if __name__ == "__main__":
-    generate_tag_map_html()
+    build_tag_browser()
