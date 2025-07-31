@@ -1,7 +1,7 @@
 
 import os
 import json
-from phi_mesh.meta.tag_index_utils import get_all_tags_and_links
+from meta.tag_index_utils import get_all_tags_and_links
 
 def generate_tag_map_html(output_file="docs/tag_map.html"):
     tags_data = get_all_tags_and_links()
