@@ -4,32 +4,6 @@ RGP:
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
-  linked_papers:
-  - zenodo_latest
-  related_concepts: []
-  description: ''
-Gradient_Syntax:
-  linked_pulses:
-  - 2025-07-26_the_big_quiet.yml
-  - 2025-06-22_hatching_syntax_awakening.yml
-  linked_papers:
-  - zenodo_latest
-  related_concepts: []
-  description: ''
-Navier_Stokes:
-  linked_pulses:
-  - 2025-07-26_the_big_quiet.yml
-  - 2025-07-24_long_haul_blinding_light.yml
-  linked_papers:
-  - zenodo_latest
-  related_concepts: []
-  description: ''
-Contextual_Filter:
-  linked_pulses:
-  - 2025-07-22_CF_split.yml
-  - 2025-07-28_moe_as_microcosm.yml
-  linked_papers:
-  - zenodo_latest
   related_concepts: []
   description: ''
 patience:
@@ -58,9 +32,21 @@ cosmogenesis:
   - 2025-07-26_the_big_quiet.yml
   related_concepts: []
   description: ''
+Gradient_Syntax:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
 cosmology:
   linked_pulses:
   - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+Navier_Stokes:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  - 2025-07-24_long_haul_blinding_light.yml
   related_concepts: []
   description: ''
 laminarity:
@@ -121,6 +107,12 @@ signal:
 legacy:
   linked_pulses:
   - 2025-07-24_long_haul_blinding_light.yml
+  related_concepts: []
+  description: ''
+Contextual_Filter:
+  linked_pulses:
+  - 2025-07-22_CF_split.yml
+  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 PoLA:
