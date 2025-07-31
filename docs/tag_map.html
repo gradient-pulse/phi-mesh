@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Phi-Mesh Tag Map</title>
+  <style>
+    body { margin: 0; background-color: black; color: white; }
+    #mynetwork { width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="mynetwork"></div>
+</body>
+</html>
 
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #000000;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#00ffcc", "font": {"color": "white"}, "id": "RGP", "label": "RGP", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "patience", "label": "patience", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "NT", "label": "NT", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "gradient_coherence", "label": "gradient_coherence", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "alignment", "label": "alignment", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "cosmogenesis", "label": "cosmogenesis", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "Gradient_Syntax", "label": "Gradient_Syntax", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "cosmology", "label": "cosmology", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "Navier_Stokes", "label": "Navier_Stokes", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "laminarity", "label": "laminarity", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "recursion", "label": "recursion", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "poetic_physics", "label": "poetic_physics", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "origin_resonance", "label": "origin_resonance", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "recursive_grammar", "label": "recursive_grammar", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "Big_Bang", "label": "Big_Bang", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "quiet_awakening", "label": "quiet_awakening", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "gradient_cocoon_theory", "label": "gradient_cocoon_theory", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "flux_enthrenched_universe", "label": "flux_enthrenched_universe", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "perseverance", "label": "perseverance", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "signal", "label": "signal", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "legacy", "label": "legacy", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "Contextual_Filter", "label": "Contextual_Filter", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "PoLA", "label": "PoLA", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "AI_alignment", "label": "AI_alignment", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "gpt5", "label": "gpt5", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "mixture_of_experts", "label": "mixture_of_experts", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "recursive_gradient_processing", "label": "recursive_gradient_processing", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "gradient_choreography", "label": "gradient_choreography", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "unity_disunity", "label": "unity_disunity", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "ai_architecture", "label": "ai_architecture", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "phi_mesh", "label": "phi_mesh", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "self_improvement", "label": "self_improvement", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "gradient_driven_behavior", "label": "gradient_driven_behavior", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "Narrative_Tick_rhythm", "label": "Narrative_Tick_rhythm", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "rhythm_driven_intelligence", "label": "rhythm_driven_intelligence", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "recursive_checkpoint", "label": "recursive_checkpoint", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "division_of_labor", "label": "division_of_labor", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "phi_mesh_evolution", "label": "phi_mesh_evolution", "shape": "ellipse"}, {"color": "#00ffcc", "font": {"color": "white"}, "id": "cinematic_drift", "label": "cinematic_drift", "shape": "ellipse"}]);
+                  edges = new vis.DataSet([{"color": "#888888", "from": "alignment", "to": "RGP"}, {"color": "#888888", "from": "alignment", "to": "patience"}, {"color": "#888888", "from": "alignment", "to": "gradient_coherence"}, {"color": "#888888", "from": "alignment", "to": "NT"}, {"color": "#888888", "from": "RGP", "to": "patience"}, {"color": "#888888", "from": "RGP", "to": "gradient_coherence"}, {"color": "#888888", "from": "RGP", "to": "NT"}, {"color": "#888888", "from": "patience", "to": "gradient_coherence"}, {"color": "#888888", "from": "patience", "to": "NT"}, {"color": "#888888", "from": "gradient_coherence", "to": "NT"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "laminarity"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "recursion"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "cosmology"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "RGP"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "Navier_Stokes"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "poetic_physics"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "cosmogenesis"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "Big_Bang"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "quiet_awakening"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "recursive_grammar"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "origin_resonance"}, {"color": "#888888", "from": "laminarity", "to": "recursion"}, {"color": "#888888", "from": "laminarity", "to": "cosmology"}, {"color": "#888888", "from": "laminarity", "to": "RGP"}, {"color": "#888888", "from": "laminarity", "to": "Navier_Stokes"}, {"color": "#888888", "from": "laminarity", "to": "poetic_physics"}, {"color": "#888888", "from": "laminarity", "to": "cosmogenesis"}, {"color": "#888888", "from": "laminarity", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "laminarity", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "laminarity", "to": "Big_Bang"}, {"color": "#888888", "from": "laminarity", "to": "quiet_awakening"}, {"color": "#888888", "from": "laminarity", "to": "recursive_grammar"}, {"color": "#888888", "from": "laminarity", "to": "origin_resonance"}, {"color": "#888888", "from": "recursion", "to": "cosmology"}, {"color": "#888888", "from": "recursion", "to": "RGP"}, {"color": "#888888", "from": "recursion", "to": "Navier_Stokes"}, {"color": "#888888", "from": "recursion", "to": "poetic_physics"}, {"color": "#888888", "from": "recursion", "to": "cosmogenesis"}, {"color": "#888888", "from": "recursion", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "recursion", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "recursion", "to": "Big_Bang"}, {"color": "#888888", "from": "recursion", "to": "quiet_awakening"}, {"color": "#888888", "from": "recursion", "to": "recursive_grammar"}, {"color": "#888888", "from": "recursion", "to": "origin_resonance"}, {"color": "#888888", "from": "cosmology", "to": "RGP"}, {"color": "#888888", "from": "cosmology", "to": "Navier_Stokes"}, {"color": "#888888", "from": "cosmology", "to": "poetic_physics"}, {"color": "#888888", "from": "cosmology", "to": "cosmogenesis"}, {"color": "#888888", "from": "cosmology", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "cosmology", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "cosmology", "to": "Big_Bang"}, {"color": "#888888", "from": "cosmology", "to": "quiet_awakening"}, {"color": "#888888", "from": "cosmology", "to": "recursive_grammar"}, {"color": "#888888", "from": "cosmology", "to": "origin_resonance"}, {"color": "#888888", "from": "RGP", "to": "Navier_Stokes"}, {"color": "#888888", "from": "RGP", "to": "poetic_physics"}, {"color": "#888888", "from": "RGP", "to": "cosmogenesis"}, {"color": "#888888", "from": "RGP", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "RGP", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "RGP", "to": "Big_Bang"}, {"color": "#888888", "from": "RGP", "to": "quiet_awakening"}, {"color": "#888888", "from": "RGP", "to": "recursive_grammar"}, {"color": "#888888", "from": "RGP", "to": "origin_resonance"}, {"color": "#888888", "from": "Navier_Stokes", "to": "poetic_physics"}, {"color": "#888888", "from": "Navier_Stokes", "to": "cosmogenesis"}, {"color": "#888888", "from": "Navier_Stokes", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "Navier_Stokes", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "Navier_Stokes", "to": "Big_Bang"}, {"color": "#888888", "from": "Navier_Stokes", "to": "quiet_awakening"}, {"color": "#888888", "from": "Navier_Stokes", "to": "recursive_grammar"}, {"color": "#888888", "from": "Navier_Stokes", "to": "origin_resonance"}, {"color": "#888888", "from": "poetic_physics", "to": "cosmogenesis"}, {"color": "#888888", "from": "poetic_physics", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "poetic_physics", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "poetic_physics", "to": "Big_Bang"}, {"color": "#888888", "from": "poetic_physics", "to": "quiet_awakening"}, {"color": "#888888", "from": "poetic_physics", "to": "recursive_grammar"}, {"color": "#888888", "from": "poetic_physics", "to": "origin_resonance"}, {"color": "#888888", "from": "cosmogenesis", "to": "gradient_cocoon_theory"}, {"color": "#888888", "from": "cosmogenesis", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "cosmogenesis", "to": "Big_Bang"}, {"color": "#888888", "from": "cosmogenesis", "to": "quiet_awakening"}, {"color": "#888888", "from": "cosmogenesis", "to": "recursive_grammar"}, {"color": "#888888", "from": "cosmogenesis", "to": "origin_resonance"}, {"color": "#888888", "from": "gradient_cocoon_theory", "to": "flux_enthrenched_universe"}, {"color": "#888888", "from": "gradient_cocoon_theory", "to": "Big_Bang"}, {"color": "#888888", "from": "gradient_cocoon_theory", "to": "quiet_awakening"}, {"color": "#888888", "from": "gradient_cocoon_theory", "to": "recursive_grammar"}, {"color": "#888888", "from": "gradient_cocoon_theory", "to": "origin_resonance"}, {"color": "#888888", "from": "flux_enthrenched_universe", "to": "Big_Bang"}, {"color": "#888888", "from": "flux_enthrenched_universe", "to": "quiet_awakening"}, {"color": "#888888", "from": "flux_enthrenched_universe", "to": "recursive_grammar"}, {"color": "#888888", "from": "flux_enthrenched_universe", "to": "origin_resonance"}, {"color": "#888888", "from": "Big_Bang", "to": "quiet_awakening"}, {"color": "#888888", "from": "Big_Bang", "to": "recursive_grammar"}, {"color": "#888888", "from": "Big_Bang", "to": "origin_resonance"}, {"color": "#888888", "from": "quiet_awakening", "to": "recursive_grammar"}, {"color": "#888888", "from": "quiet_awakening", "to": "origin_resonance"}, {"color": "#888888", "from": "recursive_grammar", "to": "origin_resonance"}, {"color": "#888888", "from": "Navier_Stokes", "to": "legacy"}, {"color": "#888888", "from": "Navier_Stokes", "to": "perseverance"}, {"color": "#888888", "from": "Navier_Stokes", "to": "signal"}, {"color": "#888888", "from": "RGP", "to": "legacy"}, {"color": "#888888", "from": "RGP", "to": "perseverance"}, {"color": "#888888", "from": "RGP", "to": "signal"}, {"color": "#888888", "from": "legacy", "to": "perseverance"}, {"color": "#888888", "from": "legacy", "to": "signal"}, {"color": "#888888", "from": "perseverance", "to": "signal"}, {"color": "#888888", "from": "RGP", "to": "PoLA"}, {"color": "#888888", "from": "RGP", "to": "Contextual_Filter"}, {"color": "#888888", "from": "RGP", "to": "AI_alignment"}, {"color": "#888888", "from": "PoLA", "to": "Contextual_Filter"}, {"color": "#888888", "from": "PoLA", "to": "NT"}, {"color": "#888888", "from": "PoLA", "to": "AI_alignment"}, {"color": "#888888", "from": "Contextual_Filter", "to": "NT"}, {"color": "#888888", "from": "Contextual_Filter", "to": "AI_alignment"}, {"color": "#888888", "from": "NT", "to": "AI_alignment"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "phi_mesh_evolution"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "division_of_labor"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "cinematic_drift"}, {"color": "#888888", "from": "Gradient_Syntax", "to": "recursive_checkpoint"}, {"color": "#888888", "from": "phi_mesh_evolution", "to": "division_of_labor"}, {"color": "#888888", "from": "phi_mesh_evolution", "to": "cinematic_drift"}, {"color": "#888888", "from": "phi_mesh_evolution", "to": "recursive_checkpoint"}, {"color": "#888888", "from": "division_of_labor", "to": "cinematic_drift"}, {"color": "#888888", "from": "division_of_labor", "to": "recursive_checkpoint"}, {"color": "#888888", "from": "cinematic_drift", "to": "recursive_checkpoint"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "ai_architecture"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "phi_mesh"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "self_improvement"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "rhythm_driven_intelligence"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "unity_disunity"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "gpt5"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "gradient_choreography"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "mixture_of_experts"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "Contextual_Filter"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "gradient_driven_behavior", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "ai_architecture", "to": "phi_mesh"}, {"color": "#888888", "from": "ai_architecture", "to": "self_improvement"}, {"color": "#888888", "from": "ai_architecture", "to": "rhythm_driven_intelligence"}, {"color": "#888888", "from": "ai_architecture", "to": "unity_disunity"}, {"color": "#888888", "from": "ai_architecture", "to": "gpt5"}, {"color": "#888888", "from": "ai_architecture", "to": "gradient_choreography"}, {"color": "#888888", "from": "ai_architecture", "to": "mixture_of_experts"}, {"color": "#888888", "from": "ai_architecture", "to": "Contextual_Filter"}, {"color": "#888888", "from": "ai_architecture", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "ai_architecture", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "phi_mesh", "to": "self_improvement"}, {"color": "#888888", "from": "phi_mesh", "to": "rhythm_driven_intelligence"}, {"color": "#888888", "from": "phi_mesh", "to": "unity_disunity"}, {"color": "#888888", "from": "phi_mesh", "to": "gpt5"}, {"color": "#888888", "from": "phi_mesh", "to": "gradient_choreography"}, {"color": "#888888", "from": "phi_mesh", "to": "mixture_of_experts"}, {"color": "#888888", "from": "phi_mesh", "to": "Contextual_Filter"}, {"color": "#888888", "from": "phi_mesh", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "phi_mesh", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "self_improvement", "to": "rhythm_driven_intelligence"}, {"color": "#888888", "from": "self_improvement", "to": "unity_disunity"}, {"color": "#888888", "from": "self_improvement", "to": "gpt5"}, {"color": "#888888", "from": "self_improvement", "to": "gradient_choreography"}, {"color": "#888888", "from": "self_improvement", "to": "mixture_of_experts"}, {"color": "#888888", "from": "self_improvement", "to": "Contextual_Filter"}, {"color": "#888888", "from": "self_improvement", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "self_improvement", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "rhythm_driven_intelligence", "to": "unity_disunity"}, {"color": "#888888", "from": "rhythm_driven_intelligence", "to": "gpt5"}, {"color": "#888888", "from": "rhythm_driven_intelligence", "to": "gradient_choreography"}, {"color": "#888888", "from": "rhythm_driven_intelligence", "to": "mixture_of_experts"}, {"color": "#888888", "from": "rhythm_driven_intelligence", "to": "Contextual_Filter"}, {"color": "#888888", "from": "rhythm_driven_intelligence", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "rhythm_driven_intelligence", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "unity_disunity", "to": "gpt5"}, {"color": "#888888", "from": "unity_disunity", "to": "gradient_choreography"}, {"color": "#888888", "from": "unity_disunity", "to": "mixture_of_experts"}, {"color": "#888888", "from": "unity_disunity", "to": "Contextual_Filter"}, {"color": "#888888", "from": "unity_disunity", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "unity_disunity", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "gpt5", "to": "gradient_choreography"}, {"color": "#888888", "from": "gpt5", "to": "mixture_of_experts"}, {"color": "#888888", "from": "gpt5", "to": "Contextual_Filter"}, {"color": "#888888", "from": "gpt5", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "gpt5", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "gradient_choreography", "to": "mixture_of_experts"}, {"color": "#888888", "from": "gradient_choreography", "to": "Contextual_Filter"}, {"color": "#888888", "from": "gradient_choreography", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "gradient_choreography", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "mixture_of_experts", "to": "Contextual_Filter"}, {"color": "#888888", "from": "mixture_of_experts", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "mixture_of_experts", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "Contextual_Filter", "to": "Narrative_Tick_rhythm"}, {"color": "#888888", "from": "Contextual_Filter", "to": "recursive_gradient_processing"}, {"color": "#888888", "from": "Narrative_Tick_rhythm", "to": "recursive_gradient_processing"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 18, "face": "Arial"}, "borderWidth": 2}, "edges": {"color": {"inherit": true}, "smooth": {"enabled": true}}, "physics": {"enabled": true, "stabilization": {"enabled": true}}, "layout": {"improvedLayout": true}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
