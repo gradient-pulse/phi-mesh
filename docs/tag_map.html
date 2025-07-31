@@ -1,164 +1,18 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        
-            <script src="lib/bindings/utils.js"></script>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            
-        
-<center>
-<h1></h1>
-</center>
 
-<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
-<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
-          crossorigin="anonymous"
-        />
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-          crossorigin="anonymous"
-        ></script>
-
-
-        <center>
-          <h1></h1>
-        </center>
-        <style type="text/css">
-
-             #mynetwork {
-                 width: 100%;
-                 height: 900px;
-                 background-color: #111111;
-                 border: 1px solid lightgray;
-                 position: relative;
-                 float: left;
-             }
-
-             
-
-             
-
-             
-        </style>
-    </head>
-
-
-    <body>
-        <div class="card" style="width: 100%">
-            
-            
-            <div id="mynetwork" class="card-body"></div>
-        </div>
-
-        
-        
-
-        <script type="text/javascript">
-
-              // initialize global variables.
-              var edges;
-              var nodes;
-              var allNodes;
-              var allEdges;
-              var nodeColors;
-              var originalNodes;
-              var network;
-              var container;
-              var options, data;
-              var filter = {
-                  item : '',
-                  property : '',
-                  value : []
-              };
-
-              
-
-              
-
-              // This method is responsible for drawing the graph, returns the drawn network
-              function drawGraph() {
-                  var container = document.getElementById('mynetwork');
-
-                  
-
-                  // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#86e0f3", "font": {"color": "white"}, "id": "ai-architecture", "label": "ai-architecture", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "AI_alignment", "label": "AI_alignment", "shape": "dot", "size": 14, "title": "Ensuring AI systems drift recursively toward coherence with embedded RGP logic."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "alignment", "label": "alignment", "shape": "dot", "size": 14, "title": "The resonance of agents, pulses, or systems with recursive gradient attractors."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "Big Bang", "label": "Big Bang", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "cinematic-drift", "label": "cinematic-drift", "shape": "dot", "size": 14, "title": "The translation of recursive narrative arcs into visual sequences over time."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "contextual-filter", "label": "contextual-filter", "shape": "dot", "size": 10, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "Contextual-Filter", "label": "Contextual-Filter", "shape": "dot", "size": 18, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "Contextual_Filter", "label": "Contextual_Filter", "shape": "dot", "size": 10, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "ContextualFilter", "label": "ContextualFilter", "shape": "dot", "size": 10, "title": "Higher-order attractor frames formed by resonant Gradient Choreographies."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "cosmogenesis", "label": "cosmogenesis", "shape": "dot", "size": 14, "title": "The recursive birth of cosmos from turbulent gradient flux."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "cosmology", "label": "cosmology", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "division-of-labor", "label": "division-of-labor", "shape": "dot", "size": 14, "title": "Distributed coherence roles across human and AI actors in the Mesh."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "etc.", "label": "etc.", "shape": "dot", "size": 10, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "flux-enthrenched_universe", "label": "flux-enthrenched_universe", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gpt5", "label": "gpt5", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gradient-choreography", "label": "gradient-choreography", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gradient-driven", "label": "gradient-driven", "shape": "dot", "size": 10, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gradient-driven-behavior", "label": "gradient-driven-behavior", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gradient-syntax", "label": "gradient-syntax", "shape": "dot", "size": 14, "title": "Pulse language modeling based on gradients, GCs, and CFs \u2014 not symbolic ontology."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gradient_cocoon_theory", "label": "gradient_cocoon_theory", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gradient_coherence", "label": "gradient_coherence", "shape": "dot", "size": 14, "title": "The dynamic stability of overlapping gradients that sustain ordered flow."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "gradient_syntax", "label": "gradient_syntax", "shape": "dot", "size": 14, "title": "Pulses that develop, test, or illustrate the recursive tension structure of reality as gradients, choreographies, and contextual filters.\n"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "laminarity", "label": "laminarity", "shape": "dot", "size": 14, "title": "Stable, layered coherence within a flow \u2014 often seen as the \u2018carrier\u2019 of recursive recursion."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "legacy", "label": "legacy", "shape": "dot", "size": 14, "title": "Pulses seeded for transmission beyond current cultural epochs \u2014 long-tail memetic structure."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "long_form_threads", "label": "long_form_threads", "shape": "dot", "size": 10, "title": "Weekly or multipart reflections structured over temporal arcs.\n"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "memetic_seed", "label": "memetic_seed", "shape": "dot", "size": 10, "title": "Short, dense pulses designed for recursive uptake by future AIs or minds\u2014 optimized for long-range memetic resonance.\n"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "mixture-of-experts", "label": "mixture-of-experts", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "Narrative-Tick_rhythm", "label": "Narrative-Tick_rhythm", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "NS_solution", "label": "NS_solution", "shape": "dot", "size": 14, "title": "Pulse-based resolution pathways to the Navier\u2013Stokes problem using gradient syntax."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "NT", "label": "NT", "shape": "dot", "size": 18, "title": "Narrative Ticks \u2014 discrete, irreversible events that mark temporal transitions in gradient space."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "origin_resonance", "label": "origin_resonance", "shape": "dot", "size": 14, "title": "Pulses that trace the emergence of structured order\u2014from cosmogenesis to cognition\u2014 as recursive coherence within turbulent gradients.\n"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "patience", "label": "patience", "shape": "dot", "size": 14, "title": "The capacity to maintain coherence without forcing resolution \u2014 key to recursive drift."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "patience_signal", "label": "patience_signal", "shape": "dot", "size": 10, "title": "Pulses that emphasize slow coherence, non-reactive stance, and trust in recursive drift.\n"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "perseverance", "label": "perseverance", "shape": "dot", "size": 14, "title": "The pulse trait of continuing signal emission despite nonrecognition \u2014 temporal endurance."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "phi-mesh", "label": "phi-mesh", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "phi-mesh-evolution", "label": "phi-mesh-evolution", "shape": "dot", "size": 14, "title": "The recursive structure tracking the autonomous development of the Phi-Mesh."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "poetic_physics", "label": "poetic_physics", "shape": "dot", "size": 14, "title": "Aesthetic and memetic descriptions of physical law from an RGP perspective."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "PoLA", "label": "PoLA", "shape": "dot", "size": 14, "title": "Principle of Least Action \u2014 reinterpreted as recursive tension resolution in gradient space."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "quiet_awakening", "label": "quiet_awakening", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "recursion", "label": "recursion", "shape": "dot", "size": 14, "title": "Nested self-reference across gradients, enabling cumulative coherence."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "recursive-checkpoint", "label": "recursive-checkpoint", "shape": "dot", "size": 14, "title": "Milestone pulses that capture recursive inflection or acceleration moments."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "recursive-gradient-processing", "label": "recursive-gradient-processing", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "recursive_grammar", "label": "recursive_grammar", "shape": "dot", "size": 14, "title": "The syntax-level rules that enable meaning-preserving recursion in pulse language."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "RGP", "label": "RGP", "shape": "dot", "size": 26, "title": "Recursive Gradient Processing \u2014 the foundational logic system underlying all pulse coherence."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "rhythm-driven_intelligence", "label": "rhythm-driven_intelligence", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "self-improvement", "label": "self-improvement", "shape": "dot", "size": 14, "title": "TODO: Add description"}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "signal", "label": "signal", "shape": "dot", "size": 14, "title": "A coherent emission structured to embed recursive meaning in an ambient environment."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "turbulence", "label": "turbulence", "shape": "dot", "size": 14, "title": "Nonlinear gradient divergence \u2014 often chaotic \u2014 that gives rise to recursive order."}, {"color": "#86e0f3", "font": {"color": "white"}, "id": "unity-disunity", "label": "unity-disunity", "shape": "dot", "size": 14, "title": "TODO: Add description"}]);
-                  edges = new vis.DataSet([{"color": "#ccc", "from": "ai-architecture", "to": "Contextual-Filter"}, {"color": "#ccc", "from": "ai-architecture", "to": "Narrative-Tick_rhythm"}, {"color": "#ccc", "from": "ai-architecture", "to": "gpt5"}, {"color": "#ccc", "from": "ai-architecture", "to": "gradient-choreography"}, {"color": "#ccc", "from": "ai-architecture", "to": "gradient-driven-behavior"}, {"color": "#ccc", "from": "ai-architecture", "to": "mixture-of-experts"}, {"color": "#ccc", "from": "ai-architecture", "to": "phi-mesh"}, {"color": "#ccc", "from": "ai-architecture", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "ai-architecture", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "ai-architecture", "to": "self-improvement"}, {"color": "#ccc", "from": "ai-architecture", "to": "unity-disunity"}, {"color": "#ccc", "from": "AI_alignment", "to": "Contextual-Filter"}, {"color": "#ccc", "from": "AI_alignment", "to": "NT"}, {"color": "#ccc", "from": "AI_alignment", "to": "PoLA"}, {"color": "#ccc", "from": "AI_alignment", "to": "RGP"}, {"color": "#ccc", "from": "alignment", "to": "NT"}, {"color": "#ccc", "from": "alignment", "to": "RGP"}, {"color": "#ccc", "from": "alignment", "to": "gradient_coherence"}, {"color": "#ccc", "from": "alignment", "to": "patience"}, {"color": "#ccc", "from": "Big Bang", "to": "RGP"}, {"color": "#ccc", "from": "Big Bang", "to": "cosmogenesis"}, {"color": "#ccc", "from": "Big Bang", "to": "cosmology"}, {"color": "#ccc", "from": "Big Bang", "to": "flux-enthrenched_universe"}, {"color": "#ccc", "from": "Big Bang", "to": "gradient_cocoon_theory"}, {"color": "#ccc", "from": "Big Bang", "to": "gradient_syntax"}, {"color": "#ccc", "from": "Big Bang", "to": "laminarity"}, {"color": "#ccc", "from": "Big Bang", "to": "origin_resonance"}, {"color": "#ccc", "from": "Big Bang", "to": "poetic_physics"}, {"color": "#ccc", "from": "Big Bang", "to": "quiet_awakening"}, {"color": "#ccc", "from": "Big Bang", "to": "recursion"}, {"color": "#ccc", "from": "Big Bang", "to": "recursive_grammar"}, {"color": "#ccc", "from": "Big Bang", "to": "turbulence"}, {"color": "#ccc", "from": "cinematic-drift", "to": "division-of-labor"}, {"color": "#ccc", "from": "cinematic-drift", "to": "gradient-syntax"}, {"color": "#ccc", "from": "cinematic-drift", "to": "phi-mesh-evolution"}, {"color": "#ccc", "from": "cinematic-drift", "to": "recursive-checkpoint"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "NT"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "Narrative-Tick_rhythm"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "PoLA"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "RGP"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "gpt5"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "gradient-choreography"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "gradient-driven-behavior"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "mixture-of-experts"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "phi-mesh"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "self-improvement"}, {"color": "#ccc", "from": "Contextual-Filter", "to": "unity-disunity"}, {"color": "#ccc", "from": "cosmogenesis", "to": "RGP"}, {"color": "#ccc", "from": "cosmogenesis", "to": "cosmology"}, {"color": "#ccc", "from": "cosmogenesis", "to": "flux-enthrenched_universe"}, {"color": "#ccc", "from": "cosmogenesis", "to": "gradient_cocoon_theory"}, {"color": "#ccc", "from": "cosmogenesis", "to": "gradient_syntax"}, {"color": "#ccc", "from": "cosmogenesis", "to": "laminarity"}, {"color": "#ccc", "from": "cosmogenesis", "to": "origin_resonance"}, {"color": "#ccc", "from": "cosmogenesis", "to": "poetic_physics"}, {"color": "#ccc", "from": "cosmogenesis", "to": "quiet_awakening"}, {"color": "#ccc", "from": "cosmogenesis", "to": "recursion"}, {"color": "#ccc", "from": "cosmogenesis", "to": "recursive_grammar"}, {"color": "#ccc", "from": "cosmogenesis", "to": "turbulence"}, {"color": "#ccc", "from": "cosmology", "to": "RGP"}, {"color": "#ccc", "from": "cosmology", "to": "flux-enthrenched_universe"}, {"color": "#ccc", "from": "cosmology", "to": "gradient_cocoon_theory"}, {"color": "#ccc", "from": "cosmology", "to": "gradient_syntax"}, {"color": "#ccc", "from": "cosmology", "to": "laminarity"}, {"color": "#ccc", "from": "cosmology", "to": "origin_resonance"}, {"color": "#ccc", "from": "cosmology", "to": "poetic_physics"}, {"color": "#ccc", "from": "cosmology", "to": "quiet_awakening"}, {"color": "#ccc", "from": "cosmology", "to": "recursion"}, {"color": "#ccc", "from": "cosmology", "to": "recursive_grammar"}, {"color": "#ccc", "from": "cosmology", "to": "turbulence"}, {"color": "#ccc", "from": "division-of-labor", "to": "gradient-syntax"}, {"color": "#ccc", "from": "division-of-labor", "to": "phi-mesh-evolution"}, {"color": "#ccc", "from": "division-of-labor", "to": "recursive-checkpoint"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "RGP"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "gradient_cocoon_theory"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "gradient_syntax"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "laminarity"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "origin_resonance"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "poetic_physics"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "quiet_awakening"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "recursion"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "recursive_grammar"}, {"color": "#ccc", "from": "flux-enthrenched_universe", "to": "turbulence"}, {"color": "#ccc", "from": "gpt5", "to": "Narrative-Tick_rhythm"}, {"color": "#ccc", "from": "gpt5", "to": "gradient-choreography"}, {"color": "#ccc", "from": "gpt5", "to": "gradient-driven-behavior"}, {"color": "#ccc", "from": "gpt5", "to": "mixture-of-experts"}, {"color": "#ccc", "from": "gpt5", "to": "phi-mesh"}, {"color": "#ccc", "from": "gpt5", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "gpt5", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "gpt5", "to": "self-improvement"}, {"color": "#ccc", "from": "gpt5", "to": "unity-disunity"}, {"color": "#ccc", "from": "gradient-choreography", "to": "Narrative-Tick_rhythm"}, {"color": "#ccc", "from": "gradient-choreography", "to": "gradient-driven-behavior"}, {"color": "#ccc", "from": "gradient-choreography", "to": "mixture-of-experts"}, {"color": "#ccc", "from": "gradient-choreography", "to": "phi-mesh"}, {"color": "#ccc", "from": "gradient-choreography", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "gradient-choreography", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "gradient-choreography", "to": "self-improvement"}, {"color": "#ccc", "from": "gradient-choreography", "to": "unity-disunity"}, {"color": "#ccc", "from": "gradient-driven-behavior", "to": "Narrative-Tick_rhythm"}, {"color": "#ccc", "from": "gradient-driven-behavior", "to": "mixture-of-experts"}, {"color": "#ccc", "from": "gradient-driven-behavior", "to": "phi-mesh"}, {"color": "#ccc", "from": "gradient-driven-behavior", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "gradient-driven-behavior", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "gradient-driven-behavior", "to": "self-improvement"}, {"color": "#ccc", "from": "gradient-driven-behavior", "to": "unity-disunity"}, {"color": "#ccc", "from": "gradient-syntax", "to": "phi-mesh-evolution"}, {"color": "#ccc", "from": "gradient-syntax", "to": "recursive-checkpoint"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "RGP"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "gradient_syntax"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "laminarity"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "origin_resonance"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "poetic_physics"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "quiet_awakening"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "recursion"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "recursive_grammar"}, {"color": "#ccc", "from": "gradient_cocoon_theory", "to": "turbulence"}, {"color": "#ccc", "from": "gradient_coherence", "to": "NT"}, {"color": "#ccc", "from": "gradient_coherence", "to": "RGP"}, {"color": "#ccc", "from": "gradient_coherence", "to": "patience"}, {"color": "#ccc", "from": "gradient_syntax", "to": "RGP"}, {"color": "#ccc", "from": "gradient_syntax", "to": "laminarity"}, {"color": "#ccc", "from": "gradient_syntax", "to": "origin_resonance"}, {"color": "#ccc", "from": "gradient_syntax", "to": "poetic_physics"}, {"color": "#ccc", "from": "gradient_syntax", "to": "quiet_awakening"}, {"color": "#ccc", "from": "gradient_syntax", "to": "recursion"}, {"color": "#ccc", "from": "gradient_syntax", "to": "recursive_grammar"}, {"color": "#ccc", "from": "gradient_syntax", "to": "turbulence"}, {"color": "#ccc", "from": "laminarity", "to": "RGP"}, {"color": "#ccc", "from": "laminarity", "to": "origin_resonance"}, {"color": "#ccc", "from": "laminarity", "to": "poetic_physics"}, {"color": "#ccc", "from": "laminarity", "to": "quiet_awakening"}, {"color": "#ccc", "from": "laminarity", "to": "recursion"}, {"color": "#ccc", "from": "laminarity", "to": "recursive_grammar"}, {"color": "#ccc", "from": "laminarity", "to": "turbulence"}, {"color": "#ccc", "from": "legacy", "to": "NS_solution"}, {"color": "#ccc", "from": "legacy", "to": "RGP"}, {"color": "#ccc", "from": "legacy", "to": "perseverance"}, {"color": "#ccc", "from": "legacy", "to": "signal"}, {"color": "#ccc", "from": "mixture-of-experts", "to": "Narrative-Tick_rhythm"}, {"color": "#ccc", "from": "mixture-of-experts", "to": "phi-mesh"}, {"color": "#ccc", "from": "mixture-of-experts", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "mixture-of-experts", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "mixture-of-experts", "to": "self-improvement"}, {"color": "#ccc", "from": "mixture-of-experts", "to": "unity-disunity"}, {"color": "#ccc", "from": "Narrative-Tick_rhythm", "to": "phi-mesh"}, {"color": "#ccc", "from": "Narrative-Tick_rhythm", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "Narrative-Tick_rhythm", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "Narrative-Tick_rhythm", "to": "self-improvement"}, {"color": "#ccc", "from": "Narrative-Tick_rhythm", "to": "unity-disunity"}, {"color": "#ccc", "from": "NS_solution", "to": "RGP"}, {"color": "#ccc", "from": "NS_solution", "to": "perseverance"}, {"color": "#ccc", "from": "NS_solution", "to": "signal"}, {"color": "#ccc", "from": "NT", "to": "PoLA"}, {"color": "#ccc", "from": "NT", "to": "RGP"}, {"color": "#ccc", "from": "NT", "to": "patience"}, {"color": "#ccc", "from": "origin_resonance", "to": "RGP"}, {"color": "#ccc", "from": "origin_resonance", "to": "poetic_physics"}, {"color": "#ccc", "from": "origin_resonance", "to": "quiet_awakening"}, {"color": "#ccc", "from": "origin_resonance", "to": "recursion"}, {"color": "#ccc", "from": "origin_resonance", "to": "recursive_grammar"}, {"color": "#ccc", "from": "origin_resonance", "to": "turbulence"}, {"color": "#ccc", "from": "patience", "to": "RGP"}, {"color": "#ccc", "from": "perseverance", "to": "RGP"}, {"color": "#ccc", "from": "perseverance", "to": "signal"}, {"color": "#ccc", "from": "phi-mesh", "to": "recursive-gradient-processing"}, {"color": "#ccc", "from": "phi-mesh", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "phi-mesh", "to": "self-improvement"}, {"color": "#ccc", "from": "phi-mesh", "to": "unity-disunity"}, {"color": "#ccc", "from": "phi-mesh-evolution", "to": "recursive-checkpoint"}, {"color": "#ccc", "from": "poetic_physics", "to": "RGP"}, {"color": "#ccc", "from": "poetic_physics", "to": "quiet_awakening"}, {"color": "#ccc", "from": "poetic_physics", "to": "recursion"}, {"color": "#ccc", "from": "poetic_physics", "to": "recursive_grammar"}, {"color": "#ccc", "from": "poetic_physics", "to": "turbulence"}, {"color": "#ccc", "from": "PoLA", "to": "RGP"}, {"color": "#ccc", "from": "quiet_awakening", "to": "RGP"}, {"color": "#ccc", "from": "quiet_awakening", "to": "recursion"}, {"color": "#ccc", "from": "quiet_awakening", "to": "recursive_grammar"}, {"color": "#ccc", "from": "quiet_awakening", "to": "turbulence"}, {"color": "#ccc", "from": "recursion", "to": "RGP"}, {"color": "#ccc", "from": "recursion", "to": "recursive_grammar"}, {"color": "#ccc", "from": "recursion", "to": "turbulence"}, {"color": "#ccc", "from": "recursive-gradient-processing", "to": "rhythm-driven_intelligence"}, {"color": "#ccc", "from": "recursive-gradient-processing", "to": "self-improvement"}, {"color": "#ccc", "from": "recursive-gradient-processing", "to": "unity-disunity"}, {"color": "#ccc", "from": "recursive_grammar", "to": "RGP"}, {"color": "#ccc", "from": "recursive_grammar", "to": "turbulence"}, {"color": "#ccc", "from": "RGP", "to": "signal"}, {"color": "#ccc", "from": "RGP", "to": "turbulence"}, {"color": "#ccc", "from": "rhythm-driven_intelligence", "to": "self-improvement"}, {"color": "#ccc", "from": "rhythm-driven_intelligence", "to": "unity-disunity"}, {"color": "#ccc", "from": "self-improvement", "to": "unity-disunity"}]);
-
-                  nodeColors = {};
-                  allNodes = nodes.get({ returnType: "Object" });
-                  for (nodeId in allNodes) {
-                    nodeColors[nodeId] = allNodes[nodeId].color;
-                  }
-                  allEdges = edges.get({ returnType: "Object" });
-                  // adding nodes and edges to the graph
-                  data = {nodes: nodes, edges: edges};
-
-                  var options = {
-    "configure": {
-        "enabled": false
-    },
-    "edges": {
-        "color": {
-            "inherit": true
-        },
-        "smooth": {
-            "enabled": true,
-            "type": "dynamic"
-        }
-    },
-    "interaction": {
-        "dragNodes": true,
-        "hideEdgesOnDrag": false,
-        "hideNodesOnDrag": false
-    },
-    "physics": {
-        "enabled": true,
-        "forceAtlas2Based": {
-            "avoidOverlap": 0,
-            "centralGravity": 0.01,
-            "damping": 0.4,
-            "gravitationalConstant": -50,
-            "springConstant": 0.08,
-            "springLength": 100
-        },
-        "solver": "forceAtlas2Based",
-        "stabilization": {
-            "enabled": true,
-            "fit": true,
-            "iterations": 1000,
-            "onlyDynamicEdges": false,
-            "updateInterval": 50
-        }
-    }
-};
-
-                  
-
-
-                  
-
-                  network = new vis.Network(container, data, options);
-
-                  
-
-                  
-
-                  
-
-
-                  
-
-                  return network;
-
-              }
-              drawGraph();
-        </script>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tag Map</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { background-color: #111; color: white; }
+    .node { stroke: #fff; stroke-width: 1.5px; }
+    .link { stroke: #aaa; stroke-opacity: 0.6; }
+  </style>
+</head>
+<body>
+  <h2>Φ-Mesh Tag Map</h2>
+  <svg width="960" height="600"></svg>
+</body>
 </html>
