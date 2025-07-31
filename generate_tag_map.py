@@ -2,6 +2,7 @@ import yaml
 import os
 import json
 from pyvis.network import Network
+from jinja2 import Template
 
 def load_tag_index(file_path):
     with open(file_path, 'r') as f:
@@ -22,6 +23,7 @@ def collect_link_data(tag_index):
 def generate_tag_map():
     tag_index_path = "meta/tag_index.yml"
     output_path = "docs/tag_map.html"
+    template_path = "pyvis_template.html"
 
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -79,11 +81,10 @@ def generate_tag_map():
 
     net.set_options(options_json)
 
-    # Fallback fix for PyVis rendering bug in GitHub Actions
-    net.template = "pyvis_template.html"
-    
-    # Output HTML map
-    net.show(output_path)
+    # Load dark theme template (via Jinja2) for GitHub Actions compatibility
+    with open(template_path, "r") as f:
+        custom_template = Template(f.read())
+    net.show(output_path, notebook=False, template=custom_template)
 
 if __name__ == "__main__":
     generate_tag_map()
