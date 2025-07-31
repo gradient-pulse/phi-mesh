@@ -80,3 +80,22 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
 
     Path(output_path).write_text("\n".join(html))
     print(f"✅ Tag browser updated: {output_path}")
+   
+# Add to tag_index_utils.py
+
+def build_graph_from_tag_index(tag_index):
+    import networkx as nx
+    G = nx.Graph()
+
+    # Add nodes
+    for tag in tag_index:
+        G.add_node(tag)
+
+    # Add edges
+    for tag, data in tag_index.items():
+        related_tags = data.get('related', [])
+        for related in related_tags:
+            if related in tag_index:
+                G.add_edge(tag, related)
+
+    return G
