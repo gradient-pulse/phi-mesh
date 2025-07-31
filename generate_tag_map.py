@@ -1,41 +1,95 @@
+# Updated generate_tag_map.py to include linked_papers and linked_podcasts
+
 import os
 import yaml
-import pyvis
+import networkx as nx
 from pyvis.network import Network
-from jinja2 import Environment, FileSystemLoader
+from datetime import datetime
+from pathlib import Path
 
-# Manually register Jinja2 environment for pyvis
-template_dir = os.path.join(os.path.dirname(pyvis.__file__), 'templates')
-if not os.path.exists(template_dir):
-    raise FileNotFoundError("Pyvis template folder not found. This prevents rendering the HTML file.")
+TAG_INDEX_PATH = "meta/tag_index.yml"
+LINK_INDEX_PATH = "meta/link_index.yml"
+OUTPUT_HTML_PATH = "docs/tag_map.html"
 
-env = Environment(loader=FileSystemLoader(template_dir))
+def load_yaml(path):
+    with open(path, 'r') as f:
+        return yaml.safe_load(f)
 
-# Load tag data
-tag_file = "meta/tag_index.yml"
-with open(tag_file, 'r') as f:
-    tags = yaml.safe_load(f).get("tags", {})
+def add_node(net, name, count=0, is_orphan=False):
+    label = f"{name}\n{count} links"
+    title = f"{name} (linked: {count})"
+    color = "#cccccc" if is_orphan else None
+    shape = "ellipse"
+    net.add_node(name, label=label, title=title, color=color, shape=shape)
 
-# Initialize network
-g = Network(height='900px', width='100%', bgcolor='#111111', font_color='white')
-g.force_atlas_2based()
+def generate_tag_map():
+    tag_data = load_yaml(TAG_INDEX_PATH)
+    link_data = load_yaml(LINK_INDEX_PATH)
 
-# Add nodes
-for tag, info in tags.items():
-    description = info.get("description", "")
-    count = info.get("count", 0)
-    size = 10 + 4 * count
-    g.add_node(tag, label=tag, title=description, size=size, color='#86e0f3')
+    G = nx.Graph()
+    all_tags = {k for k in tag_data if k != 'canonical_tags'}
 
-# Add edges based on related_concepts
-for tag, info in tags.items():
-    related = info.get("related_concepts", [])
-    for rel in related:
-        if rel in tags:
-            g.add_edge(tag, rel, color='#ccc')
+    # Create graph edges based on shared pulses
+    for tag1 in all_tags:
+        for tag2 in all_tags:
+            if tag1 >= tag2:
+                continue
+            shared = set(tag_data[tag1].get("linked_pulses", [])) & set(tag_data[tag2].get("linked_pulses", []))
+            if shared:
+                G.add_edge(tag1, tag2, weight=len(shared))
 
-# Ensure output directory exists
-os.makedirs("docs", exist_ok=True)
+    # Add nodes and detect orphans
+    orphans = [tag for tag in all_tags if tag not in G.nodes]
+    net = Network(height='950px', width='100%', bgcolor='#ffffff', font_color='black')
 
-# Write the map to GitHub Pages-visible location
-g.write_html("docs/tag_map.html")
+    for tag in G.nodes:
+        count = G.degree(tag)
+        add_node(net, tag, count)
+    for orphan in orphans:
+        add_node(net, orphan, is_orphan=True)
+
+    for u, v, d in G.edges(data=True):
+        net.add_edge(u, v, value=d['weight'])
+
+    # Attach linked papers and podcasts to central tags
+    for key, value in link_data.items():
+        if key.startswith("zenodo"):
+            title = value.get("title", "Untitled")
+            for tag in tag_data:
+                if tag.lower() in title.lower():
+                    G.add_node(title)
+                    G.add_edge(tag, title)
+
+    net.set_options('''
+    var options = {
+      nodes: {
+        borderWidth: 1,
+        size: 20,
+        font: {
+          size: 18
+        },
+        shapeProperties: {
+          interpolation: false
+        }
+      },
+      edges: {
+        color: {inherit: true},
+        width: 0.5,
+        smooth: {
+          type: "continuous"
+        }
+      },
+      physics: {
+        stabilization: true,
+        barnesHut: {
+          springLength: 200
+        }
+      }
+    }
+    ''')
+
+    net.show(OUTPUT_HTML_PATH)
+    print(f"✅ Tag map generated: {OUTPUT_HTML_PATH}")
+
+if __name__ == "__main__":
+    generate_tag_map()
