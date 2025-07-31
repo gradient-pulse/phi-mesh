@@ -80,8 +80,8 @@ def generate_tag_map():
     net.set_options(options_json)
 
     # Fallback fix for PyVis rendering bug in GitHub Actions
-    net.template = os.path.join(os.path.dirname(__file__), "pyvis_template.html")
-
+    net.template = "pyvis_template.html"
+    
     # Output HTML map
     net.show(output_path)
 
