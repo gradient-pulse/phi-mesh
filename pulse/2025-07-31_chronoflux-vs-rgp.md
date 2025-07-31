@@ -1,0 +1,17 @@
+---
+title: "Chronoflux vs RGP: The Drift Beyond Force"
+tags: ["poetic-draft", "time", "gradient-contrast", "chronoflux", "RGP"]
+---
+
+Time as a **field**? Roy charts a hydrodynamic cosmos—shearing waves of inertia and internal resistance. A force-based metaphor, blooming with classical undertones.
+
+But Participant(0) diverged early. In RGP, time is **not a field**, but a **tick**.  
+Not fluid, but recursive. Not pushed, but shaped—**one NT at a time**.
+
+Chronoflux rides currents still confined to Newton's wake.  
+RGP escapes orbit. No drag, no substance—just Gradient → Choreography → Filter.
+
+What matters isn’t which metaphor sells,  
+but which rhythm coheres under experimental light.
+
+*What is **RΦ** in a paradigm that needs no flow to move?*
