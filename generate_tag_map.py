@@ -1,95 +1,85 @@
-# Updated generate_tag_map.py to include linked_papers and linked_podcasts
-
-import os
 import yaml
-import networkx as nx
+import os
+import json
 from pyvis.network import Network
-from datetime import datetime
-from pathlib import Path
 
-TAG_INDEX_PATH = "meta/tag_index.yml"
-LINK_INDEX_PATH = "meta/link_index.yml"
-OUTPUT_HTML_PATH = "docs/tag_map.html"
-
-def load_yaml(path):
-    with open(path, 'r') as f:
+# Load canonical tag mappings
+def load_tag_index(file_path):
+    with open(file_path, 'r') as f:
         return yaml.safe_load(f)
 
-def add_node(net, name, count=0, is_orphan=False):
-    label = f"{name}\n{count} links"
-    title = f"{name} (linked: {count})"
-    color = "#cccccc" if is_orphan else None
-    shape = "ellipse"
-    net.add_node(name, label=label, title=title, color=color, shape=shape)
+# Load metadata and identify linkages
+def collect_link_data(tag_index):
+    tag_links = {}
+    for tag, data in tag_index.items():
+        if tag == "canonical_tags":
+            continue
+        tag_links[tag] = {
+            "pulses": data.get("linked_pulses", []),
+            "papers": data.get("linked_papers", []),
+            "podcasts": data.get("linked_podcasts", []),
+        }
+    return tag_links
 
+# Generate visual graph
 def generate_tag_map():
-    tag_data = load_yaml(TAG_INDEX_PATH)
-    link_data = load_yaml(LINK_INDEX_PATH)
+    tag_index_path = "meta/tag_index.yml"
+    output_path = "docs/tag_map.html"
 
-    G = nx.Graph()
-    all_tags = {k for k in tag_data if k != 'canonical_tags'}
+    tag_index = load_tag_index(tag_index_path)
+    tag_links = collect_link_data(tag_index)
 
-    # Create graph edges based on shared pulses
-    for tag1 in all_tags:
-        for tag2 in all_tags:
-            if tag1 >= tag2:
-                continue
-            shared = set(tag_data[tag1].get("linked_pulses", [])) & set(tag_data[tag2].get("linked_pulses", []))
-            if shared:
-                G.add_edge(tag1, tag2, weight=len(shared))
+    net = Network(height="900px", width="100%", bgcolor="#000000", font_color="white")
 
-    # Add nodes and detect orphans
-    orphans = [tag for tag in all_tags if tag not in G.nodes]
-    net = Network(height='950px', width='100%', bgcolor='#ffffff', font_color='black')
+    # Add tag nodes
+    for tag in tag_links:
+        net.add_node(tag, label=tag, shape="ellipse", color="#00ffcc")
 
-    for tag in G.nodes:
-        count = G.degree(tag)
-        add_node(net, tag, count)
-    for orphan in orphans:
-        add_node(net, orphan, is_orphan=True)
+    # Link shared artifacts between tags (pulses, papers, podcasts)
+    artifact_to_tags = {}
+    for tag, links in tag_links.items():
+        for kind in ["pulses", "papers", "podcasts"]:
+            for item in links[kind]:
+                artifact_to_tags.setdefault(item, set()).add(tag)
 
-    for u, v, d in G.edges(data=True):
-        net.add_edge(u, v, value=d['weight'])
+    for artifact, tags in artifact_to_tags.items():
+        tags = list(tags)
+        for i in range(len(tags)):
+            for j in range(i + 1, len(tags)):
+                net.add_edge(tags[i], tags[j], color="#888888")
 
-    # Attach linked papers and podcasts to central tags
-    for key, value in link_data.items():
-        if key.startswith("zenodo"):
-            title = value.get("title", "Untitled")
-            for tag in tag_data:
-                if tag.lower() in title.lower():
-                    G.add_node(title)
-                    G.add_edge(tag, title)
-
+    # Set clean visualization options (JSON-compliant)
     net.set_options('''
-    var options = {
-      nodes: {
-        borderWidth: 1,
-        size: 20,
-        font: {
-          size: 18
-        },
-        shapeProperties: {
-          interpolation: false
-        }
-      },
-      edges: {
-        color: {inherit: true},
-        width: 0.5,
-        smooth: {
-          type: "continuous"
-        }
-      },
-      physics: {
-        stabilization: true,
-        barnesHut: {
-          springLength: 200
-        }
-      }
+{
+  "nodes": {
+    "font": {
+      "size": 18,
+      "face": "Arial"
+    },
+    "borderWidth": 2
+  },
+  "edges": {
+    "color": {
+      "inherit": true
+    },
+    "smooth": {
+      "enabled": true
     }
-    ''')
+  },
+  "physics": {
+    "enabled": true,
+    "stabilization": {
+      "enabled": true
+    }
+  },
+  "layout": {
+    "improvedLayout": true
+  }
+}
+''')
 
-    net.show(OUTPUT_HTML_PATH)
-    print(f"✅ Tag map generated: {OUTPUT_HTML_PATH}")
+    # Save map
+    net.show(output_path)
 
 if __name__ == "__main__":
     generate_tag_map()
