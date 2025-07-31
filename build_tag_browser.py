@@ -1,15 +1,11 @@
-# FILE: build_tag_browser.py (UPDATED)
-
 import os
+import sys
 import yaml
 from pathlib import Path
 from datetime import datetime
 import re
 
-
-def build_tag_browser(tag_index_path="meta/tag_index.yml",
-                      link_index_path="meta/link_index.yml",
-                      output_path="docs/tag_browser.html"):
+def build_tag_browser(tag_index_path="meta/tag_index.yml", link_index_path="meta/link_index.yml", output_path="docs/tag_browser.html"):
     def extract_date(filename):
         match = re.match(r"(\d{4}-\d{2}-\d{2})", filename)
         return match.group(1) if match else "0000-00-00"
@@ -21,11 +17,16 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml",
         valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
         return max(valid_dates) if valid_dates else "0000-00-00"
 
+    def resolve_entry(key, link_data):
+        return link_data.get(key, None)
+
+    # Load YAML files
     tag_data = yaml.safe_load(Path(tag_index_path).read_text())
     link_data = yaml.safe_load(Path(link_index_path).read_text())
 
+    # Filter tags and sort
     sorted_tags = sorted(
-        [(tag_name, info) for tag_name, info in tag_data.items() if not is_test_tag(tag_name)],
+        [(tag_name, info) for tag_name, info in tag_data.items() if not is_test_tag(tag_name) and tag_name != "canonical_tags"],
         key=lambda item: get_latest_pulse_date(item[1].get("linked_pulses", [])),
         reverse=True
     )
@@ -45,54 +46,49 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml",
         "    .pulses, .concepts, .papers, .podcasts { margin: 5px 0 15px 20px; }",
         "    .pulse, .concept, .paper, .podcast { display: block; margin: 2px 0; }",
         "    .footer { margin-top: 50px; font-size: 0.9em; color: #777; }",
+        "    a { text-decoration: none; color: #006699; }",
         "  </style>",
         "</head>",
         "<body>",
         "<h1>🧠 Phi-Mesh Tag Browser</h1>"
     ]
 
-    # Step through each tag block
     for tag_name, info in sorted_tags:
         html.append("<div class='tag-section'>")
         html.append(f"  <div class='tag-name'>📌 {tag_name}</div>")
-        description = info.get("description", "")
-        if description:
-            html.append(f"  <div class='description'>{description}</div>")
 
-        # Pulses
-        pulses = info.get("linked_pulses", [])
-        if pulses:
-            sorted_pulses = sorted(pulses, key=extract_date, reverse=True)
-            html.append("  <div><strong>📂 Linked Pulses:</strong><div class='pulses'>")
-            for pulse in sorted_pulses:
-                html.append(f"    <span class='pulse'>• {pulse}</span>")
-            html.append("  </div></div>")
+        if info.get("description"):
+            html.append(f"  <div class='description'>{info['description']}</div>")
 
-        # Related concepts
-        concepts = info.get("related_concepts", [])
-        if concepts:
-            html.append("  <div><strong>🔗 Related Concepts:</strong><div class='concepts'>")
-            for concept in concepts:
-                html.append(f"    <span class='concept'>• {concept}</span>")
-            html.append("  </div></div>")
+        for category, label, css_class in [
+            ("linked_pulses", "📂 Linked Pulses:", "pulse"),
+            ("related_concepts", "🔗 Related Concepts:", "concept"),
+        ]:
+            entries = info.get(category, [])
+            if entries:
+                html.append(f"  <div><strong>{label}</strong>")
+                html.append(f"    <div class='{css_class}s'>")
+                for entry in sorted(entries, key=extract_date if 'pulse' in category else str, reverse=True):
+                    html.append(f"      <span class='{css_class}'>• {entry}</span>")
+                html.append("    </div></div>")
 
-        # Papers
-        if tag_name in link_data.get("linked_papers", {}):
-            html.append("  <div><strong>📄 Linked Papers:</strong><div class='papers'>")
-            for paper in link_data["linked_papers"][tag_name]:
-                title = paper.get("title", "[Untitled]")
-                url = paper.get("doi", "")
-                html.append(f"    <span class='paper'>• <a href='{url}' target='_blank'>{title}</a></span>")
-            html.append("  </div></div>")
-
-        # Podcasts
-        if tag_name in link_data.get("linked_podcasts", {}):
-            html.append("  <div><strong>🎧 Linked Podcasts:</strong><div class='podcasts'>")
-            for podcast in link_data["linked_podcasts"][tag_name]:
-                title = podcast.get("title", "[Untitled]")
-                url = podcast.get("url", "")
-                html.append(f"    <span class='podcast'>• <a href='{url}' target='_blank'>{title}</a></span>")
-            html.append("  </div></div>")
+        for category, label, css_class in [
+            ("linked_papers", "📄 Linked Papers:", "paper"),
+            ("linked_podcasts", "🎙️ Linked Podcasts:", "podcast"),
+        ]:
+            entries = info.get(category, [])
+            if entries:
+                html.append(f"  <div><strong>{label}</strong>")
+                html.append(f"    <div class='{css_class}s'>")
+                for entry in entries:
+                    resolved = resolve_entry(entry, link_data)
+                    if resolved:
+                        url = resolved.get("doi") or resolved.get("url", "")
+                        title = resolved.get("title", entry)
+                        html.append(f"      <span class='{css_class}'>• <a href='{url}' target='_blank'>{title}</a></span>")
+                    else:
+                        html.append(f"      <span class='{css_class}'>• {entry} (⚠️ missing in link_index)</span>")
+                html.append("    </div></div>")
 
         html.append("</div>")
 
@@ -101,7 +97,6 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml",
 
     Path(output_path).write_text("\n".join(html))
     print(f"✅ Tag browser updated: {output_path}")
-
 
 if __name__ == "__main__":
     build_tag_browser()
