@@ -1,29 +1,52 @@
-
-import yaml
-from collections import defaultdict
 import os
+import yaml
+from pathlib import Path
+from collections import defaultdict
 
-TAG_INDEX_PATH = 'meta/tag_index.yml'
+# Paths
+pulse_dir = Path("pulse")
+meta_path = Path("meta/tag_index.yml")
 
-def load_tag_index(path):
-    with open(path, 'r') as f:
-        return yaml.safe_load(f)
+# Load canonical tag mappings
+if meta_path.exists():
+    tag_index = yaml.safe_load(meta_path.read_text())
+    canonical_tags = tag_index.get("canonical_tags", {})
+else:
+    tag_index = {}
+    canonical_tags = {}
 
-def canonicalize_tags(tag_index):
-    canonical_map = defaultdict(set)
-    for canonical, group in tag_index.get('canonical_tags', {}).items():
-        for alias in group:
-            canonical_map[canonical].add(alias)
-    return canonical_map
+# Helper: normalize tag to canonical form
+def normalize_tag(tag):
+    for canonical, variants in canonical_tags.items():
+        if tag in variants or tag == canonical:
+            return canonical
+    return tag.replace(" ", "_").replace("-", "_")
 
-def main():
-    if not os.path.exists(TAG_INDEX_PATH):
-        print(f"{TAG_INDEX_PATH} not found.")
-        return
-    tag_index = load_tag_index(TAG_INDEX_PATH)
-    canonical_map = canonicalize_tags(tag_index)
-    for k, v in canonical_map.items():
-        print(f"{k}: {sorted(v)}")
+# Build tag index
+tag_map = defaultdict(lambda: {"linked_pulses": [], "related_concepts": [], "description": ""})
 
-if __name__ == "__main__":
-    main()
+for pulse_file in pulse_dir.glob("*.yml"):
+    with pulse_file.open() as f:
+        try:
+            pulse_data = yaml.safe_load(f)
+            tags = pulse_data.get("tags", [])
+            if isinstance(tags, str):  # handle single string case
+                tags = [tags]
+            for tag in tags:
+                if not tag:
+                    continue
+                canonical = normalize_tag(tag.strip())
+                tag_map[canonical]["linked_pulses"].append(pulse_file.name)
+        except Exception as e:
+            print(f"Error parsing {pulse_file.name}: {e}")
+
+# Combine with canonical_tags
+final_output = dict(tag_map)
+final_output["canonical_tags"] = canonical_tags
+
+# Write output
+Path("meta").mkdir(exist_ok=True)
+with open(meta_path, "w") as f:
+    yaml.dump(final_output, f, sort_keys=False)
+
+print(f"✅ Tag index updated: {meta_path}")
