@@ -8,10 +8,12 @@ on:
       - 'tag_index_utils.py'
       - 'update_tag_index.py'
       - 'build_tag_browser.py'
+      - 'generate_tag_map.py'
 
 jobs:
   update-tag-index:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -30,14 +32,14 @@ jobs:
       - name: Run tag browser HTML builder
         run: python build_tag_browser.py
 
-      - name: Commit and push changes
+      - name: Commit tag index and tag browser
         run: |
           git config user.name "actions-user"
           git config user.email "actions@github.com"
           git add meta/tag_index.yml docs/tag_browser.html
           git commit -m "auto: update daily pulse log" || echo "No changes to commit"
           git push
-          
+
       - name: Generate tag map HTML
         run: python generate_tag_map.py
 
@@ -46,5 +48,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/tag_map.html
-          git commit -m "Auto-update tag_map.html"
+          git commit -m "Auto-update tag_map.html" || echo "No changes to commit"
           git push
