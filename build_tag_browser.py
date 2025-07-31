@@ -6,24 +6,19 @@ from datetime import datetime
 import re
 
 def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag_browser.html"):
-    # Extract YYYY-MM-DD from filenames
     def extract_date(filename):
         match = re.match(r"(\d{4}-\d{2}-\d{2})", filename)
         return match.group(1) if match else "0000-00-00"
 
-    # Identify tags starting with "test run"
     def is_test_tag(tag_name):
         return tag_name.strip().lower().startswith("test run")
 
-    # Find latest date in a tag's pulse list
     def get_latest_pulse_date(pulse_list):
         valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
         return max(valid_dates) if valid_dates else "0000-00-00"
 
-    # Load the YAML tag index
     tag_data = yaml.safe_load(Path(tag_index_path).read_text())
 
-    # Filter out test tags and sort tags by most recent pulse (descending)
     sorted_tags = sorted(
         [(tag_name, info) for tag_name, info in tag_data.items() if not is_test_tag(tag_name)],
         key=lambda item: get_latest_pulse_date(item[1].get("linked_pulses", [])),
@@ -42,8 +37,8 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
         "    .tag-section { margin-bottom: 40px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }",
         "    .tag-name { font-size: 1.5em; color: #004466; }",
         "    .description { margin: 10px 0; color: #333; }",
-        "    .pulses, .concepts { margin: 5px 0 15px 20px; }",
-        "    .pulse, .concept { display: block; margin: 2px 0; }",
+        "    .pulses, .concepts, .papers { margin: 5px 0 15px 20px; }",
+        "    .pulse, .concept, .paper { display: block; margin: 2px 0; }",
         "    .footer { margin-top: 50px; font-size: 0.9em; color: #777; }",
         "  </style>",
         "</head>",
@@ -54,6 +49,7 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
     for tag_name, info in sorted_tags:
         html.append("<div class='tag-section'>")
         html.append(f"  <div class='tag-name'>📌 {tag_name}</div>")
+
         description = info.get("description", "")
         if description:
             html.append(f"  <div class='description'>{description}</div>")
@@ -65,6 +61,14 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
             html.append("    <div class='pulses'>")
             for pulse in sorted_pulses:
                 html.append(f"      <span class='pulse'>• {pulse}</span>")
+            html.append("    </div></div>")
+
+        papers = info.get("linked_papers", [])
+        if papers:
+            html.append("  <div><strong>📄 Linked Papers:</strong>")
+            html.append("    <div class='papers'>")
+            for paper_id in papers:
+                html.append(f"      <span class='paper'>• {paper_id}</span>")
             html.append("    </div></div>")
 
         concepts = info.get("related_concepts", [])
@@ -83,6 +87,5 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
     Path(output_path).write_text("\n".join(html))
     print(f"✅ Tag browser updated: {output_path}")
 
-# Entry point if needed for local testing
 if __name__ == "__main__":
     build_tag_browser()
