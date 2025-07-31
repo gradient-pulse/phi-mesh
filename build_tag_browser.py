@@ -1,39 +1,73 @@
 
-import yaml
+import os
 import json
+from phi_mesh.meta.tag_index_utils import get_all_tags_and_links
 
-def load_tag_index(filepath='meta/tag_index.yml'):
-    with open(filepath, 'r') as f:
-        return yaml.safe_load(f)
+def generate_tag_map_html(output_file="docs/tag_map.html"):
+    tags_data = get_all_tags_and_links()
 
-def build_tag_browser(tag_data, output='docs/tag_browser.html'):
-    html_parts = [
-        "<html><head><title>Phi-Mesh Tag Map</title></head><body>",
-        "<h1>Phi-Mesh Interactive Tag Map</h1><div>"
-    ]
+    # Separate tag nodes and edges
+    tag_nodes = [{"id": tag, "label": tag, "shape": "dot", "font": {"size": 16}} for tag in tags_data]
+    tag_edges = []
+    for source, links in tags_data.items():
+        for link in links.get("tag_links", []):
+            tag_edges.append({"from": source, "to": link, "arrows": "to", "color": "#ccc"})
+        for paper in links.get("papers", []):
+            tag_nodes.append({"id": f"📄 {paper}", "label": f"📄 {paper}", "shape": "box", "color": "#c0ffc0", "font": {"size": 14}})
+            tag_edges.append({"from": source, "to": f"📄 {paper}", "arrows": "to", "color": "#9ccc9c"})
+        for podcast in links.get("podcasts", []):
+            tag_nodes.append({"id": f"🎧 {podcast}", "label": f"🎧 {podcast}", "shape": "ellipse", "color": "#cce0ff", "font": {"size": 14}})
+            tag_edges.append({"from": source, "to": f"🎧 {podcast}", "arrows": "to", "color": "#99bbee"})
 
-    for tag, info in tag_data.items():
-        html_parts.append(f"<h2>{tag}</h2>")
-        if 'pulses' in info:
-            html_parts.append("<strong>Pulses:</strong><ul>")
-            for pulse in info['pulses']:
-                html_parts.append(f"<li><a href='{pulse}'>{pulse}</a></li>")
-            html_parts.append("</ul>")
-        if 'papers' in info:
-            html_parts.append("<strong>Papers:</strong><ul>")
-            for paper in info['papers']:
-                html_parts.append(f"<li><a href='{paper}'>{paper}</a></li>")
-            html_parts.append("</ul>")
-        if 'podcasts' in info:
-            html_parts.append("<strong>Podcasts:</strong><ul>")
-            for podcast in info['podcasts']:
-                html_parts.append(f"<li><a href='{podcast}'>{podcast}</a></li>")
-            html_parts.append("</ul>")
-    html_parts.append("</div></body></html>")
+    html_content = f"""
+<!doctype html>
+<html>
+<head>
+  <title>Phi-Mesh Tag Map</title>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <style type="text/css">
+    #network {{
+      width: 100%;
+      height: 92vh;
+      background-color: #111;
+      border: 1px solid lightgray;
+    }}
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;color:white;">Phi-Mesh Interactive Tag Map</h2>
+  <div id="network"></div>
+  <script type="text/javascript">
+    var nodes = new vis.DataSet({json.dumps(tag_nodes)});
+    var edges = new vis.DataSet({json.dumps(tag_edges)});
+    var container = document.getElementById('network');
+    var data = {{ nodes: nodes, edges: edges }};
+    var options = {{
+      nodes: {{
+        color: '#ffffff',
+        font: {{ color: '#ffffff' }},
+        borderWidth: 2
+      }},
+      edges: {{
+        color: {{ color: '#888' }}
+      }},
+      physics: {{
+        stabilization: true
+      }},
+      layout: {{
+        improvedLayout: true
+      }}
+    }};
+    var network = new vis.Network(container, data, options);
+  </script>
+</body>
+</html>
+    """
 
-    with open(output, 'w') as f:
-        f.write('\n'.join(html_parts))
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    with open(output_file, "w") as f:
+        f.write(html_content)
 
-if __name__ == '__main__':
-    tags = load_tag_index()
-    build_tag_browser(tags)
+if __name__ == "__main__":
+    generate_tag_map_html()
