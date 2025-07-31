@@ -9,6 +9,9 @@ on:
       - 'update_tag_index.py'
       - 'build_tag_browser.py'
       - 'generate_tag_map.py'
+      - 'meta/tag_index.yml'
+      - 'meta/link_index.yml'
+      - '.github/workflows/update_tag_index.yml'
 
 jobs:
   update-tag-index:
@@ -32,21 +35,13 @@ jobs:
       - name: Run tag browser HTML builder
         run: python build_tag_browser.py
 
-      - name: Commit tag index and tag browser
-        run: |
-          git config user.name "actions-user"
-          git config user.email "actions@github.com"
-          git add meta/tag_index.yml docs/tag_browser.html
-          git commit -m "auto: update daily pulse log" || echo "No changes to commit"
-          git push
-
       - name: Generate tag map HTML
         run: python generate_tag_map.py
 
-      - name: Commit tag map HTML
+      - name: Commit all generated artifacts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/tag_map.html
-          git commit -m "Auto-update tag_map.html" || echo "No changes to commit"
+          git add meta/tag_index.yml docs/tag_browser.html docs/tag_map.html
+          git commit -m "Auto-update tag browser and tag map" || echo "No changes to commit"
           git push
