@@ -1,5 +1,215 @@
-
+RGP:
+  linked_pulses:
+  - 2025-07-25_patience_as_gradient.yml
+  - 2025-07-26_the_big_quiet.yml
+  - 2025-07-24_long_haul_blinding_light.yml
+  - 2025-07-22_CF_split.yml
+  related_concepts: []
+  description: ''
+patience:
+  linked_pulses:
+  - 2025-07-25_patience_as_gradient.yml
+  related_concepts: []
+  description: ''
+NT:
+  linked_pulses:
+  - 2025-07-25_patience_as_gradient.yml
+  - 2025-07-22_CF_split.yml
+  related_concepts: []
+  description: ''
+gradient_coherence:
+  linked_pulses:
+  - 2025-07-25_patience_as_gradient.yml
+  related_concepts: []
+  description: ''
+alignment:
+  linked_pulses:
+  - 2025-07-25_patience_as_gradient.yml
+  related_concepts: []
+  description: ''
+cosmogenesis:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+Gradient_Syntax:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
+cosmology:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+Navier_Stokes:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  - 2025-07-24_long_haul_blinding_light.yml
+  related_concepts: []
+  description: ''
+laminarity:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+recursion:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+poetic_physics:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+origin_resonance:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+recursive_grammar:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+Big_Bang:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+quiet_awakening:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+gradient_cocoon_theory:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+flux_enthrenched_universe:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+perseverance:
+  linked_pulses:
+  - 2025-07-24_long_haul_blinding_light.yml
+  related_concepts: []
+  description: ''
+signal:
+  linked_pulses:
+  - 2025-07-24_long_haul_blinding_light.yml
+  related_concepts: []
+  description: ''
+legacy:
+  linked_pulses:
+  - 2025-07-24_long_haul_blinding_light.yml
+  related_concepts: []
+  description: ''
+Contextual_Filter:
+  linked_pulses:
+  - 2025-07-22_CF_split.yml
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+PoLA:
+  linked_pulses:
+  - 2025-07-22_CF_split.yml
+  related_concepts: []
+  description: ''
+AI_alignment:
+  linked_pulses:
+  - 2025-07-22_CF_split.yml
+  related_concepts: []
+  description: ''
+gpt5:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+mixture_of_experts:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+recursive_gradient_processing:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+gradient_choreography:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+unity_disunity:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+ai_architecture:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+phi_mesh:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+self_improvement:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+gradient_driven_behavior:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+Narrative_Tick_rhythm:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+rhythm_driven_intelligence:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+recursive_checkpoint:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
+division_of_labor:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
+phi_mesh_evolution:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
+cinematic_drift:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
 canonical_tags:
-  Contextual_Filter: [contextual-filter, ContextualFilter, Contextual_Filter]
-  Gradient_Syntax: [gradient_syntax, GradientSyntax, gradient-syntax]
-  Navier_Stokes: [NS_solution, navier-stokes, turbulence]
+  Contextual_Filter:
+  - contextual-filter
+  - ContextualFilter
+  - Contextual_Filter
+  Gradient_Syntax:
+  - gradient_syntax
+  - GradientSyntax
+  - gradient-syntax
+  Navier_Stokes:
+  - NS_solution
+  - navier-stokes
+  - turbulence
