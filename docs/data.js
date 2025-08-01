@@ -73,6 +73,10 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "rhythm_of_nature",
+      "centrality": 0
+    },
+    {
       "id": "perseverance",
       "centrality": 0
     },
