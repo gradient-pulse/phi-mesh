@@ -102,6 +102,7 @@ Gradient_Syntax:
   linked_pulses:
   - 2025-07-26_the_big_quiet.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
+  - 2025-07-21_recursive_cor_pola_convergence.yml
   - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
@@ -176,6 +177,44 @@ recursive_checkpoint:
   - 2025-08-01_phi-mesh-exec-drift.yml
   related_concepts: []
   description: ''
+CoR:
+  linked_pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  related_concepts: []
+  description: ''
+NT_rhythm:
+  linked_pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  related_concepts: []
+  description: ''
+PoLA:
+  linked_pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+flux_intelligence:
+  linked_pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  related_concepts: []
+  description: ''
+recursive_cognition:
+  linked_pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  related_concepts: []
+  description: ''
+interpretability:
+  linked_pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  related_concepts: []
+  description: ''
+contextual_filter:
+  linked_pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  - 2025-07-24_long_haul_blinding_light.yml
+  - 2025-07-22_CF_split.yml
+  related_concepts: []
+  description: ''
 perseverance:
   linked_pulses:
   - 2025-07-24_long_haul_blinding_light.yml
@@ -189,12 +228,6 @@ signal:
 legacy:
   linked_pulses:
   - 2025-07-24_long_haul_blinding_light.yml
-  related_concepts: []
-  description: ''
-contextual_filter:
-  linked_pulses:
-  - 2025-07-24_long_haul_blinding_light.yml
-  - 2025-07-22_CF_split.yml
   related_concepts: []
   description: ''
 Pola:
@@ -258,11 +291,6 @@ software_dev:
   related_concepts: []
   description: ''
 rhythm_of_least_divergence:
-  linked_pulses:
-  - 2025-08-01_dev-cycle-nt-rhythm.yml
-  related_concepts: []
-  description: ''
-PoLA:
   linked_pulses:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
