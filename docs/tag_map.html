@@ -5,62 +5,31 @@
   <title>Phi-Mesh Tag Map</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    body {
+    body {{
       background-color: black;
       color: white;
       font-family: sans-serif;
-      margin: 0;
-      display: flex;
-    }
-
-    #graph {
-      flex: 1;
-    }
-
-    #sidebar {
-      width: 250px;
-      padding: 10px;
-      border-left: 1px solid #333;
-      background: #111;
-      overflow-y: auto;
-    }
-
-    .node {
+      text-align: center;
+    }}
+    .node {{
       cursor: pointer;
       font-size: 14px;
-    }
-
-    .orphan {
+    }}
+    .orphan {{
       fill: gray;
-    }
-
-    .central {
+    }}
+    .central {{
       fill: cyan;
-    }
-
-    .link {
+    }}
+    .link {{
       stroke: #aaa;
       stroke-width: 1px;
-    }
-
-    #loading {
-      color: white;
-      font-size: 18px;
-      padding: 20px;
-    }
+    }}
   </style>
 </head>
 <body>
-  <div id="graph">
-    <h2 style="color:deepskyblue;">Phi-Mesh Tag Map</h2>
-    <div id="loading">Loading tag map…</div>
-    <svg width="1000" height="800" style="display: none;"></svg>
-  </div>
-  <div id="sidebar">
-    <h3 style="color:deepskyblue;">Tag Info</h3>
-    <div id="tag-details">Click on a tag to see details here.</div>
-  </div>
-
+  <h2 style="color:deepskyblue;">Phi-Mesh Tag Map</h2>
+  <svg width="1000" height="800"></svg>
   <script src="data.js"></script>
   <script>
     const svg = d3.select("svg");
@@ -89,7 +58,6 @@
         .attr("dy", 4)
         .style("fill", d => d.orphan ? "gray" : "deepskyblue")
         .style("font-size", "12px")
-        .on("click", showDetails)
         .call(drag(simulation));
 
     simulation.on("tick", () => {
@@ -121,18 +89,6 @@
           event.subject.fy = null;
         });
     }
-
-    function showDetails(event, d) {
-      document.getElementById("tag-details").innerHTML = `
-        <strong>${d.id}</strong><br/>
-        ${d.orphan ? "Orphan node" : "Connected node"}<br/>
-        Centrality: ${d.centrality ?? "n/a"}
-      `;
-    }
-
-    // Once data is loaded, show SVG
-    document.getElementById("loading").style.display = "none";
-    svg.style("display", "block");
   </script>
 </body>
 </html>
