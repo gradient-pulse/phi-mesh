@@ -123,7 +123,6 @@ contextual_filter:
 Contextual_Filter:
   linked_pulses:
   - 2025-07-22_CF_split.yml
-  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 PoLA:
@@ -164,61 +163,6 @@ big_quiet:
 black_holes:
   linked_pulses:
   - 2025-07-23_gradient-cocoon.yml
-  related_concepts: []
-  description: ''
-gpt5:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-mixture_of_experts:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-recursive_gradient_processing:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-gradient_choreography:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-unity_disunity:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-ai_architecture:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-phi_mesh:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-self_improvement:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-gradient_driven_behavior:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-Narrative_Tick_rhythm:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-rhythm_driven_intelligence:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 canonical_tags:

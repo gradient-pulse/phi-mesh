@@ -129,50 +129,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "gpt5",
-      "centrality": 0
-    },
-    {
-      "id": "mixture_of_experts",
-      "centrality": 0
-    },
-    {
-      "id": "recursive_gradient_processing",
-      "centrality": 0
-    },
-    {
-      "id": "gradient_choreography",
-      "centrality": 0
-    },
-    {
-      "id": "unity_disunity",
-      "centrality": 0
-    },
-    {
-      "id": "ai_architecture",
-      "centrality": 0
-    },
-    {
-      "id": "phi_mesh",
-      "centrality": 0
-    },
-    {
-      "id": "self_improvement",
-      "centrality": 0
-    },
-    {
-      "id": "gradient_driven_behavior",
-      "centrality": 0
-    },
-    {
-      "id": "Narrative_Tick_rhythm",
-      "centrality": 0
-    },
-    {
-      "id": "rhythm_driven_intelligence",
-      "centrality": 0
-    },
-    {
       "id": "canonical_tags",
       "centrality": 0
     }
