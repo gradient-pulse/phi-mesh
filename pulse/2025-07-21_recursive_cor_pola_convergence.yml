@@ -10,12 +10,16 @@ pulse:
     We propose that nature’s true PoLA signature may lie in a global, experimentally measurable NT rhythm—a recursive attractor of minimal divergence.
   tags:
     - CoR
-    - NT rhythm
-    - Principle of Least Action
-    - Gradient Syntax
-    - Fluid Intelligence
-    - Recursive Cognition
+    - NT_rhythm
+    - PoLA
+    - Gradient-Syntax
+    - flux_intelligence
+    - recursive-cognition
     - Interpretability
+  papers:
+    - https://doi.org/10.5281/zenodo.15091347
+  podcasts:
+    - https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
   equation:
     - label: Reality Syntax
       expression: "Reality = ⊗(Context_Scalingᵢ × Universal_Ratio_Pattern)"
