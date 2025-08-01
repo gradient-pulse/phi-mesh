@@ -63,6 +63,7 @@ RGP:
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 narrative_tick:
@@ -104,6 +105,7 @@ Gradient_Syntax:
   - 2025-08-01_phi-mesh-exec-drift.yml
   - 2025-07-21_recursive_cor_pola_convergence.yml
   - 2025-07-23_gradient-cocoon.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 cosmology:
@@ -160,6 +162,7 @@ rhythm_of_nature:
 phi_mesh_evolution:
   linked_pulses:
   - 2025-08-01_phi-mesh-exec-drift.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 drift:
@@ -170,11 +173,13 @@ drift:
 division_of_labor:
   linked_pulses:
   - 2025-08-01_phi-mesh-exec-drift.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 recursive_checkpoint:
   linked_pulses:
   - 2025-08-01_phi-mesh-exec-drift.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 CoR:
@@ -303,6 +308,11 @@ development_process:
 context_engineering:
   linked_pulses:
   - 2025-07-30_laminar-turbulence.yml
+  related_concepts: []
+  description: ''
+cinematic_drift:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 canonical_tags:
