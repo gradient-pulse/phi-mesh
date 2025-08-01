@@ -27,7 +27,9 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install networkx pyvis matplotlib
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml matplotlib networkx
   
       - name: Run tag index updater
         run: python update_tag_index.py
