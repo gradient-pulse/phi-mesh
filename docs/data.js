@@ -149,22 +149,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "recursive_checkpoint",
-      "centrality": 0
-    },
-    {
-      "id": "division_of_labor",
-      "centrality": 0
-    },
-    {
-      "id": "phi_mesh_evolution",
-      "centrality": 0
-    },
-    {
-      "id": "cinematic_drift",
-      "centrality": 0
-    },
-    {
       "id": "canonical_tags",
       "centrality": 0
     }
