@@ -1,109 +1,76 @@
-import yaml
+import json
 import networkx as nx
+import matplotlib.pyplot as plt
 from pyvis.network import Network
 import os
-from tag_index_utils import build_graph_from_tag_index
-from link_index_utils import add_links_to_graph
+from meta.tag_index import tag_index
+from meta.link_index import link_index
 
-TAG_INDEX_PATH = "meta/tag_index.yml"
-LINK_INDEX_PATH = "meta/link_index.yml"
-OUTPUT_PATH = "docs/tag_map.html"
+# Initialize graph
+G = nx.Graph()
 
+# Add tag nodes
+for tag in tag_index:
+    G.add_node(tag, type="tag")
 
-def generate_tag_map():
-    # Load tag index
-    with open(TAG_INDEX_PATH, 'r') as f:
-        tag_index = yaml.safe_load(f)
+# Add edges from tag_index
+for tag, data in tag_index.items():
+    for related_tag in data.get("related", []):
+        if related_tag in G:
+            G.add_edge(tag, related_tag)
 
-    # Load link index
-    with open(LINK_INDEX_PATH, 'r') as f:
-        link_index = yaml.safe_load(f)
+# Add edges from link_index (e.g., podcast, paper connections)
+for item_id, item_data in link_index.items():
+    tags = item_data.get("tags", [])
+    for i, tag1 in enumerate(tags):
+        for tag2 in tags[i + 1:]:
+            if G.has_node(tag1) and G.has_node(tag2):
+                G.add_edge(tag1, tag2)
 
-    # Build graph
-    G = build_graph_from_tag_index(tag_index)
-    add_links_to_graph(G, link_index)
+# Create Pyvis network
+net = Network(height='1000px', width='100%', bgcolor='#000000', font_color='white')
 
-    # Create PyVis network
-    net = Network(height="100vh", width="100%", bgcolor="#000000", font_color="#ffffff")
-    net.barnes_hut(gravity=-8000, central_gravity=0.3, spring_length=120)
+# Node size based on centrality
+centrality = nx.degree_centrality(G)
 
-    # Add nodes and edges
-    for node in G.nodes():
-        label = str(node)
-        net.add_node(
-            node,
-            label=label,
-            title=label,
-            shape="dot",
-            color="#33ccff",  # Light blue
-            size=12,
-            font={"size": 14, "color": "#ffffff"},
-        )
+for node in G.nodes():
+    net.add_node(
+        node,
+        label=node,
+        title=node,
+        color='deepskyblue',
+        size=15 + 25 * centrality.get(node, 0)
+    )
 
-    for source, target in G.edges():
-        net.add_edge(source, target, color="rgba(200,200,200,0.25)")
+for source, target in G.edges():
+    net.add_edge(source, target, color='rgba(255,255,255,0.2)')
 
-    # Save basic PyVis output
-    html_path = OUTPUT_PATH
-    net.save_graph(html_path)
+# Enable physics and clustering for elegance
+net.barnes_hut(gravity=-20000, central_gravity=0.3, spring_length=200, spring_strength=0.001, damping=0.9)
 
-    # Inject header and sidebar code
-    with open(html_path, 'r') as f:
-        html = f.read()
+# Add header HTML for styling and link injection
+header_html = '''
+<style>
+  h1 {
+    font-family: sans-serif;
+    font-size: 24px;
+    color: deepskyblue;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+<h1>Phi-Mesh Tag Map</h1>
+'''
 
-    injected = """
-    <style>
-      body { margin: 0; background-color: black; color: white; }
-      #mynetwork { border: none !important; }
-      #header {
-        font-size: 24px;
-        font-weight: bold;
-        padding: 12px;
-        color: #33ccff;
-        font-family: sans-serif;
-        text-align: center;
-        background-color: black;
-      }
-      #side-panel {
-        position: fixed;
-        right: 0;
-        top: 60px;
-        width: 280px;
-        height: 90%;
-        background-color: #111111;
-        color: #00ffff;
-        overflow-y: auto;
-        padding: 12px;
-        font-family: sans-serif;
-        display: none;
-        border-left: 1px solid #333333;
-      }
-    </style>
-    <div id='header'>Phi-Mesh Tag Map</div>
-    <div id='side-panel'></div>
-    <script>
-      function showTagInfo(tag) {
-        const panel = document.getElementById("side-panel");
-        panel.style.display = 'block';
-        panel.innerHTML = '<h3>' + tag + '</h3><p>Links and metadata coming soon...</p>';
-      }
+# Generate and customize HTML
+output_path = os.path.join("docs", "tag_map.html")
+net.show(output_path)
 
-      // Wait for PyVis to render then hook events
-      window.addEventListener('load', function () {
-        const nodes = document.querySelectorAll('div.node');
-        nodes.forEach(el => {
-          el.addEventListener('click', () => showTagInfo(el.innerText));
-        });
-      });
-    </script>
-    """
+# Inject header into the HTML
+with open(output_path, "r") as f:
+    html = f.read()
 
-    html = html.replace("</head>", injected + "\n</head>")
+html = html.replace("</head>", f"{header_html}</head>")
 
-    # Save final HTML
-    with open(html_path, 'w') as f:
-        f.write(html)
-
-
-if __name__ == '__main__':
-    generate_tag_map()
+with open(output_path, "w") as f:
+    f.write(html)
