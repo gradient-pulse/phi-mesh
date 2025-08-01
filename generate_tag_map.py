@@ -9,6 +9,7 @@ TAG_INDEX_PATH = "meta/tag_index.yml"
 LINK_INDEX_PATH = "meta/link_index.yml"
 OUTPUT_PATH = "docs/tag_map.html"
 
+
 def generate_tag_map():
     # Load tag index
     with open(TAG_INDEX_PATH, 'r') as f:
@@ -24,7 +25,7 @@ def generate_tag_map():
 
     # Create PyVis network
     net = Network(height="100vh", width="100%", bgcolor="#000000", font_color="#ffffff")
-    net.barnes_hut(gravity=-5000, spring_length=180, central_gravity=0.2)
+    net.barnes_hut(gravity=-8000, central_gravity=0.3, spring_length=120)
 
     # Add nodes and edges
     for node in G.nodes():
@@ -34,31 +35,34 @@ def generate_tag_map():
             label=label,
             title=label,
             shape="dot",
-            color="#44ccff",
-            font={"size": 22, "color": "#44ccff"},
+            color="#33ccff",  # Light blue
+            size=12,
+            font={"size": 14, "color": "#ffffff"},
         )
 
     for source, target in G.edges():
-        net.add_edge(source, target, color="rgba(160,160,160,0.4)")
+        net.add_edge(source, target, color="rgba(200,200,200,0.25)")
 
-    # Save initial graph
+    # Save basic PyVis output
     html_path = OUTPUT_PATH
     net.save_graph(html_path)
 
-    # Inject header and sidebar
+    # Inject header and sidebar code
     with open(html_path, 'r') as f:
         html = f.read()
 
-    header_html = """
+    injected = """
     <style>
+      body { margin: 0; background-color: black; color: white; }
+      #mynetwork { border: none !important; }
       #header {
         font-size: 24px;
         font-weight: bold;
-        padding: 12px 24px;
-        color: white;
+        padding: 12px;
+        color: #33ccff;
         font-family: sans-serif;
+        text-align: center;
         background-color: black;
-        text-align: left;
       }
       #side-panel {
         position: fixed;
@@ -81,18 +85,25 @@ def generate_tag_map():
       function showTagInfo(tag) {
         const panel = document.getElementById("side-panel");
         panel.style.display = 'block';
-        panel.innerHTML = '<h3>' + tag + '</h3>' +
-                          '<p>Links and details coming soon...</p>';
+        panel.innerHTML = '<h3>' + tag + '</h3><p>Links and metadata coming soon...</p>';
       }
-      document.querySelectorAll(".node").forEach(el => {
-        el.onclick = () => showTagInfo(el.innerText);
+
+      // Wait for PyVis to render then hook events
+      window.addEventListener('load', function () {
+        const nodes = document.querySelectorAll('div.node');
+        nodes.forEach(el => {
+          el.addEventListener('click', () => showTagInfo(el.innerText));
+        });
       });
     </script>
     """
-    html = html.replace("</head>", header_html + "\n</head>")
 
+    html = html.replace("</head>", injected + "\n</head>")
+
+    # Save final HTML
     with open(html_path, 'w') as f:
         f.write(html)
+
 
 if __name__ == '__main__':
     generate_tag_map()
