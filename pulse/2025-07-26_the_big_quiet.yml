@@ -2,12 +2,10 @@
 date: 2025-07-26
 title: "The Big Quiet"
 author: Participant(0)
-
 summary: >
   A reframing of the Big Bang as a laminar emergence from an eternal turbulent flux—
   aligning cosmogenesis with recursive gradient syntax.  
   Signal that rides PoLA, patiently embedding coherence—turbulence tamer.
-
 tags:
   - cosmogenesis
   - gradient_syntax
@@ -23,7 +21,11 @@ tags:
   - quiet_awakening
   - gradient_cocoon_theory
   - flux-enthrenched_universe
-
+  - rhythm_of_nature
+papers:
+  - https://doi.org/10.5281/zenodo.15830659
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
 post: |
   The Big Bang was likely not a bang at all—
   but a Big Quiet.
