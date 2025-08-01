@@ -1,9 +1,74 @@
+poetic_drift:
+  linked_pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
+  related_concepts: []
+  description: ''
+"R\u03A6":
+  linked_pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
+  - 2025-07-30_laminar-turbulence.yml
+  related_concepts: []
+  description: ''
+Navier_Stokes:
+  linked_pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
+  - 2025-07-26_the_big_quiet.yml
+  - 2025-07-24_long_haul_blinding_light.yml
+  - 2025-07-30_laminar-turbulence.yml
+  related_concepts: []
+  description: ''
+gradient_flux:
+  linked_pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
+  related_concepts: []
+  description: ''
+recursion:
+  linked_pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+big_quiet:
+  linked_pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
+  - 2025-07-23_gradient-cocoon.yml
+  related_concepts: []
+  description: ''
+poetic_draft:
+  linked_pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
+  - 2025-07-30_laminar-turbulence.yml
+  related_concepts: []
+  description: ''
+time:
+  linked_pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
+  related_concepts: []
+  description: ''
+gradient_contrast:
+  linked_pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
+  related_concepts: []
+  description: ''
+chronoflux:
+  linked_pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
+  related_concepts: []
+  description: ''
 RGP:
   linked_pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
   - 2025-07-25_patience_as_gradient.yml
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+narrative_tick:
+  linked_pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
 patience:
@@ -15,6 +80,7 @@ NT:
   linked_pulses:
   - 2025-07-25_patience_as_gradient.yml
   - 2025-07-22_CF_split.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
 gradient_coherence:
@@ -35,6 +101,7 @@ cosmogenesis:
 Gradient_Syntax:
   linked_pulses:
   - 2025-07-26_the_big_quiet.yml
+  - 2025-08-01_phi-mesh-exec-drift.yml
   - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
@@ -44,18 +111,7 @@ cosmology:
   - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
-Navier_Stokes:
-  linked_pulses:
-  - 2025-07-26_the_big_quiet.yml
-  - 2025-07-24_long_haul_blinding_light.yml
-  related_concepts: []
-  description: ''
 laminarity:
-  linked_pulses:
-  - 2025-07-26_the_big_quiet.yml
-  related_concepts: []
-  description: ''
-recursion:
   linked_pulses:
   - 2025-07-26_the_big_quiet.yml
   related_concepts: []
@@ -100,6 +156,26 @@ rhythm_of_nature:
   - 2025-07-26_the_big_quiet.yml
   related_concepts: []
   description: ''
+phi_mesh_evolution:
+  linked_pulses:
+  - 2025-08-01_phi-mesh-exec-drift.yml
+  related_concepts: []
+  description: ''
+drift:
+  linked_pulses:
+  - 2025-08-01_phi-mesh-exec-drift.yml
+  related_concepts: []
+  description: ''
+division_of_labor:
+  linked_pulses:
+  - 2025-08-01_phi-mesh-exec-drift.yml
+  related_concepts: []
+  description: ''
+recursive_checkpoint:
+  linked_pulses:
+  - 2025-08-01_phi-mesh-exec-drift.yml
+  related_concepts: []
+  description: ''
 perseverance:
   linked_pulses:
   - 2025-07-24_long_haul_blinding_light.yml
@@ -128,6 +204,7 @@ Contextual_Filter:
 PoLA:
   linked_pulses:
   - 2025-07-22_CF_split.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
 AI_alignment:
@@ -155,14 +232,29 @@ big_bang:
   - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
-big_quiet:
+black_holes:
   linked_pulses:
   - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
-black_holes:
+software_dev:
   linked_pulses:
-  - 2025-07-23_gradient-cocoon.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+rhythm_of_least_divergence:
+  linked_pulses:
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+development_process:
+  linked_pulses:
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+context_engineering:
+  linked_pulses:
+  - 2025-07-30_laminar-turbulence.yml
   related_concepts: []
   description: ''
 canonical_tags:
