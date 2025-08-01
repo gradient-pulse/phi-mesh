@@ -9,7 +9,6 @@ TAG_INDEX_PATH = "meta/tag_index.yml"
 LINK_INDEX_PATH = "meta/link_index.yml"
 OUTPUT_PATH = "docs/tag_map.html"
 
-
 def generate_tag_map():
     # Load tag index
     with open(TAG_INDEX_PATH, 'r') as f:
@@ -24,7 +23,7 @@ def generate_tag_map():
     add_links_to_graph(G, link_index)
 
     # Create PyVis network
-    net = Network(height="800px", width="100%", bgcolor="#000000", font_color="#00ffff")
+    net = Network(height="100vh", width="100%", bgcolor="#000000", font_color="#ffffff")
     net.barnes_hut(gravity=-5000, spring_length=180, central_gravity=0.2)
 
     # Add nodes and edges
@@ -34,15 +33,15 @@ def generate_tag_map():
             node,
             label=label,
             title=label,
-            shape="text",
-            color="#00ffff",
-            font={"size": 16, "color": "#00ffff"},
+            shape="dot",
+            color="#44ccff",
+            font={"size": 22, "color": "#44ccff"},
         )
 
     for source, target in G.edges():
-        net.add_edge(source, target, color="#888888")
+        net.add_edge(source, target, color="rgba(160,160,160,0.4)")
 
-    # Add header and sidebar to HTML
+    # Save initial graph
     html_path = OUTPUT_PATH
     net.save_graph(html_path)
 
@@ -50,17 +49,16 @@ def generate_tag_map():
     with open(html_path, 'r') as f:
         html = f.read()
 
-    # Insert header before </head>
     header_html = """
     <style>
       #header {
-        font-size: 28px;
+        font-size: 24px;
         font-weight: bold;
-        padding: 16px;
-        color: #00ffff;
+        padding: 12px 24px;
+        color: white;
         font-family: sans-serif;
-        text-align: center;
-        background-color: #000000;
+        background-color: black;
+        text-align: left;
       }
       #side-panel {
         position: fixed;
@@ -91,9 +89,9 @@ def generate_tag_map():
       });
     </script>
     """
-    html = html.replace("</head>", f"{header_html}\n</head>")
+    html = html.replace("</head>", f"{header_html}
+</head>")
 
-    # Save final
     with open(html_path, 'w') as f:
         f.write(html)
 
