@@ -5,26 +5,26 @@
   <title>Phi-Mesh Tag Map</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    body {
+    body {{
       background-color: black;
       color: white;
       font-family: sans-serif;
       text-align: center;
-    }
-    .node {
+    }}
+    .node {{
       cursor: pointer;
       font-size: 14px;
-    }
-    .orphan {
+    }}
+    .orphan {{
       fill: gray;
-    }
-    .central {
+    }}
+    .central {{
       fill: cyan;
-    }
-    .link {
+    }}
+    .link {{
       stroke: #aaa;
       stroke-width: 1px;
-    }
+    }}
   </style>
 </head>
 <body>
@@ -35,12 +35,6 @@
     const svg = d3.select("svg");
     const width = +svg.attr("width");
     const height = +svg.attr("height");
-
-    // Ensure every node has a start position
-    nodes.forEach(d => {
-      d.x = Math.random() * width;
-      d.y = Math.random() * height;
-    });
 
     const simulation = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id(d => d.id).distance(80))
@@ -66,14 +60,6 @@
         .style("font-size", "12px")
         .call(drag(simulation));
 
-    // Optional: Debug circles for layout confirmation
-    const debug = svg.append("g")
-      .selectAll("circle")
-      .data(nodes)
-      .enter().append("circle")
-        .attr("r", 4)
-        .attr("fill", d => d.orphan ? "gray" : "deepskyblue");
-
     simulation.on("tick", () => {
       link
           .attr("x1", d => d.source.x)
@@ -84,10 +70,6 @@
       node
           .attr("x", d => d.x)
           .attr("y", d => d.y);
-
-      debug
-          .attr("cx", d => d.x)
-          .attr("cy", d => d.y);
     });
 
     function drag(simulation) {
