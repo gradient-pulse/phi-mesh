@@ -4,7 +4,7 @@ import os
 import json
 
 TAG_INDEX_PATH = "meta/tag_index.yml"
-OUTPUT_HTML = "docs/tag_map.html"
+OUTPUT_DATA_JS = "docs/data.js"
 
 with open(TAG_INDEX_PATH, "r") as f:
     tag_index = yaml.safe_load(f)
@@ -23,7 +23,7 @@ for tag, info in tag_index.items():
         if related in tags:
             G.add_edge(tag, related)
 
-# Get centrality and orphan status
+# Compute metrics
 centrality = nx.degree_centrality(G)
 orphans = [n for n in G.nodes if G.degree[n] == 0]
 
@@ -36,110 +36,13 @@ nodes_data = [
     }
     for node in G.nodes()
 ]
-
 edges_data = [{"source": u, "target": v} for u, v in G.edges()]
 
-# Write data.js
+# Write data.js (used by tag_map.html)
 data_js = f"const nodes = {json.dumps(nodes_data, indent=2)};\n"
 data_js += f"const links = {json.dumps(edges_data, indent=2)};\n"
-with open("docs/data.js", "w") as f:
+
+with open(OUTPUT_DATA_JS, "w") as f:
     f.write(data_js)
 
-# Write HTML wrapper
-html_wrapper = """<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Phi-Mesh Tag Map</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <style>
-    body {{
-      background-color: black;
-      color: white;
-      font-family: sans-serif;
-      text-align: center;
-    }}
-    .node {{
-      cursor: pointer;
-      font-size: 14px;
-    }}
-    .orphan {{
-      fill: gray;
-    }}
-    .central {{
-      fill: cyan;
-    }}
-    .link {{
-      stroke: #aaa;
-      stroke-width: 1px;
-    }}
-  </style>
-</head>
-<body>
-  <h2 style="color:deepskyblue;">Phi-Mesh Tag Map</h2>
-  <svg width="1000" height="800"></svg>
-  <script src="data.js"></script>
-  <script>
-    const svg = d3.select("svg");
-    const width = +svg.attr("width");
-    const height = +svg.attr("height");
-
-    const simulation = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id(d => d.id).distance(80))
-      .force("charge", d3.forceManyBody().strength(-200))
-      .force("center", d3.forceCenter(width / 2, height / 2));
-
-    const link = svg.append("g")
-      .attr("stroke", "#aaa")
-      .selectAll("line")
-      .data(links)
-      .enter().append("line")
-      .attr("class", "link");
-
-    const node = svg.append("g")
-      .selectAll("text")
-      .data(nodes)
-      .enter().append("text")
-        .text(d => d.id)
-        .attr("class", d => d.orphan ? "node orphan" : "node central")
-        .attr("text-anchor", "middle")
-        .attr("dy", 4)
-        .style("fill", d => d.orphan ? "gray" : "deepskyblue")
-        .style("font-size", "12px")
-        .call(drag(simulation));
-
-    simulation.on("tick", () => {
-      link
-          .attr("x1", d => d.source.x)
-          .attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x)
-          .attr("y2", d => d.target.y);
-
-      node
-          .attr("x", d => d.x)
-          .attr("y", d => d.y);
-    });
-
-    function drag(simulation) {
-      return d3.drag()
-        .on("start", event => {
-          if (!event.active) simulation.alphaTarget(0.3).restart();
-          event.subject.fx = event.subject.x;
-          event.subject.fy = event.subject.y;
-        })
-        .on("drag", event => {
-          event.subject.fx = event.x;
-          event.subject.fy = event.y;
-        })
-        .on("end", event => {
-          if (!event.active) simulation.alphaTarget(0);
-          event.subject.fx = null;
-          event.subject.fy = null;
-        });
-    }
-  </script>
-</body>
-</html>
-"""
-with open(OUTPUT_HTML, "w") as f:
-    f.write(html_wrapper)
+print("✅ data.js generated successfully.")
