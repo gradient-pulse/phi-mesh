@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Phi-Mesh Tag Map</title>
@@ -11,12 +12,13 @@
   }
   .node text {
     fill: white;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: normal;
     pointer-events: none;
   }
   .node circle {
     stroke: white;
-    stroke-width: 1.5px;
+    stroke-width: 1.0px;
   }
   .link {
     stroke: white;
@@ -31,7 +33,7 @@
     overflow-y: auto;
     background: rgba(255, 255, 255, 0.05);
     padding: 10px;
-    border: 1px solid #ccc;
+    border: none;
     color: white;
     font-size: 12px;
   }
@@ -46,21 +48,22 @@
   <h2>Tag Info</h2>
   <div id="tag-details">Click a node to see details.</div>
 </div>
-
-<!-- Proper script tags -->
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="data.js"></script>
-
 <script>
   const svg = d3.select("svg"),
         width = window.innerWidth,
         height = window.innerHeight;
 
+  svg.attr("viewBox", `0 0 ${width} ${height}`);
+
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
+
   const simulation = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id(d => d.id).distance(90))
       .force("charge", d3.forceManyBody().strength(-500))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => 8 + Math.sqrt(d.centrality * 1000)));
+      .force("collision", d3.forceCollide().radius(d => 5 + Math.sqrt(d.centrality * 300)));
 
   const link = svg.append("g")
       .attr("stroke", "#fff")
@@ -72,15 +75,18 @@
 
   const node = svg.append("g")
       .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5)
+      .attr("stroke-width", 1.0)
     .selectAll("g")
     .data(nodes)
     .join("g")
       .attr("class", "node")
-      .call(drag(simulation));
+      .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
 
   node.append("circle")
-      .attr("r", d => 6 + Math.sqrt(d.centrality * 1000))
+      .attr("r", d => 3 + Math.sqrt(d.centrality * 300))
       .attr("fill", "#00BFFF")
       .on("click", (event, d) => showDetails(d));
 
@@ -100,22 +106,21 @@
         .attr("transform", d => `translate(${d.x},${d.y})`);
   });
 
-  function drag(simulation) {
-    function dragstarted(event) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
-    }
-    function dragged(event) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
-    }
-    function dragended(event) {
-      if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-    return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+  function dragstarted(event) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
+  }
+
+  function dragged(event) {
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
+  }
+
+  function dragended(event) {
+    if (!event.active) simulation.alphaTarget(0);
+    event.subject.fx = null;
+    event.subject.fy = null;
   }
 
   const linksIndex = {
@@ -124,7 +129,8 @@
       { type: "Podcast", url: "https://notebooklm.google.com/notebook/2b3e4507/audio" }
     ],
     "RGP": [
-      { type: "Zenodo", url: "https://doi.org/10.5281/zenodo.15614775" }
+      { type: "Zenodo", url: "https://doi.org/10.5281/zenodo.15614775" },
+      { type: "Podcast", url: "https://notebooklm.google.com/notebook/2b3e4507/audio" }
     ]
   };
 
@@ -135,4 +141,3 @@
     panel.innerHTML = `<b>${d.id}</b><br>Centrality: ${d.centrality}<br>${linksHTML}`;
   }
 </script>
-</body>
