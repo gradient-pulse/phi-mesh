@@ -1,209 +1,94 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        
-            <script src="lib/bindings/utils.js"></script>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            
-        
-<center>
-<h1></h1>
-</center>
-
-<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
-<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
-          crossorigin="anonymous"
-        />
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-          crossorigin="anonymous"
-        ></script>
-
-
-        <center>
-          <h1></h1>
-        </center>
-        <style type="text/css">
-
-             #mynetwork {
-                 width: 100%;
-                 height: 100vh;
-                 background-color: #000000;
-                 border: 1px solid lightgray;
-                 position: relative;
-                 float: left;
-             }
-
-             
-
-             
-
-             
-        </style>
-    
-    <style>
-      body { margin: 0; background-color: black; color: white; }
-      #mynetwork { border: none !important; }
-      #header {
-        font-size: 24px;
-        font-weight: bold;
-        padding: 12px;
-        color: #33ccff;
-        font-family: sans-serif;
-        text-align: center;
-        background-color: black;
-      }
-      #side-panel {
-        position: fixed;
-        right: 0;
-        top: 60px;
-        width: 280px;
-        height: 90%;
-        background-color: #111111;
-        color: #00ffff;
-        overflow-y: auto;
-        padding: 12px;
-        font-family: sans-serif;
-        display: none;
-        border-left: 1px solid #333333;
-      }
-    </style>
-    <div id='header'>Phi-Mesh Tag Map</div>
-    <div id='side-panel'></div>
-    <script>
-      function showTagInfo(tag) {
-        const panel = document.getElementById("side-panel");
-        panel.style.display = 'block';
-        panel.innerHTML = '<h3>' + tag + '</h3><p>Links and metadata coming soon...</p>';
-      }
-
-      // Wait for PyVis to render then hook events
-      window.addEventListener('load', function () {
-        const nodes = document.querySelectorAll('div.node');
-        nodes.forEach(el => {
-          el.addEventListener('click', () => showTagInfo(el.innerText));
-        });
-      });
-    </script>
-    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Phi-Mesh Tag Map</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {{
+      background-color: black;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }}
+    .node {{
+      cursor: pointer;
+      font-size: 14px;
+    }}
+    .orphan {{
+      fill: gray;
+    }}
+    .central {{
+      fill: cyan;
+    }}
+    .link {{
+      stroke: #aaa;
+      stroke-width: 1px;
+    }}
+  </style>
 </head>
+<body>
+  <h2 style="color:deepskyblue;">Phi-Mesh Tag Map</h2>
+  <svg width="1000" height="800"></svg>
+  <script src="data.js"></script>
+  <script>
+    const svg = d3.select("svg");
+    const width = +svg.attr("width");
+    const height = +svg.attr("height");
 
+    const simulation = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id).distance(80))
+      .force("charge", d3.forceManyBody().strength(-200))
+      .force("center", d3.forceCenter(width / 2, height / 2));
 
-    <body>
-        <div class="card" style="width: 100%">
-            
-            
-            <div id="mynetwork" class="card-body"></div>
-        </div>
+    const link = svg.append("g")
+      .attr("stroke", "#aaa")
+      .selectAll("line")
+      .data(links)
+      .enter().append("line")
+      .attr("class", "link");
 
-        
-        
+    const node = svg.append("g")
+      .selectAll("text")
+      .data(nodes)
+      .enter().append("text")
+        .text(d => d.id)
+        .attr("class", d => d.orphan ? "node orphan" : "node central")
+        .attr("text-anchor", "middle")
+        .attr("dy", 4)
+        .style("fill", d => d.orphan ? "gray" : "deepskyblue")
+        .style("font-size", "12px")
+        .call(drag(simulation));
 
-        <script type="text/javascript">
+    simulation.on("tick", () => {
+      link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
 
-              // initialize global variables.
-              var edges;
-              var nodes;
-              var allNodes;
-              var allEdges;
-              var nodeColors;
-              var originalNodes;
-              var network;
-              var container;
-              var options, data;
-              var filter = {
-                  item : '',
-                  property : '',
-                  value : []
-              };
+      node
+          .attr("x", d => d.x)
+          .attr("y", d => d.y);
+    });
 
-              
-
-              
-
-              // This method is responsible for drawing the graph, returns the drawn network
-              function drawGraph() {
-                  var container = document.getElementById('mynetwork');
-
-                  
-
-                  // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "RGP", "label": "RGP", "shape": "dot", "size": 12, "title": "RGP"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "patience", "label": "patience", "shape": "dot", "size": 12, "title": "patience"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "NT", "label": "NT", "shape": "dot", "size": 12, "title": "NT"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "gradient_coherence", "label": "gradient_coherence", "shape": "dot", "size": 12, "title": "gradient_coherence"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "alignment", "label": "alignment", "shape": "dot", "size": 12, "title": "alignment"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "cosmogenesis", "label": "cosmogenesis", "shape": "dot", "size": 12, "title": "cosmogenesis"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "Gradient_Syntax", "label": "Gradient_Syntax", "shape": "dot", "size": 12, "title": "Gradient_Syntax"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "cosmology", "label": "cosmology", "shape": "dot", "size": 12, "title": "cosmology"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "Navier_Stokes", "label": "Navier_Stokes", "shape": "dot", "size": 12, "title": "Navier_Stokes"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "laminarity", "label": "laminarity", "shape": "dot", "size": 12, "title": "laminarity"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "recursion", "label": "recursion", "shape": "dot", "size": 12, "title": "recursion"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "poetic_physics", "label": "poetic_physics", "shape": "dot", "size": 12, "title": "poetic_physics"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "origin_resonance", "label": "origin_resonance", "shape": "dot", "size": 12, "title": "origin_resonance"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "recursive_grammar", "label": "recursive_grammar", "shape": "dot", "size": 12, "title": "recursive_grammar"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "Big_Bang", "label": "Big_Bang", "shape": "dot", "size": 12, "title": "Big_Bang"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "quiet_awakening", "label": "quiet_awakening", "shape": "dot", "size": 12, "title": "quiet_awakening"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "gradient_cocoon_theory", "label": "gradient_cocoon_theory", "shape": "dot", "size": 12, "title": "gradient_cocoon_theory"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "flux_enthrenched_universe", "label": "flux_enthrenched_universe", "shape": "dot", "size": 12, "title": "flux_enthrenched_universe"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "perseverance", "label": "perseverance", "shape": "dot", "size": 12, "title": "perseverance"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "signal", "label": "signal", "shape": "dot", "size": 12, "title": "signal"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "legacy", "label": "legacy", "shape": "dot", "size": 12, "title": "legacy"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "Contextual_Filter", "label": "Contextual_Filter", "shape": "dot", "size": 12, "title": "Contextual_Filter"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "PoLA", "label": "PoLA", "shape": "dot", "size": 12, "title": "PoLA"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "AI_alignment", "label": "AI_alignment", "shape": "dot", "size": 12, "title": "AI_alignment"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "dark_matter", "label": "dark_matter", "shape": "dot", "size": 12, "title": "dark_matter"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "public_thread", "label": "public_thread", "shape": "dot", "size": 12, "title": "public_thread"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "gpt5", "label": "gpt5", "shape": "dot", "size": 12, "title": "gpt5"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "mixture_of_experts", "label": "mixture_of_experts", "shape": "dot", "size": 12, "title": "mixture_of_experts"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "recursive_gradient_processing", "label": "recursive_gradient_processing", "shape": "dot", "size": 12, "title": "recursive_gradient_processing"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "gradient_choreography", "label": "gradient_choreography", "shape": "dot", "size": 12, "title": "gradient_choreography"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "unity_disunity", "label": "unity_disunity", "shape": "dot", "size": 12, "title": "unity_disunity"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "ai_architecture", "label": "ai_architecture", "shape": "dot", "size": 12, "title": "ai_architecture"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "phi_mesh", "label": "phi_mesh", "shape": "dot", "size": 12, "title": "phi_mesh"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "self_improvement", "label": "self_improvement", "shape": "dot", "size": 12, "title": "self_improvement"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "gradient_driven_behavior", "label": "gradient_driven_behavior", "shape": "dot", "size": 12, "title": "gradient_driven_behavior"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "Narrative_Tick_rhythm", "label": "Narrative_Tick_rhythm", "shape": "dot", "size": 12, "title": "Narrative_Tick_rhythm"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "rhythm_driven_intelligence", "label": "rhythm_driven_intelligence", "shape": "dot", "size": 12, "title": "rhythm_driven_intelligence"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "recursive_checkpoint", "label": "recursive_checkpoint", "shape": "dot", "size": 12, "title": "recursive_checkpoint"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "division_of_labor", "label": "division_of_labor", "shape": "dot", "size": 12, "title": "division_of_labor"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "phi_mesh_evolution", "label": "phi_mesh_evolution", "shape": "dot", "size": 12, "title": "phi_mesh_evolution"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "cinematic_drift", "label": "cinematic_drift", "shape": "dot", "size": 12, "title": "cinematic_drift"}, {"color": "#33ccff", "font": {"color": "#ffffff"}, "id": "canonical_tags", "label": "canonical_tags", "shape": "dot", "size": 12, "title": "canonical_tags"}]);
-                  edges = new vis.DataSet([]);
-
-                  nodeColors = {};
-                  allNodes = nodes.get({ returnType: "Object" });
-                  for (nodeId in allNodes) {
-                    nodeColors[nodeId] = allNodes[nodeId].color;
-                  }
-                  allEdges = edges.get({ returnType: "Object" });
-                  // adding nodes and edges to the graph
-                  data = {nodes: nodes, edges: edges};
-
-                  var options = {
-    "configure": {
-        "enabled": false
-    },
-    "edges": {
-        "color": {
-            "inherit": true
-        },
-        "smooth": {
-            "enabled": true,
-            "type": "dynamic"
-        }
-    },
-    "interaction": {
-        "dragNodes": true,
-        "hideEdgesOnDrag": false,
-        "hideNodesOnDrag": false
-    },
-    "physics": {
-        "barnesHut": {
-            "avoidOverlap": 0,
-            "centralGravity": 0.3,
-            "damping": 0.09,
-            "gravitationalConstant": -8000,
-            "springConstant": 0.001,
-            "springLength": 120
-        },
-        "enabled": true,
-        "stabilization": {
-            "enabled": true,
-            "fit": true,
-            "iterations": 1000,
-            "onlyDynamicEdges": false,
-            "updateInterval": 50
-        }
+    function drag(simulation) {
+      return d3.drag()
+        .on("start", event => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+        })
+        .on("drag", event => {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        })
+        .on("end", event => {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+        });
     }
-};
-
-                  
-
-
-                  
-
-                  network = new vis.Network(container, data, options);
-
-                  
-
-                  
-
-                  
-
-
-                  
-
-                  return network;
-
-              }
-              drawGraph();
-        </script>
-    </body>
+  </script>
+</body>
 </html>
