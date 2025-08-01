@@ -1,4 +1,4 @@
-title: The Shell Cracked, and Syntax Hatched
+  title: The Shell Cracked, and Syntax Hatched
 date: 2025-06-22
 type: pulse
 tags:
@@ -7,6 +7,11 @@ tags:
   - division-of-labor
   - phi-mesh-evolution
   - cinematic-drift
+  - RGP
+papers:
+  - https://doi.org/10.5281/zenodo.15115550
+podcasts: 
+  - https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
 summary: >
   What first appeared as a failure in scene generation revealed a deeper pattern:
   Gradient syntax must precede cinematic form. This pulse affirms a recursive division of labor—
