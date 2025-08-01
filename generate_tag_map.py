@@ -89,8 +89,7 @@ def generate_tag_map():
       });
     </script>
     """
-    html = html.replace("</head>", f"{header_html}
-</head>")
+    html = html.replace("</head>", header_html + "\n</head>")
 
     with open(html_path, 'w') as f:
         f.write(html)
