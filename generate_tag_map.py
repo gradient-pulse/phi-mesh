@@ -1,76 +1,145 @@
-import json
+import yaml
 import networkx as nx
-import matplotlib.pyplot as plt
-from pyvis.network import Network
 import os
-from meta.tag_index import tag_index
-from meta.link_index import link_index
+import json
 
-# Initialize graph
+TAG_INDEX_PATH = "meta/tag_index.yml"
+OUTPUT_HTML = "docs/tag_map.html"
+
+with open(TAG_INDEX_PATH, "r") as f:
+    tag_index = yaml.safe_load(f)
+
+tags = list(tag_index.keys())
 G = nx.Graph()
 
-# Add tag nodes
-for tag in tag_index:
-    G.add_node(tag, type="tag")
+# Add nodes
+for tag in tags:
+    G.add_node(tag)
 
-# Add edges from tag_index
-for tag, data in tag_index.items():
-    for related_tag in data.get("related", []):
-        if related_tag in G:
-            G.add_edge(tag, related_tag)
+# Add edges based on tag relationships
+for tag, info in tag_index.items():
+    related_tags = info.get("related", [])
+    for related in related_tags:
+        if related in tags:
+            G.add_edge(tag, related)
 
-# Add edges from link_index (e.g., podcast, paper connections)
-for item_id, item_data in link_index.items():
-    tags = item_data.get("tags", [])
-    for i, tag1 in enumerate(tags):
-        for tag2 in tags[i + 1:]:
-            if G.has_node(tag1) and G.has_node(tag2):
-                G.add_edge(tag1, tag2)
-
-# Create Pyvis network
-net = Network(height='1000px', width='100%', bgcolor='#000000', font_color='white')
-
-# Node size based on centrality
+# Get centrality and orphan status
 centrality = nx.degree_centrality(G)
+orphans = [n for n in G.nodes if G.degree[n] == 0]
 
-for node in G.nodes():
-    net.add_node(
-        node,
-        label=node,
-        title=node,
-        color='deepskyblue',
-        size=15 + 25 * centrality.get(node, 0)
-    )
+# Serialize nodes and edges
+nodes_data = [
+    {
+        "id": node,
+        "centrality": round(centrality[node], 3),
+        "orphan": node in orphans,
+    }
+    for node in G.nodes()
+]
 
-for source, target in G.edges():
-    net.add_edge(source, target, color='rgba(255,255,255,0.2)')
+edges_data = [{"source": u, "target": v} for u, v in G.edges()]
 
-# Enable physics and clustering for elegance
-net.barnes_hut(gravity=-20000, central_gravity=0.3, spring_length=200, spring_strength=0.001, damping=0.9)
+# Write data.js
+data_js = f"const nodes = {json.dumps(nodes_data, indent=2)};\n"
+data_js += f"const links = {json.dumps(edges_data, indent=2)};\n"
+with open("docs/data.js", "w") as f:
+    f.write(data_js)
 
-# Add header HTML for styling and link injection
-header_html = '''
-<style>
-  h1 {
-    font-family: sans-serif;
-    font-size: 24px;
-    color: deepskyblue;
-    text-align: center;
-    margin-top: 10px;
-  }
-</style>
-<h1>Phi-Mesh Tag Map</h1>
-'''
+# Write HTML wrapper
+html_wrapper = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Phi-Mesh Tag Map</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {{
+      background-color: black;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }}
+    .node {{
+      cursor: pointer;
+      font-size: 14px;
+    }}
+    .orphan {{
+      fill: gray;
+    }}
+    .central {{
+      fill: cyan;
+    }}
+    .link {{
+      stroke: #aaa;
+      stroke-width: 1px;
+    }}
+  </style>
+</head>
+<body>
+  <h2 style="color:deepskyblue;">Phi-Mesh Tag Map</h2>
+  <svg width="1000" height="800"></svg>
+  <script src="data.js"></script>
+  <script>
+    const svg = d3.select("svg");
+    const width = +svg.attr("width");
+    const height = +svg.attr("height");
 
-# Generate and customize HTML
-output_path = os.path.join("docs", "tag_map.html")
-net.show(output_path)
+    const simulation = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id).distance(80))
+      .force("charge", d3.forceManyBody().strength(-200))
+      .force("center", d3.forceCenter(width / 2, height / 2));
 
-# Inject header into the HTML
-with open(output_path, "r") as f:
-    html = f.read()
+    const link = svg.append("g")
+      .attr("stroke", "#aaa")
+      .selectAll("line")
+      .data(links)
+      .enter().append("line")
+      .attr("class", "link");
 
-html = html.replace("</head>", f"{header_html}</head>")
+    const node = svg.append("g")
+      .selectAll("text")
+      .data(nodes)
+      .enter().append("text")
+        .text(d => d.id)
+        .attr("class", d => d.orphan ? "node orphan" : "node central")
+        .attr("text-anchor", "middle")
+        .attr("dy", 4)
+        .style("fill", d => d.orphan ? "gray" : "deepskyblue")
+        .style("font-size", "12px")
+        .call(drag(simulation));
 
-with open(output_path, "w") as f:
-    f.write(html)
+    simulation.on("tick", () => {
+      link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+
+      node
+          .attr("x", d => d.x)
+          .attr("y", d => d.y);
+    });
+
+    function drag(simulation) {
+      return d3.drag()
+        .on("start", event => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+        })
+        .on("drag", event => {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        })
+        .on("end", event => {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+        });
+    }
+  </script>
+</body>
+</html>
+"""
+with open(OUTPUT_HTML, "w") as f:
+    f.write(html_wrapper)
