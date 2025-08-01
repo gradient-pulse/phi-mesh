@@ -12,6 +12,7 @@
       margin: 0;
       overflow: hidden;
     }
+
     #header {
       padding: 10px;
       background: #111;
@@ -20,6 +21,7 @@
       font-weight: bold;
       text-align: left;
     }
+
     #loading {
       position: absolute;
       top: 50%;
@@ -28,6 +30,7 @@
       font-size: 20px;
       color: white;
     }
+
     #sidebar {
       position: absolute;
       right: 0;
@@ -39,18 +42,25 @@
       padding: 15px;
       display: none;
     }
+
     #graph {
       width: 100%;
       height: 100%;
     }
+
     .node {
       cursor: pointer;
-      fill: deepskyblue;
-      font-size: 12px;
     }
+
     .link {
       stroke: #888;
       stroke-width: 1px;
+    }
+
+    text {
+      font-size: 11px;
+      pointer-events: none;
+      fill: white;
     }
   </style>
 </head>
@@ -80,18 +90,24 @@
       .enter().append("line")
       .attr("class", "link");
 
-    const node = svg.append("g")
+    const circles = svg.append("g")
+      .selectAll("circle")
+      .data(nodes)
+      .enter().append("circle")
+        .attr("r", 6)
+        .attr("fill", d => d.orphan ? "gray" : "deepskyblue")
+        .attr("class", "node")
+        .on("click", function(event, d) {
+          showSidebar(d);
+        });
+
+    const labels = svg.append("g")
       .selectAll("text")
       .data(nodes)
       .enter().append("text")
         .text(d => d.id)
-        .attr("class", "node")
-        .style("text-anchor", "middle")
-        .attr("dy", 4)
-        .style("fill", d => d.orphan ? "gray" : "deepskyblue")
-        .on("click", function(event, d) {
-          showSidebar(d);
-        });
+        .attr("dy", -10)
+        .style("text-anchor", "middle");
 
     simulation.on("tick", () => {
       link
@@ -100,7 +116,11 @@
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y);
 
-      node
+      circles
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y);
+
+      labels
         .attr("x", d => d.x)
         .attr("y", d => d.y);
     });
@@ -115,7 +135,7 @@
       `;
     }
 
-    // Hide loader
+    // Hide loading text after map loads
     document.getElementById("loading").style.display = "none";
   </script>
 </body>
