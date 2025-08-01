@@ -49,7 +49,7 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "patience",
+      "id": "strategic_patience",
       "centrality": 0
     },
     {

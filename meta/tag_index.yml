@@ -71,7 +71,7 @@ narrative_tick:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
-patience:
+strategic_patience:
   linked_pulses:
   - 2025-07-25_patience_as_gradient.yml
   related_concepts: []
