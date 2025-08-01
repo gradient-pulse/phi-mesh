@@ -85,6 +85,10 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "contextual_filter",
+      "centrality": 0
+    },
+    {
       "id": "Contextual_Filter",
       "centrality": 0
     },

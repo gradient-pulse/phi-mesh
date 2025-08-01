@@ -110,6 +110,11 @@ legacy:
   - 2025-07-24_long_haul_blinding_light.yml
   related_concepts: []
   description: ''
+contextual_filter:
+  linked_pulses:
+  - 2025-07-24_long_haul_blinding_light.yml
+  related_concepts: []
+  description: ''
 Contextual_Filter:
   linked_pulses:
   - 2025-07-22_CF_split.yml
