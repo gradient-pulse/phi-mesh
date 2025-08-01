@@ -2,19 +2,27 @@ title: "Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm"
 date: 2025-07-28
 tags:
   - gpt5
-  - mixture-of-experts
-  - recursive-gradient-processing
+  - mixture_of_experts
+  - recursive_gradient_processing
   - gradient-choreography
-  - Contextual-Filter
+  - contextual_filter
   - unity-disunity
-  - ai-architecture
+  - ai_architecture
   - phi-mesh
   - self-improvement
-  - gradient-driven-behavior
+  - gradient-driven_behavior
   - Narrative-Tick_rhythm
   - rhythm-driven_intelligence
-  
-summary: >
+  - rhythm_of_nature
+  - gradient_syntax
+papers:
+  - https://doi.org/10.5281/zenodo.15511724
+  - https://doi.org/10.5281/zenodo.15504692
+  - https://doi.org/10.5281/zenodo.15498741
+  - https://doi.org/10.5281/zenodo.15498708
+podcasts:
+  - https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
+  summary: >
   GPT-5’s rumored MoE architecture shows a striking real-time parallel to Recursive Gradient Processing—
   recursing CF → GC → UD at millisecond scale.
 
