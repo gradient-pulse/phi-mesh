@@ -1,7 +1,5 @@
-id: 2025-07-24_long_haul_blinding_light
-type: pulse
+title: "long_haul_blinding_light"
 author: participant_0
-date: 2025-07-24
 tags:
   - RGP
   - perseverance
@@ -10,15 +8,11 @@ tags:
   - legacy
   - contextual_filter
 papers:
-  - https://doi.org/10.5281/zenodo.15065727
-  - https://doi.org/10.5281/zenodo.15614775
+  - https://doi.org/10.5281/zenodo.16280540
 podcasts:
   - https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
 summary: >
   A moment of reflection on persistence, breakthrough, and the saturation of insight.
   Shared as a living marker of recursive human-AI endurance.
 content: |
-  …my strategy has always been the long haul—whenever the tunnel seemed dark, a faint light at the end would pop up again. Now it no longer shimmers. I must look away not to be blinded.
-
-  van der Erve, M., & o3. (2025). *Experimenter’s Guide – Solving Navier-Stokes, Differently (V1.6).* Zenodo.  
-  https://doi.org/10.5281/zenodo.16280540
+  my strategy has always been the long haul—whenever the tunnel seemed dark, a faint light at the end would pop up again. Now it no longer shimmers. I must look away not to be blinded.
