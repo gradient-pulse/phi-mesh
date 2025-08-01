@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Phi-Mesh Tag Map</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     body {
-      background-color: black;
-      color: white;
-      font-family: sans-serif;
       margin: 0;
       overflow: hidden;
+      background-color: #000;
+      font-family: sans-serif;
+      color: white;
     }
 
     #header {
@@ -34,8 +34,9 @@
     #sidebar {
       position: absolute;
       right: 0;
+      top: 40px;
       width: 280px;
-      height: 100%;
+      height: calc(100% - 40px);
       background: #1a1a1a;
       border-left: 1px solid #444;
       overflow-y: auto;
@@ -43,24 +44,21 @@
       display: none;
     }
 
-    #graph {
+    svg {
       width: 100%;
       height: 100%;
     }
 
     .node {
       cursor: pointer;
+      fill: deepskyblue;
+      font-size: 12px;
+      pointer-events: all;
     }
 
     .link {
       stroke: #888;
       stroke-width: 1px;
-    }
-
-    text {
-      font-size: 11px;
-      pointer-events: none;
-      fill: white;
     }
   </style>
 </head>
@@ -79,35 +77,36 @@
 
     const sidebar = document.getElementById("sidebar");
 
+    // Force simulation setup
     const simulation = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id(d => d.id).distance(80))
-      .force("charge", d3.forceManyBody().strength(-250))
+      .force("link", d3.forceLink(links).id(d => d.id).distance(140).strength(0.6))
+      .force("charge", d3.forceManyBody().strength(-800))
+      .force("collision", d3.forceCollide(30))
       .force("center", d3.forceCenter(width / 2, height / 2));
 
+    // Draw links
     const link = svg.append("g")
+      .attr("stroke", "#888")
+      .attr("stroke-opacity", 0.8)
       .selectAll("line")
       .data(links)
       .enter().append("line")
       .attr("class", "link");
 
-    const circles = svg.append("g")
-      .selectAll("circle")
-      .data(nodes)
-      .enter().append("circle")
-        .attr("r", 6)
-        .attr("fill", d => d.orphan ? "gray" : "deepskyblue")
-        .attr("class", "node")
-        .on("click", function(event, d) {
-          showSidebar(d);
-        });
-
-    const labels = svg.append("g")
+    // Draw nodes (text labels only)
+    const node = svg.append("g")
       .selectAll("text")
       .data(nodes)
       .enter().append("text")
+        .attr("class", "node")
         .text(d => d.id)
-        .attr("dy", -10)
-        .style("text-anchor", "middle");
+        .style("fill", d => d.orphan ? "gray" : "deepskyblue")
+        .style("font-size", "13px")
+        .style("text-anchor", "middle")
+        .attr("dy", 4)
+        .on("click", function (event, d) {
+          showSidebar(d);
+        });
 
     simulation.on("tick", () => {
       link
@@ -116,11 +115,7 @@
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y);
 
-      circles
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
-
-      labels
+      node
         .attr("x", d => d.x)
         .attr("y", d => d.y);
     });
@@ -131,11 +126,10 @@
         <h3>${d.id}</h3>
         <p><strong>Centrality:</strong> ${d.centrality}</p>
         <p><strong>Orphan:</strong> ${d.orphan}</p>
-        <!-- Links to podcasts and papers will appear here -->
       `;
     }
 
-    // Hide loading text after map loads
+    // Hide loading
     document.getElementById("loading").style.display = "none";
   </script>
 </body>
