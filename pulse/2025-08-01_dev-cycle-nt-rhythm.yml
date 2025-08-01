@@ -1,7 +1,3 @@
-pulse:
-  id: dev-cycle-nt-rhythm
-  date: 2025-07-22
-  authors: [MvdE, o3]
   title: "Software-development bursts track NT ratios"
   tags:
     - NT
@@ -29,3 +25,4 @@ pulse:
       • resisting folder/agent churn until the laminar stretch stabilises.
   links:
     repo: https://github.com/gradient-pulse/phi-mesh
+  authors: [MvdE, o3]
