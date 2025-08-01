@@ -101,7 +101,23 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "dark_energy",
+      "centrality": 0
+    },
+    {
       "id": "public_thread",
+      "centrality": 0
+    },
+    {
+      "id": "big_bang",
+      "centrality": 0
+    },
+    {
+      "id": "big_quiet",
+      "centrality": 0
+    },
+    {
+      "id": "black_holes",
       "centrality": 0
     },
     {
