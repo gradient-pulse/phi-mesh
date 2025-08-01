@@ -173,7 +173,7 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "black_holes",
+      "id": "gradient_cocoon",
       "centrality": 0
     },
     {
