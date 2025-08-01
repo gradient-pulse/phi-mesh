@@ -1,48 +1,63 @@
+# generate_tag_map.py
+
 import yaml
-import networkx as nx
-import os
 import json
+import networkx as nx
+from collections import defaultdict
 
 TAG_INDEX_PATH = "meta/tag_index.yml"
 OUTPUT_DATA_JS = "docs/data.js"
 
+# Load tag index
 with open(TAG_INDEX_PATH, "r") as f:
     tag_index = yaml.safe_load(f)
 
-tags = list(tag_index.keys())
+# Build reverse index: pulse → list of tags
+pulse_to_tags = defaultdict(set)
+for tag, info in tag_index.items():
+    if tag == "canonical_tags":
+        continue
+    for pulse in info.get("linked_pulses", []):
+        pulse_to_tags[pulse].add(tag)
+
+# Initialize graph
 G = nx.Graph()
 
-# Add nodes
-for tag in tags:
-    G.add_node(tag)
+# Add all tags as nodes
+for tag in tag_index:
+    if tag != "canonical_tags":
+        G.add_node(tag)
 
-# Add edges based on tag relationships
-for tag, info in tag_index.items():
-    related_tags = info.get("related", [])
-    for related in related_tags:
-        if related in tags:
-            G.add_edge(tag, related)
+# For each pulse, create links between co-occurring tags
+for tags in pulse_to_tags.values():
+    tag_list = list(tags)
+    for i in range(len(tag_list)):
+        for j in range(i + 1, len(tag_list)):
+            G.add_edge(tag_list[i], tag_list[j])
 
-# Compute metrics
+# Calculate centrality
 centrality = nx.degree_centrality(G)
 orphans = [n for n in G.nodes if G.degree[n] == 0]
 
-# Serialize nodes and edges
-nodes_data = [
+# Build output data structures
+nodes = [
     {
         "id": node,
         "centrality": round(centrality[node], 3),
-        "orphan": node in orphans,
+        "orphan": node in orphans
     }
-    for node in G.nodes()
+    for node in sorted(G.nodes)
 ]
-edges_data = [{"source": u, "target": v} for u, v in G.edges()]
 
-# Write data.js (used by tag_map.html)
-data_js = f"const nodes = {json.dumps(nodes_data, indent=2)};\n"
-data_js += f"const links = {json.dumps(edges_data, indent=2)};\n"
+links = [
+    {"source": u, "target": v}
+    for u, v in G.edges
+]
 
+# Write to data.js
 with open(OUTPUT_DATA_JS, "w") as f:
-    f.write(data_js)
-
-print("✅ data.js generated successfully.")
+    f.write("const nodes = ")
+    json.dump(nodes, f, indent=2)
+    f.write(";\nconst links = ")
+    json.dump(links, f, indent=2)
+    f.write(";\n")
