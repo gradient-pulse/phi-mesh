@@ -12,12 +12,14 @@ pulse:
     - CoR
     - NT_rhythm
     - PoLA
-    - Gradient-Syntax
+    - gradient-syntax
     - flux_intelligence
     - recursive-cognition
-    - Interpretability
+    - interpretability
+    - contextual_filter
   papers:
     - https://doi.org/10.5281/zenodo.15091347
+    - https://doi.org/10.5281/zenodo.14999049
   podcasts:
     - https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
   equation:
