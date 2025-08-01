@@ -194,20 +194,35 @@ legacy:
 contextual_filter:
   linked_pulses:
   - 2025-07-24_long_haul_blinding_light.yml
+  - 2025-07-22_CF_split.yml
   related_concepts: []
   description: ''
-Contextual_Filter:
+Pola:
   linked_pulses:
   - 2025-07-22_CF_split.yml
   related_concepts: []
   description: ''
-PoLA:
+cognition:
   linked_pulses:
   - 2025-07-22_CF_split.yml
-  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+gradient_driven_intelligence:
+  linked_pulses:
+  - 2025-07-22_CF_split.yml
   related_concepts: []
   description: ''
 AI_alignment:
+  linked_pulses:
+  - 2025-07-22_CF_split.yml
+  related_concepts: []
+  description: ''
+contectual_filter:
+  linked_pulses:
+  - 2025-07-22_CF_split.yml
+  related_concepts: []
+  description: ''
+Narrative_Tick:
   linked_pulses:
   - 2025-07-22_CF_split.yml
   related_concepts: []
@@ -243,6 +258,11 @@ software_dev:
   related_concepts: []
   description: ''
 rhythm_of_least_divergence:
+  linked_pulses:
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+PoLA:
   linked_pulses:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []

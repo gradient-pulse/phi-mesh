@@ -145,15 +145,27 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "Contextual_Filter",
+      "id": "Pola",
       "centrality": 0
     },
     {
-      "id": "PoLA",
+      "id": "cognition",
+      "centrality": 0
+    },
+    {
+      "id": "gradient_driven_intelligence",
       "centrality": 0
     },
     {
       "id": "AI_alignment",
+      "centrality": 0
+    },
+    {
+      "id": "contectual_filter",
+      "centrality": 0
+    },
+    {
+      "id": "Narrative_Tick",
       "centrality": 0
     },
     {
@@ -182,6 +194,10 @@ const graphData = {
     },
     {
       "id": "rhythm_of_least_divergence",
+      "centrality": 0
+    },
+    {
+      "id": "PoLA",
       "centrality": 0
     },
     {
