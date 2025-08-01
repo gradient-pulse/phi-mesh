@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Phi-Mesh Tag Map</title>
@@ -47,22 +46,15 @@
   <h2>Tag Info</h2>
   <div id="tag-details">Click a node to see details.</div>
 </div>
-<script src="https://d3js.org/d3.v7.min.js">
-<script>
-const tagResources = {"RGP": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": ["https://notebooklm.google.com/notebook/2b3e4507-8a44-4fcb-a6a6-c5a98083cca7/audio"]}, "Contextual_Filter": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": []}};
-</script>
-</script>
-<script src="data.js">
-<script>
-const tagResources = {"RGP": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": ["https://notebooklm.google.com/notebook/2b3e4507-8a44-4fcb-a6a6-c5a98083cca7/audio"]}, "Contextual_Filter": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": []}};
-</script>
-</script>
+
+<!-- Proper script tags -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="data.js"></script>
+
 <script>
   const svg = d3.select("svg"),
         width = window.innerWidth,
         height = window.innerHeight;
-
-  const color = d3.scaleOrdinal(d3.schemeCategory10);
 
   const simulation = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id(d => d.id).distance(90))
@@ -114,22 +106,16 @@ const tagResources = {"RGP": {"papers": ["https://doi.org/10.5281/zenodo.1561477
       event.subject.fx = event.subject.x;
       event.subject.fy = event.subject.y;
     }
-
     function dragged(event) {
       event.subject.fx = event.x;
       event.subject.fy = event.y;
     }
-
     function dragended(event) {
       if (!event.active) simulation.alphaTarget(0);
       event.subject.fx = null;
       event.subject.fy = null;
     }
-
-    return d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended);
+    return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
   }
 
   const linksIndex = {
@@ -148,8 +134,5 @@ const tagResources = {"RGP": {"papers": ["https://doi.org/10.5281/zenodo.1561477
     const linksHTML = links.map(l => `<div><a href="${l.url}" target="_blank">${l.type} Link</a></div>`).join("");
     panel.innerHTML = `<b>${d.id}</b><br>Centrality: ${d.centrality}<br>${linksHTML}`;
   }
-
-<script>
-const tagResources = {"RGP": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": ["https://notebooklm.google.com/notebook/2b3e4507-8a44-4fcb-a6a6-c5a98083cca7/audio"]}, "Contextual_Filter": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": []}};
 </script>
-</script>
+</body>
