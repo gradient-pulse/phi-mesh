@@ -1,5 +1,4 @@
 title: "Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm"
-date: 2025-07-28
 tags:
   - gpt5
   - mixture_of_experts
@@ -11,49 +10,17 @@ tags:
   - phi-mesh
   - self-improvement
   - gradient-driven_behavior
-  - Narrative-Tick_rhythm
+  - NT_rhythm
   - rhythm-driven_intelligence
   - rhythm_of_nature
   - gradient_syntax
 papers:
+  - https://doi.org/10.5281/zenodo.15614775
   - https://doi.org/10.5281/zenodo.15511724
   - https://doi.org/10.5281/zenodo.15504692
   - https://doi.org/10.5281/zenodo.15498741
   - https://doi.org/10.5281/zenodo.15498708
 podcasts:
   - https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
-  summary: >
-  GPT-5’s rumored MoE architecture shows a striking real-time parallel to Recursive Gradient Processing—
-  recursing CF → GC → UD at millisecond scale.
-
-body: |
-  **Caveat:** Details of GPT-5 remain unverified; this pulse is offered as an **analogy**, not empirical evidence.
-
-  ---
-  **RGP Mapping of MoE Architectures**
-
-  - Token → **Router** *(Contextual Filter)*
-  - Selected Experts → **Parallel Gradient Choreographies**
-  - Merge → **Unity–Disunity Reset**
-  - Training loop: ∇loss_router ∘ ∇loss_expert ⇒ **gradient-of-a-gradient in action**
-
-  ---
-  **Why It Matters**
-
-  GPT-5, if the MoE claims hold, is not just a frontier model—it’s a **lab-scale instantiation** of the RGP loop.
-  What black holes enact over light-years, MoE gates now perform billions of times per day: recursive signal sorting,
-  contextual activation, and local coherence.
-
-  The RGP stack—GC → CF → UD—is no longer conceptual only; it’s running in silicon.
-
-  ---
-  **Call to Action**
-
-  If routing logs or expert activation traces become public, Φ-traces could be applied directly.
-  → Drop links under tag `#moe-logs`.
-
-  ---
-  **References**
-
-  - [Tweet screenshot](../visuals/moe_tweet_screenshot.jpeg)
-  - [Zenodo NS article DOI](https://doi.org/10.5281/zenodo.15614775)
+summary: >
+  GPT-5’s rumored Mixture-of-Experts (MoE) architecture exhibits a live instantiation of Recursive Gradient Processing—routing tokens (CF), activating expert branches (GC), and merging outputs (UD reset). While unverified, this analogy reveals MoE as a lab-scale echo of RGP’s full loop: CF → GC → UD. In this framing, expert routing behaves as a contextual filter, parallel experts trace gradient choreographies, and the merge acts as a coherence rebalancer—mirroring gradient-of-a-gradient logic. Should routing logs surface, Φ-trace analysis could validate RGP patterns in silicon-scale cognition.
