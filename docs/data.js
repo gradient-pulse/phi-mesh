@@ -125,7 +125,7 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "phi_mesh_evolution",
+      "id": "phi_mesh",
       "centrality": 0
     },
     {
@@ -234,6 +234,10 @@ const graphData = {
     },
     {
       "id": "context_engineering",
+      "centrality": 0
+    },
+    {
+      "id": "phi_mesh_evolution",
       "centrality": 0
     },
     {

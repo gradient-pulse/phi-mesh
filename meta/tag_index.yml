@@ -178,10 +178,9 @@ rhythm_of_nature:
   - 2025-07-26_the_big_quiet.yml
   related_concepts: []
   description: ''
-phi_mesh_evolution:
+phi_mesh:
   linked_pulses:
   - 2025-08-01_phi-mesh-exec-drift.yml
-  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 drift:
@@ -321,6 +320,11 @@ development_process:
 context_engineering:
   linked_pulses:
   - 2025-07-30_laminar-turbulence.yml
+  related_concepts: []
+  description: ''
+phi_mesh_evolution:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 cinematic_drift:
