@@ -55,7 +55,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.15614775"
 
   - title: "Whether Google Gemini 2.5 Pro Relies on Recursive Gradient Processing: A Brief Dialogue"
-  repo: "phi-mesh/foundational_rgp-papers/paper-folder-name/"
+  repo: "phi-mesh/foundational_rgp-papers/2025-05-22_Whether Google Gemini 2.5 Pro relies on Recursive Gradient Processing.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15498741"
 
   - title: "How Gemini, DeepSeek, Grok, and o3 See AI-Architectures Fundamentally Change"
