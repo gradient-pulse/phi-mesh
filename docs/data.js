@@ -229,7 +229,7 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "poetic_draft",
+      "id": "resonance",
       "centrality": 0
     },
     {
