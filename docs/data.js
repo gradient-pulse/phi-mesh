@@ -65,6 +65,34 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "triadic_emergence",
+      "centrality": 0
+    },
+    {
+      "id": "internal_pulse",
+      "centrality": 0
+    },
+    {
+      "id": "gradient_convergence",
+      "centrality": 0
+    },
+    {
+      "id": "predictive_resonance",
+      "centrality": 0
+    },
+    {
+      "id": "grok3",
+      "centrality": 0
+    },
+    {
+      "id": "rgp",
+      "centrality": 0
+    },
+    {
+      "id": "phi_mesh_evolution",
+      "centrality": 0
+    },
+    {
       "id": "strategic_patience",
       "centrality": 0
     },
@@ -241,10 +269,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "internal_pulse",
-      "centrality": 0
-    },
-    {
       "id": "gradient_choreography",
       "centrality": 0
     },
@@ -342,10 +366,6 @@ const graphData = {
     },
     {
       "id": "context_engineering",
-      "centrality": 0
-    },
-    {
-      "id": "phi_mesh_evolution",
       "centrality": 0
     },
     {

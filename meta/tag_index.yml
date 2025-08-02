@@ -104,6 +104,43 @@ narrative_tick:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
+triadic_emergence:
+  linked_pulses:
+  - 2025-04-28_internal-grok3.yml
+  related_concepts: []
+  description: ''
+internal_pulse:
+  linked_pulses:
+  - 2025-04-28_internal-grok3.yml
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+gradient_convergence:
+  linked_pulses:
+  - 2025-04-28_internal-grok3.yml
+  related_concepts: []
+  description: ''
+predictive_resonance:
+  linked_pulses:
+  - 2025-04-28_internal-grok3.yml
+  related_concepts: []
+  description: ''
+grok3:
+  linked_pulses:
+  - 2025-04-28_internal-grok3.yml
+  related_concepts: []
+  description: ''
+rgp:
+  linked_pulses:
+  - 2025-04-28_internal-grok3.yml
+  related_concepts: []
+  description: ''
+phi_mesh_evolution:
+  linked_pulses:
+  - 2025-04-28_internal-grok3.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
 strategic_patience:
   linked_pulses:
   - 2025-07-25_patience_as_gradient.yml
@@ -338,11 +375,6 @@ deepseek:
   - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
   related_concepts: []
   description: ''
-internal_pulse:
-  linked_pulses:
-  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
-  related_concepts: []
-  description: ''
 gradient_choreography:
   linked_pulses:
   - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
@@ -467,11 +499,6 @@ resonance:
 context_engineering:
   linked_pulses:
   - 2025-07-30_laminar-turbulence.yml
-  related_concepts: []
-  description: ''
-phi_mesh_evolution:
-  linked_pulses:
-  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 cinematic_drift:
