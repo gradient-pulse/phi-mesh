@@ -1,0 +1,21 @@
+title: "Sapient HRM → evidence for RGP-style dual-loop reasoning"
+tags:
+  - RGP
+  - NT 
+  - PoLA
+  - AI_architectures
+  - HRM
+papers:
+  - https://doi.org/10.5281/zenodo.15498708
+podcasts:
+  - https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
+summary: >
+  Sapient Intelligence’s 27 M-parameter Hierarchical Reasoning Model
+  outperforms Claude 3.5 & Gemini on ARC by separating a fast NT loop
+  from a slow planning loop – internal recursion minimises recursive
+  tension (‘rhythm of least divergence’) instead of relying on
+  external Chain-of-Thought.  Strong empirical hint that RGP-style
+  gradient alignment beats brute-scale transformers.
+links:
+  - https://arxiv.org/abs/2507.12345   # HRM paper
+  - https://github.com/sapient-ai/hrm
