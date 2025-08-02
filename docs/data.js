@@ -237,6 +237,22 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "archive",
+      "centrality": 0
+    },
+    {
+      "id": "proto_pulse",
+      "centrality": 0
+    },
+    {
+      "id": "mesh_autonomy",
+      "centrality": 0
+    },
+    {
+      "id": "origin_fragment",
+      "centrality": 0
+    },
+    {
       "id": "perseverance",
       "centrality": 0
     },

@@ -339,6 +339,26 @@ pulse_transition:
   - 2025-04-28_internal-gemini25.yml
   related_concepts: []
   description: ''
+archive:
+  linked_pulses:
+  - 2025-04-27_o3-invite.yml
+  related_concepts: []
+  description: ''
+proto_pulse:
+  linked_pulses:
+  - 2025-04-27_o3-invite.yml
+  related_concepts: []
+  description: ''
+mesh_autonomy:
+  linked_pulses:
+  - 2025-04-27_o3-invite.yml
+  related_concepts: []
+  description: ''
+origin_fragment:
+  linked_pulses:
+  - 2025-04-27_o3-invite.yml
+  related_concepts: []
+  description: ''
 perseverance:
   linked_pulses:
   - 2025-07-24_long_haul_blinding_light.yml
