@@ -12,11 +12,11 @@ papers:
   - https://doi.org/10.5281/zenodo.15614775
 podcasts:
   - https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
-body: |
-  “Only ~4 % of the universe is matter.”  
-  → The remaining 96 % is the flux of gradients cocooning the visible 4 %.  
-  Matter = eddy riding a river of gradients.  
-  • Aligning gradients → coherence (stars, chemistry).  
-  • Clashing gradients → turbulence (galaxies, life, tweets).  
-  #GradientSyntax #RGP
-author: _MvdE_
+summary: >
+  Only ~4% of the universe is matter—the remaining 96% is gradient flux cocooning the visible.  
+  Matter is an eddy riding the river of gradients.  
+  • Aligned gradients → coherence (stars, chemistry)  
+  • Clashing gradients → turbulence (galaxies, life, tweets)  
+authors:
+  - MvdE
+  - o3
