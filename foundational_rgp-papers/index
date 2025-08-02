@@ -35,7 +35,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.15199760"
 
   - title: "RGP Hardware Co-Design: A Quantum-Resistant Foundation for Recursive AI (one-pager)"
-  repo: "phi-mesh/foundational_rgp-papers/paper-folder-name/"
+  repo: "phi-mesh/foundational_rgp-papers/2025-04-14_Proof-of-RGP-Hardware-OnePager.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15213348"
 
   - title: "Proof of RGP-Based Intelligence: An 8-Order Adversarial Validation Framework for Recursive AI Systems"
