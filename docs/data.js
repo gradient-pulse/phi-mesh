@@ -21,10 +21,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "poetic_drift",
-      "centrality": 0
-    },
-    {
       "id": "R\u03a6",
       "centrality": 0
     },
@@ -33,15 +29,23 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "gradient_flux",
+      "id": "gradient_flux_reversal",
       "centrality": 0
     },
     {
-      "id": "recursion",
+      "id": "recursive_coherence",
+      "centrality": 0
+    },
+    {
+      "id": "flux_threshold",
       "centrality": 0
     },
     {
       "id": "big_quiet",
+      "centrality": 0
+    },
+    {
+      "id": "poetic_drift",
       "centrality": 0
     },
     {
@@ -86,6 +90,10 @@ const graphData = {
     },
     {
       "id": "laminarity",
+      "centrality": 0
+    },
+    {
+      "id": "recursion",
       "centrality": 0
     },
     {

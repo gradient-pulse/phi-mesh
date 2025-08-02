@@ -1,6 +1,7 @@
 RGP:
   linked_pulses:
   - 2025-08-02_HRM_rhythm.yml
+  - 2025-07-30-gradient-flux-reversal.yml
   - 2025-07-31_chronoflux-vs-rgp.yml
   - 2025-07-25_patience_as_gradient.yml
   - 2025-07-26_the_big_quiet.yml
@@ -36,12 +37,6 @@ HRM:
   - 2025-08-02_HRM_rhythm.yml
   related_concepts: []
   description: ''
-poetic_drift:
-  linked_pulses:
-  - 2025-07-30-gradient-flux-reversal.yml
-  - 2025-07-31_chronoflux-vs-rgp.yml
-  related_concepts: []
-  description: ''
 "R\u03A6":
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
@@ -56,21 +51,30 @@ Navier_Stokes:
   - 2025-07-30_laminar-turbulence.yml
   related_concepts: []
   description: ''
-gradient_flux:
+gradient_flux_reversal:
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
   related_concepts: []
   description: ''
-recursion:
+recursive_coherence:
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
-  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+flux_threshold:
+  linked_pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
   related_concepts: []
   description: ''
 big_quiet:
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
   - 2025-07-23_gradient-cocoon.yml
+  related_concepts: []
+  description: ''
+poetic_drift:
+  linked_pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
   related_concepts: []
   description: ''
 time:
@@ -130,6 +134,11 @@ cosmology:
   related_concepts: []
   description: ''
 laminarity:
+  linked_pulses:
+  - 2025-07-26_the_big_quiet.yml
+  related_concepts: []
+  description: ''
+recursion:
   linked_pulses:
   - 2025-07-26_the_big_quiet.yml
   related_concepts: []
