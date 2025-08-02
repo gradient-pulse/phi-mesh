@@ -1,6 +1,26 @@
 const graphData = {
   "nodes": [
     {
+      "id": "RGP",
+      "centrality": 0
+    },
+    {
+      "id": "NT",
+      "centrality": 0
+    },
+    {
+      "id": "PoLA",
+      "centrality": 0
+    },
+    {
+      "id": "AI_architectures",
+      "centrality": 0
+    },
+    {
+      "id": "HRM",
+      "centrality": 0
+    },
+    {
       "id": "poetic_drift",
       "centrality": 0
     },
@@ -41,19 +61,11 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "RGP",
-      "centrality": 0
-    },
-    {
       "id": "narrative_tick",
       "centrality": 0
     },
     {
       "id": "strategic_patience",
-      "centrality": 0
-    },
-    {
-      "id": "NT",
       "centrality": 0
     },
     {
@@ -134,10 +146,6 @@ const graphData = {
     },
     {
       "id": "NT_rhythm",
-      "centrality": 0
-    },
-    {
-      "id": "PoLA",
       "centrality": 0
     },
     {

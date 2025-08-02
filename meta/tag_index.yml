@@ -1,3 +1,40 @@
+RGP:
+  linked_pulses:
+  - 2025-08-02_HRM_rhythm.yml
+  - 2025-07-31_chronoflux-vs-rgp.yml
+  - 2025-07-25_patience_as_gradient.yml
+  - 2025-07-26_the_big_quiet.yml
+  - 2025-07-24_long_haul_blinding_light.yml
+  - 2025-07-22_CF_split.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
+NT:
+  linked_pulses:
+  - 2025-08-02_HRM_rhythm.yml
+  - 2025-07-25_patience_as_gradient.yml
+  - 2025-07-22_CF_split.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+PoLA:
+  linked_pulses:
+  - 2025-08-02_HRM_rhythm.yml
+  - 2025-07-21_recursive_cor_pola_convergence.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+AI_architectures:
+  linked_pulses:
+  - 2025-08-02_HRM_rhythm.yml
+  related_concepts: []
+  description: ''
+HRM:
+  linked_pulses:
+  - 2025-08-02_HRM_rhythm.yml
+  related_concepts: []
+  description: ''
 poetic_drift:
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
@@ -55,17 +92,6 @@ chronoflux:
   - 2025-07-31_chronoflux-vs-rgp.yml
   related_concepts: []
   description: ''
-RGP:
-  linked_pulses:
-  - 2025-07-31_chronoflux-vs-rgp.yml
-  - 2025-07-25_patience_as_gradient.yml
-  - 2025-07-26_the_big_quiet.yml
-  - 2025-07-24_long_haul_blinding_light.yml
-  - 2025-07-22_CF_split.yml
-  - 2025-08-01_dev-cycle-nt-rhythm.yml
-  - 2025-06-22_hatching_syntax_awakening.yml
-  related_concepts: []
-  description: ''
 narrative_tick:
   linked_pulses:
   - 2025-07-31_chronoflux-vs-rgp.yml
@@ -75,13 +101,6 @@ narrative_tick:
 strategic_patience:
   linked_pulses:
   - 2025-07-25_patience_as_gradient.yml
-  related_concepts: []
-  description: ''
-NT:
-  linked_pulses:
-  - 2025-07-25_patience_as_gradient.yml
-  - 2025-07-22_CF_split.yml
-  - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
 gradient_coherence:
@@ -190,12 +209,6 @@ CoR:
 NT_rhythm:
   linked_pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
-  related_concepts: []
-  description: ''
-PoLA:
-  linked_pulses:
-  - 2025-07-21_recursive_cor_pola_convergence.yml
-  - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
 flux_intelligence:
