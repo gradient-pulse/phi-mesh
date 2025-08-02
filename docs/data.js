@@ -165,6 +165,22 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "RPG",
+      "centrality": 0
+    },
+    {
+      "id": "ambient_agent",
+      "centrality": 0
+    },
+    {
+      "id": "behavioral_api",
+      "centrality": 0
+    },
+    {
+      "id": "Phi_monitor",
+      "centrality": 0
+    },
+    {
       "id": "Pola",
       "centrality": 0
     },

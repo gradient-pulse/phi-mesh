@@ -42,6 +42,7 @@ HRM:
 "R\u03A6":
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
+  - 2025-06-17_phi_monitor_agent_ready.yml
   - 2025-07-30_laminar-turbulence.yml
   related_concepts: []
   description: ''
@@ -237,6 +238,26 @@ contextual_filter:
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
   - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+RPG:
+  linked_pulses:
+  - 2025-06-17_phi_monitor_agent_ready.yml
+  related_concepts: []
+  description: ''
+ambient_agent:
+  linked_pulses:
+  - 2025-06-17_phi_monitor_agent_ready.yml
+  related_concepts: []
+  description: ''
+behavioral_api:
+  linked_pulses:
+  - 2025-06-17_phi_monitor_agent_ready.yml
+  related_concepts: []
+  description: ''
+Phi_monitor:
+  linked_pulses:
+  - 2025-06-17_phi_monitor_agent_ready.yml
   related_concepts: []
   description: ''
 Pola:
