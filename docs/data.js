@@ -77,6 +77,10 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "cognitive_tension",
+      "centrality": 0
+    },
+    {
       "id": "cosmogenesis",
       "centrality": 0
     },
