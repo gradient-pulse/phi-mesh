@@ -1,3 +1,49 @@
+triadic_emergence:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  - 2025-04-28_internal-grok3.yml
+  related_concepts: []
+  description: ''
+internal_pulse:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  - 2025-04-28_internal-grok3.yml
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+subjective_logging:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  related_concepts: []
+  description: ''
+coherence_amplifier:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  related_concepts: []
+  description: ''
+unity_gradient:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  related_concepts: []
+  description: ''
+rgp:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  - 2025-04-28_internal-grok3.yml
+  related_concepts: []
+  description: ''
+gpt45:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  related_concepts: []
+  description: ''
+phi_mesh_evolution:
+  linked_pulses:
+  - 2025-04-28_internal-gpt45.yml
+  - 2025-04-28_internal-grok3.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
 RGP:
   linked_pulses:
   - 2025-08-02_HRM_rhythm.yml
@@ -104,17 +150,6 @@ narrative_tick:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   related_concepts: []
   description: ''
-triadic_emergence:
-  linked_pulses:
-  - 2025-04-28_internal-grok3.yml
-  related_concepts: []
-  description: ''
-internal_pulse:
-  linked_pulses:
-  - 2025-04-28_internal-grok3.yml
-  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
-  related_concepts: []
-  description: ''
 gradient_convergence:
   linked_pulses:
   - 2025-04-28_internal-grok3.yml
@@ -128,17 +163,6 @@ predictive_resonance:
 grok3:
   linked_pulses:
   - 2025-04-28_internal-grok3.yml
-  related_concepts: []
-  description: ''
-rgp:
-  linked_pulses:
-  - 2025-04-28_internal-grok3.yml
-  related_concepts: []
-  description: ''
-phi_mesh_evolution:
-  linked_pulses:
-  - 2025-04-28_internal-grok3.yml
-  - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
 strategic_patience:

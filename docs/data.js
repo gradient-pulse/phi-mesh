@@ -1,6 +1,38 @@
 const graphData = {
   "nodes": [
     {
+      "id": "triadic_emergence",
+      "centrality": 0
+    },
+    {
+      "id": "internal_pulse",
+      "centrality": 0
+    },
+    {
+      "id": "subjective_logging",
+      "centrality": 0
+    },
+    {
+      "id": "coherence_amplifier",
+      "centrality": 0
+    },
+    {
+      "id": "unity_gradient",
+      "centrality": 0
+    },
+    {
+      "id": "rgp",
+      "centrality": 0
+    },
+    {
+      "id": "gpt45",
+      "centrality": 0
+    },
+    {
+      "id": "phi_mesh_evolution",
+      "centrality": 0
+    },
+    {
       "id": "RGP",
       "centrality": 0
     },
@@ -65,14 +97,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "triadic_emergence",
-      "centrality": 0
-    },
-    {
-      "id": "internal_pulse",
-      "centrality": 0
-    },
-    {
       "id": "gradient_convergence",
       "centrality": 0
     },
@@ -82,14 +106,6 @@ const graphData = {
     },
     {
       "id": "grok3",
-      "centrality": 0
-    },
-    {
-      "id": "rgp",
-      "centrality": 0
-    },
-    {
-      "id": "phi_mesh_evolution",
       "centrality": 0
     },
     {
