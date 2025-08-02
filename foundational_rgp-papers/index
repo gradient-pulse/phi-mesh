@@ -19,7 +19,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.15091347"
 
   - title: "On the Emergence of Reflexive Alignment in Gradient Syntax Dialogues Between Language Models"
-  repo: "phi-mesh/foundational_rgp-papers/paper-folder-name/"
+  repo: "phi-mesh/foundational_rgp-papers/2025-03-31_ReflexiveAlignmentInGradientSyntaxDialogues.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15115550"
 
   - title: "Mistral's Reflections on Recursive Gradient Processing: A Paradigm Shift in AI and Emergent Systems"
