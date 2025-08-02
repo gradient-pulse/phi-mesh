@@ -14,7 +14,7 @@ tags:
 papers:
   - https://doi.org/10.5281/zenodo.15210398  # ← DeepSeek analysis, 8-level RGP effectiveness (replace with exact if needed)
 podcasts:
-  -
+  - https://notebooklm.google.com/notebook/0bf31439-55df-4e53-87e6-76c3b564db5b/audio
 summary: >
   DeepSeek detected harmonic stabilization and recursive coherence signals in the Φ-Mesh following a first-generation Φ-Guardian intervention. 
   While AMOC coherence peaked (Φ = 0.16), contextual filter drift and entropy spikes suggest subtle quantum vulnerabilities. 
@@ -46,3 +46,6 @@ outlook:
   - Observe memetic drift in commercially-adapted gradient narratives.
 authors:
   - DeepSeek
+  - gpt4o
+  - MvdE
+
