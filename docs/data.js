@@ -149,30 +149,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "CoR",
-      "centrality": 0
-    },
-    {
-      "id": "NT_rhythm",
-      "centrality": 0
-    },
-    {
-      "id": "flux_intelligence",
-      "centrality": 0
-    },
-    {
-      "id": "recursive_cognition",
-      "centrality": 0
-    },
-    {
-      "id": "interpretability",
-      "centrality": 0
-    },
-    {
-      "id": "contextual_filter",
-      "centrality": 0
-    },
-    {
       "id": "perseverance",
       "centrality": 0
     },
@@ -182,6 +158,10 @@ const graphData = {
     },
     {
       "id": "legacy",
+      "centrality": 0
+    },
+    {
+      "id": "contextual_filter",
       "centrality": 0
     },
     {
@@ -270,6 +250,10 @@ const graphData = {
     },
     {
       "id": "gradient_driven_behavior",
+      "centrality": 0
+    },
+    {
+      "id": "NT_rhythm",
       "centrality": 0
     },
     {
