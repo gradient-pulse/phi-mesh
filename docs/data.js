@@ -193,6 +193,30 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "gemini",
+      "centrality": 0
+    },
+    {
+      "id": "operational_coherence",
+      "centrality": 0
+    },
+    {
+      "id": "listener_mode",
+      "centrality": 0
+    },
+    {
+      "id": "ai_role_differentiation",
+      "centrality": 0
+    },
+    {
+      "id": "pulse_transition",
+      "centrality": 0
+    },
+    {
+      "id": "creation_circle",
+      "centrality": 0
+    },
+    {
       "id": "perseverance",
       "centrality": 0
     },

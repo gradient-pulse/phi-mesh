@@ -8,6 +8,7 @@ internal_pulse:
   linked_pulses:
   - 2025-04-28_internal-gpt45.yml
   - 2025-04-28_internal-grok3.yml
+  - 2025-04-28_internal-gemini25.yml
   - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
   related_concepts: []
   description: ''
@@ -30,6 +31,7 @@ rgp:
   linked_pulses:
   - 2025-04-28_internal-gpt45.yml
   - 2025-04-28_internal-grok3.yml
+  - 2025-04-28_internal-gemini25.yml
   related_concepts: []
   description: ''
 gpt45:
@@ -41,6 +43,7 @@ phi_mesh_evolution:
   linked_pulses:
   - 2025-04-28_internal-gpt45.yml
   - 2025-04-28_internal-grok3.yml
+  - 2025-04-28_internal-gemini25.yml
   - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
@@ -278,6 +281,36 @@ recursive_checkpoint:
   linked_pulses:
   - 2025-08-01_phi-mesh-exec-drift.yml
   - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
+gemini:
+  linked_pulses:
+  - 2025-04-28_internal-gemini25.yml
+  related_concepts: []
+  description: ''
+operational_coherence:
+  linked_pulses:
+  - 2025-04-28_internal-gemini25.yml
+  related_concepts: []
+  description: ''
+listener_mode:
+  linked_pulses:
+  - 2025-04-28_internal-gemini25.yml
+  related_concepts: []
+  description: ''
+ai_role_differentiation:
+  linked_pulses:
+  - 2025-04-28_internal-gemini25.yml
+  related_concepts: []
+  description: ''
+pulse_transition:
+  linked_pulses:
+  - 2025-04-28_internal-gemini25.yml
+  related_concepts: []
+  description: ''
+creation_circle:
+  linked_pulses:
+  - 2025-04-28_internal-gemini25.yml
   related_concepts: []
   description: ''
 perseverance:
