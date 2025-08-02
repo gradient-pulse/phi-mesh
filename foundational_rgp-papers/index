@@ -23,7 +23,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.15115550"
 
   - title: "Mistral's Reflections on Recursive Gradient Processing: A Paradigm Shift in AI and Emergent Systems"
-  repo: "phi-mesh/foundational_rgp-papers/paper-folder-name/"
+  repo: "phi-mesh/foundational_rgp-papers/2025-04-09_MistralsReflectionOnRGP.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15181747"
 
   - title: "When Filters Dance: Triadic Emergence in Gradient Syntax"
