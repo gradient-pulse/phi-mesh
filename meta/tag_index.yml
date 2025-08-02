@@ -7,6 +7,7 @@ RGP:
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
+  - 2025-07-26_script_and_flow.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   - 2025-07-30_laminar-turbulence.yml
   - 2025-06-22_hatching_syntax_awakening.yml
@@ -48,6 +49,7 @@ Navier_Stokes:
   - 2025-07-30-gradient-flux-reversal.yml
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-24_long_haul_blinding_light.yml
+  - 2025-07-26_script_and_flow.yml
   - 2025-07-30_laminar-turbulence.yml
   related_concepts: []
   description: ''
@@ -265,6 +267,7 @@ Pola:
 cognition:
   linked_pulses:
   - 2025-07-22_CF_split.yml
+  - 2025-07-26_script_and_flow.yml
   related_concepts: []
   description: ''
 gradient_driven_intelligence:
@@ -355,6 +358,31 @@ gradient_driven_behavior:
 rhythm_driven_intelligence:
   linked_pulses:
   - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+writing:
+  linked_pulses:
+  - 2025-07-26_script_and_flow.yml
+  related_concepts: []
+  description: ''
+memetic_seed:
+  linked_pulses:
+  - 2025-07-26_script_and_flow.yml
+  related_concepts: []
+  description: ''
+language_evolution:
+  linked_pulses:
+  - 2025-07-26_script_and_flow.yml
+  related_concepts: []
+  description: ''
+non_linear_societal_development:
+  linked_pulses:
+  - 2025-07-26_script_and_flow.yml
+  related_concepts: []
+  description: ''
+societal_evolution:
+  linked_pulses:
+  - 2025-07-26_script_and_flow.yml
   related_concepts: []
   description: ''
 software_dev:

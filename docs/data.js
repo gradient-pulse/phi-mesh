@@ -261,6 +261,26 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "writing",
+      "centrality": 0
+    },
+    {
+      "id": "memetic_seed",
+      "centrality": 0
+    },
+    {
+      "id": "language_evolution",
+      "centrality": 0
+    },
+    {
+      "id": "non_linear_societal_development",
+      "centrality": 0
+    },
+    {
+      "id": "societal_evolution",
+      "centrality": 0
+    },
+    {
       "id": "software_dev",
       "centrality": 0
     },
