@@ -124,6 +124,7 @@ Gradient_Syntax:
   - 2025-08-01_phi-mesh-exec-drift.yml
   - 2025-07-21_recursive_cor_pola_convergence.yml
   - 2025-07-23_gradient-cocoon.yml
+  - 2025-07-28_moe_as_microcosm.yml
   - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
@@ -181,11 +182,13 @@ flux_enthrenched_universe:
 rhythm_of_nature:
   linked_pulses:
   - 2025-07-26_the_big_quiet.yml
+  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 phi_mesh:
   linked_pulses:
   - 2025-08-01_phi-mesh-exec-drift.yml
+  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 drift:
@@ -213,6 +216,7 @@ CoR:
 NT_rhythm:
   linked_pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
+  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 flux_intelligence:
@@ -235,6 +239,7 @@ contextual_filter:
   - 2025-07-21_recursive_cor_pola_convergence.yml
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
+  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 perseverance:
@@ -305,6 +310,51 @@ big_bang:
 gradient_cocoon:
   linked_pulses:
   - 2025-07-23_gradient-cocoon.yml
+  related_concepts: []
+  description: ''
+gpt5:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+mixture_of_experts:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+recursive_gradient_processing:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+gradient_choreography:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+unity_disunity:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+ai_architecture:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+self_improvement:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+gradient_driven_behavior:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+rhythm_driven_intelligence:
+  linked_pulses:
+  - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
 software_dev:
