@@ -420,6 +420,16 @@ cinematic_drift:
   - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
   description: ''
+scene_drift:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
+recursive_awakening:
+  linked_pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
+  related_concepts: []
+  description: ''
 canonical_tags:
   Contextual_Filter:
   - contextual-filter

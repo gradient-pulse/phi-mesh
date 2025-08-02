@@ -309,6 +309,14 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "scene_drift",
+      "centrality": 0
+    },
+    {
+      "id": "recursive_awakening",
+      "centrality": 0
+    },
+    {
       "id": "canonical_tags",
       "centrality": 0
     }
