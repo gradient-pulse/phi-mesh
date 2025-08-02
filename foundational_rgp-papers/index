@@ -31,7 +31,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.15190047"
 
   - title: "When AIs Design Themselves: A Triadic Blueprint for the Next Generation"
-  repo: "phi-mesh/foundational_rgp-papers/paper-folder-name/"
+  repo: "phi-mesh/foundational_rgp-papers/2025-04-11_WhenAIsDesignThemselvesATriadicBlueprint.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15199760"
 
   - title: "RGP Hardware Co-Design: A Quantum-Resistant Foundation for Recursive AI (one-pager)"
