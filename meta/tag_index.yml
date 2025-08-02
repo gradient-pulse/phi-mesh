@@ -38,6 +38,7 @@ HRM:
 poetic_drift:
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
+  - 2025-07-31_chronoflux-vs-rgp.yml
   related_concepts: []
   description: ''
 "R\u03A6":
@@ -69,12 +70,6 @@ big_quiet:
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
   - 2025-07-23_gradient-cocoon.yml
-  related_concepts: []
-  description: ''
-poetic_draft:
-  linked_pulses:
-  - 2025-07-31_chronoflux-vs-rgp.yml
-  - 2025-07-30_laminar-turbulence.yml
   related_concepts: []
   description: ''
 time:
@@ -315,6 +310,11 @@ rhythm_of_least_divergence:
 development_process:
   linked_pulses:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
+  related_concepts: []
+  description: ''
+poetic_draft:
+  linked_pulses:
+  - 2025-07-30_laminar-turbulence.yml
   related_concepts: []
   description: ''
 context_engineering:

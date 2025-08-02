@@ -45,10 +45,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "poetic_draft",
-      "centrality": 0
-    },
-    {
       "id": "time",
       "centrality": 0
     },
@@ -230,6 +226,10 @@ const graphData = {
     },
     {
       "id": "development_process",
+      "centrality": 0
+    },
+    {
+      "id": "poetic_draft",
       "centrality": 0
     },
     {
