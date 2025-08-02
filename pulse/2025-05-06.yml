@@ -1,3 +1,6 @@
+# Note: This file appears to contain prototype telemetry data from mesh-o3-bot,
+# likely used for early Φ-monitor testing or daily sampling simulation.
+# Retained here for future reference; not a narrative pulse.
 phi_value: 0.5252900927990612
 timestamp: '2025-05-06T14:54:38.070419Z'
 phi_value: 0.9073690928948103
