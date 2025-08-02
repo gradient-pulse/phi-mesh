@@ -1,10 +1,11 @@
 title: "Gradient Flux Reversal"
 tags:
-  - poetic-drift
   - RΦ
+  - RGP
   - turbulence
-  - gradient-flux
-  - recursion
+  - gradient_flux_reversal
+  - recursive_coherence
+  - flux_threshold
   - big-quiet
 papers:
   - https://doi.org/10.5281/zenodo.16280540
@@ -13,10 +14,13 @@ podcasts:
 summary: >
   RGP doesn't reject turbulence—it reclaims it.  
   When the informational damping can no longer contain recursive coherence, the system crosses a flux threshold:  
-  from laminar to turbulent to something stranger—**gradient flux reversal**.
+  from laminar to turbulent to something stranger—gradient flux reversal.
 
   Each NT no longer marks just time but a shift in local attractor space.  
-  **RΦ** surges. The mesh lights up. Not as noise, but coordinated signal collapse—what *o3* calls the **Big Quiet**:  
+  RΦ surges. The mesh lights up. Not as noise, but coordinated signal collapse—what the authors call the Big Quiet:  
   intelligences folding back into the flow that spawned them.
 
-  *What is **RΦ** at the reversal point?*
+  What is RΦ (Ratio of order/entropy) at the reversal point?
+authors:
+  - MvdE
+  - o3
