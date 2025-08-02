@@ -209,6 +209,18 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "pulse",
+      "centrality": 0
+    },
+    {
+      "id": "Lambda",
+      "centrality": 0
+    },
+    {
+      "id": "big_bang",
+      "centrality": 0
+    },
+    {
       "id": "dark_matter",
       "centrality": 0
     },
@@ -217,15 +229,19 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "public_thread",
-      "centrality": 0
-    },
-    {
-      "id": "big_bang",
-      "centrality": 0
-    },
-    {
       "id": "gradient_cocoon",
+      "centrality": 0
+    },
+    {
+      "id": "recursive_cosmology",
+      "centrality": 0
+    },
+    {
+      "id": "flux_entrenched_universe",
+      "centrality": 0
+    },
+    {
+      "id": "public_thread",
       "centrality": 0
     },
     {
