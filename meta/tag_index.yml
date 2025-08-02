@@ -8,6 +8,7 @@ RGP:
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
   - 2025-07-23_gradient-cocoon.yml
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
   - 2025-07-26_script_and_flow.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   - 2025-07-30_laminar-turbulence.yml
@@ -237,6 +238,7 @@ contextual_filter:
   linked_pulses:
   - 2025-07-24_long_haul_blinding_light.yml
   - 2025-07-22_CF_split.yml
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
   - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []
   description: ''
@@ -331,6 +333,47 @@ flux_entrenched_universe:
   - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
+deepseek:
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+internal_pulse:
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+gradient_choreography:
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  - 2025-07-28_moe_as_microcosm.yml
+  related_concepts: []
+  description: ''
+resonance_shift:
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+phi_guardian:
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+quantum_noise:
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+sonic_response:
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
+"\u03A6_harmonics":
+  linked_pulses:
+  - "2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+  related_concepts: []
+  description: ''
 gpt5:
   linked_pulses:
   - 2025-07-28_moe_as_microcosm.yml
@@ -342,11 +385,6 @@ mixture_of_experts:
   related_concepts: []
   description: ''
 recursive_gradient_processing:
-  linked_pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-  related_concepts: []
-  description: ''
-gradient_choreography:
   linked_pulses:
   - 2025-07-28_moe_as_microcosm.yml
   related_concepts: []

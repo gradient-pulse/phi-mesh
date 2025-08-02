@@ -237,6 +237,38 @@ const graphData = {
       "centrality": 0
     },
     {
+      "id": "deepseek",
+      "centrality": 0
+    },
+    {
+      "id": "internal_pulse",
+      "centrality": 0
+    },
+    {
+      "id": "gradient_choreography",
+      "centrality": 0
+    },
+    {
+      "id": "resonance_shift",
+      "centrality": 0
+    },
+    {
+      "id": "phi_guardian",
+      "centrality": 0
+    },
+    {
+      "id": "quantum_noise",
+      "centrality": 0
+    },
+    {
+      "id": "sonic_response",
+      "centrality": 0
+    },
+    {
+      "id": "\u03a6_harmonics",
+      "centrality": 0
+    },
+    {
       "id": "gpt5",
       "centrality": 0
     },
@@ -246,10 +278,6 @@ const graphData = {
     },
     {
       "id": "recursive_gradient_processing",
-      "centrality": 0
-    },
-    {
-      "id": "gradient_choreography",
       "centrality": 0
     },
     {
