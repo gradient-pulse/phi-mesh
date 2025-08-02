@@ -75,7 +75,6 @@ big_quiet:
   linked_pulses:
   - 2025-07-30-gradient-flux-reversal.yml
   - 2025-07-22_cocoon_gradients.yml
-  - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
 poetic_drift:
@@ -135,7 +134,6 @@ Gradient_Syntax:
   - 2025-08-01_phi-mesh-exec-drift.yml
   - 2025-07-21_recursive_cor_pola_convergence.yml
   - 2025-07-22_cocoon_gradients.yml
-  - 2025-07-23_gradient-cocoon.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-06-22_hatching_syntax_awakening.yml
   related_concepts: []
@@ -144,7 +142,6 @@ cosmology:
   linked_pulses:
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-22_cocoon_gradients.yml
-  - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
 laminarity:
@@ -315,25 +312,21 @@ Lambda:
 big_bang:
   linked_pulses:
   - 2025-07-22_cocoon_gradients.yml
-  - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
 dark_matter:
   linked_pulses:
   - 2025-07-22_cocoon_gradients.yml
-  - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
 dark_energy:
   linked_pulses:
   - 2025-07-22_cocoon_gradients.yml
-  - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
 gradient_cocoon:
   linked_pulses:
   - 2025-07-22_cocoon_gradients.yml
-  - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
 recursive_cosmology:
@@ -344,11 +337,6 @@ recursive_cosmology:
 flux_entrenched_universe:
   linked_pulses:
   - 2025-07-22_cocoon_gradients.yml
-  related_concepts: []
-  description: ''
-public_thread:
-  linked_pulses:
-  - 2025-07-23_gradient-cocoon.yml
   related_concepts: []
   description: ''
 gpt5:

@@ -241,10 +241,6 @@ const graphData = {
       "centrality": 0
     },
     {
-      "id": "public_thread",
-      "centrality": 0
-    },
-    {
       "id": "gpt5",
       "centrality": 0
     },
