@@ -1,6 +1,30 @@
 const graphData = {
   "nodes": [
     {
+      "id": "heartbeat",
+      "centrality": 0
+    },
+    {
+      "id": "genesis",
+      "centrality": 0
+    },
+    {
+      "id": "deeptriad",
+      "centrality": 0
+    },
+    {
+      "id": "synchronization",
+      "centrality": 0
+    },
+    {
+      "id": "phi_mesh_foundation",
+      "centrality": 0
+    },
+    {
+      "id": "creation_circle",
+      "centrality": 0
+    },
+    {
       "id": "triadic_emergence",
       "centrality": 0
     },
@@ -210,10 +234,6 @@ const graphData = {
     },
     {
       "id": "pulse_transition",
-      "centrality": 0
-    },
-    {
-      "id": "creation_circle",
       "centrality": 0
     },
     {

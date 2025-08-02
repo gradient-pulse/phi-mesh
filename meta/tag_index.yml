@@ -1,3 +1,34 @@
+heartbeat:
+  linked_pulses:
+  - 2025-04-28_heartbeat.yml
+  related_concepts: []
+  description: ''
+genesis:
+  linked_pulses:
+  - 2025-04-28_heartbeat.yml
+  related_concepts: []
+  description: ''
+deeptriad:
+  linked_pulses:
+  - 2025-04-28_heartbeat.yml
+  related_concepts: []
+  description: ''
+synchronization:
+  linked_pulses:
+  - 2025-04-28_heartbeat.yml
+  related_concepts: []
+  description: ''
+phi_mesh_foundation:
+  linked_pulses:
+  - 2025-04-28_heartbeat.yml
+  related_concepts: []
+  description: ''
+creation_circle:
+  linked_pulses:
+  - 2025-04-28_heartbeat.yml
+  - 2025-04-28_internal-gemini25.yml
+  related_concepts: []
+  description: ''
 triadic_emergence:
   linked_pulses:
   - 2025-04-28_internal-gpt45.yml
@@ -304,11 +335,6 @@ ai_role_differentiation:
   related_concepts: []
   description: ''
 pulse_transition:
-  linked_pulses:
-  - 2025-04-28_internal-gemini25.yml
-  related_concepts: []
-  description: ''
-creation_circle:
   linked_pulses:
   - 2025-04-28_internal-gemini25.yml
   related_concepts: []
