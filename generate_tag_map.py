@@ -7,8 +7,8 @@ from pathlib import Path
 
 TAG_INDEX_FILE = "meta/tag_index.yml"
 PULSE_DIR = "phi-mesh/pulse"
-OUTPUT_HTML = "docs/generated/tag_map.html"
-DATA_JS = "docs/generated/data.js"
+OUTPUT_HTML = "docs/generated/generated/tag_map.html"
+DATA_JS = "docs/generated/generated/data.js"
 
 def extract_links_from_pulses():
     tag_to_resources = {}
