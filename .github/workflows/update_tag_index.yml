@@ -1,22 +1,16 @@
-name: Update tag index
+name: Update Tag Index and Tag Map
 
 on:
   push:
     paths:
-      - 'pulse/*.yml'
-      - 'pulse/*.yaml'
-      - 'tag_index_utils.py'
-      - 'update_tag_index.py'
-      - 'build_tag_browser.py'
-      - 'generate_tag_map.py'
-      - 'meta/tag_index.yml'
-      - 'meta/link_index.yml'
-      - '.github/workflows/update_tag_index.yml'
+      - "phi-mesh/pulse/**/*.yml"
+      - "meta/tag_index_utils.py"
+      - "update_tag_index.py"
+      - "generate_tag_map.py"
 
 jobs:
-  update-tag-index:
+  update-tags:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,26 +18,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.10"
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml matplotlib networkx
-  
-      - name: Run tag index updater
+        run: pip install pyyaml networkx
+
+      - name: Regenerate tag index
         run: python update_tag_index.py
 
-      - name: Run tag browser HTML builder
-        run: python build_tag_browser.py
-
-      - name: Generate tag map HTML
+      - name: Regenerate tag map
         run: python generate_tag_map.py
 
-      - name: Commit all generated artifacts
+      - name: Commit and push changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add meta/tag_index.yml docs/tag_browser.html docs/tag_map.html docs/data.js
-          git commit -m "Auto-update tag browser, map, and data.js" || echo "No changes to commit"
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add meta/tag_index.yml docs/generated/tag_map.html docs/generated/data.js
+          git commit -m "Auto-update tag index and map"
           git push
