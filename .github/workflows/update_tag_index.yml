@@ -1,7 +1,3 @@
-# ===============================
-# 📁 File: .github/workflows/update-tag-index.yml
-# ===============================
-
 name: Update Tag Index and Tag Map
 
 on:
@@ -40,7 +36,3 @@ jobs:
           git add meta/tag_index.yml docs/tag_map.html docs/data.js
           git commit -m "Auto-update tag index and map" || echo "No changes to commit"
           git push || echo "Nothing to push"
-
-
-if __name__ == "__main__":
-    main()
