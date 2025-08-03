@@ -68,7 +68,7 @@ def generate_html():
       border-right: 1px solid #333;
     }}
     svg {{ position: absolute; top: 0; left: 320px; right: 0; bottom: 0; }}
-    a {{ color: white; text-decoration: underline; word-break: break-all; }}
+    a {{ color: white; text-decoration: underline; word-break: break-word; }}
     h2 {{ margin-top: 0; }}
   </style>
 </head>
@@ -155,8 +155,8 @@ function showDetails(event, d) {
   details.innerHTML = `
     <strong>${d.id}</strong><br/>
     ${["pulses", "papers", "podcasts"].map(kind => {
-      const list = (res[kind] || []).map(url => `<a href="\${url}" target="_blank">\${truncate(url)}</a>`).join("<br/>");
-      return list ? `<h3>${kind.charAt(0).toUpperCase() + kind.slice(1)}</h3>${list}` : "";
+      const list = (res[kind] || []).map(url => `<a href="${url}" target="_blank">${truncate(url)}</a>`).join("<br/>");
+      return list ? `<h3>${kind.charAt(0).toUpperCase() + kind.slice(1)}</h3>` + list : "";
     }).join("")}
   `;
 }
@@ -170,6 +170,22 @@ function truncate(str) {
 '''
     with open(OUTPUT_HTML, "w") as f:
         f.write(html_template)
+
+def generate_tag_graph():
+    tag_index = parse_tag_index()
+    tag_resources = extract_links_from_pulses()
+    G = build_graph(tag_index)
+    nodes = [{"id": tag, "resources": tag_resources.get(tag, {})} for tag in G.nodes]
+    links = [{"source": u, "target": v} for u, v in G.edges]
+    metadata = {
+        "node_count": len(nodes),
+        "link_count": len(links)
+    }
+    return {
+        "nodes": nodes,
+        "links": links,
+        "metadata": metadata
+    }
 
 def main():
     tag_index = parse_tag_index()
