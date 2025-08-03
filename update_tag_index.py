@@ -1,52 +1,47 @@
-import os
-import yaml
-from pathlib import Path
-from collections import defaultdict
+name: update-tag-index
 
-# Paths
-pulse_dir = Path("pulse")
-meta_path = Path("meta/tag_index.yml")
+on:
+  push:
+    paths:
+      - "phi-mesh/pulses/**/*.yml"
+      - "meta/tag_index_utils.py"
+      - "meta/tag_index.yml"
+      - "scripts/update_tag_index.py"
+      - "scripts/build_tag_browser.py"
+      - "scripts/generate_tag_map.py"
 
-# Load canonical tag mappings
-if meta_path.exists():
-    tag_index = yaml.safe_load(meta_path.read_text())
-    canonical_tags = tag_index.get("canonical_tags", {})
-else:
-    tag_index = {}
-    canonical_tags = {}
+jobs:
+  update:
+    runs-on: ubuntu-latest
 
-# Helper: normalize tag to canonical form
-def normalize_tag(tag):
-    for canonical, variants in canonical_tags.items():
-        if tag in variants or tag == canonical:
-            return canonical
-    return tag.replace(" ", "_").replace("-", "_")
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-# Build tag index
-tag_map = defaultdict(lambda: {"linked_pulses": [], "related_concepts": [], "description": ""})
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
 
-for pulse_file in pulse_dir.glob("*.yml"):
-    with pulse_file.open() as f:
-        try:
-            pulse_data = yaml.safe_load(f)
-            tags = pulse_data.get("tags", [])
-            if isinstance(tags, str):  # handle single string case
-                tags = [tags]
-            for tag in tags:
-                if not tag:
-                    continue
-                canonical = normalize_tag(tag.strip())
-                tag_map[canonical]["linked_pulses"].append(pulse_file.name)
-        except Exception as e:
-            print(f"Error parsing {pulse_file.name}: {e}")
+      - name: Install dependencies
+        run: pip install pyyaml networkx
 
-# Combine with canonical_tags
-final_output = dict(tag_map)
-final_output["canonical_tags"] = canonical_tags
+      - name: Run tag index updater
+        run: python scripts/update_tag_index.py
 
-# Write output
-Path("meta").mkdir(exist_ok=True)
-with open(meta_path, "w") as f:
-    yaml.dump(final_output, f, sort_keys=False)
+      - name: Run tag browser HTML builder
+        run: python scripts/build_tag_browser.py
 
-print(f"✅ Tag index updated: {meta_path}")
+      - name: Generate tag map HTML
+        run: |
+          python scripts/generate_tag_map.py
+          cp docs/generated/tag_map.html docs/tag_map.html
+          cp docs/generated/data.js docs/data.js
+
+      - name: Commit all generated artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meta/tag_index.yml docs/tag_map.html docs/data.js
+          git commit -m "Update tag index and tag map"
+          git push
