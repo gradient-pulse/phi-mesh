@@ -7,116 +7,28 @@
     body {
       font-family: sans-serif;
       margin: 0;
-      display: flex;
-    }
-    #sidebar {
-      width: 300px;
-      border-right: 1px solid #ccc;
-      padding: 1rem;
+      background-color: white;
     }
     #graph {
-      flex-grow: 1;
+      width: 100vw;
+      height: 100vh;
     }
     .node text {
       pointer-events: none;
-      font-size: 10px;
+      font-size: 12px;
+      fill: #333;
     }
     .link {
-      stroke: #999;
+      stroke: #aaa;
       stroke-opacity: 0.6;
-    }
-    .node circle {
-      fill: #a0c4ff;
-      stroke: #333;
-      stroke-width: 0.5px;
     }
   </style>
 </head>
 <body>
-  <div id="sidebar">
-    <h2>RGP Tag Map</h2>
-    <p>Graph will load here.</p>
-    <div id="tag-info"></div>
-  </div>
-  <div id="graph">
-    <svg width="100%" height="800"></svg>
-  </div>
+  <div id="graph"></div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js"></script>
-  <script>
-    const svg = d3.select("svg");
-    const width = window.innerWidth - 300;
-    const height = 800;
-
-    const simulation = d3.forceSimulation(graphData.nodes)
-      .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(80))
-      .force("charge", d3.forceManyBody().strength(-200))
-      .force("center", d3.forceCenter(width / 2, height / 2));
-
-    const link = svg.append("g")
-      .attr("stroke", "#aaa")
-      .selectAll("line")
-      .data(graphData.links)
-      .enter().append("line");
-
-    const node = svg.append("g")
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5)
-      .selectAll("circle")
-      .data(graphData.nodes)
-      .enter().append("circle")
-        .attr("r", 6)
-        .attr("fill", "#89C2D9")
-        .call(drag(simulation))
-        .on("click", showTagInfo);
-
-    const label = svg.append("g")
-      .selectAll("text")
-      .data(graphData.nodes)
-      .enter().append("text")
-        .text(d => d.id)
-        .attr("font-size", "10px")
-        .attr("dy", "-0.7em");
-
-    simulation.on("tick", () => {
-      link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
-
-      node
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
-
-      label
-        .attr("x", d => d.x)
-        .attr("y", d => d.y);
-    });
-
-    function drag(simulation) {
-      return d3.drag()
-        .on("start", event => {
-          if (!event.active) simulation.alphaTarget(0.3).restart();
-          event.subject.fx = event.subject.x;
-          event.subject.fy = event.subject.y;
-        })
-        .on("drag", event => {
-          event.subject.fx = event.x;
-          event.subject.fy = event.y;
-        })
-        .on("end", event => {
-          if (!event.active) simulation.alphaTarget(0);
-          event.subject.fx = null;
-          event.subject.fy = null;
-        });
-    }
-
-    function showTagInfo(event, d) {
-      const infoBox = document.getElementById("tag-info");
-      infoBox.innerHTML = `<h3>${d.id}</h3><p>Centrality: ${d.centrality.toFixed(3)}</p>`;
-    }
-  </script>
+  <script src="graph.js"></script>
 </body>
 </html>
