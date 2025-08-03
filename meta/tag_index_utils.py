@@ -1,27 +1,34 @@
+# phi-mesh/meta/tag_index_utils.py
+
+import yaml
+from pathlib import Path
+from datetime import datetime
+import re
+import networkx as nx
+
+
+def extract_date(filename):
+    match = re.match(r"(\d{4}-\d{2}-\d{2})", filename)
+    return match.group(1) if match else "0000-00-00"
+
+
+def is_test_tag(tag_name):
+    return tag_name.strip().lower().startswith("test run")
+
+
+def get_latest_pulse_date(pulse_list):
+    valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
+    return max(valid_dates) if valid_dates else "0000-00-00"
+
+
+def load_tag_index(path):
+    return yaml.safe_load(Path(path).read_text())
+
+
 def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag_browser.html"):
-    import yaml
-    from pathlib import Path
-    from datetime import datetime
-    import re
+    tag_data = load_tag_index(tag_index_path)
 
-    # Extract YYYY-MM-DD from filenames
-    def extract_date(filename):
-        match = re.match(r"(\d{4}-\d{2}-\d{2})", filename)
-        return match.group(1) if match else "0000-00-00"
-
-    # Identify tags starting with "test run"
-    def is_test_tag(tag_name):
-        return tag_name.strip().lower().startswith("test run")
-
-    # Find latest date in a tag's pulse list
-    def get_latest_pulse_date(pulse_list):
-        valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
-        return max(valid_dates) if valid_dates else "0000-00-00"
-
-    # Load the YAML tag index
-    tag_data = yaml.safe_load(Path(tag_index_path).read_text())
-
-    # Filter out test tags and sort tags by most recent pulse (descending)
+    # Filter out test tags and sort by latest pulse date descending
     sorted_tags = sorted(
         [(tag_name, info) for tag_name, info in tag_data.items() if not is_test_tag(tag_name)],
         key=lambda item: get_latest_pulse_date(item[1].get("linked_pulses", [])),
@@ -80,11 +87,9 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
 
     Path(output_path).write_text("\n".join(html))
     print(f"✅ Tag browser updated: {output_path}")
-   
-# Add to tag_index_utils.py
+
 
 def build_graph_from_tag_index(tag_index):
-    import networkx as nx
     G = nx.Graph()
 
     # Add nodes
