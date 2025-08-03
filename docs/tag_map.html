@@ -4,17 +4,31 @@
   <meta charset="UTF-8" />
   <title>RGP Tag Map</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #fff; }
-    h1 { font-size: 24px; }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: white;
+    }
+    #graph {
+      width: 100vw;
+      height: 100vh;
+    }
+    .node text {
+      pointer-events: none;
+      font-size: 12px;
+      fill: #333;
+    }
+    .link {
+      stroke: #aaa;
+      stroke-opacity: 0.6;
+    }
   </style>
 </head>
 <body>
-  <h1>RGP Tag Map</h1>
-  <p>Graph will load here.</p>
+  <div id="graph"></div>
+
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js"></script>
-  <script>
-    // Your D3 visualization will mount here
-  </script>
+  <script src="graph.js"></script>
 </body>
 </html>
