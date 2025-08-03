@@ -1,34 +1,39 @@
-# phi-mesh/meta/tag_index_utils.py
-
 import yaml
-from pathlib import Path
-from datetime import datetime
 import re
 import networkx as nx
-
+from pathlib import Path
+from datetime import datetime
 
 def extract_date(filename):
     match = re.match(r"(\d{4}-\d{2}-\d{2})", filename)
     return match.group(1) if match else "0000-00-00"
 
-
 def is_test_tag(tag_name):
     return tag_name.strip().lower().startswith("test run")
-
 
 def get_latest_pulse_date(pulse_list):
     valid_dates = [extract_date(p) for p in pulse_list if extract_date(p) != "0000-00-00"]
     return max(valid_dates) if valid_dates else "0000-00-00"
 
-
-def load_tag_index(path):
+def load_tag_index(path="meta/tag_index.yml"):
+    """Load YAML file with tag index structure."""
     return yaml.safe_load(Path(path).read_text())
 
+def build_graph_from_tag_index(tag_index):
+    """Create a NetworkX graph from tag relationships."""
+    G = nx.Graph()
+    for tag in tag_index:
+        G.add_node(tag)
+    for tag, data in tag_index.items():
+        for related in data.get('related', []):
+            if related in tag_index:
+                G.add_edge(tag, related)
+    return G
 
 def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag_browser.html"):
+    """Generate an HTML browser for tag info."""
     tag_data = load_tag_index(tag_index_path)
 
-    # Filter out test tags and sort by latest pulse date descending
     sorted_tags = sorted(
         [(tag_name, info) for tag_name, info in tag_data.items() if not is_test_tag(tag_name)],
         key=lambda item: get_latest_pulse_date(item[1].get("linked_pulses", [])),
@@ -65,10 +70,9 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
 
         pulses = info.get("linked_pulses", [])
         if pulses:
-            sorted_pulses = sorted(pulses, key=extract_date, reverse=True)
             html.append("  <div><strong>📂 Linked Pulses:</strong>")
             html.append("    <div class='pulses'>")
-            for pulse in sorted_pulses:
+            for pulse in sorted(pulses, key=extract_date, reverse=True):
                 html.append(f"      <span class='pulse'>• {pulse}</span>")
             html.append("    </div></div>")
 
@@ -87,20 +91,3 @@ def build_tag_browser(tag_index_path="meta/tag_index.yml", output_path="docs/tag
 
     Path(output_path).write_text("\n".join(html))
     print(f"✅ Tag browser updated: {output_path}")
-
-
-def build_graph_from_tag_index(tag_index):
-    G = nx.Graph()
-
-    # Add nodes
-    for tag in tag_index:
-        G.add_node(tag)
-
-    # Add edges
-    for tag, data in tag_index.items():
-        related_tags = data.get('related', [])
-        for related in related_tags:
-            if related in tag_index:
-                G.add_edge(tag, related)
-
-    return G
