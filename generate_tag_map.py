@@ -1,4 +1,3 @@
-
 import os
 import json
 import networkx as nx
@@ -39,7 +38,7 @@ def export_data_js(G, tag_resources):
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
     nodes = [{"id": tag} for tag in G.nodes]
-    links = [{"source": u, "target": v, "weight": G[u][v]["weight"]} for u, v in G for v in G[u]]
+    links = [{"source": u, "target": v, "weight": d.get("weight", 1)} for u, v, d in G.edges(data=True)]
     for node in nodes:
         tag = node["id"]
         node["resources"] = tag_resources.get(tag, {})
