@@ -1,176 +1,101 @@
 import os
 import json
-import networkx as nx
 import yaml
+from meta.tag_index_utils import load_tag_index, get_resource_links
 
-# Paths
-TAG_INDEX_PATH = "meta/tag_index.yml"
-LINK_INDEX_PATH = "meta/link_index.yml"  # Currently unused but reserved
-OUTPUT_DIR = "docs"
-DATA_JS = os.path.join(OUTPUT_DIR, "data.js")
-HTML_FILE = os.path.join(OUTPUT_DIR, "tag_map.html")
+tag_index_path = "meta/tag_index.yml"
+data_js_path = "docs/data.js"
+tag_map_html_path = "docs/tag_map.html"
 
-# Load YAML tag index
-def load_yaml_file(path):
-    with open(path, "r") as f:
-        return yaml.safe_load(f)
 
-# Construct graph from tag index
-def build_graph(tag_index):
-    G = nx.Graph()
-    for tag, data in tag_index.items():
-        G.add_node(tag)
-        for linked_tag in data.get("links", []):
-            if G.has_edge(tag, linked_tag):
-                G[tag][linked_tag]["weight"] += 1
-            else:
-                G.add_edge(tag, linked_tag, weight=1)
-    return G
+def generate_data_js(tag_index):
+    nodes = []
+    for tag in tag_index:
+        resources = get_resource_links(tag)
+        nodes.append({
+            "id": tag,
+            "resources": resources
+        })
+    return f"const data = {json.dumps({"nodes": nodes}, indent=2)};"
 
-# Extract papers, podcasts, pulses for each tag
-def gather_resources(tag_index):
-    tag_resources = {}
-    for tag, data in tag_index.items():
-        tag_resources[tag] = {
-            "papers": list(set(p["title"] for p in data.get("papers", []))),
-            "podcasts": list(set(p["title"] for p in data.get("podcasts", []))),
-            "pulses": list(set(p["title"] for p in data.get("pulses", []))),
-        }
-    return tag_resources
 
-# Output data.js file for tag map
-def export_data_js(G, tag_resources):
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-
-    nodes = [{"id": tag, "resources": tag_resources.get(tag, {})} for tag in G.nodes]
-    links = [
-        {"source": u, "target": v, "weight": G[u][v]["weight"]}
-        for u, v in G.edges()
-    ]
-    data = {"nodes": nodes, "links": links}
-
-    with open(DATA_JS, "w") as f:
-        f.write("const graphData = ")
-        json.dump(data, f, indent=2)
-
-# Copy full D3-based tag map viewer
-def copy_template_html():
-    html_content = '''<!DOCTYPE html>
-<html>
+def generate_html():
+    return '''
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RGP Tag Map</title>
   <style>
-    body { font-family: sans-serif; margin: 0; display: flex; }
-    #sidebar { width: 300px; padding: 1em; background: #f8f8f8; overflow-y: auto; border-right: 1px solid #ddd; }
-    #graph { flex: 1; }
-    .link { stroke: #aaa; stroke-width: 1.5px; }
-    .node circle { fill: #b3cde0; stroke: #333; stroke-width: 1.5px; }
-    .node text { pointer-events: none; font-size: 12px; }
+    body { font-family: sans-serif; }
+    #sidebar { position: fixed; top: 0; left: 0; width: 250px; height: 100%; overflow-y: auto; background: #f4f4f4; padding: 1rem; border-right: 1px solid #ccc; }
+    #graph { margin-left: 270px; padding: 1rem; }
+    .node { cursor: pointer; margin: 0.5rem 0; }
   </style>
 </head>
 <body>
   <div id="sidebar">
     <h2>RGP Tag Map</h2>
-    <p>Click a node to view details</p>
-    <div id="details"></div>
+    <div id="info"></div>
   </div>
-  <svg id="graph" width="960" height="800"></svg>
+  <div id="graph">
+    <svg width="1000" height="800"></svg>
+  </div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="./data.js"></script>
+  <script src="data.js"></script>
   <script>
-    const svg = d3.select("#graph")
-    const width = +svg.attr("width")
-    const height = +svg.attr("height")
+    const svg = d3.select("svg");
+    const width = +svg.attr("width");
+    const height = +svg.attr("height");
 
-    const simulation = d3.forceSimulation(graphData.nodes)
-      .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(100))
-      .force("charge", d3.forceManyBody().strength(-300))
+    const simulation = d3.forceSimulation(data.nodes)
+      .force("charge", d3.forceManyBody().strength(-50))
       .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collision", d3.forceCollide().radius(50))
+      .on("tick", ticked);
 
-    const link = svg.append("g")
-      .attr("stroke", "#999")
-      .attr("stroke-opacity", 0.6)
-      .selectAll("line")
-      .data(graphData.links)
-      .join("line")
-      .attr("stroke-width", d => Math.sqrt(d.weight))
-
-    const node = svg.append("g")
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5)
-      .selectAll("circle")
-      .data(graphData.nodes)
-      .join("circle")
-      .attr("r", 10)
-      .attr("fill", "#89bdd3")
-      .call(drag(simulation))
-      .on("click", showDetails)
-
-    const label = svg.append("g")
-      .selectAll("text")
-      .data(graphData.nodes)
-      .join("text")
-      .attr("dy", 3)
-      .attr("x", 12)
+    const node = svg.selectAll(".node")
+      .data(data.nodes)
+      .enter().append("text")
+      .attr("class", "node")
+      .attr("text-anchor", "middle")
       .text(d => d.id)
+      .on("click", showInfo);
 
-    simulation.on("tick", () => {
-      link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y)
-      node
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-      label
-        .attr("x", d => d.x)
-        .attr("y", d => d.y)
-    })
-
-    function drag(simulation) {
-      function dragstarted(event, d) {
-        if (!event.active) simulation.alphaTarget(0.3).restart()
-        d.fx = d.x
-        d.fy = d.y
-      }
-      function dragged(event, d) {
-        d.fx = event.x
-        d.fy = event.y
-      }
-      function dragended(event, d) {
-        if (!event.active) simulation.alphaTarget(0)
-        d.fx = null
-        d.fy = null
-      }
-      return d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended)
+    function ticked() {
+      node.attr("x", d => d.x).attr("y", d => d.y);
     }
 
-    function showDetails(event, d) {
-      const div = document.getElementById("details")
-      div.innerHTML = `<h3>${d.id}</h3>`
-      for (const [type, items] of Object.entries(d.resources)) {
-        if (items.length > 0) {
-          div.innerHTML += `<strong>${type}:</strong><ul>` + items.map(x => `<li>${x}</li>`).join("") + '</ul>'
-        }
-      }
+    function showInfo(event, d) {
+      const info = document.getElementById("info");
+      info.innerHTML = `<h3>${d.id}</h3>` +
+        ['papers', 'podcasts', 'pulses'].map(type => {
+          const items = d.resources[type] || [];
+          if (!items.length) return `<p><strong>${type}:</strong> None</p>`;
+          return `<p><strong>${type}:</strong><br>` +
+            items.map(link => `<a href="${link.url}" target="_blank">${link.title}</a>`).join("<br>") +
+            `</p>`;
+        }).join("");
     }
   </script>
 </body>
-</html>'''
+</html>
+'''
 
-    with open(HTML_FILE, "w") as f:
-        f.write(html_content)
 
-# Main entry
+def main():
+    tag_index = load_tag_index()
+    data_js = generate_data_js(tag_index)
+    html = generate_html()
+
+    os.makedirs("docs", exist_ok=True)
+    with open(data_js_path, "w") as f:
+        f.write(data_js)
+    with open(tag_map_html_path, "w") as f:
+        f.write(html)
+    print(f"Generated tag map: {tag_map_html_path}")
+
+
 if __name__ == "__main__":
-    tag_index = load_yaml_file(TAG_INDEX_PATH)
-    G = build_graph(tag_index)
-    tag_resources = gather_resources(tag_index)
-    export_data_js(G, tag_resources)
-    copy_template_html()
+    main()
