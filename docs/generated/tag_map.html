@@ -1,80 +1,86 @@
+
 <!DOCTYPE html>
-<meta charset="utf-8">
-<title>Phi-Mesh Tag Map</title>
-<style>
-  body { margin: 0; background-color: #000; font-family: sans-serif; color: white; }
-  svg { width: 100%; height: 100vh; display: block; }
-  .node text { fill: white; font-size: 12px; pointer-events: none; }
-  .node ellipse { stroke-width: 0; }
-  .link { stroke: white; stroke-opacity: 0.5; }
-  .sidebar {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 280px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    font-size: 13px;
-  }
-  h1 { margin: 10px 0; font-size: 24px; }
-</style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RGP Tag Map</title>
+  <style>
+    body {{ margin: 0; background: #111; color: white; font-family: sans-serif; overflow: hidden; }}
+    .sidebar {{
+      position: absolute;
+      left: 0; top: 0; bottom: 0; width: 320px;
+      background: rgba(30,30,30,0.8);
+      overflow-y: auto; padding: 1em;
+      border-right: 1px solid #333;
+    }}
+    svg {{ position: absolute; top: 0; left: 320px; right: 0; bottom: 0; }}
+    a {{ color: white; text-decoration: underline; word-break: break-word; }}
+    h2 {{ margin-top: 0; }}
+  </style>
+</head>
 <body>
 <div class="sidebar">
-  <h1>Phi-Mesh Tag Map</h1>
-  <div id="tag-details"><b>Tag Info</b><br>Click a node to see details.</div>
+  <h2>RGP Tag Map</h2>
+  <p><em>Coherence Tracking Across Fields—click a tag</em></p>
+  <div id="details">Hover over a node to see connections</div>
 </div>
-<svg></svg>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="data.js"></script>
 <script>
-const nodes = [{"id": "RGP", "centrality": 0.9}, {"id": "Contextual_Filter", "centrality": 0.8}, {"id": "Navier_Stokes", "centrality": 0.75}, {"id": "gradient_coherence", "centrality": 0.6}, {"id": "division_of_labor", "centrality": 0.1}];
-const links = [{"source": "RGP", "target": "Contextual_Filter"}, {"source": "RGP", "target": "Navier_Stokes"}, {"source": "RGP", "target": "gradient_coherence"}, {"source": "gradient_coherence", "target": "division_of_labor"}];
-const tagResources = {"RGP": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": ["https://notebooklm.google.com/notebook/2b3e4507-8a44-4fcb-a6a6-c5a98083cca7/audio"]}, "Contextual_Filter": {"papers": ["https://doi.org/10.5281/zenodo.15614775"], "podcasts": []}, "Navier_Stokes": {"papers": [], "podcasts": []}, "gradient_coherence": {"papers": [], "podcasts": []}, "division_of_labor": {"papers": [], "podcasts": []}};
+const width = window.innerWidth - 320, height = window.innerHeight;
 
-const svg = d3.select("svg"),
-      width = window.innerWidth,
-      height = window.innerHeight;
+const svg = d3.select("body").append("svg")
+  .attr("width", width).attr("height", height);
 
-const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.id).distance(90))
-    .force("charge", d3.forceManyBody().strength(-450))
-    .force("center", d3.forceCenter(width / 2, height / 2));
+const simulation = d3.forceSimulation(graphData.nodes)
+  .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(100))
+  .force("charge", d3.forceManyBody().strength(-250))
+  .force("center", d3.forceCenter(width / 2, height / 2))
+  .on("tick", ticked);
 
 const link = svg.append("g")
-    .attr("stroke", "#fff").attr("stroke-opacity", 0.6)
   .selectAll("line")
-  .data(links).join("line")
-    .attr("stroke-width", 1.2);
+  .data(graphData.links)
+  .enter().append("line")
+  .attr("stroke", "#aaa");
 
 const node = svg.append("g")
-    .attr("stroke-width", 1.5)
-  .selectAll("g")
-  .data(nodes).join("g")
-    .attr("class", "node")
-    .call(drag(simulation));
+  .selectAll("circle")
+  .data(graphData.nodes)
+  .enter().append("circle")
+  .attr("r", 8)
+  .attr("fill", "#89CFF0")
+  .on("click", showDetails)
+  .call(drag(simulation));
 
-node.append("ellipse")
-    .attr("rx", d => 6 + Math.sqrt(d.centrality * 1000))
-    .attr("ry", d => 4 + Math.sqrt(d.centrality * 500))
-    .attr("fill", "#00BFFF")
-    .on("click", (event, d) => showDetails(d));
+const label = svg.append("g")
+  .selectAll("text")
+  .data(graphData.nodes)
+  .enter().append("text")
+  .text(d => d.id)
+  .style("fill", "white")
+  .style("font-size", "10px")
+  .attr("text-anchor", "middle")
+  .attr("dy", "1.2em");
 
-node.append("text")
-    .text(d => d.id)
-    .attr("x", 10)
-    .attr("y", 4);
-
-simulation.on("tick", () => {
+function ticked() {
   link
-      .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+  node
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y);
+  label
+      .attr("x", d => d.x)
+      .attr("y", d => d.y);
+}
 
-  node.attr("transform", d => `translate(${d.x},${d.y})`);
-});
-
-function drag(sim) {
+function drag(simulation) {
   return d3.drag()
       .on("start", event => {
-        if (!event.active) sim.alphaTarget(0.3).restart();
+        if (!event.active) simulation.alphaTarget(0.3).restart();
         event.subject.fx = event.subject.x;
         event.subject.fy = event.subject.y;
       })
@@ -83,22 +89,27 @@ function drag(sim) {
         event.subject.fy = event.y;
       })
       .on("end", event => {
-        if (!event.active) sim.alphaTarget(0);
+        if (!event.active) simulation.alphaTarget(0);
         event.subject.fx = null;
         event.subject.fy = null;
       });
 }
 
-function showDetails(d) {
-  const panel = document.getElementById("tag-details");
-  const resources = tagResources[d.id] || { papers: [], podcasts: [] };
-  let html = `<b>${d.id}</b><br>Centrality: ${d.centrality.toFixed(2)}<br>`;
-  if (resources.papers.length) {
-    html += "<br><b>Papers</b><br>" + resources.papers.map(url => `<a href="${url}" target="_blank">${url}</a>`).join("<br>");
-  }
-  if (resources.podcasts.length) {
-    html += "<br><b>Podcasts</b><br>" + resources.podcasts.map(url => `<a href="${url}" target="_blank">${url}</a>`).join("<br>");
-  }
-  panel.innerHTML = html;
+function showDetails(event, d) {
+  const details = document.getElementById("details");
+  const res = d.resources || {};
+  details.innerHTML = `
+    <strong>${d.id}</strong><br/>
+    ${["pulses", "papers", "podcasts"].map(kind => {
+      const list = (res[kind] || []).map(url => `<a href="${url}" target="_blank">${truncate(url)}</a>`).join("<br/>");
+      return list ? `<h3>${kind.charAt(0).toUpperCase() + kind.slice(1)}</h3>` + list : "";
+    }).join("")}
+  `;
+}
+
+function truncate(str) {
+  return str.length > 40 ? str.slice(0, 37) + "..." : str;
 }
 </script>
+</body>
+</html>
