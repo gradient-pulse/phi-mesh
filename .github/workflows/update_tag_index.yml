@@ -7,10 +7,13 @@ on:
       - "meta/tag_index_utils.py"
       - "update_tag_index.py"
       - "generate_tag_map.py"
+      - "docs/tag_map_template.html"
+      - "docs/graph.js"
 
 jobs:
   update-tags:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
