@@ -1,127 +1,66 @@
-# generate_tag_map.py
-
 import os
+import sys
 import json
+import yaml
 import networkx as nx
-from meta.tag_index_utils import load_tag_index
 
-# Load tag index
-tag_index = load_tag_index()
+# Ensure meta is in the path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "meta")))
+from tag_index_utils import load_tag_index
 
-# Create graph
-G = nx.Graph()
-for tag, metadata in tag_index.items():
-    G.add_node(tag)
-    for linked_tag in metadata.get("links", []):
-        if G.has_node(linked_tag):
-            G.add_edge(tag, linked_tag)
+TAG_INDEX_PATH = "meta/tag_index.yml"
+HTML_TEMPLATE_PATH = "docs/tag_map_template.html"
+DATA_JS_PATH = "docs/data.js"
+OUTPUT_HTML_PATH = "docs/tag_map.html"
 
-# Assign centrality
-centrality = nx.degree_centrality(G)
+def build_graph(tag_index):
+    G = nx.Graph()
+    for tag, entry in tag_index.items():
+        G.add_node(tag)
+        for linked in entry.get("links", []):
+            G.add_edge(tag, linked)
+    return G
 
-nodes = []
-links = []
-for node in G.nodes():
-    nodes.append({
-        "id": node,
-        "centrality": round(centrality.get(node, 0), 3)
-    })
-for source, target in G.edges():
-    links.append({"source": source, "target": target})
+def compute_centrality(G):
+    return nx.degree_centrality(G)
 
-# Ensure output directory exists
-output_dir = os.path.join("docs")
-os.makedirs(output_dir, exist_ok=True)
+def generate_js_data(G, centrality):
+    nodes = []
+    links = []
 
-# Write data.js
-with open(os.path.join(output_dir, "data.js"), "w") as f:
-    json_data = json.dumps({"nodes": nodes, "links": links}, indent=2)
-    f.write(f"const data = {json_data};")
+    for i, node in enumerate(G.nodes()):
+        nodes.append({
+            "id": node,
+            "group": 1,
+            "centrality": centrality.get(node, 0),
+        })
 
-# Write tag_map.html
-html_content = '''<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>RGP Tag Map</title>
-  <style>
-    body { font-family: sans-serif; }
-    #graph { width: 100vw; height: 90vh; }
-  </style>
-</head>
-<body>
-  <h2>RGP Tag Map</h2>
-  <div id="graph">Graph will load here.</div>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="data.js"></script>
-  <script>
-    const width = window.innerWidth;
-    const height = window.innerHeight * 0.9;
-    const svg = d3.select("#graph").append("svg")
-      .attr("width", width)
-      .attr("height", height);
+    for source, target in G.edges():
+        links.append({"source": source, "target": target})
 
-    const simulation = d3.forceSimulation(data.nodes)
-      .force("link", d3.forceLink(data.links).id(d => d.id).distance(60))
-      .force("charge", d3.forceManyBody().strength(-100))
-      .force("center", d3.forceCenter(width / 2, height / 2));
+    return {"nodes": nodes, "links": links}
 
-    const link = svg.selectAll("line")
-      .data(data.links)
-      .enter().append("line")
-      .style("stroke", "#aaa");
+def write_data_js(data):
+    with open(DATA_JS_PATH, "w") as f:
+        f.write("const graphData = ")
+        json.dump(data, f, indent=2)
+        f.write(";")
 
-    const node = svg.selectAll("circle")
-      .data(data.nodes)
-      .enter().append("circle")
-      .attr("r", 5)
-      .style("fill", "#3399ff")
-      .call(drag(simulation));
+def update_html_wrapper():
+    with open(HTML_TEMPLATE_PATH, "r") as template_file:
+        template = template_file.read()
 
-    const label = svg.selectAll("text")
-      .data(data.nodes)
-      .enter().append("text")
-      .text(d => d.id)
-      .attr("font-size", "10px")
-      .attr("dx", 6)
-      .attr("dy", 2);
+    with open(OUTPUT_HTML_PATH, "w") as out_file:
+        out_file.write(template)
 
-    simulation.on("tick", () => {
-      link.attr("x1", d => d.source.x)
-          .attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x)
-          .attr("y2", d => d.target.y);
+def main():
+    tag_index = load_tag_index(TAG_INDEX_PATH)
+    G = build_graph(tag_index)
+    centrality = compute_centrality(G)
+    data = generate_js_data(G, centrality)
+    write_data_js(data)
+    update_html_wrapper()
+    print("✅ Tag map generation complete.")
 
-      node.attr("cx", d => d.x)
-          .attr("cy", d => d.y);
-
-      label.attr("x", d => d.x)
-           .attr("y", d => d.y);
-    });
-
-    function drag(simulation) {
-      function dragstarted(event, d) {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-      }
-      function dragged(event, d) {
-        d.fx = event.x;
-        d.fy = event.y;
-      }
-      function dragended(event, d) {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-      }
-      return d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended);
-    }
-  </script>
-</body>
-</html>'''
-
-with open(os.path.join(output_dir, "tag_map.html"), "w") as f:
-    f.write(html_content)
+if __name__ == "__main__":
+    main()
