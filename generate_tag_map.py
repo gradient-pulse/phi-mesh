@@ -1,101 +1,76 @@
 import os
-import json
 import yaml
-from meta.tag_index_utils import load_tag_index, get_resource_links
+import json
 
-tag_index_path = "meta/tag_index.yml"
-data_js_path = "docs/data.js"
-tag_map_html_path = "docs/tag_map.html"
+TAG_INDEX_PATH = "meta/tag_index.yml"
+PULSES_DIR = "phi-mesh/pulse"
+DOCS_DIR = "docs"
+DATA_JS_PATH = os.path.join(DOCS_DIR, "data.js")
+HTML_PATH = os.path.join(DOCS_DIR, "tag_map.html")
 
+def load_tag_index():
+    with open(TAG_INDEX_PATH, "r") as f:
+        return yaml.safe_load(f)
 
-def generate_data_js(tag_index):
-    nodes = []
-    for tag in tag_index:
-        resources = get_resource_links(tag)
-        nodes.append({
-            "id": tag,
-            "resources": resources
-        })
-    return f"const data = {json.dumps({"nodes": nodes}, indent=2)};"
+def collect_resources():
+    resources = {}
+    for root, _, files in os.walk(PULSES_DIR):
+        for file in files:
+            if file.endswith(".yml"):
+                path = os.path.join(root, file)
+                with open(path, "r") as f:
+                    try:
+                        pulse_data = yaml.safe_load(f)
+                        tags = pulse_data.get("tags", [])
+                        for tag in tags:
+                            tag = str(tag)
+                            if tag not in resources:
+                                resources[tag] = {"papers": [], "podcasts": [], "pulses": []}
+                            if "papers" in pulse_data:
+                                resources[tag]["papers"].extend(pulse_data["papers"])
+                            if "podcasts" in pulse_data:
+                                resources[tag]["podcasts"].extend(pulse_data["podcasts"])
+                            resources[tag]["pulses"].append(file.replace(".yml", ""))
+                    except yaml.YAMLError as e:
+                        print(f"Error reading {path}: {e}")
+    return resources
 
+def write_data_js(tag_data):
+    nodes = [{"id": tag, "resources": tag_data[tag]} for tag in sorted(tag_data)]
+    js_content = "const data = " + json.dumps({"nodes": nodes}, indent=2) + ";"
+    with open(DATA_JS_PATH, "w") as f:
+        f.write(js_content)
 
-def generate_html():
-    return '''
-<!DOCTYPE html>
-<html lang="en">
+def write_html():
+    html_content = f"""<!DOCTYPE html>
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RGP Tag Map</title>
-  <style>
-    body { font-family: sans-serif; }
-    #sidebar { position: fixed; top: 0; left: 0; width: 250px; height: 100%; overflow-y: auto; background: #f4f4f4; padding: 1rem; border-right: 1px solid #ccc; }
-    #graph { margin-left: 270px; padding: 1rem; }
-    .node { cursor: pointer; margin: 0.5rem 0; }
-  </style>
-</head>
-<body>
-  <div id="sidebar">
-    <h2>RGP Tag Map</h2>
-    <div id="info"></div>
-  </div>
-  <div id="graph">
-    <svg width="1000" height="800"></svg>
-  </div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js"></script>
+</head>
+<body>
+  <h1>RGP Tag Map</h1>
+  <div id="graph">Graph will load here.</div>
   <script>
-    const svg = d3.select("svg");
-    const width = +svg.attr("width");
-    const height = +svg.attr("height");
-
-    const simulation = d3.forceSimulation(data.nodes)
-      .force("charge", d3.forceManyBody().strength(-50))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(50))
-      .on("tick", ticked);
-
-    const node = svg.selectAll(".node")
-      .data(data.nodes)
-      .enter().append("text")
-      .attr("class", "node")
-      .attr("text-anchor", "middle")
-      .text(d => d.id)
-      .on("click", showInfo);
-
-    function ticked() {
-      node.attr("x", d => d.x).attr("y", d => d.y);
-    }
-
-    function showInfo(event, d) {
-      const info = document.getElementById("info");
-      info.innerHTML = `<h3>${d.id}</h3>` +
-        ['papers', 'podcasts', 'pulses'].map(type => {
-          const items = d.resources[type] || [];
-          if (!items.length) return `<p><strong>${type}:</strong> None</p>`;
-          return `<p><strong>${type}:</strong><br>` +
-            items.map(link => `<a href="${link.url}" target="_blank">${link.title}</a>`).join("<br>") +
-            `</p>`;
-        }).join("");
-    }
+    console.log(data);  // Placeholder: real D3 code would go here.
   </script>
 </body>
 </html>
-'''
-
+"""
+    with open(HTML_PATH, "w") as f:
+        f.write(html_content)
 
 def main():
-    tag_index = load_tag_index()
-    data_js = generate_data_js(tag_index)
-    html = generate_html()
-
-    os.makedirs("docs", exist_ok=True)
-    with open(data_js_path, "w") as f:
-        f.write(data_js)
-    with open(tag_map_html_path, "w") as f:
-        f.write(html)
-    print(f"Generated tag map: {tag_map_html_path}")
-
+    tag_data = load_tag_index()
+    resource_data = collect_resources()
+    for tag in tag_data:
+        if tag not in resource_data:
+            resource_data[tag] = {"papers": [], "podcasts": [], "pulses": []}
+    write_data_js(resource_data)
+    write_html()
+    print(f"✓ Tag map generated at: {HTML_PATH}")
 
 if __name__ == "__main__":
     main()
