@@ -33,6 +33,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add meta/tag_index.yml docs/generated/tag_map.html docs/generated/data.js
+          git add meta/tag_index.yml docs/tag_map.html docs/data.js
           git commit -m "Auto-update tag index and map"
           git push
