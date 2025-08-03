@@ -1,47 +1,33 @@
-name: update-tag-index
+import yaml
+import os
 
-on:
-  push:
-    paths:
-      - "phi-mesh/pulses/**/*.yml"
-      - "meta/tag_index_utils.py"
-      - "meta/tag_index.yml"
-      - "scripts/update_tag_index.py"
-      - "scripts/build_tag_browser.py"
-      - "scripts/generate_tag_map.py"
+TAG_INDEX_PATH = "meta/tag_index.yml"
+DOCS_DIR = "docs"
+TAG_BROWSER_PATH = os.path.join(DOCS_DIR, "tag_browser.html")
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
+def load_tags():
+    with open(TAG_INDEX_PATH, 'r') as f:
+        return yaml.safe_load(f)
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+def generate_html(tag_data):
+    html = ['<html><head><meta charset="UTF-8"><title>RGP Tag Map</title></head><body>']
+    html.append('<h1>RGP Tag Map</h1>')
+    html.append('<ul>')
+    for tag in sorted(tag_data.keys()):
+        html.append(f'<li>{tag}</li>')
+    html.append('</ul></body></html>')
+    return '\n'.join(html)
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
+def save_html(content):
+    os.makedirs(DOCS_DIR, exist_ok=True)
+    with open(TAG_BROWSER_PATH, 'w') as f:
+        f.write(content)
 
-      - name: Install dependencies
-        run: pip install pyyaml networkx
+def main():
+    tags = load_tags()
+    html = generate_html(tags)
+    save_html(html)
+    print(f"Generated {TAG_BROWSER_PATH}")
 
-      - name: Run tag index updater
-        run: python scripts/update_tag_index.py
-
-      - name: Run tag browser HTML builder
-        run: python scripts/build_tag_browser.py
-
-      - name: Generate tag map HTML
-        run: |
-          python scripts/generate_tag_map.py
-          cp docs/generated/tag_map.html docs/tag_map.html
-          cp docs/generated/data.js docs/data.js
-
-      - name: Commit all generated artifacts
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add meta/tag_index.yml docs/tag_map.html docs/data.js
-          git commit -m "Update tag index and tag map"
-          git push
+if __name__ == "__main__":
+    main()
