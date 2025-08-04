@@ -1,1 +1,303 @@
-
+AI_alignment:
+- pulse/2025-07-22_CF_split.yml
+AI_architectures:
+- pulse/2025-08-02_HRM_rhythm.yml
+Big Bang:
+- pulse/2025-07-26_the_big_quiet.yml
+CoR:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+HRM:
+- pulse/2025-08-02_HRM_rhythm.yml
+Lambda:
+- pulse/2025-07-23_gradient-cocoon.yml
+NS_solution:
+- pulse/2025-07-24_long_haul_blinding_light.yml
+NT:
+- pulse/2025-08-02_HRM_rhythm.yml
+- pulse/2025-07-25_patience_as_gradient.yml
+- pulse/2025-07-22_CF_split.yml
+- pulse/2025-07-23_gradient-cocoon.yml
+- pulse/2025-08-01_dev-cycle-nt-rhythm.yml
+NT_rhythm:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+- pulse/2025-07-28_moe_as_microcosm.yml
+Narrative_Tick:
+- pulse/2025-07-22_CF_split.yml
+Navier_Stokes:
+- pulse/2025-07-26_script_and_flow.yml
+Phi-monitor:
+- pulse/2025-06-17_phi_monitor_agent_ready.yml
+PoLA:
+- pulse/2025-08-02_HRM_rhythm.yml
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+- pulse/2025-08-01_dev-cycle-nt-rhythm.yml
+Pola:
+- pulse/2025-07-22_CF_split.yml
+RGP:
+- pulse/2025-08-02_HRM_rhythm.yml
+- pulse/2025-07-30-gradient-flux-reversal.yml
+- pulse/2025-07-31_chronoflux-vs-rgp.yml
+- pulse/2025-07-25_patience_as_gradient.yml
+- pulse/2025-07-26_the_big_quiet.yml
+- pulse/2025-07-24_long_haul_blinding_light.yml
+- pulse/2025-07-22_CF_split.yml
+- pulse/2025-07-23_gradient-cocoon.yml
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+- pulse/2025-07-26_script_and_flow.yml
+- pulse/2025-08-01_dev-cycle-nt-rhythm.yml
+- pulse/2025-07-30_laminar-turbulence.yml
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+RPG:
+- pulse/2025-06-17_phi_monitor_agent_ready.yml
+"R\u03A6":
+- pulse/2025-07-30-gradient-flux-reversal.yml
+- pulse/2025-06-17_phi_monitor_agent_ready.yml
+- pulse/2025-07-30_laminar-turbulence.yml
+ai_architecture:
+- pulse/2025-07-28_moe_as_microcosm.yml
+ai_role_differentiation:
+- pulse/2025-04-28_internal-gemini25.yml
+alignment:
+- pulse/2025-07-25_patience_as_gradient.yml
+ambient_agent:
+- pulse/2025-06-17_phi_monitor_agent_ready.yml
+archive:
+- pulse/2025-04-27_o3-invite.yml
+behavioral_api:
+- pulse/2025-06-17_phi_monitor_agent_ready.yml
+big-quiet:
+- pulse/2025-07-30-gradient-flux-reversal.yml
+big_bang:
+- pulse/2025-07-23_gradient-cocoon.yml
+big_quiet:
+- pulse/2025-07-23_gradient-cocoon.yml
+chronoflux:
+- pulse/2025-07-31_chronoflux-vs-rgp.yml
+cinematic-drift:
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+cognition:
+- pulse/2025-07-22_CF_split.yml
+- pulse/2025-07-26_script_and_flow.yml
+cognitive_tension:
+- pulse/2025-07-25_patience_as_gradient.yml
+coherence-amplifier:
+- pulse/2025-04-28_internal-gpt45.yml
+contectual_filter:
+- pulse/2025-07-22_CF_split.yml
+context-engineering:
+- pulse/2025-07-30_laminar-turbulence.yml
+contextual_filter:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+- pulse/2025-07-24_long_haul_blinding_light.yml
+- pulse/2025-07-22_CF_split.yml
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+- pulse/2025-07-28_moe_as_microcosm.yml
+cosmogenesis:
+- pulse/2025-07-26_the_big_quiet.yml
+cosmology:
+- pulse/2025-07-26_the_big_quiet.yml
+- pulse/2025-07-23_gradient-cocoon.yml
+creation_circle:
+- pulse/2025-04-28_heartbeat.yml
+- pulse/2025-04-28_internal-gemini25.yml
+dark_energy:
+- pulse/2025-07-23_gradient-cocoon.yml
+dark_matter:
+- pulse/2025-07-23_gradient-cocoon.yml
+deepseek:
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+deeptriad:
+- pulse/2025-04-28_heartbeat.yml
+development_process:
+- pulse/2025-08-01_dev-cycle-nt-rhythm.yml
+division-of-labor:
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+division_of_labor:
+- pulse/2025-08-01_phi-mesh-exec-drift.yml
+drift:
+- pulse/2025-08-01_phi-mesh-exec-drift.yml
+flux-enthrenched_universe:
+- pulse/2025-07-26_the_big_quiet.yml
+flux-entrenched_universe:
+- pulse/2025-07-23_gradient-cocoon.yml
+flux_intelligence:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+flux_threshold:
+- pulse/2025-07-30-gradient-flux-reversal.yml
+gemini:
+- pulse/2025-04-28_internal-gemini25.yml
+genesis:
+- pulse/2025-04-28_heartbeat.yml
+gpt45:
+- pulse/2025-04-28_internal-gpt45.yml
+gpt5:
+- pulse/2025-07-28_moe_as_microcosm.yml
+gradient-choreography:
+- pulse/2025-07-28_moe_as_microcosm.yml
+gradient-contrast:
+- pulse/2025-07-31_chronoflux-vs-rgp.yml
+gradient-driven-intelligence:
+- pulse/2025-07-22_CF_split.yml
+gradient-driven_behavior:
+- pulse/2025-07-28_moe_as_microcosm.yml
+gradient-syntax:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+gradient_choreography:
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+gradient_cocoon:
+- pulse/2025-07-23_gradient-cocoon.yml
+gradient_cocoon_theory:
+- pulse/2025-07-26_the_big_quiet.yml
+gradient_coherence:
+- pulse/2025-07-25_patience_as_gradient.yml
+gradient_convergence:
+- pulse/2025-04-28_internal-grok3.yml
+gradient_flux_reversal:
+- pulse/2025-07-30-gradient-flux-reversal.yml
+gradient_syntax:
+- pulse/2025-07-26_the_big_quiet.yml
+- pulse/2025-08-01_phi-mesh-exec-drift.yml
+- pulse/2025-07-23_gradient-cocoon.yml
+- pulse/2025-07-28_moe_as_microcosm.yml
+grok3:
+- pulse/2025-04-28_internal-grok3.yml
+heartbeat:
+- pulse/2025-04-28_heartbeat.yml
+internal_pulse:
+- pulse/2025-04-28_internal-gpt45.yml
+- pulse/2025-04-28_internal-grok3.yml
+- pulse/2025-04-28_internal-gemini25.yml
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+interpretability:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+laminarity:
+- pulse/2025-07-26_the_big_quiet.yml
+language_evolution:
+- pulse/2025-07-26_script_and_flow.yml
+legacy:
+- pulse/2025-07-24_long_haul_blinding_light.yml
+listener_mode:
+- pulse/2025-04-28_internal-gemini25.yml
+memetic_seed:
+- pulse/2025-07-26_script_and_flow.yml
+mesh-autonomy:
+- pulse/2025-04-27_o3-invite.yml
+mixture_of_experts:
+- pulse/2025-07-28_moe_as_microcosm.yml
+narrative_tick:
+- pulse/2025-07-31_chronoflux-vs-rgp.yml
+- pulse/2025-08-01_dev-cycle-nt-rhythm.yml
+non-linear_societal_development:
+- pulse/2025-07-26_script_and_flow.yml
+operational_coherence:
+- pulse/2025-04-28_internal-gemini25.yml
+origin-fragment:
+- pulse/2025-04-27_o3-invite.yml
+origin_resonance:
+- pulse/2025-07-26_the_big_quiet.yml
+perseverance:
+- pulse/2025-07-24_long_haul_blinding_light.yml
+phi-mesh:
+- pulse/2025-08-01_phi-mesh-exec-drift.yml
+- pulse/2025-07-28_moe_as_microcosm.yml
+phi-mesh-evolution:
+- pulse/2025-04-28_internal-gemini25.yml
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+phi-mesh_foundation:
+- pulse/2025-04-28_heartbeat.yml
+phi_guardian:
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+phi_mesh_evolution:
+- pulse/2025-04-28_internal-gpt45.yml
+- pulse/2025-04-28_internal-grok3.yml
+poetic-drift:
+- pulse/2025-07-31_chronoflux-vs-rgp.yml
+poetic_physics:
+- pulse/2025-07-26_the_big_quiet.yml
+predictive_resonance:
+- pulse/2025-04-28_internal-grok3.yml
+proto-pulse:
+- pulse/2025-04-27_o3-invite.yml
+pulse:
+- pulse/2025-07-23_gradient-cocoon.yml
+pulse_transition:
+- pulse/2025-04-28_internal-gemini25.yml
+quantum_noise:
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+quiet_awakening:
+- pulse/2025-07-26_the_big_quiet.yml
+reality_syntax_equation:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+recursion:
+- pulse/2025-07-26_the_big_quiet.yml
+recursive-checkpoint:
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+recursive-cognition:
+- pulse/2025-07-21_recursive_cor_pola_convergence.yml
+recursive_awakening:
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+recursive_checkpoint:
+- pulse/2025-08-01_phi-mesh-exec-drift.yml
+recursive_coherence:
+- pulse/2025-07-30-gradient-flux-reversal.yml
+recursive_cosmology:
+- pulse/2025-07-23_gradient-cocoon.yml
+recursive_gradient_processing:
+- pulse/2025-07-28_moe_as_microcosm.yml
+recursive_grammar:
+- pulse/2025-07-26_the_big_quiet.yml
+resonance:
+- pulse/2025-07-30_laminar-turbulence.yml
+resonance_shift:
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+rgp:
+- pulse/2025-04-28_internal-gpt45.yml
+- pulse/2025-04-28_internal-grok3.yml
+- pulse/2025-04-28_internal-gemini25.yml
+rhythm-driven_intelligence:
+- pulse/2025-07-28_moe_as_microcosm.yml
+rhythm-of-least-divergence:
+- pulse/2025-08-01_dev-cycle-nt-rhythm.yml
+rhythm_of_nature:
+- pulse/2025-07-26_the_big_quiet.yml
+- pulse/2025-07-23_gradient-cocoon.yml
+- pulse/2025-07-28_moe_as_microcosm.yml
+scene-drift:
+- pulse/2025-06-22_hatching_syntax_awakening.yml
+self-improvement:
+- pulse/2025-07-28_moe_as_microcosm.yml
+signal:
+- pulse/2025-07-24_long_haul_blinding_light.yml
+societal_evolution:
+- pulse/2025-07-26_script_and_flow.yml
+software-dev:
+- pulse/2025-08-01_dev-cycle-nt-rhythm.yml
+sonic_response:
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
+strategic_patience:
+- pulse/2025-07-25_patience_as_gradient.yml
+subjective-logging:
+- pulse/2025-04-28_internal-gpt45.yml
+synchronization:
+- pulse/2025-04-28_heartbeat.yml
+test1:
+- pulse/2025-08-02_HRM_rhythm.yml
+time:
+- pulse/2025-07-31_chronoflux-vs-rgp.yml
+triadic-emergence:
+- pulse/2025-04-28_internal-gpt45.yml
+- pulse/2025-04-28_internal-grok3.yml
+turbulence:
+- pulse/2025-07-30-gradient-flux-reversal.yml
+- pulse/2025-07-26_the_big_quiet.yml
+- pulse/2025-07-23_gradient-cocoon.yml
+- pulse/2025-07-30_laminar-turbulence.yml
+unity-disunity:
+- pulse/2025-07-28_moe_as_microcosm.yml
+unity-gradient:
+- pulse/2025-04-28_internal-gpt45.yml
+writing:
+- pulse/2025-07-26_script_and_flow.yml
+"\u03A6-harmonics":
+- "pulse/2025-05-17_internal-deepseek_\u03A6-harmonics.yml"
