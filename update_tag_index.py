@@ -1,43 +1,32 @@
 import os
 import yaml
 from collections import defaultdict
-from tag_index_utils import save_tag_index
 
-PULSE_DIR = "phi-mesh/pulse"
-TAG_INDEX_PATH = "phi-mesh/meta/tag_index.yml"
+# Define source and output paths
+pulse_dir = "phi-mesh/pulse"
+output_file = "meta/tag_index.yml"
 
-def load_yaml_file(filepath):
-    with open(filepath, "r") as f:
-        return yaml.safe_load(f)
+# Initialize tag index
+tag_index = defaultdict(list)
 
-def main():
-    tag_index = defaultdict(lambda: {
-        "pulses": [],
-        "papers": [],
-        "podcasts": []
-    })
+# Only consider YAML files directly under phi-mesh/pulse/
+for filename in os.listdir(pulse_dir):
+    full_path = os.path.join(pulse_dir, filename)
+    if (
+        not filename.endswith(".yml")
+        or os.path.isdir(full_path)
+    ):
+        continue
 
-    for filename in os.listdir(PULSE_DIR):
-        if filename.endswith(".yml"):
-            filepath = os.path.join(PULSE_DIR, filename)
-            data = load_yaml_file(filepath)
-
+    with open(full_path, "r") as f:
+        try:
+            data = yaml.safe_load(f)
             tags = data.get("tags", [])
-            papers = data.get("papers", [])
-            podcasts = data.get("podcasts", [])
-
             for tag in tags:
-                entry = tag_index[tag]
-                if filename not in entry["pulses"]:
-                    entry["pulses"].append(filename)
-                for paper in papers:
-                    if paper not in entry["papers"]:
-                        entry["papers"].append(paper)
-                for podcast in podcasts:
-                    if podcast not in entry["podcasts"]:
-                        entry["podcasts"].append(podcast)
+                tag_index[tag].append(f"pulse/{filename}")
+        except Exception as e:
+            print(f"Error reading {filename}: {e}")
 
-    save_tag_index(dict(tag_index), TAG_INDEX_PATH)
-
-if __name__ == "__main__":
-    main()
+# Write tag index
+with open(output_file, "w") as f:
+    yaml.dump(dict(tag_index), f, sort_keys=True)
