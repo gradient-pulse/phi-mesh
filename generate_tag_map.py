@@ -5,7 +5,7 @@ from collections import defaultdict
 import networkx as nx
 
 TAG_INDEX_PATH = "meta/tag_index.yml"
-PULSE_DIR = "phi-mesh/pulse/"
+PULSE_DIR = "pulse/"
 OUTPUT_HTML = "docs/tag_map.html"
 
 # New: base template with placeholders
