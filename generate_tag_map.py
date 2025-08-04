@@ -11,31 +11,38 @@ def load_tag_index(path):
     with open(path, "r") as f:
         return yaml.safe_load(f)
 
-def generate_graph_data(tag_index):
-    G = nx.Graph()
-
-    # Reverse index: pulse → list of tags
+def infer_links_from_pulses(tag_index):
     pulse_to_tags = defaultdict(list)
-    for tag, pulses in tag_index.items():
-        for pulse in pulses:
+    for tag, entry in tag_index.items():
+        for pulse in entry.get("pulses", []):
             pulse_to_tags[pulse].append(tag)
 
-    # Add tags as nodes
+    co_occurrence = defaultdict(set)
+    for tags in pulse_to_tags.values():
+        for i in range(len(tags)):
+            for j in range(i + 1, len(tags)):
+                tag1, tag2 = tags[i], tags[j]
+                co_occurrence[tag1].add(tag2)
+                co_occurrence[tag2].add(tag1)
+
+    for tag in tag_index:
+        tag_index[tag]["links"] = sorted(co_occurrence.get(tag, []))
+
+    return tag_index
+
+def generate_graph_data(tag_index):
+    G = nx.Graph()
     for tag in tag_index:
         G.add_node(tag)
 
-    # Link all tags that co-occur in the same pulse
-    for tags in pulse_to_tags.values():
-        for i, tag1 in enumerate(tags):
-            for tag2 in tags[i+1:]:
-                G.add_edge(tag1, tag2)
+    for tag, entry in tag_index.items():
+        for linked_tag in entry.get("links", []):
+            if G.has_node(linked_tag):
+                G.add_edge(tag, linked_tag)
 
-    # Compute centrality scores
     centrality = nx.degree_centrality(G)
-
     nodes = [{"id": tag, "centrality": round(centrality.get(tag, 0), 3)} for tag in G.nodes()]
-    links = [{"source": src, "target": tgt} for src, tgt in G.edges()]
-
+    links = [{"source": s, "target": t} for s, t in G.edges()]
     return {"nodes": nodes, "links": links}
 
 def write_data_js(graph_data, path):
@@ -46,52 +53,28 @@ def write_data_js(graph_data, path):
 
 def inject_into_template(graph_data, output_path):
     html_template = f"""<!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset=\"UTF-8\" />
   <title>RGP Tag Map</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src=\"https://d3js.org/d3.v7.min.js\"></script>
   <style>
-    body {{
-      font-family: sans-serif;
-      margin: 0;
-    }}
-    .node {{
-      stroke: #000;
-      stroke-width: 0.5px;
-    }}
-    .link {{
-      stroke: #999;
-      stroke-opacity: 0.6;
-    }}
-    .sidebar {{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 250px;
-      height: 100%;
-      overflow-y: auto;
-      background: #f0f0f0;
-      padding: 10px;
-      border-right: 1px solid #ccc;
-    }}
-    .content {{
-      margin-left: 260px;
-      padding: 10px;
-    }}
-    .tag-label {{
-      font-size: 12px;
-    }}
+    body {{ font-family: sans-serif; margin: 0; }}
+    .node {{ stroke: #000; stroke-width: 0.5px; }}
+    .link {{ stroke: #999; stroke-opacity: 0.6; }}
+    .sidebar {{ position: absolute; top: 0; left: 0; width: 250px; height: 100%; overflow-y: auto; background: #f0f0f0; padding: 10px; border-right: 1px solid #ccc; }}
+    .content {{ margin-left: 260px; padding: 10px; }}
+    .tag-label {{ font-size: 12px; }}
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <div class=\"sidebar\">
     <h2>RGP Tag Map</h2>
     <p>Coherence Tracking Across Fields—click a tag</p>
-    <ul id="tagList"></ul>
+    <ul id=\"tagList\"></ul>
   </div>
-  <div class="content">
-    <svg width="960" height="800"></svg>
+  <div class=\"content\">
+    <svg width=\"960\" height=\"800\"></svg>
   </div>
   <script>
 {{
@@ -132,43 +115,16 @@ def inject_into_template(graph_data, output_path):
     .text(d => d.id);
 
   simulation.on("tick", () => {{
-    link
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
-
-    node
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
-
-    label
-      .attr("x", d => d.x)
-      .attr("y", d => d.y);
+    link.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+    node.attr("cx", d => d.x).attr("cy", d => d.y);
+    label.attr("x", d => d.x).attr("y", d => d.y);
   }});
 
   function drag(simulation) {{
-    function dragstarted(event, d) {{
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }}
-
-    function dragged(event, d) {{
-      d.fx = event.x;
-      d.fy = event.y;
-    }}
-
-    function dragended(event, d) {{
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }}
-
-    return d3.drag()
-      .on("start", dragstarted)
-      .on("drag", dragged)
-      .on("end", dragended);
+    function dragstarted(event, d) {{ if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }}
+    function dragged(event, d) {{ d.fx = event.x; d.fy = event.y; }}
+    function dragended(event, d) {{ if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }}
+    return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
   }}
   </script>
 </body>
@@ -180,6 +136,7 @@ def inject_into_template(graph_data, output_path):
 def main():
     try:
         tag_index = load_tag_index(TAG_INDEX_PATH)
+        tag_index = infer_links_from_pulses(tag_index)
         graph_data = generate_graph_data(tag_index)
         write_data_js(graph_data, DATA_JS_PATH)
         inject_into_template(graph_data, TAG_MAP_HTML_PATH)
