@@ -7,13 +7,10 @@ on:
       - "meta/tag_index_utils.py"
       - "update_tag_index.py"
       - "generate_tag_map.py"
-      - "docs/tag_map_template.html"
-      - "docs/graph.js"
 
 jobs:
   update-tags:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,6 +33,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add meta/tag_index.yml docs/tag_map.html docs/data.js
+          git add phi-mesh/meta/tag_index.yml docs/tag_map.html docs/data.js
           git commit -m "Auto-update tag index and map" || echo "No changes to commit"
           git push || echo "Nothing to push"
