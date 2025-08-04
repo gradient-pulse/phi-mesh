@@ -33,9 +33,9 @@ jobs:
       - name: 📂 Show meta/ and tag_index.yml
         run: |
           echo "📁 Contents of meta/"
-          ls -l meta/
-          echo "📄 tag_index.yml:"
-          cat meta/tag_index.yml
+          ls -l meta/ || true
+          echo "📄 tag_index.yml (if exists):"
+          test -f meta/tag_index.yml && cat meta/tag_index.yml || echo "⚠️ tag_index.yml not found or empty"
 
       - name: 🟢 Run generate_tag_map.py
         run: |
