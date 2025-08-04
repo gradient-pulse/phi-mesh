@@ -1,3 +1,14 @@
+name: Update Tag Index and Tag Map
+
+on:
+  push:
+    paths:
+      - "pulse/**/*.yml"
+      - "meta/tag_index_utils.py"
+      - "update_tag_index.py"
+      - "generate_tag_map.py"
+  workflow_dispatch:
+
 jobs:
   update-tags:
     runs-on: ubuntu-latest
