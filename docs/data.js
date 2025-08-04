@@ -481,7 +481,7 @@ const graphData = {
       "centrality": 0.0
     },
     {
-      "id": "test1",
+      "id": "test12",
       "centrality": 0.0
     },
     {
@@ -676,7 +676,7 @@ const graphData = {
     },
     {
       "source": "AI_architectures",
-      "target": "test1"
+      "target": "test12"
     },
     {
       "source": "HRM",
@@ -692,7 +692,7 @@ const graphData = {
     },
     {
       "source": "HRM",
-      "target": "test1"
+      "target": "test12"
     },
     {
       "source": "NT",
@@ -700,7 +700,7 @@ const graphData = {
     },
     {
       "source": "NT",
-      "target": "test1"
+      "target": "test12"
     },
     {
       "source": "PoLA",
@@ -708,11 +708,11 @@ const graphData = {
     },
     {
       "source": "PoLA",
-      "target": "test1"
+      "target": "test12"
     },
     {
       "source": "RGP",
-      "target": "test1"
+      "target": "test12"
     },
     {
       "source": "Big Bang",

@@ -281,7 +281,7 @@ subjective-logging:
 - pulse/2025-04-28_internal-gpt45.yml
 synchronization:
 - pulse/2025-04-28_heartbeat.yml
-test1:
+test12:
 - pulse/2025-08-02_HRM_rhythm.yml
 time:
 - pulse/2025-07-31_chronoflux-vs-rgp.yml
