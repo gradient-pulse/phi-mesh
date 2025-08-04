@@ -1,14 +1,3 @@
-name: Update Tag Index and Tag Map
-
-on:
-  push:
-    paths:
-      - "pulse/**/*.yml"
-      - "meta/tag_index_utils.py"
-      - "update_tag_index.py"
-      - "generate_tag_map.py"
-  workflow_dispatch:
-
 jobs:
   update-tags:
     runs-on: ubuntu-latest
@@ -23,31 +12,35 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install pyyaml networkx
+        run: |
+          echo "📦 Installing dependencies..."
+          pip install pyyaml networkx
 
-      - name: Regenerate tag index
+      - name: Run update_tag_index.py
         run: |
           echo "🟡 Running update_tag_index.py"
           python update_tag_index.py
+        continue-on-error: false
 
-      - name: Check if tag index exists
+      - name: View tag_index.yml
         run: |
           echo "📁 Contents of meta/"
           ls -l meta/
           echo "📄 tag_index.yml content:"
-          cat meta/tag_index.yml
+          cat meta/tag_index.yml || echo "⚠️ Could not read tag_index.yml"
 
-      - name: Regenerate tag map
+      - name: Run generate_tag_map.py
         run: |
           echo "🟢 Running generate_tag_map.py"
           python generate_tag_map.py
+        continue-on-error: false
 
-      - name: Check if data.js exists
+      - name: View docs/
         run: |
           echo "📁 Contents of docs/"
           ls -l docs/
-          echo "📄 data.js content:"
-          head -n 30 docs/data.js || echo "data.js not found or empty"
+          echo "📄 Top of data.js:"
+          head -n 30 docs/data.js || echo "⚠️ Could not read data.js"
 
       - name: Commit and push changes
         run: |
