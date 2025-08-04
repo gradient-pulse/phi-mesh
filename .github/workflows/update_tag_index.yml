@@ -14,49 +14,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 🧾 Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
-        run: |
-          echo "📦 Installing dependencies..."
-          pip install pyyaml networkx
+      - name: 📦 Install dependencies
+        run: pip install pyyaml networkx
 
-      - name: Run update_tag_index.py
+      - name: 🟡 Run update_tag_index.py
         run: |
-          echo "🟡 Running update_tag_index.py"
-          python update_tag_index.py
-        continue-on-error: false
+          echo "🔁 Running update_tag_index.py"
+          python update_tag_index.py || { echo "❌ update_tag_index.py failed"; exit 1; }
 
-      - name: View tag_index.yml
+      - name: 📂 Show meta/ and tag_index.yml
         run: |
           echo "📁 Contents of meta/"
           ls -l meta/
-          echo "📄 tag_index.yml content:"
-          cat meta/tag_index.yml || echo "⚠️ Could not read tag_index.yml"
+          echo "📄 tag_index.yml:"
+          cat meta/tag_index.yml
 
-      - name: Run generate_tag_map.py
+      - name: 🟢 Run generate_tag_map.py
         run: |
-          echo "🟢 Running generate_tag_map.py"
-          python generate_tag_map.py
-        continue-on-error: false
+          echo "🧠 Running generate_tag_map.py"
+          python generate_tag_map.py || { echo "❌ generate_tag_map.py failed"; exit 1; }
+          echo "✅ Finished generate_tag_map.py"
 
-      - name: View docs/
+      - name: 📂 Show docs/ and data.js preview
         run: |
           echo "📁 Contents of docs/"
           ls -l docs/
-          echo "📄 Top of data.js:"
-          head -n 30 docs/data.js || echo "⚠️ Could not read data.js"
+          echo "📄 Preview of data.js:"
+          head -n 30 docs/data.js || echo "⚠️ data.js not found or empty"
 
-      - name: Commit and push changes
+      - name: ✅ Commit and push changes
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add meta/tag_index.yml docs/tag_map.html docs/data.js
-          git commit -m "Auto-update tag index and map" || echo "No changes to commit"
-          git push || echo "Nothing to push"
+          git commit -m "Auto-update tag index and map" || echo "ℹ️ No changes to commit"
+          git push || echo "ℹ️ Nothing to push"
