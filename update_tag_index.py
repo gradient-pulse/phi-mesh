@@ -2,29 +2,23 @@ import os
 import yaml
 from collections import defaultdict
 
-# File path to save tag index
+# Correct relative path now that the script runs from repo root
+PULSE_DIR = "pulse"
 TAG_INDEX_PATH = "meta/tag_index.yml"
-# Path where pulse files are stored
-PULSE_DIR = "phi-mesh/pulse"
-
-def is_valid_pulse_file(path):
-    # Exclude subdirectories like 'archive' or 'telemetry'
-    return os.path.isfile(path) and path.endswith(".yml") and os.path.dirname(path) == PULSE_DIR
 
 def load_pulses():
     pulses = {}
     for file in os.listdir(PULSE_DIR):
-        path = os.path.join(PULSE_DIR, file)
-        if is_valid_pulse_file(path):
+        if file.endswith(".yml") and not file.startswith("."):
+            path = os.path.join(PULSE_DIR, file)
             with open(path, "r", encoding="utf-8") as f:
                 try:
                     data = yaml.safe_load(f)
-                    tags = data.get('tags', [])
-                    if tags:
-                        canonical_tags = [str(tag).strip().replace("-", "_") for tag in tags]
+                    if data and 'tags' in data:
+                        canonical_tags = [str(tag).strip().replace("-", "_") for tag in data['tags']]
                         pulses[path] = canonical_tags
-                except yaml.YAMLError as e:
-                    print(f"⚠️ Skipping invalid YAML: {path}")
+                except yaml.YAMLError:
+                    print(f"Skipping invalid YAML: {path}")
     return pulses
 
 def build_tag_index(pulses):
@@ -33,7 +27,7 @@ def build_tag_index(pulses):
         for tag in tags:
             if pulse_path not in tag_index[tag]:
                 tag_index[tag].append(pulse_path)
-    return dict(sorted(tag_index.items()))
+    return dict(sorted(tag_index.items()))  # alphabetize tags
 
 def write_tag_index(tag_index):
     with open(TAG_INDEX_PATH, "w", encoding="utf-8") as f:
