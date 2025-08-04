@@ -1,39 +1,26 @@
-name: Update Tag Index and Tag Map
-
-on:
-  push:
-    paths:
-      - "pulse/**/*.yml"
-      - "meta/tag_index_utils.py"
-      - "update_tag_index.py"
-      - "generate_tag_map.py"
-  workflow_dispatch:
-
-concurrency:
-  group: "tag-update"
-  cancel-in-progress: false
-
-jobs:
-  update-tags:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: Install dependencies
-        run: pip install pyyaml networkx
-
       - name: Regenerate tag index
-        run: python update_tag_index.py
+        run: |
+          echo "🟡 Running update_tag_index.py"
+          python update_tag_index.py
+
+      - name: Check if tag index exists
+        run: |
+          echo "📁 Contents of meta/"
+          ls -l meta/
+          echo "📄 tag_index.yml content:"
+          cat meta/tag_index.yml
 
       - name: Regenerate tag map
-        run: python generate_tag_map.py
+        run: |
+          echo "🟢 Running generate_tag_map.py"
+          python generate_tag_map.py
+
+      - name: Check if data.js exists
+        run: |
+          echo "📁 Contents of docs/"
+          ls -l docs/
+          echo "📄 data.js content:"
+          cat docs/data.js | head -n 30
 
       - name: Commit and push changes
         run: |
