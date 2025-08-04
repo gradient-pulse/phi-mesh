@@ -1,0 +1,36 @@
+name: update-tags
+
+on:
+  push:
+    paths:
+      - "phi-pulses/**/*.yml"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up job
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Regenerate tag index
+        run: python update_tag_index.py
+
+      - name: Regenerate tag map
+        run: python generate_tag_map.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "actions-user"
+          git config --global user.email "actions@users.noreply.github.com"
+          git add phi-mesh/meta/update_tag_index.yml phi-mesh/docs/data.js
+          git commit -m "Auto-update tag index and map" || echo "No changes to commit"
+          git push
