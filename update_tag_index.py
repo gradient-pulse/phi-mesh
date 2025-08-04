@@ -3,8 +3,8 @@ import yaml
 from collections import defaultdict
 
 # Configuration
-PULSE_DIR = "phi-mesh/pulse"
-TAG_INDEX_PATH = "phi-mesh/meta/tag_index.yml"
+PULSE_DIR = "pulse"
+TAG_INDEX_PATH = "meta/tag_index.yml"
 
 def load_pulses():
     pulse_files = [
