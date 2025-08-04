@@ -34,6 +34,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add phi-mesh/meta/tag_index.yml docs/tag_map.html docs/data.js
+          git add meta/tag_index.yml docs/tag_map.html docs/data.js
           git commit -m "Auto-update tag index and map" || echo "No changes to commit"
           git push || echo "Nothing to push"
