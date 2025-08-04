@@ -9,6 +9,10 @@ on:
       - "generate_tag_map.py"
   workflow_dispatch:
 
+concurrency:
+  group: "tag-update"
+  cancel-in-progress: false
+
 jobs:
   update-tags:
     runs-on: ubuntu-latest
