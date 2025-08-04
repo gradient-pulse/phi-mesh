@@ -2,9 +2,10 @@ import os
 import yaml
 from collections import defaultdict
 
-# Configuration
-PULSE_DIR = "pulse"
-TAG_INDEX_PATH = "meta/tag_index.yml"
+# Configuration: use script-relative paths
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PULSE_DIR = os.path.join(SCRIPT_DIR, "pulse")
+TAG_INDEX_PATH = os.path.join(SCRIPT_DIR, "meta", "tag_index.yml")
 
 def load_pulses():
     pulse_files = [
@@ -34,7 +35,9 @@ def extract_tags(pulse_files):
                     print(f"⚠️  No tags in: {filepath}")
                     continue
                 for tag in pulse_tags:
-                    tag_index[tag].append(filepath.replace("\\", "/"))
+                    # Normalize to forward slashes for GitHub
+                    relative_path = os.path.relpath(filepath, SCRIPT_DIR).replace("\\", "/")
+                    tag_index[tag].append(relative_path)
                 print(f"✅ {os.path.basename(filepath)}: {pulse_tags}")
             except Exception as e:
                 print(f"❌ Failed to parse {filepath}: {e}")
