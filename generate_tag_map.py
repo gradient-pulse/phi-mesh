@@ -17,31 +17,41 @@ def load_yaml(path):
 
 # Load pulses and collect tags, papers, podcasts
 def collect_data():
-    tag_to_pulses = defaultdict(list)
+    tag_to_pulses = defaultdict(set)
     tag_to_papers = defaultdict(set)
     tag_to_podcasts = defaultdict(set)
-    for root, _, files in os.walk(PULSE_DIR):
-        for f in files:
-            if f.endswith(".yml") and "archive" not in root and "telemetry" not in root:
-                full_path = os.path.join(root, f)
-                rel_path = os.path.relpath(full_path, SCRIPT_DIR).replace("\\", "/")
-                with open(full_path, "r", encoding="utf-8") as stream:
-                    try:
-                        data = yaml.safe_load(stream)
-                        if not data:
-                            continue
-                        tags = data.get("tags", [])
-                        for tag in tags:
-                            tag_to_pulses[tag].append({
-                                "title": data.get("title", os.path.splitext(f)[0]),
-                                "path": rel_path
-                            })
-                            for p in data.get("papers", []):
-                                tag_to_papers[tag].add(p)
-                            for p in data.get("podcasts", []):
-                                tag_to_podcasts[tag].add(p)
-                    except yaml.YAMLError as e:
-                        print(f"Error parsing {f}: {e}")
+
+    for fname in os.listdir(PULSE_DIR):
+        if not fname.endswith(".yml"):
+            continue
+        with open(os.path.join(PULSE_DIR, fname), 'r', encoding='utf-8') as f:
+            doc = yaml.safe_load(f)
+
+        tags = doc.get("tags", [])
+        title = doc.get("title", fname.replace(".yml", ""))
+        pulse_link = f"https://gradient-pulse.github.io/phi-mesh/pulse/{fname.replace('.yml', '.html')}"
+
+        for tag in tags:
+            tag_to_pulses[tag].add((title, pulse_link))
+
+        for paper in doc.get("papers", []):
+            for tag in tags:
+                if isinstance(paper, dict):
+                    tag_to_papers[tag].add(tuple(paper.items()))
+                elif isinstance(paper, list):
+                    for item in paper:
+                        if isinstance(item, dict):
+                            tag_to_papers[tag].add(tuple(item.items()))
+
+        for podcast in doc.get("podcasts", []):
+            for tag in tags:
+                if isinstance(podcast, dict):
+                    tag_to_podcasts[tag].add(tuple(podcast.items()))
+                elif isinstance(podcast, list):
+                    for item in podcast:
+                        if isinstance(item, dict):
+                            tag_to_podcasts[tag].add(tuple(item.items()))
+
     return tag_to_pulses, tag_to_papers, tag_to_podcasts
 
 # Write data.js
