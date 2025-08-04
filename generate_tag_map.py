@@ -14,30 +14,27 @@ def load_tag_index(path):
 def generate_graph_data(tag_index):
     G = nx.Graph()
 
+    # Reverse index: pulse → list of tags
+    pulse_to_tags = defaultdict(list)
+    for tag, pulses in tag_index.items():
+        for pulse in pulses:
+            pulse_to_tags[pulse].append(tag)
+
     # Add tags as nodes
     for tag in tag_index:
         G.add_node(tag)
 
-    # Add edges between co-occurring tags
-    for tag, links in tag_index.items():
-        for linked_tag in links.get("links", []):
-            if G.has_node(linked_tag):
-                G.add_edge(tag, linked_tag)
+    # Link all tags that co-occur in the same pulse
+    for tags in pulse_to_tags.values():
+        for i, tag1 in enumerate(tags):
+            for tag2 in tags[i+1:]:
+                G.add_edge(tag1, tag2)
 
     # Compute centrality scores
     centrality = nx.degree_centrality(G)
 
-    nodes = []
-    links = []
-
-    for node in G.nodes():
-        nodes.append({
-            "id": node,
-            "centrality": round(centrality.get(node, 0), 3)
-        })
-
-    for source, target in G.edges():
-        links.append({"source": source, "target": target})
+    nodes = [{"id": tag, "centrality": round(centrality.get(tag, 0), 3)} for tag in G.nodes()]
+    links = [{"source": src, "target": tgt} for src, tgt in G.edges()]
 
     return {"nodes": nodes, "links": links}
 
