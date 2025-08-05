@@ -1,48 +1,188 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>RGP Tag Map</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     body {
-      font-family: sans-serif;
       margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    #container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
       overflow: hidden;
     }
     #sidebar {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 300px;
-      height: 100%;
+      width: 270px;
+      padding: 20px;
       background-color: #f4f4f4;
       overflow-y: auto;
-      padding: 1em;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     }
     #graph {
-      position: absolute;
-      left: 300px;
-      top: 0;
-      right: 0;
-      bottom: 0;
+      flex-grow: 1;
+      background-color: white;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+    h2 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    ul {
+      padding-left: 20px;
+      margin-top: 0;
+    }
+    li {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    a {
+      color: #0074d9;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+<div id="container">
   <div id="sidebar">
     <h1>RGP Tag Map</h1>
     <p>Coherence Tracking Across Fields—click a tag</p>
-    <ul id="tag-list"></ul>
-    <div id="link-panel">
-      <h2>Links</h2>
-      <ul id="links"></ul>
-    </div>
+    <h2>Links</h2>
+    <ul id="link-list"></ul>
   </div>
-  <svg id="graph" width="1200" height="800"></svg>
+  <div id="graph"></div>
+</div>
 
-  <script src="data.js"></script>
-  <script src="graph.js"></script>
+<script type="text/javascript" src="graph_data.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const width = window.innerWidth - 270;
+  const height = window.innerHeight;
+
+  const svg = d3.select("#graph")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  const zoomGroup = svg.append("g");
+
+  const zoom = d3.zoom()
+    .scaleExtent([0.1, 4])
+    .on("zoom", (event) => {
+      zoomGroup.attr("transform", event.transform);
+    });
+
+  svg.call(zoom);
+
+  const simulation = d3.forceSimulation(graphData.nodes)
+    .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(100))
+    .force("charge", d3.forceManyBody().strength(-250))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("x", d3.forceX(width / 2).strength(0.1))
+    .force("y", d3.forceY(height / 2).strength(0.1));
+
+  const link = zoomGroup.append("g")
+    .attr("stroke", "#aaa")
+    .attr("stroke-width", 1.5)
+    .selectAll("line")
+    .data(graphData.links)
+    .join("line");
+
+  const node = zoomGroup.append("g")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5)
+    .selectAll("circle")
+    .data(graphData.nodes)
+    .join("circle")
+    .attr("r", 8)
+    .attr("fill", "steelblue")
+    .call(drag(simulation))
+    .on("click", showLinks);
+
+  const label = zoomGroup.append("g")
+    .selectAll("text")
+    .data(graphData.nodes)
+    .join("text")
+    .text(d => d.id)
+    .attr("font-size", 12)
+    .attr("dx", 12)
+    .attr("dy", "0.35em");
+
+  simulation.on("tick", () => {
+    link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+
+    node
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y);
+
+    label
+      .attr("x", d => d.x)
+      .attr("y", d => d.y);
+  });
+
+  // Auto-fit to screen
+  setTimeout(() => {
+    const allX = graphData.nodes.map(d => d.x);
+    const allY = graphData.nodes.map(d => d.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
+    const graphWidth = maxX - minX;
+    const graphHeight = maxY - minY;
+    const scale = 0.85 * Math.min(width / graphWidth, height / graphHeight);
+    const tx = (width - graphWidth * scale) / 2 - minX * scale;
+    const ty = (height - graphHeight * scale) / 2 - minY * scale;
+    zoomGroup.attr("transform", `translate(${tx},${ty}) scale(${scale})`);
+  }, 1000);
+
+  function drag(simulation) {
+    return d3.drag()
+      .on("start", (event) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      })
+      .on("drag", (event) => {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      })
+      .on("end", (event) => {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      });
+  }
+
+  function showLinks(event, d) {
+    const list = document.getElementById("link-list");
+    list.innerHTML = "";
+    if (d.links) {
+      d.links.forEach(link => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = link.url;
+        a.textContent = link.label;
+        a.target = "_blank";
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    }
+  }
+});
+</script>
 </body>
 </html>
