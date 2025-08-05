@@ -16,7 +16,7 @@ AI_architectures:
   - NT
   - PoLA
   - RGP
-  - test12345
+  - test123456
   pulses:
   - 2025-08-02_HRM_rhythm.yml
 Big Bang:
@@ -55,7 +55,7 @@ HRM:
   - NT
   - PoLA
   - RGP
-  - test12345
+  - test123456
   pulses:
   - 2025-08-02_HRM_rhythm.yml
 Lambda:
@@ -118,7 +118,7 @@ NT:
   - rhythm_of_nature
   - software-dev
   - strategic_patience
-  - test12345
+  - test123456
   - turbulence
   pulses:
   - 2025-07-22_CF_split.yml
@@ -200,7 +200,7 @@ PoLA:
   - recursive-cognition
   - rhythm-of-least-divergence
   - software-dev
-  - test12345
+  - test123456
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
@@ -293,7 +293,7 @@ RGP:
   - software-dev
   - sonic_response
   - strategic_patience
-  - test12345
+  - test123456
   - time
   - turbulence
   - writing
@@ -1790,7 +1790,7 @@ synchronization:
   - phi-mesh_foundation
   pulses:
   - 2025-04-28_heartbeat.yml
-test12345:
+test123456:
   links:
   - AI_architectures
   - HRM
