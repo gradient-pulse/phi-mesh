@@ -1,69 +1,75 @@
+import os
 import yaml
 import json
-import os
+from collections import defaultdict
 
-# Path constants
 PULSE_DIR = "pulse"
-OUTPUT_HTML = "docs/tag_map.html"
-OUTPUT_DATA = "docs/data.js"
 TAG_INDEX_FILE = "meta/tag_index.yml"
+GRAPH_JS_FILE = "docs/graph_data.js"
 
-# Load all .yml files from the pulse directory
-def load_pulses():
-    pulses = []
-    for filename in os.listdir(PULSE_DIR):
-        if filename.endswith(".yml"):
-            with open(os.path.join(PULSE_DIR, filename), "r", encoding="utf-8") as f:
-                try:
-                    data = yaml.safe_load(f)
-                    if data:
-                        data["filename"] = os.path.join(PULSE_DIR, filename)
-                        pulses.append(data)
-                except yaml.YAMLError:
-                    print(f"Error parsing {filename}")
-    return pulses
+def extract_tag_data():
+    tag_to_pulses = defaultdict(set)
+    pulse_files = [f for f in os.listdir(PULSE_DIR) if f.endswith(".yml")]
 
-# Build tag index from pulses
-def build_tag_index(pulses):
-    tag_index = {}
-    for pulse in pulses:
-        tags = pulse.get("tags", [])
-        for tag in tags:
-            if tag not in tag_index:
-                tag_index[tag] = {"links": set(), "pulses": []}
-            tag_index[tag]["pulses"].append(pulse["filename"])
-            for linked_tag in tags:
-                if linked_tag != tag:
-                    tag_index[tag]["links"].add(linked_tag)
-    # Convert sets to sorted lists
-    for tag in tag_index:
-        tag_index[tag]["links"] = sorted(tag_index[tag]["links"])
+    for filename in pulse_files:
+        with open(os.path.join(PULSE_DIR, filename), "r", encoding="utf-8") as f:
+            try:
+                data = yaml.safe_load(f)
+                tags = data.get("tags", [])
+                for tag in tags:
+                    tag_to_pulses[tag].add(filename)
+            except yaml.YAMLError:
+                continue
+
+    return tag_to_pulses
+
+def build_tag_links(tag_to_pulses):
+    tag_links = defaultdict(lambda: {"links": set(), "pulses": set()})
+
+    for pulse_file in set(p for ps in tag_to_pulses.values() for p in ps):
+        tags_in_pulse = [tag for tag, ps in tag_to_pulses.items() if pulse_file in ps]
+        for tag in tags_in_pulse:
+            tag_links[tag]["pulses"].add(pulse_file)
+            for other_tag in tags_in_pulse:
+                if other_tag != tag:
+                    tag_links[tag]["links"].add(other_tag)
+
+    tag_index = {
+        tag: {
+            "links": sorted(list(data["links"])),
+            "pulses": sorted(list(data["pulses"]))
+        }
+        for tag, data in tag_links.items()
+    }
+
     return tag_index
 
-# Build graph data for D3.js
+def write_tag_index(tag_index):
+    os.makedirs(os.path.dirname(TAG_INDEX_FILE), exist_ok=True)
+    with open(TAG_INDEX_FILE, "w", encoding="utf-8") as f:
+        yaml.dump(tag_index, f, allow_unicode=True, sort_keys=True)
 
 def build_graph_data(tag_index):
-    nodes = sorted([{"id": tag} for tag in tag_index.keys()], key=lambda x: x["id"].lower())
+    nodes = sorted([{"id": tag} for tag in tag_index], key=lambda x: x["id"].lower())
     links = []
     for src, entry in tag_index.items():
-        for dst in entry["links"]:
-            if src < dst:  # avoid duplicate edges
-                links.append({"source": src, "target": dst})
+        for dst in entry.get("links", []):
+            links.append({"source": src, "target": dst})
     return {"nodes": nodes, "links": links}
 
-# Write the JavaScript data file
-def write_data_js(graph_data):
-    with open(OUTPUT_DATA, "w", encoding="utf-8") as f:
+def write_graph_data_js(graph_data):
+    os.makedirs(os.path.dirname(GRAPH_JS_FILE), exist_ok=True)
+    with open(GRAPH_JS_FILE, "w", encoding="utf-8") as f:
         f.write("const graphData = ")
         json.dump(graph_data, f, indent=2)
         f.write(";")
 
-# Main function to run the process
 def main():
-    pulses = load_pulses()
-    tag_index = build_tag_index(pulses)
+    tag_to_pulses = extract_tag_data()
+    tag_index = build_tag_links(tag_to_pulses)
+    write_tag_index(tag_index)
     graph_data = build_graph_data(tag_index)
-    write_data_js(graph_data)
+    write_graph_data_js(graph_data)
 
 if __name__ == "__main__":
     main()
