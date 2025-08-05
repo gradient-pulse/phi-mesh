@@ -172,10 +172,7 @@ def scan_pulses():
 
 def build_graph_data(tag_index):
     nodes = [{"id": tag} for tag in tag_index.keys()]
-    links = []
-    for src, entry in tag_index.items():
-        for dst in entry.get("links", []):
-            links.append({"source": src, "target": dst})
+    links = []  # Skipping links: not present in Option A structure
     return {"nodes": nodes, "links": links}
 
 def write_html(graph_data, tag_details):
