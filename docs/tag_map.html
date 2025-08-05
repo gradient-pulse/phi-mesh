@@ -32,13 +32,16 @@
 </head>
 <body>
   <div id="sidebar">
-    <h2>RGP Tag Map</h2>
+    <h1>RGP Tag Map</h1>
     <p>Coherence Tracking Across Fields—click a tag</p>
-    <!-- Dynamic sidebar content injected here -->
+    <ul id="tag-list"></ul>
+    <div id="link-panel">
+      <h2>Links</h2>
+      <ul id="links"></ul>
+    </div>
   </div>
-  <svg id="graph"></svg>
+  <svg id="graph" width="1200" height="800"></svg>
 
-  <!-- Order matters: data.js before graph.js -->
   <script src="data.js"></script>
   <script src="graph.js"></script>
 </body>
