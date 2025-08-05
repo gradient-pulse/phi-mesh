@@ -1,19 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  const sidebarWidth = 280;
+  const margin = 50;
+  const width = window.innerWidth - sidebarWidth - margin;
+  const height = window.innerHeight - margin;
 
   const svg = d3.select("#graph")
     .append("svg")
     .attr("width", width)
     .attr("height", height);
 
-  const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+  const simulation = d3.forceSimulation(graphData.nodes)
+    .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(100))
     .force("charge", d3.forceManyBody().strength(-250))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .force("x", d3.forceX(width / 2).strength(0.1))
     .force("y", d3.forceY(height / 2).strength(0.1));
-  
+
   const link = svg.append("g")
     .attr("stroke", "#aaa")
     .attr("stroke-width", 1.5)
