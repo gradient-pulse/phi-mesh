@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const sidebarWidth = 280;
-  const margin = 50;
-  const width = window.innerWidth - sidebarWidth - margin;
-  const height = window.innerHeight - margin;
+  const width = window.innerWidth - sidebarWidth;
+  const height = window.innerHeight;
 
   const svg = d3.select("#graph")
     .append("svg")
@@ -24,8 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .join("line");
 
   const node = svg.append("g")
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 1.5)
     .selectAll("circle")
     .data(graphData.nodes)
     .join("circle")
@@ -82,8 +79,10 @@ document.addEventListener("DOMContentLoaded", function () {
       .on("end", dragended);
   }
 
-  // ✅ Phase C: Click Node → Populate Sidebar
+  // ✅ Node click → populate sidebar
   node.on("click", function (event, d) {
+    console.log("Clicked node:", d); // 🔍 Debug output
+
     const linkList = document.getElementById("link-list");
     linkList.innerHTML = "";
 
@@ -95,18 +94,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         items.forEach(item => {
           const li = document.createElement("li");
+          const a = document.createElement("a");
+
           if (isLink) {
-            const a = document.createElement("a");
             a.href = item;
             a.target = "_blank";
             a.textContent = item.length > 40 ? item.slice(0, 40) + "…" : item;
-            li.appendChild(a);
           } else {
-            const a = document.createElement("a");
             a.href = item.path;
             a.textContent = item.title.length > 40 ? item.title.slice(0, 40) + "…" : item.title;
-            li.appendChild(a);
           }
+
+          li.appendChild(a);
           linkList.appendChild(li);
         });
       }
