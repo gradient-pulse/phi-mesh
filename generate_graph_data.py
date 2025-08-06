@@ -2,77 +2,82 @@ import os
 import yaml
 import json
 
+PULSE_DIR = "pulse"
 TAG_INDEX_PATH = "meta/tag_index.yml"
-PULSE_DIR = "pulse/"
-GRAPH_DATA_JS_PATH = "docs/graph_data.js"
+GRAPH_DATA_PATH = "docs/data.js"
 
-def load_tag_index():
-    with open(TAG_INDEX_PATH, "r") as f:
+
+def load_yaml_file(filepath):
+    with open(filepath, "r") as f:
         return yaml.safe_load(f)
 
-def collect_resources_for_tag(tag):
+
+def load_all_pulses():
     pulses = []
-    papers = set()
-    podcasts = set()
+    for root, _, files in os.walk(PULSE_DIR):
+        for file in files:
+            if file.endswith(".yml"):
+                path = os.path.join(root, file)
+                data = load_yaml_file(path)
+                data["_filename"] = path  # store path for later reference
+                pulses.append(data)
+    return pulses
 
-    for filename in os.listdir(PULSE_DIR):
-        if filename.endswith(".yml"):
-            with open(os.path.join(PULSE_DIR, filename), "r") as f:
-                try:
-                    pulse_data = yaml.safe_load(f)
-                    if not isinstance(pulse_data, dict):
-                        continue
-                    if tag in pulse_data.get("tags", []):
-                        title = pulse_data.get("title", filename)
-                        pulses.append({
-                            "title": title,
-                            "path": f"pulse/{filename}"
-                        })
-
-                        papers.update(pulse_data.get("papers", [])[:3])
-                        podcasts.update(pulse_data.get("podcasts", [])[:3])
-                except Exception as e:
-                    print(f"⚠️ Error in {filename}: {e}")
-
-    return {
-        "pulses": pulses[:3],
-        "papers": list(papers)[:3],
-        "podcasts": list(podcasts)[:3]
-    }
 
 def build_graph_data(tag_index):
     nodes = []
     links = []
+    tag_to_pulses = {}
+
+    # Build pulse lookup
+    pulses = load_all_pulses()
+    for pulse in pulses:
+        for tag in pulse.get("tags", []):
+            if tag not in tag_to_pulses:
+                tag_to_pulses[tag] = []
+            tag_to_pulses[tag].append(pulse)
 
     for tag, metadata in tag_index.items():
-        if isinstance(metadata, dict):
-            links_list = metadata.get("links", [])
-        else:
-            links_list = metadata
-
-        resource_data = collect_resources_for_tag(tag)
-
-        nodes.append({
+        node = {
             "id": tag,
-            "pulses": resource_data["pulses"],
-            "papers": resource_data["papers"],
-            "podcasts": resource_data["podcasts"]
-        })
+            "pulses": [],
+            "papers": [],
+            "podcasts": []
+        }
 
-        for linked_tag in links_list:
-            links.append({
-                "source": tag,
-                "target": linked_tag
-            })
+        # Attach pulses
+        for pulse in tag_to_pulses.get(tag, [])[:3]:
+            title = pulse.get("title", pulse.get("_filename"))
+            path = pulse.get("_filename", "")
+            node["pulses"].append({"title": title, "path": path})
+
+        # Attach up to 3 papers & podcasts
+        papers = []
+        podcasts = []
+        for pulse in tag_to_pulses.get(tag, []):
+            papers.extend(pulse.get("papers", []))
+            podcasts.extend(pulse.get("podcasts", []))
+
+        node["papers"] = papers[:3]
+        node["podcasts"] = podcasts[:3]
+
+        nodes.append(node)
+
+        for linked_tag in metadata.get("links", []):
+            links.append({"source": tag, "target": linked_tag})
 
     return {"nodes": nodes, "links": links}
 
-if __name__ == "__main__":
-    print("🔁 Running generate_graph_data.py")
-    tag_index = load_tag_index()
-    graph_data = build_graph_data(tag_index)
 
-    with open(GRAPH_DATA_JS_PATH, "w") as f:
+def save_graph_data(graph_data):
+    with open(GRAPH_DATA_PATH, "w") as f:
         f.write("const graphData = ")
         json.dump(graph_data, f, indent=2)
         f.write(";")
+
+
+if __name__ == "__main__":
+    tag_index = load_yaml_file(TAG_INDEX_PATH)
+    graph_data = build_graph_data(tag_index)
+    save_graph_data(graph_data)
+    print("✅ Graph data generated and saved to docs/data.js")
