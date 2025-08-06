@@ -51,19 +51,17 @@
   </style>
 </head>
 <body>
-<div id="container">
-  <div id="sidebar">
-    <h1>RGP Tag Map</h1>
-    <p>Coherence Tracking Across Fields—click a tag</p>
-    <h2>Links</h2>
-    <ul id="link-list"></ul>
+  <div id="container">
+    <div id="sidebar">
+      <h1>RGP Tag Map</h1>
+      <p>Coherence Tracking Across Fields—click a tag</p>
+      <ul id="link-list"></ul> <!-- This UL is what graph_layout.js populates -->
+    </div>
+    <div id="graph"></div>
   </div>
-  <div id="graph"></div>
-</div>
 
-<!-- Load data and layout -->
-<script src="graph_data.js"></script>
-<script src="graph_layout.js"></script>
-
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="data.js"></script>
+  <script src="graph_layout.js"></script>
 </body>
 </html>
