@@ -13,24 +13,21 @@ def load_yaml_file(filepath):
     with open(filepath, "r") as f:
         return yaml.safe_load(f)
 
-
 def load_all_pulses():
-    """Load all valid pulse .yml files from pulse directory."""
     pulses = []
     for root, _, files in os.walk(PULSE_DIR):
+        if "archive" in root:
+            continue  # ❌ Skip archive folder
         for file in files:
             if file.endswith(".yml"):
                 path = os.path.join(root, file)
                 data = load_yaml_file(path)
-
-                # ✅ Safety check: only allow dicts (not lists, etc.)
-                if isinstance(data, dict):
-                    data["_filename"] = path  # keep filename reference
-                    pulses.append(data)
-                else:
+                if not isinstance(data, dict):
                     print(f"⚠️ Skipped non-dict YAML file: {path}")
+                    continue
+                data["_filename"] = path  # store path for later reference
+                pulses.append(data)
     return pulses
-
 
 def build_graph_data(tag_index):
     """Build node and link structures for D3 graph."""
