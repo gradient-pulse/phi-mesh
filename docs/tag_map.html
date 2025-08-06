@@ -5,49 +5,49 @@
   <title>RGP Tag Map</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-    #container {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-    }
-    #sidebar {
-      width: 270px;
-      padding: 20px;
-      background-color: #f4f4f4;
-      overflow-y: auto;
-    }
-    #graph {
-      flex-grow: 1;
-      background-color: white;
-    }
-    h1 {
-      margin-top: 0;
-      font-size: 24px;
-    }
-    h2 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
-    ul {
-      padding-left: 20px;
-      margin-top: 0;
-    }
-    li {
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    a {
-      color: #0074d9;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: sans-serif;
+  }
+
+  #container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #sidebar {
+    width: 280px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  #graph {
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  #link-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  #link-list li {
+    margin-bottom: 6px;
+  }
+
+  #link-list a {
+    color: steelblue;
+    text-decoration: none;
+  }
+
+  #link-list a:hover {
+    text-decoration: underline;
+  }
   </style>
 </head>
 <body>
