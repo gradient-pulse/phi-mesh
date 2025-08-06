@@ -81,4 +81,39 @@ document.addEventListener("DOMContentLoaded", function () {
       .on("drag", dragged)
       .on("end", dragended);
   }
+
+  // ✅ Phase C: Click Node → Populate Sidebar
+  node.on("click", function (event, d) {
+    const linkList = document.getElementById("link-list");
+    linkList.innerHTML = "";
+
+    function appendSection(title, items, isLink) {
+      if (items && items.length > 0) {
+        const sectionTitle = document.createElement("li");
+        sectionTitle.innerHTML = `<strong>${title}</strong>`;
+        linkList.appendChild(sectionTitle);
+
+        items.forEach(item => {
+          const li = document.createElement("li");
+          if (isLink) {
+            const a = document.createElement("a");
+            a.href = item;
+            a.target = "_blank";
+            a.textContent = item.length > 40 ? item.slice(0, 40) + "…" : item;
+            li.appendChild(a);
+          } else {
+            const a = document.createElement("a");
+            a.href = item.path;
+            a.textContent = item.title.length > 40 ? item.title.slice(0, 40) + "…" : item.title;
+            li.appendChild(a);
+          }
+          linkList.appendChild(li);
+        });
+      }
+    }
+
+    appendSection("Pulses", d.pulses, false);
+    appendSection("Papers", d.papers, true);
+    appendSection("Podcasts", d.podcasts, true);
+  });
 });
