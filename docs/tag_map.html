@@ -5,49 +5,49 @@
   <title>RGP Tag Map</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    font-family: sans-serif;
-  }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
 
-  #container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-  }
+    #container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
 
-  #sidebar {
-    width: 280px;
-    background-color: #f4f4f4;
-    padding: 10px;
-    overflow-y: auto;
-  }
+    #sidebar {
+      width: 280px;
+      background-color: #f4f4f4;
+      padding: 10px;
+      overflow-y: auto;
+    }
 
-  #graph {
-    flex-grow: 1;
-    overflow: hidden;
-  }
+    #sidebar-content ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
 
-  #link-list {
-    list-style-type: none;
-    padding-left: 0;
-  }
+    #sidebar-content li {
+      margin-bottom: 6px;
+    }
 
-  #link-list li {
-    margin-bottom: 6px;
-  }
+    #sidebar-content a {
+      color: steelblue;
+      text-decoration: none;
+    }
 
-  #link-list a {
-    color: steelblue;
-    text-decoration: none;
-  }
+    #sidebar-content a:hover {
+      text-decoration: underline;
+    }
 
-  #link-list a:hover {
-    text-decoration: underline;
-  }
+    #graph {
+      flex-grow: 1;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -55,14 +55,16 @@
     <div id="sidebar">
       <h1>RGP Tag Map</h1>
       <p>Coherence Tracking Across Fields—click a tag</p>
-      <ul id="link-list"></ul> <!-- This UL is what graph_layout.js populates -->
+      <div id="sidebar-content"></div> <!-- This div is dynamically populated by displayLinks() -->
     </div>
     <div id="graph"></div>
   </div>
-   <script src="https://d3js.org/d3.v7.min.js"></script>
-   <script src="data.js"></script>
-   <script src="graph_data.js"></script>
-   <script src="graph_layout.js"></script>
-   <script src="link_index.js"></script> <!-- THIS LINE IS CRUCIAL -->
+
+  <!-- Script sequence matters -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="data.js"></script>
+  <script src="graph_data.js"></script>
+  <script src="link_index.js"></script> <!-- Defines linkIndex BEFORE layout -->
+  <script src="graph_layout.js"></script> <!-- Calls displayLinks() which uses linkIndex -->
 </body>
 </html>
