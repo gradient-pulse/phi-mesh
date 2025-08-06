@@ -1,37 +1,31 @@
 import yaml
 import json
 
-# Path to source YAML and output JS
-TAG_INDEX_PATH = "meta/tag_index.yml"
-OUTPUT_JS_PATH = "docs/graph_data.js"
-
-def load_tag_index(path):
-    with open(path, "r") as f:
-        return yaml.safe_load(f)
+with open("meta/tag_index.yml", "r") as f:
+    tag_index = yaml.safe_load(f)
 
 def build_graph_data(tag_index):
-    nodes = set()
+    nodes = []
     links = []
 
     for tag, metadata in tag_index.items():
-        nodes.add(tag)
+        nodes.append({"id": tag})
+
+        if not isinstance(metadata, dict):
+            print(f"⚠️ Skipping tag '{tag}': metadata is not a dict")
+            continue
+
         for linked_tag in metadata.get("links", []):
-            nodes.add(linked_tag)
-            links.append({"source": tag, "target": linked_tag})
+            links.append({
+                "source": tag,
+                "target": linked_tag
+            })
 
-    return {
-        "nodes": [{"id": tag} for tag in sorted(nodes)],
-        "links": links
-    }
+    return {"nodes": nodes, "links": links}
 
-def write_graph_data_js(graph_data, path):
-    with open(path, "w") as f:
-        f.write("const graphData = ")
-        json.dump(graph_data, f, indent=2)
-        f.write(";\n")
+graph_data = build_graph_data(tag_index)
 
-if __name__ == "__main__":
-    tag_index = load_tag_index(TAG_INDEX_PATH)
-    graph_data = build_graph_data(tag_index)
-    write_graph_data_js(graph_data, OUTPUT_JS_PATH)
-    print(f"✅ graph_data.js updated with {len(graph_data['nodes'])} nodes and {len(graph_data['links'])} links.")
+with open("docs/graph_data.js", "w") as f:
+    f.write("const graphData = ")
+    json.dump(graph_data, f, indent=2)
+    f.write(";")
