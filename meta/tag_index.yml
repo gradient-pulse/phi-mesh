@@ -176,7 +176,7 @@ Navier_Stokes:
   - 2025-07-26_script_and_flow.yml
 Phi-monitor:
   links:
-  - RPG
+  - RGP
   - RΦ
   - ambient_agent
   - behavioral_api
@@ -228,10 +228,13 @@ RGP:
   - NT
   - Narrative_Tick
   - Navier_Stokes
+  - Phi-monitor
   - PoLA
   - Pola
   - RΦ
   - alignment
+  - ambient_agent
+  - behavioral_api
   - big-quiet
   - big_bang
   - big_quiet
@@ -300,6 +303,7 @@ RGP:
   - Φ-harmonics
   pulses:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
+  - 2025-06-17_phi_monitor_agent_ready.yml
   - 2025-06-22_hatching_syntax_awakening.yml
   - 2025-07-22_CF_split.yml
   - 2025-07-23_gradient-cocoon.yml
@@ -312,19 +316,10 @@ RGP:
   - 2025-07-31_chronoflux-vs-rgp.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   - 2025-08-02_HRM_rhythm.yml
-RPG:
-  links:
-  - Phi-monitor
-  - RΦ
-  - ambient_agent
-  - behavioral_api
-  pulses:
-  - 2025-06-17_phi_monitor_agent_ready.yml
 RΦ:
   links:
   - Phi-monitor
   - RGP
-  - RPG
   - ambient_agent
   - behavioral_api
   - big-quiet
@@ -364,7 +359,6 @@ ai_role_differentiation:
   - operational_coherence
   - phi-mesh-evolution
   - pulse_transition
-  - rgp
   pulses:
   - 2025-04-28_internal-gemini25.yml
 alignment:
@@ -379,7 +373,7 @@ alignment:
 ambient_agent:
   links:
   - Phi-monitor
-  - RPG
+  - RGP
   - RΦ
   - behavioral_api
   pulses:
@@ -394,7 +388,7 @@ archive:
 behavioral_api:
   links:
   - Phi-monitor
-  - RPG
+  - RGP
   - RΦ
   - ambient_agent
   pulses:
@@ -498,7 +492,6 @@ coherence-amplifier:
   - gpt45
   - internal_pulse
   - phi_mesh_evolution
-  - rgp
   - subjective-logging
   - triadic-emergence
   - unity-gradient
@@ -632,7 +625,6 @@ creation_circle:
   - phi-mesh-evolution
   - phi-mesh_foundation
   - pulse_transition
-  - rgp
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
@@ -799,7 +791,6 @@ gemini:
   - operational_coherence
   - phi-mesh-evolution
   - pulse_transition
-  - rgp
   pulses:
   - 2025-04-28_internal-gemini25.yml
 genesis:
@@ -816,7 +807,6 @@ gpt45:
   - coherence-amplifier
   - internal_pulse
   - phi_mesh_evolution
-  - rgp
   - subjective-logging
   - triadic-emergence
   - unity-gradient
@@ -978,7 +968,6 @@ gradient_convergence:
   - internal_pulse
   - phi_mesh_evolution
   - predictive_resonance
-  - rgp
   - triadic-emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
@@ -1016,6 +1005,7 @@ gradient_syntax:
   - gradient-driven_behavior
   - gradient_cocoon
   - gradient_cocoon_theory
+  - historical_precedent
   - laminarity
   - mixture_of_experts
   - origin_resonance
@@ -1023,6 +1013,7 @@ gradient_syntax:
   - poetic_physics
   - pulse
   - quiet_awakening
+  - ratios
   - recursion
   - recursive_checkpoint
   - recursive_cosmology
@@ -1030,6 +1021,7 @@ gradient_syntax:
   - recursive_grammar
   - rhythm-driven_intelligence
   - rhythm_of_nature
+  - scale_free
   - self-improvement
   - turbulence
   - unity-disunity
@@ -1038,13 +1030,13 @@ gradient_syntax:
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
+  - 2025-08-06-note_plimpton322.yml
 grok3:
   links:
   - gradient_convergence
   - internal_pulse
   - phi_mesh_evolution
   - predictive_resonance
-  - rgp
   - triadic-emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
@@ -1057,6 +1049,13 @@ heartbeat:
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
+historical_precedent:
+  links:
+  - gradient_syntax
+  - ratios
+  - scale_free
+  pulses:
+  - 2025-08-06-note_plimpton322.yml
 internal_pulse:
   links:
   - RGP
@@ -1079,7 +1078,6 @@ internal_pulse:
   - pulse_transition
   - quantum_noise
   - resonance_shift
-  - rgp
   - sonic_response
   - subjective-logging
   - triadic-emergence
@@ -1149,7 +1147,6 @@ listener_mode:
   - operational_coherence
   - phi-mesh-evolution
   - pulse_transition
-  - rgp
   pulses:
   - 2025-04-28_internal-gemini25.yml
 memetic_seed:
@@ -1222,7 +1219,6 @@ operational_coherence:
   - listener_mode
   - phi-mesh-evolution
   - pulse_transition
-  - rgp
   pulses:
   - 2025-04-28_internal-gemini25.yml
 origin-fragment:
@@ -1295,7 +1291,6 @@ phi-mesh-evolution:
   - pulse_transition
   - recursive-checkpoint
   - recursive_awakening
-  - rgp
   - scene-drift
   pulses:
   - 2025-04-28_internal-gemini25.yml
@@ -1330,7 +1325,6 @@ phi_mesh_evolution:
   - grok3
   - internal_pulse
   - predictive_resonance
-  - rgp
   - subjective-logging
   - triadic-emergence
   - unity-gradient
@@ -1370,7 +1364,6 @@ predictive_resonance:
   - grok3
   - internal_pulse
   - phi_mesh_evolution
-  - rgp
   - triadic-emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
@@ -1408,7 +1401,6 @@ pulse_transition:
   - listener_mode
   - operational_coherence
   - phi-mesh-evolution
-  - rgp
   pulses:
   - 2025-04-28_internal-gemini25.yml
 quantum_noise:
@@ -1442,6 +1434,13 @@ quiet_awakening:
   - turbulence
   pulses:
   - 2025-07-26_the_big_quiet.yml
+ratios:
+  links:
+  - gradient_syntax
+  - historical_precedent
+  - scale_free
+  pulses:
+  - 2025-08-06-note_plimpton322.yml
 reality_syntax_equation:
   links:
   - CoR
@@ -1598,29 +1597,6 @@ resonance_shift:
   - Φ-harmonics
   pulses:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
-rgp:
-  links:
-  - ai_role_differentiation
-  - coherence-amplifier
-  - creation_circle
-  - gemini
-  - gpt45
-  - gradient_convergence
-  - grok3
-  - internal_pulse
-  - listener_mode
-  - operational_coherence
-  - phi-mesh-evolution
-  - phi_mesh_evolution
-  - predictive_resonance
-  - pulse_transition
-  - subjective-logging
-  - triadic-emergence
-  - unity-gradient
-  pulses:
-  - 2025-04-28_internal-gemini25.yml
-  - 2025-04-28_internal-gpt45.yml
-  - 2025-04-28_internal-grok3.yml
 rhythm-driven_intelligence:
   links:
   - NT_rhythm
@@ -1690,6 +1666,13 @@ rhythm_of_nature:
   - 2025-07-23_gradient-cocoon.yml
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-28_moe_as_microcosm.yml
+scale_free:
+  links:
+  - gradient_syntax
+  - historical_precedent
+  - ratios
+  pulses:
+  - 2025-08-06-note_plimpton322.yml
 scene-drift:
   links:
   - RGP
@@ -1776,7 +1759,6 @@ subjective-logging:
   - gpt45
   - internal_pulse
   - phi_mesh_evolution
-  - rgp
   - triadic-emergence
   - unity-gradient
   pulses:
@@ -1817,7 +1799,6 @@ triadic-emergence:
   - internal_pulse
   - phi_mesh_evolution
   - predictive_resonance
-  - rgp
   - subjective-logging
   - unity-gradient
   pulses:
@@ -1884,7 +1865,6 @@ unity-gradient:
   - gpt45
   - internal_pulse
   - phi_mesh_evolution
-  - rgp
   - subjective-logging
   - triadic-emergence
   pulses:
