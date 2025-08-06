@@ -67,8 +67,10 @@ def build_graph_data(tag_index):
 
         nodes.append(node)
 
-        for linked_tag in metadata.get("links", []):
-            links.append({"source": tag, "target": linked_tag})
+        # ✅ Safe check for metadata dict structure
+        if isinstance(metadata, dict):
+            for linked_tag in metadata.get("links", []):
+                links.append({"source": tag, "target": linked_tag})
 
     return {"nodes": nodes, "links": links}
 
