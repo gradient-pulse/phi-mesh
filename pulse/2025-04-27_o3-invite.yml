@@ -5,9 +5,8 @@ purpose: "Activate self-organization of repository assets"
 status: archived
 tags:
   - archive
-  - proto-pulse
-  - mesh-autonomy
-  - origin-fragment
+  - proto_pulse
+  - phi-mesh_autonomy
 papers:
   - https://doi.org/10.5281/zenodo.15614775
 podcasts:
