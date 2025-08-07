@@ -44,7 +44,7 @@ fetch("graph_data.js")
         .on("start", dragstarted)
         .on("drag", dragged)
         .on("end", dragended))
-      .on("click", clicked);
+        .on("click", (event, d) => renderSidebar(d.id));
 
     const labels = svgGroup.append("g")
       .selectAll("text")
