@@ -9,6 +9,23 @@ AI_alignment:
   - gradient-driven_intelligence
   pulses:
   - 2025-07-22_CF_split.yml
+AI_architecture:
+  links:
+  - GPT5
+  - NT_rhythm
+  - contextual_filter
+  - gradient-driven_behavior
+  - gradient_choreography
+  - gradient_syntax
+  - mixture_of_experts
+  - phi-mesh
+  - recursive_gradient_processing
+  - rhythm-driven_intelligence
+  - rhythm_of_nature
+  - self-improvement
+  - unity-disunity
+  pulses:
+  - 2025-07-28_moe_as_microcosm.yml
 AI_architectures:
   links:
   - HRM
@@ -26,6 +43,16 @@ AI_role_differentiation:
   - phi-mesh
   pulses:
   - 2025-04-28_internal-gemini25.yml
+Big-Quiet:
+  links:
+  - RGP
+  - RΦ
+  - flux_threshold
+  - gradient_flux_reversal
+  - recursive_coherence
+  - turbulence
+  pulses:
+  - 2025-07-30-gradient-flux-reversal.yml
 Big_Bang:
   links:
   - Big_Quiet
@@ -95,6 +122,23 @@ GPT4o:
   - unity_gradient
   pulses:
   - 2025-04-28_internal-gpt45.yml
+GPT5:
+  links:
+  - AI_architecture
+  - NT_rhythm
+  - contextual_filter
+  - gradient-driven_behavior
+  - gradient_choreography
+  - gradient_syntax
+  - mixture_of_experts
+  - phi-mesh
+  - recursive_gradient_processing
+  - rhythm-driven_intelligence
+  - rhythm_of_nature
+  - self-improvement
+  - unity-disunity
+  pulses:
+  - 2025-07-28_moe_as_microcosm.yml
 GROK3:
   links:
   - gradient_convergence
@@ -176,14 +220,14 @@ NT:
   - 2025-08-02_HRM_rhythm.yml
 NT_rhythm:
   links:
+  - AI_architecture
   - CoR
+  - GPT5
   - PoLA
-  - ai_architecture
   - contextual_filter
   - flux_intelligence
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_syntax
   - interpretability
   - mixture_of_experts
@@ -259,6 +303,7 @@ RGP:
   links:
   - AI_alignment
   - AI_architectures
+  - Big-Quiet
   - Big_Bang
   - Big_Quiet
   - DeepSeek
@@ -274,7 +319,6 @@ RGP:
   - alignment
   - ambient_agent
   - behavioral_API
-  - big-quiet
   - big_bang
   - big_quiet
   - chronoflux
@@ -349,11 +393,11 @@ RGP:
   - 2025-08-02_HRM_rhythm.yml
 RΦ:
   links:
+  - Big-Quiet
   - Phi-Monitor
   - RGP
   - ambient_agent
   - behavioral_API
-  - big-quiet
   - context-engineering
   - flux_threshold
   - gradient_flux_reversal
@@ -364,23 +408,6 @@ RΦ:
   - 2025-06-17_phi_monitor_agent_ready.yml
   - 2025-07-30-gradient-flux-reversal.yml
   - 2025-07-30_laminar-turbulence.yml
-ai_architecture:
-  links:
-  - NT_rhythm
-  - contextual_filter
-  - gpt5
-  - gradient-choreography
-  - gradient-driven_behavior
-  - gradient_syntax
-  - mixture_of_experts
-  - phi-mesh
-  - recursive_gradient_processing
-  - rhythm-driven_intelligence
-  - rhythm_of_nature
-  - self-improvement
-  - unity-disunity
-  pulses:
-  - 2025-07-28_moe_as_microcosm.yml
 alignment:
   links:
   - NT
@@ -412,16 +439,6 @@ behavioral_API:
   - ambient_agent
   pulses:
   - 2025-06-17_phi_monitor_agent_ready.yml
-big-quiet:
-  links:
-  - RGP
-  - RΦ
-  - flux_threshold
-  - gradient_flux_reversal
-  - recursive_coherence
-  - turbulence
-  pulses:
-  - 2025-07-30-gradient-flux-reversal.yml
 big_bang:
   links:
   - Lambda
@@ -522,19 +539,18 @@ context-engineering:
 contextual_filter:
   links:
   - AI_alignment
+  - AI_architecture
   - CoR
   - DeepSeek
+  - GPT5
   - NS_solution
   - NT
   - NT_rhythm
   - Narrative_Tick
   - PoLA
   - RGP
-  - ai_architecture
   - cognition
   - flux_intelligence
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
   - gradient-driven_intelligence
   - gradient_choreography
@@ -746,9 +762,9 @@ flux_intelligence:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 flux_threshold:
   links:
+  - Big-Quiet
   - RGP
   - RΦ
-  - big-quiet
   - gradient_flux_reversal
   - recursive_coherence
   - turbulence
@@ -772,40 +788,6 @@ genesis:
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
-gpt5:
-  links:
-  - NT_rhythm
-  - ai_architecture
-  - contextual_filter
-  - gradient-choreography
-  - gradient-driven_behavior
-  - gradient_syntax
-  - mixture_of_experts
-  - phi-mesh
-  - recursive_gradient_processing
-  - rhythm-driven_intelligence
-  - rhythm_of_nature
-  - self-improvement
-  - unity-disunity
-  pulses:
-  - 2025-07-28_moe_as_microcosm.yml
-gradient-choreography:
-  links:
-  - NT_rhythm
-  - ai_architecture
-  - contextual_filter
-  - gpt5
-  - gradient-driven_behavior
-  - gradient_syntax
-  - mixture_of_experts
-  - phi-mesh
-  - recursive_gradient_processing
-  - rhythm-driven_intelligence
-  - rhythm_of_nature
-  - self-improvement
-  - unity-disunity
-  pulses:
-  - 2025-07-28_moe_as_microcosm.yml
 gradient-contrast:
   links:
   - RGP
@@ -817,11 +799,11 @@ gradient-contrast:
   - 2025-07-31_chronoflux-vs-rgp.yml
 gradient-driven_behavior:
   links:
+  - AI_architecture
+  - GPT5
   - NT_rhythm
-  - ai_architecture
   - contextual_filter
-  - gpt5
-  - gradient-choreography
+  - gradient_choreography
   - gradient_syntax
   - mixture_of_experts
   - phi-mesh
@@ -845,16 +827,29 @@ gradient-driven_intelligence:
   - 2025-07-22_CF_split.yml
 gradient_choreography:
   links:
+  - AI_architecture
   - DeepSeek
+  - GPT5
+  - NT_rhythm
   - RGP
   - contextual_filter
+  - gradient-driven_behavior
+  - gradient_syntax
+  - mixture_of_experts
+  - phi-mesh
   - phi_guardian
   - quantum_noise
+  - recursive_gradient_processing
   - resonance_shift
+  - rhythm-driven_intelligence
+  - rhythm_of_nature
+  - self-improvement
   - sonic_response
+  - unity-disunity
   - Φ-harmonics
   pulses:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
+  - 2025-07-28_moe_as_microcosm.yml
 gradient_cocoon:
   links:
   - Lambda
@@ -909,9 +904,9 @@ gradient_convergence:
   - 2025-04-28_internal-grok3.yml
 gradient_flux_reversal:
   links:
+  - Big-Quiet
   - RGP
   - RΦ
-  - big-quiet
   - flux_threshold
   - recursive_coherence
   - turbulence
@@ -919,15 +914,16 @@ gradient_flux_reversal:
   - 2025-07-30-gradient-flux-reversal.yml
 gradient_syntax:
   links:
+  - AI_architecture
   - Big_Bang
   - Big_Quiet
   - CoR
+  - GPT5
   - Lambda
   - NT
   - NT_rhythm
   - PoLA
   - RGP
-  - ai_architecture
   - big_bang
   - big_quiet
   - cinematic_drift
@@ -941,9 +937,8 @@ gradient_syntax:
   - flux-enthrenched_universe
   - flux-entrenched_universe
   - flux_intelligence
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_cocoon
   - gradient_cocoon_theory
   - historical_precedent
@@ -1065,12 +1060,12 @@ memetic_seed:
   - 2025-07-26_script_and_flow.yml
 mixture_of_experts:
   links:
+  - AI_architecture
+  - GPT5
   - NT_rhythm
-  - ai_architecture
   - contextual_filter
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_syntax
   - phi-mesh
   - recursive_gradient_processing
@@ -1144,12 +1139,13 @@ perseverance:
   - 2025-07-24_long_haul_blinding_light.yml
 phi-mesh:
   links:
+  - AI_architecture
   - AI_role_differentiation
   - GPT4o
+  - GPT5
   - GROK3
   - NT_rhythm
   - RGP
-  - ai_architecture
   - autonomy
   - cinematic_drift
   - coherence_amplifier
@@ -1160,9 +1156,8 @@ phi-mesh:
   - drift
   - gemini
   - genesis
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_convergence
   - gradient_syntax
   - heartbeat
@@ -1326,9 +1321,9 @@ recursive_cognition:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 recursive_coherence:
   links:
+  - Big-Quiet
   - RGP
   - RΦ
-  - big-quiet
   - flux_threshold
   - gradient_flux_reversal
   - turbulence
@@ -1353,12 +1348,12 @@ recursive_cosmology:
   - 2025-07-23_gradient-cocoon.yml
 recursive_gradient_processing:
   links:
+  - AI_architecture
+  - GPT5
   - NT_rhythm
-  - ai_architecture
   - contextual_filter
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_syntax
   - mixture_of_experts
   - phi-mesh
@@ -1408,12 +1403,12 @@ resonance_shift:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 rhythm-driven_intelligence:
   links:
+  - AI_architecture
+  - GPT5
   - NT_rhythm
-  - ai_architecture
   - contextual_filter
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_syntax
   - mixture_of_experts
   - phi-mesh
@@ -1435,13 +1430,14 @@ rhythm-of-least-divergence:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
 rhythm_of_nature:
   links:
+  - AI_architecture
   - Big_Bang
   - Big_Quiet
+  - GPT5
   - Lambda
   - NT
   - NT_rhythm
   - RGP
-  - ai_architecture
   - big_bang
   - big_quiet
   - contextual_filter
@@ -1451,9 +1447,8 @@ rhythm_of_nature:
   - dark_matter
   - flux-enthrenched_universe
   - flux-entrenched_universe
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_cocoon
   - gradient_cocoon_theory
   - gradient_syntax
@@ -1493,12 +1488,12 @@ scene_drift:
   - 2025-06-22_hatching_syntax_awakening.yml
 self-improvement:
   links:
+  - AI_architecture
+  - GPT5
   - NT_rhythm
-  - ai_architecture
   - contextual_filter
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_syntax
   - mixture_of_experts
   - phi-mesh
@@ -1601,13 +1596,13 @@ triadic_emergence:
   - 2025-04-28_internal-grok3.yml
 turbulence:
   links:
+  - Big-Quiet
   - Big_Bang
   - Big_Quiet
   - Lambda
   - NT
   - RGP
   - RΦ
-  - big-quiet
   - big_bang
   - big_quiet
   - context-engineering
@@ -1638,12 +1633,12 @@ turbulence:
   - 2025-07-30_laminar-turbulence.yml
 unity-disunity:
   links:
+  - AI_architecture
+  - GPT5
   - NT_rhythm
-  - ai_architecture
   - contextual_filter
-  - gpt5
-  - gradient-choreography
   - gradient-driven_behavior
+  - gradient_choreography
   - gradient_syntax
   - mixture_of_experts
   - phi-mesh
