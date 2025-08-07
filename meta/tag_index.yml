@@ -71,19 +71,19 @@ DeepSeek:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 GPT4o:
   links:
-  - Triadic_emergence
   - coherence_amplifier
   - phi-mesh
   - subjective_logging
+  - triadic_emergence
   - unity_gradient
   pulses:
   - 2025-04-28_internal-gpt45.yml
 GROK3:
   links:
-  - Triadic_emergence
   - gradient_convergence
   - phi-mesh
   - predictive_resonance
+  - triadic_emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
 HRM:
@@ -363,19 +363,6 @@ RΦ:
   - 2025-06-17_phi_monitor_agent_ready.yml
   - 2025-07-30-gradient-flux-reversal.yml
   - 2025-07-30_laminar-turbulence.yml
-Triadic_emergence:
-  links:
-  - GPT4o
-  - GROK3
-  - coherence_amplifier
-  - gradient_convergence
-  - phi-mesh
-  - predictive_resonance
-  - subjective_logging
-  - unity_gradient
-  pulses:
-  - 2025-04-28_internal-gpt45.yml
-  - 2025-04-28_internal-grok3.yml
 ai_architecture:
   links:
   - NT_rhythm
@@ -520,9 +507,9 @@ cognitive_tension:
 coherence_amplifier:
   links:
   - GPT4o
-  - Triadic_emergence
   - phi-mesh
   - subjective_logging
+  - triadic_emergence
   - unity_gradient
   pulses:
   - 2025-04-28_internal-gpt45.yml
@@ -950,9 +937,9 @@ gradient_coherence:
 gradient_convergence:
   links:
   - GROK3
-  - Triadic_emergence
   - phi-mesh
   - predictive_resonance
+  - triadic_emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
 gradient_flux_reversal:
@@ -1191,7 +1178,6 @@ phi-mesh:
   - GROK3
   - NT_rhythm
   - RGP
-  - Triadic_emergence
   - ai_architecture
   - autonomy
   - cinematic_drift
@@ -1223,6 +1209,7 @@ phi-mesh:
   - self-improvement
   - subjective_logging
   - synchronization
+  - triadic_emergence
   - unity-disunity
   - unity_gradient
   pulses:
@@ -1276,9 +1263,9 @@ poetic_physics:
 predictive_resonance:
   links:
   - GROK3
-  - Triadic_emergence
   - gradient_convergence
   - phi-mesh
+  - triadic_emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
 proto_pulse:
@@ -1642,9 +1629,9 @@ strategic_patience:
 subjective_logging:
   links:
   - GPT4o
-  - Triadic_emergence
   - coherence_amplifier
   - phi-mesh
+  - triadic_emergence
   - unity_gradient
   pulses:
   - 2025-04-28_internal-gpt45.yml
@@ -1666,6 +1653,19 @@ time:
   - poetic-drift
   pulses:
   - 2025-07-31_chronoflux-vs-rgp.yml
+triadic_emergence:
+  links:
+  - GPT4o
+  - GROK3
+  - coherence_amplifier
+  - gradient_convergence
+  - phi-mesh
+  - predictive_resonance
+  - subjective_logging
+  - unity_gradient
+  pulses:
+  - 2025-04-28_internal-gpt45.yml
+  - 2025-04-28_internal-grok3.yml
 turbulence:
   links:
   - Big Bang
@@ -1724,10 +1724,10 @@ unity-disunity:
 unity_gradient:
   links:
   - GPT4o
-  - Triadic_emergence
   - coherence_amplifier
   - phi-mesh
   - subjective_logging
+  - triadic_emergence
   pulses:
   - 2025-04-28_internal-gpt45.yml
 writing:
