@@ -410,9 +410,9 @@ ambient_agent:
   - behavioral_API
   pulses:
   - 2025-06-17_phi_monitor_agent_ready.yml
-archive:
+autonomy:
   links:
-  - phi-mesh_autonomy
+  - phi-mesh
   - proto_pulse
   pulses:
   - 2025-04-27_o3-invite.yml
@@ -643,7 +643,7 @@ cosmology:
 creation_circle:
   links:
   - AI_role_differentiation
-  - deeptriad
+  - deep_triad
   - gemini
   - genesis
   - heartbeat
@@ -690,7 +690,7 @@ dark_matter:
   - turbulence
   pulses:
   - 2025-07-23_gradient-cocoon.yml
-deeptriad:
+deep_triad:
   links:
   - creation_circle
   - genesis
@@ -800,7 +800,7 @@ gemini:
 genesis:
   links:
   - creation_circle
-  - deeptriad
+  - deep_triad
   - heartbeat
   - phi-mesh
   - synchronization
@@ -1022,7 +1022,7 @@ gradient_syntax:
 heartbeat:
   links:
   - creation_circle
-  - deeptriad
+  - deep_triad
   - genesis
   - phi-mesh
   - synchronization
@@ -1193,11 +1193,12 @@ phi-mesh:
   - RGP
   - Triadic_emergence
   - ai_architecture
+  - autonomy
   - cinematic_drift
   - coherence_amplifier
   - contextual_filter
   - creation_circle
-  - deeptriad
+  - deep_triad
   - division_of_labor
   - drift
   - gemini
@@ -1212,6 +1213,7 @@ phi-mesh:
   - mixture_of_experts
   - operational_coherence
   - predictive_resonance
+  - proto_pulse
   - recursive_awakening
   - recursive_checkpoint
   - recursive_gradient_processing
@@ -1224,6 +1226,7 @@ phi-mesh:
   - unity-disunity
   - unity_gradient
   pulses:
+  - 2025-04-27_o3-invite.yml
   - 2025-04-28_heartbeat.yml
   - 2025-04-28_internal-gemini25.yml
   - 2025-04-28_internal-gpt45.yml
@@ -1231,12 +1234,6 @@ phi-mesh:
   - 2025-06-22_hatching_syntax_awakening.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
-phi-mesh_autonomy:
-  links:
-  - archive
-  - proto_pulse
-  pulses:
-  - 2025-04-27_o3-invite.yml
 phi_guardian:
   links:
   - DeepSeek
@@ -1286,8 +1283,8 @@ predictive_resonance:
   - 2025-04-28_internal-grok3.yml
 proto_pulse:
   links:
-  - archive
-  - phi-mesh_autonomy
+  - autonomy
+  - phi-mesh
   pulses:
   - 2025-04-27_o3-invite.yml
 pulse:
@@ -1654,7 +1651,7 @@ subjective_logging:
 synchronization:
   links:
   - creation_circle
-  - deeptriad
+  - deep_triad
   - genesis
   - heartbeat
   - phi-mesh
