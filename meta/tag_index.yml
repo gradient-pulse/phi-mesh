@@ -205,9 +205,8 @@ NT:
   - gradient_cocoon
   - gradient_coherence
   - gradient_syntax
-  - narrative_tick
+  - least_divergence_rhythm
   - recursive_cosmology
-  - rhythm-of-least-divergence
   - rhythm_of_nature
   - software-dev
   - strategic_patience
@@ -251,12 +250,16 @@ Narrative_Tick:
   - chronoflux
   - cognition
   - contextual_filter
+  - development_process
   - gradient-driven_intelligence
   - gradient_contrast
+  - least_divergence_rhythm
+  - software-dev
   - time
   pulses:
   - 2025-07-22_CF_split.yml
   - 2025-07-31_chronoflux-vs-rgp.yml
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
 Navier_Stokes:
   links:
   - RGP
@@ -293,10 +296,9 @@ PoLA:
   - gradient-driven_intelligence
   - gradient_syntax
   - interpretability
-  - narrative_tick
+  - least_divergence_rhythm
   - reality_syntax_equation
   - recursive_cognition
-  - rhythm-of-least-divergence
   - software-dev
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
@@ -350,9 +352,9 @@ RGP:
   - gradient_syntax
   - laminarity
   - language_evolution
+  - least_divergence_rhythm
   - legacy
   - memetic_seed
-  - narrative_tick
   - non-linear_society
   - origin_resonance
   - perseverance
@@ -367,7 +369,6 @@ RGP:
   - recursive_grammar
   - resonance
   - resonance_shift
-  - rhythm-of-least-divergence
   - rhythm_of_nature
   - scene_drift
   - signal
@@ -687,10 +688,10 @@ deep_triad:
 development_process:
   links:
   - NT
+  - Narrative_Tick
   - PoLA
   - RGP
-  - narrative_tick
-  - rhythm-of-least-divergence
+  - least_divergence_rhythm
   - software-dev
   pulses:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
@@ -1030,6 +1031,16 @@ language_evolution:
   - writing
   pulses:
   - 2025-07-26_script_and_flow.yml
+least_divergence_rhythm:
+  links:
+  - NT
+  - Narrative_Tick
+  - PoLA
+  - RGP
+  - development_process
+  - software-dev
+  pulses:
+  - 2025-08-01_dev-cycle-nt-rhythm.yml
 legacy:
   links:
   - NS_solution
@@ -1076,16 +1087,6 @@ mixture_of_experts:
   - unity-disunity
   pulses:
   - 2025-07-28_moe_as_microcosm.yml
-narrative_tick:
-  links:
-  - NT
-  - PoLA
-  - RGP
-  - development_process
-  - rhythm-of-least-divergence
-  - software-dev
-  pulses:
-  - 2025-08-01_dev-cycle-nt-rhythm.yml
 non-linear_society:
   links:
   - Navier_Stokes
@@ -1405,16 +1406,6 @@ rhythm-driven_intelligence:
   - unity-disunity
   pulses:
   - 2025-07-28_moe_as_microcosm.yml
-rhythm-of-least-divergence:
-  links:
-  - NT
-  - PoLA
-  - RGP
-  - development_process
-  - narrative_tick
-  - software-dev
-  pulses:
-  - 2025-08-01_dev-cycle-nt-rhythm.yml
 rhythm_of_nature:
   links:
   - AI_architecture
@@ -1513,11 +1504,11 @@ societal_evolution:
 software-dev:
   links:
   - NT
+  - Narrative_Tick
   - PoLA
   - RGP
   - development_process
-  - narrative_tick
-  - rhythm-of-least-divergence
+  - least_divergence_rhythm
   pulses:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
 sonic_response:
