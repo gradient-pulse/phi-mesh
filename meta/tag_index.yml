@@ -2,12 +2,11 @@ AI_alignment:
   links:
   - NT
   - Narrative_Tick
-  - Pola
+  - PoLA
   - RGP
   - cognition
-  - contectual_filter
   - contextual_filter
-  - gradient-driven-intelligence
+  - gradient-driven_intelligence
   pulses:
   - 2025-07-22_CF_split.yml
 AI_architectures:
@@ -129,21 +128,19 @@ NT:
   - Lambda
   - Narrative_Tick
   - PoLA
-  - Pola
   - RGP
   - alignment
   - big_bang
   - big_quiet
   - cognition
   - cognitive_tension
-  - contectual_filter
   - contextual_filter
   - cosmology
   - dark_energy
   - dark_matter
   - development_process
   - flux-entrenched_universe
-  - gradient-driven-intelligence
+  - gradient-driven_intelligence
   - gradient_cocoon
   - gradient_coherence
   - gradient_syntax
@@ -189,12 +186,11 @@ Narrative_Tick:
   links:
   - AI_alignment
   - NT
-  - Pola
+  - PoLA
   - RGP
   - cognition
-  - contectual_filter
   - contextual_filter
-  - gradient-driven-intelligence
+  - gradient-driven_intelligence
   pulses:
   - 2025-07-22_CF_split.yml
 Navier_Stokes:
@@ -218,15 +214,19 @@ Phi-Monitor:
   - 2025-06-17_phi_monitor_agent_ready.yml
 PoLA:
   links:
+  - AI_alignment
   - AI_architectures
   - CoR
   - HRM
   - NT
   - NT_rhythm
+  - Narrative_Tick
   - RGP
+  - cognition
   - contextual_filter
   - development_process
   - flux_intelligence
+  - gradient-driven_intelligence
   - gradient_syntax
   - interpretability
   - narrative_tick
@@ -236,20 +236,9 @@ PoLA:
   - software-dev
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
+  - 2025-07-22_CF_split.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
   - 2025-08-02_HRM_rhythm.yml
-Pola:
-  links:
-  - AI_alignment
-  - NT
-  - Narrative_Tick
-  - RGP
-  - cognition
-  - contectual_filter
-  - contextual_filter
-  - gradient-driven-intelligence
-  pulses:
-  - 2025-07-22_CF_split.yml
 RGP:
   links:
   - AI_alignment
@@ -264,7 +253,6 @@ RGP:
   - Navier_Stokes
   - Phi-Monitor
   - PoLA
-  - Pola
   - RΦ
   - alignment
   - ambient_agent
@@ -276,7 +264,6 @@ RGP:
   - cinematic_drift
   - cognition
   - cognitive_tension
-  - contectual_filter
   - context-engineering
   - contextual_filter
   - cosmogenesis
@@ -289,7 +276,7 @@ RGP:
   - flux-entrenched_universe
   - flux_threshold
   - gradient-contrast
-  - gradient-driven-intelligence
+  - gradient-driven_intelligence
   - gradient_choreography
   - gradient_cocoon
   - gradient_cocoon_theory
@@ -481,11 +468,10 @@ cognition:
   - NT
   - Narrative_Tick
   - Navier_Stokes
-  - Pola
+  - PoLA
   - RGP
-  - contectual_filter
   - contextual_filter
-  - gradient-driven-intelligence
+  - gradient-driven_intelligence
   - language_evolution
   - memetic_seed
   - non-linear_societal_development
@@ -512,18 +498,6 @@ coherence_amplifier:
   - unity_gradient
   pulses:
   - 2025-04-28_internal-gpt45.yml
-contectual_filter:
-  links:
-  - AI_alignment
-  - NT
-  - Narrative_Tick
-  - Pola
-  - RGP
-  - cognition
-  - contextual_filter
-  - gradient-driven-intelligence
-  pulses:
-  - 2025-07-22_CF_split.yml
 context-engineering:
   links:
   - RGP
@@ -542,16 +516,14 @@ contextual_filter:
   - NT_rhythm
   - Narrative_Tick
   - PoLA
-  - Pola
   - RGP
   - ai_architecture
   - cognition
-  - contectual_filter
   - flux_intelligence
   - gpt5
   - gradient-choreography
-  - gradient-driven-intelligence
   - gradient-driven_behavior
+  - gradient-driven_intelligence
   - gradient_choreography
   - gradient_syntax
   - interpretability
@@ -834,18 +806,6 @@ gradient-contrast:
   - time
   pulses:
   - 2025-07-31_chronoflux-vs-rgp.yml
-gradient-driven-intelligence:
-  links:
-  - AI_alignment
-  - NT
-  - Narrative_Tick
-  - Pola
-  - RGP
-  - cognition
-  - contectual_filter
-  - contextual_filter
-  pulses:
-  - 2025-07-22_CF_split.yml
 gradient-driven_behavior:
   links:
   - NT_rhythm
@@ -863,6 +823,17 @@ gradient-driven_behavior:
   - unity-disunity
   pulses:
   - 2025-07-28_moe_as_microcosm.yml
+gradient-driven_intelligence:
+  links:
+  - AI_alignment
+  - NT
+  - Narrative_Tick
+  - PoLA
+  - RGP
+  - cognition
+  - contextual_filter
+  pulses:
+  - 2025-07-22_CF_split.yml
 gradient_choreography:
   links:
   - DeepSeek
