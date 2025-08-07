@@ -26,27 +26,27 @@
       overflow-y: auto;
     }
 
-    #sidebar-content ul {
+    #graph {
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    #link-list {
       list-style-type: none;
       padding-left: 0;
     }
 
-    #sidebar-content li {
+    #link-list li {
       margin-bottom: 6px;
     }
 
-    #sidebar-content a {
+    #link-list a {
       color: steelblue;
       text-decoration: none;
     }
 
-    #sidebar-content a:hover {
+    #link-list a:hover {
       text-decoration: underline;
-    }
-
-    #graph {
-      flex-grow: 1;
-      overflow: hidden;
     }
   </style>
 </head>
@@ -55,12 +55,12 @@
     <div id="sidebar">
       <h1>RGP Tag Map</h1>
       <p>Coherence Tracking Across Fields—click a tag</p>
-      <div id="sidebar-content"></div> <!-- This div is dynamically populated by displayLinks() -->
+      <ul id="link-list"></ul> <!-- This MUST match what graph_layout.js expects -->
     </div>
     <div id="graph"></div>
   </div>
 
-  <!-- Script sequence matters -->
+  <!-- Script order matters -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js"></script>
   <script src="graph_data.js"></script>
