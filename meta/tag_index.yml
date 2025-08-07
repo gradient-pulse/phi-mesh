@@ -248,11 +248,15 @@ Narrative_Tick:
   - NT
   - PoLA
   - RGP
+  - chronoflux
   - cognition
   - contextual_filter
   - gradient-driven_intelligence
+  - gradient_contrast
+  - time
   pulses:
   - 2025-07-22_CF_split.yml
+  - 2025-07-31_chronoflux-vs-rgp.yml
 Navier_Stokes:
   links:
   - RGP
@@ -336,12 +340,12 @@ RGP:
   - flux-enthrenched_universe
   - flux-entrenched_universe
   - flux_threshold
-  - gradient-contrast
   - gradient-driven_intelligence
   - gradient_choreography
   - gradient_cocoon
   - gradient_cocoon_theory
   - gradient_coherence
+  - gradient_contrast
   - gradient_flux_reversal
   - gradient_syntax
   - laminarity
@@ -354,7 +358,6 @@ RGP:
   - perseverance
   - phi-mesh
   - phi_guardian
-  - poetic-drift
   - quantum_noise
   - quiet_awakening
   - recursion
@@ -475,10 +478,9 @@ big_quiet:
   - 2025-07-23_gradient-cocoon.yml
 chronoflux:
   links:
+  - Narrative_Tick
   - RGP
-  - gradient-contrast
-  - narrative_tick
-  - poetic-drift
+  - gradient_contrast
   - time
   pulses:
   - 2025-07-31_chronoflux-vs-rgp.yml
@@ -788,15 +790,6 @@ genesis:
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
-gradient-contrast:
-  links:
-  - RGP
-  - chronoflux
-  - narrative_tick
-  - poetic-drift
-  - time
-  pulses:
-  - 2025-07-31_chronoflux-vs-rgp.yml
 gradient-driven_behavior:
   links:
   - AI_architecture
@@ -894,6 +887,14 @@ gradient_coherence:
   - strategic_patience
   pulses:
   - 2025-07-25_patience_as_gradient.yml
+gradient_contrast:
+  links:
+  - Narrative_Tick
+  - RGP
+  - chronoflux
+  - time
+  pulses:
+  - 2025-07-31_chronoflux-vs-rgp.yml
 gradient_convergence:
   links:
   - GROK3
@@ -1080,15 +1081,10 @@ narrative_tick:
   - NT
   - PoLA
   - RGP
-  - chronoflux
   - development_process
-  - gradient-contrast
-  - poetic-drift
   - rhythm-of-least-divergence
   - software-dev
-  - time
   pulses:
-  - 2025-07-31_chronoflux-vs-rgp.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
 non-linear_society:
   links:
@@ -1199,15 +1195,6 @@ phi_guardian:
   - Φ-harmonics
   pulses:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
-poetic-drift:
-  links:
-  - RGP
-  - chronoflux
-  - gradient-contrast
-  - narrative_tick
-  - time
-  pulses:
-  - 2025-07-31_chronoflux-vs-rgp.yml
 predictive_resonance:
   links:
   - GROK3
@@ -1574,11 +1561,10 @@ synchronization:
   - 2025-04-28_heartbeat.yml
 time:
   links:
+  - Narrative_Tick
   - RGP
   - chronoflux
-  - gradient-contrast
-  - narrative_tick
-  - poetic-drift
+  - gradient_contrast
   pulses:
   - 2025-07-31_chronoflux-vs-rgp.yml
 triadic_emergence:
