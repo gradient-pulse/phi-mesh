@@ -1,6 +1,6 @@
-// graph_layout.js — D3 v7 force layout with zoom, pan, truncation, modal-ready
+// graph_layout.js — with panning, zoom, sidebar tweaks, and safe graph loading
 
-const width = window.innerWidth - 280; // Sidebar width
+const width = window.innerWidth - 280; // subtract sidebar
 const height = window.innerHeight;
 
 const zoom = d3.zoom()
@@ -25,7 +25,7 @@ const simulation = d3.forceSimulation()
 fetch("graph_data.js")
   .then(response => response.text())
   .then(text => {
-    const graph = new Function('return ' + text)(); // safer than eval
+    const graph = new Function(text.replace(/^const graph\s*=\s*/, '').trim() + '; return graph;')();
 
     const link = svgGroup.append("g")
       .selectAll("line")
@@ -99,61 +99,40 @@ fetch("graph_data.js")
     function clicked(event, d) {
       const tag = d.id;
       const sidebar = document.getElementById("link-list");
-      sidebar.innerHTML = ""; // clear previous entries
+      sidebar.innerHTML = "";
 
       const data = linkIndex[tag];
       if (!data) {
-        const li = document.createElement("li");
-        li.textContent = "No linked content found.";
-        sidebar.appendChild(li);
+        const noData = document.createElement("li");
+        noData.textContent = "No linked content found.";
+        sidebar.appendChild(noData);
         return;
       }
 
-      // Show tag name first
-      const title = document.createElement("li");
-      title.innerHTML = `<strong style="font-size: 18px;">${tag}</strong>`;
-      sidebar.appendChild(title);
+      const headerTag = document.createElement("li");
+      headerTag.innerHTML = `<strong>${tag}</strong>`;
+      sidebar.appendChild(headerTag);
 
-      // Helper to add section
-      function addSection(titleText, items, type) {
-        if (items.length === 0) return;
-        const header = document.createElement("li");
-        header.innerHTML = `<strong>${titleText}</strong>`;
-        header.style.marginTop = "12px";
-        sidebar.appendChild(header);
+      const addLinks = (type, title) => {
+        if (data[type]?.length > 0) {
+          const header = document.createElement("li");
+          header.innerHTML = `<strong>${title}</strong>`;
+          sidebar.appendChild(header);
+          data[type].slice(0, 3).forEach(path => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = path;
+            a.target = "_blank";
+            const display = path.split("/").pop().slice(0, 25);
+            a.textContent = display.length === 25 ? display + "..." : display;
+            li.appendChild(a);
+            sidebar.appendChild(li);
+          });
+        }
+      };
 
-        items.slice(0, 3).forEach(path => {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = path;
-          a.target = "_blank";
-
-          // Shorten long names
-          let label = path.split("/").pop();
-          if (label.length > 25) label = label.slice(0, 25) + "...";
-
-          a.textContent = label;
-
-          // Optional: show modal for pulses
-          if (type === "pulse") {
-            a.addEventListener("click", (e) => {
-              e.preventDefault();
-              showModal(path);
-            });
-          }
-
-          li.appendChild(a);
-          sidebar.appendChild(li);
-        });
-      }
-
-      addSection("Papers", data.papers, "paper");
-      addSection("Podcasts", data.podcasts, "podcast");
-      addSection("Pulses", data.pulses, "pulse");
-    }
-
-    function showModal(path) {
-      alert(`Pulse preview requested for:\n${path}`);
-      // In future: fetch(path).then(...).display()
+      addLinks("papers", "Papers");
+      addLinks("podcasts", "Podcasts");
+      addLinks("pulses", "Pulses");
     }
   });
