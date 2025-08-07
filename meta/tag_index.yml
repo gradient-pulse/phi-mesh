@@ -214,7 +214,7 @@ Phi-monitor:
   - RGP
   - RΦ
   - ambient_agent
-  - behavioral_api
+  - behavioral_API
   pulses:
   - 2025-06-17_phi_monitor_agent_ready.yml
 PoLA:
@@ -269,7 +269,7 @@ RGP:
   - RΦ
   - alignment
   - ambient_agent
-  - behavioral_api
+  - behavioral_API
   - big-quiet
   - big_bang
   - big_quiet
@@ -353,7 +353,7 @@ RΦ:
   - Phi-monitor
   - RGP
   - ambient_agent
-  - behavioral_api
+  - behavioral_API
   - big-quiet
   - context-engineering
   - flux_threshold
@@ -396,7 +396,7 @@ ambient_agent:
   - Phi-monitor
   - RGP
   - RΦ
-  - behavioral_api
+  - behavioral_API
   pulses:
   - 2025-06-17_phi_monitor_agent_ready.yml
 archive:
@@ -405,7 +405,7 @@ archive:
   - proto_pulse
   pulses:
   - 2025-04-27_o3-invite.yml
-behavioral_api:
+behavioral_API:
   links:
   - Phi-monitor
   - RGP
