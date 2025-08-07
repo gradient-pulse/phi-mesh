@@ -1,6 +1,6 @@
-// graph_layout.js — with Google Maps-style panning, zoom, and improved sidebar layout
+// graph_layout.js — D3 v7 force layout with zoom, pan, truncation, modal-ready
 
-const width = window.innerWidth - 280;
+const width = window.innerWidth - 280; // Sidebar width
 const height = window.innerHeight;
 
 const zoom = d3.zoom()
@@ -25,7 +25,7 @@ const simulation = d3.forceSimulation()
 fetch("graph_data.js")
   .then(response => response.text())
   .then(text => {
-    const graph = eval(text); // Contains nodes and links
+    const graph = new Function('return ' + text)(); // safer than eval
 
     const link = svgGroup.append("g")
       .selectAll("line")
@@ -96,54 +96,64 @@ fetch("graph_data.js")
       d.fy = null;
     }
 
-    function truncate(text, length = 25) {
-      return text.length > length ? text.slice(0, length) + "..." : text;
-    }
-
     function clicked(event, d) {
       const tag = d.id;
       const sidebar = document.getElementById("link-list");
-      sidebar.innerHTML = "";
-
-      const headerTag = document.createElement("div");
-      headerTag.style.fontWeight = "bold";
-      headerTag.style.fontSize = "18px";
-      headerTag.style.marginBottom = "10px";
-      headerTag.textContent = tag;
-      sidebar.appendChild(headerTag);
+      sidebar.innerHTML = ""; // clear previous entries
 
       const data = linkIndex[tag];
       if (!data) {
-        const noData = document.createElement("div");
-        noData.textContent = "No linked content found.";
-        sidebar.appendChild(noData);
+        const li = document.createElement("li");
+        li.textContent = "No linked content found.";
+        sidebar.appendChild(li);
         return;
       }
 
-      function section(title, items) {
-        if (items.length === 0) return;
+      // Show tag name first
+      const title = document.createElement("li");
+      title.innerHTML = `<strong style="font-size: 18px;">${tag}</strong>`;
+      sidebar.appendChild(title);
 
-        const header = document.createElement("div");
-        header.style.fontWeight = "bold";
-        header.style.fontSize = "15px";
-        header.textContent = title;
+      // Helper to add section
+      function addSection(titleText, items, type) {
+        if (items.length === 0) return;
+        const header = document.createElement("li");
+        header.innerHTML = `<strong>${titleText}</strong>`;
+        header.style.marginTop = "12px";
         sidebar.appendChild(header);
 
         items.slice(0, 3).forEach(path => {
-          const div = document.createElement("div");
+          const li = document.createElement("li");
           const a = document.createElement("a");
           a.href = path;
           a.target = "_blank";
-          a.textContent = truncate(path.split("/").pop());
-          a.title = path.split("/").pop();
-          a.style.fontSize = "13px";
-          div.appendChild(a);
-          sidebar.appendChild(div);
+
+          // Shorten long names
+          let label = path.split("/").pop();
+          if (label.length > 25) label = label.slice(0, 25) + "...";
+
+          a.textContent = label;
+
+          // Optional: show modal for pulses
+          if (type === "pulse") {
+            a.addEventListener("click", (e) => {
+              e.preventDefault();
+              showModal(path);
+            });
+          }
+
+          li.appendChild(a);
+          sidebar.appendChild(li);
         });
       }
 
-      section("Papers", data.papers);
-      section("Podcasts", data.podcasts);
-      section("Pulses", data.pulses);
+      addSection("Papers", data.papers, "paper");
+      addSection("Podcasts", data.podcasts, "podcast");
+      addSection("Pulses", data.pulses, "pulse");
+    }
+
+    function showModal(path) {
+      alert(`Pulse preview requested for:\n${path}`);
+      // In future: fetch(path).then(...).display()
     }
   });
