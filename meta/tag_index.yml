@@ -18,6 +18,15 @@ AI_architectures:
   - RGP
   pulses:
   - 2025-08-02_HRM_rhythm.yml
+AI_role_differentiation:
+  links:
+  - creation_circle
+  - gemini
+  - listener_mode
+  - operational_coherence
+  - phi-mesh
+  pulses:
+  - 2025-04-28_internal-gemini25.yml
 Big Bang:
   links:
   - RGP
@@ -345,17 +354,6 @@ ai_architecture:
   - unity-disunity
   pulses:
   - 2025-07-28_moe_as_microcosm.yml
-ai_role_differentiation:
-  links:
-  - creation_circle
-  - gemini
-  - internal_pulse
-  - listener_mode
-  - operational_coherence
-  - phi-mesh-evolution
-  - pulse_transition
-  pulses:
-  - 2025-04-28_internal-gemini25.yml
 alignment:
   links:
   - NT
@@ -608,17 +606,14 @@ cosmology:
   - 2025-07-26_the_big_quiet.yml
 creation_circle:
   links:
-  - ai_role_differentiation
+  - AI_role_differentiation
   - deeptriad
   - gemini
   - genesis
   - heartbeat
-  - internal_pulse
   - listener_mode
   - operational_coherence
   - phi-mesh
-  - phi-mesh-evolution
-  - pulse_transition
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
@@ -778,13 +773,11 @@ flux_threshold:
   - 2025-07-30-gradient-flux-reversal.yml
 gemini:
   links:
-  - ai_role_differentiation
+  - AI_role_differentiation
   - creation_circle
-  - internal_pulse
   - listener_mode
   - operational_coherence
-  - phi-mesh-evolution
-  - pulse_transition
+  - phi-mesh
   pulses:
   - 2025-04-28_internal-gemini25.yml
 genesis:
@@ -1053,23 +1046,16 @@ historical_precedent:
 internal_pulse:
   links:
   - RGP
-  - ai_role_differentiation
   - coherence-amplifier
   - contextual_filter
-  - creation_circle
   - deepseek
-  - gemini
   - gpt45
   - gradient_choreography
   - gradient_convergence
   - grok3
-  - listener_mode
-  - operational_coherence
-  - phi-mesh-evolution
   - phi_guardian
   - phi_mesh_evolution
   - predictive_resonance
-  - pulse_transition
   - quantum_noise
   - resonance_shift
   - sonic_response
@@ -1078,7 +1064,6 @@ internal_pulse:
   - unity-gradient
   - Φ-harmonics
   pulses:
-  - 2025-04-28_internal-gemini25.yml
   - 2025-04-28_internal-gpt45.yml
   - 2025-04-28_internal-grok3.yml
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
@@ -1134,13 +1119,11 @@ legacy:
   - 2025-07-24_long_haul_blinding_light.yml
 listener_mode:
   links:
-  - ai_role_differentiation
+  - AI_role_differentiation
   - creation_circle
   - gemini
-  - internal_pulse
   - operational_coherence
-  - phi-mesh-evolution
-  - pulse_transition
+  - phi-mesh
   pulses:
   - 2025-04-28_internal-gemini25.yml
 memetic_seed:
@@ -1199,13 +1182,11 @@ non-linear_societal_development:
   - 2025-07-26_script_and_flow.yml
 operational_coherence:
   links:
-  - ai_role_differentiation
+  - AI_role_differentiation
   - creation_circle
   - gemini
-  - internal_pulse
   - listener_mode
-  - phi-mesh-evolution
-  - pulse_transition
+  - phi-mesh
   pulses:
   - 2025-04-28_internal-gemini25.yml
 origin_resonance:
@@ -1237,6 +1218,7 @@ perseverance:
   - 2025-07-24_long_haul_blinding_light.yml
 phi-mesh:
   links:
+  - AI_role_differentiation
   - NT_rhythm
   - ai_architecture
   - contextual_filter
@@ -1244,13 +1226,16 @@ phi-mesh:
   - deeptriad
   - division_of_labor
   - drift
+  - gemini
   - genesis
   - gpt5
   - gradient-choreography
   - gradient-driven_behavior
   - gradient_syntax
   - heartbeat
+  - listener_mode
   - mixture_of_experts
+  - operational_coherence
   - recursive_checkpoint
   - recursive_gradient_processing
   - rhythm-driven_intelligence
@@ -1260,26 +1245,19 @@ phi-mesh:
   - unity-disunity
   pulses:
   - 2025-04-28_heartbeat.yml
+  - 2025-04-28_internal-gemini25.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
 phi-mesh-evolution:
   links:
   - RGP
-  - ai_role_differentiation
   - cinematic-drift
-  - creation_circle
   - division-of-labor
-  - gemini
   - gradient-syntax
-  - internal_pulse
-  - listener_mode
-  - operational_coherence
-  - pulse_transition
   - recursive-checkpoint
   - recursive_awakening
   - scene-drift
   pulses:
-  - 2025-04-28_internal-gemini25.yml
   - 2025-06-22_hatching_syntax_awakening.yml
 phi-mesh_autonomy:
   links:
@@ -1374,17 +1352,6 @@ pulse:
   - turbulence
   pulses:
   - 2025-07-23_gradient-cocoon.yml
-pulse_transition:
-  links:
-  - ai_role_differentiation
-  - creation_circle
-  - gemini
-  - internal_pulse
-  - listener_mode
-  - operational_coherence
-  - phi-mesh-evolution
-  pulses:
-  - 2025-04-28_internal-gemini25.yml
 quantum_noise:
   links:
   - RGP
