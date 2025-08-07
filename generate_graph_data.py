@@ -1,39 +1,49 @@
-
 import yaml
 import json
 
+# Load tag index
 with open("meta/tag_index.yml", "r") as f:
-    tag_index = yaml.safe_load(f)
+    raw_data = yaml.safe_load(f)
 
-def build_graph_data(tag_index):
-    graph = {
-        "nodes": [],
-        "links": []
-    }
+# Normalize tag entries
+normalized_tags = []
+for entry in raw_data:
+    if isinstance(entry, str):
+        normalized_tags.append({
+            "tag": entry,
+            "centrality": 0.0,
+            "links": []
+        })
+    elif isinstance(entry, dict):
+        normalized_tags.append(entry)
 
-    tag_names = set()
-    for entry in tag_index:
-        tag = entry.get("tag")
-        tag_names.add(tag)
-        graph["nodes"].append({
-            "id": tag,
-            "centrality": entry.get("centrality", 0)
+def build_graph_data(tag_entries):
+    nodes = []
+    links = []
+    tag_lookup = {entry["tag"]: idx for idx, entry in enumerate(tag_entries)}
+
+    for idx, entry in enumerate(tag_entries):
+        tag = entry["tag"]
+        centrality = entry.get("centrality", 0)
+        nodes.append({
+            "id": idx,
+            "label": tag,
+            "centrality": centrality
         })
 
-    for entry in tag_index:
-        source = entry.get("tag")
         for linked_tag in entry.get("links", []):
-            if linked_tag in tag_names:
-                graph["links"].append({
-                    "source": source,
-                    "target": linked_tag
+            if linked_tag in tag_lookup:
+                links.append({
+                    "source": idx,
+                    "target": tag_lookup[linked_tag]
                 })
 
-    return graph
+    return {"nodes": nodes, "links": links}
 
-graph_data = build_graph_data(tag_index)
+graph_data = build_graph_data(normalized_tags)
 
+# Output file
 with open("docs/graph_data.js", "w") as f:
     f.write("const graphData = ")
     json.dump(graph_data, f, indent=2)
-    f.write(";\n")
+    f.write(";")    
