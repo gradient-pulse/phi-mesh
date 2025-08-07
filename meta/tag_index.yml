@@ -66,6 +66,14 @@ GPT4o:
   - unity-gradient
   pulses:
   - 2025-04-28_internal-gpt45.yml
+GROK3:
+  links:
+  - gradient_convergence
+  - phi-mesh
+  - predictive_resonance
+  - triadic-emergence
+  pulses:
+  - 2025-04-28_internal-grok3.yml
 HRM:
   links:
   - AI_architectures
@@ -949,9 +957,8 @@ gradient_coherence:
   - 2025-07-25_patience_as_gradient.yml
 gradient_convergence:
   links:
-  - grok3
-  - internal_pulse
-  - phi_mesh_evolution
+  - GROK3
+  - phi-mesh
   - predictive_resonance
   - triadic-emergence
   pulses:
@@ -1016,15 +1023,6 @@ gradient_syntax:
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
   - 2025-08-06-note_plimpton322.yml
-grok3:
-  links:
-  - gradient_convergence
-  - internal_pulse
-  - phi_mesh_evolution
-  - predictive_resonance
-  - triadic-emergence
-  pulses:
-  - 2025-04-28_internal-grok3.yml
 heartbeat:
   links:
   - creation_circle
@@ -1047,18 +1045,12 @@ internal_pulse:
   - contextual_filter
   - deepseek
   - gradient_choreography
-  - gradient_convergence
-  - grok3
   - phi_guardian
-  - phi_mesh_evolution
-  - predictive_resonance
   - quantum_noise
   - resonance_shift
   - sonic_response
-  - triadic-emergence
   - Φ-harmonics
   pulses:
-  - 2025-04-28_internal-grok3.yml
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 interpretability:
   links:
@@ -1213,6 +1205,7 @@ phi-mesh:
   links:
   - AI_role_differentiation
   - GPT4o
+  - GROK3
   - NT_rhythm
   - ai_architecture
   - coherence_amplifier
@@ -1226,11 +1219,13 @@ phi-mesh:
   - gpt5
   - gradient-choreography
   - gradient-driven_behavior
+  - gradient_convergence
   - gradient_syntax
   - heartbeat
   - listener_mode
   - mixture_of_experts
   - operational_coherence
+  - predictive_resonance
   - recursive_checkpoint
   - recursive_gradient_processing
   - rhythm-driven_intelligence
@@ -1245,6 +1240,7 @@ phi-mesh:
   - 2025-04-28_heartbeat.yml
   - 2025-04-28_internal-gemini25.yml
   - 2025-04-28_internal-gpt45.yml
+  - 2025-04-28_internal-grok3.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
 phi-mesh-evolution:
@@ -1277,15 +1273,6 @@ phi_guardian:
   - Φ-harmonics
   pulses:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
-phi_mesh_evolution:
-  links:
-  - gradient_convergence
-  - grok3
-  - internal_pulse
-  - predictive_resonance
-  - triadic-emergence
-  pulses:
-  - 2025-04-28_internal-grok3.yml
 poetic-drift:
   links:
   - RGP
@@ -1315,10 +1302,9 @@ poetic_physics:
   - 2025-07-26_the_big_quiet.yml
 predictive_resonance:
   links:
+  - GROK3
   - gradient_convergence
-  - grok3
-  - internal_pulse
-  - phi_mesh_evolution
+  - phi-mesh
   - triadic-emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
@@ -1726,12 +1712,10 @@ time:
 triadic-emergence:
   links:
   - GPT4o
+  - GROK3
   - coherence_amplifier
   - gradient_convergence
-  - grok3
-  - internal_pulse
   - phi-mesh
-  - phi_mesh_evolution
   - predictive_resonance
   - subjective_logging
   - unity-gradient
