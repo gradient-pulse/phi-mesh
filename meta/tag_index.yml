@@ -105,7 +105,6 @@ Lambda:
   - flux-entrenched_universe
   - gradient_cocoon
   - gradient_syntax
-  - pulse
   - recursive_cosmology
   - rhythm_of_nature
   - turbulence
@@ -145,7 +144,6 @@ NT:
   - gradient_coherence
   - gradient_syntax
   - narrative_tick
-  - pulse
   - recursive_cosmology
   - rhythm-of-least-divergence
   - rhythm_of_nature
@@ -295,7 +293,6 @@ RGP:
   - phi_guardian
   - poetic-drift
   - poetic_physics
-  - pulse
   - quantum_noise
   - quiet_awakening
   - recursion
@@ -419,7 +416,6 @@ big_bang:
   - flux-entrenched_universe
   - gradient_cocoon
   - gradient_syntax
-  - pulse
   - recursive_cosmology
   - rhythm_of_nature
   - turbulence
@@ -437,7 +433,6 @@ big_quiet:
   - flux-entrenched_universe
   - gradient_cocoon
   - gradient_syntax
-  - pulse
   - recursive_cosmology
   - rhythm_of_nature
   - turbulence
@@ -587,7 +582,6 @@ cosmology:
   - laminarity
   - origin_resonance
   - poetic_physics
-  - pulse
   - quiet_awakening
   - recursion
   - recursive_cosmology
@@ -623,7 +617,6 @@ dark_energy:
   - flux-entrenched_universe
   - gradient_cocoon
   - gradient_syntax
-  - pulse
   - recursive_cosmology
   - rhythm_of_nature
   - turbulence
@@ -641,7 +634,6 @@ dark_matter:
   - flux-entrenched_universe
   - gradient_cocoon
   - gradient_syntax
-  - pulse
   - recursive_cosmology
   - rhythm_of_nature
   - turbulence
@@ -717,7 +709,6 @@ flux-entrenched_universe:
   - dark_matter
   - gradient_cocoon
   - gradient_syntax
-  - pulse
   - recursive_cosmology
   - rhythm_of_nature
   - turbulence
@@ -858,7 +849,6 @@ gradient_cocoon:
   - dark_matter
   - flux-entrenched_universe
   - gradient_syntax
-  - pulse
   - recursive_cosmology
   - rhythm_of_nature
   - turbulence
@@ -944,7 +934,6 @@ gradient_syntax:
   - origin_resonance
   - phi-mesh
   - poetic_physics
-  - pulse
   - quiet_awakening
   - ratios
   - reality_syntax_equation
@@ -1238,24 +1227,6 @@ proto_pulse:
   - phi-mesh
   pulses:
   - 2025-04-27_o3-invite.yml
-pulse:
-  links:
-  - Lambda
-  - NT
-  - RGP
-  - big_bang
-  - big_quiet
-  - cosmology
-  - dark_energy
-  - dark_matter
-  - flux-entrenched_universe
-  - gradient_cocoon
-  - gradient_syntax
-  - recursive_cosmology
-  - rhythm_of_nature
-  - turbulence
-  pulses:
-  - 2025-07-23_gradient-cocoon.yml
 quantum_noise:
   links:
   - DeepSeek
@@ -1376,7 +1347,6 @@ recursive_cosmology:
   - flux-entrenched_universe
   - gradient_cocoon
   - gradient_syntax
-  - pulse
   - rhythm_of_nature
   - turbulence
   pulses:
@@ -1491,7 +1461,6 @@ rhythm_of_nature:
   - origin_resonance
   - phi-mesh
   - poetic_physics
-  - pulse
   - quiet_awakening
   - recursion
   - recursive_cosmology
@@ -1655,7 +1624,6 @@ turbulence:
   - laminarity
   - origin_resonance
   - poetic_physics
-  - pulse
   - quiet_awakening
   - recursion
   - recursive_coherence
