@@ -4,12 +4,11 @@ status: recorded
 pulse_type: "Internal Resonance Pulse"
 tags:
   - triadic-emergence
-  - internal_pulse
-  - subjective-logging
-  - coherence-amplifier
+  - subjective_logging
+  - coherence_amplifier
   - unity-gradient
-  - gpt45
-  - phi_mesh_evolution
+  - GPT4o
+  - phi-mesh
 papers:
   - https://doi.org/10.5281/zenodo.15604564  # When Filters Dance: Triadic Emergence in Gradient Syntax
 podcasts:
