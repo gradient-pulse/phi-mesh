@@ -1,6 +1,6 @@
-// graph_layout.js — with Google Maps-style panning, zoom, and fixed eval
+// New graph_layout.js — sidebar refinements for layout + UX
 
-const width = window.innerWidth - 280; // Subtract sidebar width
+const width = window.innerWidth - 280;
 const height = window.innerHeight;
 
 const zoom = d3.zoom()
@@ -25,8 +25,7 @@ const simulation = d3.forceSimulation()
 fetch("graph_data.js")
   .then(response => response.text())
   .then(text => {
-    eval(text); // defines `graphData`
-    const graph = graphData; // now graph is correctly defined
+    const graph = eval(text);
 
     const link = svgGroup.append("g")
       .selectAll("line")
@@ -100,63 +99,40 @@ fetch("graph_data.js")
     function clicked(event, d) {
       const tag = d.id;
       const sidebar = document.getElementById("link-list");
-      sidebar.innerHTML = ""; // Clear previous entries
+      sidebar.innerHTML = "";
 
       const data = linkIndex[tag];
       if (!data) {
-        const noData = document.createElement("li");
-        noData.textContent = "No linked content found.";
-        sidebar.appendChild(noData);
+        sidebar.innerHTML = `<li style='font-size: 12px;'>No linked content found.</li>`;
         return;
       }
 
-      const headerTag = document.createElement("li");
-      headerTag.innerHTML = `<strong>${tag}</strong>`;
-      sidebar.appendChild(headerTag);
+      const tagHeader = document.createElement("li");
+      tagHeader.innerHTML = `<div style='font-size: 15px; font-weight: bold; margin-bottom: 8px;'>${tag}</div>`;
+      sidebar.appendChild(tagHeader);
 
-      if (data.papers.length > 0) {
+      function createSection(title, items) {
+        if (!items.length) return;
         const header = document.createElement("li");
-        header.innerHTML = "<strong>Papers</strong>";
+        header.innerHTML = `<div style='font-weight: bold; font-size: 13px;'>${title}</div>`;
         sidebar.appendChild(header);
-        data.papers.forEach(path => {
+
+        items.slice(0, 3).forEach(path => {
           const li = document.createElement("li");
           const a = document.createElement("a");
           a.href = path;
           a.target = "_blank";
-          a.textContent = path.split("/").pop();
+          const shortText = path.split("/").pop().slice(0, 25) + (path.length > 25 ? "..." : "");
+          a.textContent = shortText;
+          a.style.fontSize = "12px";
+          a.title = path.split("/").pop();
           li.appendChild(a);
           sidebar.appendChild(li);
         });
       }
 
-      if (data.podcasts.length > 0) {
-        const header = document.createElement("li");
-        header.innerHTML = "<strong>Podcasts</strong>";
-        sidebar.appendChild(header);
-        data.podcasts.forEach(path => {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = path;
-          a.target = "_blank";
-          a.textContent = path.split("/").pop();
-          li.appendChild(a);
-          sidebar.appendChild(li);
-        });
-      }
-
-      if (data.pulses.length > 0) {
-        const header = document.createElement("li");
-        header.innerHTML = "<strong>Pulses</strong>";
-        sidebar.appendChild(header);
-        data.pulses.forEach(path => {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = path;
-          a.target = "_blank";
-          a.textContent = path.split("/").pop();
-          li.appendChild(a);
-          sidebar.appendChild(li);
-        });
-      }
+      createSection("Papers", data.papers);
+      createSection("Podcasts", data.podcasts);
+      createSection("Pulses", data.pulses);
     }
   });
