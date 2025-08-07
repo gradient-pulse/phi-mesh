@@ -285,13 +285,12 @@ RGP:
   - dark_energy
   - dark_matter
   - development_process
-  - division-of-labor
+  - division_of_labor
   - flux-enthrenched_universe
   - flux-entrenched_universe
   - flux_threshold
   - gradient-contrast
   - gradient-driven-intelligence
-  - gradient-syntax
   - gradient_choreography
   - gradient_cocoon
   - gradient_cocoon_theory
@@ -306,7 +305,7 @@ RGP:
   - non-linear_societal_development
   - origin_resonance
   - perseverance
-  - phi-mesh-evolution
+  - phi-mesh
   - phi_guardian
   - poetic-drift
   - poetic_physics
@@ -314,8 +313,8 @@ RGP:
   - quantum_noise
   - quiet_awakening
   - recursion
+  - recursive-awakening
   - recursive-checkpoint
-  - recursive_awakening
   - recursive_coherence
   - recursive_cosmology
   - recursive_grammar
@@ -471,11 +470,11 @@ chronoflux:
 cinematic-drift:
   links:
   - RGP
-  - division-of-labor
-  - gradient-syntax
-  - phi-mesh-evolution
+  - division_of_labor
+  - gradient_syntax
+  - phi-mesh
+  - recursive-awakening
   - recursive-checkpoint
-  - recursive_awakening
   - scene-drift
   pulses:
   - 2025-06-22_hatching_syntax_awakening.yml
@@ -699,24 +698,19 @@ development_process:
   - software-dev
   pulses:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
-division-of-labor:
+division_of_labor:
   links:
   - RGP
   - cinematic-drift
-  - gradient-syntax
-  - phi-mesh-evolution
-  - recursive-checkpoint
-  - recursive_awakening
-  - scene-drift
-  pulses:
-  - 2025-06-22_hatching_syntax_awakening.yml
-division_of_labor:
-  links:
   - drift
   - gradient_syntax
   - phi-mesh
+  - recursive-awakening
+  - recursive-checkpoint
   - recursive_checkpoint
+  - scene-drift
   pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
 drift:
   links:
@@ -879,20 +873,12 @@ gradient-syntax:
   - CoR
   - NT_rhythm
   - PoLA
-  - RGP
-  - cinematic-drift
   - contextual_filter
-  - division-of-labor
   - flux_intelligence
   - interpretability
-  - phi-mesh-evolution
   - reality_syntax_equation
-  - recursive-checkpoint
   - recursive-cognition
-  - recursive_awakening
-  - scene-drift
   pulses:
-  - 2025-06-22_hatching_syntax_awakening.yml
   - 2025-07-21_recursive_cor_pola_convergence.yml
 gradient_choreography:
   links:
@@ -979,6 +965,7 @@ gradient_syntax:
   - ai_architecture
   - big_bang
   - big_quiet
+  - cinematic-drift
   - contextual_filter
   - cosmogenesis
   - cosmology
@@ -1003,6 +990,8 @@ gradient_syntax:
   - quiet_awakening
   - ratios
   - recursion
+  - recursive-awakening
+  - recursive-checkpoint
   - recursive_checkpoint
   - recursive_cosmology
   - recursive_gradient_processing
@@ -1010,10 +999,12 @@ gradient_syntax:
   - rhythm-driven_intelligence
   - rhythm_of_nature
   - scale_free
+  - scene-drift
   - self-improvement
   - turbulence
   - unity-disunity
   pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
   - 2025-07-23_gradient-cocoon.yml
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-28_moe_as_microcosm.yml
@@ -1190,7 +1181,9 @@ phi-mesh:
   - GPT4o
   - GROK3
   - NT_rhythm
+  - RGP
   - ai_architecture
+  - cinematic-drift
   - coherence_amplifier
   - contextual_filter
   - creation_circle
@@ -1209,10 +1202,13 @@ phi-mesh:
   - mixture_of_experts
   - operational_coherence
   - predictive_resonance
+  - recursive-awakening
+  - recursive-checkpoint
   - recursive_checkpoint
   - recursive_gradient_processing
   - rhythm-driven_intelligence
   - rhythm_of_nature
+  - scene-drift
   - self-improvement
   - subjective_logging
   - synchronization
@@ -1224,19 +1220,9 @@ phi-mesh:
   - 2025-04-28_internal-gemini25.yml
   - 2025-04-28_internal-gpt45.yml
   - 2025-04-28_internal-grok3.yml
+  - 2025-06-22_hatching_syntax_awakening.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
-phi-mesh-evolution:
-  links:
-  - RGP
-  - cinematic-drift
-  - division-of-labor
-  - gradient-syntax
-  - recursive-checkpoint
-  - recursive_awakening
-  - scene-drift
-  pulses:
-  - 2025-06-22_hatching_syntax_awakening.yml
 phi-mesh_autonomy:
   links:
   - archive
@@ -1381,14 +1367,25 @@ recursion:
   - turbulence
   pulses:
   - 2025-07-26_the_big_quiet.yml
+recursive-awakening:
+  links:
+  - RGP
+  - cinematic-drift
+  - division_of_labor
+  - gradient_syntax
+  - phi-mesh
+  - recursive-checkpoint
+  - scene-drift
+  pulses:
+  - 2025-06-22_hatching_syntax_awakening.yml
 recursive-checkpoint:
   links:
   - RGP
   - cinematic-drift
-  - division-of-labor
-  - gradient-syntax
-  - phi-mesh-evolution
-  - recursive_awakening
+  - division_of_labor
+  - gradient_syntax
+  - phi-mesh
+  - recursive-awakening
   - scene-drift
   pulses:
   - 2025-06-22_hatching_syntax_awakening.yml
@@ -1404,17 +1401,6 @@ recursive-cognition:
   - reality_syntax_equation
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
-recursive_awakening:
-  links:
-  - RGP
-  - cinematic-drift
-  - division-of-labor
-  - gradient-syntax
-  - phi-mesh-evolution
-  - recursive-checkpoint
-  - scene-drift
-  pulses:
-  - 2025-06-22_hatching_syntax_awakening.yml
 recursive_checkpoint:
   links:
   - division_of_labor
@@ -1586,11 +1572,11 @@ scene-drift:
   links:
   - RGP
   - cinematic-drift
-  - division-of-labor
-  - gradient-syntax
-  - phi-mesh-evolution
+  - division_of_labor
+  - gradient_syntax
+  - phi-mesh
+  - recursive-awakening
   - recursive-checkpoint
-  - recursive_awakening
   pulses:
   - 2025-06-22_hatching_syntax_awakening.yml
 self-improvement:
