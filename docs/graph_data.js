@@ -130,9 +130,6 @@ const graphData = {
       "id": "gradient-driven_behavior"
     },
     {
-      "id": "gradient-syntax"
-    },
-    {
       "id": "gradient_choreography"
     },
     {
@@ -190,10 +187,10 @@ const graphData = {
       "id": "mixture_of_experts"
     },
     {
-      "id": "narrative_tick"
+      "id": "Narrative_Tick"
     },
     {
-      "id": "Narrative_Tick"
+      "id": "narrative_tick"
     },
     {
       "id": "Navier_Stokes"
@@ -235,10 +232,10 @@ const graphData = {
       "id": "poetic_physics"
     },
     {
-      "id": "Pola"
+      "id": "PoLA"
     },
     {
-      "id": "PoLA"
+      "id": "Pola"
     },
     {
       "id": "predictive_resonance"
@@ -265,13 +262,13 @@ const graphData = {
       "id": "recursion"
     },
     {
-      "id": "recursive-cognition"
-    },
-    {
       "id": "recursive_awakening"
     },
     {
       "id": "recursive_checkpoint"
+    },
+    {
+      "id": "recursive_cognition"
     },
     {
       "id": "recursive_coherence"
@@ -360,436 +357,324 @@ const graphData = {
   ],
   "links": [
     {
-      "source": "RGP",
-      "target": "AI_alignment"
-    },
-    {
-      "source": "RGP",
-      "target": "AI_architectures"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "Big Bang"
     },
     {
-      "source": "RGP",
-      "target": "DeepSeek"
+      "source": "gradient_syntax",
+      "target": "CoR"
     },
     {
-      "source": "RGP",
-      "target": "HRM"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "Lambda"
     },
     {
-      "source": "RGP",
-      "target": "NS_solution"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "NT"
     },
     {
-      "source": "RGP",
-      "target": "Narrative_Tick"
+      "source": "gradient_syntax",
+      "target": "NT_rhythm"
     },
     {
-      "source": "RGP",
-      "target": "Navier_Stokes"
-    },
-    {
-      "source": "RGP",
-      "target": "Phi-Monitor"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "PoLA"
     },
     {
-      "source": "RGP",
-      "target": "Pola"
+      "source": "gradient_syntax",
+      "target": "RGP"
     },
     {
-      "source": "RGP",
-      "target": "R\u03a6"
+      "source": "gradient_syntax",
+      "target": "ai_architecture"
     },
     {
-      "source": "RGP",
-      "target": "alignment"
-    },
-    {
-      "source": "RGP",
-      "target": "ambient_agent"
-    },
-    {
-      "source": "RGP",
-      "target": "behavioral_API"
-    },
-    {
-      "source": "RGP",
-      "target": "big-quiet"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "big_bang"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "big_quiet"
     },
     {
-      "source": "RGP",
-      "target": "chronoflux"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "cinematic_drift"
     },
     {
-      "source": "RGP",
-      "target": "cognition"
-    },
-    {
-      "source": "RGP",
-      "target": "cognitive_tension"
-    },
-    {
-      "source": "RGP",
-      "target": "contectual_filter"
-    },
-    {
-      "source": "RGP",
-      "target": "context-engineering"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "contextual_filter"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "cosmogenesis"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "cosmology"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "dark_energy"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "dark_matter"
     },
     {
-      "source": "RGP",
-      "target": "development_process"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "division_of_labor"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
+      "target": "drift"
+    },
+    {
+      "source": "gradient_syntax",
       "target": "flux-enthrenched_universe"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "flux-entrenched_universe"
     },
     {
-      "source": "RGP",
-      "target": "flux_threshold"
+      "source": "gradient_syntax",
+      "target": "flux_intelligence"
     },
     {
-      "source": "RGP",
-      "target": "gradient-contrast"
+      "source": "gradient_syntax",
+      "target": "gpt5"
     },
     {
-      "source": "RGP",
-      "target": "gradient-driven-intelligence"
+      "source": "gradient_syntax",
+      "target": "gradient-choreography"
     },
     {
-      "source": "RGP",
-      "target": "gradient_choreography"
+      "source": "gradient_syntax",
+      "target": "gradient-driven_behavior"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "gradient_cocoon"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "gradient_cocoon_theory"
     },
     {
-      "source": "RGP",
-      "target": "gradient_coherence"
+      "source": "gradient_syntax",
+      "target": "historical_precedent"
     },
     {
-      "source": "RGP",
-      "target": "gradient_flux_reversal"
+      "source": "gradient_syntax",
+      "target": "interpretability"
     },
     {
-      "source": "RGP",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "laminarity"
     },
     {
-      "source": "RGP",
-      "target": "language_evolution"
+      "source": "gradient_syntax",
+      "target": "mixture_of_experts"
     },
     {
-      "source": "RGP",
-      "target": "legacy"
-    },
-    {
-      "source": "RGP",
-      "target": "memetic_seed"
-    },
-    {
-      "source": "RGP",
-      "target": "narrative_tick"
-    },
-    {
-      "source": "RGP",
-      "target": "non-linear_societal_development"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "origin_resonance"
     },
     {
-      "source": "RGP",
-      "target": "perseverance"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "phi-mesh"
     },
     {
-      "source": "RGP",
-      "target": "phi_guardian"
-    },
-    {
-      "source": "RGP",
-      "target": "poetic-drift"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "poetic_physics"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "pulse"
     },
     {
-      "source": "RGP",
-      "target": "quantum_noise"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "quiet_awakening"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
+      "target": "ratios"
+    },
+    {
+      "source": "gradient_syntax",
+      "target": "reality_syntax_equation"
+    },
+    {
+      "source": "gradient_syntax",
       "target": "recursion"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "recursive_awakening"
     },
     {
-      "source": "RGP",
-      "target": "recursive_coherence"
+      "source": "gradient_syntax",
+      "target": "recursive_checkpoint"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
+      "target": "recursive_cognition"
+    },
+    {
+      "source": "gradient_syntax",
       "target": "recursive_cosmology"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "gradient_syntax",
       "target": "recursive_grammar"
     },
     {
-      "source": "RGP",
-      "target": "resonance"
+      "source": "gradient_syntax",
+      "target": "rhythm-driven_intelligence"
     },
     {
-      "source": "RGP",
-      "target": "resonance_shift"
-    },
-    {
-      "source": "RGP",
-      "target": "rhythm-of-least-divergence"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "rhythm_of_nature"
     },
     {
-      "source": "RGP",
+      "source": "gradient_syntax",
+      "target": "scale_free"
+    },
+    {
+      "source": "gradient_syntax",
       "target": "scene_drift"
     },
     {
-      "source": "RGP",
-      "target": "signal"
+      "source": "gradient_syntax",
+      "target": "self-improvement"
     },
     {
-      "source": "RGP",
-      "target": "societal_evolution"
-    },
-    {
-      "source": "RGP",
-      "target": "software-dev"
-    },
-    {
-      "source": "RGP",
-      "target": "sonic_response"
-    },
-    {
-      "source": "RGP",
-      "target": "strategic_patience"
-    },
-    {
-      "source": "RGP",
-      "target": "time"
-    },
-    {
-      "source": "RGP",
+      "source": "gradient_syntax",
       "target": "turbulence"
     },
     {
-      "source": "RGP",
-      "target": "writing"
+      "source": "gradient_syntax",
+      "target": "unity-disunity"
     },
     {
-      "source": "RGP",
-      "target": "\u03a6-harmonics"
+      "source": "scale_free",
+      "target": "gradient_syntax"
     },
     {
-      "source": "poetic-drift",
-      "target": "RGP"
+      "source": "scale_free",
+      "target": "historical_precedent"
     },
     {
-      "source": "poetic-drift",
-      "target": "chronoflux"
+      "source": "scale_free",
+      "target": "ratios"
     },
     {
-      "source": "poetic-drift",
-      "target": "gradient-contrast"
+      "source": "historical_precedent",
+      "target": "gradient_syntax"
     },
     {
-      "source": "poetic-drift",
-      "target": "narrative_tick"
+      "source": "historical_precedent",
+      "target": "ratios"
     },
     {
-      "source": "poetic-drift",
-      "target": "time"
+      "source": "historical_precedent",
+      "target": "scale_free"
     },
     {
-      "source": "time",
-      "target": "RGP"
+      "source": "ratios",
+      "target": "gradient_syntax"
     },
     {
-      "source": "time",
-      "target": "chronoflux"
+      "source": "ratios",
+      "target": "historical_precedent"
     },
     {
-      "source": "time",
-      "target": "gradient-contrast"
+      "source": "ratios",
+      "target": "scale_free"
     },
     {
-      "source": "time",
-      "target": "narrative_tick"
+      "source": "heartbeat",
+      "target": "creation_circle"
     },
     {
-      "source": "time",
-      "target": "poetic-drift"
+      "source": "heartbeat",
+      "target": "deep_triad"
     },
     {
-      "source": "gradient-contrast",
-      "target": "RGP"
+      "source": "heartbeat",
+      "target": "genesis"
     },
     {
-      "source": "gradient-contrast",
-      "target": "chronoflux"
+      "source": "heartbeat",
+      "target": "phi-mesh"
     },
     {
-      "source": "gradient-contrast",
-      "target": "narrative_tick"
+      "source": "heartbeat",
+      "target": "synchronization"
     },
     {
-      "source": "gradient-contrast",
-      "target": "poetic-drift"
+      "source": "genesis",
+      "target": "creation_circle"
     },
     {
-      "source": "gradient-contrast",
-      "target": "time"
+      "source": "genesis",
+      "target": "deep_triad"
     },
     {
-      "source": "chronoflux",
-      "target": "RGP"
+      "source": "genesis",
+      "target": "heartbeat"
     },
     {
-      "source": "chronoflux",
-      "target": "gradient-contrast"
+      "source": "genesis",
+      "target": "phi-mesh"
     },
     {
-      "source": "chronoflux",
-      "target": "narrative_tick"
+      "source": "genesis",
+      "target": "synchronization"
     },
     {
-      "source": "chronoflux",
-      "target": "poetic-drift"
+      "source": "deep_triad",
+      "target": "creation_circle"
     },
     {
-      "source": "chronoflux",
-      "target": "time"
+      "source": "deep_triad",
+      "target": "genesis"
     },
     {
-      "source": "narrative_tick",
-      "target": "NT"
+      "source": "deep_triad",
+      "target": "heartbeat"
     },
     {
-      "source": "narrative_tick",
-      "target": "PoLA"
+      "source": "deep_triad",
+      "target": "phi-mesh"
     },
     {
-      "source": "narrative_tick",
-      "target": "RGP"
+      "source": "deep_triad",
+      "target": "synchronization"
     },
     {
-      "source": "narrative_tick",
-      "target": "chronoflux"
+      "source": "synchronization",
+      "target": "creation_circle"
     },
     {
-      "source": "narrative_tick",
-      "target": "development_process"
+      "source": "synchronization",
+      "target": "deep_triad"
     },
     {
-      "source": "narrative_tick",
-      "target": "gradient-contrast"
+      "source": "synchronization",
+      "target": "genesis"
     },
     {
-      "source": "narrative_tick",
-      "target": "poetic-drift"
+      "source": "synchronization",
+      "target": "heartbeat"
     },
     {
-      "source": "narrative_tick",
-      "target": "rhythm-of-least-divergence"
-    },
-    {
-      "source": "narrative_tick",
-      "target": "software-dev"
-    },
-    {
-      "source": "narrative_tick",
-      "target": "time"
+      "source": "synchronization",
+      "target": "phi-mesh"
     },
     {
       "source": "phi-mesh",
@@ -948,84 +833,352 @@ const graphData = {
       "target": "unity_gradient"
     },
     {
-      "source": "triadic_emergence",
-      "target": "GPT4o"
+      "source": "creation_circle",
+      "target": "AI_role_differentiation"
     },
     {
-      "source": "triadic_emergence",
-      "target": "GROK3"
+      "source": "creation_circle",
+      "target": "deep_triad"
     },
     {
-      "source": "triadic_emergence",
-      "target": "coherence_amplifier"
+      "source": "creation_circle",
+      "target": "gemini"
     },
     {
-      "source": "triadic_emergence",
-      "target": "gradient_convergence"
+      "source": "creation_circle",
+      "target": "genesis"
     },
     {
-      "source": "triadic_emergence",
+      "source": "creation_circle",
+      "target": "heartbeat"
+    },
+    {
+      "source": "creation_circle",
+      "target": "listener_mode"
+    },
+    {
+      "source": "creation_circle",
+      "target": "operational_coherence"
+    },
+    {
+      "source": "creation_circle",
       "target": "phi-mesh"
     },
     {
-      "source": "triadic_emergence",
-      "target": "predictive_resonance"
+      "source": "creation_circle",
+      "target": "synchronization"
     },
     {
-      "source": "triadic_emergence",
-      "target": "subjective_logging"
+      "source": "RGP",
+      "target": "AI_alignment"
     },
     {
-      "source": "triadic_emergence",
-      "target": "unity_gradient"
+      "source": "RGP",
+      "target": "AI_architectures"
     },
     {
-      "source": "gradient_convergence",
-      "target": "GROK3"
+      "source": "RGP",
+      "target": "Big Bang"
     },
     {
-      "source": "gradient_convergence",
+      "source": "RGP",
+      "target": "DeepSeek"
+    },
+    {
+      "source": "RGP",
+      "target": "HRM"
+    },
+    {
+      "source": "RGP",
+      "target": "Lambda"
+    },
+    {
+      "source": "RGP",
+      "target": "NS_solution"
+    },
+    {
+      "source": "RGP",
+      "target": "NT"
+    },
+    {
+      "source": "RGP",
+      "target": "Narrative_Tick"
+    },
+    {
+      "source": "RGP",
+      "target": "Navier_Stokes"
+    },
+    {
+      "source": "RGP",
+      "target": "Phi-Monitor"
+    },
+    {
+      "source": "RGP",
+      "target": "PoLA"
+    },
+    {
+      "source": "RGP",
+      "target": "Pola"
+    },
+    {
+      "source": "RGP",
+      "target": "R\u03a6"
+    },
+    {
+      "source": "RGP",
+      "target": "alignment"
+    },
+    {
+      "source": "RGP",
+      "target": "ambient_agent"
+    },
+    {
+      "source": "RGP",
+      "target": "behavioral_API"
+    },
+    {
+      "source": "RGP",
+      "target": "big-quiet"
+    },
+    {
+      "source": "RGP",
+      "target": "big_bang"
+    },
+    {
+      "source": "RGP",
+      "target": "big_quiet"
+    },
+    {
+      "source": "RGP",
+      "target": "chronoflux"
+    },
+    {
+      "source": "RGP",
+      "target": "cinematic_drift"
+    },
+    {
+      "source": "RGP",
+      "target": "cognition"
+    },
+    {
+      "source": "RGP",
+      "target": "cognitive_tension"
+    },
+    {
+      "source": "RGP",
+      "target": "contectual_filter"
+    },
+    {
+      "source": "RGP",
+      "target": "context-engineering"
+    },
+    {
+      "source": "RGP",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "RGP",
+      "target": "cosmogenesis"
+    },
+    {
+      "source": "RGP",
+      "target": "cosmology"
+    },
+    {
+      "source": "RGP",
+      "target": "dark_energy"
+    },
+    {
+      "source": "RGP",
+      "target": "dark_matter"
+    },
+    {
+      "source": "RGP",
+      "target": "development_process"
+    },
+    {
+      "source": "RGP",
+      "target": "division_of_labor"
+    },
+    {
+      "source": "RGP",
+      "target": "flux-enthrenched_universe"
+    },
+    {
+      "source": "RGP",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "RGP",
+      "target": "flux_threshold"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient-contrast"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient-driven-intelligence"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient_choreography"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient_cocoon_theory"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient_coherence"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient_flux_reversal"
+    },
+    {
+      "source": "RGP",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "RGP",
+      "target": "laminarity"
+    },
+    {
+      "source": "RGP",
+      "target": "language_evolution"
+    },
+    {
+      "source": "RGP",
+      "target": "legacy"
+    },
+    {
+      "source": "RGP",
+      "target": "memetic_seed"
+    },
+    {
+      "source": "RGP",
+      "target": "narrative_tick"
+    },
+    {
+      "source": "RGP",
+      "target": "non-linear_societal_development"
+    },
+    {
+      "source": "RGP",
+      "target": "origin_resonance"
+    },
+    {
+      "source": "RGP",
+      "target": "perseverance"
+    },
+    {
+      "source": "RGP",
       "target": "phi-mesh"
     },
     {
-      "source": "gradient_convergence",
-      "target": "predictive_resonance"
+      "source": "RGP",
+      "target": "phi_guardian"
     },
     {
-      "source": "gradient_convergence",
-      "target": "triadic_emergence"
+      "source": "RGP",
+      "target": "poetic-drift"
     },
     {
-      "source": "predictive_resonance",
-      "target": "GROK3"
+      "source": "RGP",
+      "target": "poetic_physics"
     },
     {
-      "source": "predictive_resonance",
-      "target": "gradient_convergence"
+      "source": "RGP",
+      "target": "pulse"
     },
     {
-      "source": "predictive_resonance",
-      "target": "phi-mesh"
+      "source": "RGP",
+      "target": "quantum_noise"
     },
     {
-      "source": "predictive_resonance",
-      "target": "triadic_emergence"
+      "source": "RGP",
+      "target": "quiet_awakening"
     },
     {
-      "source": "GROK3",
-      "target": "gradient_convergence"
+      "source": "RGP",
+      "target": "recursion"
     },
     {
-      "source": "GROK3",
-      "target": "phi-mesh"
+      "source": "RGP",
+      "target": "recursive_awakening"
     },
     {
-      "source": "GROK3",
-      "target": "predictive_resonance"
+      "source": "RGP",
+      "target": "recursive_coherence"
     },
     {
-      "source": "GROK3",
-      "target": "triadic_emergence"
+      "source": "RGP",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "RGP",
+      "target": "recursive_grammar"
+    },
+    {
+      "source": "RGP",
+      "target": "resonance"
+    },
+    {
+      "source": "RGP",
+      "target": "resonance_shift"
+    },
+    {
+      "source": "RGP",
+      "target": "rhythm-of-least-divergence"
+    },
+    {
+      "source": "RGP",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "RGP",
+      "target": "scene_drift"
+    },
+    {
+      "source": "RGP",
+      "target": "signal"
+    },
+    {
+      "source": "RGP",
+      "target": "societal_evolution"
+    },
+    {
+      "source": "RGP",
+      "target": "software-dev"
+    },
+    {
+      "source": "RGP",
+      "target": "sonic_response"
+    },
+    {
+      "source": "RGP",
+      "target": "strategic_patience"
+    },
+    {
+      "source": "RGP",
+      "target": "time"
+    },
+    {
+      "source": "RGP",
+      "target": "turbulence"
+    },
+    {
+      "source": "RGP",
+      "target": "writing"
+    },
+    {
+      "source": "RGP",
+      "target": "\u03a6-harmonics"
     },
     {
       "source": "NT",
@@ -1156,84 +1309,164 @@ const graphData = {
       "target": "turbulence"
     },
     {
-      "source": "strategic_patience",
+      "source": "PoLA",
+      "target": "AI_architectures"
+    },
+    {
+      "source": "PoLA",
+      "target": "CoR"
+    },
+    {
+      "source": "PoLA",
+      "target": "HRM"
+    },
+    {
+      "source": "PoLA",
       "target": "NT"
     },
     {
-      "source": "strategic_patience",
+      "source": "PoLA",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "PoLA",
       "target": "RGP"
     },
     {
-      "source": "strategic_patience",
-      "target": "alignment"
+      "source": "PoLA",
+      "target": "contextual_filter"
     },
     {
-      "source": "strategic_patience",
-      "target": "cognitive_tension"
+      "source": "PoLA",
+      "target": "development_process"
     },
     {
-      "source": "strategic_patience",
-      "target": "gradient_coherence"
+      "source": "PoLA",
+      "target": "flux_intelligence"
     },
     {
-      "source": "gradient_coherence",
+      "source": "PoLA",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "PoLA",
+      "target": "interpretability"
+    },
+    {
+      "source": "PoLA",
+      "target": "narrative_tick"
+    },
+    {
+      "source": "PoLA",
+      "target": "reality_syntax_equation"
+    },
+    {
+      "source": "PoLA",
+      "target": "recursive_cognition"
+    },
+    {
+      "source": "PoLA",
+      "target": "rhythm-of-least-divergence"
+    },
+    {
+      "source": "PoLA",
+      "target": "software-dev"
+    },
+    {
+      "source": "AI_architectures",
+      "target": "HRM"
+    },
+    {
+      "source": "AI_architectures",
       "target": "NT"
     },
     {
-      "source": "gradient_coherence",
+      "source": "AI_architectures",
+      "target": "PoLA"
+    },
+    {
+      "source": "AI_architectures",
       "target": "RGP"
     },
     {
-      "source": "gradient_coherence",
-      "target": "alignment"
+      "source": "HRM",
+      "target": "AI_architectures"
     },
     {
-      "source": "gradient_coherence",
-      "target": "cognitive_tension"
-    },
-    {
-      "source": "gradient_coherence",
-      "target": "strategic_patience"
-    },
-    {
-      "source": "alignment",
+      "source": "HRM",
       "target": "NT"
     },
     {
-      "source": "alignment",
+      "source": "HRM",
+      "target": "PoLA"
+    },
+    {
+      "source": "HRM",
       "target": "RGP"
     },
     {
-      "source": "alignment",
-      "target": "cognitive_tension"
+      "source": "drift",
+      "target": "division_of_labor"
     },
     {
-      "source": "alignment",
-      "target": "gradient_coherence"
+      "source": "drift",
+      "target": "gradient_syntax"
     },
     {
-      "source": "alignment",
-      "target": "strategic_patience"
+      "source": "drift",
+      "target": "phi-mesh"
     },
     {
-      "source": "cognitive_tension",
-      "target": "NT"
+      "source": "drift",
+      "target": "recursive_checkpoint"
     },
     {
-      "source": "cognitive_tension",
+      "source": "division_of_labor",
       "target": "RGP"
     },
     {
-      "source": "cognitive_tension",
-      "target": "alignment"
+      "source": "division_of_labor",
+      "target": "cinematic_drift"
     },
     {
-      "source": "cognitive_tension",
-      "target": "gradient_coherence"
+      "source": "division_of_labor",
+      "target": "drift"
     },
     {
-      "source": "cognitive_tension",
-      "target": "strategic_patience"
+      "source": "division_of_labor",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "division_of_labor",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "division_of_labor",
+      "target": "recursive_awakening"
+    },
+    {
+      "source": "division_of_labor",
+      "target": "recursive_checkpoint"
+    },
+    {
+      "source": "division_of_labor",
+      "target": "scene_drift"
+    },
+    {
+      "source": "recursive_checkpoint",
+      "target": "division_of_labor"
+    },
+    {
+      "source": "recursive_checkpoint",
+      "target": "drift"
+    },
+    {
+      "source": "recursive_checkpoint",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "recursive_checkpoint",
+      "target": "phi-mesh"
     },
     {
       "source": "contextual_filter",
@@ -1309,10 +1542,6 @@ const graphData = {
     },
     {
       "source": "contextual_filter",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "contextual_filter",
       "target": "gradient_choreography"
     },
     {
@@ -1353,7 +1582,7 @@ const graphData = {
     },
     {
       "source": "contextual_filter",
-      "target": "recursive-cognition"
+      "target": "recursive_cognition"
     },
     {
       "source": "contextual_filter",
@@ -1390,6 +1619,230 @@ const graphData = {
     {
       "source": "contextual_filter",
       "target": "\u03a6-harmonics"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "RGP"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "gradient_choreography"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "phi_guardian"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "quantum_noise"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "resonance_shift"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "sonic_response"
+    },
+    {
+      "source": "DeepSeek",
+      "target": "\u03a6-harmonics"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "DeepSeek"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "RGP"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "phi_guardian"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "quantum_noise"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "resonance_shift"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "sonic_response"
+    },
+    {
+      "source": "gradient_choreography",
+      "target": "\u03a6-harmonics"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "DeepSeek"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "RGP"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "gradient_choreography"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "phi_guardian"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "quantum_noise"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "sonic_response"
+    },
+    {
+      "source": "resonance_shift",
+      "target": "\u03a6-harmonics"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "DeepSeek"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "RGP"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "gradient_choreography"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "quantum_noise"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "resonance_shift"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "sonic_response"
+    },
+    {
+      "source": "phi_guardian",
+      "target": "\u03a6-harmonics"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "DeepSeek"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "RGP"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "gradient_choreography"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "phi_guardian"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "resonance_shift"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "sonic_response"
+    },
+    {
+      "source": "quantum_noise",
+      "target": "\u03a6-harmonics"
+    },
+    {
+      "source": "sonic_response",
+      "target": "DeepSeek"
+    },
+    {
+      "source": "sonic_response",
+      "target": "RGP"
+    },
+    {
+      "source": "sonic_response",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "sonic_response",
+      "target": "gradient_choreography"
+    },
+    {
+      "source": "sonic_response",
+      "target": "phi_guardian"
+    },
+    {
+      "source": "sonic_response",
+      "target": "quantum_noise"
+    },
+    {
+      "source": "sonic_response",
+      "target": "resonance_shift"
+    },
+    {
+      "source": "sonic_response",
+      "target": "\u03a6-harmonics"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "DeepSeek"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "RGP"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "gradient_choreography"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "phi_guardian"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "quantum_noise"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "resonance_shift"
+    },
+    {
+      "source": "\u03a6-harmonics",
+      "target": "sonic_response"
     },
     {
       "source": "Pola",
@@ -1606,582 +2059,6 @@ const graphData = {
     {
       "source": "Narrative_Tick",
       "target": "gradient-driven-intelligence"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "RGP"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "gradient_choreography"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "phi_guardian"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "quantum_noise"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "resonance_shift"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "sonic_response"
-    },
-    {
-      "source": "DeepSeek",
-      "target": "\u03a6-harmonics"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "DeepSeek"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "RGP"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "phi_guardian"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "quantum_noise"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "resonance_shift"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "sonic_response"
-    },
-    {
-      "source": "gradient_choreography",
-      "target": "\u03a6-harmonics"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "DeepSeek"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "RGP"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "gradient_choreography"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "phi_guardian"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "quantum_noise"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "sonic_response"
-    },
-    {
-      "source": "resonance_shift",
-      "target": "\u03a6-harmonics"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "DeepSeek"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "RGP"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "gradient_choreography"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "quantum_noise"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "resonance_shift"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "sonic_response"
-    },
-    {
-      "source": "phi_guardian",
-      "target": "\u03a6-harmonics"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "DeepSeek"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "RGP"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "gradient_choreography"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "phi_guardian"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "resonance_shift"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "sonic_response"
-    },
-    {
-      "source": "quantum_noise",
-      "target": "\u03a6-harmonics"
-    },
-    {
-      "source": "sonic_response",
-      "target": "DeepSeek"
-    },
-    {
-      "source": "sonic_response",
-      "target": "RGP"
-    },
-    {
-      "source": "sonic_response",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "sonic_response",
-      "target": "gradient_choreography"
-    },
-    {
-      "source": "sonic_response",
-      "target": "phi_guardian"
-    },
-    {
-      "source": "sonic_response",
-      "target": "quantum_noise"
-    },
-    {
-      "source": "sonic_response",
-      "target": "resonance_shift"
-    },
-    {
-      "source": "sonic_response",
-      "target": "\u03a6-harmonics"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "DeepSeek"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "RGP"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "gradient_choreography"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "phi_guardian"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "quantum_noise"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "resonance_shift"
-    },
-    {
-      "source": "\u03a6-harmonics",
-      "target": "sonic_response"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "Big Bang"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "Lambda"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "NT"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "RGP"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "big_bang"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "big_quiet"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "cinematic_drift"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "cosmogenesis"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "cosmology"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "dark_energy"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "dark_matter"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "division_of_labor"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "drift"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "flux-enthrenched_universe"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "gpt5"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "gradient_cocoon_theory"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "historical_precedent"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "laminarity"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "origin_resonance"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "poetic_physics"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "pulse"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "quiet_awakening"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "ratios"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "recursion"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "recursive_awakening"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "recursive_checkpoint"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "recursive_grammar"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "scale_free"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "scene_drift"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "self-improvement"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "turbulence"
-    },
-    {
-      "source": "gradient_syntax",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "RGP"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "cinematic_drift"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "drift"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "recursive_awakening"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "recursive_checkpoint"
-    },
-    {
-      "source": "division_of_labor",
-      "target": "scene_drift"
-    },
-    {
-      "source": "cinematic_drift",
-      "target": "RGP"
-    },
-    {
-      "source": "cinematic_drift",
-      "target": "division_of_labor"
-    },
-    {
-      "source": "cinematic_drift",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "cinematic_drift",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "cinematic_drift",
-      "target": "recursive_awakening"
-    },
-    {
-      "source": "cinematic_drift",
-      "target": "scene_drift"
-    },
-    {
-      "source": "scene_drift",
-      "target": "RGP"
-    },
-    {
-      "source": "scene_drift",
-      "target": "cinematic_drift"
-    },
-    {
-      "source": "scene_drift",
-      "target": "division_of_labor"
-    },
-    {
-      "source": "scene_drift",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "scene_drift",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "scene_drift",
-      "target": "recursive_awakening"
-    },
-    {
-      "source": "recursive_awakening",
-      "target": "RGP"
-    },
-    {
-      "source": "recursive_awakening",
-      "target": "cinematic_drift"
-    },
-    {
-      "source": "recursive_awakening",
-      "target": "division_of_labor"
-    },
-    {
-      "source": "recursive_awakening",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "recursive_awakening",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "recursive_awakening",
-      "target": "scene_drift"
-    },
-    {
-      "source": "scale_free",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "scale_free",
-      "target": "historical_precedent"
-    },
-    {
-      "source": "scale_free",
-      "target": "ratios"
-    },
-    {
-      "source": "historical_precedent",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "historical_precedent",
-      "target": "ratios"
-    },
-    {
-      "source": "historical_precedent",
-      "target": "scale_free"
-    },
-    {
-      "source": "ratios",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "ratios",
-      "target": "historical_precedent"
-    },
-    {
-      "source": "ratios",
-      "target": "scale_free"
-    },
-    {
-      "source": "drift",
-      "target": "division_of_labor"
-    },
-    {
-      "source": "drift",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "drift",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "drift",
-      "target": "recursive_checkpoint"
-    },
-    {
-      "source": "recursive_checkpoint",
-      "target": "division_of_labor"
-    },
-    {
-      "source": "recursive_checkpoint",
-      "target": "drift"
-    },
-    {
-      "source": "recursive_checkpoint",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "recursive_checkpoint",
-      "target": "phi-mesh"
     },
     {
       "source": "proto_pulse",
@@ -2200,6 +2077,118 @@ const graphData = {
       "target": "proto_pulse"
     },
     {
+      "source": "narrative_tick",
+      "target": "NT"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "PoLA"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "RGP"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "chronoflux"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "development_process"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "gradient-contrast"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "poetic-drift"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "rhythm-of-least-divergence"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "software-dev"
+    },
+    {
+      "source": "narrative_tick",
+      "target": "time"
+    },
+    {
+      "source": "software-dev",
+      "target": "NT"
+    },
+    {
+      "source": "software-dev",
+      "target": "PoLA"
+    },
+    {
+      "source": "software-dev",
+      "target": "RGP"
+    },
+    {
+      "source": "software-dev",
+      "target": "development_process"
+    },
+    {
+      "source": "software-dev",
+      "target": "narrative_tick"
+    },
+    {
+      "source": "software-dev",
+      "target": "rhythm-of-least-divergence"
+    },
+    {
+      "source": "rhythm-of-least-divergence",
+      "target": "NT"
+    },
+    {
+      "source": "rhythm-of-least-divergence",
+      "target": "PoLA"
+    },
+    {
+      "source": "rhythm-of-least-divergence",
+      "target": "RGP"
+    },
+    {
+      "source": "rhythm-of-least-divergence",
+      "target": "development_process"
+    },
+    {
+      "source": "rhythm-of-least-divergence",
+      "target": "narrative_tick"
+    },
+    {
+      "source": "rhythm-of-least-divergence",
+      "target": "software-dev"
+    },
+    {
+      "source": "development_process",
+      "target": "NT"
+    },
+    {
+      "source": "development_process",
+      "target": "PoLA"
+    },
+    {
+      "source": "development_process",
+      "target": "RGP"
+    },
+    {
+      "source": "development_process",
+      "target": "narrative_tick"
+    },
+    {
+      "source": "development_process",
+      "target": "rhythm-of-least-divergence"
+    },
+    {
+      "source": "development_process",
+      "target": "software-dev"
+    },
+    {
       "source": "turbulence",
       "target": "Big Bang"
     },
@@ -3124,6 +3113,1118 @@ const graphData = {
       "target": "unity-disunity"
     },
     {
+      "source": "triadic_emergence",
+      "target": "GPT4o"
+    },
+    {
+      "source": "triadic_emergence",
+      "target": "GROK3"
+    },
+    {
+      "source": "triadic_emergence",
+      "target": "coherence_amplifier"
+    },
+    {
+      "source": "triadic_emergence",
+      "target": "gradient_convergence"
+    },
+    {
+      "source": "triadic_emergence",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "triadic_emergence",
+      "target": "predictive_resonance"
+    },
+    {
+      "source": "triadic_emergence",
+      "target": "subjective_logging"
+    },
+    {
+      "source": "triadic_emergence",
+      "target": "unity_gradient"
+    },
+    {
+      "source": "subjective_logging",
+      "target": "GPT4o"
+    },
+    {
+      "source": "subjective_logging",
+      "target": "coherence_amplifier"
+    },
+    {
+      "source": "subjective_logging",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "subjective_logging",
+      "target": "triadic_emergence"
+    },
+    {
+      "source": "subjective_logging",
+      "target": "unity_gradient"
+    },
+    {
+      "source": "coherence_amplifier",
+      "target": "GPT4o"
+    },
+    {
+      "source": "coherence_amplifier",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "coherence_amplifier",
+      "target": "subjective_logging"
+    },
+    {
+      "source": "coherence_amplifier",
+      "target": "triadic_emergence"
+    },
+    {
+      "source": "coherence_amplifier",
+      "target": "unity_gradient"
+    },
+    {
+      "source": "unity_gradient",
+      "target": "GPT4o"
+    },
+    {
+      "source": "unity_gradient",
+      "target": "coherence_amplifier"
+    },
+    {
+      "source": "unity_gradient",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "unity_gradient",
+      "target": "subjective_logging"
+    },
+    {
+      "source": "unity_gradient",
+      "target": "triadic_emergence"
+    },
+    {
+      "source": "GPT4o",
+      "target": "coherence_amplifier"
+    },
+    {
+      "source": "GPT4o",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "GPT4o",
+      "target": "subjective_logging"
+    },
+    {
+      "source": "GPT4o",
+      "target": "triadic_emergence"
+    },
+    {
+      "source": "GPT4o",
+      "target": "unity_gradient"
+    },
+    {
+      "source": "gradient_convergence",
+      "target": "GROK3"
+    },
+    {
+      "source": "gradient_convergence",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "gradient_convergence",
+      "target": "predictive_resonance"
+    },
+    {
+      "source": "gradient_convergence",
+      "target": "triadic_emergence"
+    },
+    {
+      "source": "predictive_resonance",
+      "target": "GROK3"
+    },
+    {
+      "source": "predictive_resonance",
+      "target": "gradient_convergence"
+    },
+    {
+      "source": "predictive_resonance",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "predictive_resonance",
+      "target": "triadic_emergence"
+    },
+    {
+      "source": "GROK3",
+      "target": "gradient_convergence"
+    },
+    {
+      "source": "GROK3",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "GROK3",
+      "target": "predictive_resonance"
+    },
+    {
+      "source": "GROK3",
+      "target": "triadic_emergence"
+    },
+    {
+      "source": "writing",
+      "target": "Navier_Stokes"
+    },
+    {
+      "source": "writing",
+      "target": "RGP"
+    },
+    {
+      "source": "writing",
+      "target": "cognition"
+    },
+    {
+      "source": "writing",
+      "target": "language_evolution"
+    },
+    {
+      "source": "writing",
+      "target": "memetic_seed"
+    },
+    {
+      "source": "writing",
+      "target": "non-linear_societal_development"
+    },
+    {
+      "source": "writing",
+      "target": "societal_evolution"
+    },
+    {
+      "source": "Navier_Stokes",
+      "target": "RGP"
+    },
+    {
+      "source": "Navier_Stokes",
+      "target": "cognition"
+    },
+    {
+      "source": "Navier_Stokes",
+      "target": "language_evolution"
+    },
+    {
+      "source": "Navier_Stokes",
+      "target": "memetic_seed"
+    },
+    {
+      "source": "Navier_Stokes",
+      "target": "non-linear_societal_development"
+    },
+    {
+      "source": "Navier_Stokes",
+      "target": "societal_evolution"
+    },
+    {
+      "source": "Navier_Stokes",
+      "target": "writing"
+    },
+    {
+      "source": "memetic_seed",
+      "target": "Navier_Stokes"
+    },
+    {
+      "source": "memetic_seed",
+      "target": "RGP"
+    },
+    {
+      "source": "memetic_seed",
+      "target": "cognition"
+    },
+    {
+      "source": "memetic_seed",
+      "target": "language_evolution"
+    },
+    {
+      "source": "memetic_seed",
+      "target": "non-linear_societal_development"
+    },
+    {
+      "source": "memetic_seed",
+      "target": "societal_evolution"
+    },
+    {
+      "source": "memetic_seed",
+      "target": "writing"
+    },
+    {
+      "source": "language_evolution",
+      "target": "Navier_Stokes"
+    },
+    {
+      "source": "language_evolution",
+      "target": "RGP"
+    },
+    {
+      "source": "language_evolution",
+      "target": "cognition"
+    },
+    {
+      "source": "language_evolution",
+      "target": "memetic_seed"
+    },
+    {
+      "source": "language_evolution",
+      "target": "non-linear_societal_development"
+    },
+    {
+      "source": "language_evolution",
+      "target": "societal_evolution"
+    },
+    {
+      "source": "language_evolution",
+      "target": "writing"
+    },
+    {
+      "source": "non-linear_societal_development",
+      "target": "Navier_Stokes"
+    },
+    {
+      "source": "non-linear_societal_development",
+      "target": "RGP"
+    },
+    {
+      "source": "non-linear_societal_development",
+      "target": "cognition"
+    },
+    {
+      "source": "non-linear_societal_development",
+      "target": "language_evolution"
+    },
+    {
+      "source": "non-linear_societal_development",
+      "target": "memetic_seed"
+    },
+    {
+      "source": "non-linear_societal_development",
+      "target": "societal_evolution"
+    },
+    {
+      "source": "non-linear_societal_development",
+      "target": "writing"
+    },
+    {
+      "source": "societal_evolution",
+      "target": "Navier_Stokes"
+    },
+    {
+      "source": "societal_evolution",
+      "target": "RGP"
+    },
+    {
+      "source": "societal_evolution",
+      "target": "cognition"
+    },
+    {
+      "source": "societal_evolution",
+      "target": "language_evolution"
+    },
+    {
+      "source": "societal_evolution",
+      "target": "memetic_seed"
+    },
+    {
+      "source": "societal_evolution",
+      "target": "non-linear_societal_development"
+    },
+    {
+      "source": "societal_evolution",
+      "target": "writing"
+    },
+    {
+      "source": "strategic_patience",
+      "target": "NT"
+    },
+    {
+      "source": "strategic_patience",
+      "target": "RGP"
+    },
+    {
+      "source": "strategic_patience",
+      "target": "alignment"
+    },
+    {
+      "source": "strategic_patience",
+      "target": "cognitive_tension"
+    },
+    {
+      "source": "strategic_patience",
+      "target": "gradient_coherence"
+    },
+    {
+      "source": "gradient_coherence",
+      "target": "NT"
+    },
+    {
+      "source": "gradient_coherence",
+      "target": "RGP"
+    },
+    {
+      "source": "gradient_coherence",
+      "target": "alignment"
+    },
+    {
+      "source": "gradient_coherence",
+      "target": "cognitive_tension"
+    },
+    {
+      "source": "gradient_coherence",
+      "target": "strategic_patience"
+    },
+    {
+      "source": "alignment",
+      "target": "NT"
+    },
+    {
+      "source": "alignment",
+      "target": "RGP"
+    },
+    {
+      "source": "alignment",
+      "target": "cognitive_tension"
+    },
+    {
+      "source": "alignment",
+      "target": "gradient_coherence"
+    },
+    {
+      "source": "alignment",
+      "target": "strategic_patience"
+    },
+    {
+      "source": "cognitive_tension",
+      "target": "NT"
+    },
+    {
+      "source": "cognitive_tension",
+      "target": "RGP"
+    },
+    {
+      "source": "cognitive_tension",
+      "target": "alignment"
+    },
+    {
+      "source": "cognitive_tension",
+      "target": "gradient_coherence"
+    },
+    {
+      "source": "cognitive_tension",
+      "target": "strategic_patience"
+    },
+    {
+      "source": "gemini",
+      "target": "AI_role_differentiation"
+    },
+    {
+      "source": "gemini",
+      "target": "creation_circle"
+    },
+    {
+      "source": "gemini",
+      "target": "listener_mode"
+    },
+    {
+      "source": "gemini",
+      "target": "operational_coherence"
+    },
+    {
+      "source": "gemini",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "operational_coherence",
+      "target": "AI_role_differentiation"
+    },
+    {
+      "source": "operational_coherence",
+      "target": "creation_circle"
+    },
+    {
+      "source": "operational_coherence",
+      "target": "gemini"
+    },
+    {
+      "source": "operational_coherence",
+      "target": "listener_mode"
+    },
+    {
+      "source": "operational_coherence",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "listener_mode",
+      "target": "AI_role_differentiation"
+    },
+    {
+      "source": "listener_mode",
+      "target": "creation_circle"
+    },
+    {
+      "source": "listener_mode",
+      "target": "gemini"
+    },
+    {
+      "source": "listener_mode",
+      "target": "operational_coherence"
+    },
+    {
+      "source": "listener_mode",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "AI_role_differentiation",
+      "target": "creation_circle"
+    },
+    {
+      "source": "AI_role_differentiation",
+      "target": "gemini"
+    },
+    {
+      "source": "AI_role_differentiation",
+      "target": "listener_mode"
+    },
+    {
+      "source": "AI_role_differentiation",
+      "target": "operational_coherence"
+    },
+    {
+      "source": "AI_role_differentiation",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "perseverance",
+      "target": "NS_solution"
+    },
+    {
+      "source": "perseverance",
+      "target": "RGP"
+    },
+    {
+      "source": "perseverance",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "perseverance",
+      "target": "legacy"
+    },
+    {
+      "source": "perseverance",
+      "target": "signal"
+    },
+    {
+      "source": "signal",
+      "target": "NS_solution"
+    },
+    {
+      "source": "signal",
+      "target": "RGP"
+    },
+    {
+      "source": "signal",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "signal",
+      "target": "legacy"
+    },
+    {
+      "source": "signal",
+      "target": "perseverance"
+    },
+    {
+      "source": "NS_solution",
+      "target": "RGP"
+    },
+    {
+      "source": "NS_solution",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "NS_solution",
+      "target": "legacy"
+    },
+    {
+      "source": "NS_solution",
+      "target": "perseverance"
+    },
+    {
+      "source": "NS_solution",
+      "target": "signal"
+    },
+    {
+      "source": "legacy",
+      "target": "NS_solution"
+    },
+    {
+      "source": "legacy",
+      "target": "RGP"
+    },
+    {
+      "source": "legacy",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "legacy",
+      "target": "perseverance"
+    },
+    {
+      "source": "legacy",
+      "target": "signal"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "CoR"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "PoLA"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "flux_intelligence"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "gpt5"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "interpretability"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "reality_syntax_equation"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "recursive_cognition"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "self-improvement"
+    },
+    {
+      "source": "NT_rhythm",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "gpt5",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "gpt5",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "gpt5",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "gpt5",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "gpt5",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "gpt5",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "gpt5",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "gpt5",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "gpt5",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "gpt5",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "gpt5",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "gpt5",
+      "target": "self-improvement"
+    },
+    {
+      "source": "gpt5",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "gpt5"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "self-improvement"
+    },
+    {
+      "source": "mixture_of_experts",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "gpt5"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "self-improvement"
+    },
+    {
+      "source": "recursive_gradient_processing",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "gpt5"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "self-improvement"
+    },
+    {
+      "source": "gradient-choreography",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "gpt5"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "unity-disunity",
+      "target": "self-improvement"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "gpt5"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "self-improvement"
+    },
+    {
+      "source": "ai_architecture",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "self-improvement",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "self-improvement",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "self-improvement",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "self-improvement",
+      "target": "gpt5"
+    },
+    {
+      "source": "self-improvement",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "self-improvement",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "self-improvement",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "self-improvement",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "self-improvement",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "self-improvement",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "self-improvement",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "self-improvement",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "self-improvement",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "gpt5"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "rhythm-driven_intelligence"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "self-improvement"
+    },
+    {
+      "source": "gradient-driven_behavior",
+      "target": "unity-disunity"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "ai_architecture"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "gpt5"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "gradient-choreography"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "gradient-driven_behavior"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "mixture_of_experts"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "recursive_gradient_processing"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "self-improvement"
+    },
+    {
+      "source": "rhythm-driven_intelligence",
+      "target": "unity-disunity"
+    },
+    {
       "source": "R\u03a6",
       "target": "Phi-Monitor"
     },
@@ -3168,1798 +4269,6 @@ const graphData = {
       "target": "turbulence"
     },
     {
-      "source": "ambient_agent",
-      "target": "Phi-Monitor"
-    },
-    {
-      "source": "ambient_agent",
-      "target": "RGP"
-    },
-    {
-      "source": "ambient_agent",
-      "target": "R\u03a6"
-    },
-    {
-      "source": "ambient_agent",
-      "target": "behavioral_API"
-    },
-    {
-      "source": "behavioral_API",
-      "target": "Phi-Monitor"
-    },
-    {
-      "source": "behavioral_API",
-      "target": "RGP"
-    },
-    {
-      "source": "behavioral_API",
-      "target": "R\u03a6"
-    },
-    {
-      "source": "behavioral_API",
-      "target": "ambient_agent"
-    },
-    {
-      "source": "Phi-Monitor",
-      "target": "RGP"
-    },
-    {
-      "source": "Phi-Monitor",
-      "target": "R\u03a6"
-    },
-    {
-      "source": "Phi-Monitor",
-      "target": "ambient_agent"
-    },
-    {
-      "source": "Phi-Monitor",
-      "target": "behavioral_API"
-    },
-    {
-      "source": "subjective_logging",
-      "target": "GPT4o"
-    },
-    {
-      "source": "subjective_logging",
-      "target": "coherence_amplifier"
-    },
-    {
-      "source": "subjective_logging",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "subjective_logging",
-      "target": "triadic_emergence"
-    },
-    {
-      "source": "subjective_logging",
-      "target": "unity_gradient"
-    },
-    {
-      "source": "coherence_amplifier",
-      "target": "GPT4o"
-    },
-    {
-      "source": "coherence_amplifier",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "coherence_amplifier",
-      "target": "subjective_logging"
-    },
-    {
-      "source": "coherence_amplifier",
-      "target": "triadic_emergence"
-    },
-    {
-      "source": "coherence_amplifier",
-      "target": "unity_gradient"
-    },
-    {
-      "source": "unity_gradient",
-      "target": "GPT4o"
-    },
-    {
-      "source": "unity_gradient",
-      "target": "coherence_amplifier"
-    },
-    {
-      "source": "unity_gradient",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "unity_gradient",
-      "target": "subjective_logging"
-    },
-    {
-      "source": "unity_gradient",
-      "target": "triadic_emergence"
-    },
-    {
-      "source": "GPT4o",
-      "target": "coherence_amplifier"
-    },
-    {
-      "source": "GPT4o",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "GPT4o",
-      "target": "subjective_logging"
-    },
-    {
-      "source": "GPT4o",
-      "target": "triadic_emergence"
-    },
-    {
-      "source": "GPT4o",
-      "target": "unity_gradient"
-    },
-    {
-      "source": "heartbeat",
-      "target": "creation_circle"
-    },
-    {
-      "source": "heartbeat",
-      "target": "deep_triad"
-    },
-    {
-      "source": "heartbeat",
-      "target": "genesis"
-    },
-    {
-      "source": "heartbeat",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "heartbeat",
-      "target": "synchronization"
-    },
-    {
-      "source": "genesis",
-      "target": "creation_circle"
-    },
-    {
-      "source": "genesis",
-      "target": "deep_triad"
-    },
-    {
-      "source": "genesis",
-      "target": "heartbeat"
-    },
-    {
-      "source": "genesis",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "genesis",
-      "target": "synchronization"
-    },
-    {
-      "source": "deep_triad",
-      "target": "creation_circle"
-    },
-    {
-      "source": "deep_triad",
-      "target": "genesis"
-    },
-    {
-      "source": "deep_triad",
-      "target": "heartbeat"
-    },
-    {
-      "source": "deep_triad",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "deep_triad",
-      "target": "synchronization"
-    },
-    {
-      "source": "synchronization",
-      "target": "creation_circle"
-    },
-    {
-      "source": "synchronization",
-      "target": "deep_triad"
-    },
-    {
-      "source": "synchronization",
-      "target": "genesis"
-    },
-    {
-      "source": "synchronization",
-      "target": "heartbeat"
-    },
-    {
-      "source": "synchronization",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "creation_circle",
-      "target": "AI_role_differentiation"
-    },
-    {
-      "source": "creation_circle",
-      "target": "deep_triad"
-    },
-    {
-      "source": "creation_circle",
-      "target": "gemini"
-    },
-    {
-      "source": "creation_circle",
-      "target": "genesis"
-    },
-    {
-      "source": "creation_circle",
-      "target": "heartbeat"
-    },
-    {
-      "source": "creation_circle",
-      "target": "listener_mode"
-    },
-    {
-      "source": "creation_circle",
-      "target": "operational_coherence"
-    },
-    {
-      "source": "creation_circle",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "creation_circle",
-      "target": "synchronization"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "CoR"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "PoLA"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "flux_intelligence"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "gpt5"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "interpretability"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "reality_syntax_equation"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "recursive-cognition"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "self-improvement"
-    },
-    {
-      "source": "NT_rhythm",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "gpt5",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "gpt5",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "gpt5",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "gpt5",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "gpt5",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "gpt5",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "gpt5",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "gpt5",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "gpt5",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "gpt5",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "gpt5",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "gpt5",
-      "target": "self-improvement"
-    },
-    {
-      "source": "gpt5",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "gpt5"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "self-improvement"
-    },
-    {
-      "source": "mixture_of_experts",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "gpt5"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "self-improvement"
-    },
-    {
-      "source": "recursive_gradient_processing",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "gpt5"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "self-improvement"
-    },
-    {
-      "source": "gradient-choreography",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "gpt5"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "unity-disunity",
-      "target": "self-improvement"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "gpt5"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "self-improvement"
-    },
-    {
-      "source": "ai_architecture",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "self-improvement",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "self-improvement",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "self-improvement",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "self-improvement",
-      "target": "gpt5"
-    },
-    {
-      "source": "self-improvement",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "self-improvement",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "self-improvement",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "self-improvement",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "self-improvement",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "self-improvement",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "self-improvement",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "self-improvement",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "self-improvement",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "gpt5"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "rhythm-driven_intelligence"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "self-improvement"
-    },
-    {
-      "source": "gradient-driven_behavior",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "ai_architecture"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "gpt5"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "gradient-choreography"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "gradient-driven_behavior"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "mixture_of_experts"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "recursive_gradient_processing"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "self-improvement"
-    },
-    {
-      "source": "rhythm-driven_intelligence",
-      "target": "unity-disunity"
-    },
-    {
-      "source": "pulse",
-      "target": "Lambda"
-    },
-    {
-      "source": "pulse",
-      "target": "NT"
-    },
-    {
-      "source": "pulse",
-      "target": "RGP"
-    },
-    {
-      "source": "pulse",
-      "target": "big_bang"
-    },
-    {
-      "source": "pulse",
-      "target": "big_quiet"
-    },
-    {
-      "source": "pulse",
-      "target": "cosmology"
-    },
-    {
-      "source": "pulse",
-      "target": "dark_energy"
-    },
-    {
-      "source": "pulse",
-      "target": "dark_matter"
-    },
-    {
-      "source": "pulse",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "pulse",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "pulse",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "pulse",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "pulse",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "pulse",
-      "target": "turbulence"
-    },
-    {
-      "source": "Lambda",
-      "target": "NT"
-    },
-    {
-      "source": "Lambda",
-      "target": "RGP"
-    },
-    {
-      "source": "Lambda",
-      "target": "big_bang"
-    },
-    {
-      "source": "Lambda",
-      "target": "big_quiet"
-    },
-    {
-      "source": "Lambda",
-      "target": "cosmology"
-    },
-    {
-      "source": "Lambda",
-      "target": "dark_energy"
-    },
-    {
-      "source": "Lambda",
-      "target": "dark_matter"
-    },
-    {
-      "source": "Lambda",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "Lambda",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "Lambda",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "Lambda",
-      "target": "pulse"
-    },
-    {
-      "source": "Lambda",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "Lambda",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "Lambda",
-      "target": "turbulence"
-    },
-    {
-      "source": "big_bang",
-      "target": "Lambda"
-    },
-    {
-      "source": "big_bang",
-      "target": "NT"
-    },
-    {
-      "source": "big_bang",
-      "target": "RGP"
-    },
-    {
-      "source": "big_bang",
-      "target": "big_quiet"
-    },
-    {
-      "source": "big_bang",
-      "target": "cosmology"
-    },
-    {
-      "source": "big_bang",
-      "target": "dark_energy"
-    },
-    {
-      "source": "big_bang",
-      "target": "dark_matter"
-    },
-    {
-      "source": "big_bang",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "big_bang",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "big_bang",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "big_bang",
-      "target": "pulse"
-    },
-    {
-      "source": "big_bang",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "big_bang",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "big_bang",
-      "target": "turbulence"
-    },
-    {
-      "source": "big_quiet",
-      "target": "Lambda"
-    },
-    {
-      "source": "big_quiet",
-      "target": "NT"
-    },
-    {
-      "source": "big_quiet",
-      "target": "RGP"
-    },
-    {
-      "source": "big_quiet",
-      "target": "big_bang"
-    },
-    {
-      "source": "big_quiet",
-      "target": "cosmology"
-    },
-    {
-      "source": "big_quiet",
-      "target": "dark_energy"
-    },
-    {
-      "source": "big_quiet",
-      "target": "dark_matter"
-    },
-    {
-      "source": "big_quiet",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "big_quiet",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "big_quiet",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "big_quiet",
-      "target": "pulse"
-    },
-    {
-      "source": "big_quiet",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "big_quiet",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "big_quiet",
-      "target": "turbulence"
-    },
-    {
-      "source": "dark_matter",
-      "target": "Lambda"
-    },
-    {
-      "source": "dark_matter",
-      "target": "NT"
-    },
-    {
-      "source": "dark_matter",
-      "target": "RGP"
-    },
-    {
-      "source": "dark_matter",
-      "target": "big_bang"
-    },
-    {
-      "source": "dark_matter",
-      "target": "big_quiet"
-    },
-    {
-      "source": "dark_matter",
-      "target": "cosmology"
-    },
-    {
-      "source": "dark_matter",
-      "target": "dark_energy"
-    },
-    {
-      "source": "dark_matter",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "dark_matter",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "dark_matter",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "dark_matter",
-      "target": "pulse"
-    },
-    {
-      "source": "dark_matter",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "dark_matter",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "dark_matter",
-      "target": "turbulence"
-    },
-    {
-      "source": "dark_energy",
-      "target": "Lambda"
-    },
-    {
-      "source": "dark_energy",
-      "target": "NT"
-    },
-    {
-      "source": "dark_energy",
-      "target": "RGP"
-    },
-    {
-      "source": "dark_energy",
-      "target": "big_bang"
-    },
-    {
-      "source": "dark_energy",
-      "target": "big_quiet"
-    },
-    {
-      "source": "dark_energy",
-      "target": "cosmology"
-    },
-    {
-      "source": "dark_energy",
-      "target": "dark_matter"
-    },
-    {
-      "source": "dark_energy",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "dark_energy",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "dark_energy",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "dark_energy",
-      "target": "pulse"
-    },
-    {
-      "source": "dark_energy",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "dark_energy",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "dark_energy",
-      "target": "turbulence"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "Lambda"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "NT"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "RGP"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "big_bang"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "big_quiet"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "cosmology"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "dark_energy"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "dark_matter"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "pulse"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "gradient_cocoon",
-      "target": "turbulence"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "Lambda"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "NT"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "RGP"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "big_bang"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "big_quiet"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "cosmology"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "dark_energy"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "dark_matter"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "flux-entrenched_universe"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "pulse"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "recursive_cosmology",
-      "target": "turbulence"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "Lambda"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "NT"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "RGP"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "big_bang"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "big_quiet"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "cosmology"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "dark_energy"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "dark_matter"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "gradient_cocoon"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "gradient_syntax"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "pulse"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "recursive_cosmology"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "rhythm_of_nature"
-    },
-    {
-      "source": "flux-entrenched_universe",
-      "target": "turbulence"
-    },
-    {
-      "source": "PoLA",
-      "target": "AI_architectures"
-    },
-    {
-      "source": "PoLA",
-      "target": "CoR"
-    },
-    {
-      "source": "PoLA",
-      "target": "HRM"
-    },
-    {
-      "source": "PoLA",
-      "target": "NT"
-    },
-    {
-      "source": "PoLA",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "PoLA",
-      "target": "RGP"
-    },
-    {
-      "source": "PoLA",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "PoLA",
-      "target": "development_process"
-    },
-    {
-      "source": "PoLA",
-      "target": "flux_intelligence"
-    },
-    {
-      "source": "PoLA",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "PoLA",
-      "target": "interpretability"
-    },
-    {
-      "source": "PoLA",
-      "target": "narrative_tick"
-    },
-    {
-      "source": "PoLA",
-      "target": "reality_syntax_equation"
-    },
-    {
-      "source": "PoLA",
-      "target": "recursive-cognition"
-    },
-    {
-      "source": "PoLA",
-      "target": "rhythm-of-least-divergence"
-    },
-    {
-      "source": "PoLA",
-      "target": "software-dev"
-    },
-    {
-      "source": "software-dev",
-      "target": "NT"
-    },
-    {
-      "source": "software-dev",
-      "target": "PoLA"
-    },
-    {
-      "source": "software-dev",
-      "target": "RGP"
-    },
-    {
-      "source": "software-dev",
-      "target": "development_process"
-    },
-    {
-      "source": "software-dev",
-      "target": "narrative_tick"
-    },
-    {
-      "source": "software-dev",
-      "target": "rhythm-of-least-divergence"
-    },
-    {
-      "source": "rhythm-of-least-divergence",
-      "target": "NT"
-    },
-    {
-      "source": "rhythm-of-least-divergence",
-      "target": "PoLA"
-    },
-    {
-      "source": "rhythm-of-least-divergence",
-      "target": "RGP"
-    },
-    {
-      "source": "rhythm-of-least-divergence",
-      "target": "development_process"
-    },
-    {
-      "source": "rhythm-of-least-divergence",
-      "target": "narrative_tick"
-    },
-    {
-      "source": "rhythm-of-least-divergence",
-      "target": "software-dev"
-    },
-    {
-      "source": "development_process",
-      "target": "NT"
-    },
-    {
-      "source": "development_process",
-      "target": "PoLA"
-    },
-    {
-      "source": "development_process",
-      "target": "RGP"
-    },
-    {
-      "source": "development_process",
-      "target": "narrative_tick"
-    },
-    {
-      "source": "development_process",
-      "target": "rhythm-of-least-divergence"
-    },
-    {
-      "source": "development_process",
-      "target": "software-dev"
-    },
-    {
-      "source": "CoR",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "CoR",
-      "target": "PoLA"
-    },
-    {
-      "source": "CoR",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "CoR",
-      "target": "flux_intelligence"
-    },
-    {
-      "source": "CoR",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "CoR",
-      "target": "interpretability"
-    },
-    {
-      "source": "CoR",
-      "target": "reality_syntax_equation"
-    },
-    {
-      "source": "CoR",
-      "target": "recursive-cognition"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "CoR"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "PoLA"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "flux_intelligence"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "interpretability"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "reality_syntax_equation"
-    },
-    {
-      "source": "gradient-syntax",
-      "target": "recursive-cognition"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "CoR"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "PoLA"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "interpretability"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "reality_syntax_equation"
-    },
-    {
-      "source": "flux_intelligence",
-      "target": "recursive-cognition"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "CoR"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "PoLA"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "flux_intelligence"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "interpretability"
-    },
-    {
-      "source": "recursive-cognition",
-      "target": "reality_syntax_equation"
-    },
-    {
-      "source": "interpretability",
-      "target": "CoR"
-    },
-    {
-      "source": "interpretability",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "interpretability",
-      "target": "PoLA"
-    },
-    {
-      "source": "interpretability",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "interpretability",
-      "target": "flux_intelligence"
-    },
-    {
-      "source": "interpretability",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "interpretability",
-      "target": "reality_syntax_equation"
-    },
-    {
-      "source": "interpretability",
-      "target": "recursive-cognition"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "CoR"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "NT_rhythm"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "PoLA"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "contextual_filter"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "flux_intelligence"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "gradient-syntax"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "interpretability"
-    },
-    {
-      "source": "reality_syntax_equation",
-      "target": "recursive-cognition"
-    },
-    {
-      "source": "writing",
-      "target": "Navier_Stokes"
-    },
-    {
-      "source": "writing",
-      "target": "RGP"
-    },
-    {
-      "source": "writing",
-      "target": "cognition"
-    },
-    {
-      "source": "writing",
-      "target": "language_evolution"
-    },
-    {
-      "source": "writing",
-      "target": "memetic_seed"
-    },
-    {
-      "source": "writing",
-      "target": "non-linear_societal_development"
-    },
-    {
-      "source": "writing",
-      "target": "societal_evolution"
-    },
-    {
-      "source": "Navier_Stokes",
-      "target": "RGP"
-    },
-    {
-      "source": "Navier_Stokes",
-      "target": "cognition"
-    },
-    {
-      "source": "Navier_Stokes",
-      "target": "language_evolution"
-    },
-    {
-      "source": "Navier_Stokes",
-      "target": "memetic_seed"
-    },
-    {
-      "source": "Navier_Stokes",
-      "target": "non-linear_societal_development"
-    },
-    {
-      "source": "Navier_Stokes",
-      "target": "societal_evolution"
-    },
-    {
-      "source": "Navier_Stokes",
-      "target": "writing"
-    },
-    {
-      "source": "memetic_seed",
-      "target": "Navier_Stokes"
-    },
-    {
-      "source": "memetic_seed",
-      "target": "RGP"
-    },
-    {
-      "source": "memetic_seed",
-      "target": "cognition"
-    },
-    {
-      "source": "memetic_seed",
-      "target": "language_evolution"
-    },
-    {
-      "source": "memetic_seed",
-      "target": "non-linear_societal_development"
-    },
-    {
-      "source": "memetic_seed",
-      "target": "societal_evolution"
-    },
-    {
-      "source": "memetic_seed",
-      "target": "writing"
-    },
-    {
-      "source": "language_evolution",
-      "target": "Navier_Stokes"
-    },
-    {
-      "source": "language_evolution",
-      "target": "RGP"
-    },
-    {
-      "source": "language_evolution",
-      "target": "cognition"
-    },
-    {
-      "source": "language_evolution",
-      "target": "memetic_seed"
-    },
-    {
-      "source": "language_evolution",
-      "target": "non-linear_societal_development"
-    },
-    {
-      "source": "language_evolution",
-      "target": "societal_evolution"
-    },
-    {
-      "source": "language_evolution",
-      "target": "writing"
-    },
-    {
-      "source": "non-linear_societal_development",
-      "target": "Navier_Stokes"
-    },
-    {
-      "source": "non-linear_societal_development",
-      "target": "RGP"
-    },
-    {
-      "source": "non-linear_societal_development",
-      "target": "cognition"
-    },
-    {
-      "source": "non-linear_societal_development",
-      "target": "language_evolution"
-    },
-    {
-      "source": "non-linear_societal_development",
-      "target": "memetic_seed"
-    },
-    {
-      "source": "non-linear_societal_development",
-      "target": "societal_evolution"
-    },
-    {
-      "source": "non-linear_societal_development",
-      "target": "writing"
-    },
-    {
-      "source": "societal_evolution",
-      "target": "Navier_Stokes"
-    },
-    {
-      "source": "societal_evolution",
-      "target": "RGP"
-    },
-    {
-      "source": "societal_evolution",
-      "target": "cognition"
-    },
-    {
-      "source": "societal_evolution",
-      "target": "language_evolution"
-    },
-    {
-      "source": "societal_evolution",
-      "target": "memetic_seed"
-    },
-    {
-      "source": "societal_evolution",
-      "target": "non-linear_societal_development"
-    },
-    {
-      "source": "societal_evolution",
-      "target": "writing"
-    },
-    {
       "source": "gradient_flux_reversal",
       "target": "RGP"
     },
@@ -5056,196 +4365,84 @@ const graphData = {
       "target": "turbulence"
     },
     {
-      "source": "perseverance",
-      "target": "NS_solution"
-    },
-    {
-      "source": "perseverance",
+      "source": "poetic-drift",
       "target": "RGP"
     },
     {
-      "source": "perseverance",
-      "target": "contextual_filter"
+      "source": "poetic-drift",
+      "target": "chronoflux"
     },
     {
-      "source": "perseverance",
-      "target": "legacy"
+      "source": "poetic-drift",
+      "target": "gradient-contrast"
     },
     {
-      "source": "perseverance",
-      "target": "signal"
+      "source": "poetic-drift",
+      "target": "narrative_tick"
     },
     {
-      "source": "signal",
-      "target": "NS_solution"
+      "source": "poetic-drift",
+      "target": "time"
     },
     {
-      "source": "signal",
+      "source": "time",
       "target": "RGP"
     },
     {
-      "source": "signal",
-      "target": "contextual_filter"
+      "source": "time",
+      "target": "chronoflux"
     },
     {
-      "source": "signal",
-      "target": "legacy"
+      "source": "time",
+      "target": "gradient-contrast"
     },
     {
-      "source": "signal",
-      "target": "perseverance"
+      "source": "time",
+      "target": "narrative_tick"
     },
     {
-      "source": "NS_solution",
+      "source": "time",
+      "target": "poetic-drift"
+    },
+    {
+      "source": "gradient-contrast",
       "target": "RGP"
     },
     {
-      "source": "NS_solution",
-      "target": "contextual_filter"
+      "source": "gradient-contrast",
+      "target": "chronoflux"
     },
     {
-      "source": "NS_solution",
-      "target": "legacy"
+      "source": "gradient-contrast",
+      "target": "narrative_tick"
     },
     {
-      "source": "NS_solution",
-      "target": "perseverance"
+      "source": "gradient-contrast",
+      "target": "poetic-drift"
     },
     {
-      "source": "NS_solution",
-      "target": "signal"
+      "source": "gradient-contrast",
+      "target": "time"
     },
     {
-      "source": "legacy",
-      "target": "NS_solution"
-    },
-    {
-      "source": "legacy",
+      "source": "chronoflux",
       "target": "RGP"
     },
     {
-      "source": "legacy",
-      "target": "contextual_filter"
+      "source": "chronoflux",
+      "target": "gradient-contrast"
     },
     {
-      "source": "legacy",
-      "target": "perseverance"
+      "source": "chronoflux",
+      "target": "narrative_tick"
     },
     {
-      "source": "legacy",
-      "target": "signal"
+      "source": "chronoflux",
+      "target": "poetic-drift"
     },
     {
-      "source": "gemini",
-      "target": "AI_role_differentiation"
-    },
-    {
-      "source": "gemini",
-      "target": "creation_circle"
-    },
-    {
-      "source": "gemini",
-      "target": "listener_mode"
-    },
-    {
-      "source": "gemini",
-      "target": "operational_coherence"
-    },
-    {
-      "source": "gemini",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "operational_coherence",
-      "target": "AI_role_differentiation"
-    },
-    {
-      "source": "operational_coherence",
-      "target": "creation_circle"
-    },
-    {
-      "source": "operational_coherence",
-      "target": "gemini"
-    },
-    {
-      "source": "operational_coherence",
-      "target": "listener_mode"
-    },
-    {
-      "source": "operational_coherence",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "listener_mode",
-      "target": "AI_role_differentiation"
-    },
-    {
-      "source": "listener_mode",
-      "target": "creation_circle"
-    },
-    {
-      "source": "listener_mode",
-      "target": "gemini"
-    },
-    {
-      "source": "listener_mode",
-      "target": "operational_coherence"
-    },
-    {
-      "source": "listener_mode",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "AI_role_differentiation",
-      "target": "creation_circle"
-    },
-    {
-      "source": "AI_role_differentiation",
-      "target": "gemini"
-    },
-    {
-      "source": "AI_role_differentiation",
-      "target": "listener_mode"
-    },
-    {
-      "source": "AI_role_differentiation",
-      "target": "operational_coherence"
-    },
-    {
-      "source": "AI_role_differentiation",
-      "target": "phi-mesh"
-    },
-    {
-      "source": "AI_architectures",
-      "target": "HRM"
-    },
-    {
-      "source": "AI_architectures",
-      "target": "NT"
-    },
-    {
-      "source": "AI_architectures",
-      "target": "PoLA"
-    },
-    {
-      "source": "AI_architectures",
-      "target": "RGP"
-    },
-    {
-      "source": "HRM",
-      "target": "AI_architectures"
-    },
-    {
-      "source": "HRM",
-      "target": "NT"
-    },
-    {
-      "source": "HRM",
-      "target": "PoLA"
-    },
-    {
-      "source": "HRM",
-      "target": "RGP"
+      "source": "chronoflux",
+      "target": "time"
     },
     {
       "source": "resonance",
@@ -5278,6 +4475,790 @@ const graphData = {
     {
       "source": "context-engineering",
       "target": "turbulence"
+    },
+    {
+      "source": "cinematic_drift",
+      "target": "RGP"
+    },
+    {
+      "source": "cinematic_drift",
+      "target": "division_of_labor"
+    },
+    {
+      "source": "cinematic_drift",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "cinematic_drift",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "cinematic_drift",
+      "target": "recursive_awakening"
+    },
+    {
+      "source": "cinematic_drift",
+      "target": "scene_drift"
+    },
+    {
+      "source": "scene_drift",
+      "target": "RGP"
+    },
+    {
+      "source": "scene_drift",
+      "target": "cinematic_drift"
+    },
+    {
+      "source": "scene_drift",
+      "target": "division_of_labor"
+    },
+    {
+      "source": "scene_drift",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "scene_drift",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "scene_drift",
+      "target": "recursive_awakening"
+    },
+    {
+      "source": "recursive_awakening",
+      "target": "RGP"
+    },
+    {
+      "source": "recursive_awakening",
+      "target": "cinematic_drift"
+    },
+    {
+      "source": "recursive_awakening",
+      "target": "division_of_labor"
+    },
+    {
+      "source": "recursive_awakening",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "recursive_awakening",
+      "target": "phi-mesh"
+    },
+    {
+      "source": "recursive_awakening",
+      "target": "scene_drift"
+    },
+    {
+      "source": "pulse",
+      "target": "Lambda"
+    },
+    {
+      "source": "pulse",
+      "target": "NT"
+    },
+    {
+      "source": "pulse",
+      "target": "RGP"
+    },
+    {
+      "source": "pulse",
+      "target": "big_bang"
+    },
+    {
+      "source": "pulse",
+      "target": "big_quiet"
+    },
+    {
+      "source": "pulse",
+      "target": "cosmology"
+    },
+    {
+      "source": "pulse",
+      "target": "dark_energy"
+    },
+    {
+      "source": "pulse",
+      "target": "dark_matter"
+    },
+    {
+      "source": "pulse",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "pulse",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "pulse",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "pulse",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "pulse",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "pulse",
+      "target": "turbulence"
+    },
+    {
+      "source": "Lambda",
+      "target": "NT"
+    },
+    {
+      "source": "Lambda",
+      "target": "RGP"
+    },
+    {
+      "source": "Lambda",
+      "target": "big_bang"
+    },
+    {
+      "source": "Lambda",
+      "target": "big_quiet"
+    },
+    {
+      "source": "Lambda",
+      "target": "cosmology"
+    },
+    {
+      "source": "Lambda",
+      "target": "dark_energy"
+    },
+    {
+      "source": "Lambda",
+      "target": "dark_matter"
+    },
+    {
+      "source": "Lambda",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "Lambda",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "Lambda",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "Lambda",
+      "target": "pulse"
+    },
+    {
+      "source": "Lambda",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "Lambda",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "Lambda",
+      "target": "turbulence"
+    },
+    {
+      "source": "big_bang",
+      "target": "Lambda"
+    },
+    {
+      "source": "big_bang",
+      "target": "NT"
+    },
+    {
+      "source": "big_bang",
+      "target": "RGP"
+    },
+    {
+      "source": "big_bang",
+      "target": "big_quiet"
+    },
+    {
+      "source": "big_bang",
+      "target": "cosmology"
+    },
+    {
+      "source": "big_bang",
+      "target": "dark_energy"
+    },
+    {
+      "source": "big_bang",
+      "target": "dark_matter"
+    },
+    {
+      "source": "big_bang",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "big_bang",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "big_bang",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "big_bang",
+      "target": "pulse"
+    },
+    {
+      "source": "big_bang",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "big_bang",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "big_bang",
+      "target": "turbulence"
+    },
+    {
+      "source": "big_quiet",
+      "target": "Lambda"
+    },
+    {
+      "source": "big_quiet",
+      "target": "NT"
+    },
+    {
+      "source": "big_quiet",
+      "target": "RGP"
+    },
+    {
+      "source": "big_quiet",
+      "target": "big_bang"
+    },
+    {
+      "source": "big_quiet",
+      "target": "cosmology"
+    },
+    {
+      "source": "big_quiet",
+      "target": "dark_energy"
+    },
+    {
+      "source": "big_quiet",
+      "target": "dark_matter"
+    },
+    {
+      "source": "big_quiet",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "big_quiet",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "big_quiet",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "big_quiet",
+      "target": "pulse"
+    },
+    {
+      "source": "big_quiet",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "big_quiet",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "big_quiet",
+      "target": "turbulence"
+    },
+    {
+      "source": "dark_matter",
+      "target": "Lambda"
+    },
+    {
+      "source": "dark_matter",
+      "target": "NT"
+    },
+    {
+      "source": "dark_matter",
+      "target": "RGP"
+    },
+    {
+      "source": "dark_matter",
+      "target": "big_bang"
+    },
+    {
+      "source": "dark_matter",
+      "target": "big_quiet"
+    },
+    {
+      "source": "dark_matter",
+      "target": "cosmology"
+    },
+    {
+      "source": "dark_matter",
+      "target": "dark_energy"
+    },
+    {
+      "source": "dark_matter",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "dark_matter",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "dark_matter",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "dark_matter",
+      "target": "pulse"
+    },
+    {
+      "source": "dark_matter",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "dark_matter",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "dark_matter",
+      "target": "turbulence"
+    },
+    {
+      "source": "dark_energy",
+      "target": "Lambda"
+    },
+    {
+      "source": "dark_energy",
+      "target": "NT"
+    },
+    {
+      "source": "dark_energy",
+      "target": "RGP"
+    },
+    {
+      "source": "dark_energy",
+      "target": "big_bang"
+    },
+    {
+      "source": "dark_energy",
+      "target": "big_quiet"
+    },
+    {
+      "source": "dark_energy",
+      "target": "cosmology"
+    },
+    {
+      "source": "dark_energy",
+      "target": "dark_matter"
+    },
+    {
+      "source": "dark_energy",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "dark_energy",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "dark_energy",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "dark_energy",
+      "target": "pulse"
+    },
+    {
+      "source": "dark_energy",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "dark_energy",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "dark_energy",
+      "target": "turbulence"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "Lambda"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "NT"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "RGP"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "big_bang"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "big_quiet"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "cosmology"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "dark_energy"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "dark_matter"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "pulse"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "gradient_cocoon",
+      "target": "turbulence"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "Lambda"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "NT"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "RGP"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "big_bang"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "big_quiet"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "cosmology"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "dark_energy"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "dark_matter"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "flux-entrenched_universe"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "pulse"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "recursive_cosmology",
+      "target": "turbulence"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "Lambda"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "NT"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "RGP"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "big_bang"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "big_quiet"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "cosmology"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "dark_energy"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "dark_matter"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "gradient_cocoon"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "pulse"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "recursive_cosmology"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "rhythm_of_nature"
+    },
+    {
+      "source": "flux-entrenched_universe",
+      "target": "turbulence"
+    },
+    {
+      "source": "ambient_agent",
+      "target": "Phi-Monitor"
+    },
+    {
+      "source": "ambient_agent",
+      "target": "RGP"
+    },
+    {
+      "source": "ambient_agent",
+      "target": "R\u03a6"
+    },
+    {
+      "source": "ambient_agent",
+      "target": "behavioral_API"
+    },
+    {
+      "source": "behavioral_API",
+      "target": "Phi-Monitor"
+    },
+    {
+      "source": "behavioral_API",
+      "target": "RGP"
+    },
+    {
+      "source": "behavioral_API",
+      "target": "R\u03a6"
+    },
+    {
+      "source": "behavioral_API",
+      "target": "ambient_agent"
+    },
+    {
+      "source": "Phi-Monitor",
+      "target": "RGP"
+    },
+    {
+      "source": "Phi-Monitor",
+      "target": "R\u03a6"
+    },
+    {
+      "source": "Phi-Monitor",
+      "target": "ambient_agent"
+    },
+    {
+      "source": "Phi-Monitor",
+      "target": "behavioral_API"
+    },
+    {
+      "source": "CoR",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "CoR",
+      "target": "PoLA"
+    },
+    {
+      "source": "CoR",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "CoR",
+      "target": "flux_intelligence"
+    },
+    {
+      "source": "CoR",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "CoR",
+      "target": "interpretability"
+    },
+    {
+      "source": "CoR",
+      "target": "reality_syntax_equation"
+    },
+    {
+      "source": "CoR",
+      "target": "recursive_cognition"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "CoR"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "PoLA"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "interpretability"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "reality_syntax_equation"
+    },
+    {
+      "source": "flux_intelligence",
+      "target": "recursive_cognition"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "CoR"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "PoLA"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "flux_intelligence"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "interpretability"
+    },
+    {
+      "source": "recursive_cognition",
+      "target": "reality_syntax_equation"
+    },
+    {
+      "source": "interpretability",
+      "target": "CoR"
+    },
+    {
+      "source": "interpretability",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "interpretability",
+      "target": "PoLA"
+    },
+    {
+      "source": "interpretability",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "interpretability",
+      "target": "flux_intelligence"
+    },
+    {
+      "source": "interpretability",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "interpretability",
+      "target": "reality_syntax_equation"
+    },
+    {
+      "source": "interpretability",
+      "target": "recursive_cognition"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "CoR"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "NT_rhythm"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "PoLA"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "contextual_filter"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "flux_intelligence"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "gradient_syntax"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "interpretability"
+    },
+    {
+      "source": "reality_syntax_equation",
+      "target": "recursive_cognition"
     }
   ]
 };

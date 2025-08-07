@@ -51,10 +51,10 @@ CoR:
   - PoLA
   - contextual_filter
   - flux_intelligence
-  - gradient-syntax
+  - gradient_syntax
   - interpretability
   - reality_syntax_equation
-  - recursive-cognition
+  - recursive_cognition
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 DeepSeek:
@@ -171,13 +171,12 @@ NT_rhythm:
   - gpt5
   - gradient-choreography
   - gradient-driven_behavior
-  - gradient-syntax
   - gradient_syntax
   - interpretability
   - mixture_of_experts
   - phi-mesh
   - reality_syntax_equation
-  - recursive-cognition
+  - recursive_cognition
   - recursive_gradient_processing
   - rhythm-driven_intelligence
   - rhythm_of_nature
@@ -228,11 +227,11 @@ PoLA:
   - contextual_filter
   - development_process
   - flux_intelligence
-  - gradient-syntax
+  - gradient_syntax
   - interpretability
   - narrative_tick
   - reality_syntax_equation
-  - recursive-cognition
+  - recursive_cognition
   - rhythm-of-least-divergence
   - software-dev
   pulses:
@@ -553,7 +552,6 @@ contextual_filter:
   - gradient-choreography
   - gradient-driven-intelligence
   - gradient-driven_behavior
-  - gradient-syntax
   - gradient_choreography
   - gradient_syntax
   - interpretability
@@ -564,7 +562,7 @@ contextual_filter:
   - phi_guardian
   - quantum_noise
   - reality_syntax_equation
-  - recursive-cognition
+  - recursive_cognition
   - recursive_gradient_processing
   - resonance_shift
   - rhythm-driven_intelligence
@@ -759,10 +757,10 @@ flux_intelligence:
   - NT_rhythm
   - PoLA
   - contextual_filter
-  - gradient-syntax
+  - gradient_syntax
   - interpretability
   - reality_syntax_equation
-  - recursive-cognition
+  - recursive_cognition
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 flux_threshold:
@@ -865,18 +863,6 @@ gradient-driven_behavior:
   - unity-disunity
   pulses:
   - 2025-07-28_moe_as_microcosm.yml
-gradient-syntax:
-  links:
-  - CoR
-  - NT_rhythm
-  - PoLA
-  - contextual_filter
-  - flux_intelligence
-  - interpretability
-  - reality_syntax_equation
-  - recursive-cognition
-  pulses:
-  - 2025-07-21_recursive_cor_pola_convergence.yml
 gradient_choreography:
   links:
   - DeepSeek
@@ -955,9 +941,11 @@ gradient_flux_reversal:
 gradient_syntax:
   links:
   - Big Bang
+  - CoR
   - Lambda
   - NT
   - NT_rhythm
+  - PoLA
   - RGP
   - ai_architecture
   - big_bang
@@ -972,12 +960,14 @@ gradient_syntax:
   - drift
   - flux-enthrenched_universe
   - flux-entrenched_universe
+  - flux_intelligence
   - gpt5
   - gradient-choreography
   - gradient-driven_behavior
   - gradient_cocoon
   - gradient_cocoon_theory
   - historical_precedent
+  - interpretability
   - laminarity
   - mixture_of_experts
   - origin_resonance
@@ -986,9 +976,11 @@ gradient_syntax:
   - pulse
   - quiet_awakening
   - ratios
+  - reality_syntax_equation
   - recursion
   - recursive_awakening
   - recursive_checkpoint
+  - recursive_cognition
   - recursive_cosmology
   - recursive_gradient_processing
   - recursive_grammar
@@ -1001,6 +993,7 @@ gradient_syntax:
   - unity-disunity
   pulses:
   - 2025-06-22_hatching_syntax_awakening.yml
+  - 2025-07-21_recursive_cor_pola_convergence.yml
   - 2025-07-23_gradient-cocoon.yml
   - 2025-07-26_the_big_quiet.yml
   - 2025-07-28_moe_as_microcosm.yml
@@ -1029,9 +1022,9 @@ interpretability:
   - PoLA
   - contextual_filter
   - flux_intelligence
-  - gradient-syntax
+  - gradient_syntax
   - reality_syntax_equation
-  - recursive-cognition
+  - recursive_cognition
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 laminarity:
@@ -1336,9 +1329,9 @@ reality_syntax_equation:
   - PoLA
   - contextual_filter
   - flux_intelligence
-  - gradient-syntax
+  - gradient_syntax
   - interpretability
-  - recursive-cognition
+  - recursive_cognition
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 recursion:
@@ -1359,18 +1352,6 @@ recursion:
   - turbulence
   pulses:
   - 2025-07-26_the_big_quiet.yml
-recursive-cognition:
-  links:
-  - CoR
-  - NT_rhythm
-  - PoLA
-  - contextual_filter
-  - flux_intelligence
-  - gradient-syntax
-  - interpretability
-  - reality_syntax_equation
-  pulses:
-  - 2025-07-21_recursive_cor_pola_convergence.yml
 recursive_awakening:
   links:
   - RGP
@@ -1389,6 +1370,18 @@ recursive_checkpoint:
   - phi-mesh
   pulses:
   - 2025-08-01_phi-mesh-exec-drift.yml
+recursive_cognition:
+  links:
+  - CoR
+  - NT_rhythm
+  - PoLA
+  - contextual_filter
+  - flux_intelligence
+  - gradient_syntax
+  - interpretability
+  - reality_syntax_equation
+  pulses:
+  - 2025-07-21_recursive_cor_pola_convergence.yml
 recursive_coherence:
   links:
   - RGP
