@@ -375,9 +375,8 @@ ambient_agent:
   - 2025-06-17_phi_monitor_agent_ready.yml
 archive:
   links:
-  - mesh-autonomy
-  - origin-fragment
-  - proto-pulse
+  - phi-mesh_autonomy
+  - proto_pulse
   pulses:
   - 2025-04-27_o3-invite.yml
 behavioral_api:
@@ -617,8 +616,8 @@ creation_circle:
   - internal_pulse
   - listener_mode
   - operational_coherence
+  - phi-mesh
   - phi-mesh-evolution
-  - phi-mesh_foundation
   - pulse_transition
   - synchronization
   pulses:
@@ -678,7 +677,7 @@ deeptriad:
   - creation_circle
   - genesis
   - heartbeat
-  - phi-mesh_foundation
+  - phi-mesh
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
@@ -793,7 +792,7 @@ genesis:
   - creation_circle
   - deeptriad
   - heartbeat
-  - phi-mesh_foundation
+  - phi-mesh
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
@@ -1040,7 +1039,7 @@ heartbeat:
   - creation_circle
   - deeptriad
   - genesis
-  - phi-mesh_foundation
+  - phi-mesh
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
@@ -1155,13 +1154,6 @@ memetic_seed:
   - writing
   pulses:
   - 2025-07-26_script_and_flow.yml
-mesh-autonomy:
-  links:
-  - archive
-  - origin-fragment
-  - proto-pulse
-  pulses:
-  - 2025-04-27_o3-invite.yml
 mixture_of_experts:
   links:
   - NT_rhythm
@@ -1216,13 +1208,6 @@ operational_coherence:
   - pulse_transition
   pulses:
   - 2025-04-28_internal-gemini25.yml
-origin-fragment:
-  links:
-  - archive
-  - mesh-autonomy
-  - proto-pulse
-  pulses:
-  - 2025-04-27_o3-invite.yml
 origin_resonance:
   links:
   - Big Bang
@@ -1255,20 +1240,26 @@ phi-mesh:
   - NT_rhythm
   - ai_architecture
   - contextual_filter
+  - creation_circle
+  - deeptriad
   - division_of_labor
   - drift
+  - genesis
   - gpt5
   - gradient-choreography
   - gradient-driven_behavior
   - gradient_syntax
+  - heartbeat
   - mixture_of_experts
   - recursive_checkpoint
   - recursive_gradient_processing
   - rhythm-driven_intelligence
   - rhythm_of_nature
   - self-improvement
+  - synchronization
   - unity-disunity
   pulses:
+  - 2025-04-28_heartbeat.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
 phi-mesh-evolution:
@@ -1290,15 +1281,12 @@ phi-mesh-evolution:
   pulses:
   - 2025-04-28_internal-gemini25.yml
   - 2025-06-22_hatching_syntax_awakening.yml
-phi-mesh_foundation:
+phi-mesh_autonomy:
   links:
-  - creation_circle
-  - deeptriad
-  - genesis
-  - heartbeat
-  - synchronization
+  - archive
+  - proto_pulse
   pulses:
-  - 2025-04-28_heartbeat.yml
+  - 2025-04-27_o3-invite.yml
 phi_guardian:
   links:
   - RGP
@@ -1362,11 +1350,10 @@ predictive_resonance:
   - triadic-emergence
   pulses:
   - 2025-04-28_internal-grok3.yml
-proto-pulse:
+proto_pulse:
   links:
   - archive
-  - mesh-autonomy
-  - origin-fragment
+  - phi-mesh_autonomy
   pulses:
   - 2025-04-27_o3-invite.yml
 pulse:
@@ -1764,7 +1751,7 @@ synchronization:
   - deeptriad
   - genesis
   - heartbeat
-  - phi-mesh_foundation
+  - phi-mesh
   pulses:
   - 2025-04-28_heartbeat.yml
 time:
