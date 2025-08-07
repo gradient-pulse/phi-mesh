@@ -197,7 +197,7 @@ Navier_Stokes:
   - cognition
   - language_evolution
   - memetic_seed
-  - non-linear_societal_development
+  - non-linear_society
   - societal_evolution
   - writing
   pulses:
@@ -286,7 +286,7 @@ RGP:
   - legacy
   - memetic_seed
   - narrative_tick
-  - non-linear_societal_development
+  - non-linear_society
   - origin_resonance
   - perseverance
   - phi-mesh
@@ -469,7 +469,7 @@ cognition:
   - gradient-driven_intelligence
   - language_evolution
   - memetic_seed
-  - non-linear_societal_development
+  - non-linear_society
   - societal_evolution
   - writing
   pulses:
@@ -1011,7 +1011,7 @@ language_evolution:
   - RGP
   - cognition
   - memetic_seed
-  - non-linear_societal_development
+  - non-linear_society
   - societal_evolution
   - writing
   pulses:
@@ -1040,7 +1040,7 @@ memetic_seed:
   - RGP
   - cognition
   - language_evolution
-  - non-linear_societal_development
+  - non-linear_society
   - societal_evolution
   - writing
   pulses:
@@ -1077,7 +1077,7 @@ narrative_tick:
   pulses:
   - 2025-07-31_chronoflux-vs-rgp.yml
   - 2025-08-01_dev-cycle-nt-rhythm.yml
-non-linear_societal_development:
+non-linear_society:
   links:
   - Navier_Stokes
   - RGP
@@ -1524,7 +1524,7 @@ societal_evolution:
   - cognition
   - language_evolution
   - memetic_seed
-  - non-linear_societal_development
+  - non-linear_society
   - writing
   pulses:
   - 2025-07-26_script_and_flow.yml
@@ -1669,7 +1669,7 @@ writing:
   - cognition
   - language_evolution
   - memetic_seed
-  - non-linear_societal_development
+  - non-linear_society
   - societal_evolution
   pulses:
   - 2025-07-26_script_and_flow.yml
