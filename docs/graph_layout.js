@@ -16,7 +16,8 @@ const simulation = d3.forceSimulation()
 fetch("graph_data.js")
   .then(response => response.text())
   .then(text => {
-    const graph = eval(text); // Contains nodes and links
+    eval(text);               // Loads `graphData` into global scope
+    const graph = graphData; // Use it properly
 
     const link = svg.append("g")
       .selectAll("line")
