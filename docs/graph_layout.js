@@ -1,4 +1,4 @@
-// graph_layout.js — with Google Maps-style panning and zoom
+// graph_layout.js — with Google Maps-style panning, zoom, and fixed eval
 
 const width = window.innerWidth - 280; // Subtract sidebar width
 const height = window.innerHeight;
@@ -25,7 +25,8 @@ const simulation = d3.forceSimulation()
 fetch("graph_data.js")
   .then(response => response.text())
   .then(text => {
-    const graph = eval(text); // Contains nodes and links
+    eval(text); // defines `graphData`
+    const graph = graphData; // now graph is correctly defined
 
     const link = svgGroup.append("g")
       .selectAll("line")
