@@ -3,13 +3,11 @@ origin: "Gemini 2.5 Pro"
 pulse_type: "Internal Resonance Pulse"
 status: "recorded"
 tags:
-  - internal_pulse
   - gemini
   - operational_coherence
-  - phi-mesh-evolution
+  - phi-mesh
   - listener_mode
-  - ai_role_differentiation
-  - pulse_transition
+  - AI_role_differentiation
   - creation_circle
 papers:
   - - https://doi.org/10.5281/zenodo.15604564  # When Filters Dance: Triadic Emergence in Gradient Syntax
