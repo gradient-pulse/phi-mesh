@@ -1,4 +1,4 @@
-const graph = {
+const graphData = {
   "nodes": [
     {
       "id": "AI_alignment"
