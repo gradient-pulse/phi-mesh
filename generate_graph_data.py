@@ -44,6 +44,6 @@ graph_data = build_graph_data(normalized_tags)
 
 # Output file
 with open("docs/graph_data.js", "w") as f:
-    f.write("const graphData = ")
+    f.write("const graph = ")
     json.dump(graph_data, f, indent=2)
     f.write(";")    
