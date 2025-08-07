@@ -1,12 +1,21 @@
-// graph_layout.js — updated to populate the sidebar on node click
+// graph_layout.js — with Google Maps-style panning and zoom
 
 const width = window.innerWidth - 280; // Subtract sidebar width
 const height = window.innerHeight;
 
+const zoom = d3.zoom()
+  .scaleExtent([0.1, 5])
+  .on("zoom", (event) => {
+    svgGroup.attr("transform", event.transform);
+  });
+
 const svg = d3.select("#graph")
   .append("svg")
   .attr("width", width)
-  .attr("height", height);
+  .attr("height", height)
+  .call(zoom);
+
+const svgGroup = svg.append("g");
 
 const simulation = d3.forceSimulation()
   .force("link", d3.forceLink().id(d => d.id).distance(80))
@@ -16,17 +25,16 @@ const simulation = d3.forceSimulation()
 fetch("graph_data.js")
   .then(response => response.text())
   .then(text => {
-    eval(text);               // Loads `graphData` into global scope
-    const graph = graphData; // Use it properly
+    const graph = eval(text); // Contains nodes and links
 
-    const link = svg.append("g")
+    const link = svgGroup.append("g")
       .selectAll("line")
       .data(graph.links)
       .enter().append("line")
       .attr("stroke", "#ccc")
       .attr("stroke-width", 1);
 
-    const node = svg.append("g")
+    const node = svgGroup.append("g")
       .selectAll("circle")
       .data(graph.nodes)
       .enter().append("circle")
@@ -38,7 +46,7 @@ fetch("graph_data.js")
         .on("end", dragended))
       .on("click", clicked);
 
-    const labels = svg.append("g")
+    const labels = svgGroup.append("g")
       .selectAll("text")
       .data(graph.nodes)
       .enter().append("text")
@@ -100,6 +108,10 @@ fetch("graph_data.js")
         sidebar.appendChild(noData);
         return;
       }
+
+      const headerTag = document.createElement("li");
+      headerTag.innerHTML = `<strong>${tag}</strong>`;
+      sidebar.appendChild(headerTag);
 
       if (data.papers.length > 0) {
         const header = document.createElement("li");
