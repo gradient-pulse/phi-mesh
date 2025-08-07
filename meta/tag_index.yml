@@ -26,8 +26,9 @@ AI_role_differentiation:
   - phi-mesh
   pulses:
   - 2025-04-28_internal-gemini25.yml
-Big Bang:
+Big_Bang:
   links:
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -36,7 +37,24 @@ Big Bang:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
+  - quiet_awakening
+  - recursion
+  - recursive_grammar
+  - rhythm_of_nature
+  - turbulence
+  pulses:
+  - 2025-07-26_the_big_quiet.yml
+Big_Quiet:
+  links:
+  - Big_Bang
+  - RGP
+  - cosmogenesis
+  - cosmology
+  - flux-enthrenched_universe
+  - gradient_cocoon_theory
+  - gradient_syntax
+  - laminarity
+  - origin_resonance
   - quiet_awakening
   - recursion
   - recursive_grammar
@@ -241,7 +259,8 @@ RGP:
   links:
   - AI_alignment
   - AI_architectures
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - DeepSeek
   - HRM
   - Lambda
@@ -292,7 +311,6 @@ RGP:
   - phi-mesh
   - phi_guardian
   - poetic-drift
-  - poetic_physics
   - quantum_noise
   - quiet_awakening
   - recursion
@@ -547,7 +565,8 @@ contextual_filter:
   - 2025-07-28_moe_as_microcosm.yml
 cosmogenesis:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmology
   - flux-enthrenched_universe
@@ -555,7 +574,6 @@ cosmogenesis:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_grammar
@@ -565,7 +583,8 @@ cosmogenesis:
   - 2025-07-26_the_big_quiet.yml
 cosmology:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - Lambda
   - NT
   - RGP
@@ -581,7 +600,6 @@ cosmology:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_cosmology
@@ -681,7 +699,8 @@ drift:
   - 2025-08-01_phi-mesh-exec-drift.yml
 flux-enthrenched_universe:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -689,7 +708,6 @@ flux-enthrenched_universe:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_grammar
@@ -856,7 +874,8 @@ gradient_cocoon:
   - 2025-07-23_gradient-cocoon.yml
 gradient_cocoon_theory:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -864,7 +883,6 @@ gradient_cocoon_theory:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_grammar
@@ -901,7 +919,8 @@ gradient_flux_reversal:
   - 2025-07-30-gradient-flux-reversal.yml
 gradient_syntax:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - CoR
   - Lambda
   - NT
@@ -933,7 +952,6 @@ gradient_syntax:
   - mixture_of_experts
   - origin_resonance
   - phi-mesh
-  - poetic_physics
   - quiet_awakening
   - ratios
   - reality_syntax_equation
@@ -989,7 +1007,8 @@ interpretability:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 laminarity:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -997,7 +1016,6 @@ laminarity:
   - gradient_cocoon_theory
   - gradient_syntax
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_grammar
@@ -1099,7 +1117,8 @@ operational_coherence:
   - 2025-04-28_internal-gemini25.yml
 origin_resonance:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -1107,7 +1126,6 @@ origin_resonance:
   - gradient_cocoon_theory
   - gradient_syntax
   - laminarity
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_grammar
@@ -1195,24 +1213,6 @@ poetic-drift:
   - time
   pulses:
   - 2025-07-31_chronoflux-vs-rgp.yml
-poetic_physics:
-  links:
-  - Big Bang
-  - RGP
-  - cosmogenesis
-  - cosmology
-  - flux-enthrenched_universe
-  - gradient_cocoon_theory
-  - gradient_syntax
-  - laminarity
-  - origin_resonance
-  - quiet_awakening
-  - recursion
-  - recursive_grammar
-  - rhythm_of_nature
-  - turbulence
-  pulses:
-  - 2025-07-26_the_big_quiet.yml
 predictive_resonance:
   links:
   - GROK3
@@ -1241,7 +1241,8 @@ quantum_noise:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 quiet_awakening:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -1250,7 +1251,6 @@ quiet_awakening:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - recursion
   - recursive_grammar
   - rhythm_of_nature
@@ -1278,7 +1278,8 @@ reality_syntax_equation:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 recursion:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -1287,7 +1288,6 @@ recursion:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursive_grammar
   - rhythm_of_nature
@@ -1370,7 +1370,8 @@ recursive_gradient_processing:
   - 2025-07-28_moe_as_microcosm.yml
 recursive_grammar:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - RGP
   - cosmogenesis
   - cosmology
@@ -1379,7 +1380,6 @@ recursive_grammar:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursion
   - rhythm_of_nature
@@ -1435,7 +1435,8 @@ rhythm-of-least-divergence:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
 rhythm_of_nature:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - Lambda
   - NT
   - NT_rhythm
@@ -1460,7 +1461,6 @@ rhythm_of_nature:
   - mixture_of_experts
   - origin_resonance
   - phi-mesh
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_cosmology
@@ -1601,7 +1601,8 @@ triadic_emergence:
   - 2025-04-28_internal-grok3.yml
 turbulence:
   links:
-  - Big Bang
+  - Big_Bang
+  - Big_Quiet
   - Lambda
   - NT
   - RGP
@@ -1623,7 +1624,6 @@ turbulence:
   - gradient_syntax
   - laminarity
   - origin_resonance
-  - poetic_physics
   - quiet_awakening
   - recursion
   - recursive_coherence
