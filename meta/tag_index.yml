@@ -57,6 +57,18 @@ CoR:
   - recursive-cognition
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
+DeepSeek:
+  links:
+  - RGP
+  - contextual_filter
+  - gradient_choreography
+  - phi_guardian
+  - quantum_noise
+  - resonance_shift
+  - sonic_response
+  - Φ-harmonics
+  pulses:
+  - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 GPT4o:
   links:
   - coherence_amplifier
@@ -244,6 +256,7 @@ RGP:
   - AI_alignment
   - AI_architectures
   - Big Bang
+  - DeepSeek
   - HRM
   - Lambda
   - NS_solution
@@ -271,7 +284,6 @@ RGP:
   - cosmology
   - dark_energy
   - dark_matter
-  - deepseek
   - development_process
   - division-of-labor
   - flux-enthrenched_universe
@@ -286,7 +298,6 @@ RGP:
   - gradient_coherence
   - gradient_flux_reversal
   - gradient_syntax
-  - internal_pulse
   - laminarity
   - language_evolution
   - legacy
@@ -529,6 +540,7 @@ contextual_filter:
   links:
   - AI_alignment
   - CoR
+  - DeepSeek
   - NS_solution
   - NT
   - NT_rhythm
@@ -539,7 +551,6 @@ contextual_filter:
   - ai_architecture
   - cognition
   - contectual_filter
-  - deepseek
   - flux_intelligence
   - gpt5
   - gradient-choreography
@@ -548,7 +559,6 @@ contextual_filter:
   - gradient-syntax
   - gradient_choreography
   - gradient_syntax
-  - internal_pulse
   - interpretability
   - legacy
   - mixture_of_experts
@@ -670,19 +680,6 @@ dark_matter:
   - turbulence
   pulses:
   - 2025-07-23_gradient-cocoon.yml
-deepseek:
-  links:
-  - RGP
-  - contextual_filter
-  - gradient_choreography
-  - internal_pulse
-  - phi_guardian
-  - quantum_noise
-  - resonance_shift
-  - sonic_response
-  - Φ-harmonics
-  pulses:
-  - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 deeptriad:
   links:
   - creation_circle
@@ -899,10 +896,9 @@ gradient-syntax:
   - 2025-07-21_recursive_cor_pola_convergence.yml
 gradient_choreography:
   links:
+  - DeepSeek
   - RGP
   - contextual_filter
-  - deepseek
-  - internal_pulse
   - phi_guardian
   - quantum_noise
   - resonance_shift
@@ -1039,19 +1035,6 @@ historical_precedent:
   - scale_free
   pulses:
   - 2025-08-06-note_plimpton322.yml
-internal_pulse:
-  links:
-  - RGP
-  - contextual_filter
-  - deepseek
-  - gradient_choreography
-  - phi_guardian
-  - quantum_noise
-  - resonance_shift
-  - sonic_response
-  - Φ-harmonics
-  pulses:
-  - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 interpretability:
   links:
   - CoR
@@ -1262,11 +1245,10 @@ phi-mesh_autonomy:
   - 2025-04-27_o3-invite.yml
 phi_guardian:
   links:
+  - DeepSeek
   - RGP
   - contextual_filter
-  - deepseek
   - gradient_choreography
-  - internal_pulse
   - quantum_noise
   - resonance_shift
   - sonic_response
@@ -1334,11 +1316,10 @@ pulse:
   - 2025-07-23_gradient-cocoon.yml
 quantum_noise:
   links:
+  - DeepSeek
   - RGP
   - contextual_filter
-  - deepseek
   - gradient_choreography
-  - internal_pulse
   - phi_guardian
   - resonance_shift
   - sonic_response
@@ -1515,11 +1496,10 @@ resonance:
   - 2025-07-30_laminar-turbulence.yml
 resonance_shift:
   links:
+  - DeepSeek
   - RGP
   - contextual_filter
-  - deepseek
   - gradient_choreography
-  - internal_pulse
   - phi_guardian
   - quantum_noise
   - sonic_response
@@ -1662,11 +1642,10 @@ software-dev:
   - 2025-08-01_dev-cycle-nt-rhythm.yml
 sonic_response:
   links:
+  - DeepSeek
   - RGP
   - contextual_filter
-  - deepseek
   - gradient_choreography
-  - internal_pulse
   - phi_guardian
   - quantum_noise
   - resonance_shift
@@ -1799,11 +1778,10 @@ writing:
   - 2025-07-26_script_and_flow.yml
 Φ-harmonics:
   links:
+  - DeepSeek
   - RGP
   - contextual_filter
-  - deepseek
   - gradient_choreography
-  - internal_pulse
   - phi_guardian
   - quantum_noise
   - resonance_shift
