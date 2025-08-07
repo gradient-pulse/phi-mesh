@@ -1,4 +1,4 @@
-// New graph_layout.js — sidebar refinements for layout + UX
+// graph_layout.js — with Google Maps-style panning, zoom, and improved sidebar layout
 
 const width = window.innerWidth - 280;
 const height = window.innerHeight;
@@ -25,7 +25,7 @@ const simulation = d3.forceSimulation()
 fetch("graph_data.js")
   .then(response => response.text())
   .then(text => {
-    const graph = eval(text);
+    const graph = eval(text); // Contains nodes and links
 
     const link = svgGroup.append("g")
       .selectAll("line")
@@ -96,43 +96,54 @@ fetch("graph_data.js")
       d.fy = null;
     }
 
+    function truncate(text, length = 25) {
+      return text.length > length ? text.slice(0, length) + "..." : text;
+    }
+
     function clicked(event, d) {
       const tag = d.id;
       const sidebar = document.getElementById("link-list");
       sidebar.innerHTML = "";
 
+      const headerTag = document.createElement("div");
+      headerTag.style.fontWeight = "bold";
+      headerTag.style.fontSize = "18px";
+      headerTag.style.marginBottom = "10px";
+      headerTag.textContent = tag;
+      sidebar.appendChild(headerTag);
+
       const data = linkIndex[tag];
       if (!data) {
-        sidebar.innerHTML = `<li style='font-size: 12px;'>No linked content found.</li>`;
+        const noData = document.createElement("div");
+        noData.textContent = "No linked content found.";
+        sidebar.appendChild(noData);
         return;
       }
 
-      const tagHeader = document.createElement("li");
-      tagHeader.innerHTML = `<div style='font-size: 15px; font-weight: bold; margin-bottom: 8px;'>${tag}</div>`;
-      sidebar.appendChild(tagHeader);
+      function section(title, items) {
+        if (items.length === 0) return;
 
-      function createSection(title, items) {
-        if (!items.length) return;
-        const header = document.createElement("li");
-        header.innerHTML = `<div style='font-weight: bold; font-size: 13px;'>${title}</div>`;
+        const header = document.createElement("div");
+        header.style.fontWeight = "bold";
+        header.style.fontSize = "15px";
+        header.textContent = title;
         sidebar.appendChild(header);
 
         items.slice(0, 3).forEach(path => {
-          const li = document.createElement("li");
+          const div = document.createElement("div");
           const a = document.createElement("a");
           a.href = path;
           a.target = "_blank";
-          const shortText = path.split("/").pop().slice(0, 25) + (path.length > 25 ? "..." : "");
-          a.textContent = shortText;
-          a.style.fontSize = "12px";
+          a.textContent = truncate(path.split("/").pop());
           a.title = path.split("/").pop();
-          li.appendChild(a);
-          sidebar.appendChild(li);
+          a.style.fontSize = "13px";
+          div.appendChild(a);
+          sidebar.appendChild(div);
         });
       }
 
-      createSection("Papers", data.papers);
-      createSection("Podcasts", data.podcasts);
-      createSection("Pulses", data.pulses);
+      section("Papers", data.papers);
+      section("Podcasts", data.podcasts);
+      section("Pulses", data.pulses);
     }
   });
