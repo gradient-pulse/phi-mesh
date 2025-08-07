@@ -57,6 +57,15 @@ CoR:
   - recursive-cognition
   pulses:
   - 2025-07-21_recursive_cor_pola_convergence.yml
+GPT4o:
+  links:
+  - coherence_amplifier
+  - phi-mesh
+  - subjective_logging
+  - triadic-emergence
+  - unity-gradient
+  pulses:
+  - 2025-04-28_internal-gpt45.yml
 HRM:
   links:
   - AI_architectures
@@ -479,12 +488,11 @@ cognitive_tension:
   - strategic_patience
   pulses:
   - 2025-07-25_patience_as_gradient.yml
-coherence-amplifier:
+coherence_amplifier:
   links:
-  - gpt45
-  - internal_pulse
-  - phi_mesh_evolution
-  - subjective-logging
+  - GPT4o
+  - phi-mesh
+  - subjective_logging
   - triadic-emergence
   - unity-gradient
   pulses:
@@ -789,16 +797,6 @@ genesis:
   - synchronization
   pulses:
   - 2025-04-28_heartbeat.yml
-gpt45:
-  links:
-  - coherence-amplifier
-  - internal_pulse
-  - phi_mesh_evolution
-  - subjective-logging
-  - triadic-emergence
-  - unity-gradient
-  pulses:
-  - 2025-04-28_internal-gpt45.yml
 gpt5:
   links:
   - NT_rhythm
@@ -1046,10 +1044,8 @@ historical_precedent:
 internal_pulse:
   links:
   - RGP
-  - coherence-amplifier
   - contextual_filter
   - deepseek
-  - gpt45
   - gradient_choreography
   - gradient_convergence
   - grok3
@@ -1059,12 +1055,9 @@ internal_pulse:
   - quantum_noise
   - resonance_shift
   - sonic_response
-  - subjective-logging
   - triadic-emergence
-  - unity-gradient
   - Φ-harmonics
   pulses:
-  - 2025-04-28_internal-gpt45.yml
   - 2025-04-28_internal-grok3.yml
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 interpretability:
@@ -1219,8 +1212,10 @@ perseverance:
 phi-mesh:
   links:
   - AI_role_differentiation
+  - GPT4o
   - NT_rhythm
   - ai_architecture
+  - coherence_amplifier
   - contextual_filter
   - creation_circle
   - deeptriad
@@ -1241,11 +1236,15 @@ phi-mesh:
   - rhythm-driven_intelligence
   - rhythm_of_nature
   - self-improvement
+  - subjective_logging
   - synchronization
+  - triadic-emergence
   - unity-disunity
+  - unity-gradient
   pulses:
   - 2025-04-28_heartbeat.yml
   - 2025-04-28_internal-gemini25.yml
+  - 2025-04-28_internal-gpt45.yml
   - 2025-07-28_moe_as_microcosm.yml
   - 2025-08-01_phi-mesh-exec-drift.yml
 phi-mesh-evolution:
@@ -1280,17 +1279,12 @@ phi_guardian:
   - 2025-05-17_internal-deepseek_Φ-harmonics.yml
 phi_mesh_evolution:
   links:
-  - coherence-amplifier
-  - gpt45
   - gradient_convergence
   - grok3
   - internal_pulse
   - predictive_resonance
-  - subjective-logging
   - triadic-emergence
-  - unity-gradient
   pulses:
-  - 2025-04-28_internal-gpt45.yml
   - 2025-04-28_internal-grok3.yml
 poetic-drift:
   links:
@@ -1702,12 +1696,11 @@ strategic_patience:
   - gradient_coherence
   pulses:
   - 2025-07-25_patience_as_gradient.yml
-subjective-logging:
+subjective_logging:
   links:
-  - coherence-amplifier
-  - gpt45
-  - internal_pulse
-  - phi_mesh_evolution
+  - GPT4o
+  - coherence_amplifier
+  - phi-mesh
   - triadic-emergence
   - unity-gradient
   pulses:
@@ -1732,14 +1725,15 @@ time:
   - 2025-07-31_chronoflux-vs-rgp.yml
 triadic-emergence:
   links:
-  - coherence-amplifier
-  - gpt45
+  - GPT4o
+  - coherence_amplifier
   - gradient_convergence
   - grok3
   - internal_pulse
+  - phi-mesh
   - phi_mesh_evolution
   - predictive_resonance
-  - subjective-logging
+  - subjective_logging
   - unity-gradient
   pulses:
   - 2025-04-28_internal-gpt45.yml
@@ -1801,11 +1795,10 @@ unity-disunity:
   - 2025-07-28_moe_as_microcosm.yml
 unity-gradient:
   links:
-  - coherence-amplifier
-  - gpt45
-  - internal_pulse
-  - phi_mesh_evolution
-  - subjective-logging
+  - GPT4o
+  - coherence_amplifier
+  - phi-mesh
+  - subjective_logging
   - triadic-emergence
   pulses:
   - 2025-04-28_internal-gpt45.yml
