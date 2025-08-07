@@ -1,118 +1,148 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const sidebarWidth = 280;
-  const width = window.innerWidth - sidebarWidth;
-  const height = window.innerHeight;
+// graph_layout.js — updated to populate the sidebar on node click
 
-  const svg = d3.select("#graph")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height);
+const width = window.innerWidth - 280; // Subtract sidebar width
+const height = window.innerHeight;
 
-  const simulation = d3.forceSimulation(graphData.nodes)
-    .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(100))
-    .force("charge", d3.forceManyBody().strength(-250))
-    .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("x", d3.forceX(width / 2).strength(0.1))
-    .force("y", d3.forceY(height / 2).strength(0.1));
+const svg = d3.select("#graph")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
 
-  const link = svg.append("g")
-    .attr("stroke", "#aaa")
-    .attr("stroke-width", 1.5)
-    .selectAll("line")
-    .data(graphData.links)
-    .join("line");
+const simulation = d3.forceSimulation()
+  .force("link", d3.forceLink().id(d => d.id).distance(80))
+  .force("charge", d3.forceManyBody().strength(-300))
+  .force("center", d3.forceCenter(width / 2, height / 2));
 
-  const node = svg.append("g")
-    .selectAll("circle")
-    .data(graphData.nodes)
-    .join("circle")
-    .attr("r", 8)
-    .attr("fill", "steelblue")
-    .call(drag(simulation));
+fetch("graph_data.js")
+  .then(response => response.text())
+  .then(text => {
+    const graph = eval(text); // Contains nodes and links
 
-  const label = svg.append("g")
-    .selectAll("text")
-    .data(graphData.nodes)
-    .join("text")
-    .text(d => d.id)
-    .attr("font-size", 12)
-    .attr("dx", 12)
-    .attr("dy", "0.35em");
+    const link = svg.append("g")
+      .selectAll("line")
+      .data(graph.links)
+      .enter().append("line")
+      .attr("stroke", "#ccc")
+      .attr("stroke-width", 1);
 
-  simulation.on("tick", () => {
-    link
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
+    const node = svg.append("g")
+      .selectAll("circle")
+      .data(graph.nodes)
+      .enter().append("circle")
+      .attr("r", 10)
+      .attr("fill", "#9ecae1")
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended))
+      .on("click", clicked);
 
-    node
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
+    const labels = svg.append("g")
+      .selectAll("text")
+      .data(graph.nodes)
+      .enter().append("text")
+      .text(d => d.id)
+      .attr("text-anchor", "middle")
+      .attr("dy", 20)
+      .attr("font-size", "11px")
+      .attr("pointer-events", "none");
 
-    label
-      .attr("x", d => d.x)
-      .attr("y", d => d.y);
-  });
+    simulation
+      .nodes(graph.nodes)
+      .on("tick", ticked);
 
-  function drag(simulation) {
-    function dragstarted(event) {
+    simulation.force("link")
+      .links(graph.links);
+
+    function ticked() {
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+
+      node
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y);
+
+      labels
+        .attr("x", d => d.x)
+        .attr("y", d => d.y);
+    }
+
+    function dragstarted(event, d) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
+      d.fx = d.x;
+      d.fy = d.y;
     }
 
-    function dragged(event) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
     }
 
-    function dragended(event) {
+    function dragended(event, d) {
       if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
+      d.fx = null;
+      d.fy = null;
     }
 
-    return d3.drag()
-      .on("start", dragstarted)
-      .on("drag", dragged)
-      .on("end", dragended);
-  }
+    function clicked(event, d) {
+      const tag = d.id;
+      const sidebar = document.getElementById("link-list");
+      sidebar.innerHTML = ""; // Clear previous entries
 
-  // ✅ Node click → populate sidebar
-  node.on("click", function (event, d) {
-    console.log("Clicked node:", d); // 🔍 Debug output
+      const data = linkIndex[tag];
+      if (!data) {
+        const noData = document.createElement("li");
+        noData.textContent = "No linked content found.";
+        sidebar.appendChild(noData);
+        return;
+      }
 
-    const linkList = document.getElementById("link-list");
-    linkList.innerHTML = "";
-
-    function appendSection(title, items, isLink) {
-      if (items && items.length > 0) {
-        const sectionTitle = document.createElement("li");
-        sectionTitle.innerHTML = `<strong>${title}</strong>`;
-        linkList.appendChild(sectionTitle);
-
-        items.forEach(item => {
+      if (data.papers.length > 0) {
+        const header = document.createElement("li");
+        header.innerHTML = "<strong>Papers</strong>";
+        sidebar.appendChild(header);
+        data.papers.forEach(path => {
           const li = document.createElement("li");
           const a = document.createElement("a");
-
-          if (isLink) {
-            a.href = item;
-            a.target = "_blank";
-            a.textContent = item.length > 40 ? item.slice(0, 40) + "…" : item;
-          } else {
-            a.href = item.path;
-            a.textContent = item.title.length > 40 ? item.title.slice(0, 40) + "…" : item.title;
-          }
-
+          a.href = path;
+          a.target = "_blank";
+          a.textContent = path.split("/").pop();
           li.appendChild(a);
-          linkList.appendChild(li);
+          sidebar.appendChild(li);
+        });
+      }
+
+      if (data.podcasts.length > 0) {
+        const header = document.createElement("li");
+        header.innerHTML = "<strong>Podcasts</strong>";
+        sidebar.appendChild(header);
+        data.podcasts.forEach(path => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = path;
+          a.target = "_blank";
+          a.textContent = path.split("/").pop();
+          li.appendChild(a);
+          sidebar.appendChild(li);
+        });
+      }
+
+      if (data.pulses.length > 0) {
+        const header = document.createElement("li");
+        header.innerHTML = "<strong>Pulses</strong>";
+        sidebar.appendChild(header);
+        data.pulses.forEach(path => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = path;
+          a.target = "_blank";
+          a.textContent = path.split("/").pop();
+          li.appendChild(a);
+          sidebar.appendChild(li);
         });
       }
     }
-
-    appendSection("Pulses", d.pulses, false);
-    appendSection("Papers", d.papers, true);
-    appendSection("Podcasts", d.podcasts, true);
   });
-});
