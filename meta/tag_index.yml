@@ -64,7 +64,6 @@ Big_Bang:
   - cosmogenesis
   - cosmology
   - flux-enthrenched_universe
-  - flux-entrenched_universe
   - gradient_cocoon
   - gradient_cocoon_theory
   - gradient_syntax
@@ -90,7 +89,6 @@ Big_Quiet:
   - cosmogenesis
   - cosmology
   - flux-enthrenched_universe
-  - flux-entrenched_universe
   - gradient_cocoon
   - gradient_cocoon_theory
   - gradient_syntax
@@ -126,7 +124,7 @@ Dark_Energy:
   - NT
   - RGP
   - cosmology
-  - flux-entrenched_universe
+  - flux-enthrenched_universe
   - gradient_cocoon
   - gradient_syntax
   - recursive_cosmology
@@ -143,7 +141,7 @@ Dark_Matter:
   - NT
   - RGP
   - cosmology
-  - flux-entrenched_universe
+  - flux-enthrenched_universe
   - gradient_cocoon
   - gradient_syntax
   - recursive_cosmology
@@ -214,7 +212,7 @@ Lambda:
   - NT
   - RGP
   - cosmology
-  - flux-entrenched_universe
+  - flux-enthrenched_universe
   - gradient_cocoon
   - gradient_syntax
   - recursive_cosmology
@@ -250,7 +248,7 @@ NT:
   - contextual_filter
   - cosmology
   - development_process
-  - flux-entrenched_universe
+  - flux-enthrenched_universe
   - gradient-driven_intelligence
   - gradient_cocoon
   - gradient_coherence
@@ -388,7 +386,6 @@ RGP:
   - development_process
   - division_of_labor
   - flux-enthrenched_universe
-  - flux-entrenched_universe
   - flux_threshold
   - gradient-driven_intelligence
   - gradient_choreography
@@ -625,7 +622,6 @@ cosmology:
   - RGP
   - cosmogenesis
   - flux-enthrenched_universe
-  - flux-entrenched_universe
   - gradient_cocoon
   - gradient_cocoon_theory
   - gradient_syntax
@@ -698,37 +694,27 @@ flux-enthrenched_universe:
   links:
   - Big_Bang
   - Big_Quiet
+  - Dark_Energy
+  - Dark_Matter
+  - Lambda
+  - NT
   - RGP
   - cosmogenesis
   - cosmology
+  - gradient_cocoon
   - gradient_cocoon_theory
   - gradient_syntax
   - laminarity
   - origin_resonance
   - quiet_awakening
   - recursion
+  - recursive_cosmology
   - recursive_grammar
   - rhythm_of_nature
   - turbulence
   pulses:
-  - 2025-07-26_the_big_quiet.yml
-flux-entrenched_universe:
-  links:
-  - Big_Bang
-  - Big_Quiet
-  - Dark_Energy
-  - Dark_Matter
-  - Lambda
-  - NT
-  - RGP
-  - cosmology
-  - gradient_cocoon
-  - gradient_syntax
-  - recursive_cosmology
-  - rhythm_of_nature
-  - turbulence
-  pulses:
   - 2025-07-23_gradient-cocoon.yml
+  - 2025-07-26_the_big_quiet.yml
 flux_intelligence:
   links:
   - CoR
@@ -832,7 +818,7 @@ gradient_cocoon:
   - NT
   - RGP
   - cosmology
-  - flux-entrenched_universe
+  - flux-enthrenched_universe
   - gradient_syntax
   - recursive_cosmology
   - rhythm_of_nature
@@ -913,7 +899,6 @@ gradient_syntax:
   - division_of_labor
   - drift
   - flux-enthrenched_universe
-  - flux-entrenched_universe
   - flux_intelligence
   - gradient-driven_behavior
   - gradient_choreography
@@ -1303,7 +1288,7 @@ recursive_cosmology:
   - NT
   - RGP
   - cosmology
-  - flux-entrenched_universe
+  - flux-enthrenched_universe
   - gradient_cocoon
   - gradient_syntax
   - rhythm_of_nature
@@ -1398,7 +1383,6 @@ rhythm_of_nature:
   - cosmogenesis
   - cosmology
   - flux-enthrenched_universe
-  - flux-entrenched_universe
   - gradient-driven_behavior
   - gradient_choreography
   - gradient_cocoon
@@ -1560,7 +1544,6 @@ turbulence:
   - cosmogenesis
   - cosmology
   - flux-enthrenched_universe
-  - flux-entrenched_universe
   - flux_threshold
   - gradient_cocoon
   - gradient_cocoon_theory
