@@ -1,5 +1,4 @@
-
-// graph_layout.js — with panning, zoom, sidebar tweaks, and safe graph loading
+// graph_layout.js — safe JSON loading, with panning, zoom, and sidebar rendering
 
 const width = window.innerWidth - 280; // subtract sidebar
 const height = window.innerHeight;
@@ -23,11 +22,9 @@ const simulation = d3.forceSimulation()
   .force("charge", d3.forceManyBody().strength(-300))
   .force("center", d3.forceCenter(width / 2, height / 2));
 
-fetch("graph_data.js")
-  .then(response => response.text())
-  .then(text => {
-    const graph = new Function(text.replace(/^const graph\s*=\s*/, '').trim() + '; return graph;')();
-
+fetch("graph_data.json")
+  .then(response => response.json())
+  .then(graph => {
     const link = svgGroup.append("g")
       .selectAll("line")
       .data(graph.links)
@@ -45,7 +42,7 @@ fetch("graph_data.js")
         .on("start", dragstarted)
         .on("drag", dragged)
         .on("end", dragended))
-        .on("click", (event, d) => renderSidebar(d.id));
+      .on("click", (event, d) => renderSidebar(d.id));
 
     const labels = svgGroup.append("g")
       .selectAll("text")
