@@ -1,7 +1,6 @@
 import yaml
 import json
 import os
-from datetime import datetime
 
 # Load tag index
 with open("meta/tag_index.yml", "r") as f:
@@ -44,13 +43,12 @@ def build_graph_data(tag_entries):
 
 graph_data = build_graph_data(normalized_tags)
 
-# ✅ Output as JS file defining `window.graph` (NOT const)
+# ✅ Output as valid JS defining `window.graph`
 output_path = "docs/graph_data.js"
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
 with open(output_path, "w") as f:
     f.write("window.graph = ")
-    json.dump(graph_data, f, indent=2)
-    f.write(f";\n// generated {datetime.utcnow().isoformat()}Z")
+    f.write(json.dumps(graph_data, indent=2))
+    f.write(";\n")
 
 print(f"✅ Graph data written to {output_path}")
