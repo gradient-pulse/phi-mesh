@@ -1,5 +1,6 @@
 import yaml
 import json
+import os
 
 # Load tag index
 with open("meta/tag_index.yml", "r") as f:
@@ -42,8 +43,10 @@ def build_graph_data(tag_entries):
 
 graph_data = build_graph_data(normalized_tags)
 
-# Output file
-with open("docs/graph_data.js", "w") as f:
-    f.write("const graph = ")
+# ✅ Output as JSON for tag_map.html to load correctly
+output_path = "docs/graph_data.json"
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
+with open(output_path, "w") as f:
     json.dump(graph_data, f, indent=2)
-    f.write(";")    
+
+print(f"✅ Graph data written to {output_path}")
