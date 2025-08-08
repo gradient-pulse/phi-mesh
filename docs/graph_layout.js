@@ -1,4 +1,6 @@
-// graph_layout.js — safe JSON loading, with panning, zoom, and sidebar rendering
+// graph_layout.js — safe JS loading, with panning, zoom, and sidebar rendering
+
+const graph = window.graph;  // ✨ PATCH: Use global JS object
 
 const width = window.innerWidth - 280; // subtract sidebar
 const height = window.innerHeight;
@@ -22,9 +24,8 @@ const simulation = d3.forceSimulation()
   .force("charge", d3.forceManyBody().strength(-300))
   .force("center", d3.forceCenter(width / 2, height / 2));
 
-fetch("graph_data.json")
-  .then(response => response.json())
-  .then(graph => {
+const graph = window.graph; // loaded via <script src="graph_data.js">
+
     const link = svgGroup.append("g")
       .selectAll("line")
       .data(graph.links)
