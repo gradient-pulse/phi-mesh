@@ -1,8 +1,9 @@
+
 // graph_layout.js — safe JS loading, with panning, zoom, and sidebar rendering
 
-const graph = window.graph;  // ✨ Use global JS object
+const graph = window.graph;  // Loaded from graph_data.js
 
-const width = window.innerWidth - 280; // subtract sidebar
+const width = window.innerWidth - 280; // Subtract sidebar width
 const height = window.innerHeight;
 
 const zoom = d3.zoom()
@@ -24,6 +25,7 @@ const simulation = d3.forceSimulation()
   .force("charge", d3.forceManyBody().strength(-300))
   .force("center", d3.forceCenter(width / 2, height / 2));
 
+// Draw links
 const link = svgGroup.append("g")
   .selectAll("line")
   .data(graph.links)
@@ -31,6 +33,7 @@ const link = svgGroup.append("g")
   .attr("stroke", "#ccc")
   .attr("stroke-width", 1);
 
+// Draw nodes
 const node = svgGroup.append("g")
   .selectAll("circle")
   .data(graph.nodes)
@@ -41,13 +44,14 @@ const node = svgGroup.append("g")
     .on("start", dragstarted)
     .on("drag", dragged)
     .on("end", dragended))
-  .on("click", (event, d) => renderSidebar(d.id));
+  .on("click", (event, d) => renderSidebar(d.label));
 
+// Draw labels
 const labels = svgGroup.append("g")
   .selectAll("text")
   .data(graph.nodes)
   .enter().append("text")
-  .text(d => d.id)
+  .text(d => d.label)
   .attr("text-anchor", "middle")
   .attr("dy", 20)
   .attr("font-size", "11px")
