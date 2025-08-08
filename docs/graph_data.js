@@ -1,4 +1,4 @@
-const graph = {
+window.graph = {
   nodes: [
     { id: 0, label: "RGP", centrality: 0.8 },
     { id: 1, label: "gradient_syntax", centrality: 0.6 },
