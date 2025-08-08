@@ -49,7 +49,7 @@ output_path = "docs/graph_data.js"
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
 with open(output_path, "w", encoding="utf-8") as f:
-    f.write("const graph = ")
+    f.write("const graphData = ")
     f.write(json.dumps(graph_data, indent=2))
     f.write(";")
 
