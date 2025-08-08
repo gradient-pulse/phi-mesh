@@ -1,3 +1,4 @@
+
 // graph_layout.js — with panning, zoom, sidebar tweaks, and safe graph loading
 
 const width = window.innerWidth - 280; // subtract sidebar
@@ -94,45 +95,5 @@ fetch("graph_data.js")
       if (!event.active) simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;
-    }
-
-    function clicked(event, d) {
-      const tag = d.id;
-      const sidebar = document.getElementById("link-list");
-      sidebar.innerHTML = "";
-
-      const data = linkIndex[tag];
-      if (!data) {
-        const noData = document.createElement("li");
-        noData.textContent = "No linked content found.";
-        sidebar.appendChild(noData);
-        return;
-      }
-
-      const headerTag = document.createElement("li");
-      headerTag.innerHTML = `<strong>${tag}</strong>`;
-      sidebar.appendChild(headerTag);
-
-      const addLinks = (type, title) => {
-        if (data[type]?.length > 0) {
-          const header = document.createElement("li");
-          header.innerHTML = `<strong>${title}</strong>`;
-          sidebar.appendChild(header);
-          data[type].slice(0, 3).forEach(path => {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = path;
-            a.target = "_blank";
-            const display = path.split("/").pop().slice(0, 25);
-            a.textContent = display.length === 25 ? display + "..." : display;
-            li.appendChild(a);
-            sidebar.appendChild(li);
-          });
-        }
-      };
-
-      addLinks("papers", "Papers");
-      addLinks("podcasts", "Podcasts");
-      addLinks("pulses", "Pulses");
     }
   });
