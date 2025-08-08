@@ -1,6 +1,6 @@
 // graph_layout.js — safe JS loading, with panning, zoom, and sidebar rendering
 
-const graph = window.graph;  // ✨ PATCH: Use global JS object
+const graph = window.graph;  // ✨ Use global JS object
 
 const width = window.innerWidth - 280; // subtract sidebar
 const height = window.innerHeight;
@@ -24,74 +24,71 @@ const simulation = d3.forceSimulation()
   .force("charge", d3.forceManyBody().strength(-300))
   .force("center", d3.forceCenter(width / 2, height / 2));
 
-const graph = window.graph; // loaded via <script src="graph_data.js">
+const link = svgGroup.append("g")
+  .selectAll("line")
+  .data(graph.links)
+  .enter().append("line")
+  .attr("stroke", "#ccc")
+  .attr("stroke-width", 1);
 
-    const link = svgGroup.append("g")
-      .selectAll("line")
-      .data(graph.links)
-      .enter().append("line")
-      .attr("stroke", "#ccc")
-      .attr("stroke-width", 1);
+const node = svgGroup.append("g")
+  .selectAll("circle")
+  .data(graph.nodes)
+  .enter().append("circle")
+  .attr("r", 10)
+  .attr("fill", "#9ecae1")
+  .call(d3.drag()
+    .on("start", dragstarted)
+    .on("drag", dragged)
+    .on("end", dragended))
+  .on("click", (event, d) => renderSidebar(d.id));
 
-    const node = svgGroup.append("g")
-      .selectAll("circle")
-      .data(graph.nodes)
-      .enter().append("circle")
-      .attr("r", 10)
-      .attr("fill", "#9ecae1")
-      .call(d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended))
-      .on("click", (event, d) => renderSidebar(d.id));
+const labels = svgGroup.append("g")
+  .selectAll("text")
+  .data(graph.nodes)
+  .enter().append("text")
+  .text(d => d.id)
+  .attr("text-anchor", "middle")
+  .attr("dy", 20)
+  .attr("font-size", "11px")
+  .attr("pointer-events", "none");
 
-    const labels = svgGroup.append("g")
-      .selectAll("text")
-      .data(graph.nodes)
-      .enter().append("text")
-      .text(d => d.id)
-      .attr("text-anchor", "middle")
-      .attr("dy", 20)
-      .attr("font-size", "11px")
-      .attr("pointer-events", "none");
+simulation
+  .nodes(graph.nodes)
+  .on("tick", ticked);
 
-    simulation
-      .nodes(graph.nodes)
-      .on("tick", ticked);
+simulation.force("link")
+  .links(graph.links);
 
-    simulation.force("link")
-      .links(graph.links);
+function ticked() {
+  link
+    .attr("x1", d => d.source.x)
+    .attr("y1", d => d.source.y)
+    .attr("x2", d => d.target.x)
+    .attr("y2", d => d.target.y);
 
-    function ticked() {
-      link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
+  node
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y);
 
-      node
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
+  labels
+    .attr("x", d => d.x)
+    .attr("y", d => d.y);
+}
 
-      labels
-        .attr("x", d => d.x)
-        .attr("y", d => d.y);
-    }
+function dragstarted(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
 
-    function dragstarted(event, d) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
+function dragged(event, d) {
+  d.fx = event.x;
+  d.fy = event.y;
+}
 
-    function dragged(event, d) {
-      d.fx = event.x;
-      d.fy = event.y;
-    }
-
-    function dragended(event, d) {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }
-  });
+function dragended(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
