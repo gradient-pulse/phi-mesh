@@ -2,11 +2,11 @@ import yaml
 import json
 import os
 
-# Load tag index
-with open("meta/tag_index.yml", "r") as f:
+# === Load tag index from meta/tag_index.yml ===
+with open("meta/tag_index.yml", "r", encoding="utf-8") as f:
     raw_data = yaml.safe_load(f)
 
-# Normalize tag entries
+# === Normalize entries ===
 normalized_tags = []
 for entry in raw_data:
     if isinstance(entry, str):
@@ -18,6 +18,7 @@ for entry in raw_data:
     elif isinstance(entry, dict):
         normalized_tags.append(entry)
 
+# === Build graph data ===
 def build_graph_data(tag_entries):
     nodes = []
     links = []
@@ -43,12 +44,13 @@ def build_graph_data(tag_entries):
 
 graph_data = build_graph_data(normalized_tags)
 
-# ✅ Output as a JS file defining a JS object, not JSON
+# === Write to valid JavaScript file ===
 output_path = "docs/graph_data.js"
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
 with open(output_path, "w", encoding="utf-8") as f:
-    f.write("// Auto-generated graph data\n")
-    f.write("var graph = ")
+    f.write("const graph = ")
     f.write(json.dumps(graph_data, indent=2))
     f.write(";")
+
 print(f"✅ Graph data written to {output_path}")
