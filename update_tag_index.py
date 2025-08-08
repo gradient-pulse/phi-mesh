@@ -1,84 +1,62 @@
-name: Update Tag Index, Link Index, and Tag Map
+import os
+import yaml
+from collections import defaultdict
 
-on:
-  push:
-    paths:
-      - "pulse/**/*.yml"
-      - "meta/tag_index_utils.py"
-      - "update_tag_index.py"
-      - "generate_tag_map.py"
-      - "generate_graph_data.py"
-      - "generate_link_index.py"
-  workflow_dispatch:
+# Configuration: use script-relative paths
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PULSE_DIR = os.path.join(SCRIPT_DIR, "pulse")
+TAG_INDEX_PATH = os.path.join(SCRIPT_DIR, "meta", "tag_index.yml")
 
-jobs:
-  update-tags:
-    name: Update Tags & Link Index
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+def load_pulses():
+    pulse_files = [
+        os.path.join(root, f)
+        for root, _, files in os.walk(PULSE_DIR)
+        for f in files
+        if f.endswith(".yml")
+           and "archive" not in root
+           and "telemetry" not in root
+    ]
+    if not pulse_files:
+        raise RuntimeError(f"❌ No pulse files found in {PULSE_DIR}")
+    print(f"✅ Found {len(pulse_files)} pulse files.")
+    return pulse_files
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
 
-      - name: Install dependencies
-        run: pip install pyyaml networkx
+def extract_tags(pulse_files):
+    tag_index = defaultdict(list)
+    for filepath in pulse_files:
+        with open(filepath, "r", encoding="utf-8") as f:
+            try:
+                data = yaml.safe_load(f)
+                if not data:
+                    print(f"⚠️  Skipping empty file: {filepath}")
+                    continue
+                pulse_tags = data.get("tags", [])
+                if not pulse_tags:
+                    print(f"⚠️  No tags in: {filepath}")
+                    continue
+                for tag in pulse_tags:
+                    # Normalize to forward slashes for GitHub
+                    relative_path = os.path.relpath(filepath, SCRIPT_DIR).replace("\\", "/")
+                    tag_index[tag].append(relative_path)
+                print(f"✅ {os.path.basename(filepath)}: {pulse_tags}")
+            except Exception as e:
+                print(f"❌ Failed to parse {filepath}: {e}")
+    return dict(tag_index)
 
-      - name: 🟡 Run update_tag_index.py
-        run: python update_tag_index.py
 
-      - name: 🔗 Run generate_link_index.py
-        run: |
-          echo "🔁 Running generate_link_index.py"
-          python generate_link_index.py || { echo "❌ generate_link_index.py failed"; exit 1; }
+def write_tag_index(tag_index):
+    if not tag_index:
+        print("⚠️ No tags extracted; tag index will be empty.")
+    else:
+        print(f"✅ Extracted {sum(len(v) for v in tag_index.values())} tag links across {len(tag_index)} tags.")
+    with open(TAG_INDEX_PATH, "w", encoding="utf-8") as f:
+        yaml.dump(tag_index, f, default_flow_style=False, sort_keys=True)
+    print(f"✅ Tag index written to {TAG_INDEX_PATH}")
 
-      - name: 📊 Generate graph_data.js
-        run: |
-          echo "🔁 Running generate_graph_data.py"
-          python generate_graph_data.py || { echo "❌ generate_graph_data.py failed"; exit 1; }
 
-      - name: 📂 Show meta/ and tag_index.yml (if exists)
-        run: |
-          echo "📁 Contents of meta/"
-          ls -l meta/ || true
-          echo "📄 tag_index.yml (if exists):"
-          test -f meta/tag_index.yml && cat meta/tag_index.yml || echo "⚠️ tag_index.yml not found"
-
-  generate-map:
-    name: Generate Tag Map
-    runs-on: ubuntu-latest
-    needs: update-tags
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: Install dependencies
-        run: pip install pyyaml networkx
-
-      - name: 🧠 Run generate_tag_map.py
-        run: python generate_tag_map.py
-
-      - name: 📁 Show generated tag map files
-        run: |
-          echo "📁 Contents of docs/"
-          ls -l docs/
-          echo "📄 Preview of data.js:"
-          head -n 30 docs/data.js || echo "⚠️ data.js not found or empty"
-
-      - name: Commit and push tag map
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add meta/tag_index.yml docs/tag_map.html docs/data.js docs/graph_data.json link_index.js || true
-          git commit -m "Auto-update tag index, link index, graph data, and tag map" || echo "No changes to commit"
-          git push || echo "Nothing to push"
+if __name__ == "__main__":
+    pulses = load_pulses()
+    tag_index = extract_tags(pulses)
+    write_tag_index(tag_index)
