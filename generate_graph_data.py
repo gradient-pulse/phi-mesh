@@ -1,3 +1,5 @@
+# ✅ generate_graph_data.py (Final Fixed Version)
+
 import yaml
 import json
 import os
@@ -43,12 +45,11 @@ def build_graph_data(tag_entries):
 
 graph_data = build_graph_data(normalized_tags)
 
-# ✅ Output as valid JS defining `window.graph`
-output_path = "docs/graph_data.js"
-os.makedirs(os.path.dirname(output_path), exist_ok=True)
-with open(output_path, "w") as f:
-    f.write("window.graph = ")
-    f.write(json.dumps(graph_data, indent=2))
-    f.write(";\n")
+# ✅ Output valid JS file: const graph = {...};
+os.makedirs("docs", exist_ok=True)
+with open("docs/graph_data.js", "w") as f:
+    f.write("const graph = ")
+    json.dump(graph_data, f, indent=2)
+    f.write(";\n// ✅ Auto-generated graph data\n")
 
-print(f"✅ Graph data written to {output_path}")
+print("✅ Graph data written to docs/graph_data.js")
