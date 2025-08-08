@@ -1,7 +1,6 @@
-
 // graph_layout.js — safe JS loading, with panning, zoom, and sidebar rendering
 
-const graph = window.graph;  // Loaded from graph_data.js
+const graph = window.graph || {};  // Safely fallback to empty object
 
 const width = window.innerWidth - 280; // Subtract sidebar width
 const height = window.innerHeight;
