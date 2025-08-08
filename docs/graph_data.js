@@ -1,8 +1,11 @@
-graphData = `
-({
+const graph = {
   nodes: [
-    { id: "example-tag" }
+    { id: "software-dev" },
+    { id: "rgp" },
+    { id: "mesh-academy" }
   ],
-  links: []
-})
-`;
+  links: [
+    { source: "software-dev", target: "rgp" },
+    { source: "rgp", target: "mesh-academy" }
+  ]
+};
