@@ -1,4 +1,4 @@
-const graph = {
+({
   nodes: [
     { id: "software-dev" },
     { id: "rgp-core" },
@@ -12,4 +12,4 @@ const graph = {
     { source: "gradient-syntax", target: "mesh-academy" },
     { source: "mesh-academy", target: "coherence" }
   ]
-};
+})
