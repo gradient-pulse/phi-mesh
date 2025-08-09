@@ -3,60 +3,46 @@ name: Update Tag Index and Tag Map
 on:
   push:
     paths:
-      - "pulse/**/*.yml"
+      - "phi-mesh/pulse/**/*.yml"
       - "meta/tag_index_utils.py"
       - "update_tag_index.py"
       - "generate_tag_map.py"
-      - "generate_graph_data.py"
-  workflow_dispatch:
+      - "docs/tag_map_template.html"
+      - "docs/graph.js"
+      - "meta/tag_index.yml"
+      - "generate_graph_data.py"   # <— ensure changes to the generator re-run CI
 
 jobs:
   update-tags:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧾 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: pip install pyyaml networkx
 
-      - name: 🔁 Run update_tag_index.py
+      - name: Regenerate tag index
         run: python update_tag_index.py
 
-      - name: 🧠 Run generate_graph_data.py
-        run: |
-          echo "🔁 Running generate_graph_data.py"
-          python generate_graph_data.py
-
-  generate-map:
-    runs-on: ubuntu-latest
-    needs: update-tags
-
-    steps:
-      - name: 🧾 Checkout repository
-        uses: actions/checkout@v3
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: 📦 Install dependencies
-        run: pip install pyyaml networkx
-
-      - name: 🎨 Run generate_tag_map.py
+      - name: Regenerate tag map
         run: python generate_tag_map.py
 
-      - name: 📤 Commit and push tag map
+      # --- NEW: build graph_data.js from meta/tag_index.yml
+      - name: Build graph_data.js
+        run: python generate_graph_data.py
+
+      # Single, final commit so graph_data.js can’t be overwritten by later steps
+      - name: Commit and push changes
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add meta/tag_index.yml docs/tag_map.html docs/graph_data.js || true
-          git commit -m "Auto-update tag index and graph" || echo "No changes to commit"
+          git add meta/tag_index.yml docs/tag_map.html docs/data.js docs/graph_data.js
+          git commit -m "Auto-update tag index, map, and graph data" || echo "No changes to commit"
           git push || echo "Nothing to push"
