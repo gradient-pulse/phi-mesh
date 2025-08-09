@@ -1,40 +1,124 @@
 # meta/aliases.yml
-Big_Bang:
-  - big_bang
-  - Big Bang
-  - big bang
+version: 1
+generated: 2025-08-09
+notes: >
+  Canonical → list of known aliases. The updater should map every alias to its
+  canonical form before writing tag_index or graph data.
 
-Big_Quiet:
-  - big_quiet
-  - Big Quiet
-  - big quiet
+aliases:
 
-AI_architectures:
-  - ai_architectures
-  - AI architectures
-  - Ai_Architectures
+  RGP:
+    - rgp
 
-AI_architecture:
-  - ai_architecture
-  - AI architecture
+  Contextual_Filter:
+    - ContextualFilter
+    - contextual_filter
+    - contectual_filter
 
-Narrative_Tick:
-  - narrative_tick
-  - Narrative Tick
-  - Narrative-Tick
+  Gradient_Syntax:
+    - gradient_syntax
+    - gradient-syntax
+    - GradientSyntax
 
-Phi-Monitor:
-  - phi-monitor
-  - Phi Monitor
+  Navier_Stokes:
+    - NS_solution
+    - navier-stokes
 
-DeepSeek:
-  - deepseek
+  Big Bang:
+    - Big_Bang
+    - big_bang
 
-GPT5:
-  - gpt5
-GPT4o:
-  - gpt4o
+  big_quiet:
+    - Big_Quiet
+    - Big-Quiet
+    - big-quiet
 
-RΦ:
-  - rφ
-  - rφ_
+  cosmogenesis:
+    - Cosmogenesis
+
+  cosmology:
+    - Cosmology
+
+  flux-entrenched_universe:
+    - flux_entrenched_universe
+    - flux-enthrenched_universe   # common misspelling kept as alias
+
+  Phi-monitor:
+    - Phi_monitor
+    - Phi-monitor  # normalized to this form
+
+  proto-pulse:
+    - proto_pulse
+
+  coherence-amplifier:
+    - coherence_amplifier
+
+  subjective-logging:
+    - subjective_logging
+
+  triadic-emergence:
+    - triadic_emergence
+
+  gradient-choreography:
+    - gradient_choreography
+
+  gradient-driven-behavior:
+    - gradient-driven_behavior
+
+  gradient-driven-intelligence:
+    - gradient-driven_intelligence
+
+  NT_rhythm:
+    - NT-rhythm
+
+  narrative_tick:
+    - Narrative_Tick
+
+  rhythm-of-least-divergence:
+    - rhythm_of_least_divergence
+    - rhythm_of_least_divergence  # guard for accidental underscore variant
+
+  rhythm_of_nature:
+    - rhythm-of-nature
+
+  mixture-of-experts:
+    - mixture_of_experts
+
+  gpt5:
+    - GPT5
+
+  grok3:
+    - GROK3
+
+  AI_architectures:
+    - ai_architecture
+    - ai-architecture
+
+  phi-mesh:
+    - phi_mesh
+
+  phi-mesh-evolution:
+    - phi_mesh_evolution
+
+  unity-disunity:
+    - unity_disunity
+
+  recursive-checkpoint:
+    - recursive_checkpoint
+
+  recursive-cognition:
+    - recursive_cognition
+
+  Φ-harmonics:
+    - \u03A6-harmonics
+
+  big_bang:
+    - Big_Bang  # handled already via "Big Bang", but kept here for robustness
+
+  big_quiet_alias:
+    - Big-Quiet  # handled above; safety net for stragglers
+
+  # Soft “typo bucket” that you can flip on/off in the script if desired:
+  _typos:
+    - flux-enthrenched_universe   # typo of entrenched
+    - contectual_filter           # typo of contextual
