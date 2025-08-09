@@ -1,84 +1,46 @@
-name: Update Tag Index, Map, and Graph Data
+name: Update Tag Index & Graph
 
 on:
   push:
     paths:
       - "phi-mesh/pulse/**/*.yml"
-      - "meta/tag_index.yml"
+      - "phi-mesh/pulse/**/*.yaml"
+      - "meta/tag_index_utils.py"
       - "update_tag_index.py"
-      - "generate_tag_map.py"
       - "generate_graph_data.py"
-      - "docs/sidebar_display.js"
-      - "docs/graph_layout.js"
+      - "docs/*.js"
       - "docs/tag_map.html"
-      - ".github/workflows/update_graph_and_tags.yml"
-  workflow_dispatch: {}
-
-# Avoid overlapping runs on busy edit bursts
-concurrency:
-  group: update-tags-and-graph
-  cancel-in-progress: true
-
-permissions:
-  contents: write
 
 jobs:
-  update:
+  build-map:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-          cache: "pip"
 
-      - name: Install dependencies
+      - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml networkx
+          pip install pyyaml
 
-      # 1) Always refresh the tag index first (source of truth)
       - name: Regenerate tag index
         run: python update_tag_index.py
 
-      # 2) Rebuild the tag map HTML (safe if it already exists)
-      - name: Regenerate tag map (HTML)
-        run: python generate_tag_map.py
-
-      # 3) Rebuild graph data — writes hashed payload + loader
-      - name: Regenerate graph data (JS)
+      - name: Generate graph data
         run: python generate_graph_data.py
 
-      - name: Prune old graph payloads (keep latest 3)
+      - name: Inject build hash in tag_map.html (cache-busting without new files)
         run: |
-          set -e
-          ls -1t docs/graph_data.*.js 2>/dev/null | tail -n +4 | xargs -r rm -f
+          HASH=$(git rev-parse --short HEAD)
+          sed -i "s/__BUILD_HASH__/${HASH}/g" docs/tag_map.html
 
-      # Guardrail: verify outputs exist before committing
-      - name: Verify outputs exist
-        run: |
-          test -f docs/tag_map.html
-          test -f docs/graph_data.js
-          ls -1 docs/graph_data.*.js | head -n 1
-
-      - name: Commit artifacts
+      - name: Commit changes if any
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add meta/tag_index.yml docs/tag_map.html docs/graph_data.js docs/graph_data.*.js
-          git commit -m "Auto: update tag index, tag map, and graph data" || echo "No changes to commit"
-          git push || echo "Nothing to push"
-
-      # Optional: upload built files as an artifact for quick inspection
-      - name: Upload docs artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: site-docs
-          path: |
-            docs/tag_map.html
-            docs/graph_data.js
-            docs/graph_data.*.js
+          git add meta/tag_index.yml docs/data.js docs/graph_data.js docs/link_index.js docs/tag_map.html
+          git diff --cached --quiet || git commit -m "auto: update tag index & graph (build $GITHUB_SHA)"
+          git push || true
