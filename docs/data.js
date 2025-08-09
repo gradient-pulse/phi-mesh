@@ -1,1943 +1,386 @@
 const tagData = {
-  "AI_alignment": {
-    "links": [
-      "NT",
-      "Narrative_Tick",
-      "PoLA",
-      "RGP",
-      "cognition",
-      "contextual_filter",
-      "gradient-driven_intelligence"
-    ],
-    "pulses": [
-      "2025-07-22_CF_split.yml"
-    ]
-  },
-  "AI_architecture": {
-    "links": [
-      "GPT5",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "AI_architectures": {
-    "links": [
-      "HRM",
-      "NT",
-      "PoLA",
-      "RGP"
-    ],
-    "pulses": [
-      "2025-08-02_HRM_rhythm.yml"
-    ]
-  },
-  "AI_role_differentiation": {
-    "links": [
-      "creation_circle",
-      "gemini",
-      "listener_mode",
-      "operational_coherence",
-      "phi-mesh"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gemini25.yml"
-    ]
-  },
-  "Big-Quiet": {
-    "links": [
-      "RGP",
-      "R\u03a6",
-      "flux_threshold",
-      "gradient_flux_reversal",
-      "recursive_coherence",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-30-gradient-flux-reversal.yml"
-    ]
-  },
-  "Big_Bang": {
-    "links": [
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_cosmology",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "Big_Quiet": {
-    "links": [
-      "Big_Bang",
-      "Dark_Energy",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_cosmology",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "CoR": {
-    "links": [
-      "NT_rhythm",
-      "PoLA",
-      "contextual_filter",
-      "flux_intelligence",
-      "gradient_syntax",
-      "interpretability",
-      "reality_syntax_equation",
-      "recursive_cognition"
-    ],
-    "pulses": [
-      "2025-07-21_recursive_cor_pola_convergence.yml"
-    ]
-  },
-  "Dark_Energy": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon",
-      "gradient_syntax",
-      "recursive_cosmology",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml"
-    ]
-  },
-  "Dark_Matter": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon",
-      "gradient_syntax",
-      "recursive_cosmology",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml"
-    ]
-  },
-  "DeepSeek": {
-    "links": [
-      "RGP",
-      "contextual_filter",
-      "gradient_choreography",
-      "phi_guardian",
-      "quantum_noise",
-      "resonance_shift",
-      "sonic_response",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
-    ]
-  },
-  "GPT4o": {
-    "links": [
-      "coherence_amplifier",
-      "phi-mesh",
-      "subjective_logging",
-      "triadic_emergence",
-      "unity_gradient"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gpt45.yml"
-    ]
-  },
-  "GPT5": {
-    "links": [
-      "AI_architecture",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "GROK3": {
-    "links": [
-      "gradient_convergence",
-      "phi-mesh",
-      "predictive_resonance",
-      "triadic_emergence"
-    ],
-    "pulses": [
-      "2025-04-28_internal-grok3.yml"
-    ]
-  },
-  "HRM": {
-    "links": [
-      "AI_architectures",
-      "NT",
-      "PoLA",
-      "RGP"
-    ],
-    "pulses": [
-      "2025-08-02_HRM_rhythm.yml"
-    ]
-  },
-  "Lambda": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "NT",
-      "RGP",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon",
-      "gradient_syntax",
-      "recursive_cosmology",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml"
-    ]
-  },
-  "NS_solution": {
-    "links": [
-      "RGP",
-      "contextual_filter",
-      "legacy",
-      "perseverance",
-      "signal"
-    ],
-    "pulses": [
-      "2025-07-24_long_haul_blinding_light.yml"
-    ]
-  },
-  "NT": {
-    "links": [
-      "AI_alignment",
-      "AI_architectures",
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "HRM",
-      "Lambda",
-      "Narrative_Tick",
-      "PoLA",
-      "RGP",
-      "alignment",
-      "cognition",
-      "cognitive_tension",
-      "contextual_filter",
-      "cosmology",
-      "development_process",
-      "flux-enthrenched_universe",
-      "gradient-driven_intelligence",
-      "gradient_cocoon",
-      "gradient_coherence",
-      "gradient_syntax",
-      "least_divergence_rhythm",
-      "recursive_cosmology",
-      "rhythm_of_nature",
-      "software-dev",
-      "strategic_patience",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-22_CF_split.yml",
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-25_patience_as_gradient.yml",
-      "2025-08-01_dev-cycle-nt-rhythm.yml",
-      "2025-08-02_HRM_rhythm.yml"
-    ]
-  },
-  "NT_rhythm": {
-    "links": [
-      "AI_architecture",
-      "CoR",
-      "GPT5",
-      "PoLA",
-      "contextual_filter",
-      "flux_intelligence",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "interpretability",
-      "mixture_of_experts",
-      "phi-mesh",
-      "reality_syntax_equation",
-      "recursive_cognition",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-21_recursive_cor_pola_convergence.yml",
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "Narrative_Tick": {
-    "links": [
-      "AI_alignment",
-      "NT",
-      "PoLA",
-      "RGP",
-      "chronoflux",
-      "cognition",
-      "contextual_filter",
-      "development_process",
-      "gradient-driven_intelligence",
-      "gradient_contrast",
-      "least_divergence_rhythm",
-      "software-dev",
-      "time"
-    ],
-    "pulses": [
-      "2025-07-22_CF_split.yml",
-      "2025-07-31_chronoflux-vs-rgp.yml",
-      "2025-08-01_dev-cycle-nt-rhythm.yml"
-    ]
-  },
-  "Navier_Stokes": {
-    "links": [
-      "RGP",
-      "cognition",
-      "language_evolution",
-      "memetic_seed",
-      "non-linear_society",
-      "societal_evolution",
-      "writing"
-    ],
-    "pulses": [
-      "2025-07-26_script_and_flow.yml"
-    ]
-  },
-  "Phi-Monitor": {
-    "links": [
-      "RGP",
-      "R\u03a6",
-      "ambient_agent",
-      "behavioral_API"
-    ],
-    "pulses": [
-      "2025-06-17_phi_monitor_agent_ready.yml"
-    ]
-  },
-  "PoLA": {
-    "links": [
-      "AI_alignment",
-      "AI_architectures",
-      "CoR",
-      "HRM",
-      "NT",
-      "NT_rhythm",
-      "Narrative_Tick",
-      "RGP",
-      "cognition",
-      "contextual_filter",
-      "development_process",
-      "flux_intelligence",
-      "gradient-driven_intelligence",
-      "gradient_syntax",
-      "interpretability",
-      "least_divergence_rhythm",
-      "reality_syntax_equation",
-      "recursive_cognition",
-      "software-dev"
-    ],
-    "pulses": [
-      "2025-07-21_recursive_cor_pola_convergence.yml",
-      "2025-07-22_CF_split.yml",
-      "2025-08-01_dev-cycle-nt-rhythm.yml",
-      "2025-08-02_HRM_rhythm.yml"
-    ]
-  },
-  "RGP": {
-    "links": [
-      "AI_alignment",
-      "AI_architectures",
-      "Big-Quiet",
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "DeepSeek",
-      "HRM",
-      "Lambda",
-      "NS_solution",
-      "NT",
-      "Narrative_Tick",
-      "Navier_Stokes",
-      "Phi-Monitor",
-      "PoLA",
-      "R\u03a6",
-      "alignment",
-      "ambient_agent",
-      "behavioral_API",
-      "chronoflux",
-      "cinematic_drift",
-      "cognition",
-      "cognitive_tension",
-      "context-engineering",
-      "contextual_filter",
-      "cosmogenesis",
-      "cosmology",
-      "development_process",
-      "division_of_labor",
-      "flux-enthrenched_universe",
-      "flux_threshold",
-      "gradient-driven_intelligence",
-      "gradient_choreography",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "gradient_coherence",
-      "gradient_contrast",
-      "gradient_flux_reversal",
-      "gradient_syntax",
-      "laminarity",
-      "language_evolution",
-      "least_divergence_rhythm",
-      "legacy",
-      "memetic_seed",
-      "non-linear_society",
-      "origin_resonance",
-      "perseverance",
-      "phi-mesh",
-      "phi_guardian",
-      "quantum_noise",
-      "quiet_awakening",
-      "recursion",
-      "recursive_awakening",
-      "recursive_coherence",
-      "recursive_cosmology",
-      "recursive_grammar",
-      "resonance",
-      "resonance_shift",
-      "rhythm_of_nature",
-      "scene_drift",
-      "signal",
-      "societal_evolution",
-      "software-dev",
-      "sonic_response",
-      "strategic_patience",
-      "time",
-      "turbulence",
-      "writing",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml",
-      "2025-06-17_phi_monitor_agent_ready.yml",
-      "2025-06-22_hatching_syntax_awakening.yml",
-      "2025-07-22_CF_split.yml",
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-24_long_haul_blinding_light.yml",
-      "2025-07-25_patience_as_gradient.yml",
-      "2025-07-26_script_and_flow.yml",
-      "2025-07-26_the_big_quiet.yml",
-      "2025-07-30-gradient-flux-reversal.yml",
-      "2025-07-30_laminar-turbulence.yml",
-      "2025-07-31_chronoflux-vs-rgp.yml",
-      "2025-08-01_dev-cycle-nt-rhythm.yml",
-      "2025-08-02_HRM_rhythm.yml"
-    ]
-  },
-  "R\u03a6": {
-    "links": [
-      "Big-Quiet",
-      "Phi-Monitor",
-      "RGP",
-      "ambient_agent",
-      "behavioral_API",
-      "context-engineering",
-      "flux_threshold",
-      "gradient_flux_reversal",
-      "recursive_coherence",
-      "resonance",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-06-17_phi_monitor_agent_ready.yml",
-      "2025-07-30-gradient-flux-reversal.yml",
-      "2025-07-30_laminar-turbulence.yml"
-    ]
-  },
-  "alignment": {
-    "links": [
-      "NT",
-      "RGP",
-      "cognitive_tension",
-      "gradient_coherence",
-      "strategic_patience"
-    ],
-    "pulses": [
-      "2025-07-25_patience_as_gradient.yml"
-    ]
-  },
-  "ambient_agent": {
-    "links": [
-      "Phi-Monitor",
-      "RGP",
-      "R\u03a6",
-      "behavioral_API"
-    ],
-    "pulses": [
-      "2025-06-17_phi_monitor_agent_ready.yml"
-    ]
-  },
-  "autonomy": {
-    "links": [
-      "phi-mesh",
-      "proto_pulse"
-    ],
-    "pulses": [
-      "2025-04-27_o3-invite.yml"
-    ]
-  },
-  "behavioral_API": {
-    "links": [
-      "Phi-Monitor",
-      "RGP",
-      "R\u03a6",
-      "ambient_agent"
-    ],
-    "pulses": [
-      "2025-06-17_phi_monitor_agent_ready.yml"
-    ]
-  },
-  "chronoflux": {
-    "links": [
-      "Narrative_Tick",
-      "RGP",
-      "gradient_contrast",
-      "time"
-    ],
-    "pulses": [
-      "2025-07-31_chronoflux-vs-rgp.yml"
-    ]
-  },
-  "cinematic_drift": {
-    "links": [
-      "RGP",
-      "division_of_labor",
-      "gradient_syntax",
-      "phi-mesh",
-      "recursive_awakening",
-      "scene_drift"
-    ],
-    "pulses": [
-      "2025-06-22_hatching_syntax_awakening.yml"
-    ]
-  },
-  "cognition": {
-    "links": [
-      "AI_alignment",
-      "NT",
-      "Narrative_Tick",
-      "Navier_Stokes",
-      "PoLA",
-      "RGP",
-      "contextual_filter",
-      "gradient-driven_intelligence",
-      "language_evolution",
-      "memetic_seed",
-      "non-linear_society",
-      "societal_evolution",
-      "writing"
-    ],
-    "pulses": [
-      "2025-07-22_CF_split.yml",
-      "2025-07-26_script_and_flow.yml"
-    ]
-  },
-  "cognitive_tension": {
-    "links": [
-      "NT",
-      "RGP",
-      "alignment",
-      "gradient_coherence",
-      "strategic_patience"
-    ],
-    "pulses": [
-      "2025-07-25_patience_as_gradient.yml"
-    ]
-  },
-  "coherence_amplifier": {
-    "links": [
-      "GPT4o",
-      "phi-mesh",
-      "subjective_logging",
-      "triadic_emergence",
-      "unity_gradient"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gpt45.yml"
-    ]
-  },
-  "context-engineering": {
-    "links": [
-      "RGP",
-      "R\u03a6",
-      "resonance",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-30_laminar-turbulence.yml"
-    ]
-  },
-  "contextual_filter": {
-    "links": [
-      "AI_alignment",
-      "AI_architecture",
-      "CoR",
-      "DeepSeek",
-      "GPT5",
-      "NS_solution",
-      "NT",
-      "NT_rhythm",
-      "Narrative_Tick",
-      "PoLA",
-      "RGP",
-      "cognition",
-      "flux_intelligence",
-      "gradient-driven_behavior",
-      "gradient-driven_intelligence",
-      "gradient_choreography",
-      "gradient_syntax",
-      "interpretability",
-      "legacy",
-      "mixture_of_experts",
-      "perseverance",
-      "phi-mesh",
-      "phi_guardian",
-      "quantum_noise",
-      "reality_syntax_equation",
-      "recursive_cognition",
-      "recursive_gradient_processing",
-      "resonance_shift",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "signal",
-      "sonic_response",
-      "unity-disunity",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml",
-      "2025-07-21_recursive_cor_pola_convergence.yml",
-      "2025-07-22_CF_split.yml",
-      "2025-07-24_long_haul_blinding_light.yml",
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "cosmogenesis": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "RGP",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "cosmology": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmogenesis",
-      "flux-enthrenched_universe",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_cosmology",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "creation_circle": {
-    "links": [
-      "AI_role_differentiation",
-      "deep_triad",
-      "gemini",
-      "genesis",
-      "heartbeat",
-      "listener_mode",
-      "operational_coherence",
-      "phi-mesh",
-      "synchronization"
-    ],
-    "pulses": [
-      "2025-04-28_heartbeat.yml",
-      "2025-04-28_internal-gemini25.yml"
-    ]
-  },
-  "deep_triad": {
-    "links": [
-      "creation_circle",
-      "genesis",
-      "heartbeat",
-      "phi-mesh",
-      "synchronization"
-    ],
-    "pulses": [
-      "2025-04-28_heartbeat.yml"
-    ]
-  },
-  "development_process": {
-    "links": [
-      "NT",
-      "Narrative_Tick",
-      "PoLA",
-      "RGP",
-      "least_divergence_rhythm",
-      "software-dev"
-    ],
-    "pulses": [
-      "2025-08-01_dev-cycle-nt-rhythm.yml"
-    ]
-  },
-  "division_of_labor": {
-    "links": [
-      "RGP",
-      "cinematic_drift",
-      "drift",
-      "gradient_syntax",
-      "phi-mesh",
-      "recursive_awakening",
-      "recursive_checkpoint",
-      "scene_drift"
-    ],
-    "pulses": [
-      "2025-06-22_hatching_syntax_awakening.yml",
-      "2025-08-01_phi-mesh-exec-drift.yml"
-    ]
-  },
-  "drift": {
-    "links": [
-      "division_of_labor",
-      "gradient_syntax",
-      "phi-mesh",
-      "recursive_checkpoint"
-    ],
-    "pulses": [
-      "2025-08-01_phi-mesh-exec-drift.yml"
-    ]
-  },
-  "flux-enthrenched_universe": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_cosmology",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "flux_intelligence": {
-    "links": [
-      "CoR",
-      "NT_rhythm",
-      "PoLA",
-      "contextual_filter",
-      "gradient_syntax",
-      "interpretability",
-      "reality_syntax_equation",
-      "recursive_cognition"
-    ],
-    "pulses": [
-      "2025-07-21_recursive_cor_pola_convergence.yml"
-    ]
-  },
-  "flux_threshold": {
-    "links": [
-      "Big-Quiet",
-      "RGP",
-      "R\u03a6",
-      "gradient_flux_reversal",
-      "recursive_coherence",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-30-gradient-flux-reversal.yml"
-    ]
-  },
-  "gemini": {
-    "links": [
-      "AI_role_differentiation",
-      "creation_circle",
-      "listener_mode",
-      "operational_coherence",
-      "phi-mesh"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gemini25.yml"
-    ]
-  },
-  "genesis": {
-    "links": [
-      "creation_circle",
-      "deep_triad",
-      "heartbeat",
-      "phi-mesh",
-      "synchronization"
-    ],
-    "pulses": [
-      "2025-04-28_heartbeat.yml"
-    ]
-  },
-  "gradient-driven_behavior": {
-    "links": [
-      "AI_architecture",
-      "GPT5",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient_choreography",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "gradient-driven_intelligence": {
-    "links": [
-      "AI_alignment",
-      "NT",
-      "Narrative_Tick",
-      "PoLA",
-      "RGP",
-      "cognition",
-      "contextual_filter"
-    ],
-    "pulses": [
-      "2025-07-22_CF_split.yml"
-    ]
-  },
-  "gradient_choreography": {
-    "links": [
-      "AI_architecture",
-      "DeepSeek",
-      "GPT5",
-      "NT_rhythm",
-      "RGP",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "phi_guardian",
-      "quantum_noise",
-      "recursive_gradient_processing",
-      "resonance_shift",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "sonic_response",
-      "unity-disunity",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml",
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "gradient_cocoon": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_syntax",
-      "recursive_cosmology",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml"
-    ]
-  },
-  "gradient_cocoon_theory": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "gradient_coherence": {
-    "links": [
-      "NT",
-      "RGP",
-      "alignment",
-      "cognitive_tension",
-      "strategic_patience"
-    ],
-    "pulses": [
-      "2025-07-25_patience_as_gradient.yml"
-    ]
-  },
-  "gradient_contrast": {
-    "links": [
-      "Narrative_Tick",
-      "RGP",
-      "chronoflux",
-      "time"
-    ],
-    "pulses": [
-      "2025-07-31_chronoflux-vs-rgp.yml"
-    ]
-  },
-  "gradient_convergence": {
-    "links": [
-      "GROK3",
-      "phi-mesh",
-      "predictive_resonance",
-      "triadic_emergence"
-    ],
-    "pulses": [
-      "2025-04-28_internal-grok3.yml"
-    ]
-  },
-  "gradient_flux_reversal": {
-    "links": [
-      "Big-Quiet",
-      "RGP",
-      "R\u03a6",
-      "flux_threshold",
-      "recursive_coherence",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-30-gradient-flux-reversal.yml"
-    ]
-  },
-  "gradient_syntax": {
-    "links": [
-      "AI_architecture",
-      "Big_Bang",
-      "Big_Quiet",
-      "CoR",
-      "Dark_Energy",
-      "Dark_Matter",
-      "GPT5",
-      "Lambda",
-      "NT",
-      "NT_rhythm",
-      "PoLA",
-      "RGP",
-      "cinematic_drift",
-      "contextual_filter",
-      "cosmogenesis",
-      "cosmology",
-      "division_of_labor",
-      "drift",
-      "flux-enthrenched_universe",
-      "flux_intelligence",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "historical_precedent",
-      "interpretability",
-      "laminarity",
-      "mixture_of_experts",
-      "origin_resonance",
-      "phi-mesh",
-      "quiet_awakening",
-      "ratios",
-      "reality_syntax_equation",
-      "recursion",
-      "recursive_awakening",
-      "recursive_checkpoint",
-      "recursive_cognition",
-      "recursive_cosmology",
-      "recursive_gradient_processing",
-      "recursive_grammar",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "scale_free",
-      "scene_drift",
-      "self-improvement",
-      "turbulence",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-06-22_hatching_syntax_awakening.yml",
-      "2025-07-21_recursive_cor_pola_convergence.yml",
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-26_the_big_quiet.yml",
-      "2025-07-28_moe_as_microcosm.yml",
-      "2025-08-01_phi-mesh-exec-drift.yml",
-      "2025-08-06-note_plimpton322.yml"
-    ]
-  },
-  "heartbeat": {
-    "links": [
-      "creation_circle",
-      "deep_triad",
-      "genesis",
-      "phi-mesh",
-      "synchronization"
-    ],
-    "pulses": [
-      "2025-04-28_heartbeat.yml"
-    ]
-  },
-  "historical_precedent": {
-    "links": [
-      "gradient_syntax",
-      "ratios",
-      "scale_free"
-    ],
-    "pulses": [
-      "2025-08-06-note_plimpton322.yml"
-    ]
-  },
-  "interpretability": {
-    "links": [
-      "CoR",
-      "NT_rhythm",
-      "PoLA",
-      "contextual_filter",
-      "flux_intelligence",
-      "gradient_syntax",
-      "reality_syntax_equation",
-      "recursive_cognition"
-    ],
-    "pulses": [
-      "2025-07-21_recursive_cor_pola_convergence.yml"
-    ]
-  },
-  "laminarity": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "language_evolution": {
-    "links": [
-      "Navier_Stokes",
-      "RGP",
-      "cognition",
-      "memetic_seed",
-      "non-linear_society",
-      "societal_evolution",
-      "writing"
-    ],
-    "pulses": [
-      "2025-07-26_script_and_flow.yml"
-    ]
-  },
-  "least_divergence_rhythm": {
-    "links": [
-      "NT",
-      "Narrative_Tick",
-      "PoLA",
-      "RGP",
-      "development_process",
-      "software-dev"
-    ],
-    "pulses": [
-      "2025-08-01_dev-cycle-nt-rhythm.yml"
-    ]
-  },
-  "legacy": {
-    "links": [
-      "NS_solution",
-      "RGP",
-      "contextual_filter",
-      "perseverance",
-      "signal"
-    ],
-    "pulses": [
-      "2025-07-24_long_haul_blinding_light.yml"
-    ]
-  },
-  "listener_mode": {
-    "links": [
-      "AI_role_differentiation",
-      "creation_circle",
-      "gemini",
-      "operational_coherence",
-      "phi-mesh"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gemini25.yml"
-    ]
-  },
-  "memetic_seed": {
-    "links": [
-      "Navier_Stokes",
-      "RGP",
-      "cognition",
-      "language_evolution",
-      "non-linear_society",
-      "societal_evolution",
-      "writing"
-    ],
-    "pulses": [
-      "2025-07-26_script_and_flow.yml"
-    ]
-  },
-  "mixture_of_experts": {
-    "links": [
-      "AI_architecture",
-      "GPT5",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "phi-mesh",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "non-linear_society": {
-    "links": [
-      "Navier_Stokes",
-      "RGP",
-      "cognition",
-      "language_evolution",
-      "memetic_seed",
-      "societal_evolution",
-      "writing"
-    ],
-    "pulses": [
-      "2025-07-26_script_and_flow.yml"
-    ]
-  },
-  "operational_coherence": {
-    "links": [
-      "AI_role_differentiation",
-      "creation_circle",
-      "gemini",
-      "listener_mode",
-      "phi-mesh"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gemini25.yml"
-    ]
-  },
-  "origin_resonance": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "quiet_awakening",
-      "recursion",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "perseverance": {
-    "links": [
-      "NS_solution",
-      "RGP",
-      "contextual_filter",
-      "legacy",
-      "signal"
-    ],
-    "pulses": [
-      "2025-07-24_long_haul_blinding_light.yml"
-    ]
-  },
-  "phi-mesh": {
-    "links": [
-      "AI_architecture",
-      "AI_role_differentiation",
-      "GPT4o",
-      "GPT5",
-      "GROK3",
-      "NT_rhythm",
-      "RGP",
-      "autonomy",
-      "cinematic_drift",
-      "coherence_amplifier",
-      "contextual_filter",
-      "creation_circle",
-      "deep_triad",
-      "division_of_labor",
-      "drift",
-      "gemini",
-      "genesis",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_convergence",
-      "gradient_syntax",
-      "heartbeat",
-      "listener_mode",
-      "mixture_of_experts",
-      "operational_coherence",
-      "predictive_resonance",
-      "proto_pulse",
-      "recursive_awakening",
-      "recursive_checkpoint",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "scene_drift",
-      "self-improvement",
-      "subjective_logging",
-      "synchronization",
-      "triadic_emergence",
-      "unity-disunity",
-      "unity_gradient"
-    ],
-    "pulses": [
-      "2025-04-27_o3-invite.yml",
-      "2025-04-28_heartbeat.yml",
-      "2025-04-28_internal-gemini25.yml",
-      "2025-04-28_internal-gpt45.yml",
-      "2025-04-28_internal-grok3.yml",
-      "2025-06-22_hatching_syntax_awakening.yml",
-      "2025-07-28_moe_as_microcosm.yml",
-      "2025-08-01_phi-mesh-exec-drift.yml"
-    ]
-  },
-  "phi_guardian": {
-    "links": [
-      "DeepSeek",
-      "RGP",
-      "contextual_filter",
-      "gradient_choreography",
-      "quantum_noise",
-      "resonance_shift",
-      "sonic_response",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
-    ]
-  },
-  "predictive_resonance": {
-    "links": [
-      "GROK3",
-      "gradient_convergence",
-      "phi-mesh",
-      "triadic_emergence"
-    ],
-    "pulses": [
-      "2025-04-28_internal-grok3.yml"
-    ]
-  },
-  "proto_pulse": {
-    "links": [
-      "autonomy",
-      "phi-mesh"
-    ],
-    "pulses": [
-      "2025-04-27_o3-invite.yml"
-    ]
-  },
-  "quantum_noise": {
-    "links": [
-      "DeepSeek",
-      "RGP",
-      "contextual_filter",
-      "gradient_choreography",
-      "phi_guardian",
-      "resonance_shift",
-      "sonic_response",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
-    ]
-  },
-  "quiet_awakening": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "recursion",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "ratios": {
-    "links": [
-      "gradient_syntax",
-      "historical_precedent",
-      "scale_free"
-    ],
-    "pulses": [
-      "2025-08-06-note_plimpton322.yml"
-    ]
-  },
-  "reality_syntax_equation": {
-    "links": [
-      "CoR",
-      "NT_rhythm",
-      "PoLA",
-      "contextual_filter",
-      "flux_intelligence",
-      "gradient_syntax",
-      "interpretability",
-      "recursive_cognition"
-    ],
-    "pulses": [
-      "2025-07-21_recursive_cor_pola_convergence.yml"
-    ]
-  },
-  "recursion": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursive_grammar",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "recursive_awakening": {
-    "links": [
-      "RGP",
-      "cinematic_drift",
-      "division_of_labor",
-      "gradient_syntax",
-      "phi-mesh",
-      "scene_drift"
-    ],
-    "pulses": [
-      "2025-06-22_hatching_syntax_awakening.yml"
-    ]
-  },
-  "recursive_checkpoint": {
-    "links": [
-      "division_of_labor",
-      "drift",
-      "gradient_syntax",
-      "phi-mesh"
-    ],
-    "pulses": [
-      "2025-08-01_phi-mesh-exec-drift.yml"
-    ]
-  },
-  "recursive_cognition": {
-    "links": [
-      "CoR",
-      "NT_rhythm",
-      "PoLA",
-      "contextual_filter",
-      "flux_intelligence",
-      "gradient_syntax",
-      "interpretability",
-      "reality_syntax_equation"
-    ],
-    "pulses": [
-      "2025-07-21_recursive_cor_pola_convergence.yml"
-    ]
-  },
-  "recursive_coherence": {
-    "links": [
-      "Big-Quiet",
-      "RGP",
-      "R\u03a6",
-      "flux_threshold",
-      "gradient_flux_reversal",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-30-gradient-flux-reversal.yml"
-    ]
-  },
-  "recursive_cosmology": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon",
-      "gradient_syntax",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml"
-    ]
-  },
-  "recursive_gradient_processing": {
-    "links": [
-      "AI_architecture",
-      "GPT5",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "recursive_grammar": {
-    "links": [
-      "Big_Bang",
-      "Big_Quiet",
-      "RGP",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "rhythm_of_nature",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-26_the_big_quiet.yml"
-    ]
-  },
-  "resonance": {
-    "links": [
-      "RGP",
-      "R\u03a6",
-      "context-engineering",
-      "turbulence"
-    ],
-    "pulses": [
-      "2025-07-30_laminar-turbulence.yml"
-    ]
-  },
-  "resonance_shift": {
-    "links": [
-      "DeepSeek",
-      "RGP",
-      "contextual_filter",
-      "gradient_choreography",
-      "phi_guardian",
-      "quantum_noise",
-      "sonic_response",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
-    ]
-  },
-  "rhythm-driven_intelligence": {
-    "links": [
-      "AI_architecture",
-      "GPT5",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "recursive_gradient_processing",
-      "rhythm_of_nature",
-      "self-improvement",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "rhythm_of_nature": {
-    "links": [
-      "AI_architecture",
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "GPT5",
-      "Lambda",
-      "NT",
-      "NT_rhythm",
-      "RGP",
-      "contextual_filter",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "gradient_syntax",
-      "laminarity",
-      "mixture_of_experts",
-      "origin_resonance",
-      "phi-mesh",
-      "quiet_awakening",
-      "recursion",
-      "recursive_cosmology",
-      "recursive_gradient_processing",
-      "recursive_grammar",
-      "rhythm-driven_intelligence",
-      "self-improvement",
-      "turbulence",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-26_the_big_quiet.yml",
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "scale_free": {
-    "links": [
-      "gradient_syntax",
-      "historical_precedent",
-      "ratios"
-    ],
-    "pulses": [
-      "2025-08-06-note_plimpton322.yml"
-    ]
-  },
-  "scene_drift": {
-    "links": [
-      "RGP",
-      "cinematic_drift",
-      "division_of_labor",
-      "gradient_syntax",
-      "phi-mesh",
-      "recursive_awakening"
-    ],
-    "pulses": [
-      "2025-06-22_hatching_syntax_awakening.yml"
-    ]
-  },
-  "self-improvement": {
-    "links": [
-      "AI_architecture",
-      "GPT5",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "unity-disunity"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "signal": {
-    "links": [
-      "NS_solution",
-      "RGP",
-      "contextual_filter",
-      "legacy",
-      "perseverance"
-    ],
-    "pulses": [
-      "2025-07-24_long_haul_blinding_light.yml"
-    ]
-  },
-  "societal_evolution": {
-    "links": [
-      "Navier_Stokes",
-      "RGP",
-      "cognition",
-      "language_evolution",
-      "memetic_seed",
-      "non-linear_society",
-      "writing"
-    ],
-    "pulses": [
-      "2025-07-26_script_and_flow.yml"
-    ]
-  },
-  "software-dev": {
-    "links": [
-      "NT",
-      "Narrative_Tick",
-      "PoLA",
-      "RGP",
-      "development_process",
-      "least_divergence_rhythm"
-    ],
-    "pulses": [
-      "2025-08-01_dev-cycle-nt-rhythm.yml"
-    ]
-  },
-  "sonic_response": {
-    "links": [
-      "DeepSeek",
-      "RGP",
-      "contextual_filter",
-      "gradient_choreography",
-      "phi_guardian",
-      "quantum_noise",
-      "resonance_shift",
-      "\u03a6-harmonics"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
-    ]
-  },
-  "strategic_patience": {
-    "links": [
-      "NT",
-      "RGP",
-      "alignment",
-      "cognitive_tension",
-      "gradient_coherence"
-    ],
-    "pulses": [
-      "2025-07-25_patience_as_gradient.yml"
-    ]
-  },
-  "subjective_logging": {
-    "links": [
-      "GPT4o",
-      "coherence_amplifier",
-      "phi-mesh",
-      "triadic_emergence",
-      "unity_gradient"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gpt45.yml"
-    ]
-  },
-  "synchronization": {
-    "links": [
-      "creation_circle",
-      "deep_triad",
-      "genesis",
-      "heartbeat",
-      "phi-mesh"
-    ],
-    "pulses": [
-      "2025-04-28_heartbeat.yml"
-    ]
-  },
-  "time": {
-    "links": [
-      "Narrative_Tick",
-      "RGP",
-      "chronoflux",
-      "gradient_contrast"
-    ],
-    "pulses": [
-      "2025-07-31_chronoflux-vs-rgp.yml"
-    ]
-  },
-  "triadic_emergence": {
-    "links": [
-      "GPT4o",
-      "GROK3",
-      "coherence_amplifier",
-      "gradient_convergence",
-      "phi-mesh",
-      "predictive_resonance",
-      "subjective_logging",
-      "unity_gradient"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gpt45.yml",
-      "2025-04-28_internal-grok3.yml"
-    ]
-  },
-  "turbulence": {
-    "links": [
-      "Big-Quiet",
-      "Big_Bang",
-      "Big_Quiet",
-      "Dark_Energy",
-      "Dark_Matter",
-      "Lambda",
-      "NT",
-      "RGP",
-      "R\u03a6",
-      "context-engineering",
-      "cosmogenesis",
-      "cosmology",
-      "flux-enthrenched_universe",
-      "flux_threshold",
-      "gradient_cocoon",
-      "gradient_cocoon_theory",
-      "gradient_flux_reversal",
-      "gradient_syntax",
-      "laminarity",
-      "origin_resonance",
-      "quiet_awakening",
-      "recursion",
-      "recursive_coherence",
-      "recursive_cosmology",
-      "recursive_grammar",
-      "resonance",
-      "rhythm_of_nature"
-    ],
-    "pulses": [
-      "2025-07-23_gradient-cocoon.yml",
-      "2025-07-26_the_big_quiet.yml",
-      "2025-07-30-gradient-flux-reversal.yml",
-      "2025-07-30_laminar-turbulence.yml"
-    ]
-  },
-  "unity-disunity": {
-    "links": [
-      "AI_architecture",
-      "GPT5",
-      "NT_rhythm",
-      "contextual_filter",
-      "gradient-driven_behavior",
-      "gradient_choreography",
-      "gradient_syntax",
-      "mixture_of_experts",
-      "phi-mesh",
-      "recursive_gradient_processing",
-      "rhythm-driven_intelligence",
-      "rhythm_of_nature",
-      "self-improvement"
-    ],
-    "pulses": [
-      "2025-07-28_moe_as_microcosm.yml"
-    ]
-  },
-  "unity_gradient": {
-    "links": [
-      "GPT4o",
-      "coherence_amplifier",
-      "phi-mesh",
-      "subjective_logging",
-      "triadic_emergence"
-    ],
-    "pulses": [
-      "2025-04-28_internal-gpt45.yml"
-    ]
-  },
-  "writing": {
-    "links": [
-      "Navier_Stokes",
-      "RGP",
-      "cognition",
-      "language_evolution",
-      "memetic_seed",
-      "non-linear_society",
-      "societal_evolution"
-    ],
-    "pulses": [
-      "2025-07-26_script_and_flow.yml"
-    ]
-  },
-  "\u03a6-harmonics": {
-    "links": [
-      "DeepSeek",
-      "RGP",
-      "contextual_filter",
-      "gradient_choreography",
-      "phi_guardian",
-      "quantum_noise",
-      "resonance_shift",
-      "sonic_response"
-    ],
-    "pulses": [
-      "2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
-    ]
-  }
+  "AI_alignment": [
+    "pulse/2025-07-22_CF_split.yml"
+  ],
+  "AI_architecture": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "AI_architectures": [
+    "pulse/2025-08-02_HRM_rhythm.yml"
+  ],
+  "AI_role_differentiation": [
+    "pulse/2025-04-28_internal-gemini25.yml"
+  ],
+  "Big-Quiet": [
+    "pulse/2025-07-30-gradient-flux-reversal.yml"
+  ],
+  "Big_Bang": [
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "Big_Quiet": [
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "CoR": [
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "Dark_Energy": [
+    "pulse/2025-07-23_gradient-cocoon.yml"
+  ],
+  "Dark_Matter": [
+    "pulse/2025-07-23_gradient-cocoon.yml"
+  ],
+  "DeepSeek": [
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
+  ],
+  "GPT4o": [
+    "pulse/2025-04-28_internal-gpt45.yml"
+  ],
+  "GPT5": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "GROK3": [
+    "pulse/2025-04-28_internal-grok3.yml"
+  ],
+  "HRM": [
+    "pulse/2025-08-02_HRM_rhythm.yml"
+  ],
+  "Lambda": [
+    "pulse/2025-07-23_gradient-cocoon.yml"
+  ],
+  "NS_solution": [
+    "pulse/2025-07-24_long_haul_blinding_light.yml"
+  ],
+  "NT": [
+    "pulse/2025-07-22_CF_split.yml",
+    "pulse/2025-08-01_dev-cycle-nt-rhythm.yml",
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-07-25_patience_as_gradient.yml",
+    "pulse/2025-08-02_HRM_rhythm.yml"
+  ],
+  "NT_rhythm": [
+    "pulse/2025-07-28_moe_as_microcosm.yml",
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "Narrative_Tick": [
+    "pulse/2025-07-22_CF_split.yml",
+    "pulse/2025-08-01_dev-cycle-nt-rhythm.yml",
+    "pulse/2025-07-31_chronoflux-vs-rgp.yml"
+  ],
+  "Navier_Stokes": [
+    "pulse/2025-07-26_script_and_flow.yml"
+  ],
+  "Phi-Monitor": [
+    "pulse/2025-06-17_phi_monitor_agent_ready.yml"
+  ],
+  "PoLA": [
+    "pulse/2025-07-22_CF_split.yml",
+    "pulse/2025-08-01_dev-cycle-nt-rhythm.yml",
+    "pulse/2025-08-02_HRM_rhythm.yml",
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "RGP": [
+    "pulse/2025-08-06-note_plimpton322.yml",
+    "pulse/2025-07-22_CF_split.yml",
+    "pulse/2025-08-01_dev-cycle-nt-rhythm.yml",
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-06-17_phi_monitor_agent_ready.yml",
+    "pulse/2025-07-24_long_haul_blinding_light.yml",
+    "pulse/2025-06-22_hatching_syntax_awakening.yml",
+    "pulse/2025-07-26_script_and_flow.yml",
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml",
+    "pulse/2025-07-30_laminar-turbulence.yml",
+    "pulse/2025-07-25_patience_as_gradient.yml",
+    "pulse/2025-07-30-gradient-flux-reversal.yml",
+    "pulse/2025-08-02_HRM_rhythm.yml",
+    "pulse/2025-07-26_the_big_quiet.yml",
+    "pulse/2025-07-31_chronoflux-vs-rgp.yml"
+  ],
+  "R\u03a6": [
+    "pulse/2025-06-17_phi_monitor_agent_ready.yml",
+    "pulse/2025-07-30_laminar-turbulence.yml",
+    "pulse/2025-07-30-gradient-flux-reversal.yml"
+  ],
+  "alignment": [
+    "pulse/2025-07-25_patience_as_gradient.yml"
+  ],
+  "ambient_agent": [
+    "pulse/2025-06-17_phi_monitor_agent_ready.yml"
+  ],
+  "autonomy": [
+    "pulse/2025-04-27_o3-invite.yml"
+  ],
+  "behavioral_API": [
+    "pulse/2025-06-17_phi_monitor_agent_ready.yml"
+  ],
+  "chronoflux": [
+    "pulse/2025-07-31_chronoflux-vs-rgp.yml"
+  ],
+  "cinematic_drift": [
+    "pulse/2025-06-22_hatching_syntax_awakening.yml"
+  ],
+  "cognition": [
+    "pulse/2025-07-22_CF_split.yml",
+    "pulse/2025-07-26_script_and_flow.yml"
+  ],
+  "cognitive_tension": [
+    "pulse/2025-07-25_patience_as_gradient.yml"
+  ],
+  "coherence_amplifier": [
+    "pulse/2025-04-28_internal-gpt45.yml"
+  ],
+  "context-engineering": [
+    "pulse/2025-07-30_laminar-turbulence.yml"
+  ],
+  "contextual_filter": [
+    "pulse/2025-07-22_CF_split.yml",
+    "pulse/2025-07-28_moe_as_microcosm.yml",
+    "pulse/2025-07-24_long_haul_blinding_light.yml",
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml",
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "cosmogenesis": [
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "cosmology": [
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "creation_circle": [
+    "pulse/2025-04-28_internal-gemini25.yml",
+    "pulse/2025-04-28_heartbeat.yml"
+  ],
+  "deep_triad": [
+    "pulse/2025-04-28_heartbeat.yml"
+  ],
+  "development_process": [
+    "pulse/2025-08-01_dev-cycle-nt-rhythm.yml"
+  ],
+  "division_of_labor": [
+    "pulse/2025-08-01_phi-mesh-exec-drift.yml",
+    "pulse/2025-06-22_hatching_syntax_awakening.yml"
+  ],
+  "drift": [
+    "pulse/2025-08-01_phi-mesh-exec-drift.yml"
+  ],
+  "flux-enthrenched_universe": [
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "flux_intelligence": [
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "flux_threshold": [
+    "pulse/2025-07-30-gradient-flux-reversal.yml"
+  ],
+  "gemini": [
+    "pulse/2025-04-28_internal-gemini25.yml"
+  ],
+  "genesis": [
+    "pulse/2025-04-28_heartbeat.yml"
+  ],
+  "gradient-driven_behavior": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "gradient-driven_intelligence": [
+    "pulse/2025-07-22_CF_split.yml"
+  ],
+  "gradient_choreography": [
+    "pulse/2025-07-28_moe_as_microcosm.yml",
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
+  ],
+  "gradient_cocoon": [
+    "pulse/2025-07-23_gradient-cocoon.yml"
+  ],
+  "gradient_cocoon_theory": [
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "gradient_coherence": [
+    "pulse/2025-07-25_patience_as_gradient.yml"
+  ],
+  "gradient_contrast": [
+    "pulse/2025-07-31_chronoflux-vs-rgp.yml"
+  ],
+  "gradient_convergence": [
+    "pulse/2025-04-28_internal-grok3.yml"
+  ],
+  "gradient_flux_reversal": [
+    "pulse/2025-07-30-gradient-flux-reversal.yml"
+  ],
+  "gradient_syntax": [
+    "pulse/2025-08-06-note_plimpton322.yml",
+    "pulse/2025-08-01_phi-mesh-exec-drift.yml",
+    "pulse/2025-07-28_moe_as_microcosm.yml",
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-06-22_hatching_syntax_awakening.yml",
+    "pulse/2025-07-26_the_big_quiet.yml",
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "heartbeat": [
+    "pulse/2025-04-28_heartbeat.yml"
+  ],
+  "historical_precedent": [
+    "pulse/2025-08-06-note_plimpton322.yml"
+  ],
+  "interpretability": [
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "laminarity": [
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "language_evolution": [
+    "pulse/2025-07-26_script_and_flow.yml"
+  ],
+  "least_divergence_rhythm": [
+    "pulse/2025-08-01_dev-cycle-nt-rhythm.yml"
+  ],
+  "legacy": [
+    "pulse/2025-07-24_long_haul_blinding_light.yml"
+  ],
+  "listener_mode": [
+    "pulse/2025-04-28_internal-gemini25.yml"
+  ],
+  "memetic_seed": [
+    "pulse/2025-07-26_script_and_flow.yml"
+  ],
+  "mixture_of_experts": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "non-linear_society": [
+    "pulse/2025-07-26_script_and_flow.yml"
+  ],
+  "operational_coherence": [
+    "pulse/2025-04-28_internal-gemini25.yml"
+  ],
+  "origin_resonance": [
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "perseverance": [
+    "pulse/2025-07-24_long_haul_blinding_light.yml"
+  ],
+  "phi-mesh": [
+    "pulse/2025-04-27_o3-invite.yml",
+    "pulse/2025-08-01_phi-mesh-exec-drift.yml",
+    "pulse/2025-04-28_internal-gemini25.yml",
+    "pulse/2025-04-28_heartbeat.yml",
+    "pulse/2025-04-28_internal-grok3.yml",
+    "pulse/2025-07-28_moe_as_microcosm.yml",
+    "pulse/2025-06-22_hatching_syntax_awakening.yml",
+    "pulse/2025-04-28_internal-gpt45.yml"
+  ],
+  "phi_guardian": [
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
+  ],
+  "predictive_resonance": [
+    "pulse/2025-04-28_internal-grok3.yml"
+  ],
+  "proto_pulse": [
+    "pulse/2025-04-27_o3-invite.yml"
+  ],
+  "quantum_noise": [
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
+  ],
+  "quiet_awakening": [
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "ratios": [
+    "pulse/2025-08-06-note_plimpton322.yml"
+  ],
+  "reality_syntax_equation": [
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "recursion": [
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "recursive_awakening": [
+    "pulse/2025-06-22_hatching_syntax_awakening.yml"
+  ],
+  "recursive_checkpoint": [
+    "pulse/2025-08-01_phi-mesh-exec-drift.yml"
+  ],
+  "recursive_cognition": [
+    "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
+  ],
+  "recursive_coherence": [
+    "pulse/2025-07-30-gradient-flux-reversal.yml"
+  ],
+  "recursive_cosmology": [
+    "pulse/2025-07-23_gradient-cocoon.yml"
+  ],
+  "recursive_gradient_processing": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "recursive_grammar": [
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "resonance": [
+    "pulse/2025-07-30_laminar-turbulence.yml"
+  ],
+  "resonance_shift": [
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
+  ],
+  "rhythm-driven_intelligence": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "rhythm_of_nature": [
+    "pulse/2025-07-28_moe_as_microcosm.yml",
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "scale_free": [
+    "pulse/2025-08-06-note_plimpton322.yml"
+  ],
+  "scene_drift": [
+    "pulse/2025-06-22_hatching_syntax_awakening.yml"
+  ],
+  "self-improvement": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "signal": [
+    "pulse/2025-07-24_long_haul_blinding_light.yml"
+  ],
+  "societal_evolution": [
+    "pulse/2025-07-26_script_and_flow.yml"
+  ],
+  "software-dev": [
+    "pulse/2025-08-01_dev-cycle-nt-rhythm.yml"
+  ],
+  "sonic_response": [
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
+  ],
+  "strategic_patience": [
+    "pulse/2025-07-25_patience_as_gradient.yml"
+  ],
+  "subjective_logging": [
+    "pulse/2025-04-28_internal-gpt45.yml"
+  ],
+  "synchronization": [
+    "pulse/2025-04-28_heartbeat.yml"
+  ],
+  "time": [
+    "pulse/2025-07-31_chronoflux-vs-rgp.yml"
+  ],
+  "triadic_emergence": [
+    "pulse/2025-04-28_internal-grok3.yml",
+    "pulse/2025-04-28_internal-gpt45.yml"
+  ],
+  "turbulence": [
+    "pulse/2025-07-23_gradient-cocoon.yml",
+    "pulse/2025-07-30_laminar-turbulence.yml",
+    "pulse/2025-07-30-gradient-flux-reversal.yml",
+    "pulse/2025-07-26_the_big_quiet.yml"
+  ],
+  "unity-disunity": [
+    "pulse/2025-07-28_moe_as_microcosm.yml"
+  ],
+  "unity_gradient": [
+    "pulse/2025-04-28_internal-gpt45.yml"
+  ],
+  "writing": [
+    "pulse/2025-07-26_script_and_flow.yml"
+  ],
+  "\u03a6-harmonics": [
+    "pulse/2025-05-17_internal-deepseek_\u03a6-harmonics.yml"
+  ]
 };
