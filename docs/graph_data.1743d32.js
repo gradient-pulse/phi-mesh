@@ -1,0 +1,4 @@
+window.graph = {
+  "nodes": [],
+  "links": []
+};
