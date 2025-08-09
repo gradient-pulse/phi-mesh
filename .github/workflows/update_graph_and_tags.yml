@@ -53,6 +53,11 @@ jobs:
       - name: Regenerate graph data (JS)
         run: python generate_graph_data.py
 
+      - name: Prune old graph payloads (keep latest 3)
+        run: |
+          set -e
+          ls -1t docs/graph_data.*.js 2>/dev/null | tail -n +4 | xargs -r rm -f
+
       # Guardrail: verify outputs exist before committing
       - name: Verify outputs exist
         run: |
