@@ -1,5 +1,8 @@
 name: Update Tag Index, Map, and Graph Data
 
+permissions:
+  contents: write
+
 on:
   push:
     paths:
@@ -10,6 +13,8 @@ on:
       - "generate_graph_data.py"
       - "docs/graph_layout.js"
       - "docs/sidebar_display.js"
+      - "docs/link_index.js"
+      - "docs/data.js"
       - ".github/workflows/update_graph_and_tags.yml"
 
 jobs:
@@ -18,6 +23,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
