@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <title>RGP Tag Map</title>
+  <!-- Load D3 exactly once -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    html, body { margin:0; padding:0; height:100%; overflow:hidden; font-family:sans-serif; }
-    #container { display:flex; height:100vh; width:100vw; }
-    #sidebar { width:280px; background:#f4f4f4; padding:10px; overflow-y:auto; }
-    #sidebar h1 { font-size:20px; margin-bottom:4px; }
-    #sidebar p { font-size:13px; margin-bottom:14px; }
-    #graph { flex-grow:1; overflow:hidden; }
-    #link-list { list-style:none; padding-left:0; }
-    #link-list li { margin-bottom:6px; font-size:13px; }
-    #link-list li strong { display:block; font-weight:bold; margin-top:8px; }
-    #link-list a { color:steelblue; text-decoration:none; font-size:13px; }
-    #link-list a:hover { text-decoration:underline; }
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; }
+    #container { display: flex; height: 100vh; width: 100vw; }
+    #sidebar { width: 280px; background: #f4f4f4; padding: 10px; overflow-y: auto; }
+    #sidebar h1 { font-size: 20px; margin-bottom: 4px; }
+    #sidebar p { font-size: 13px; margin-bottom: 14px; }
+    #graph { flex-grow: 1; overflow: hidden; }
+    #link-list { list-style: none; padding-left: 0; }
+    #link-list li { margin-bottom: 6px; font-size: 13px; }
+    #link-list li strong { display: block; font-weight: bold; margin-top: 8px; }
+    #link-list a { color: steelblue; text-decoration: none; font-size: 13px; }
+    #link-list a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -28,38 +29,11 @@
     <div id="graph"></div>
   </div>
 
-  <!-- Base data + base graph -->
+  <!-- Strict load order: data → graph data loader → link index → sidebar → graph layout -->
   <script src="data.js"></script>
   <script src="graph_data.js"></script>
-
-  <!-- Chain loader to avoid race: overlay (if any) -> sidebar -> layout -->
-  <script>
-    function loadScript(src) {
-      return new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = src;
-        s.onload = () => resolve(src);
-        s.onerror = () => reject(new Error('Failed to load ' + src));
-        document.head.appendChild(s);
-      });
-    }
-
-    (async function boot() {
-      try {
-        // If workflow wrote a versioned file, load it and override window.graph.
-        if (window && window.GRAPH_SRC && window.GRAPH_SRC !== 'graph_data.js') {
-          await loadScript(window.GRAPH_SRC);
-          console.log('[tag_map] overlay graph loaded:', window.GRAPH_SRC);
-        }
-
-        // Now load sidebar + layout in order.
-        await loadScript('link_index.js');
-        await loadScript('sidebar_display.js');
-        await loadScript('graph_layout.js');
-      } catch (e) {
-        console.error('[tag_map] boot error:', e);
-      }
-    })();
-  </script>
+  <script src="link_index.js"></script>
+  <script src="sidebar_display.js"></script>
+  <script src="graph_layout.js"></script>
 </body>
 </html>
