@@ -1,6 +1,7 @@
 import yaml
 import json
 import os
+import re
 from collections import defaultdict
 from datetime import datetime
 
@@ -8,104 +9,182 @@ TAG_INDEX_PATH = "meta/tag_index.yml"
 OUT_JS_MAIN = "docs/graph_data.js"
 OUT_JS_CACHEBUSTER = "docs/graph_data.generated.js"
 
+
+# --------------------------
+# Helpers
+# --------------------------
+_slug_re = re.compile(r"[^a-z0-9]+")
+
+def slugify(name: str) -> str:
+    if not isinstance(name, str):
+        name = str(name)
+    name = name.strip().lower()
+    name = name.replace("-", "_").replace(" ", "_")
+    name = _slug_re.sub("_", name)
+    name = re.sub(r"_+", "_", name).strip("_")
+    return name
+
+
+def build_alias_map(canon_block) -> dict:
+    """
+    Build alias->canonical mapping from a 'canonical_tags' block like:
+      canonical_tags:
+        Navier_Stokes: [NS_solution, navier-stokes, turbulence]
+        Gradient_Syntax: [gradient_syntax, GradientSyntax, gradient-syntax]
+    We normalize both sides with slugify and return alias->canon_slug.
+    """
+    alias2canon = {}
+    if not isinstance(canon_block, dict):
+        return alias2canon
+
+    for canon, aliases in canon_block.items():
+        canon_slug = slugify(canon)
+        alias2canon[slugify(canon)] = canon_slug  # allow canonical to map to itself
+        if isinstance(aliases, list):
+            for a in aliases:
+                alias2canon[slugify(a)] = canon_slug
+    return alias2canon
+
+
+def to_canonical(name: str, alias2canon: dict) -> str:
+    s = slugify(name)
+    return alias2canon.get(s, s)
+
+
+# --------------------------
+# Load & normalize tag index
+# --------------------------
 def load_tag_index(path: str):
     with open(path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
+        raw = yaml.safe_load(f)
 
-    # Accept either of these shapes:
-    # 1) { tag: {links:[...], pulses:[...], ...}, ... }
-    # 2) [{tag:"RGP", links:[...], centrality:0.7}, "loose_string_tag", ...]
-    tags = {}
+    # Pull canonical map if present
+    canon_block = {}
+    if isinstance(raw, dict) and "canonical_tags" in raw:
+        canon_block = raw.get("canonical_tags") or {}
+    alias2canon = build_alias_map(canon_block)
 
-    if isinstance(data, dict):
-        # Newer canonical format
-        for tag, payload in data.items():
+    # Accept either shape:
+    # (A) dict of { tag: {links:[...], ...}, ... }
+    # (B) list of entries: [{tag:"RGP", links:[...]}, "loose_tag", ...]
+    # Also accept a top-level wrapper like {tags: {...}}.
+    tags_raw = raw
+    if isinstance(raw, dict) and "tags" in raw and isinstance(raw["tags"], dict):
+        tags_raw = raw["tags"]
+
+    # Accumulate into canonical buckets
+    canon_nodes = defaultdict(lambda: {"links": set(), "labels": set(), "centrality": None})
+
+    if isinstance(tags_raw, dict):
+        for tag, payload in tags_raw.items():
+            canon_tag = to_canonical(tag, alias2canon)
+            canon_nodes[canon_tag]["labels"].add(tag)
+
+            links = []
+            cent = None
             if isinstance(payload, dict):
                 links = payload.get("links", []) or []
-                centrality = payload.get("centrality", None)
-            else:
-                links, centrality = [], None
-            tags[tag] = {
-                "links": [str(x) for x in links],
-                "centrality": centrality,
-            }
+                cent = payload.get("centrality", None)
 
-    elif isinstance(data, list):
-        # Legacy list format
-        for entry in data:
+            # prefer first non-None centrality
+            if cent is not None and canon_nodes[canon_tag]["centrality"] is None:
+                try:
+                    canon_nodes[canon_tag]["centrality"] = float(cent)
+                except Exception:
+                    pass
+
+            for lk in links:
+                canon_nodes[canon_tag]["links"].add(to_canonical(lk, alias2canon))
+
+    elif isinstance(tags_raw, list):
+        for entry in tags_raw:
             if isinstance(entry, str):
-                tags[entry] = {"links": [], "centrality": None}
+                canon_tag = to_canonical(entry, alias2canon)
+                canon_nodes[canon_tag]["labels"].add(entry)
             elif isinstance(entry, dict):
                 tag = entry.get("tag")
                 if not tag:
-                    # skip malformed
                     continue
-                tags[tag] = {
-                    "links": [str(x) for x in entry.get("links", [])],
-                    "centrality": entry.get("centrality"),
-                }
-    else:
-        # Anything else → empty set
-        tags = {}
+                canon_tag = to_canonical(tag, alias2canon)
+                canon_nodes[canon_tag]["labels"].add(tag)
 
-    return tags
+                cent = entry.get("centrality", None)
+                if cent is not None and canon_nodes[canon_tag]["centrality"] is None:
+                    try:
+                        canon_nodes[canon_tag]["centrality"] = float(cent)
+                    except Exception:
+                        pass
 
+                for lk in entry.get("links", []) or []:
+                    canon_nodes[canon_tag]["links"].add(to_canonical(lk, alias2canon))
+
+    # materialize to plain dict lists
+    result = {}
+    for ctag, data in canon_nodes.items():
+        # remove self-links after canonicalization
+        links = {l for l in data["links"] if l and l != ctag}
+        result[ctag] = {
+            "links": sorted(links),
+            "centrality": data["centrality"],
+            # keep one display label (prefer the most common/longest original)
+            "label": sorted(data["labels"], key=lambda s: (len(s), s))[-1] if data["labels"] else ctag,
+        }
+    return result
+
+
+# --------------------------
+# Graph building
+# --------------------------
 def compute_degree_centrality(tags: dict):
-    # Simple degree centrality normalized to [0,1]
     degree = defaultdict(int)
     for t, payload in tags.items():
         for nbr in payload["links"]:
             degree[t] += 1
-            degree[nbr] += 1  # treat as undirected for sizing
-
+            degree[nbr] += 1
     if not degree:
         return {t: 0.0 for t in tags.keys()}
-
     max_deg = max(degree.values()) or 1
     return {t: degree.get(t, 0) / max_deg for t in tags.keys()}
 
-def build_graph(tags: dict):
-    # Node ids are integers; 'label' is the tag string used by sidebar
-    tag_list = sorted(tags.keys())
-    index_of = {t: i for i, t in enumerate(tag_list)}
 
-    # Prefer provided centrality; otherwise compute by degree
-    computed_cent = compute_degree_centrality(tags)
+def build_graph(tags: dict):
+    # stable ordering
+    tag_list = sorted(tags.keys())
+    idx = {t: i for i, t in enumerate(tag_list)}
+
+    comp_cent = compute_degree_centrality(tags)
 
     nodes = []
-    links = []
+    edges = []
 
     for t in tag_list:
+        display = tags[t].get("label", t)
         c = tags[t].get("centrality")
         if c is None:
-            c = computed_cent.get(t, 0.0)
+            c = comp_cent.get(t, 0.0)
 
         nodes.append({
-            "id": index_of[t],
-            "label": t,
+            "id": idx[t],
+            "label": display,
             "centrality": float(round(c, 4)),
         })
 
         for nbr in tags[t]["links"]:
-            # Only create link if neighbor exists in the set
-            if nbr in index_of:
-                links.append({
-                    "source": index_of[t],
-                    "target": index_of[nbr],
-                })
+            if nbr in idx and nbr != t:
+                edges.append({"source": idx[t], "target": idx[nbr]})
 
-    # De-duplicate links (since we might have both A→B and B→A)
+    # de-duplicate undirected edges
     seen = set()
-    dedup_links = []
-    for e in links:
+    dedup = []
+    for e in edges:
         a, b = e["source"], e["target"]
-        key = (min(a, b), max(a, b))
-        if key in seen:
-            continue
-        seen.add(key)
-        dedup_links.append(e)
+        k = (min(a, b), max(a, b))
+        if k not in seen:
+            seen.add(k)
+            dedup.append(e)
 
-    return {"nodes": nodes, "links": dedup_links}
+    return {"nodes": nodes, "links": dedup}
+
 
 def write_js(obj, path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -114,21 +193,18 @@ def write_js(obj, path):
         f.write(json.dumps(obj, indent=2))
         f.write(";\n")
 
+
 def main():
     tags = load_tag_index(TAG_INDEX_PATH)
     graph = build_graph(tags)
 
-    # Main file used by the page
     write_js(graph, OUT_JS_MAIN)
-
-    # Extra cache-busted artifact (optional; handy for debugging)
-    write_js({
-        "generated_at": datetime.utcnow().isoformat() + "Z",
-        "graph": graph
-    }, OUT_JS_CACHEBUSTER)
+    write_js({"generated_at": datetime.utcnow().isoformat() + "Z", "graph": graph},
+             OUT_JS_CACHEBUSTER)
 
     print(f"✅ Graph data written to {OUT_JS_MAIN} and {OUT_JS_CACHEBUSTER}")
     print(f"   Nodes: {len(graph['nodes'])}  Links: {len(graph['links'])}")
+
 
 if __name__ == "__main__":
     main()
