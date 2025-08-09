@@ -1,160 +1,140 @@
 #!/usr/bin/env python3
-# Build docs/graph_data.js from meta/tag_index.yml
-# - Handles multiple historical schemas
-# - Falls back to co-occurrence on pulses to create links when 'links:' is absent
-# - Emits weight on links; de-dups undirected edges
+"""
+Generate docs/graph_data.js from meta/tag_index.yml.
 
-import yaml, json, os
-from collections import defaultdict
-from itertools import combinations
+- Accepts either:
+    { tags: { <Tag>: {links:[], pulses:[]}, ... } }
+  or a flat mapping:
+    { <Tag>: {links:[], pulses:[]}, ... }
 
-TAG_INDEX_PATH = "meta/tag_index.yml"
-OUTPUT_JS_PATH = "docs/graph_data.js"
+- Normalizes tag ids (lowercase + underscores), but preserves labels.
+- De-duplicates nodes/links, merges weights, ignores self-links.
+- Computes a simple centrality = weighted degree.
+- Writes docs/graph_data.js (pretty) and docs/graph_data.generated.js (same).
+"""
 
-def load_raw(path):
-    with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+import json
+import re
+from pathlib import Path
 
-def normalize_entries(raw):
-    """
-    Return a list of entries with unified keys:
-      {"tag": str, "links": [str], "pulses": [str], "centrality": float}
-    Accepts:
-      A) dict-of-tags -> {TAG: {links:[], pulses:[], centrality:0.0}, ...}
-      B) list of similar dicts or strings
-      C) simple dict -> {TAG: [pulses...]}  (no links)
-    """
-    out = []
+import yaml
 
-    if isinstance(raw, dict):
-        # Detect simple dict (values are lists of pulses OR dicts)
-        for tag, val in raw.items():
-            if isinstance(val, dict):
-                out.append({
-                    "tag": tag,
-                    "links": list(val.get("links", []) or []),
-                    "pulses": list(val.get("pulses", []) or []),
-                    "centrality": float(val.get("centrality", 0.0)),
-                })
-            elif isinstance(val, list):
-                # simple format: tag -> [pulse paths]
-                out.append({
-                    "tag": tag,
-                    "links": [],
-                    "pulses": list(val),
-                    "centrality": 0.0,
-                })
-            else:
-                out.append({"tag": tag, "links": [], "pulses": [], "centrality": 0.0})
-        return out
+ROOT = Path(__file__).resolve().parent
+META = ROOT / "meta" / "tag_index.yml"
+OUT_JS = ROOT / "docs" / "graph_data.js"
+OUT_GEN = ROOT / "docs" / "graph_data.generated.js"
 
-    if isinstance(raw, list):
-        for item in raw:
-            if isinstance(item, str):
-                out.append({"tag": item, "links": [], "pulses": [], "centrality": 0.0})
-            elif isinstance(item, dict):
-                tag = item.get("tag")
-                if not tag and len(item.keys()) == 1:
-                    # shape like [{"RGP": {...}}]
-                    tag = next(iter(item.keys()))
-                    payload = item[tag] or {}
-                    out.append({
-                        "tag": tag,
-                        "links": list(payload.get("links", []) or []),
-                        "pulses": list(payload.get("pulses", []) or []),
-                        "centrality": float(payload.get("centrality", 0.0)),
-                    })
-                elif tag:
-                    out.append({
-                        "tag": tag,
-                        "links": list(item.get("links", []) or []),
-                        "pulses": list(item.get("pulses", []) or []),
-                        "centrality": float(item.get("centrality", 0.0)),
-                    })
-        return out
+def normalize_id(s: str) -> str:
+    if not isinstance(s, str):
+        s = str(s)
+    s = s.strip()
+    s = s.replace("-", "_").replace(" ", "_")
+    s = re.sub(r"[^\w_]+", "", s)  # keep letters, digits, underscore
+    return s.lower()
 
-    raise ValueError(f"Unsupported tag_index format: {type(raw)}")
+def load_tags_dict():
+    if not META.exists():
+        raise FileNotFoundError(f"Missing {META}")
 
-def build_graph(entries):
-    # Collect tags, centralities, direct links, and pulses
-    all_tags = set()
-    centrality = {}
-    direct_links = defaultdict(set)      # tag -> set(other_tag)
-    tag_to_pulses = defaultdict(set)     # tag -> set(pulse_ids)
+    with META.open("r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
 
-    for e in entries:
-        tag = e.get("tag")
-        if not tag:
-            continue
-        all_tags.add(tag)
-        centrality[tag] = float(e.get("centrality", 0.0))
-
-        for t in (e.get("links") or []):
-            if isinstance(t, str) and t:
-                direct_links[tag].add(t)
-                all_tags.add(t)
-
-        for p in (e.get("pulses") or []):
-            if isinstance(p, str) and p:
-                tag_to_pulses[tag].add(p)
-
-    # If there are no direct links, derive by co-occurrence on pulses
-    derived_edges = defaultdict(int)  # (a,b) sorted tuple -> weight
-    has_any_direct = any(len(v) for v in direct_links.values())
-
-    if not has_any_direct:
-        # Build pulse -> set(tags) inverse
-        pulse_to_tags = defaultdict(set)
-        for t, ps in tag_to_pulses.items():
-            for p in ps:
-                pulse_to_tags[p].add(t)
-
-        for tags in pulse_to_tags.values():
-            for a, b in combinations(sorted(tags), 2):
-                derived_edges[(a, b)] += 1
-
-    # Build nodes
-    tags_sorted = sorted(all_tags)
-    tag_id = {t: i for i, t in enumerate(tags_sorted)}
-    nodes = [{"id": tag_id[t], "label": t, "centrality": centrality.get(t, 0.0)} for t in tags_sorted]
-
-    # Build links (direct or derived)
-    links = []
-    if has_any_direct:
-        seen = set()
-        for a, outs in direct_links.items():
-            for b in outs:
-                if a == b or a not in tag_id or b not in tag_id:
-                    continue
-                key = tuple(sorted((a, b)))
-                if key in seen:
-                    continue
-                seen.add(key)
-                links.append({"source": tag_id[a], "target": tag_id[b], "weight": 1})
+    # detect layout
+    if "tags" in data and isinstance(data["tags"], dict):
+        tags_dict = data["tags"]
     else:
-        for (a, b), w in derived_edges.items():
-            if a in tag_id and b in tag_id and a != b:
-                links.append({"source": tag_id[a], "target": tag_id[b], "weight": int(w)})
+        # flat mapping form: filter only entries that look like a tag node
+        tags_dict = {k: v for k, v in data.items()
+                     if isinstance(v, dict) and ("links" in v or "pulses" in v)}
+    return tags_dict, data
+
+def build_alias_map(data):
+    """
+    Optional alias support if present under a 'canonical_tags' section:
+      canonical_tags:
+        Some_Canon:
+          - alias1
+          - alias2
+    Returns alias->canonical label mapping.
+    """
+    alias_map = {}
+    ct = data.get("canonical_tags") or data.get("canonicalTags")
+    if isinstance(ct, dict):
+        for canon, aliases in ct.items():
+            if isinstance(aliases, list):
+                canon_id = normalize_id(canon)
+                for a in aliases:
+                    alias_map[normalize_id(a)] = canon_id
+    return alias_map
+
+def canonize(id_or_label, alias_map, known_ids):
+    nid = normalize_id(id_or_label)
+    nid = alias_map.get(nid, nid)
+    # If alias points to a canonical that doesn't exist yet, keep nid;
+    # caller will decide whether to create a node for it.
+    return nid
+
+def generate_graph(tags_dict, alias_map):
+    # 1) collect known nodes (canonical ids + labels)
+    id_to_label = {}
+    for label in tags_dict.keys():
+        cid = canonize(label, alias_map, known_ids=None)
+        # Prefer most descriptive label: use the exact key (original)
+        if cid not in id_to_label:
+            id_to_label[cid] = str(label)
+
+    # 2) links (undirected, weighted)
+    edge_w = {}  # key = tuple(sorted(idA,idB)) -> weight
+    for label, payload in tags_dict.items():
+        src = canonize(label, alias_map, id_to_label.keys())
+        links = (payload or {}).get("links", []) or []
+        for L in links:
+            dst = canonize(L, alias_map, id_to_label.keys())
+            if not dst or dst == src:
+                continue
+            # ensure node exists (helps when link references a tag that has no own entry)
+            id_to_label.setdefault(dst, L if isinstance(L, str) else str(L))
+            a, b = sorted((src, dst))
+            edge_w[(a, b)] = edge_w.get((a, b), 0) + 1
+
+    # 3) nodes with centrality
+    degree = {nid: 0 for nid in id_to_label.keys()}
+    for (a, b), w in edge_w.items():
+        degree[a] += w
+        degree[b] += w
+
+    nodes = [{
+        "id": nid,
+        "label": id_to_label[nid],
+        "centrality": degree.get(nid, 0)
+    } for nid in id_to_label.keys()]
+
+    # stable sort (labels asc)
+    nodes.sort(key=lambda n: (n["label"].lower(), n["id"]))
+
+    links = [{
+        "source": a,
+        "target": b,
+        "weight": w
+    } for (a, b), w in sorted(edge_w.items(), key=lambda kv: (-kv[1], kv[0]))]
 
     return {"nodes": nodes, "links": links}
 
 def write_js(graph, path):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write("window.graph = ")
-        f.write(json.dumps(graph, indent=2))
-        f.write(";\n")
+    txt = "window.graph = " + json.dumps(graph, ensure_ascii=False, indent=2) + ";\n"
+    path.write_text(txt, encoding="utf-8")
+
+def main():
+    tags_dict, raw = load_tags_dict()
+    alias_map = build_alias_map(raw)
+
+    graph = generate_graph(tags_dict, alias_map)
+
+    # safety: empty link set warning still produces valid file
+    OUT_JS.parent.mkdir(parents=True, exist_ok=True)
+    write_js(graph, OUT_JS)
+    write_js(graph, OUT_GEN)
+    print(f"Wrote {OUT_JS} and {OUT_GEN} ({len(graph['nodes'])} nodes, {len(graph['links'])} links)")
 
 if __name__ == "__main__":
-    print(f"📥 Reading {TAG_INDEX_PATH} …")
-    raw = load_raw(TAG_INDEX_PATH)
-    entries = normalize_entries(raw)
-    graph = build_graph(entries)
-    write_js(graph, OUTPUT_JS_PATH)
-    print(f"✅ Wrote {OUTPUT_JS_PATH}")
-    print(f"   Nodes: {len(graph['nodes'])}  Links: {len(graph['links'])}")
-    if len(graph["links"]) == 0:
-        print("⚠️  No links generated. Check that 'pulses:' are listed per tag or 'links:' exist.")
-    else:
-        preview = graph["links"][:5]
-        print(f"   Sample: {preview}")
+    main()
