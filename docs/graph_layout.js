@@ -1,10 +1,29 @@
-// graph_layout.js — panning, zoom, sidebar rendering, and auto-zoom-to-fit
+// graph_layout.js — panning, zoom, sidebar rendering, auto-zoom-to-fit, and robust link normalization
 
 const graph = window.graph || { nodes: [], links: [] }; // Safe fallback
 
 const sidebarWidth = 280;
 const width = Math.max(640, window.innerWidth - sidebarWidth);
 const height = Math.max(480, window.innerHeight);
+
+// Build a label->id map so we can accept links by label or id
+const idByLabel = new Map((graph.nodes || []).map(n => [n.label, n.id]));
+
+// Normalize links to numeric ids if needed
+const normalizedLinks = (graph.links || []).map(l => {
+  const src = (typeof l.source === "number") ? l.source
+            : (typeof l.source === "string") ? (idByLabel.get(l.source) ?? l.source)
+            : l.source?.id ?? l.source;
+
+  const tgt = (typeof l.target === "number") ? l.target
+            : (typeof l.target === "string") ? (idByLabel.get(l.target) ?? l.target)
+            : l.target?.id ?? l.target;
+
+  return { source: src, target: tgt };
+});
+
+// Basic debug to confirm what we loaded
+console.log(`Graph loaded: ${graph.nodes?.length || 0} nodes, ${normalizedLinks.length} links.`);
 
 // Root SVG + zoom group
 const zoom = d3.zoom()
@@ -24,23 +43,23 @@ const svgGroup = svg.append("g");
 // Forces
 const simulation = d3.forceSimulation()
   .force("link", d3.forceLink()
-    .id(d => d.id)           // ids are numeric; matches links' source/target numbers
-    .distance(40)            // closer graph
-    .strength(0.3))
-  .force("charge", d3.forceManyBody().strength(-80)) // softer repulsion
+    .id(d => d.id)            // node ids are numeric
+    .distance(40)
+    .strength(0.35))
+  .force("charge", d3.forceManyBody().strength(-80))
   .force("center", d3.forceCenter(width / 2, height / 2))
   .force("collide", d3.forceCollide().radius(18).strength(0.9))
   .force("x", d3.forceX(width / 2).strength(0.05))
   .force("y", d3.forceY(height / 2).strength(0.05));
 
-// Links
+// Links (darker so they’re clearly visible)
 const link = svgGroup.append("g")
-  .attr("stroke", "#8a8a8a")
-  .attr("stroke-opacity", 0.8)
+  .attr("stroke", "#666")
+  .attr("stroke-opacity", 0.9)
   .selectAll("line")
-  .data(graph.links || [])
+  .data(normalizedLinks)
   .enter().append("line")
-  .attr("stroke-width", 0.8);
+  .attr("stroke-width", 1.2);
 
 // Nodes
 const node = svgGroup.append("g")
@@ -71,7 +90,7 @@ const labels = svgGroup.append("g")
 
 // Run simulation
 simulation.nodes(graph.nodes).on("tick", ticked).on("end", zoomToFit);
-simulation.force("link").links(graph.links);
+simulation.force("link").links(normalizedLinks);
 
 function ticked() {
   link
@@ -118,7 +137,7 @@ function zoomToFit() {
   const scale = Math.min(
     (width - margin * 2) / boundsWidth,
     (height - margin * 2) / boundsHeight,
-    3 // cap initial zoom-in
+    3
   );
 
   const midX = (minX + maxX) / 2;
