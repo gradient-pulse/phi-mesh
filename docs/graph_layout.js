@@ -1,6 +1,9 @@
 // graph_layout.js — safe JS loading, with panning, zoom, and sidebar rendering
 
-const graph = window.graph || {};  // Safely fallback to empty object
+// Be resilient if scripts load out of order
+const graph = (window.graph && window.graph.nodes && window.graph.links)
+  ? window.graph
+  : { nodes: [], links: [] };
 
 const width = window.innerWidth - 280; // Subtract sidebar width
 const height = window.innerHeight;
@@ -19,6 +22,7 @@ const svg = d3.select("#graph")
 
 const svgGroup = svg.append("g");
 
+// Use string ids from data (tags) for link resolution
 const simulation = d3.forceSimulation()
   .force("link", d3.forceLink().id(d => d.id).distance(80))
   .force("charge", d3.forceManyBody().strength(-300))
@@ -37,7 +41,8 @@ const node = svgGroup.append("g")
   .selectAll("circle")
   .data(graph.nodes)
   .enter().append("circle")
-  .attr("r", 10)
+  // node size reflects centrality (with a sane minimum)
+  .attr("r", d => 6 + Math.round(10 * (d.centrality || 0)))
   .attr("fill", "#9ecae1")
   .call(d3.drag()
     .on("start", dragstarted)
