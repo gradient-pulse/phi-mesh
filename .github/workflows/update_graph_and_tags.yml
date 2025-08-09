@@ -1,46 +1,92 @@
-name: Update Tag Index & Graph
+name: Update Tag Index and Tag Map
 
 on:
   push:
     paths:
       - "phi-mesh/pulse/**/*.yml"
       - "phi-mesh/pulse/**/*.yaml"
+      - "meta/aliases.yml"                 # <— watch alias rollups
       - "meta/tag_index_utils.py"
       - "update_tag_index.py"
+      - "generate_tag_map.py"
+      - "build_tag_browser.py"
       - "generate_graph_data.py"
-      - "docs/*.js"
-      - "docs/tag_map.html"
+      - "docs/tag_map_template.html"
+      - "docs/graph.js"
+      - "docs/data.js"
+      - "docs/tag_browser.html"
+      - ".github/workflows/update_tag_index.yml"
+  workflow_dispatch: {}
 
 jobs:
-  build-map:
+  update-tags:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml
+          pip install pyyaml networkx matplotlib
 
+      # Build/refresh the tag index using aliases
       - name: Regenerate tag index
         run: python update_tag_index.py
 
-      - name: Generate graph data
-        run: python generate_graph_data.py
-
-      - name: Inject build hash in tag_map.html (cache-busting without new files)
+      # Optional: graph/map/browser builders (safe if scripts are absent)
+      - name: Build tag browser (if present)
         run: |
-          HASH=$(git rev-parse --short HEAD)
-          sed -i "s/__BUILD_HASH__/${HASH}/g" docs/tag_map.html
+          if [ -f build_tag_browser.py ]; then
+            python build_tag_browser.py
+          else
+            echo "build_tag_browser.py not found, skipping."
+          fi
 
-      - name: Commit changes if any
+      - name: Generate tag map HTML (if present)
+        run: |
+          if [ -f generate_tag_map.py ]; then
+            python generate_tag_map.py
+          else
+            echo "generate_tag_map.py not found, skipping."
+          fi
+
+      - name: Generate graph data JS (if present)
+        run: |
+          if [ -f generate_graph_data.py ]; then
+            python generate_graph_data.py
+          else
+            echo "generate_graph_data.py not found, skipping."
+          fi
+
+      # Advisory report for curating meta/aliases.yml (non-blocking)
+      - name: Suggest alias groups
+        run: |
+          if [ -f tools/suggest_aliases.py ]; then
+            python tools/suggest_aliases.py --index meta/tag_index.yml --out meta/alias_suggestions.txt --min-size 2 --format text
+          else
+            echo "tools/suggest_aliases.py not found, skipping."
+          fi
+
+      - name: Upload alias suggestions artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: alias-suggestions
+          path: meta/alias_suggestions.txt
+          if-no-files-found: ignore
+          retention-days: 10
+
+      - name: Commit and push generated artifacts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add meta/tag_index.yml docs/data.js docs/graph_data.js docs/link_index.js docs/tag_map.html
-          git diff --cached --quiet || git commit -m "auto: update tag index & graph (build $GITHUB_SHA)"
-          git push || true
+          git add meta/tag_index.yml meta/alias_suggestions.txt || true
+          git add docs/tag_map.html docs/data.js docs/tag_browser.html 2>/dev/null || true
+          git commit -m "Auto-update tags, map, and suggestions" || echo "No changes to commit"
+          git push || echo "Nothing to push"
