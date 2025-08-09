@@ -1,224 +1,281 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-update_tag_index.py
+Build a canonical tag index from pulse/*.yml files.
 
-Builds a canonical tag index from pulse YAML files.
-
-- Scans:   ./pulse/**/*.yml|yaml and ./phi-mesh/pulse/**/*.yml|yaml
-- Output:  ./meta/tag_index.yml
-
-The output format is:
+Output schema (YAML):
 {
-  "<tag>": {
-    "links":  [list of related tags that co-occur with this tag],
-    "pulses": [list of pulse file paths where this tag appears]
+  <tag>: {
+    links: [<other tag>, ...],    # co-occurring tags across pulses (sorted, unique)
+    pulses: ["pulse/....yml", ...]# files that contain the tag (sorted, unique)
   },
   ...
 }
 
 Design goals:
-- Deterministic (sorted lists, stable diffs)
-- Defensive (skips bad files, logs warnings)
-- YAML-safe (convert to plain built-ins before dumping)
-"""
+- Never emit non-serializable types (NO OrderedDict, sets, custom classes).
+- Be resilient to weird input (missing fields, non-list tags, mixed types).
+- Keep diffs stable (sorted lists, sorted keys).
+- Allow optional aliasing via meta/tag_aliases.yml (if present).
 
+Exit codes:
+ 0 success
+ 1 usage / config errors
+ 2 parsing errors (but tries to continue & report)
+"""
 from __future__ import annotations
 
+import argparse
+import glob
+import json
 import os
 import sys
-import glob
-import traceback
 from typing import Dict, List, Set, Tuple
-import yaml
 
-# ----------------------------
-# Config
-# ----------------------------
+try:
+    import yaml  # PyYAML
+except Exception as e:
+    print(f"[fatal] PyYAML not available: {e}", file=sys.stderr)
+    sys.exit(1)
 
-PULSE_DIR_CANDIDATES = [
-    "pulse",
-    os.path.join("phi-mesh", "pulse"),
-]
 
-OUTPUT_PATH = os.path.join("meta", "tag_index.yml")
+# ----------------------------- helpers --------------------------------- #
 
-VALID_EXTS = (".yml", ".yaml")
-
-# ----------------------------
-# Utilities
-# ----------------------------
-
-def log(msg: str) -> None:
-    print(f"[update_tag_index] {msg}")
-
-def find_pulse_files() -> List[str]:
-    files: List[str] = []
-    for base in PULSE_DIR_CANDIDATES:
-        if not os.path.isdir(base):
-            continue
-        # recursive glob for yml/yaml
-        for pattern in ("**/*.yml", "**/*.yaml"):
-            files.extend(glob.glob(os.path.join(base, pattern), recursive=True))
-    # Deduplicate and sort for deterministic processing
-    files = sorted(set(files))
-    return files
-
-def read_yaml(path: str) -> dict | None:
+def _read_yaml_file(path: str) -> Tuple[dict, List[str]]:
+    """Safe-load a YAML file. Returns (data or {}, warnings)."""
+    warns: List[str] = []
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
-        if not isinstance(data, dict):
-            log(f"WARNING: {path}: YAML root is not a mapping; skipping.")
-            return None
-        return data
-    except Exception as e:
-        log(f"ERROR: failed to read {path}: {e}")
-        traceback.print_exc()
-        return None
-
-def normalize_tag(tag: str) -> str:
-    """
-    Minimal normalization: strip whitespace.
-    (We intentionally avoid heavy canonicalization to respect author intent.)
-    """
-    if not isinstance(tag, str):
-        return str(tag)
-    return tag.strip()
-
-def pairs(items: List[str]) -> List[Tuple[str, str]]:
-    """
-    Return unique undirected pairs (a,b) with a < b for a stable representation.
-    """
-    items = sorted(set(items))
-    out: List[Tuple[str, str]] = []
-    n = len(items)
-    for i in range(n):
-        for j in range(i + 1, n):
-            out.append((items[i], items[j]))
-    return out
-
-def _to_builtin(obj):
-    """
-    Recursively convert all containers to YAML-safe Python builtins:
-    - dict
-    - list
-    - str/int/float/bool/None
-    Also converts sets/tuples to sorted lists for determinism.
-    """
-    if isinstance(obj, dict):
-        # keep insertion order as Python 3.7+ preserves it,
-        # but we build dicts in sorted key order below anyway.
-        return {k: _to_builtin(v) for k, v in obj.items()}
-    if isinstance(obj, (list, tuple, set)):
-        # sort where possible for stable output
-        lst = list(obj)
-        try:
-            lst = sorted(lst)
-        except Exception:
-            # fallback: keep original order
-            pass
-        return [_to_builtin(v) for v in lst]
-    return obj
-
-# ----------------------------
-# Core logic
-# ----------------------------
-
-def build_index(pulse_files: List[str]) -> Dict[str, Dict[str, List[str]]]:
-    """
-    Build a tag index with:
-      tag_index[tag]["pulses"] -> sorted list of pulse paths
-      tag_index[tag]["links"]  -> sorted list of related tags (co-occurrence)
-    """
-    # Working storage
-    tag_to_pulses: Dict[str, Set[str]] = {}
-    undirected_edges: Set[Tuple[str, str]] = set()
-
-    for path in pulse_files:
-        data = read_yaml(path)
         if data is None:
+            data = {}
+        if not isinstance(data, dict):
+            warns.append(f"{path}: top-level YAML is not a mapping (got {type(data).__name__}); treating as empty.")
+            return {}, warns
+        return data, warns
+    except FileNotFoundError:
+        warns.append(f"{path}: not found.")
+        return {}, warns
+    except yaml.YAMLError as e:
+        warns.append(f"{path}: YAML parse error: {e}")
+        return {}, warns
+    except Exception as e:
+        warns.append(f"{path}: unreadable: {e}")
+        return {}, warns
+
+
+def _load_aliases(alias_path: str) -> Dict[str, str]:
+    """
+    Optional aliases file format:
+      old_tag: Canonical_Tag
+      Another old: Canonical_Tag
+    """
+    data, warns = _read_yaml_file(alias_path)
+    for w in warns:
+        print(f"[warn] {w}", file=sys.stderr)
+    if not isinstance(data, dict):
+        return {}
+    aliases: Dict[str, str] = {}
+    for k, v in data.items():
+        if isinstance(k, str) and isinstance(v, str) and k.strip():
+            aliases[k.strip()] = v.strip()
+    return aliases
+
+
+def _canon(tag: str) -> str:
+    """Minimal normalization to keep keys stable without being destructive."""
+    # trim whitespace and collapse internal spaces to single spaces
+    t = " ".join(str(tag).strip().split())
+    return t
+
+
+def _apply_alias(tag: str, aliases: Dict[str, str]) -> str:
+    """Map tag via aliases if present; otherwise return as-is."""
+    return aliases.get(tag, tag)
+
+
+def _ensure_str_list(value, where: str) -> List[str]:
+    """
+    Coerce an arbitrary YAML field into a list[str].
+    - None => []
+    - str  => [str]
+    - list => [str(x) for x in value if x is not None]
+    - anything else => []
+    """
+    out: List[str] = []
+    if value is None:
+        return out
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, list):
+        for i, x in enumerate(value):
+            if x is None:
+                continue
+            try:
+                out.append(str(x))
+            except Exception:
+                print(f"[warn] {where}: list item {i} not string-coercible; dropped.", file=sys.stderr)
+        return out
+    # best effort: try to stringify scalars
+    try:
+        return [str(value)]
+    except Exception:
+        print(f"[warn] {where}: unexpected type {type(value).__name__}; dropped.", file=sys.stderr)
+        return []
+
+
+# ----------------------------- core build -------------------------------- #
+
+def build_index(
+    pulse_dir: str,
+    aliases_path: str | None = None,
+) -> Tuple[Dict[str, Dict[str, List[str]]], List[str]]:
+    """
+    Scan pulse YAMLs and build the tag index.
+    Returns (index, warnings)
+    """
+    warns: List[str] = []
+
+    # Load aliases if present
+    aliases: Dict[str, str] = {}
+    if aliases_path and os.path.exists(aliases_path):
+        aliases = _load_aliases(aliases_path)
+
+    # Collect mapping
+    pulses_by_tag: Dict[str, Set[str]] = {}
+    links_by_tag: Dict[str, Set[str]] = {}
+
+    # Accept both pulse/*.yml and pulse/**/*.yml
+    patterns = [
+        os.path.join(pulse_dir, "*.yml"),
+        os.path.join(pulse_dir, "*.yaml"),
+        os.path.join(pulse_dir, "**/*.yml"),
+        os.path.join(pulse_dir, "**/*.yaml"),
+    ]
+
+    # de-dupe file list
+    files: List[str] = []
+    seen: Set[str] = set()
+    for pat in patterns:
+        for p in glob.glob(pat, recursive=True):
+            if p not in seen and os.path.isfile(p):
+                files.append(p)
+                seen.add(p)
+
+    if not files:
+        warns.append(f"No pulse files found under '{pulse_dir}'.")
+        return {}, warns
+
+    for path in sorted(files):
+        data, w = _read_yaml_file(path)
+        warns.extend(w)
+        if not data:
             continue
 
-        tags = data.get("tags")
-        if tags is None:
-            # No tags field — skip quietly.
+        # tags can be under 'tags', sometimes other variants creep in — stick to 'tags'
+        raw_tags = data.get("tags", [])
+        tag_list = _ensure_str_list(raw_tags, f"{path}:tags")
+
+        # normalize + alias
+        canon_tags: List[str] = []
+        for t in tag_list:
+            c = _canon(t)
+            c = _apply_alias(c, aliases)
+            if c:
+                canon_tags.append(c)
+
+        # co-occurrence links are all other tags in the same file
+        tag_set = set(canon_tags)
+        if not tag_set:
             continue
 
-        if not isinstance(tags, list):
-            log(f"WARNING: {path}: 'tags' is not a list; skipping.")
-            continue
+        # record pulses per tag
+        rel_path = path.replace("\\", "/")  # normalize for cross-platform diffs
+        for t in tag_set:
+            pulses_by_tag.setdefault(t, set()).add(rel_path)
 
-        # Normalize, drop empties
-        clean_tags = [normalize_tag(t) for t in tags if normalize_tag(t)]
-        if not clean_tags:
-            continue
+        # record co-occurrence links
+        for t in tag_set:
+            others = tag_set - {t}
+            if not others:
+                continue
+            links_by_tag.setdefault(t, set()).update(others)
 
-        # record pulse membership
-        for t in clean_tags:
-            tag_to_pulses.setdefault(t, set()).add(path)
-
-        # record co-occurrences as undirected edges
-        for a, b in pairs(clean_tags):
-            undirected_edges.add((a, b))
-
-    # Build adjacency from undirected edges
-    adjacency: Dict[str, Set[str]] = {t: set() for t in tag_to_pulses.keys()}
-    for a, b in undirected_edges:
-        adjacency.setdefault(a, set()).add(b)
-        adjacency.setdefault(b, set()).add(a)
-
-    # Build final payload (deterministic: sorted keys, sorted lists)
-    all_tags_sorted = sorted(tag_to_pulses.keys())
-
-    result: Dict[str, Dict[str, List[str]]] = {}
-    for tag in all_tags_sorted:
-        pulses_sorted = sorted(tag_to_pulses[tag])
-        links_sorted = sorted(adjacency.get(tag, set()))
-        result[tag] = {
-            "links": links_sorted,
-            "pulses": pulses_sorted,
+    # Assemble final index (plain dicts/lists only, sorted for stability)
+    index: Dict[str, Dict[str, List[str]]] = {}
+    for tag in sorted(set(pulses_by_tag.keys()) | set(links_by_tag.keys())):
+        pulses = sorted(pulses_by_tag.get(tag, set()))
+        links = sorted(links_by_tag.get(tag, set()))
+        index[tag] = {
+            "links": links,
+            "pulses": pulses,
         }
 
-    return result
+    # Defensive: JSON round-trip to guarantee plain types only
+    index = json.loads(json.dumps(index, ensure_ascii=False))
 
-def ensure_parent_dir(path: str) -> None:
-    d = os.path.dirname(path)
-    if d and not os.path.isdir(d):
-        os.makedirs(d, exist_ok=True)
+    return index, warns
 
-def write_yaml(path: str, payload: dict) -> None:
-    ensure_parent_dir(path)
-    payload_builtin = _to_builtin(payload)
-    with open(path, "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            payload_builtin,
-            f,
-            sort_keys=True,          # stable diffs across runs
-            allow_unicode=True,
-            width=1000,
-            default_flow_style=False
-        )
 
-# ----------------------------
-# Entry point
-# ----------------------------
+# ----------------------------- CLI -------------------------------------- #
 
-def main() -> int:
-    log("Scanning for pulse YAML files…")
-    pulse_files = find_pulse_files()
-    if not pulse_files:
-        log("WARNING: no pulse files found in expected locations.")
-    else:
-        log(f"Found {len(pulse_files)} files.")
+def parse_args(argv: List[str]) -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        description="Regenerate meta/tag_index.yml from pulse/*.yml files."
+    )
+    p.add_argument(
+        "--pulse-dir",
+        default="pulse",
+        help="Directory containing pulse YAMLs (default: %(default)s)",
+    )
+    p.add_argument(
+        "--aliases",
+        default="meta/tag_aliases.yml",
+        help="Optional YAML mapping of tag aliases to canonical names (default: %(default)s)",
+    )
+    p.add_argument(
+        "--out",
+        default="meta/tag_index.yml",
+        help="Output YAML path (default: %(default)s)",
+    )
+    p.add_argument(
+        "--fail-on-warn",
+        action="store_true",
+        help="Exit nonzero if any warnings occurred.",
+    )
+    return p.parse_args(argv)
 
-    log("Building tag index…")
-    index = build_index(pulse_files)
 
-    log(f"Writing YAML to {OUTPUT_PATH} …")
-    write_yaml(OUTPUT_PATH, index)
+def main(argv: List[str] | None = None) -> int:
+    ns = parse_args(sys.argv[1:] if argv is None else argv)
 
-    log("Done.")
+    index, warns = build_index(ns.pulse_dir, ns.aliases if ns.aliases else None)
+
+    for w in warns:
+        print(f"[warn] {w}", file=sys.stderr)
+
+    # Write output (sorted keys for stable diffs; unicode on)
+    os.makedirs(os.path.dirname(ns.out), exist_ok=True)
+    try:
+        with open(ns.out, "w", encoding="utf-8") as f:
+            yaml.safe_dump(
+                index,
+                f,
+                sort_keys=True,           # stable order for diffs
+                allow_unicode=True,
+                width=120,
+                default_flow_style=False,
+            )
+    except Exception as e:
+        print(f"[fatal] failed to write {ns.out}: {e}", file=sys.stderr)
+        return 1
+
+    if ns.fail_on_warn and warns:
+        return 2
+
+    print(f"[ok] wrote {ns.out} with {len(index)} tags.")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
