@@ -1,111 +1,137 @@
-#!/usr/bin/env python3
 import yaml
 import json
 import os
-import sys
-from datetime import datetime
+from collections import defaultdict
 
 TAG_INDEX_PATH = "meta/tag_index.yml"
-OUTPUT_PATH = "docs/graph_data.js"
+OUT_PRIMARY = "docs/graph_data.js"
+OUT_SECONDARY = "docs/graph_data.generated.js"  # optional mirror for debugging
 
-def load_tag_index(path):
+def load_tag_index(path: str):
     with open(path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
+    return data
 
-    # Accept both modern "dict-of-tags" and legacy "list" formats.
-    # Modern (recommended) shape seen in your repo:
-    # {
-    #   "RGP": {"links":[...], "pulses":[...], ...},
-    #   "NT":  {"links":[...], ...},
-    #   ...
-    # }
-    #
-    # Legacy tolerated shape:
-    # [
-    #   {"tag":"RGP","links":[...],"centrality":...},
-    #   "LooseStringTag"
-    # ]
-    if isinstance(data, dict):
-        # Normalize into list of {tag, links, centrality?}
-        entries = []
-        for tag, obj in data.items():
-            if not isinstance(obj, dict):
-                obj = {}
-            links = obj.get("links", []) or []
-            # If centrality not provided, use out-degree as a simple proxy
-            centrality = obj.get("centrality", float(len(links)))
-            entries.append({"tag": str(tag), "links": list(map(str, links)), "centrality": float(centrality)})
-        return entries
+def normalize_to_tag_map(raw):
+    """
+    Accepts either:
+      A) dict[tag] -> {links: [...], pulses: [...], ...}
+      B) list of dicts like [{"tag": "...", "links": [...]}]
+      C) simple list of tag strings
+    Returns dict[tag] -> {"links": set(), "pulses": set(), "centrality": float?}
+    """
+    tag_map = {}
 
-    elif isinstance(data, list):
-        entries = []
-        for item in data:
-            if isinstance(item, str):
-                entries.append({"tag": item, "links": [], "centrality": 0.0})
-            elif isinstance(item, dict):
-                tag = item.get("tag")
+    if isinstance(raw, dict):
+        # Newer format: { tag: {links:[], pulses:[], ...}, ... }
+        for tag, payload in raw.items():
+            if not isinstance(payload, dict):
+                payload = {}
+            links = set(payload.get("links", []) or [])
+            pulses = set(payload.get("pulses", []) or [])
+            cent = payload.get("centrality", None)
+            tag_map[tag] = {"links": links, "pulses": pulses, "centrality": cent}
+
+    elif isinstance(raw, list):
+        for entry in raw:
+            if isinstance(entry, str):
+                tag_map.setdefault(entry, {"links": set(), "pulses": set(), "centrality": None})
+            elif isinstance(entry, dict):
+                # expect {"tag": "...", "links": [...], ...}
+                tag = entry.get("tag")
                 if not tag:
-                    # try keys like {"RGP": {...}}
-                    if len(item) == 1 and isinstance(next(iter(item.values())), dict):
-                        tag = str(next(iter(item.keys())))
-                        obj = next(iter(item.values()))
-                        links = obj.get("links", []) or []
-                        cent = obj.get("centrality", float(len(links)))
-                        entries.append({"tag": tag, "links": list(map(str, links)), "centrality": float(cent)})
-                        continue
-                    else:
-                        continue
-                links = item.get("links", []) or []
-                cent = item.get("centrality", float(len(links)))
-                entries.append({"tag": str(tag), "links": list(map(str, links)), "centrality": float(cent)})
-        return entries
-
+                    # if it’s a single-key dict like {"RGP": {...}}
+                    if len(entry) == 1:
+                        tag, payload = next(iter(entry.items()))
+                        if isinstance(payload, dict):
+                            links = set(payload.get("links", []) or [])
+                            pulses = set(payload.get("pulses", []) or [])
+                            cent = payload.get("centrality", None)
+                            tag_map[tag] = {"links": links, "pulses": pulses, "centrality": cent}
+                            continue
+                    # skip malformed
+                    continue
+                links = set(entry.get("links", []) or [])
+                pulses = set(entry.get("pulses", []) or [])
+                cent = entry.get("centrality", None)
+                tag_map[tag] = {"links": links, "pulses": pulses, "centrality": cent}
     else:
-        raise ValueError("Unsupported tag index format in meta/tag_index.yml")
+        # unknown format → empty graph (fail safe)
+        pass
 
-def build_graph(entries):
-    tags = {e["tag"] for e in entries}
-    # nodes with string IDs (tags) so your D3 .id(d => d.id) works naturally
-    nodes = [{
-        "id": e["tag"],
-        "label": e["tag"],
-        # Light normalization: keep centrality non-negative, scale down if huge
-        "centrality": float(e.get("centrality", 0.0))
-    } for e in entries]
+    # Ensure all linked tags exist as nodes, even if they had no own entry
+    all_links = set()
+    for v in tag_map.values():
+        all_links |= set(v["links"])
+    for l in all_links:
+        tag_map.setdefault(l, {"links": set(), "pulses": set(), "centrality": None})
+
+    return tag_map
+
+def compute_centrality(tag_map):
+    """
+    Compute a simple degree centrality (in+out) normalized to [0,1].
+    Uses undirected degree from links for now.
+    """
+    degree = defaultdict(int)
+    for tag, payload in tag_map.items():
+        for nbr in payload["links"]:
+            degree[tag] += 1
+            degree[nbr] += 1
+
+    max_deg = max(degree.values()) if degree else 0
+    for tag, payload in tag_map.items():
+        if payload["centrality"] is None:
+            if max_deg == 0:
+                payload["centrality"] = 0.0
+            else:
+                payload["centrality"] = round(degree[tag] / max_deg, 4)
+
+def build_graph(tag_map):
+    tag_to_id = {tag: i for i, tag in enumerate(sorted(tag_map.keys()))}
+
+    nodes = []
+    for tag, payload in sorted(tag_map.items()):
+        nodes.append({
+            "id": tag_to_id[tag],
+            "label": tag,
+            "centrality": payload.get("centrality", 0.0)
+        })
 
     links = []
-    for e in entries:
-        for tgt in e.get("links", []):
-            if tgt in tags:
-                links.append({"source": e["tag"], "target": tgt})
+    for tag, payload in tag_map.items():
+        src = tag_to_id[tag]
+        for tgt_tag in payload["links"]:
+            if tgt_tag in tag_to_id:
+                links.append({"source": src, "target": tag_to_id[tgt_tag]})
 
     return {"nodes": nodes, "links": links}
 
-def write_js(graph, out_path):
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    stamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
-    header = f"/* Auto-generated by generate_graph_data.py @ {stamp} | nodes={len(graph['nodes'])}, links={len(graph['links'])} */\n"
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(header)
+def write_js(obj, path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
         f.write("window.graph = ")
-        f.write(json.dumps(graph, indent=2))
-        f.write(";\n")
+        f.write(json.dumps(obj, indent=2))
+        f.write(";")
 
 def main():
     try:
-        entries = load_tag_index(TAG_INDEX_PATH)
-    except Exception as e:
-        print(f"❌ Failed to read/parse {TAG_INDEX_PATH}: {e}")
-        sys.exit(1)
+        raw = load_tag_index(TAG_INDEX_PATH)
+    except FileNotFoundError:
+        print(f"❌ {TAG_INDEX_PATH} not found. Writing empty graph.")
+        write_js({"nodes": [], "links": []}, OUT_PRIMARY)
+        write_js({"nodes": [], "links": []}, OUT_SECONDARY)
+        return
 
-    graph = build_graph(entries)
+    tag_map = normalize_to_tag_map(raw)
+    compute_centrality(tag_map)
+    graph = build_graph(tag_map)
 
-    if not graph["nodes"]:
-        print("❌ Zero nodes parsed from tag index — refusing to overwrite docs/graph_data.js.")
-        sys.exit(2)
+    write_js(graph, OUT_PRIMARY)
+    write_js(graph, OUT_SECONDARY)
 
-    write_js(graph, OUTPUT_PATH)
-    print(f"✅ Graph data written to {OUTPUT_PATH} ({len(graph['nodes'])} nodes, {len(graph['links'])} links)")
+    print(f"✅ Graph has {len(graph['nodes'])} nodes and {len(graph['links'])} links.")
+    print(f"✅ Wrote {OUT_PRIMARY} and {OUT_SECONDARY}")
 
 if __name__ == "__main__":
     main()
