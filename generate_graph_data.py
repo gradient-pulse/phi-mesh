@@ -1,186 +1,134 @@
 import yaml
 import json
 import os
-import re
 from collections import defaultdict
+from datetime import datetime
 
-META_PATH = "meta/tag_index.yml"
-OUT_PRIMARY = "docs/graph_data.js"
-OUT_SECONDARY = "docs/graph_data.generated.js"
-
-def norm(s: str) -> str:
-    """
-    Normalize a tag key for internal matching.
-    Lowercase, trim, replace non [a-z0-9]+ with underscores, collapse repeats.
-    """
-    s = s.strip().lower()
-    s = re.sub(r"[^a-z0-9]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s
+TAG_INDEX_PATH = "meta/tag_index.yml"
+OUT_JS_MAIN = "docs/graph_data.js"
+OUT_JS_CACHEBUSTER = "docs/graph_data.generated.js"
 
 def load_tag_index(path: str):
     with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        data = yaml.safe_load(f)
 
-def coerce_to_entries(raw):
-    """
-    Coerce various tag_index.yml shapes into a list of standardized entries:
-    [
-      {
-        "tag": "<display label>",
-        "key": "<normalized key>",
-        "links": [ "<display label>", ... ],
-        "link_keys": [ "<normalized key>", ... ],
-        "centrality": float | int | None
-      },
-      ...
-    ]
-    """
-    entries = []
+    # Accept either of these shapes:
+    # 1) { tag: {links:[...], pulses:[...], ...}, ... }
+    # 2) [{tag:"RGP", links:[...], centrality:0.7}, "loose_string_tag", ...]
+    tags = {}
 
-    # Case A: mapping { tag_name: {links: [...], pulses: [...], ...} }
-    if isinstance(raw, dict):
-        for label, payload in raw.items():
-            if not isinstance(payload, dict):
-                # Bare mapping: treat as empty payload
-                payload = {}
-            links = payload.get("links") or []
-            # some old variants used "related_concepts" or similar
-            links = list(links) + list(payload.get("related_concepts", []))
-
-            cen = payload.get("centrality", None)
-            entry = {
-                "tag": label,
-                "key": norm(label),
-                "links": [],
-                "link_keys": [],
-                "centrality": cen,
+    if isinstance(data, dict):
+        # Newer canonical format
+        for tag, payload in data.items():
+            if isinstance(payload, dict):
+                links = payload.get("links", []) or []
+                centrality = payload.get("centrality", None)
+            else:
+                links, centrality = [], None
+            tags[tag] = {
+                "links": [str(x) for x in links],
+                "centrality": centrality,
             }
-            for l in links:
-                if not isinstance(l, str):
+
+    elif isinstance(data, list):
+        # Legacy list format
+        for entry in data:
+            if isinstance(entry, str):
+                tags[entry] = {"links": [], "centrality": None}
+            elif isinstance(entry, dict):
+                tag = entry.get("tag")
+                if not tag:
+                    # skip malformed
                     continue
-                entry["links"].append(l)
-                entry["link_keys"].append(norm(l))
-            entries.append(entry)
-        return entries
-
-    # Case B: list-of-dicts or list-of-strings
-    if isinstance(raw, list):
-        for item in raw:
-            if isinstance(item, str):
-                entries.append({
-                    "tag": item,
-                    "key": norm(item),
-                    "links": [],
-                    "link_keys": [],
-                    "centrality": None,
-                })
-            elif isinstance(item, dict):
-                # Accept either already in our shape, or {tag:..., links:..., centrality:...}
-                tag = item.get("tag") or item.get("label") or "unknown"
-                links = item.get("links", [])
-                cen = item.get("centrality", None)
-                e = {
-                    "tag": tag,
-                    "key": norm(tag),
-                    "links": [],
-                    "link_keys": [],
-                    "centrality": cen,
+                tags[tag] = {
+                    "links": [str(x) for x in entry.get("links", [])],
+                    "centrality": entry.get("centrality"),
                 }
-                for l in links:
-                    if isinstance(l, str):
-                        e["links"].append(l)
-                        e["link_keys"].append(norm(l))
-                entries.append(e)
-        return entries
+    else:
+        # Anything else → empty set
+        tags = {}
 
-    # Fallback: nothing usable
-    return entries
+    return tags
 
-def build_graph_data(entries):
-    # Build lookup of normalized key -> index
-    # If duplicates of the same normalized key appear, keep the first
-    key_to_index = {}
-    unique_entries = []
-    for e in entries:
-        k = e["key"]
-        if k and k not in key_to_index:
-            key_to_index[k] = len(unique_entries)
-            unique_entries.append(e)
+def compute_degree_centrality(tags: dict):
+    # Simple degree centrality normalized to [0,1]
+    degree = defaultdict(int)
+    for t, payload in tags.items():
+        for nbr in payload["links"]:
+            degree[t] += 1
+            degree[nbr] += 1  # treat as undirected for sizing
 
-    # Compute default centrality (out-degree) if missing
-    out_degree = defaultdict(int)
-    for e in unique_entries:
-        # count only links that point to existing tags
-        unique_targets = set(lk for lk in e["link_keys"] if lk in key_to_index and lk != e["key"])
-        out_degree[e["key"]] += len(unique_targets)
+    if not degree:
+        return {t: 0.0 for t in tags.keys()}
+
+    max_deg = max(degree.values()) or 1
+    return {t: degree.get(t, 0) / max_deg for t in tags.keys()}
+
+def build_graph(tags: dict):
+    # Node ids are integers; 'label' is the tag string used by sidebar
+    tag_list = sorted(tags.keys())
+    index_of = {t: i for i, t in enumerate(tag_list)}
+
+    # Prefer provided centrality; otherwise compute by degree
+    computed_cent = compute_degree_centrality(tags)
 
     nodes = []
-    for idx, e in enumerate(unique_entries):
-        cen = e["centrality"]
-        if cen is None:
-            cen = float(out_degree[e["key"]])
+    links = []
+
+    for t in tag_list:
+        c = tags[t].get("centrality")
+        if c is None:
+            c = computed_cent.get(t, 0.0)
+
         nodes.append({
-            "id": idx,
-            "label": e["tag"],
-            "centrality": cen,
+            "id": index_of[t],
+            "label": t,
+            "centrality": float(round(c, 4)),
         })
 
-    # Build links (dedup, no self-loops, only between existing tags)
+        for nbr in tags[t]["links"]:
+            # Only create link if neighbor exists in the set
+            if nbr in index_of:
+                links.append({
+                    "source": index_of[t],
+                    "target": index_of[nbr],
+                })
+
+    # De-duplicate links (since we might have both A→B and B→A)
     seen = set()
-    links = []
-    for e in unique_entries:
-        src_idx = key_to_index[e["key"]]
-        for lk in e["link_keys"]:
-            if lk not in key_to_index:
-                continue
-            tgt_idx = key_to_index[lk]
-            if tgt_idx == src_idx:
-                continue
-            tup = (src_idx, tgt_idx)
-            if tup in seen:
-                continue
-            seen.add(tup)
-            links.append({"source": src_idx, "target": tgt_idx})
+    dedup_links = []
+    for e in links:
+        a, b = e["source"], e["target"]
+        key = (min(a, b), max(a, b))
+        if key in seen:
+            continue
+        seen.add(key)
+        dedup_links.append(e)
 
-    # Optional: stable sort nodes by label for nicer layout ID order
-    # Need to remap links if we reindex
-    remap = list(range(len(nodes)))
-    # sort returns new order indices
-    sorted_pairs = sorted(enumerate(nodes), key=lambda p: p[1]["label"].lower())
-    old_to_new = {old_i: new_i for new_i, (old_i, _) in enumerate(sorted_pairs)}
-    nodes_sorted = [p[1] for p in sorted_pairs]
-    # fix IDs to be 0..n-1
-    for new_i, n in enumerate(nodes_sorted):
-        n["id"] = new_i
-    links_sorted = [{"source": old_to_new[l["source"]], "target": old_to_new[l["target"]]} for l in links]
+    return {"nodes": nodes, "links": dedup_links}
 
-    return {"nodes": nodes_sorted, "links": links_sorted}
-
-def write_js(graph, path):
+def write_js(obj, path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write("window.graph = ")
-        f.write(json.dumps(graph, ensure_ascii=False))
-        f.write(";")
+        f.write(json.dumps(obj, indent=2))
+        f.write(";\n")
 
 def main():
-    raw = load_tag_index(META_PATH)
-    entries = coerce_to_entries(raw)
-    graph = build_graph_data(entries)
+    tags = load_tag_index(TAG_INDEX_PATH)
+    graph = build_graph(tags)
 
-    # Write both files (primary for the app; secondary for diff/debug)
-    write_js(graph, OUT_PRIMARY)
+    # Main file used by the page
+    write_js(graph, OUT_JS_MAIN)
 
-    # A more readable pretty version if you want to inspect diffs
-    os.makedirs(os.path.dirname(OUT_SECONDARY), exist_ok=True)
-    with open(OUT_SECONDARY, "w", encoding="utf-8") as f:
-        f.write("window.graph = ")
-        f.write(json.dumps(graph, indent=2, ensure_ascii=False))
-        f.write(";")
+    # Extra cache-busted artifact (optional; handy for debugging)
+    write_js({
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "graph": graph
+    }, OUT_JS_CACHEBUSTER)
 
-    print(f"✅ Graph data written to {OUT_PRIMARY} and {OUT_SECONDARY}")
-    print(f"   Nodes: {len(graph['nodes'])}, Links: {len(graph['links'])}")
+    print(f"✅ Graph data written to {OUT_JS_MAIN} and {OUT_JS_CACHEBUSTER}")
+    print(f"   Nodes: {len(graph['nodes'])}  Links: {len(graph['links'])}")
 
 if __name__ == "__main__":
     main()
