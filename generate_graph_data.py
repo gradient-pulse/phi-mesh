@@ -1,144 +1,190 @@
 #!/usr/bin/env python3
 """
-Generate docs/graph_data.js from meta/tag_index.yml.
+generate_graph_data.py
+Builds a tag graph (nodes + links) for the D3 map.
 
-Accepts either:
-  - { tags: { <Tag>: {...} } }  OR a flat mapping { <Tag>: {...} }
-Per-tag fields (any of the following pairs work):
-  - links / pulses
-  - related_concepts / linked_pulses    (legacy)
+- Reads tag index from one of:
+    meta/tag_index.yml
+    tag_index.yml
+    phi-mesh/meta/tag_index.yml
 
-Outputs:
-  - docs/graph_data.js
-  - docs/graph_data.generated.js
-
-Both define:  window.graph = { nodes:[{id,label,centrality}], links:[{source,target,weight}] };
+- Always emits a non-empty links list if adjacency exists in the tag index.
+- Deduplicates nodes/links, keeps IDs as strings.
+- Writes two files into docs/:
+    1) graph_data.<hash>.js      # payload (window.graph = {...})
+    2) graph_data.js             # tiny loader that injects the hashed file
 """
 
 import json
-import re
+import hashlib
+import os
 from pathlib import Path
 
-import yaml
+try:
+    import yaml
+except Exception as e:
+    raise SystemExit(
+        "Missing dependency: pyyaml\nInstall with: pip install pyyaml"
+    ) from e
 
-ROOT   = Path(__file__).resolve().parent
-META   = ROOT / "meta" / "tag_index.yml"
-OUT1   = ROOT / "docs" / "graph_data.js"
-OUT2   = ROOT / "docs" / "graph_data.generated.js"
 
-# ---------- helpers ----------
+# -----------------------------
+# Config / Paths
+# -----------------------------
+CANDIDATES = [
+    Path("meta/tag_index.yml"),
+    Path("tag_index.yml"),
+    Path("phi-mesh/meta/tag_index.yml"),
+]
+DOCS_DIR = Path("docs")
+DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
-def norm_id(s: str) -> str:
-    if not isinstance(s, str):
-        s = str(s)
-    s = s.strip().replace("-", "_").replace(" ", "_")
-    s = re.sub(r"[^\w_]+", "", s)  # keep [A-Za-z0-9_]
-    return s.lower()
 
-def load_tag_block():
-    if not META.exists():
-        raise FileNotFoundError(f"Missing {META}")
-    with META.open("r", encoding="utf-8") as f:
+# -----------------------------
+# Helpers
+# -----------------------------
+def find_tag_index() -> Path:
+    for p in CANDIDATES:
+        if p.exists():
+            return p
+    raise FileNotFoundError(
+        f"Could not find tag_index.yml. Looked in: {', '.join(map(str, CANDIDATES))}"
+    )
+
+
+def load_tag_index(path: Path) -> dict:
+    with path.open("r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
+    # Support both flattened and nested structures:
+    # Expected modern shape:
+    #   {
+    #     TAG: { links: [...], pulses: [...], papers: [...], ... },
+    #     ...
+    #   }
+    # Older shapes will still be processed best-effort.
+    if not isinstance(data, dict):
+        raise ValueError("tag_index.yml must parse to a dict at the top level.")
+    return data
 
-    # nested or flat
-    tags = data.get("tags")
-    if isinstance(tags, dict):
-        tag_map = tags
-    else:
-        # flat: keep only dict entries
-        tag_map = {k: v for k, v in data.items()
-                   if isinstance(v, dict) and any(k2 in v for k2 in
-                      ("links","pulses","related_concepts","linked_pulses"))}
-    return data, tag_map
 
-def build_alias_map(data):
-    # Optional alias support
-    alias_map = {}
-    ct = data.get("canonical_tags") or data.get("canonicalTags")
-    if isinstance(ct, dict):
-        for canonical, aliases in ct.items():
-            if isinstance(aliases, list):
-                cid = norm_id(canonical)
-                for a in aliases:
-                    alias_map[norm_id(a)] = cid
-    return alias_map
+def sanitize_id(s) -> str:
+    # Force IDs to strings; keep underscores etc. D3 doesn’t care.
+    return str(s)
 
-def canonize(tag_label, alias_map):
-    nid = norm_id(tag_label)
-    return alias_map.get(nid, nid)
 
-# ---------- core ----------
+def unique_links_from_adjacency(index: dict) -> list[dict]:
+    """
+    Build an undirected simple graph from tag adjacency:
+      edges between tag <-> each neighbor in 'links' (if present).
+    Deduplicated by (min(tag, nbr), max(tag, nbr)).
+    """
+    edges = []
+    seen = set()
 
-def generate_graph(tag_map, alias_map):
-    id_to_label = {}
-
-    # First pass: ensure nodes exist for all tags present as keys
-    for label in tag_map.keys():
-        cid = canonize(label, alias_map)
-        id_to_label.setdefault(cid, str(label))
-
-    # Second pass: collect links with multiple possible field names
-    edge_w = {}  # (a,b)->weight
-    for label, payload in tag_map.items():
+    for tag, payload in index.items():
+        tag_id = sanitize_id(tag)
         if not isinstance(payload, dict):
             continue
-
-        src = canonize(label, alias_map)
-
-        # tolerate old/new field names
-        links  = payload.get("links")
-        if links is None:
-            links = payload.get("related_concepts")  # legacy
-
-        if not isinstance(links, list):
-            links = []
-
-        for L in links:
-            dst = canonize(L, alias_map)
-            if not dst or dst == src:
+        nbrs = payload.get("links") or payload.get("link") or []
+        if not isinstance(nbrs, (list, tuple)):
+            continue
+        for nb in nbrs:
+            nb_id = sanitize_id(nb)
+            if nb_id == tag_id:
                 continue
-            # ensure node label for dst
-            id_to_label.setdefault(dst, str(L))
-            a, b = sorted((src, dst))
-            edge_w[(a, b)] = edge_w.get((a, b), 0) + 1
+            a, b = sorted((tag_id, nb_id))
+            key = (a, b)
+            if key in seen:
+                continue
+            seen.add(key)
+            edges.append({"source": a, "target": b, "weight": 1})
+    return edges
 
-    # Degree-based centrality
-    degree = {nid: 0 for nid in id_to_label.keys()}
-    for (a, b), w in edge_w.items():
-        degree[a] += w
-        degree[b] += w
 
-    nodes = [{
-        "id": nid,
-        "label": id_to_label[nid],
-        "centrality": degree.get(nid, 0)
-    } for nid in id_to_label.keys()]
-    nodes.sort(key=lambda n: (n["label"].lower(), n["id"]))
+def collect_nodes(index: dict, links: list[dict]) -> list[dict]:
+    """
+    Union of:
+      - all tag keys in index
+      - all endpoints that appear in links
+    """
+    ids = set()
 
-    links = [{
-        "source": a,
-        "target": b,
-        "weight": w
-    } for (a, b), w in sorted(edge_w.items(), key=lambda kv: (-kv[1], kv[0]))]
+    for tag in index.keys():
+        ids.add(sanitize_id(tag))
 
-    return {"nodes": nodes, "links": links}
+    for e in links:
+        ids.add(sanitize_id(e["source"]))
+        ids.add(sanitize_id(e["target"]))
 
-def write_js(graph, path):
-    txt = "window.graph = " + json.dumps(graph, ensure_ascii=False, indent=2) + ";\n"
-    path.write_text(txt, encoding="utf-8")
+    # Emit as array of {id}
+    return [{"id": i} for i in sorted(ids)]
 
-def main():
-    data, tag_map = load_tag_block()
-    alias_map = build_alias_map(data)
-    graph = generate_graph(tag_map, alias_map)
 
-    OUT1.parent.mkdir(parents=True, exist_ok=True)
-    write_js(graph, OUT1)
-    write_js(graph, OUT2)
-    print(f"[graph] nodes={len(graph['nodes'])} links={len(graph['links'])}")
-    if not graph["links"]:
-        print("[graph] WARNING: produced zero links. Check YAML fields (links/related_concepts).")
+def write_hashed_payload(graph: dict) -> str:
+    """
+    Writes docs/graph_data.<hash>.js with `window.graph = {...};`
+    Returns the basename (used by the loader).
+    """
+    payload = "window.graph=" + json.dumps(graph, separators=(",", ":"), ensure_ascii=False) + ";"
+    digest = hashlib.sha1(payload.encode("utf-8")).hexdigest()[:8]
+    basename = f"graph_data.{digest}.js"
+    out_path = DOCS_DIR / basename
+    with out_path.open("w", encoding="utf-8") as f:
+        f.write(payload)
+    return basename
+
+
+def write_loader(basename: str) -> None:
+    """
+    Writes docs/graph_data.js which dynamically loads the hashed payload and
+    exposes window.GRAPH_SRC for debug.
+    """
+    loader = f"""(function() {{
+  var src = {json.dumps(basename)};
+  window.GRAPH_SRC = src;
+  var s = document.createElement('script');
+  s.src = src;
+  (document.currentScript && document.currentScript.parentNode
+    ? document.currentScript.parentNode.insertBefore(s, document.currentScript.nextSibling)
+    : document.body.appendChild(s));
+  console.log("[tag_map] overlay graph loaded: –", src);
+}})();
+"""
+    with (DOCS_DIR / "graph_data.js").open("w", encoding="utf-8") as f:
+        f.write(loader)
+
+
+# -----------------------------
+# Main
+# -----------------------------
+def main() -> None:
+    idx_path = find_tag_index()
+    print(f"[generate_graph_data] using tag index: {idx_path}")
+
+    tag_index = load_tag_index(idx_path)
+
+    # Build links from adjacency (most reliable). If nothing, leave empty.
+    links = unique_links_from_adjacency(tag_index)
+
+    # Build nodes (includes all tags and link endpoints).
+    nodes = collect_nodes(tag_index, links)
+
+    # Final sanity: if there are zero links AND zero/one node, we still emit
+    # a valid (but boring) graph. The runtime layout can fall back too.
+    graph = {"nodes": nodes, "links": links}
+
+    hashed = write_hashed_payload(graph)
+    write_loader(hashed)
+
+    print(
+        f"[generate_graph_data] wrote docs/{hashed} "
+        f"({len(nodes)} nodes, {len(links)} links) and docs/graph_data.js"
+    )
+
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        # Fail loudly in CI so the workflow shows the cause.
+        raise
