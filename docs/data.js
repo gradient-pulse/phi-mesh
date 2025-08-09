@@ -81,7 +81,6 @@ const tagData = {
     "pulse/2025-07-21_recursive_cor_pola_convergence.yml"
   ],
   "RGP": [
-    "pulse/2025-08-06-note_plimpton322.yml",
     "pulse/2025-07-22_CF_split.yml",
     "pulse/2025-08-01_dev-cycle-nt-rhythm.yml",
     "pulse/2025-07-23_gradient-cocoon.yml",
