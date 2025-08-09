@@ -1,71 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>RGP Tag Map</title>
+  <!-- Load D3 exactly once -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: sans-serif;
-    }
-
-    #container {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-    }
-
-    #sidebar {
-      width: 280px;
-      background-color: #f4f4f4;
-      padding: 10px;
-      overflow-y: auto;
-    }
-
-    #sidebar h1 {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    #sidebar p {
-      font-size: 13px;
-      margin-bottom: 14px;
-    }
-
-    #graph {
-      flex-grow: 1;
-      overflow: hidden;
-    }
-
-    #link-list {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-    #link-list li {
-      margin-bottom: 6px;
-      font-size: 13px;
-    }
-
-    #link-list li strong {
-      display: block;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    #link-list a {
-      color: steelblue;
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    #link-list a:hover {
-      text-decoration: underline;
-    }
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; }
+    #container { display: flex; height: 100vh; width: 100vw; }
+    #sidebar { width: 280px; background: #f4f4f4; padding: 10px; overflow-y: auto; }
+    #sidebar h1 { font-size: 20px; margin-bottom: 4px; }
+    #sidebar p { font-size: 13px; margin-bottom: 14px; }
+    #graph { flex-grow: 1; overflow: hidden; }
+    #link-list { list-style: none; padding-left: 0; }
+    #link-list li { margin-bottom: 6px; font-size: 13px; }
+    #link-list li strong { display: block; font-weight: bold; margin-top: 8px; }
+    #link-list a { color: steelblue; text-decoration: none; font-size: 13px; }
+    #link-list a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -73,17 +24,16 @@
     <div id="sidebar">
       <h1>RGP Tag Map</h1>
       <p>Coherence Tracking Across Fields—click a tag</p>
-      <ul id="link-list"></ul> <!-- This MUST match what graph_layout.js expects -->
+      <ul id="link-list"></ul>
     </div>
     <div id="graph"></div>
   </div>
 
-  <!-- Script load order matters -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Strict load order: data → graph data → link index → sidebar → graph layout -->
   <script src="data.js"></script>
   <script src="graph_data.js"></script>
   <script src="link_index.js"></script>
-  <script src="sidebar_display.js"></script> <!-- NEW modular sidebar logic -->
+  <script src="sidebar_display.js"></script>
   <script src="graph_layout.js"></script>
 </body>
 </html>
