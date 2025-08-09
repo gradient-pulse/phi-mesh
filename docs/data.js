@@ -102,9 +102,6 @@ const tagData = {
     "pulse/2025-07-30_laminar-turbulence.yml",
     "pulse/2025-07-30-gradient-flux-reversal.yml"
   ],
-  "alignment": [
-    "pulse/2025-07-25_patience_as_gradient.yml"
-  ],
   "ambient_agent": [
     "pulse/2025-06-17_phi_monitor_agent_ready.yml"
   ],
