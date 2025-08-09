@@ -2,15 +2,17 @@
 """
 Generate docs/graph_data.js from meta/tag_index.yml.
 
-- Accepts either:
-    { tags: { <Tag>: {links:[], pulses:[]}, ... } }
-  or a flat mapping:
-    { <Tag>: {links:[], pulses:[]}, ... }
+Accepts either:
+  - { tags: { <Tag>: {...} } }  OR a flat mapping { <Tag>: {...} }
+Per-tag fields (any of the following pairs work):
+  - links / pulses
+  - related_concepts / linked_pulses    (legacy)
 
-- Normalizes tag ids (lowercase + underscores), but preserves labels.
-- De-duplicates nodes/links, merges weights, ignores self-links.
-- Computes a simple centrality = weighted degree.
-- Writes docs/graph_data.js (pretty) and docs/graph_data.generated.js (same).
+Outputs:
+  - docs/graph_data.js
+  - docs/graph_data.generated.js
+
+Both define:  window.graph = { nodes:[{id,label,centrality}], links:[{source,target,weight}] };
 """
 
 import json
@@ -19,85 +21,89 @@ from pathlib import Path
 
 import yaml
 
-ROOT = Path(__file__).resolve().parent
-META = ROOT / "meta" / "tag_index.yml"
-OUT_JS = ROOT / "docs" / "graph_data.js"
-OUT_GEN = ROOT / "docs" / "graph_data.generated.js"
+ROOT   = Path(__file__).resolve().parent
+META   = ROOT / "meta" / "tag_index.yml"
+OUT1   = ROOT / "docs" / "graph_data.js"
+OUT2   = ROOT / "docs" / "graph_data.generated.js"
 
-def normalize_id(s: str) -> str:
+# ---------- helpers ----------
+
+def norm_id(s: str) -> str:
     if not isinstance(s, str):
         s = str(s)
-    s = s.strip()
-    s = s.replace("-", "_").replace(" ", "_")
-    s = re.sub(r"[^\w_]+", "", s)  # keep letters, digits, underscore
+    s = s.strip().replace("-", "_").replace(" ", "_")
+    s = re.sub(r"[^\w_]+", "", s)  # keep [A-Za-z0-9_]
     return s.lower()
 
-def load_tags_dict():
+def load_tag_block():
     if not META.exists():
         raise FileNotFoundError(f"Missing {META}")
-
     with META.open("r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
 
-    # detect layout
-    if "tags" in data and isinstance(data["tags"], dict):
-        tags_dict = data["tags"]
+    # nested or flat
+    tags = data.get("tags")
+    if isinstance(tags, dict):
+        tag_map = tags
     else:
-        # flat mapping form: filter only entries that look like a tag node
-        tags_dict = {k: v for k, v in data.items()
-                     if isinstance(v, dict) and ("links" in v or "pulses" in v)}
-    return tags_dict, data
+        # flat: keep only dict entries
+        tag_map = {k: v for k, v in data.items()
+                   if isinstance(v, dict) and any(k2 in v for k2 in
+                      ("links","pulses","related_concepts","linked_pulses"))}
+    return data, tag_map
 
 def build_alias_map(data):
-    """
-    Optional alias support if present under a 'canonical_tags' section:
-      canonical_tags:
-        Some_Canon:
-          - alias1
-          - alias2
-    Returns alias->canonical label mapping.
-    """
+    # Optional alias support
     alias_map = {}
     ct = data.get("canonical_tags") or data.get("canonicalTags")
     if isinstance(ct, dict):
-        for canon, aliases in ct.items():
+        for canonical, aliases in ct.items():
             if isinstance(aliases, list):
-                canon_id = normalize_id(canon)
+                cid = norm_id(canonical)
                 for a in aliases:
-                    alias_map[normalize_id(a)] = canon_id
+                    alias_map[norm_id(a)] = cid
     return alias_map
 
-def canonize(id_or_label, alias_map, known_ids):
-    nid = normalize_id(id_or_label)
-    nid = alias_map.get(nid, nid)
-    # If alias points to a canonical that doesn't exist yet, keep nid;
-    # caller will decide whether to create a node for it.
-    return nid
+def canonize(tag_label, alias_map):
+    nid = norm_id(tag_label)
+    return alias_map.get(nid, nid)
 
-def generate_graph(tags_dict, alias_map):
-    # 1) collect known nodes (canonical ids + labels)
+# ---------- core ----------
+
+def generate_graph(tag_map, alias_map):
     id_to_label = {}
-    for label in tags_dict.keys():
-        cid = canonize(label, alias_map, known_ids=None)
-        # Prefer most descriptive label: use the exact key (original)
-        if cid not in id_to_label:
-            id_to_label[cid] = str(label)
 
-    # 2) links (undirected, weighted)
-    edge_w = {}  # key = tuple(sorted(idA,idB)) -> weight
-    for label, payload in tags_dict.items():
-        src = canonize(label, alias_map, id_to_label.keys())
-        links = (payload or {}).get("links", []) or []
+    # First pass: ensure nodes exist for all tags present as keys
+    for label in tag_map.keys():
+        cid = canonize(label, alias_map)
+        id_to_label.setdefault(cid, str(label))
+
+    # Second pass: collect links with multiple possible field names
+    edge_w = {}  # (a,b)->weight
+    for label, payload in tag_map.items():
+        if not isinstance(payload, dict):
+            continue
+
+        src = canonize(label, alias_map)
+
+        # tolerate old/new field names
+        links  = payload.get("links")
+        if links is None:
+            links = payload.get("related_concepts")  # legacy
+
+        if not isinstance(links, list):
+            links = []
+
         for L in links:
-            dst = canonize(L, alias_map, id_to_label.keys())
+            dst = canonize(L, alias_map)
             if not dst or dst == src:
                 continue
-            # ensure node exists (helps when link references a tag that has no own entry)
-            id_to_label.setdefault(dst, L if isinstance(L, str) else str(L))
+            # ensure node label for dst
+            id_to_label.setdefault(dst, str(L))
             a, b = sorted((src, dst))
             edge_w[(a, b)] = edge_w.get((a, b), 0) + 1
 
-    # 3) nodes with centrality
+    # Degree-based centrality
     degree = {nid: 0 for nid in id_to_label.keys()}
     for (a, b), w in edge_w.items():
         degree[a] += w
@@ -108,8 +114,6 @@ def generate_graph(tags_dict, alias_map):
         "label": id_to_label[nid],
         "centrality": degree.get(nid, 0)
     } for nid in id_to_label.keys()]
-
-    # stable sort (labels asc)
     nodes.sort(key=lambda n: (n["label"].lower(), n["id"]))
 
     links = [{
@@ -125,16 +129,16 @@ def write_js(graph, path):
     path.write_text(txt, encoding="utf-8")
 
 def main():
-    tags_dict, raw = load_tags_dict()
-    alias_map = build_alias_map(raw)
+    data, tag_map = load_tag_block()
+    alias_map = build_alias_map(data)
+    graph = generate_graph(tag_map, alias_map)
 
-    graph = generate_graph(tags_dict, alias_map)
-
-    # safety: empty link set warning still produces valid file
-    OUT_JS.parent.mkdir(parents=True, exist_ok=True)
-    write_js(graph, OUT_JS)
-    write_js(graph, OUT_GEN)
-    print(f"Wrote {OUT_JS} and {OUT_GEN} ({len(graph['nodes'])} nodes, {len(graph['links'])} links)")
+    OUT1.parent.mkdir(parents=True, exist_ok=True)
+    write_js(graph, OUT1)
+    write_js(graph, OUT2)
+    print(f"[graph] nodes={len(graph['nodes'])} links={len(graph['links'])}")
+    if not graph["links"]:
+        print("[graph] WARNING: produced zero links. Check YAML fields (links/related_concepts).")
 
 if __name__ == "__main__":
     main()
