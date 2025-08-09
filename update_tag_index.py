@@ -1,219 +1,224 @@
 #!/usr/bin/env python3
 """
-Regenerate meta/tag_index.yml from pulse/*.yml files.
+update_tag_index.py
 
-Features
-- Robust YAML read with error guards.
-- Tag normalization: trim, collapse whitespace, replace spaces with underscores.
-- Optional canonical mapping:
-    * meta/tag_canonical.yml (preferred if present)
-    * or a "canonical_tags:" section inside an existing meta/tag_index.yml
-- Bi-directional, de-duplicated links built from co-occurring tags per pulse.
-- Deterministic, sorted output for clean diffs.
+Builds a canonical tag index from pulse YAML files.
 
-Output schema (meta/tag_index.yml):
-  <tag>:
-    links: [<related tag>...]
-    pulses: [<relative pulse path>...]
+- Scans:   ./pulse/**/*.yml|yaml and ./phi-mesh/pulse/**/*.yml|yaml
+- Output:  ./meta/tag_index.yml
 
-You can safely extend later to include papers/podcasts if you want.
+The output format is:
+{
+  "<tag>": {
+    "links":  [list of related tags that co-occur with this tag],
+    "pulses": [list of pulse file paths where this tag appears]
+  },
+  ...
+}
+
+Design goals:
+- Deterministic (sorted lists, stable diffs)
+- Defensive (skips bad files, logs warnings)
+- YAML-safe (convert to plain built-ins before dumping)
 """
 
+from __future__ import annotations
+
+import os
 import sys
-import re
-import json
-from pathlib import Path
-from collections import defaultdict, OrderedDict
+import glob
+import traceback
 from typing import Dict, List, Set, Tuple
+import yaml
 
-try:
-    import yaml
-except Exception as e:
-    print(f"[update_tag_index] ERROR: pyyaml not installed: {e}", file=sys.stderr)
-    sys.exit(1)
+# ----------------------------
+# Config
+# ----------------------------
 
-# --- Config -------------------------------------------------------------------
-
-PULSE_DIRS = [
-    Path("pulse"),                  # primary
-    Path("phi-mesh/pulse"),         # alt
+PULSE_DIR_CANDIDATES = [
+    "pulse",
+    os.path.join("phi-mesh", "pulse"),
 ]
 
-TAG_INDEX_PATH = Path("meta/tag_index.yml")
-CANONICAL_PATH = Path("meta/tag_canonical.yml")  # optional
+OUTPUT_PATH = os.path.join("meta", "tag_index.yml")
 
-# If True, we preserve case as written after canonicalization;
-# keys in the file will appear exactly as the canonical key (case-sensitive).
-PRESERVE_CASE = True
+VALID_EXTS = (".yml", ".yaml")
 
-# --- Helpers ------------------------------------------------------------------
+# ----------------------------
+# Utilities
+# ----------------------------
 
-_ws_re = re.compile(r"\s+")
+def log(msg: str) -> None:
+    print(f"[update_tag_index] {msg}")
 
-def norm_tag(tag: str) -> str:
-    """Basic normalization: strip, collapse whitespace, use underscores."""
-    if not isinstance(tag, str):
-        return ""
-    t = tag.strip()
-    t = _ws_re.sub(" ", t)  # collapse internal spaces
-    t = t.replace(" ", "_")
-    # Do NOT lower() by default to keep display nicer; rely on canonical map for true merging.
-    return t
+def find_pulse_files() -> List[str]:
+    files: List[str] = []
+    for base in PULSE_DIR_CANDIDATES:
+        if not os.path.isdir(base):
+            continue
+        # recursive glob for yml/yaml
+        for pattern in ("**/*.yml", "**/*.yaml"):
+            files.extend(glob.glob(os.path.join(base, pattern), recursive=True))
+    # Deduplicate and sort for deterministic processing
+    files = sorted(set(files))
+    return files
 
-def load_yaml(path: Path):
-    if not path.exists():
-        return None
+def read_yaml(path: str) -> dict | None:
     try:
-        with path.open("r", encoding="utf-8") as f:
-            return yaml.safe_load(f) or {}
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not isinstance(data, dict):
+            log(f"WARNING: {path}: YAML root is not a mapping; skipping.")
+            return None
+        return data
     except Exception as e:
-        print(f"[update_tag_index] WARN: failed to read {path}: {e}", file=sys.stderr)
+        log(f"ERROR: failed to read {path}: {e}")
+        traceback.print_exc()
         return None
 
-def find_pulse_files() -> List[Path]:
-    out: List[Path] = []
-    for base in PULSE_DIRS:
-        if base.exists():
-            out.extend(sorted(base.glob("*.yml")))
-            out.extend(sorted(base.glob("*.yaml")))
+def normalize_tag(tag: str) -> str:
+    """
+    Minimal normalization: strip whitespace.
+    (We intentionally avoid heavy canonicalization to respect author intent.)
+    """
+    if not isinstance(tag, str):
+        return str(tag)
+    return tag.strip()
+
+def pairs(items: List[str]) -> List[Tuple[str, str]]:
+    """
+    Return unique undirected pairs (a,b) with a < b for a stable representation.
+    """
+    items = sorted(set(items))
+    out: List[Tuple[str, str]] = []
+    n = len(items)
+    for i in range(n):
+        for j in range(i + 1, n):
+            out.append((items[i], items[j]))
     return out
 
-def build_canonical_map() -> Dict[str, str]:
+def _to_builtin(obj):
     """
-    Canonical map lets you merge variants, e.g.:
-      Contextual_Filter: [contextual-filter, ContextualFilter, Contextual_Filter]
-      Gradient_Syntax:   [gradient_syntax, GradientSyntax, gradient-syntax]
-    Map format accepted from either:
-      - meta/tag_canonical.yml
-      - meta/tag_index.yml under key: canonical_tags
+    Recursively convert all containers to YAML-safe Python builtins:
+    - dict
+    - list
+    - str/int/float/bool/None
+    Also converts sets/tuples to sorted lists for determinism.
     """
-    mapping: Dict[str, str] = {}
+    if isinstance(obj, dict):
+        # keep insertion order as Python 3.7+ preserves it,
+        # but we build dicts in sorted key order below anyway.
+        return {k: _to_builtin(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple, set)):
+        # sort where possible for stable output
+        lst = list(obj)
+        try:
+            lst = sorted(lst)
+        except Exception:
+            # fallback: keep original order
+            pass
+        return [_to_builtin(v) for v in lst]
+    return obj
 
-    # 1) A dedicated canonical file (preferred, simple format)
-    #    YAML schema: { CanonicalKey: [alias1, alias2, ...], ... }
-    data = load_yaml(CANONICAL_PATH)
-    if isinstance(data, dict):
-        for canon, aliases in data.items():
-            ckey = norm_tag(canon)
-            if not ckey:
-                continue
-            # Map canonical to itself
-            mapping[ckey] = ckey
-            if isinstance(aliases, list):
-                for a in aliases:
-                    akey = norm_tag(str(a))
-                    if akey:
-                        mapping[akey] = ckey
+# ----------------------------
+# Core logic
+# ----------------------------
 
-    # 2) Fallback: try to read canonical_tags from existing tag_index.yml
-    idx = load_yaml(TAG_INDEX_PATH)
-    if isinstance(idx, dict) and "canonical_tags" in idx:
-        cats = idx["canonical_tags"]
-        if isinstance(cats, dict):
-            for canon, aliases in cats.items():
-                ckey = norm_tag(canon)
-                if not ckey:
-                    continue
-                mapping.setdefault(ckey, ckey)
-                if isinstance(aliases, list):
-                    for a in aliases:
-                        akey = norm_tag(str(a))
-                        if akey:
-                            mapping[akey] = ckey
+def build_index(pulse_files: List[str]) -> Dict[str, Dict[str, List[str]]]:
+    """
+    Build a tag index with:
+      tag_index[tag]["pulses"] -> sorted list of pulse paths
+      tag_index[tag]["links"]  -> sorted list of related tags (co-occurrence)
+    """
+    # Working storage
+    tag_to_pulses: Dict[str, Set[str]] = {}
+    undirected_edges: Set[Tuple[str, str]] = set()
 
-    return mapping
-
-def canonicalize(tag: str, cmap: Dict[str, str]) -> str:
-    t = norm_tag(tag)
-    if not t:
-        return ""
-    return cmap.get(t, t)
-
-# --- Core ---------------------------------------------------------------------
-
-def main() -> int:
-    pulses = find_pulse_files()
-    if not pulses:
-        print("[update_tag_index] WARN: no pulse/*.yml files found", file=sys.stderr)
-
-    canonical_map = build_canonical_map()
-
-    # Build: tag -> { 'links': set(), 'pulses': set() }
-    links: Dict[str, Set[str]] = defaultdict(set)
-    buckets: Dict[str, Set[str]] = defaultdict(set)  # tag -> set of pulse paths
-
-    for p in pulses:
-        data = load_yaml(p)
-        if not isinstance(data, dict):
+    for path in pulse_files:
+        data = read_yaml(path)
+        if data is None:
             continue
 
-        raw_tags = data.get("tags", [])
-        if not isinstance(raw_tags, list):
+        tags = data.get("tags")
+        if tags is None:
+            # No tags field — skip quietly.
             continue
 
-        # Canonicalize & normalize
-        tags: List[str] = []
-        for t in raw_tags:
-            ct = canonicalize(str(t), canonical_map)
-            if ct:
-                tags.append(ct)
-
-        # De-dupe within this pulse
-        tags = sorted(set(tags))
-        if not tags:
+        if not isinstance(tags, list):
+            log(f"WARNING: {path}: 'tags' is not a list; skipping.")
             continue
 
-        # Register pulse file path (relative)
-        rel = str(p.as_posix())
+        # Normalize, drop empties
+        clean_tags = [normalize_tag(t) for t in tags if normalize_tag(t)]
+        if not clean_tags:
+            continue
 
-        # Build co-occurrence links for this pulse
-        for i, a in enumerate(tags):
-            buckets[a].add(rel)
-            for j, b in enumerate(tags):
-                if i == j:
-                    continue
-                links[a].add(b)
-                links[b].add(a)  # ensure bi-directional
+        # record pulse membership
+        for t in clean_tags:
+            tag_to_pulses.setdefault(t, set()).add(path)
 
-    # Convert to deterministic, sorted dict
-    out: Dict[str, Dict[str, List[str]]] = OrderedDict()
+        # record co-occurrences as undirected edges
+        for a, b in pairs(clean_tags):
+            undirected_edges.add((a, b))
 
-    # Optional: include canonical_tags back into the file (handy for round-trips)
-    canonical_tags_out: Dict[str, List[str]] = OrderedDict()
-    # Only write this section if we actually had a dedicated canonical file
-    if CANONICAL_PATH.exists():
-        raw_can = load_yaml(CANONICAL_PATH) or {}
-        if isinstance(raw_can, dict):
-            for canon in sorted(raw_can.keys(), key=lambda s: s.lower()):
-                ckey = canonicalize(canon, canonical_map)
-                aliases = raw_can.get(canon) or []
-                alias_norm = sorted({canonicalize(a, canonical_map) for a in aliases if canonicalize(a, canonical_map)})
-                canonical_tags_out[ckey] = alias_norm
+    # Build adjacency from undirected edges
+    adjacency: Dict[str, Set[str]] = {t: set() for t in tag_to_pulses.keys()}
+    for a, b in undirected_edges:
+        adjacency.setdefault(a, set()).add(b)
+        adjacency.setdefault(b, set()).add(a)
 
-    # Harvest all tags we saw (union of buckets/links), sorted
-    all_tags: Set[str] = set(buckets.keys()) | set(links.keys())
-    for tag in sorted(all_tags, key=lambda s: s.lower()):
-        tag_key = tag if PRESERVE_CASE else tag.lower()
-        out[tag_key] = {
-            "links": sorted(links.get(tag, set()), key=lambda s: s.lower()),
-            "pulses": sorted(buckets.get(tag, set())),
+    # Build final payload (deterministic: sorted keys, sorted lists)
+    all_tags_sorted = sorted(tag_to_pulses.keys())
+
+    result: Dict[str, Dict[str, List[str]]] = {}
+    for tag in all_tags_sorted:
+        pulses_sorted = sorted(tag_to_pulses[tag])
+        links_sorted = sorted(adjacency.get(tag, set()))
+        result[tag] = {
+            "links": links_sorted,
+            "pulses": pulses_sorted,
         }
 
-    # Final payload (optionally include canonical_tags)
-    payload: Dict[str, object] = OrderedDict()
-    if canonical_tags_out:
-        payload["canonical_tags"] = canonical_tags_out
-    payload.update(out)
+    return result
 
-    # Ensure meta/ exists
-    TAG_INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
+def ensure_parent_dir(path: str) -> None:
+    d = os.path.dirname(path)
+    if d and not os.path.isdir(d):
+        os.makedirs(d, exist_ok=True)
 
-    with TAG_INDEX_PATH.open("w", encoding="utf-8") as f:
-        yaml.safe_dump(payload, f, sort_keys=False, allow_unicode=True)
+def write_yaml(path: str, payload: dict) -> None:
+    ensure_parent_dir(path)
+    payload_builtin = _to_builtin(payload)
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(
+            payload_builtin,
+            f,
+            sort_keys=True,          # stable diffs across runs
+            allow_unicode=True,
+            width=1000,
+            default_flow_style=False
+        )
 
-    print(f"[update_tag_index] Wrote {TAG_INDEX_PATH} with {len(all_tags)} tags.")
+# ----------------------------
+# Entry point
+# ----------------------------
+
+def main() -> int:
+    log("Scanning for pulse YAML files…")
+    pulse_files = find_pulse_files()
+    if not pulse_files:
+        log("WARNING: no pulse files found in expected locations.")
+    else:
+        log(f"Found {len(pulse_files)} files.")
+
+    log("Building tag index…")
+    index = build_index(pulse_files)
+
+    log(f"Writing YAML to {OUTPUT_PATH} …")
+    write_yaml(OUTPUT_PATH, index)
+
+    log("Done.")
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
