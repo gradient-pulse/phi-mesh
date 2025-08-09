@@ -28,15 +28,28 @@
     <div id="graph"></div>
   </div>
 
-  <!-- Strict, cache-busting load order -->
+  <!-- Base data + graph (must load first) -->
   <script src="data.js"></script>
+  <script src="graph_data.js"></script>
   <script>
-    // workflow writes window.GRAPH_SRC → versioned graph_data.<sha>.js
-    (function(){
-      var src = (window && window.GRAPH_SRC) ? window.GRAPH_SRC : 'graph_data.js';
-      document.write('<script src="'+src+'"><\/script>');
+    // Optional overlay: if workflow wrote a versioned file path into window.GRAPH_SRC,
+    // load it AFTER the base graph_data.js to overwrite window.graph.
+    (function () {
+      try {
+        if (window && window.GRAPH_SRC && window.GRAPH_SRC !== 'graph_data.js') {
+          var s = document.createElement('script');
+          s.src = window.GRAPH_SRC;
+          s.onload = function(){ console.log('[tag_map] overlay graph loaded:', s.src); };
+          s.onerror = function(){ console.warn('[tag_map] failed to load overlay graph:', s.src); };
+          document.head.appendChild(s);
+        }
+      } catch (e) {
+        console.warn('[tag_map] overlay load skipped:', e);
+      }
     })();
   </script>
+
+  <!-- Sidebar + layout -->
   <script src="link_index.js"></script>
   <script src="sidebar_display.js"></script>
   <script src="graph_layout.js"></script>
