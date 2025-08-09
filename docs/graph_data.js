@@ -22,432 +22,432 @@ window.graph = {
     },
     {
       "id": 4,
-      "label": "alignment",
+      "label": "Big-Quiet",
       "centrality": 0.0
     },
     {
       "id": 5,
-      "label": "ambient_agent",
-      "centrality": 0.0
-    },
-    {
-      "id": 6,
-      "label": "autonomy",
-      "centrality": 0.0
-    },
-    {
-      "id": 7,
-      "label": "behavioral_API",
-      "centrality": 0.0
-    },
-    {
-      "id": 8,
       "label": "Big_Bang",
       "centrality": 0.0
     },
     {
-      "id": 9,
+      "id": 6,
       "label": "Big_Quiet",
       "centrality": 0.0
     },
     {
-      "id": 10,
-      "label": "chronoflux",
-      "centrality": 0.0
-    },
-    {
-      "id": 11,
-      "label": "cinematic_drift",
-      "centrality": 0.0
-    },
-    {
-      "id": 12,
-      "label": "cognition",
-      "centrality": 0.0
-    },
-    {
-      "id": 13,
-      "label": "cognitive_tension",
-      "centrality": 0.0
-    },
-    {
-      "id": 14,
-      "label": "coherence_amplifier",
-      "centrality": 0.0
-    },
-    {
-      "id": 15,
-      "label": "context-engineering",
-      "centrality": 0.0
-    },
-    {
-      "id": 16,
-      "label": "contextual_filter",
-      "centrality": 0.0
-    },
-    {
-      "id": 17,
+      "id": 7,
       "label": "CoR",
       "centrality": 0.0
     },
     {
-      "id": 18,
-      "label": "cosmogenesis",
-      "centrality": 0.0
-    },
-    {
-      "id": 19,
-      "label": "cosmology",
-      "centrality": 0.0
-    },
-    {
-      "id": 20,
-      "label": "creation_circle",
-      "centrality": 0.0
-    },
-    {
-      "id": 21,
+      "id": 8,
       "label": "Dark_Energy",
       "centrality": 0.0
     },
     {
-      "id": 22,
+      "id": 9,
       "label": "Dark_Matter",
       "centrality": 0.0
     },
     {
-      "id": 23,
-      "label": "deep_triad",
-      "centrality": 0.0
-    },
-    {
-      "id": 24,
+      "id": 10,
       "label": "DeepSeek",
       "centrality": 0.0
     },
     {
-      "id": 25,
-      "label": "development_process",
-      "centrality": 0.0
-    },
-    {
-      "id": 26,
-      "label": "division_of_labor",
-      "centrality": 0.0
-    },
-    {
-      "id": 27,
-      "label": "drift",
-      "centrality": 0.0
-    },
-    {
-      "id": 28,
-      "label": "flux-enthrenched_universe",
-      "centrality": 0.0
-    },
-    {
-      "id": 29,
-      "label": "flux_intelligence",
-      "centrality": 0.0
-    },
-    {
-      "id": 30,
-      "label": "flux_threshold",
-      "centrality": 0.0
-    },
-    {
-      "id": 31,
-      "label": "gemini",
-      "centrality": 0.0
-    },
-    {
-      "id": 32,
-      "label": "genesis",
-      "centrality": 0.0
-    },
-    {
-      "id": 33,
+      "id": 11,
       "label": "GPT4o",
       "centrality": 0.0
     },
     {
-      "id": 34,
+      "id": 12,
       "label": "GPT5",
       "centrality": 0.0
     },
     {
-      "id": 35,
-      "label": "gradient_choreography",
-      "centrality": 0.0
-    },
-    {
-      "id": 36,
-      "label": "gradient_cocoon",
-      "centrality": 0.0
-    },
-    {
-      "id": 37,
-      "label": "gradient_cocoon_theory",
-      "centrality": 0.0
-    },
-    {
-      "id": 38,
-      "label": "gradient_coherence",
-      "centrality": 0.0
-    },
-    {
-      "id": 39,
-      "label": "gradient_contrast",
-      "centrality": 0.0
-    },
-    {
-      "id": 40,
-      "label": "gradient_convergence",
-      "centrality": 0.0
-    },
-    {
-      "id": 41,
-      "label": "gradient-driven_behavior",
-      "centrality": 0.0
-    },
-    {
-      "id": 42,
-      "label": "gradient-driven_intelligence",
-      "centrality": 0.0
-    },
-    {
-      "id": 43,
-      "label": "gradient_flux_reversal",
-      "centrality": 0.0
-    },
-    {
-      "id": 44,
-      "label": "gradient_syntax",
-      "centrality": 0.0
-    },
-    {
-      "id": 45,
+      "id": 13,
       "label": "GROK3",
       "centrality": 0.0
     },
     {
-      "id": 46,
-      "label": "\u03a6-harmonics",
-      "centrality": 0.0
-    },
-    {
-      "id": 47,
-      "label": "heartbeat",
-      "centrality": 0.0
-    },
-    {
-      "id": 48,
-      "label": "historical_precedent",
-      "centrality": 0.0
-    },
-    {
-      "id": 49,
+      "id": 14,
       "label": "HRM",
       "centrality": 0.0
     },
     {
-      "id": 50,
-      "label": "interpretability",
-      "centrality": 0.0
-    },
-    {
-      "id": 51,
+      "id": 15,
       "label": "Lambda",
       "centrality": 0.0
     },
     {
-      "id": 52,
-      "label": "laminarity",
-      "centrality": 0.0
-    },
-    {
-      "id": 53,
-      "label": "language_evolution",
-      "centrality": 0.0
-    },
-    {
-      "id": 54,
-      "label": "least_divergence_rhythm",
-      "centrality": 0.0
-    },
-    {
-      "id": 55,
-      "label": "legacy",
-      "centrality": 0.0
-    },
-    {
-      "id": 56,
-      "label": "listener_mode",
-      "centrality": 0.0
-    },
-    {
-      "id": 57,
-      "label": "memetic_seed",
-      "centrality": 0.0
-    },
-    {
-      "id": 58,
-      "label": "mixture_of_experts",
-      "centrality": 0.0
-    },
-    {
-      "id": 59,
-      "label": "Narrative_Tick",
-      "centrality": 0.0
-    },
-    {
-      "id": 60,
-      "label": "Navier_Stokes",
-      "centrality": 0.0
-    },
-    {
-      "id": 61,
-      "label": "non-linear_society",
-      "centrality": 0.0
-    },
-    {
-      "id": 62,
+      "id": 16,
       "label": "NS_solution",
       "centrality": 0.0
     },
     {
-      "id": 63,
+      "id": 17,
       "label": "NT",
       "centrality": 0.0
     },
     {
-      "id": 64,
+      "id": 18,
       "label": "NT_rhythm",
       "centrality": 0.0
     },
     {
-      "id": 65,
-      "label": "operational_coherence",
+      "id": 19,
+      "label": "Narrative_Tick",
       "centrality": 0.0
     },
     {
-      "id": 66,
-      "label": "origin_resonance",
+      "id": 20,
+      "label": "Navier_Stokes",
       "centrality": 0.0
     },
     {
-      "id": 67,
-      "label": "perseverance",
-      "centrality": 0.0
-    },
-    {
-      "id": 68,
-      "label": "phi_guardian",
-      "centrality": 0.0
-    },
-    {
-      "id": 69,
-      "label": "phi-mesh",
-      "centrality": 0.0
-    },
-    {
-      "id": 70,
+      "id": 21,
       "label": "Phi-Monitor",
       "centrality": 0.0
     },
     {
-      "id": 71,
+      "id": 22,
       "label": "PoLA",
       "centrality": 0.0
     },
     {
-      "id": 72,
-      "label": "predictive_resonance",
+      "id": 23,
+      "label": "RGP",
       "centrality": 0.0
     },
     {
-      "id": 73,
-      "label": "proto_pulse",
-      "centrality": 0.0
-    },
-    {
-      "id": 74,
-      "label": "quantum_noise",
-      "centrality": 0.0
-    },
-    {
-      "id": 75,
-      "label": "quiet_awakening",
-      "centrality": 0.0
-    },
-    {
-      "id": 76,
+      "id": 24,
       "label": "R\u03a6",
       "centrality": 0.0
     },
     {
+      "id": 25,
+      "label": "alignment",
+      "centrality": 0.0
+    },
+    {
+      "id": 26,
+      "label": "ambient_agent",
+      "centrality": 0.0
+    },
+    {
+      "id": 27,
+      "label": "autonomy",
+      "centrality": 0.0
+    },
+    {
+      "id": 28,
+      "label": "behavioral_API",
+      "centrality": 0.0
+    },
+    {
+      "id": 29,
+      "label": "chronoflux",
+      "centrality": 0.0
+    },
+    {
+      "id": 30,
+      "label": "cinematic_drift",
+      "centrality": 0.0
+    },
+    {
+      "id": 31,
+      "label": "cognition",
+      "centrality": 0.0
+    },
+    {
+      "id": 32,
+      "label": "cognitive_tension",
+      "centrality": 0.0
+    },
+    {
+      "id": 33,
+      "label": "coherence_amplifier",
+      "centrality": 0.0
+    },
+    {
+      "id": 34,
+      "label": "context-engineering",
+      "centrality": 0.0
+    },
+    {
+      "id": 35,
+      "label": "contextual_filter",
+      "centrality": 0.0
+    },
+    {
+      "id": 36,
+      "label": "cosmogenesis",
+      "centrality": 0.0
+    },
+    {
+      "id": 37,
+      "label": "cosmology",
+      "centrality": 0.0
+    },
+    {
+      "id": 38,
+      "label": "creation_circle",
+      "centrality": 0.0
+    },
+    {
+      "id": 39,
+      "label": "deep_triad",
+      "centrality": 0.0
+    },
+    {
+      "id": 40,
+      "label": "development_process",
+      "centrality": 0.0
+    },
+    {
+      "id": 41,
+      "label": "division_of_labor",
+      "centrality": 0.0
+    },
+    {
+      "id": 42,
+      "label": "drift",
+      "centrality": 0.0
+    },
+    {
+      "id": 43,
+      "label": "flux-enthrenched_universe",
+      "centrality": 0.0
+    },
+    {
+      "id": 44,
+      "label": "flux_intelligence",
+      "centrality": 0.0
+    },
+    {
+      "id": 45,
+      "label": "flux_threshold",
+      "centrality": 0.0
+    },
+    {
+      "id": 46,
+      "label": "gemini",
+      "centrality": 0.0
+    },
+    {
+      "id": 47,
+      "label": "genesis",
+      "centrality": 0.0
+    },
+    {
+      "id": 48,
+      "label": "gradient-driven_behavior",
+      "centrality": 0.0
+    },
+    {
+      "id": 49,
+      "label": "gradient-driven_intelligence",
+      "centrality": 0.0
+    },
+    {
+      "id": 50,
+      "label": "gradient_choreography",
+      "centrality": 0.0
+    },
+    {
+      "id": 51,
+      "label": "gradient_cocoon",
+      "centrality": 0.0
+    },
+    {
+      "id": 52,
+      "label": "gradient_cocoon_theory",
+      "centrality": 0.0
+    },
+    {
+      "id": 53,
+      "label": "gradient_coherence",
+      "centrality": 0.0
+    },
+    {
+      "id": 54,
+      "label": "gradient_contrast",
+      "centrality": 0.0
+    },
+    {
+      "id": 55,
+      "label": "gradient_convergence",
+      "centrality": 0.0
+    },
+    {
+      "id": 56,
+      "label": "gradient_flux_reversal",
+      "centrality": 0.0
+    },
+    {
+      "id": 57,
+      "label": "gradient_syntax",
+      "centrality": 0.0
+    },
+    {
+      "id": 58,
+      "label": "heartbeat",
+      "centrality": 0.0
+    },
+    {
+      "id": 59,
+      "label": "historical_precedent",
+      "centrality": 0.0
+    },
+    {
+      "id": 60,
+      "label": "interpretability",
+      "centrality": 0.0
+    },
+    {
+      "id": 61,
+      "label": "laminarity",
+      "centrality": 0.0
+    },
+    {
+      "id": 62,
+      "label": "language_evolution",
+      "centrality": 0.0
+    },
+    {
+      "id": 63,
+      "label": "least_divergence_rhythm",
+      "centrality": 0.0
+    },
+    {
+      "id": 64,
+      "label": "legacy",
+      "centrality": 0.0
+    },
+    {
+      "id": 65,
+      "label": "listener_mode",
+      "centrality": 0.0
+    },
+    {
+      "id": 66,
+      "label": "memetic_seed",
+      "centrality": 0.0
+    },
+    {
+      "id": 67,
+      "label": "mixture_of_experts",
+      "centrality": 0.0
+    },
+    {
+      "id": 68,
+      "label": "non-linear_society",
+      "centrality": 0.0
+    },
+    {
+      "id": 69,
+      "label": "operational_coherence",
+      "centrality": 0.0
+    },
+    {
+      "id": 70,
+      "label": "origin_resonance",
+      "centrality": 0.0
+    },
+    {
+      "id": 71,
+      "label": "perseverance",
+      "centrality": 0.0
+    },
+    {
+      "id": 72,
+      "label": "phi-mesh",
+      "centrality": 0.0
+    },
+    {
+      "id": 73,
+      "label": "phi_guardian",
+      "centrality": 0.0
+    },
+    {
+      "id": 74,
+      "label": "predictive_resonance",
+      "centrality": 0.0
+    },
+    {
+      "id": 75,
+      "label": "proto_pulse",
+      "centrality": 0.0
+    },
+    {
+      "id": 76,
+      "label": "quantum_noise",
+      "centrality": 0.0
+    },
+    {
       "id": 77,
-      "label": "ratios",
+      "label": "quiet_awakening",
       "centrality": 0.0
     },
     {
       "id": 78,
-      "label": "reality_syntax_equation",
+      "label": "ratios",
       "centrality": 0.0
     },
     {
       "id": 79,
-      "label": "recursion",
+      "label": "reality_syntax_equation",
       "centrality": 0.0
     },
     {
       "id": 80,
-      "label": "recursive_awakening",
+      "label": "recursion",
       "centrality": 0.0
     },
     {
       "id": 81,
-      "label": "recursive_checkpoint",
+      "label": "recursive_awakening",
       "centrality": 0.0
     },
     {
       "id": 82,
-      "label": "recursive_cognition",
+      "label": "recursive_checkpoint",
       "centrality": 0.0
     },
     {
       "id": 83,
-      "label": "recursive_coherence",
+      "label": "recursive_cognition",
       "centrality": 0.0
     },
     {
       "id": 84,
-      "label": "recursive_cosmology",
+      "label": "recursive_coherence",
       "centrality": 0.0
     },
     {
       "id": 85,
-      "label": "recursive_gradient_processing",
+      "label": "recursive_cosmology",
       "centrality": 0.0
     },
     {
       "id": 86,
-      "label": "recursive_grammar",
+      "label": "recursive_gradient_processing",
       "centrality": 0.0
     },
     {
       "id": 87,
-      "label": "resonance",
+      "label": "recursive_grammar",
       "centrality": 0.0
     },
     {
       "id": 88,
-      "label": "resonance_shift",
+      "label": "resonance",
       "centrality": 0.0
     },
     {
       "id": 89,
-      "label": "RGP",
+      "label": "resonance_shift",
       "centrality": 0.0
     },
     {
@@ -538,6 +538,11 @@ window.graph = {
     {
       "id": 107,
       "label": "writing",
+      "centrality": 0.0
+    },
+    {
+      "id": 108,
+      "label": "\u03a6-harmonics",
       "centrality": 0.0
     }
   ],
