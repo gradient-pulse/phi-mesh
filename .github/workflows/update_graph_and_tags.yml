@@ -1,8 +1,5 @@
 name: Update Tag Index, Map, and Graph Data
 
-permissions:
-  contents: write
-
 on:
   push:
     paths:
@@ -13,18 +10,23 @@ on:
       - "generate_graph_data.py"
       - "docs/graph_layout.js"
       - "docs/sidebar_display.js"
-      - "docs/link_index.js"
-      - "docs/data.js"
       - ".github/workflows/update_graph_and_tags.yml"
+      - "!**/workflows/archive/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-graph-and-tags
+  cancel-in-progress: true
 
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -45,10 +47,22 @@ jobs:
       - name: Regenerate graph data (JS)
         run: python generate_graph_data.py
 
+      # ---- Cache busting: version the js and write a tiny loader ----
+      - name: Prepare versioned graph bundle
+        shell: bash
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          if [ ! -f docs/graph_data.js ]; then
+            echo "Expected docs/graph_data.js not found"; ls -la docs; exit 1
+          fi
+          cp docs/graph_data.js "docs/graph_data.${SHORT_SHA}.js"
+          echo "window.GRAPH_SRC='graph_data.${SHORT_SHA}.js';" > docs/data.js
+          echo "Wrote docs/data.js → $(cat docs/data.js)"
+
       - name: Commit artifacts
         run: |
-          git config user.name "github-actions[bot]"
+          git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add meta/tag_index.yml docs/tag_map.html docs/graph_data.js docs/graph_data.generated.js docs/data.js || true
-          git commit -m "Auto: update tag index, tag map, and graph_data.js" || echo "No changes to commit"
+          git add meta/tag_index.yml docs/tag_map.html docs/graph_data.js docs/graph_data.*.js docs/data.js
+          git commit -m "Auto: update tag index, tag map, and versioned graph data" || echo "No changes to commit"
           git push || echo "Nothing to push"
