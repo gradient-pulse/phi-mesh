@@ -8,17 +8,19 @@ on:
       - "update_tag_index.py"
       - "generate_tag_map.py"
       - "generate_graph_data.py"
-      - "docs/graph_layout.js"
       - "docs/sidebar_display.js"
+      - "docs/graph_layout.js"
+      - "docs/tag_map.html"
       - ".github/workflows/update_graph_and_tags.yml"
-      - "!**/workflows/archive/**"
+  workflow_dispatch: {}
+
+# Avoid overlapping runs on busy edit bursts
+concurrency:
+  group: update-tags-and-graph
+  cancel-in-progress: true
 
 permissions:
   contents: write
-
-concurrency:
-  group: update-graph-and-tags
-  cancel-in-progress: true
 
 jobs:
   update:
@@ -32,37 +34,46 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
+      # 1) Always refresh the tag index first (source of truth)
       - name: Regenerate tag index
         run: python update_tag_index.py
 
+      # 2) Rebuild the tag map HTML (safe if it already exists)
       - name: Regenerate tag map (HTML)
         run: python generate_tag_map.py
 
+      # 3) Rebuild graph data — writes hashed payload + loader
       - name: Regenerate graph data (JS)
         run: python generate_graph_data.py
 
-      # ---- Cache busting: version the js and write a tiny loader ----
-      - name: Prepare versioned graph bundle
-        shell: bash
+      # Guardrail: verify outputs exist before committing
+      - name: Verify outputs exist
         run: |
-          SHORT_SHA="${GITHUB_SHA::7}"
-          if [ ! -f docs/graph_data.js ]; then
-            echo "Expected docs/graph_data.js not found"; ls -la docs; exit 1
-          fi
-          cp docs/graph_data.js "docs/graph_data.${SHORT_SHA}.js"
-          echo "window.GRAPH_SRC='graph_data.${SHORT_SHA}.js';" > docs/data.js
-          echo "Wrote docs/data.js → $(cat docs/data.js)"
+          test -f docs/tag_map.html
+          test -f docs/graph_data.js
+          ls -1 docs/graph_data.*.js | head -n 1
 
       - name: Commit artifacts
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add meta/tag_index.yml docs/tag_map.html docs/graph_data.js docs/graph_data.*.js docs/data.js
-          git commit -m "Auto: update tag index, tag map, and versioned graph data" || echo "No changes to commit"
+          git add meta/tag_index.yml docs/tag_map.html docs/graph_data.js docs/graph_data.*.js
+          git commit -m "Auto: update tag index, tag map, and graph data" || echo "No changes to commit"
           git push || echo "Nothing to push"
+
+      # Optional: upload built files as an artifact for quick inspection
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-docs
+          path: |
+            docs/tag_map.html
+            docs/graph_data.js
+            docs/graph_data.*.js
