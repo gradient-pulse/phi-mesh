@@ -1,25 +1,18 @@
-// graph_layout.js — safe load, with panning/zoom, collision, and sidebar rendering
+// graph_layout.js — single-init, panning/zoom, sidebar rendering, debug logs
 
-(function initWhenReady() {
-  function ready() {
-    return window.graph && Array.isArray(window.graph.nodes) && Array.isArray(window.graph.links);
-  }
-  if (!ready()) {
-    // Try again after the current task, then after DOMContentLoaded
-    document.addEventListener("DOMContentLoaded", () => {
-      if (!ready()) setTimeout(init, 0); else init();
-    });
-    // Also a short fallback in case scripts race
-    setTimeout(() => { if (ready()) init(); }, 30);
-  } else {
-    init();
-  }
-})();
+// ---- prevent double init ----
+if (window.__RGP_GRAPH_INIT__) {
+  console.warn("[RGP] graph_layout.js already initialized. Skipping.");
+} else {
+  window.__RGP_GRAPH_INIT__ = true;
 
-function init() {
-  const graph = window.graph || { nodes: [], links: [] };
+  const graph = (window.graph && Array.isArray(window.graph.nodes) && Array.isArray(window.graph.links))
+    ? window.graph
+    : { nodes: [], links: [] };
 
-  const width = window.innerWidth - 280; // Subtract sidebar width
+  console.log(`[RGP] Graph loaded: ${graph.nodes.length} nodes, ${graph.links.length} links`);
+
+  const width = window.innerWidth - 280; // sidebar is ~280px
   const height = window.innerHeight;
 
   const zoom = d3.zoom()
@@ -36,46 +29,41 @@ function init() {
 
   const svgGroup = svg.append("g");
 
-  const simulation = d3.forceSimulation(graph.nodes)
-    .force("link", d3.forceLink(graph.links)
+  const simulation = d3.forceSimulation()
+    .force("link", d3.forceLink()
+      // ids in our graph are numeric (0..N-1)
       .id(d => d.id)
-      .distance(60)
-      .strength(0.6))
-    .force("charge", d3.forceManyBody().strength(-180))
-    .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("collision", d3.forceCollide().radius(18));
+      .distance(80)
+      .strength(0.7)
+    )
+    .force("charge", d3.forceManyBody().strength(-280))
+    .force("center", d3.forceCenter(width / 2, height / 2));
 
-  // Draw links
+  // Draw links first (behind nodes)
   const link = svgGroup.append("g")
-    .attr("stroke", "#999")
-    .attr("stroke-opacity", 0.6)
+    .attr("stroke", "#bbb")
+    .attr("stroke-opacity", 0.8)
     .selectAll("line")
     .data(graph.links)
     .enter().append("line")
-    .attr("stroke-width", 1.2);
+    .attr("stroke-width", 1);
 
   // Draw nodes
   const node = svgGroup.append("g")
     .selectAll("circle")
     .data(graph.nodes)
     .enter().append("circle")
-    .attr("r", 8)
+    .attr("r", 9)
     .attr("fill", "#9ecae1")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1)
     .call(d3.drag()
-      .on("start", (event, d) => {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x; d.fy = d.y;
-      })
-      .on("drag", (event, d) => {
-        d.fx = event.x; d.fy = event.y;
-      })
-      .on("end", (event, d) => {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null; d.fy = null;
-      }))
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended))
     .on("click", (event, d) => renderSidebar(d.label));
 
-  // Draw labels
+  // Labels
   const labels = svgGroup.append("g")
     .selectAll("text")
     .data(graph.nodes)
@@ -84,15 +72,16 @@ function init() {
     .attr("text-anchor", "middle")
     .attr("dy", 18)
     .attr("font-size", "11px")
-    .attr("fill", "#666")
-    .attr("pointer-events", "none");
+    .attr("pointer-events", "none")
+    .attr("fill", "#666");
 
-  simulation.on("tick", () => {
+  simulation.nodes(graph.nodes).on("tick", ticked);
+  simulation.force("link").links(graph.links);
+
+  function ticked() {
     link
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
+      .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
 
     node
       .attr("cx", d => d.x)
@@ -100,19 +89,18 @@ function init() {
 
     labels
       .attr("x", d => d.x)
-      .attr("y", d => d.y + 1);
-  });
+      .attr("y", d => d.y);
+  }
 
-  // Simple resize handler
-  window.addEventListener("resize", () => {
-    const w = window.innerWidth - 280;
-    const h = window.innerHeight;
-    svg.attr("width", w).attr("height", h);
-    simulation.force("center", d3.forceCenter(w / 2, h / 2)).alpha(0.1).restart();
-  });
-
-  // Optional visibility check
-  if (!graph.links || graph.links.length === 0) {
-    console.warn("No links present in graph.links – check generate_graph_data output or tag 'links' lists.");
+  function dragstarted(event, d) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x; d.fy = d.y;
+  }
+  function dragged(event, d) {
+    d.fx = event.x; d.fy = event.y;
+  }
+  function dragended(event, d) {
+    if (!event.active) simulation.alphaTarget(0);
+    d.fx = null; d.fy = null;
   }
 }
