@@ -1,1 +1,2 @@
-window.GRAPH_SRC='graph_data.06f36a5.js';
+/* schema:2 */
+const DATA_INDEX = {"schema": "2", "tags": {}};
