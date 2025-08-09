@@ -3,37 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <title>RGP Tag Map</title>
-  <!-- Load D3 exactly once -->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; }
-    #container { display: flex; height: 100vh; width: 100vw; }
-    #sidebar { width: 280px; background: #f4f4f4; padding: 10px; overflow-y: auto; }
-    #sidebar h1 { font-size: 20px; margin-bottom: 4px; }
-    #sidebar p { font-size: 13px; margin-bottom: 14px; }
-    #graph { flex-grow: 1; overflow: hidden; }
-    #link-list { list-style: none; padding-left: 0; }
-    #link-list li { margin-bottom: 6px; font-size: 13px; }
-    #link-list li strong { display: block; font-weight: bold; margin-top: 8px; }
-    #link-list a { color: steelblue; text-decoration: none; font-size: 13px; }
-    #link-list a:hover { text-decoration: underline; }
+    html, body { margin:0; padding:0; height:100%; overflow:hidden; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    #container { display:flex; height:100vh; width:100vw; }
+    #sidebar { width: 300px; background:#0b0e13; color:#eaeef6; padding:12px; overflow:auto; border-right:1px solid #1b2130; }
+    #sidebar h1 { margin:0 0 6px; font-size:18px; font-weight:600; }
+    #sidebar p { margin:0 0 12px; font-size:12px; opacity:.8; }
+    #link-list { list-style:none; padding:0; margin:0; font-size:13px; }
+    #link-list a { color:#79b8ff; text-decoration:none; }
+    #link-list a:hover { text-decoration:underline; }
+    #graph { flex:1; background:#06080c; position:relative; }
+    .label { font-size:12px; pointer-events:none; fill:#dbe4ff; text-shadow:0 1px 2px rgba(0,0,0,.4); }
+    .node { cursor:pointer; }
+    .link { stroke:#8ea0c8; stroke-opacity:.45; }
+    .node circle { fill:#4aa3ff; }
+    .node--hub circle { fill:#70e1b5; }
+    .halo { fill:none; stroke:#0ff; stroke-width:1.5px; opacity:.0; }
+    .node:hover + .halo, .node:hover ~ .halo[data-for=hover] { opacity:.6; }
   </style>
+  <!-- Actions will replace __BUILD_HASH__ at publish time -->
+  <script>window.BUILD_HASH="__BUILD_HASH__";</script>
 </head>
 <body>
   <div id="container">
-    <div id="sidebar">
+    <aside id="sidebar">
       <h1>RGP Tag Map</h1>
-      <p>Coherence Tracking Across Fields—click a tag</p>
+      <p>Coherence Tracking Across Fields — click a tag</p>
       <ul id="link-list"></ul>
-    </div>
-    <div id="graph"></div>
+    </aside>
+    <main id="graph"></main>
   </div>
 
-  <!-- Strict load order: data → graph data loader → link index → sidebar → graph layout -->
-  <script src="data.js"></script>
-  <script src="graph_data.js"></script>
-  <script src="link_index.js"></script>
-  <script src="sidebar_display.js"></script>
-  <script src="graph_layout.js"></script>
+  <!-- Stable filenames + cache-busting via ?v=BUILD_HASH -->
+  <script src="data.js?v=__BUILD_HASH__"></script>
+  <script src="graph_data.js?v=__BUILD_HASH__"></script>
+  <script src="link_index.js?v=__BUILD_HASH__"></script>
+  <script src="sidebar_display.js?v=__BUILD_HASH__"></script>
+  <script src="graph_layout.js?v=__BUILD_HASH__"></script>
 </body>
 </html>
