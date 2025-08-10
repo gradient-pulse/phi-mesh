@@ -54,6 +54,26 @@ jobs:
             echo "generate_graph_data.py is missing"; exit 1
           fi
 
+      # --- Sanity check: data.js must have content --------------------------
+      - name: Sanity check data.js
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! grep -q '"nodes"' docs/data.js || ! grep -q '"links"' docs/data.js; then
+            echo "ERROR: docs/data.js appears empty or invalid."
+            echo "---- docs/data.js (head) ----"
+            head -n 100 docs/data.js || true
+            echo "-----------------------------"
+            exit 1
+          fi
+          # Also ensure it isn't trivially small (guards against empty object)
+          BYTES=$(wc -c < docs/data.js || echo 0)
+          if [ "$BYTES" -lt 50 ]; then
+            echo "ERROR: docs/data.js is suspiciously small ($BYTES bytes)."
+            exit 1
+          fi
+          echo "✅ docs/data.js looks OK ($BYTES bytes)."
+
       # --- Tag browser (new path) -------------------------------------------
       - name: Build Tag Browser HTML (docs/tag_browser.html)
         run: |
