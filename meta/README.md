@@ -4,6 +4,6 @@ On each push to `/pulse/**/*.yml`, the tag index at `/phi-mesh/meta/tag_index.ym
 
 ## 🔗 RPG Tag Navigation 
 
-[![🕸️ Tag Map View](https://img.shields.io/badge/Tag%20Map%20View-online-brightgreen)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
+[![🕸️ Tag Map View](https://img.shields.io/badge/Tag%20Map%20View-online-brightgreen)]([https://gradient-pulse.github.io/phi-mesh/tag_map.html](https://gradient-pulse.github.io/phi-mesh/tag_browser.html))
   
 To add a new tag, simply include a `tags:` field in any pulse in the phi-mesh/pulse directory. 
