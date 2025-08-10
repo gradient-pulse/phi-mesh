@@ -1,262 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Phi-Mesh Tag Map</title>
-<style>
-  :root{
-    --bg:#0b0b0f; --fg:#e9edf5; --muted:#9aa4b2; --accent:#7dd3fc;
-    --chip:#0f172a; --panel:#0f1320; --border:rgba(255,255,255,.08);
-    --link-paper:#9AE6B4; /* green-ish */
-    --link-podcast:#F6AD55; /* orange-ish */
-  }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
-  .layout{display:grid;grid-template-columns:360px 1fr;height:100%;}
-  /* Sidebar */
-  .sidebar{border-right:1px solid var(--border);padding:12px 12px 16px;box-sizing:border-box;overflow:auto}
-  .title{margin:0 0 4px 0;font-size:18px;font-weight:700}
-  .search-wrap{display:flex;gap:8px;margin:6px 0 10px}
-  #tag-search{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:12px;color:var(--fg);padding:10px 12px;outline:none}
-  #clear-search{background:var(--panel);border:1px solid var(--border);border-radius:10px;color:var(--muted);padding:0 10px;cursor:pointer}
-  .list{display:grid;gap:8px}
-  .row{background:var(--panel);border:1px solid var(--border);padding:10px 12px;border-radius:12px;cursor:pointer}
-  .row:hover{outline:1px solid rgba(125,211,252,.35)}
-  .row .name{font-weight:700}
-  .row .meta{color:var(--muted);font-size:12px}
-  .details{margin-top:10px;font-size:14px}
-  .callout{background:rgba(125,211,252,.12);border:1px solid rgba(125,211,252,.35);color:var(--fg);padding:10px;border-radius:10px;margin:8px 0 12px}
-  .links h4{margin:12px 0 6px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-  .links a{display:block;text-decoration:none;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .links a.paper{color:var(--link-paper)}
-  .links a.podcast{color:var(--link-podcast)}
-  .empty{color:var(--muted);padding:12px 4px}
-  /* Canvas */
-  .stage{position:relative}
-  svg{display:block;width:100%;height:100%}
-  .link{stroke:#9aa4b233;stroke-width:1}
-  .node{fill:#14b8ff}
-  .node.selected{fill:#38bdf8}
-  .node.dim{opacity:.2}
-  .label{font-size:11px;fill:#ffffff;paint-order:stroke;stroke:#000;stroke-width:2px}
-  .label.dim{opacity:.2}
-  .hud{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.35);padding:6px 8px;border-radius:8px;font-size:12px;color:var(--muted)}
-</style>
+  <meta charset="utf-8" />
+  <title>Phi-Mesh Tag Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --panel:#11141a;
+      --fg:#f5f7fb;
+      --muted:#a2adba;
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --border:rgba(255,255,255,0.08);
+      --chip:rgba(125,211,252,0.14);
+      --link-dim:rgba(255,255,255,0.25);
+    }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .app{display:grid;grid-template-columns:360px 1fr;height:100%}
+
+    /* Sidebar */
+    aside{
+      border-right:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;flex-direction:column;gap:12px;overflow:auto
+    }
+    header{padding:16px 16px 8px}
+    header h1{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
+    .search-row{display:flex;gap:8px;align-items:center}
+    #tag-search{
+      width:100%;background:var(--panel);border:1px solid var(--border);
+      color:var(--fg);border-radius:12px;padding:10px 12px;outline:none
+    }
+    #clear-search{
+      background:var(--panel);border:1px solid var(--border);color:var(--muted);
+      border-radius:10px;padding:8px 10px;cursor:pointer
+    }
+    #clear-search:hover{color:var(--fg)}
+    .details{padding:8px 16px 16px}
+    .details h3{margin:0 0 6px 0}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px 0}
+    .chip{font-size:12px;padding:5px 8px;border-radius:999px;background:var(--chip);border:1px solid rgba(125,211,252,.25)}
+    .callout{
+      margin:8px 0 12px 0;padding:10px 12px;border-left:3px solid var(--accent);
+      background:rgba(125,211,252,0.07);border-radius:8px;font-size:14px;line-height:1.35
+    }
+    .links h4{margin:10px 0 6px 0;font-size:13px;color:var(--muted);font-weight:600}
+    .links a{display:block;font-size:12px;line-height:1.45;text-decoration:none;margin:2px 0}
+    .links a.paper{color:var(--accent)}
+    .links a.podcast{color:var(--accent2)}
+    .links a:hover{text-decoration:underline}
+    .empty{color:var(--muted);padding:8px 0}
+
+    /* Graph */
+    svg{width:100%;height:100%;display:block;background:#080a0e}
+    .link{stroke:#fff;stroke-opacity:0.5;stroke-width:1.1}
+    .node{fill:#00BFFF}
+    .label{fill:#fff;font-size:11px;pointer-events:none}
+    .dim{opacity:0.15}
+  </style>
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar">
-    <h1 class="title">Phi-Mesh Tag Map</h1>
-    <div class="search-wrap">
-      <input id="tag-search" placeholder="Search tags (prefix) …" />
-      <button id="clear-search" title="Clear">×</button>
-    </div>
-    <div id="list" class="list"></div>
-    <div id="details" class="details empty">Pick a tag to see details.</div>
-  </aside>
-  <div class="stage">
-    <div class="hud">Drag to pan · Scroll to zoom · Click a node</div>
-    <svg></svg>
+  <div class="app">
+    <aside>
+      <header>
+        <h1>Phi-Mesh Tag Map</h1>
+        <div class="search-row">
+          <input id="tag-search" type="search" placeholder="Search tags (prefix)…" />
+          <button id="clear-search" title="Clear">✕</button>
+        </div>
+      </header>
+      <div id="details" class="details empty">Pick a tag to see details.</div>
+    </aside>
+    <section>
+      <svg></svg>
+    </section>
   </div>
-</div>
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="data.js"></script>
-<script>
-/* ------------------ Data ------------------ */
-const D = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[],links:[],tagResources:{},callouts:{}};
-const nodes = D.nodes.map(d => ({...d}));
-const links = D.links.map(l => ({...l}));
-const tagResources = D.tagResources || {};
-const callouts = D.callouts || {};  // { tagId: "short text" }
+  <!-- Data + D3 -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="data.js"></script>
+  <script>
+  // Expect window.PHI_DATA = { nodes, links, tagResources, callouts }
+  const D = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[],links:[],tagResources:{},callouts:{}};
+  const nodes = D.nodes.map(d => ({...d}));
+  const links = D.links.map(l => ({...l}));
+  const tagResources = D.tagResources || {};
+  const callouts = D.callouts || {};
 
-/* degree + neighbor map */
-const degree = {};
-links.forEach(({source,target})=>{
-  degree[source]=(degree[source]||0)+1;
-  degree[target]=(degree[target]||0)+1;
-});
-const neighbors = new Map();
-nodes.forEach(n=>neighbors.set(n.id,new Set([n.id])));
-links.forEach(({source,target})=>{
-  neighbors.get(source).add(target);
-  neighbors.get(target).add(source);
-});
+  // Degree map
+  const degree = {};
+  links.forEach(({source,target})=>{
+    degree[source]=(degree[source]||0)+1;
+    degree[target]=(degree[target]||0)+1;
+  });
 
-/* sidebar tag list (sorted) */
-const tags = nodes
-  .map(n=>({ id:n.id, centrality:n.centrality??0, degree:degree[n.id]||0 }))
-  .sort((a,b)=>(b.degree-a.degree)||(b.centrality-a.centrality)||a.id.localeCompare(b.id));
+  // Neighbor map for highlight
+  const neighbors = new Map();
+  nodes.forEach(n=>neighbors.set(n.id,new Set([n.id])));
+  links.forEach(({source,target})=>{
+    neighbors.get(source).add(target);
+    neighbors.get(target).add(source);
+  });
 
-/* ------------------ Sidebar ------------------ */
-const listEl = document.getElementById('list');
-const detailsEl = document.getElementById('details');
-const searchEl = document.getElementById('tag-search');
+  // Sidebar
+  const detailsEl = document.getElementById('details');
+  const searchEl  = document.getElementById('tag-search');
+  const clearBtn  = document.getElementById('clear-search');
 
-function renderList(prefix=''){
-  listEl.innerHTML='';
-  const q = prefix.trim().toLowerCase();
-  const arr = q? tags.filter(t=>t.id.toLowerCase().startsWith(q)) : tags;
-  if(!arr.length){ listEl.innerHTML = `<div class="empty">No tags match.</div>`; return; }
-  for(const t of arr){
-    const row = document.createElement('div');
-    row.className='row';
-    row.innerHTML = `<div class="name">${t.id}</div><div class="meta">deg ${t.degree} · cent ${t.centrality.toFixed(2)}</div>`;
-    row.addEventListener('click',()=>selectTag(t.id));
-    listEl.appendChild(row);
-  }
-}
-renderList();
+  function updateDetails(tagId){
+    const t = nodes.find(x=>x.id===tagId);
+    if(!t){ detailsEl.className='details empty'; detailsEl.textContent='Tag not found.'; return; }
+    detailsEl.className='details';
 
-document.getElementById('clear-search').onclick = ()=>{
-  searchEl.value=''; renderList('');
-  svg.transition().duration(250).call(zoom.transform, d3.zoomIdentity);
-};
-searchEl.addEventListener('input', e=>renderList(e.target.value));
-searchEl.addEventListener('keydown', e=>{
-  if(e.key==='Escape'){ e.stopPropagation(); document.getElementById('clear-search').click(); }
-});
+    const res = tagResources[tagId] || {papers:[],podcasts:[]};
+    const papers = (res.papers||[]).slice(0,3);
+    const pods   = (res.podcasts||[]).slice(0,3);
+    const call   = callouts[tagId];
 
-/* details panel */
-function updateDetails(tagId){
-  const t = tags.find(x=>x.id===tagId);
-  if(!t){ detailsEl.className='details empty'; detailsEl.textContent='Tag not found.'; return; }
-  detailsEl.className='details';
-  const res = tagResources[tagId] || {papers:[],podcasts:[]};
-  const papers = (res.papers||[]).slice(0,3);
-  const pods   = (res.podcasts||[]).slice(0,3);
-  const call = callouts[tagId];
+    let html = `
+      <h3>${tagId}</h3>
+      <div class="chips">
+        <span class="chip">degree ${degree[tagId]||0}</span>
+        <span class="chip">centrality ${(t.centrality??0).toFixed(2)}</span>
+      </div>
+    `;
+    if(call) html += `<div class="callout">${call}</div>`;
 
-  let html = `<div class="chipline"></div>
-    <div class="chips" style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px">
-      <span class="chip" style="background:var(--chip);border:1px solid var(--border);padding:4px 8px;border-radius:999px">degree ${t.degree}</span>
-      <span class="chip" style="background:var(--chip);border:1px solid var(--border);padding:4px 8px;border-radius:999px">centrality ${t.centrality.toFixed(2)}</span>
-    </div>
-    <h3 style="margin:0 0 6px 0">${tagId}</h3>`;
-
-  if(call) html += `<div class="callout">${call}</div>`;
-
-  if(papers.length || pods.length){
-    html += `<div class="links">`;
-    if(papers.length){
-      html += `<h4>Papers</h4>`;
-      html += papers.map(u=>`<a class="paper" href="${u}" target="_blank" rel="noopener">${u}</a>`).join('');
+    if(papers.length || pods.length){
+      html += `<div class="links">`;
+      if(papers.length){
+        html += `<h4>Papers</h4>` + papers.map(u=>`<a class="paper" href="${u}" target="_blank" rel="noopener">${u}</a>`).join("");
+      }
+      if(pods.length){
+        html += `<h4>Podcasts</h4>` + pods.map(u=>`<a class="podcast" href="${u}" target="_blank" rel="noopener">${u}</a>`).join("");
+      }
+      html += `</div>`;
+    } else {
+      html += `<div class="empty">No linked resources yet.</div>`;
     }
-    if(pods.length){
-      html += `<h4>Podcasts</h4>`;
-      html += pods.map(u=>`<a class="podcast" href="${u}" target="_blank" rel="noopener">${u}</a>`).join('');
-    }
-    html += `</div>`;
-  } else {
-    html += `<div class="empty">No linked resources yet.</div>`;
+    detailsEl.innerHTML = html;
   }
-  detailsEl.innerHTML = html;
-}
 
-/* ------------------ Graph ------------------ */
-const svg = d3.select('svg');
-const width = svg.node().clientWidth;
-const height = svg.node().clientHeight;
+  // Graph
+  const svg = d3.select('svg');
+  const width = svg.node().clientWidth;
+  const height = svg.node().clientHeight;
 
-const zoom = d3.zoom()
-  .scaleExtent([0.3, 3])
-  .on('zoom', (e)=> g.attr('transform', e.transform));
-svg.call(zoom);
+  const zoom = d3.zoom()
+    .scaleExtent([0.3, 3])
+    .on('zoom', (e)=> g.attr('transform', e.transform));
+  svg.call(zoom);
 
-const g = svg.append('g');
-const link = g.append('g').attr('stroke-linecap','round')
-  .selectAll('line').data(links).enter().append('line')
-  .attr('class','link');
+  const g = svg.append('g');
 
-const node = g.append('g')
-  .selectAll('ellipse').data(nodes).enter().append('ellipse')
-  .attr('class','node')
-  .attr('rx', d => 6 + Math.sqrt(Math.max(1, degree[d.id])) * 0.9)  /* smaller nodes */
-  .attr('ry', d => 4 + Math.sqrt(Math.max(1, degree[d.id])) * 0.7)
-  .call(d3.drag()
-    .on('start', dragstarted)
-    .on('drag', dragged)
-    .on('end', dragended))
-  .on('click', (e,d)=>selectTag(d.id));
+  const link = g.append('g')
+    .attr('stroke-linecap','round')
+    .selectAll('line').data(links).enter().append('line')
+    .attr('class','link');
 
-const label = g.append('g')
-  .selectAll('text').data(nodes).enter().append('text')
-  .attr('class','label')
-  .attr('text-anchor','middle')
-  .attr('dy', 16) /* label under node */
-  .text(d=>d.id);
+  // group node + label → keeps them together
+  const nodeG = g.append('g')
+    .selectAll('g.nodeG').data(nodes).enter().append('g')
+    .attr('class','nodeG')
+    .call(d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended))
+    .on('click', (e,d)=>{ e.stopPropagation(); selectTag(d.id); });
 
-const sim = d3.forceSimulation(nodes)
-  .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.4))
-  .force('charge', d3.forceManyBody().strength(-180))
-  .force('center', d3.forceCenter(width/2, height/2))
-  .on('tick', ticked);
+  nodeG.append('ellipse')
+    .attr('class','node')
+    .attr('rx', d => 5 + Math.sqrt(Math.max(1, degree[d.id])) * 0.85)
+    .attr('ry', d => 3.5 + Math.sqrt(Math.max(1, degree[d.id])) * 0.65);
 
-function ticked(){
-  link
-    .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
-    .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
-  node.attr('cx', d=>d.x).attr('cy', d=>d.y)
-      .attr('transform', d=>`translate(${d.x},${d.y})`);
-  label.attr('x', d=>d.x).attr('y', d=>d.y);
-}
+  nodeG.append('text')
+    .attr('class','label')
+    .attr('text-anchor','middle')
+    .attr('dy', 14) // label underneath node
+    .text(d=>d.id);
 
-/* quick lookup map */
-const nodeById = new Map();
-node.each(d=>nodeById.set(d.id,d));
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.4))
+    .force('charge', d3.forceManyBody().strength(-180))
+    .force('center', d3.forceCenter(width/2, height/2))
+    .on('tick', ticked);
 
-/* highlight + select + center */
-let selectedId = null;
+  function ticked(){
+    link
+      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+    nodeG.attr('transform', d=>`translate(${d.x},${d.y})`);
+  }
 
-function highlightNode(tagId){
-  const neigh = neighbors.get(tagId) || new Set();
-  node.classed('dim', d=>!neigh.has(d.id))
-      .classed('selected', d=>d.id===tagId);
-  label.classed('dim', d=>!neigh.has(d.id));
-  link.classed('dim', d=>!(neigh.has(d.source.id||d.source) && neigh.has(d.target.id||d.target)));
-}
+  function dragstarted(event,d){
+    if(!event.active) sim.alphaTarget(0.2).restart();
+    d.fx=d.x; d.fy=d.y;
+  }
+  function dragged(event,d){ d.fx=event.x; d.fy=event.y; }
+  function dragended(event,d){
+    if(!event.active) sim.alphaTarget(0);
+    d.fx=null; d.fy=null;
+  }
 
-function clearHighlight(){
-  node.classed('dim', false).classed('selected', false);
-  label.classed('dim', false);
-  link.classed('dim', false);
-}
+  // Highlight helpers
+  function highlightSet(ids){
+    const keep = new Set(ids);
+    nodeG.selectAll('.node').classed('dim', d=>!keep.has(d.id));
+    nodeG.selectAll('.label').classed('dim', d=>!keep.has(d.id));
+    link.classed('dim', d=>{
+      const s = d.source.id||d.source, t = d.target.id||d.target;
+      return !(keep.has(s) && keep.has(t));
+    });
+  }
+  function clearHighlight(){
+    nodeG.selectAll('.node').classed('dim', false);
+    nodeG.selectAll('.label').classed('dim', false);
+    link.classed('dim', false);
+  }
 
-function selectTag(tagId){
-  selectedId = tagId;
-  updateDetails(tagId);
-  highlightNode(tagId);
-  centerOnTag(tagId, 1.4);
-}
+  // Selection + centering
+  function selectTag(tagId){
+    updateDetails(tagId);
+    const neigh = neighbors.get(tagId) || new Set();
+    highlightSet(neigh);
+    centerOnItems([...neigh], 1.3);
+  }
 
-function centerOnTag(tagId, k=1.4){
-  const n = nodeById.get(tagId);
-  if(!n) return;
-  const x = n.x ?? 0, y = n.y ?? 0;
-  const t = d3.zoomIdentity.translate(width/2 - x*k, height/2 - y*k).scale(k);
-  svg.transition().duration(700).call(zoom.transform, t);
-}
+  function centerOnItems(ids, k=1.3){
+    if(!ids.length) return;
+    const pts = ids.map(id => {
+      const d = nodes.find(n=>n.id===id);
+      return [d?.x||0, d?.y||0];
+    });
+    const minX = Math.min(...pts.map(p=>p[0]));
+    const maxX = Math.max(...pts.map(p=>p[0]));
+    const minY = Math.min(...pts.map(p=>p[1]));
+    const maxY = Math.max(...pts.map(p=>p[1]));
+    const cx = (minX+maxX)/2, cy=(minY+maxY)/2;
+    const t = d3.zoomIdentity.translate(width/2 - cx*k, height/2 - cy*k).scale(k);
+    svg.transition().duration(600).call(zoom.transform, t);
+  }
 
-/* drag handlers */
-function dragstarted(event,d){
-  if(!event.active) sim.alphaTarget(0.2).restart();
-  d.fx=d.x; d.fy=d.y;
-}
-function dragged(event,d){ d.fx=event.x; d.fy=event.y; }
-function dragended(event,d){
-  if(!event.active) sim.alphaTarget(0);
-  d.fx=null; d.fy=null;
-}
+  // Background click → clear selection
+  svg.on('click', (e)=>{
+    if(e.target.tagName !== 'svg') return;
+    detailsEl.className='details empty';
+    detailsEl.textContent='Pick a tag to see details.';
+    clearHighlight();
+  });
 
-/* click empty background to reset */
-svg.on('click', (e)=>{
-  // ignore if clicking on a node (event target isn't the <svg>)
-  if(e.target.tagName !== 'svg') return;
-  selectedId = null;
-  detailsEl.className='details empty';
-  detailsEl.textContent='Pick a tag to see details.';
-  clearHighlight();
-});
-</script>
+  // Search (prefix)
+  function applySearch(q){
+    const s = q.trim().toLowerCase();
+    if(!s){ clearHighlight(); return; }
+    const matches = nodes.filter(n=>n.id.toLowerCase().startsWith(s)).map(n=>n.id);
+    if(!matches.length){ highlightSet([]); return; }
+    highlightSet(matches);
+    centerOnItems(matches, 1.6);
+  }
+  searchEl.addEventListener('input', e=>applySearch(e.target.value));
+  searchEl.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){
+      e.preventDefault(); e.stopPropagation();
+      clearBtn.click();
+    }
+  });
+  clearBtn.addEventListener('click', ()=>{
+    searchEl.value=''; applySearch('');
+    svg.transition().duration(250).call(zoom.transform, d3.zoomIdentity);
+  });
+  </script>
 </body>
 </html>
