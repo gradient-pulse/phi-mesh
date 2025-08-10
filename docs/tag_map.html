@@ -1,294 +1,262 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Phi-Mesh Tag Map</title>
 <style>
   :root{
-    --bg:#0b0b0f; --fg:#f5f7fb; --muted:#9aa4b2; --accent:#00BFFF;
-    --panel:rgba(255,255,255,0.06); --panel-b:rgba(255,255,255,0.08);
-    --chip:rgba(125,211,252,0.14); --link:#7dd3fc;
+    --bg:#0b0b0f; --fg:#e9edf5; --muted:#9aa4b2; --accent:#7dd3fc;
+    --chip:#0f172a; --panel:#0f1320; --border:rgba(255,255,255,.08);
+    --link-paper:#9AE6B4; /* green-ish */
+    --link-podcast:#F6AD55; /* orange-ish */
   }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
-  .wrap{display:grid;grid-template-columns:360px 1fr;height:100%}
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
+  .layout{display:grid;grid-template-columns:360px 1fr;height:100%;}
   /* Sidebar */
-  .sidebar{border-right:1px solid var(--panel-b);display:flex;flex-direction:column;min-width:0}
-  .head{padding:18px 16px 12px 16px;border-bottom:1px solid var(--panel-b)}
-  .head h1{margin:0 0 10px 0;font-size:18px;font-weight:600}
-  .search{display:flex;gap:8px;margin-top:6px;margin-bottom:8px}
-  .search input{flex:1;background:var(--panel);border:1px solid var(--panel-b);color:var(--fg);border-radius:10px;padding:9px 11px;outline:none}
-  .search button{background:transparent;border:1px solid var(--panel-b);color:var(--muted);border-radius:10px;padding:8px 10px;cursor:pointer}
-  .list{overflow:auto;flex:1;padding:10px;display:grid;gap:6px}
-  .row{display:flex;justify-content:space-between;align-items:center;background:var(--panel);border:1px solid var(--panel-b);padding:9px 10px;border-radius:10px;cursor:pointer}
-  .row:hover{background:rgba(125,211,252,0.10)}
-  .row .name{font-weight:600;font-size:13px}
-  .row .meta{color:var(--muted);font-size:11px}
-  .row.active{outline:2px solid var(--accent)}
-  .details{border-top:1px solid var(--panel-b);padding:14px 16px;max-height:38%;overflow:auto}
-  .details h2{margin:0 0 8px 0;font-size:16px}
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
-  .chip{font-size:11px;padding:5px 7px;border-radius:999px;background:var(--chip);border:1px solid rgba(125,211,252,0.25);color:var(--fg)}
-  .callout{margin-top:8px;padding:8px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid var(--panel-b);font-size:12px;color:var(--fg)}
-  .resources{font-size:12px;margin-top:10px}
-  .resources a{color:var(--link);text-decoration:none}
-  .resources a:hover{text-decoration:underline}
-  .section-title{font-weight:600;margin:10px 0 6px 0;font-size:12px;color:#cfe9ff}
-  /* Map */
-  svg{width:100%;height:100%;display:block}
-  .link{stroke:#fff;stroke-opacity:.42}
-  .node ellipse{fill:var(--accent);stroke:#fff;stroke-width:0}
-  .node text{fill:#fff;font-size:11px;pointer-events:none;dominant-baseline:hanging}
-  .dim{opacity:.15}
-  .match ellipse{stroke:#fff;stroke-width:1.2}
+  .sidebar{border-right:1px solid var(--border);padding:12px 12px 16px;box-sizing:border-box;overflow:auto}
+  .title{margin:0 0 4px 0;font-size:18px;font-weight:700}
+  .search-wrap{display:flex;gap:8px;margin:6px 0 10px}
+  #tag-search{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:12px;color:var(--fg);padding:10px 12px;outline:none}
+  #clear-search{background:var(--panel);border:1px solid var(--border);border-radius:10px;color:var(--muted);padding:0 10px;cursor:pointer}
+  .list{display:grid;gap:8px}
+  .row{background:var(--panel);border:1px solid var(--border);padding:10px 12px;border-radius:12px;cursor:pointer}
+  .row:hover{outline:1px solid rgba(125,211,252,.35)}
+  .row .name{font-weight:700}
+  .row .meta{color:var(--muted);font-size:12px}
+  .details{margin-top:10px;font-size:14px}
+  .callout{background:rgba(125,211,252,.12);border:1px solid rgba(125,211,252,.35);color:var(--fg);padding:10px;border-radius:10px;margin:8px 0 12px}
+  .links h4{margin:12px 0 6px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .links a{display:block;text-decoration:none;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .links a.paper{color:var(--link-paper)}
+  .links a.podcast{color:var(--link-podcast)}
+  .empty{color:var(--muted);padding:12px 4px}
+  /* Canvas */
+  .stage{position:relative}
+  svg{display:block;width:100%;height:100%}
+  .link{stroke:#9aa4b233;stroke-width:1}
+  .node{fill:#14b8ff}
+  .node.selected{fill:#38bdf8}
+  .node.dim{opacity:.2}
+  .label{font-size:11px;fill:#ffffff;paint-order:stroke;stroke:#000;stroke-width:2px}
+  .label.dim{opacity:.2}
+  .hud{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.35);padding:6px 8px;border-radius:8px;font-size:12px;color:var(--muted)}
 </style>
+</head>
 <body>
-<div class="wrap">
+<div class="layout">
   <aside class="sidebar">
-    <div class="head">
-      <h1>Phi-Mesh Tag Map</h1>
-      <div class="search">
-        <input id="tagSearch" type="search" placeholder="Search tags (prefix) …" />
-        <button id="clearBtn" title="Clear">✕</button>
-      </div>
+    <h1 class="title">Phi-Mesh Tag Map</h1>
+    <div class="search-wrap">
+      <input id="tag-search" placeholder="Search tags (prefix) …" />
+      <button id="clear-search" title="Clear">×</button>
     </div>
     <div id="list" class="list"></div>
-    <div id="details" class="details">Pick a tag to see details.</div>
+    <div id="details" class="details empty">Pick a tag to see details.</div>
   </aside>
-  <main>
+  <div class="stage">
+    <div class="hud">Drag to pan · Scroll to zoom · Click a node</div>
     <svg></svg>
-  </main>
+  </div>
 </div>
 
-<!-- Data & D3 -->
-<script src="data.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="data.js"></script>
 <script>
-const DATA = window.PHI_DATA ? window.PHI_DATA : {nodes:[],links:[],tagResources:{},tagFirstSeen:{}};
+/* ------------------ Data ------------------ */
+const D = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[],links:[],tagResources:{},callouts:{}};
+const nodes = D.nodes.map(d => ({...d}));
+const links = D.links.map(l => ({...l}));
+const tagResources = D.tagResources || {};
+const callouts = D.callouts || {};  // { tagId: "short text" }
 
-// ---------- Build derived info ----------
+/* degree + neighbor map */
 const degree = {};
-DATA.links.forEach(({source,target})=>{
-  const s = typeof source==="string"?source:source.id;
-  const t = typeof target==="string"?target:target.id;
-  degree[s]=(degree[s]||0)+1; degree[t]=(degree[t]||0)+1;
+links.forEach(({source,target})=>{
+  degree[source]=(degree[source]||0)+1;
+  degree[target]=(degree[target]||0)+1;
 });
-const tags = DATA.nodes.map(n=>({
-  id:n.id,
-  centrality:n.centrality||0,
-  degree:degree[n.id]||0,
-  resources:(DATA.tagResources||{})[n.id]||{papers:[],podcasts:[]},
-  callout:(DATA.tagFirstSeen||{})[n.id]?.callout || null,
-  firstPulse:(DATA.tagFirstSeen||{})[n.id]?.pulse || null,
-})).sort((a,b)=>(b.degree-a.degree)||(b.centrality-a.centrality)||a.id.localeCompare(b.id));
+const neighbors = new Map();
+nodes.forEach(n=>neighbors.set(n.id,new Set([n.id])));
+links.forEach(({source,target})=>{
+  neighbors.get(source).add(target);
+  neighbors.get(target).add(source);
+});
 
+/* sidebar tag list (sorted) */
+const tags = nodes
+  .map(n=>({ id:n.id, centrality:n.centrality??0, degree:degree[n.id]||0 }))
+  .sort((a,b)=>(b.degree-a.degree)||(b.centrality-a.centrality)||a.id.localeCompare(b.id));
+
+/* ------------------ Sidebar ------------------ */
 const listEl = document.getElementById('list');
 const detailsEl = document.getElementById('details');
-const searchEl = document.getElementById('tagSearch');
-const clearBtn = document.getElementById('clearBtn');
-let activeTag = null;
+const searchEl = document.getElementById('tag-search');
 
-// ---------- Sidebar rendering ----------
-function renderList(filter=""){
-  listEl.innerHTML = "";
-  const q = filter.trim().toLowerCase();
-  const subset = q ? tags.filter(t=>t.id.toLowerCase().startsWith(q)) : tags;
-  subset.forEach(t=>{
+function renderList(prefix=''){
+  listEl.innerHTML='';
+  const q = prefix.trim().toLowerCase();
+  const arr = q? tags.filter(t=>t.id.toLowerCase().startsWith(q)) : tags;
+  if(!arr.length){ listEl.innerHTML = `<div class="empty">No tags match.</div>`; return; }
+  for(const t of arr){
     const row = document.createElement('div');
-    row.className = 'row' + (t.id===activeTag?' active':'');
-    row.dataset.tag = t.id;
-    row.onclick = ()=>selectTag(t.id, true);
-    const left = document.createElement('div');
-    left.innerHTML = `<div class="name">${t.id}</div>
-      <div class="meta">deg ${t.degree} · cent ${t.centrality.toFixed(2)}</div>`;
-    row.appendChild(left);
+    row.className='row';
+    row.innerHTML = `<div class="name">${t.id}</div><div class="meta">deg ${t.degree} · cent ${t.centrality.toFixed(2)}</div>`;
+    row.addEventListener('click',()=>selectTag(t.id));
     listEl.appendChild(row);
-  });
-  if (!subset.length){
-    const empty = document.createElement('div');
-    empty.className='row';
-    empty.textContent='No tags match your filter.';
-    listEl.appendChild(empty);
   }
 }
-function truncateTitle(url){ // show first ~25 chars without hammering the DOM
-  try{
-    const u = new URL(url);
-    return (u.pathname.split('/').pop() || u.href).slice(0,25) + (u.href.length>25?'…':'');
-  }catch{return (url||'').slice(0,25) + ((url||'').length>25?'…':'');}
-}
-function renderDetails(tagId){
+renderList();
+
+document.getElementById('clear-search').onclick = ()=>{
+  searchEl.value=''; renderList('');
+  svg.transition().duration(250).call(zoom.transform, d3.zoomIdentity);
+};
+searchEl.addEventListener('input', e=>renderList(e.target.value));
+searchEl.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){ e.stopPropagation(); document.getElementById('clear-search').click(); }
+});
+
+/* details panel */
+function updateDetails(tagId){
   const t = tags.find(x=>x.id===tagId);
-  if(!t){ detailsEl.textContent='Tag not found.'; return; }
-  const pills = [
-    `<span class="chip">degree: ${t.degree}</span>`,
-    `<span class="chip">centrality: ${t.centrality.toFixed(2)}</span>`
-  ];
-  let html = `<h2>${t.id}</h2><div class="chips">${pills.join('')}</div>`;
-  if (t.callout){
-    html += `<div class="callout">${t.callout}${t.firstPulse?` <span style="color:${getComputedStyle(document.body).getPropertyValue('--muted')};font-size:11px">(${t.firstPulse})</span>`:''}</div>`;
-  }
-  const res = t.resources || {papers:[],podcasts:[]};
+  if(!t){ detailsEl.className='details empty'; detailsEl.textContent='Tag not found.'; return; }
+  detailsEl.className='details';
+  const res = tagResources[tagId] || {papers:[],podcasts:[]};
   const papers = (res.papers||[]).slice(0,3);
-  const pods = (res.podcasts||[]).slice(0,3);
-  if (papers.length || pods.length){
-    html += `<div class="resources">`;
-    if (papers.length){
-      html += `<div class="section-title">Papers</div>`;
-      html += papers.map(u=>`<div><a href="${u}" target="_blank" rel="noopener">${truncateTitle(u)}</a></div>`).join('');
+  const pods   = (res.podcasts||[]).slice(0,3);
+  const call = callouts[tagId];
+
+  let html = `<div class="chipline"></div>
+    <div class="chips" style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px">
+      <span class="chip" style="background:var(--chip);border:1px solid var(--border);padding:4px 8px;border-radius:999px">degree ${t.degree}</span>
+      <span class="chip" style="background:var(--chip);border:1px solid var(--border);padding:4px 8px;border-radius:999px">centrality ${t.centrality.toFixed(2)}</span>
+    </div>
+    <h3 style="margin:0 0 6px 0">${tagId}</h3>`;
+
+  if(call) html += `<div class="callout">${call}</div>`;
+
+  if(papers.length || pods.length){
+    html += `<div class="links">`;
+    if(papers.length){
+      html += `<h4>Papers</h4>`;
+      html += papers.map(u=>`<a class="paper" href="${u}" target="_blank" rel="noopener">${u}</a>`).join('');
     }
-    if (pods.length){
-      html += `<div class="section-title">Podcasts</div>`;
-      html += pods.map(u=>`<div><a href="${u}" target="_blank" rel="noopener">${truncateTitle(u)}</a></div>`).join('');
+    if(pods.length){
+      html += `<h4>Podcasts</h4>`;
+      html += pods.map(u=>`<a class="podcast" href="${u}" target="_blank" rel="noopener">${u}</a>`).join('');
     }
     html += `</div>`;
+  } else {
+    html += `<div class="empty">No linked resources yet.</div>`;
   }
   detailsEl.innerHTML = html;
 }
-function highlightList(tagId){
-  [...listEl.querySelectorAll('.row')].forEach(el=>{
-    el.classList.toggle('active', el.dataset.tag===tagId);
-  });
-  const active = listEl.querySelector('.row.active');
-  if(active){
-    const rect = active.getBoundingClientRect();
-    const parent = listEl.getBoundingClientRect();
-    if (rect.top < parent.top || rect.bottom > parent.bottom){
-      active.scrollIntoView({block:'center', behavior:'smooth'});
-    }
-  }
-}
 
-// ---------- SVG map ----------
-const svg = d3.select("svg");
-const width = window.innerWidth, height = window.innerHeight;
+/* ------------------ Graph ------------------ */
+const svg = d3.select('svg');
+const width = svg.node().clientWidth;
+const height = svg.node().clientHeight;
 
-const simulation = d3.forceSimulation(DATA.nodes)
-  .force("link", d3.forceLink(DATA.links).id(d=>d.id).distance(90))
-  .force("charge", d3.forceManyBody().strength(-420))
-  .force("center", d3.forceCenter(width/2, height/2));
+const zoom = d3.zoom()
+  .scaleExtent([0.3, 3])
+  .on('zoom', (e)=> g.attr('transform', e.transform));
+svg.call(zoom);
 
-const container = svg.append("g");
+const g = svg.append('g');
+const link = g.append('g').attr('stroke-linecap','round')
+  .selectAll('line').data(links).enter().append('line')
+  .attr('class','link');
 
-const link = container.append("g").attr("class","links")
-  .selectAll("line").data(DATA.links).join("line")
-  .attr("class","link").attr("stroke-width",1.2);
-
-const node = container.append("g").attr("class","nodes")
-  .selectAll("g").data(DATA.nodes).join("g")
-  .attr("class","node")
-  .on("click",(event,d)=>{ selectTag(d.id, false); event.stopPropagation(); })
+const node = g.append('g')
+  .selectAll('ellipse').data(nodes).enter().append('ellipse')
+  .attr('class','node')
+  .attr('rx', d => 6 + Math.sqrt(Math.max(1, degree[d.id])) * 0.9)  /* smaller nodes */
+  .attr('ry', d => 4 + Math.sqrt(Math.max(1, degree[d.id])) * 0.7)
   .call(d3.drag()
-    .on("start", (event,d)=>{ if(!event.active) simulation.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
-    .on("drag", (event,d)=>{ d.fx=event.x; d.fy=event.y; })
-    .on("end", (event,d)=>{ if(!event.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; })
-  );
+    .on('start', dragstarted)
+    .on('drag', dragged)
+    .on('end', dragended))
+  .on('click', (e,d)=>selectTag(d.id));
 
-node.append("ellipse")
-  .attr("rx", d=> 5 + Math.sqrt((d.centrality||0)*800))
-  .attr("ry", d=> 3.5 + Math.sqrt((d.centrality||0)*400));
-
-node.append("text")
-  .attr("x", 10)
-  .attr("y", 6)
+const label = g.append('g')
+  .selectAll('text').data(nodes).enter().append('text')
+  .attr('class','label')
+  .attr('text-anchor','middle')
+  .attr('dy', 16) /* label under node */
   .text(d=>d.id);
 
-// pan / zoom
-svg.call(d3.zoom().scaleExtent([0.2, 4]).on("zoom", (event)=>{
-  container.attr("transform", event.transform);
-}));
+const sim = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.4))
+  .force('charge', d3.forceManyBody().strength(-180))
+  .force('center', d3.forceCenter(width/2, height/2))
+  .on('tick', ticked);
 
-simulation.on("tick", ()=>{
-  link.attr("x1", d=>d.source.x).attr("y1", d=>d.source.y)
-      .attr("x2", d=>d.target.x).attr("y2", d=>d.target.y);
-  node.attr("transform", d=>`translate(${d.x},${d.y})`);
-});
-
-// ---------- Selection + filtering ----------
-function selectTag(tagId, fromList){
-  activeTag = tagId;
-  renderDetails(tagId);
-  highlightList(tagId);
-  // focus highlight in graph
-  node.classed("dim", d=> d.id!==tagId && !isNeighbor(tagId, d.id));
-  link.classed("dim", d=> !isEdge(tagId, idOf(d.source)) && !isEdge(tagId, idOf(d.target)));
-  node.classed("match", d=> d.id===tagId);
-  // optional: center on node
-  const nd = DATA.nodes.find(n=>n.id===tagId);
-  if (nd){
-    // smooth-ish nudge (don’t steal control entirely)
-    const t = d3.zoomTransform(svg.node());
-    const k = t.k || 1;
-    const tx = width/2 - nd.x*k;
-    const ty = height/2 - nd.y*k;
-    svg.transition().duration(350).call(d3.zoom().translateTo, nd.x, nd.y);
-  }
-}
-function clearSelection(){
-  activeTag = null;
-  detailsEl.textContent = 'Pick a tag to see details.';
-  node.classed("dim", false).classed("match", false);
-  link.classed("dim", false);
-  highlightList(null);
-}
-function idOf(x){ return typeof x==="string" ? x : x.id; }
-const neighborSet = (()=>{ // build quick neighbor lookup
-  const map = new Map();
-  DATA.nodes.forEach(n=>map.set(n.id, new Set([n.id])));
-  DATA.links.forEach(({source,target})=>{
-    const s=idOf(source), t=idOf(target);
-    map.get(s).add(t); map.get(t).add(s);
-  });
-  return map;
-})();
-function isNeighbor(a,b){ return neighborSet.get(a)?.has(b); }
-function isEdge(a,b){ return neighborSet.get(a)?.has(b) && a!==b; }
-
-function applySearchHighlight(q){
-  const qq = q.trim().toLowerCase();
-  const matches = new Set(tags.filter(t=>!qq || t.id.toLowerCase().startsWith(qq)).map(t=>t.id));
-  node.classed("dim", d=> !matches.has(d.id));
-  link.classed("dim", d=> !(matches.has(idOf(d.source)) && matches.has(idOf(d.target))));
-  // if there’s exactly one match, pre-select it visually (but don’t open details yet)
-  if(matches.size===1 && !activeTag){
-    const only = [...matches][0];
-    node.classed("match", d=> d.id===only);
-  }else{
-    node.classed("match", d=> d.id===activeTag);
-  }
+function ticked(){
+  link
+    .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+    .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+  node.attr('cx', d=>d.x).attr('cy', d=>d.y)
+      .attr('transform', d=>`translate(${d.x},${d.y})`);
+  label.attr('x', d=>d.x).attr('y', d=>d.y);
 }
 
-// ---------- Events ----------
-searchEl.addEventListener('input', (e)=>{
-  const val = e.target.value || "";
-  renderList(val);
-  applySearchHighlight(val);
-});
-searchEl.addEventListener('keydown', (e)=>{
-  if(e.key==='Escape'){ // only when focused
-    e.stopPropagation();
-    searchEl.value = '';
-    renderList('');
-    applySearchHighlight('');
-  }
-  if(e.key==='Enter'){
-    const q = (searchEl.value||'').trim().toLowerCase();
-    if(!q) return;
-    const first = tags.find(t=>t.id.toLowerCase().startsWith(q));
-    if(first){ selectTag(first.id, true); }
-  }
-});
-clearBtn.addEventListener('click', ()=>{
-  searchEl.value=''; renderList(''); applySearchHighlight('');
-});
-window.addEventListener('keydown', (e)=>{
-  // quick focus shortcut; don’t trap Esc globally
-  if(e.key==='/' && document.activeElement!==searchEl){
-    e.preventDefault(); searchEl.focus();
-  }
-});
+/* quick lookup map */
+const nodeById = new Map();
+node.each(d=>nodeById.set(d.id,d));
 
-// click empty space clears selection
-svg.on("click", ()=> clearSelection());
+/* highlight + select + center */
+let selectedId = null;
 
-// initial paint
-renderList('');
-applySearchHighlight('');
+function highlightNode(tagId){
+  const neigh = neighbors.get(tagId) || new Set();
+  node.classed('dim', d=>!neigh.has(d.id))
+      .classed('selected', d=>d.id===tagId);
+  label.classed('dim', d=>!neigh.has(d.id));
+  link.classed('dim', d=>!(neigh.has(d.source.id||d.source) && neigh.has(d.target.id||d.target)));
+}
+
+function clearHighlight(){
+  node.classed('dim', false).classed('selected', false);
+  label.classed('dim', false);
+  link.classed('dim', false);
+}
+
+function selectTag(tagId){
+  selectedId = tagId;
+  updateDetails(tagId);
+  highlightNode(tagId);
+  centerOnTag(tagId, 1.4);
+}
+
+function centerOnTag(tagId, k=1.4){
+  const n = nodeById.get(tagId);
+  if(!n) return;
+  const x = n.x ?? 0, y = n.y ?? 0;
+  const t = d3.zoomIdentity.translate(width/2 - x*k, height/2 - y*k).scale(k);
+  svg.transition().duration(700).call(zoom.transform, t);
+}
+
+/* drag handlers */
+function dragstarted(event,d){
+  if(!event.active) sim.alphaTarget(0.2).restart();
+  d.fx=d.x; d.fy=d.y;
+}
+function dragged(event,d){ d.fx=event.x; d.fy=event.y; }
+function dragended(event,d){
+  if(!event.active) sim.alphaTarget(0);
+  d.fx=null; d.fy=null;
+}
+
+/* click empty background to reset */
+svg.on('click', (e)=>{
+  // ignore if clicking on a node (event target isn't the <svg>)
+  if(e.target.tagName !== 'svg') return;
+  selectedId = null;
+  detailsEl.className='details empty';
+  detailsEl.textContent='Pick a tag to see details.';
+  clearHighlight();
+});
 </script>
+</body>
+</html>
