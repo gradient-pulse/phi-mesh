@@ -6,10 +6,8 @@ on:
       - "meta/tag_index.yml"
       - "meta/aliases.yml"
       - "pulse/**/*.yml"
-      - "pulse/**/*.yaml"
       - "generate_graph_data.py"
       - "build_tag_browser.py"
-      - "generate_tag_map.py"
       - "docs/tag_map_template.html"
       - "docs/graph.js"
       - ".github/workflows/build_tags_and_graph.yml"
@@ -18,6 +16,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,57 +31,59 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
-      - name: Debug: list pulse files (skipping archive/telemetry)
-        run: |
-          echo "Pulse files (yml,yaml; excluding archive & telemetry):"
-          find pulse -type f \( -name "*.yml" -o -name "*.yaml" \) \
-            -not -path "*/archive/*" -not -path "*/telemetry/*" | sort
-
       # --- Graph data --------------------------------------------------------
       - name: Generate alias-aware docs/data.js
         shell: bash
         run: |
           set -euo pipefail
-          rm -f docs/data.js  # nuke any legacy placeholder
           mkdir -p docs
-          python generate_graph_data.py \
-            --tag-index meta/tag_index.yml \
-            --alias-map meta/aliases.yml \
-            --out-js docs/data.js
-          echo "HEAD of data.js:"
-          head -n 2 docs/data.js
-
-          # Guard: require window.PHI_DATA and forbid legacy const tagData
-          if ! head -n 1 docs/data.js | grep -q "window.PHI_DATA"; then
-            echo "ERROR: docs/data.js does not start with window.PHI_DATA" >&2
-            exit 2
+          if [[ -f generate_graph_data.py ]]; then
+            if [[ -f meta/aliases.yml ]]; then
+              python generate_graph_data.py \
+                --tag-index meta/tag_index.yml \
+                --alias-map meta/aliases.yml \
+                --out-js docs/data.js
+            else
+              echo "meta/aliases.yml not found → continuing without explicit alias map."
+              python generate_graph_data.py \
+                --tag-index meta/tag_index.yml \
+                --out-js docs/data.js
+            fi
+          else
+            echo "generate_graph_data.py is missing"; exit 1
           fi
-          if grep -q "const tagData" docs/data.js; then
-            echo "ERROR: docs/data.js was overwritten to legacy format somewhere later." >&2
-            exit 2
-          fi
 
-      # --- Tag browser -------------------------------------------------------
+      # --- Tag browser (new path) -------------------------------------------
       - name: Build Tag Browser HTML (docs/tag_browser.html)
+        shell: bash
         run: |
+          set -euo pipefail
           python build_tag_browser.py \
             --tag-index meta/tag_index.yml \
             --alias-map meta/aliases.yml \
             --data-js docs/data.js \
             --out-html docs/tag_browser.html
 
-      # --- Legacy tag map (optional) ----------------------------------------
-      - name: Build Tag Map HTML (optional)
-        if: ${{ hashFiles('generate_tag_map.py') != '' }}
+      # --- Validate output so we don't publish empties -----------------------
+      - name: Validate docs/data.js
+        shell: bash
         run: |
-          python generate_tag_map.py || echo "Tag map generation skipped/failed gracefully."
+          set -euo pipefail
+          if [[ ! -s docs/data.js ]]; then
+            echo "ERROR: docs/data.js is empty or missing."; exit 2
+          fi
+          if ! head -n 1 docs/data.js | grep -q "window.PHI_DATA"; then
+            echo "ERROR: docs/data.js missing window.PHI_DATA"; exit 3
+          fi
+          echo "OK: docs/data.js looks good."
 
       # --- Commit artifacts --------------------------------------------------
       - name: Commit generated artifacts
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data.js docs/tag_browser.html
-          if [ -f docs/tag_map.html ]; then git add docs/tag_map.html; fi
-          git commit -m "Auto: build tags & graph (data.js, browser, map)" || echo "No changes to commit"
+          git commit -m "Auto: build tags & graph (data.js, tag_browser.html)" || echo "No changes to commit"
           git push || echo "Nothing to push"
