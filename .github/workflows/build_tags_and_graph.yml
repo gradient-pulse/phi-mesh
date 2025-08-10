@@ -69,6 +69,16 @@ jobs:
         run: |
           python generate_tag_map.py || echo "Tag map generation skipped/failed gracefully."
 
+      - name: Cleanup legacy graph files
+        run: |
+          mkdir -p docs/archive
+          # move once, then stop committing them going forward
+          if ls docs/graph_data*.js 1> /dev/null 2>&1; then
+            git mv -f $(ls docs/graph_data*.js) docs/archive/ || true
+          fi
+          if [ -f docs/graph_layout.js ]; then git mv -f docs/graph_layout.js docs/archive/; fi
+          if [ -f docs/link_index.js ]; then git mv -f docs/link_index.js docs/archive/; fi
+
       # --- Commit artifacts --------------------------------------------------
       - name: Commit generated artifacts
         run: |
