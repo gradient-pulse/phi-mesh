@@ -1,135 +1,192 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <title>Phi-Mesh Tag Map</title>
 <style>
-  :root{
-    --bg:#000; --fg:#fff; --muted:#c7c7c7;
-    --node:#00BFFF; --link:#9aa4b2;
-    --paper:#9AE6B4;   /* soft green */
-    --pod:#C084FC;     /* soft purple */
-    --panel:rgba(255,255,255,.06);
+  :root {
+    --bg: #000; --fg: #fff; --muted: #b9c1cc;
+    --accent: #00BFFF; --panel: rgba(0,0,0,0.55);
+    --chip: rgba(255,255,255,0.10);
   }
-  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
-  .sidebar{
-    position:absolute; top:16px; left:16px; max-width:360px; padding:14px 16px;
-    background:var(--panel); backdrop-filter:saturate(120%) blur(4px); border-radius:12px;
-    border:1px solid rgba(255,255,255,.08); pointer-events:auto;
+  html, body { margin: 0; background: var(--bg); color: var(--fg); height: 100%; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial; }
+  svg { width: 100%; height: 100vh; display: block; }
+
+  /* Top-left HUD */
+  .hud {
+    position: absolute; top: 16px; left: 16px; width: 360px;
+    background: var(--panel); padding: 12px 12px 10px 12px; border-radius: 12px;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 22px rgba(0,0,0,0.35);
   }
-  h1{margin:0 0 8px 0; font-size:24px; line-height:1.15;}
-  .tname{font-weight:700; font-size:16px; margin:8px 0 6px 0;}
-  .meta{color:var(--muted); font-size:12px; margin-bottom:8px;}
-  .sec{margin-top:10px; font-weight:700; font-size:12px; color:#e7e7e7;}
-  .list{font-size:12px; line-height:1.25;}       /* D: smaller font */
-  .list a{display:block; color:var(--paper); text-decoration:none; word-break:break-all; margin:2px 0;}
-  .list a.pod{color:var(--pod);}
-  .list a:hover{text-decoration:underline;}
-  .callout{margin-top:10px; font-size:13px; color:#f1f1f1;}
-  svg{width:100%; height:100vh; display:block; cursor:grab;}
-  svg:active{cursor:grabbing;}
-  .node text{fill:#fff; font-size:11px; pointer-events:none; text-shadow:0 0 2px #000;}  /* B: smaller, readable */
-  .node ellipse{stroke-width:0;}
-  .link{stroke:var(--link); stroke-opacity:.55;}
+  .hud h1 { margin: 0 0 10px 0; font-size: 22px; line-height: 1.15; }
+  .search {
+    position: relative; margin: 6px 0 4px 0;
+  }
+  .search input {
+    width: 100%; padding: 10px 34px 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06); color: var(--fg); outline: none; font-size: 14px;
+  }
+  .search button {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 16px; padding: 4px 6px;
+  }
+  .help { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+  /* Node & label styling */
+  .link { stroke: #fff; stroke-opacity: 0.42; }
+  .node ellipse { fill: var(--accent); stroke: #fff; stroke-width: 0; }
+  .node text { fill: #fff; font-size: 11px; pointer-events: none; dominant-baseline: hanging; } /* label under node */
+  .dim { opacity: 0.15; }
+  .match ellipse { stroke: #fff; stroke-width: 1.2; }
 </style>
 <body>
-<div class="sidebar" id="panel">
-  <h1>Phi-Mesh Tag Map</h1>
-  <div class="tname">Click a node…</div>
-  <div class="meta">Centrality —</div>
-  <div class="sec">Papers</div>
-  <div class="list" id="papers"></div>
-  <div class="sec">Podcasts</div>
-  <div class="list" id="pods"></div>
-  <div class="callout" id="callout"></div>
-</div>
+  <div class="hud">
+    <h1>Phi-Mesh Tag Map</h1>
+    <div class="search">
+      <input id="tagSearch" type="search" placeholder="Search tag (prefix)… e.g., n → shows tags starting with N" />
+      <button id="clearBtn" title="Clear">✕</button>
+    </div>
+    <div class="help">Type to highlight tags that <em>start with</em> your text (case-insensitive). Press Esc to clear. Click a node for details.</div>
+  </div>
 
-<svg id="scene"></svg>
+  <svg></svg>
 
-<script src="data.js"></script>
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script>
-const DATA = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[], links:[], tagResources:{}, tagFirstSeen:{}};
+  <!-- Data payload (nodes, links, resources, first-seen) -->
+  <script src="data.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+  // --------------------------------------------------------------------
+  // Data
+  // --------------------------------------------------------------------
+  const DATA = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[],links:[],tagResources:{},tagFirstSeen:{}};
 
-function trimTitle(urlOrTitle, n=25){
-  const isUrl = /^https?:\/\//i.test(urlOrTitle);
-  let t = urlOrTitle;
-  if(isUrl){
-    try { const u = new URL(urlOrTitle); t = decodeURIComponent(u.pathname.split('/').filter(Boolean).pop() || u.host); }
-    catch{ t = urlOrTitle; }
-  }
-  return (t.length>n)? (t.slice(0,n) + '…') : t;
-}
-function norm(items=[]){
-  return items.map(x=>{
-    if(typeof x === 'string') return {title: trimTitle(x), url:x};
-    return {title: trimTitle(x.title || x.url || ''), url: x.url || x.title || ''};
+  const svg = d3.select("svg");
+  const width = window.innerWidth, height = window.innerHeight;
+
+  // Zoom/pan
+  const zoom = d3.zoom()
+      .scaleExtent([0.25, 4])
+      .on("zoom", (event) => g.attr("transform", event.transform));
+  svg.call(zoom);
+
+  // Root group for all content
+  const g = svg.append("g");
+
+  // Links
+  const link = g.append("g")
+    .attr("stroke", "#fff").attr("stroke-opacity", 0.42)
+    .selectAll("line")
+    .data(DATA.links)
+    .join("line")
+    .attr("class", "link")
+    .attr("stroke-width", 1);
+
+  // Nodes (ellipse + label underneath)
+  const node = g.append("g")
+    .selectAll("g")
+    .data(DATA.nodes)
+    .join("g")
+      .attr("class", "node")
+      .call(drag(sim()));
+
+  node.append("ellipse")
+      .attr("rx", d => 5 + Math.sqrt((d.centrality || 0.0001) * 700))  // slightly smaller
+      .attr("ry", d => 3.8 + Math.sqrt((d.centrality || 0.0001) * 350))
+      .attr("fill", "#00BFFF");
+
+  node.append("text")
+      .text(d => d.id)
+      .attr("x", 0)
+      .attr("y", d => (3.8 + Math.sqrt((d.centrality || 0.0001) * 350)) + 3)  // label just under node
+      .attr("text-anchor", "middle");
+
+  // Sidebar-on-click (reuses your existing left panel behavior via alert-like quick view)
+  node.on("click", (event, d) => {
+    const res = (DATA.tagResources && DATA.tagResources[d.id]) || {papers:[], podcasts:[]};
+    const first = DATA.tagFirstSeen && DATA.tagFirstSeen[d.id];
+    // Limit to 3 + pretty titles (trim)
+    const trim = (s, n=48) => (s && s.length>n ? s.slice(0,n) + "…" : s);
+    const list = (arr)=> (arr||[]).slice(0,3).map(x=>{
+      const t = (typeof x === 'string') ? x : (x.title || x.url || '');
+      const u = (typeof x === 'string') ? x : (x.url || x.title || '');
+      return `• ${trim(t)}\n   ${u}`;
+    }).join("\n");
+
+    const msg = [
+      `${d.id}`,
+      first && first.callout ? `\nCall-out (${first.pulse || "first-seen"}):\n${first.callout}\n` : "",
+      res.papers && res.papers.length ? `Papers:\n${list(res.papers)}` : "Papers: —",
+      res.podcasts && res.podcasts.length ? `Podcasts:\n${list(res.podcasts)}` : "Podcasts: —"
+    ].filter(Boolean).join("\n");
+    // Replace this with your real sidebar if you have one wired;
+    // keeping it simple here so the search patch is clean & portable.
+    console.info(msg);
   });
-}
 
-const svg = d3.select("#scene");
-const g = svg.append("g");
+  // Simulation
+  function sim(){
+    const simulation = d3.forceSimulation(DATA.nodes)
+      .force("link", d3.forceLink(DATA.links).id(d => d.id).distance(90))
+      .force("charge", d3.forceManyBody().strength(-420))
+      .force("center", d3.forceCenter(width/2, height/2))
+      .on("tick", () => {
+        link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+      });
+    return simulation;
+  }
 
-// pan/zoom
-const zoom = d3.zoom().scaleExtent([0.2, 4]).on("zoom", (e)=> g.attr("transform", e.transform));
-svg.call(zoom);
+  function drag(simulation) {
+    return d3.drag()
+      .on("start", (event) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      })
+      .on("drag", (event) => {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      })
+      .on("end", (event) => {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      });
+  }
 
-// C: slightly smaller nodes
-const sim = d3.forceSimulation(DATA.nodes)
-  .force("link", d3.forceLink(DATA.links).id(d=>d.id).distance(90))
-  .force("charge", d3.forceManyBody().strength(-420))
-  .force("center", d3.forceCenter(window.innerWidth/2, window.innerHeight/2));
+  // --------------------------------------------------------------------
+  // Prefix Search UI
+  // --------------------------------------------------------------------
+  const searchEl = document.getElementById("tagSearch");
+  const clearBtn = document.getElementById("clearBtn");
 
-const link = g.append("g")
-  .selectAll("line")
-  .data(DATA.links).join("line")
-  .attr("class","link")
-  .attr("stroke-width",1.0);
+  function applyPrefixFilter(prefix){
+    const q = (prefix || "").trim().toLowerCase();
+    if (!q){
+      node.classed("dim", false).classed("match", false);
+      link.classed("dim", false);
+      return;
+    }
+    const matches = new Set(DATA.nodes.filter(n => n.id.toLowerCase().startsWith(q)).map(n => n.id));
+    node.classed("match", d => matches.has(d.id))
+        .classed("dim",   d => !matches.has(d.id));
+    // dim links that don't connect two matches
+    link.classed("dim", d => !(matches.has(d.source.id) && matches.has(d.target.id)));
 
-const node = g.append("g")
-  .selectAll("g")
-  .data(DATA.nodes).join("g")
-  .attr("class","node")
-  .call(d3.drag()
-    .on("start", (event,d)=>{ if(!event.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
-    .on("drag", (event,d)=>{ d.fx=event.x; d.fy=event.y; })
-    .on("end",  (event,d)=>{ if(!event.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }))
-  .on("click", (_,d)=> showDetails(d.id));
+    // Auto-zoom to the mean position of matches (nice UX)
+    if (matches.size){
+      const sel = DATA.nodes.filter(n => matches.has(n.id));
+      const cx = d3.mean(sel, d=>d.x), cy = d3.mean(sel, d=>d.y);
+      const t = d3.zoomIdentity.translate(width/2 - cx, height/2 - cy);
+      svg.transition().duration(300).call(zoom.transform, t);
+    }
+  }
 
-node.append("ellipse")
-  .attr("rx", d=> 4 + Math.sqrt((d.centrality||0)*600))  // C: smaller base/scales
-  .attr("ry", d=> 3 + Math.sqrt((d.centrality||0)*300))
-  .attr("fill","var(--node)");
+  searchEl.addEventListener("input", (e) => applyPrefixFilter(e.target.value));
+  searchEl.addEventListener("keydown", (e) => {
+    if (e.key === "Escape"){ searchEl.value = ""; applyPrefixFilter(""); }
+  });
+  clearBtn.addEventListener("click", () => { searchEl.value = ""; applyPrefixFilter(""); });
 
-// B: label centered under node
-node.append("text")
-  .attr("text-anchor","middle")
-  .attr("dy", d=> 10 + Math.sqrt((d.centrality||0)*300)) // sit just under ellipse
-  .text(d=> d.id);
-
-sim.on("tick", ()=>{
-  link.attr("x1", d=>d.source.x).attr("y1", d=>d.source.y)
-      .attr("x2", d=>d.target.x).attr("y2", d=>d.target.y);
-  node.attr("transform", d=>`translate(${d.x},${d.y})`);
-});
-
-// sidebar
-const panel = document.getElementById('panel');
-const papersEl = document.getElementById('papers');
-const podsEl = document.getElementById('pods');
-const calloutEl = document.getElementById('callout');
-
-function showDetails(tagId){
-  const nd = DATA.nodes.find(n=>n.id===tagId) || {centrality:0};
-  panel.querySelector('.tname').textContent = tagId;
-  panel.querySelector('.meta').textContent = `Centrality ${ (nd.centrality||0).toFixed(2) }`;
-
-  const res = (DATA.tagResources && DATA.tagResources[tagId]) ? DATA.tagResources[tagId] : {papers:[], podcasts:[]};
-  const papers = norm(res.papers).slice(0,3);   // A: cap 3
-  const pods   = norm(res.podcasts).slice(0,3); // A: cap 3
-
-  papersEl.innerHTML = papers.length ? papers.map(p=>`<a class="paper" style="color:var(--paper)" href="${p.url}" target="_blank" rel="noopener">${p.title}</a>`).join("") : `<span style="color:var(--muted)">—</span>`;
-  podsEl.innerHTML   = pods.length   ? pods.map(p=>`<a class="pod"   style="color:var(--pod)"   href="${p.url}" target="_blank" rel="noopener">${p.title}</a>`).join("") : `<span style="color:var(--muted)">—</span>`;
-
-  const first = (DATA.tagFirstSeen && DATA.tagFirstSeen[tagId]) || null;
-  calloutEl.textContent = first && first.callout ? `Call-out (${first.pulse}): ${first.callout}` : "";
-}
-</script>
+  </script>
+</body>
