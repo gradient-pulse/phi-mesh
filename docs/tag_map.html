@@ -1,46 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>RGP Tag Map</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <style>
-    html, body { margin:0; padding:0; height:100%; overflow:hidden; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-    #container { display:flex; height:100vh; width:100vw; }
-    #sidebar { width: 300px; background:#0b0e13; color:#eaeef6; padding:12px; overflow:auto; border-right:1px solid #1b2130; }
-    #sidebar h1 { margin:0 0 6px; font-size:18px; font-weight:600; }
-    #sidebar p { margin:0 0 12px; font-size:12px; opacity:.8; }
-    #link-list { list-style:none; padding:0; margin:0; font-size:13px; }
-    #link-list a { color:#79b8ff; text-decoration:none; }
-    #link-list a:hover { text-decoration:underline; }
-    #graph { flex:1; background:#06080c; position:relative; }
-    .label { font-size:12px; pointer-events:none; fill:#dbe4ff; text-shadow:0 1px 2px rgba(0,0,0,.4); }
-    .node { cursor:pointer; }
-    .link { stroke:#8ea0c8; stroke-opacity:.45; }
-    .node circle { fill:#4aa3ff; }
-    .node--hub circle { fill:#70e1b5; }
-    .halo { fill:none; stroke:#0ff; stroke-width:1.5px; opacity:.0; }
-    .node:hover + .halo, .node:hover ~ .halo[data-for=hover] { opacity:.6; }
-  </style>
-  <!-- Actions will replace 119fd36 at publish time -->
-  <script>window.BUILD_HASH="119fd36";</script>
-</head>
+<meta charset="utf-8">
+<title>Phi-Mesh Tag Map</title>
+<style>
+  body { margin: 0; background-color: #000; font-family: sans-serif; color: white; }
+  svg { width: 100%; height: 100vh; display: block; }
+  .node text { fill: white; font-size: 12px; pointer-events: none; }
+  .node ellipse { stroke-width: 0; }
+  .link { stroke: white; stroke-opacity: 0.5; }
+  .sidebar {
+    position: absolute; top: 20px; left: 20px; width: 280px;
+    background: rgba(255, 255, 255, 0.05); padding: 10px; font-size: 13px;
+  }
+  h1 { margin: 10px 0; font-size: 24px; }
+</style>
 <body>
-  <div id="container">
-    <aside id="sidebar">
-      <h1>RGP Tag Map</h1>
-      <p>Coherence Tracking Across Fields — click a tag</p>
-      <ul id="link-list"></ul>
-    </aside>
-    <main id="graph"></main>
-  </div>
+<div class="sidebar">
+  <h1>Phi-Mesh Tag Map</h1>
+  <div id="tag-details"><b>Tag Info</b><br>Click a node to see details.</div>
+</div>
+<svg></svg>
 
-  <!-- Stable filenames + cache-busting via ?v=BUILD_HASH -->
-  <script src="data.js?v=119fd36"></script>
-  <script src="graph_data.js?v=119fd36"></script>
-  <script src="link_index.js?v=119fd36"></script>
-  <script src="sidebar_display.js?v=119fd36"></script>
-  <script src="graph_layout.js?v=119fd36"></script>
-</body>
-</html>
+<!-- new unified data source -->
+<script src="data.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  // Expect window.PHI_DATA = { nodes:[{id,centrality}], links:[{source,target}], tagResources:{tag:{papers:[],podcasts:[]}} }
+  const DATA = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[],links:[],tagResources:{}};
+  const nodes = DATA.nodes || [];
+  const links = DATA.links || [];
+  const tagResources = DATA.tagResources || {};
+
+  const svg = d3.select("svg"),
+        width = window.innerWidth,
+        height = window.innerHeight;
+
+  const simulation = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id).distance(90))
+      .force("charge", d3.forceManyBody().strength(-450))
+      .force("center", d3.forceCenter(width / 2, height / 2));
+
+  const link = svg.append("g")
+      .attr("stroke", "#fff").attr("stroke-opacity", 0.6)
+    .selectAll("line")
+    .data(links).join("line")
+      .attr("stroke-width", 1.2);
+
+  const node = svg.append("g")
+      .attr("stroke-width", 1.5)
+    .selectAll("g")
+    .data(nodes).join("g")
+      .attr("class", "node")
+      .call(d3.drag()
+        .on("start", (event) => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+        })
+        .on("drag", (event) => {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        })
+        .on("end", (event) => {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+        })
+      );
+
+  node.append("ellipse")
+      .attr("rx", d => 6 + Math.sqrt((d.centrality || 0) * 1000))
+      .attr("ry", d => 4 + Math.sqrt((d.centrality || 0) * 500))
+      .attr("fill", "#00BFFF")
+      .on("click", (event, d) => showDetails(d));
+
+  node.append("text")
+      .text(d => d.id)
+      .attr("x", 10)
+      .attr("y", 4);
+
+  simulation.on("tick", () => {
+    link
+        .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+
+  function showDetails(d) {
+    const panel = document.getElementById("tag-details");
+    const res = tagResources[d.id] || { papers: [], podcasts: [] };
+    let html = `<b>${d.id}</b><br>`;
+    html += `Centrality: ${(d.centrality || 0).toFixed(2)}<br>`;
+    if (res.papers && res.papers.length) {
+      html += "<br><b>Papers</b><br>" + res.papers.map(url => `<a href="${url}" target="_blank">${url}</a>`).join("<br>");
+    }
+    if (res.podcasts && res.podcasts.length) {
+      html += "<br><b>Podcasts</b><br>" + res.podcasts.map(url => `<a href="${url}" target="_blank">${url}</a>`).join("<br>");
+    }
+    panel.innerHTML = html;
+  }
+</script>
