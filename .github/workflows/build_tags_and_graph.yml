@@ -3,122 +3,78 @@ name: Build Tags & Graph
 on:
   push:
     paths:
+      - "meta/tag_index.yml"
+      - "meta/aliases.yml"
       - "pulse/**/*.yml"
-      - "meta/*.yml"
-      - "update_tag_index.py"
       - "generate_graph_data.py"
       - "build_tag_browser.py"
       - "generate_tag_map.py"
-      - "tools/**/*.py"
+      - "docs/tag_map_template.html"
+      - "docs/graph.js"
       - ".github/workflows/build_tags_and_graph.yml"
-  workflow_dispatch:
-
-# prevent overlapping runs on rapid pushes
-concurrency:
-  group: build-tags-and-graph
-  cancel-in-progress: true
-
-env:
-  PYTHON_VERSION: "3.10"
-  ALIASES_STRATEGY: "fail"   # set to "default" to auto-create a minimal meta/aliases.yml
+  workflow_dispatch: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: "3.10"
 
-      - name: Install dependencies
+      - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml networkx jinja2 matplotlib
+          pip install pyyaml networkx
 
-      - name: Ensure aliases file (fail-fast or default)
+      # --- Graph data --------------------------------------------------------
+      - name: Generate alias-aware docs/data.js
         shell: bash
         run: |
-          if [[ "${ALIASES_STRATEGY}" == "default" ]]; then
-            if [[ ! -f meta/aliases.yml ]]; then
-              echo "aliases: {}" > meta/aliases.yml
-              echo "Created default meta/aliases.yml"
-            fi
-          else
-            if [[ ! -f meta/aliases.yml ]]; then
-              echo "::error::meta/aliases.yml missing. Set env ALIASES_STRATEGY=default to auto-create an empty one." >&2
-              exit 1
-            fi
-          fi
-
-      - name: Regenerate tag index
-        run: |
-          if [[ -f update_tag_index.py ]]; then
-            python update_tag_index.py
-          else
-            echo "::warning::update_tag_index.py not found; skipping."
-          fi
-
-      - name: Generate alias-aware graph_data.js
-        run: |
+          set -euo pipefail
+          mkdir -p docs
           if [[ -f generate_graph_data.py ]]; then
-            python generate_graph_data.py \
-              --tag-index meta/tag_index.yml \
-              --alias-map meta/aliases.yml \
-              --out-js docs/data.js
+            if [[ -f meta/aliases.yml ]]; then
+              python generate_graph_data.py \
+                --tag-index meta/tag_index.yml \
+                --alias-map meta/aliases.yml \
+                --out-js docs/data.js
+            else
+              echo "meta/aliases.yml not found → continuing without explicit alias map."
+              python generate_graph_data.py \
+                --tag-index meta/tag_index.yml \
+                --out-js docs/data.js
+            fi
           else
-            echo "::error::generate_graph_data.py not found." >&2
-            exit 1
+            echo "generate_graph_data.py is missing"; exit 1
           fi
 
-      - name: Build tag map HTML (optional)
+      # --- Tag browser (new path) -------------------------------------------
+      - name: Build Tag Browser HTML (docs/tag_browser.html)
         run: |
-          if [[ -f generate_tag_map.py ]]; then
-            python generate_tag_map.py
-          else
-            echo "::notice::generate_tag_map.py not found; skipping."
-          fi
+          python build_tag_browser.py \
+            --tag-index meta/tag_index.yml \
+            --alias-map meta/aliases.yml \
+            --data-js docs/data.js \
+            --out-html docs/tag_browser.html
 
-      - name: Build tag browser HTML (optional)
+      # --- Tag map (optional legacy visual) ---------------------------------
+      - name: Build Tag Map HTML (optional)
+        if: ${{ hashFiles('generate_tag_map.py') != '' }}
         run: |
-          if [[ -f build_tag_browser.py ]]; then
-            python build_tag_browser.py
-          else
-            echo "::notice::build_tag_browser.py not found; skipping."
-          fi
+          python generate_tag_map.py || echo "Tag map generation skipped/failed gracefully."
 
-      - name: Suggest aliases (optional)
+      # --- Commit artifacts --------------------------------------------------
+      - name: Commit generated artifacts
         run: |
-          if [[ -f tools/suggest_aliases.py ]]; then
-            python tools/suggest_aliases.py \
-              --tag-index meta/tag_index.yml \
-              --out meta/aliases_suggestions.yml || true
-          else
-            echo "::notice::tools/suggest_aliases.py not found; skipping suggestions."
-          fi
-
-      - name: Commit artifacts
-        run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Add only the canonical build outputs (no version sprawl)
-          git add meta/tag_index.yml || true
-          git add docs/graph_data.js || true
-          git add docs/tag_map.html  || true
-          git add docs/data.js       || true
-          git add docs/tag_browser.html || true
-          git add meta/aliases_suggestions.yml || true
-
-          git commit -m "auto: update tag index, graph_data.js, and docs" || echo "Nothing to commit"
+          git add docs/data.js docs/tag_browser.html
+          if [ -f docs/tag_map.html ]; then git add docs/tag_map.html; fi
+          git commit -m "Auto: build tags & graph (data.js, browser, map)" || echo "No changes to commit"
           git push || echo "Nothing to push"
-
-      - name: Summary
-        if: always()
-        run: |
-          NODES=$(grep -c '"id":' docs/graph_data.js 2>/dev/null || echo 0)
-          echo "Nodes counted in graph_data.js (approx): ${NODES}"
