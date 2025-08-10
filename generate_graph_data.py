@@ -1,214 +1,296 @@
 #!/usr/bin/env python3
-"""
-Robust tag graph builder for Phi-Mesh.
+# generate_graph_data.py
+# Builds docs/data.js from meta/tag_index.yml or (if empty/missing) from pulse/**/*.yml.
+# Usage:
+#   python generate_graph_data.py \
+#       --tag-index meta/tag_index.yml \
+#       --alias-map meta/aliases.yml \
+#       --pulse-glob "pulse/**/*.yml" \
+#       --out-js docs/data.js \
+#       [--debug]
 
-Supports tag_index.yml schemas:
-A) {"tags": {tag: {linked_pulses:[...], related_concepts:[...]}}}
-B) {tag: ["pulse/…yml", ...]}
-C) {tag: {pulses:[...], links:[...]}}
-D) [ {tag: <A|B|C-shape>}, {tag2: ...}, ... ]  # top-level list
+import argparse, json, sys, pathlib, glob
+from collections import defaultdict, Counter
+from itertools import combinations
 
-Also applies aliases from meta/aliases.yml, accepting either:
-  {canonical: [aliases]}  OR  {"aliases": {canonical: [aliases]}}
-"""
+try:
+    import yaml
+except Exception as e:
+    print("ERROR: pyyaml is required.", file=sys.stderr)
+    sys.exit(2)
 
-from __future__ import annotations
-import argparse, json, sys
-from pathlib import Path
-from typing import Dict, List, Set, Tuple, Any
-import yaml
+def read_text(p: pathlib.Path) -> str:
+    return p.read_text(encoding="utf-8", errors="ignore") if p.exists() else ""
 
+def load_yaml(p: pathlib.Path):
+    if not p.exists():
+        return None
+    txt = read_text(p)
+    if not txt.strip():
+        return None
+    try:
+        return yaml.safe_load(txt)
+    except Exception as e:
+        print(f"WARNING: Failed to parse YAML {p}: {e}", file=sys.stderr)
+        return None
 
-def load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as f:
-        return yaml.safe_load(f) or {}
+def load_alias_map(alias_path: pathlib.Path):
+    # aliases.yml can be {"canonical": ["alias1","alias2", ...], ...}
+    # or {"aliases": {"canonical": [...]} }
+    aliases_raw = load_yaml(alias_path)
+    alias_to_canon = {}
+    if not aliases_raw:
+        return alias_to_canon
 
+    if isinstance(aliases_raw, dict) and "aliases" in aliases_raw and isinstance(aliases_raw["aliases"], dict):
+        items = aliases_raw["aliases"].items()
+    elif isinstance(aliases_raw, dict):
+        items = aliases_raw.items()
+    else:
+        items = []
 
-def build_alias_resolver(alias_map: Dict[str, List[str]]) -> Dict[str, str]:
-    resolver: Dict[str, str] = {}
-    if not alias_map:
-        return resolver
-    for canonical, aliases in alias_map.items():
-        if not canonical:
+    for canon, aliases in items:
+        if not aliases: 
             continue
-        resolver[canonical] = canonical
-        if not aliases:
-            continue
-        for a in aliases:
-            if a:
-                resolver[str(a)] = canonical
-    return resolver
+        for a in (aliases if isinstance(aliases, list) else [aliases]):
+            if not a: 
+                continue
+            alias_to_canon[str(a).strip()] = str(canon).strip()
+    return alias_to_canon
 
+def normalize(tag: str) -> str:
+    return str(tag).strip()
 
-def resolve_tag(name: str, resolver: Dict[str, str]) -> str:
-    return resolver.get(name, name) if resolver else name
+def apply_alias(tag: str, alias_to_canon: dict) -> str:
+    t = normalize(tag)
+    # match raw, and also case-insensitive
+    if t in alias_to_canon:
+        return normalize(alias_to_canon[t])
+    # fallback case-insensitive
+    lower_map = {k.lower(): v for k, v in alias_to_canon.items()}
+    if t.lower() in lower_map:
+        return normalize(lower_map[t.lower()])
+    return t
 
+def parse_tag_index_any_shape(obj):
+    """
+    Accepts several historical shapes and returns:
+      tags -> set[pulses]
+      related -> set[(tagA, tagB)]  (optional)
+    """
+    tag_to_pulses = defaultdict(set)
+    related_edges = set()
 
-def parse_kv_block(
-    tag: str, val: Any,
-    pulses_by_tag: Dict[str, Set[str]],
-    links_by_tag: Dict[str, Set[str]],
-):
-    """Handle a single tag entry in shapes B or C."""
-    if isinstance(val, list):  # B: flat list of pulses
-        pulses_by_tag.setdefault(tag, set()).update(str(x) for x in val)
-    elif isinstance(val, dict):  # C: rich dict
-        for key in ("pulses", "linked_pulses"):
-            v = val.get(key)
-            if isinstance(v, list):
-                pulses_by_tag.setdefault(tag, set()).update(str(x) for x in v)
-        for key in ("links", "related_concepts"):
-            v = val.get(key)
-            if isinstance(v, list):
-                links_by_tag.setdefault(tag, set()).update(str(x) for x in v)
+    if not obj:
+        return tag_to_pulses, related_edges
 
-
-def parse_tag_index(obj: Any) -> Tuple[Dict[str, Set[str]], Dict[str, Set[str]]]:
-    pulses_by_tag: Dict[str, Set[str]] = {}
-    links_by_tag: Dict[str, Set[str]] = {}
-
-    # D) top-level list → merge items
-    if isinstance(obj, list):
-        for item in obj:
-            if isinstance(item, dict):
-                # could be {tag: ...} OR {"tags": {...}}
-                if "tags" in item and isinstance(item["tags"], dict):
-                    for t, info in item["tags"].items():
-                        parse_kv_block(str(t), info, pulses_by_tag, links_by_tag)
-                else:
-                    for t, info in item.items():
-                        parse_kv_block(str(t), info, pulses_by_tag, links_by_tag)
-        return pulses_by_tag, links_by_tag
-
-    # A) has "tags" mapping
+    # Shape A: {"tags": { "<tag>": {"linked_pulses":[...], "related_concepts":[...] }, ... } }
     if isinstance(obj, dict) and "tags" in obj and isinstance(obj["tags"], dict):
-        for t, info in obj["tags"].items():
-            parse_kv_block(str(t), info, pulses_by_tag, links_by_tag)
-        return pulses_by_tag, links_by_tag
+        for tag, info in obj["tags"].items():
+            if isinstance(info, dict):
+                for p in info.get("linked_pulses", []) or []:
+                    tag_to_pulses[tag].add(str(p))
+                for r in info.get("related_concepts", []) or []:
+                    related_edges.add((tag, str(r)))
+        return tag_to_pulses, related_edges
 
-    # B/C) plain mapping of tags
+    # Shape B: flat dict mapping tag -> list of pulse paths
+    # e.g. { "RGP":[ "pulse/2025-..yml", ... ], "NT":[ ... ] }
     if isinstance(obj, dict):
-        for t, val in obj.items():
-            parse_kv_block(str(t), val, pulses_by_tag, links_by_tag)
-        return pulses_by_tag, links_by_tag
+        for tag, val in obj.items():
+            if isinstance(val, list):
+                for p in val:
+                    tag_to_pulses[tag].add(str(p))
+        return tag_to_pulses, related_edges
 
-    # Unknown
-    return pulses_by_tag, links_by_tag
+    # Shape C: dict-of-dicts like { tag: { "pulses":[...], "links":[...] } }
+    if isinstance(obj, dict):
+        for tag, info in obj.items():
+            if isinstance(info, dict):
+                for p in info.get("pulses", []) or []:
+                    tag_to_pulses[tag].add(str(p))
+                for r in info.get("links", []) or []:
+                    related_edges.add((tag, str(r)))
+        return tag_to_pulses, related_edges
 
+    # Shape D: list of dict entries with nested keys
+    if isinstance(obj, list):
+        for entry in obj:
+            if isinstance(entry, dict):
+                for tag, info in entry.items():
+                    if isinstance(info, dict):
+                        for p in info.get("pulses", []) or []:
+                            tag_to_pulses[tag].add(str(p))
+                        for r in info.get("links", []) or []:
+                            related_edges.add((tag, str(r)))
+                    elif isinstance(info, list):
+                        for p in info:
+                            tag_to_pulses[tag].add(str(p))
+    return tag_to_pulses, related_edges
 
-def apply_aliases(
-    pulses_by_tag: Dict[str, Set[str]],
-    links_by_tag: Dict[str, Set[str]],
-    resolver: Dict[str, str],
-) -> Tuple[Dict[str, Set[str]], Dict[str, Set[str]]]:
-    if not resolver:
-        return pulses_by_tag, links_by_tag
+def derive_from_pulses(pulse_glob: str):
+    """
+    Scan pulse/**/*.yml and build:
+      - tag_to_pulses: tag -> set[pulse_relpath]
+      - co_occurrence edges: pairs of tags that appear together in a pulse
+      - per-tag resources (papers, podcasts) aggregated across pulses
+    """
+    tag_to_pulses = defaultdict(set)
+    edges = Counter()
+    resources = defaultdict(lambda: {"papers": set(), "podcasts": set()})
 
-    new_pulses: Dict[str, Set[str]] = {}
-    for tag, pulses in pulses_by_tag.items():
-        t = resolve_tag(tag, resolver)
-        new_pulses.setdefault(t, set()).update(pulses)
+    for path in glob.glob(pulse_glob, recursive=True):
+        p = pathlib.Path(path)
+        obj = load_yaml(p)
+        if not isinstance(obj, dict):
+            continue
 
-    new_links: Dict[str, Set[str]] = {}
-    for src, tgts in links_by_tag.items():
-        s = resolve_tag(src, resolver)
-        for tgt in tgts:
-            t = resolve_tag(tgt, resolver)
-            if t and t != s:
-                new_links.setdefault(s, set()).add(t)
+        tags = obj.get("tags") or obj.get("tag") or []
+        if isinstance(tags, str):
+            tags = [tags]
+        tags = [normalize(t) for t in tags if t]
 
-    return new_pulses, new_links
+        if not tags:
+            continue
 
+        # record tag -> pulse
+        for t in set(tags):
+            tag_to_pulses[t].add(str(p.as_posix()))
 
-def compute_degree_centrality(links_by_tag: Dict[str, Set[str]]) -> Dict[str, float]:
-    all_tags: Set[str] = set(links_by_tag.keys())
-    for targets in links_by_tag.values():
-        all_tags.update(targets)
+        # co-occurrence edges between all tag pairs in this pulse
+        for a, b in combinations(sorted(set(tags)), 2):
+            edges[(a, b)] += 1
 
-    deg: Dict[str, int] = {t: 0 for t in all_tags}
-    for s, targets in links_by_tag.items():
-        deg[s] += len(targets)
-        for t in targets:
-            deg[t] += 1
+        # collect any per-pulse resources under each tag
+        for lst_name, key in (("papers", "papers"), ("podcasts", "podcasts")):
+            lst = obj.get(key) or []
+            for t in set(tags):
+                for it in lst:
+                    resources[t][lst_name].add(str(it))
 
-    if not deg:
-        return {}
-    m = max(deg.values()) or 1
-    return {t: (v / m) for t, v in deg.items()}
+    # turn co-occurrence counts into edge list
+    related_edges = set()
+    for (a, b), cnt in edges.items():
+        # store undirected edge
+        related_edges.add((a, b))
 
+    # materialize resources to lists
+    res_final = {t: {"papers": sorted(list(v["papers"])),
+                     "podcasts": sorted(list(v["podcasts"]))}
+                 for t, v in resources.items()}
 
-def build_nodes_links(
-    pulses_by_tag: Dict[str, Set[str]],
-    links_by_tag: Dict[str, Set[str]],
-):
-    all_tags: Set[str] = set(pulses_by_tag.keys()) | set(links_by_tag.keys())
-    for tgts in links_by_tag.values():
-        all_tags.update(tgts)
+    return tag_to_pulses, related_edges, res_final
 
-    centrality = compute_degree_centrality(links_by_tag)
+def build_graph(tag_to_pulses, related_edges, alias_to_canon):
+    # apply aliases
+    canon_map = {}
+    for t in list(tag_to_pulses.keys()) + [x for e in related_edges for x in e]:
+        canon_map[t] = apply_alias(t, alias_to_canon)
 
-    nodes = [{
-        "id": t,
-        "centrality": round(float(centrality.get(t, 0.0)), 4),
-        "pulseCount": len(pulses_by_tag.get(t, set())),
-    } for t in sorted(all_tags)]
+    # merge pulse sets under canonical names
+    canon_tag_to_pulses = defaultdict(set)
+    for t, pulses in tag_to_pulses.items():
+        canon_tag_to_pulses[canon_map[t]].update(pulses)
 
-    links = []
-    for s, tgts in links_by_tag.items():
-        for t in tgts:
-            if s != t:
-                links.append({"source": s, "target": t})
+    # rebuild related edges under canonical names (dedupe self-loops)
+    canon_edges = set()
+    for a, b in related_edges:
+        ca, cb = canon_map[a], canon_map[b]
+        if ca != cb:
+            # normalize undirected
+            e = tuple(sorted([ca, cb]))
+            canon_edges.add(e)
 
-    return nodes, links
+    # degree / centrality (very simple: co-occur degree + pulse count weight)
+    degree = Counter()
+    for a, b in canon_edges:
+        degree[a] += 1
+        degree[b] += 1
+    for t, pulses in canon_tag_to_pulses.items():
+        degree[t] += min(len(pulses), 5)  # small bonus for usage
 
+    # nodes
+    nodes = []
+    if degree:
+        max_deg = max(degree.values()) or 1
+    else:
+        max_deg = 1
+    for t in sorted(canon_tag_to_pulses.keys()):
+        centrality = degree[t] / max_deg if max_deg else 0.0
+        nodes.append({"id": t, "centrality": round(centrality, 4), "count": len(canon_tag_to_pulses[t])})
 
-def write_js(out_path: Path, nodes, links, stats):
-    payload = {"nodes": nodes, "links": links, "stats": stats}
-    out_path.write_text("window.PHI_DATA = " + json.dumps(payload, ensure_ascii=False, indent=2) + ";\n", encoding="utf-8")
+    # links
+    links = [{"source": a, "target": b} for (a, b) in sorted(canon_edges)]
 
+    return nodes, links, canon_tag_to_pulses
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tag-index", required=True)
-    ap.add_argument("--alias-map")
-    ap.add_argument("--out-js", required=True)
+    ap.add_argument("--tag-index", default="meta/tag_index.yml")
+    ap.add_argument("--alias-map", default="meta/aliases.yml")
+    ap.add_argument("--pulse-glob", default="pulse/**/*.yml")
+    ap.add_argument("--out-js", default="docs/data.js")
+    ap.add_argument("--debug", action="store_true")
     args = ap.parse_args()
 
-    tag_path = Path(args.tag_index)
-    alias_path = Path(args.alias_map) if args.alias_map else None
-    out_js = Path(args.out_js)
+    tag_index_path = pathlib.Path(args.tag_index)
+    alias_path = pathlib.Path(args.alias_map)
+    out_js = pathlib.Path(args.out_js)
 
-    if not tag_path.exists():
-        print(f"ERROR: tag index not found at {tag_path}", file=sys.stderr)
-        sys.exit(2)
+    alias_to_canon = load_alias_map(alias_path)
 
-    tag_obj = load_yaml(tag_path)
+    # 1) Try tag_index
+    tag_index_obj = load_yaml(tag_index_path)
+    tag_to_pulses, related_edges = parse_tag_index_any_shape(tag_index_obj)
 
-    # load aliases
-    resolver = {}
-    if alias_path and alias_path.exists():
-        raw = load_yaml(alias_path) or {}
-        if isinstance(raw, dict) and "aliases" in raw and isinstance(raw["aliases"], dict):
-            resolver = build_alias_resolver(raw["aliases"])
-        elif isinstance(raw, dict):
-            resolver = build_alias_resolver(raw)
-        # else ignore weird shapes
+    # If empty, 2) derive from pulses
+    resources_by_tag = {}
+    if not tag_to_pulses:
+        print("INFO: tag_index was empty or unparseable; deriving tags from pulses.", file=sys.stderr)
+        tag_to_pulses, related_edges, resources_by_tag = derive_from_pulses(args.pulse_glob)
 
-    pulses_by_tag, links_by_tag = parse_tag_index(tag_obj)
-    pulses_by_tag, links_by_tag = apply_aliases(pulses_by_tag, links_by_tag, resolver)
+    # If still empty, emit a minimal, valid JS so downstream doesn’t crash
+    if not tag_to_pulses:
+        print("WARNING: No tags discovered. Emitting empty graph.", file=sys.stderr)
+        graph_obj = {
+            "nodes": [],
+            "links": [],
+            "tagResources": {},
+            "stats": {"tags": 0, "edges": 0}
+        }
+        out_js.parent.mkdir(parents=True, exist_ok=True)
+        payload = (
+            "window.GRAPH_DATA = " + json.dumps(graph_obj, ensure_ascii=False) + ";\n"
+            "window.TAG_GRAPH = window.GRAPH_DATA;\n"
+        )
+        out_js.write_text(payload, encoding="utf-8")
+        return
 
-    nodes, links = build_nodes_links(pulses_by_tag, links_by_tag)
-    stats = {"tagCount": len(nodes), "edgeCount": len(links), "hasAliases": bool(resolver)}
+    # 3) Build graph with aliases
+    nodes, links, canon_tag_to_pulses = build_graph(tag_to_pulses, related_edges, alias_to_canon)
 
-    if stats["tagCount"] == 0:
-        write_js(out_js, [], [], stats)
-        print("ERROR: No tags parsed from tag_index.yml (schema mismatch?).", file=sys.stderr)
-        # Exit non-zero so the workflow catches it
-        sys.exit(3)
+    # 4) resources map (papers/podcasts) — if we didn’t derive earlier, make empty buckets
+    tag_resources = {}
+    for t in {n["id"] for n in nodes}:
+        tag_resources[t] = resources_by_tag.get(t, {"papers": [], "podcasts": []})
 
-    write_js(out_js, nodes, links, stats)
-    print(f"Wrote {out_js} with {stats['tagCount']} tags and {stats['edgeCount']} edges.")
+    graph_obj = {
+        "nodes": nodes,
+        "links": links,
+        "tagResources": tag_resources,
+        "stats": {"tags": len(nodes), "edges": len(links)}
+    }
 
+    if args.debug:
+        print("DEBUG: tags:", len(nodes), "edges:", len(links), file=sys.stderr)
+        print("DEBUG sample nodes:", nodes[:5], file=sys.stderr)
+
+    out_js.parent.mkdir(parents=True, exist_ok=True)
+    payload = (
+        "window.GRAPH_DATA = " + json.dumps(graph_obj, ensure_ascii=False) + ";\n"
+        "window.TAG_GRAPH = window.GRAPH_DATA;\n"
+    )
+    out_js.write_text(payload, encoding="utf-8")
 
 if __name__ == "__main__":
     main()
