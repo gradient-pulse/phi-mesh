@@ -4,10 +4,12 @@ tags:
   - scale_free
   - historical_precedent
   - ratios
+  - Plimpton_322
 papers:
   - https://doi.org/10.5281/zenodo.15614775
 podcasts:
   - https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+callout: "NT ratios stabilize after the second bifurcation—watch the 0.618 cluster."
 summary: >
   The 3 700-year-old Babylonian tablet *Plimpton 322* lists base-60
   Pythagorean triples.  No angles, no coordinates—just reusable
