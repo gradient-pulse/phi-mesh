@@ -1,6 +1,6 @@
 ## 🔗 RPG Tag Navigation 
 
-[![🕸️ Tag Map View](https://img.shields.io/badge/Tag%20Map%20View-online-brightgreen)](https://gradient-pulse.github.io/phi-mesh/tag_browser.html)
+[![🕸️ Tag Browser](https://img.shields.io/badge/Tag%20Browser-online-brightgreen)](https://gradient-pulse.github.io/phi-mesh/tag_browser.html)
 
 [![🗺️ Legacy Map View](https://img.shields.io/badge/Legacy%20Map%20View-online-blue)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
 
