@@ -6,6 +6,7 @@ Robust to:
 - meta/tag_index.yml being empty ({}) or missing.
 - Multiple historical schemas of tag_index.yml.
 - Optional alias map (meta/aliases.yml) with flexible shapes.
+- Pulse YAML files that are dicts OR lists (we'll coerce).
 
 If tag_index is empty, we fall back to scanning pulse/*.yml files to
 reconstruct tags, edges, and basic resources.
@@ -19,7 +20,6 @@ from __future__ import annotations
 import argparse
 import glob
 import json
-import math
 import os
 from collections import defaultdict
 from itertools import combinations
@@ -35,10 +35,10 @@ def load_yaml(path: str) -> Any:
         return None
     with open(path, "r", encoding="utf-8") as f:
         try:
-            data = yaml.safe_load(f) or {}
+            data = yaml.safe_load(f)
         except Exception:
-            data = {}
-    return data
+            data = None
+    return data if data is not None else {}
 
 
 # ----------------------------- Aliases ------------------------------------- #
@@ -133,34 +133,71 @@ def extract_tag_mapping_from_index(idx: Any) -> Dict[str, List[str]]:
     return out
 
 
+# ----------------------------- Pulse coercion ------------------------------ #
+
+def coerce_pulse_doc(raw: Any) -> Dict[str, Any]:
+    """
+    Accepts pulse YAML that may be a dict OR a list.
+    If it's a list, try to merge dict items, preferring the first occurrence
+    of known fields. If it's neither, return empty dict.
+    """
+    if isinstance(raw, dict):
+        return raw
+
+    if isinstance(raw, list):
+        merged: Dict[str, Any] = {}
+        # try to find a single mapping that already has tags/title/etc.
+        for item in raw:
+            if isinstance(item, dict) and any(k in item for k in ("tags", "Tags", "title", "papers", "podcasts")):
+                # shallow-merge; keep earlier keys
+                for k, v in item.items():
+                    merged.setdefault(k, v)
+        if merged:
+            return merged
+        # last resort: merge all dicts shallowly
+        for item in raw:
+            if isinstance(item, dict):
+                for k, v in item.items():
+                    merged.setdefault(k, v)
+        return merged
+
+    return {}
+
+
 # ----------------------------- Pulse scan fallback ------------------------- #
 
-def scan_pulses_for_tags(pulse_glob: str) -> Tuple[Dict[str, List[str]], Dict[str, List[str]]]:
+def scan_pulses_for_tags(pulse_glob: str):
     """
     Scan pulse/**/*.yml and build:
       tag_to_pulses: { tag: [pulse_path,...] }
       pulse_to_tags: { pulse_path: [tag,...] }
-    Also collect 'papers' and 'podcasts' per pulse to later aggregate per tag.
+      pulse_resources: { pulse_path: { papers:[], podcasts:[] } }
+    Robust to dict/list YAML docs.
     """
     tag_to_pulses: Dict[str, List[str]] = defaultdict(list)
     pulse_to_tags: Dict[str, List[str]] = {}
     pulse_resources: Dict[str, Dict[str, List[str]]] = {}
 
     for path in glob.glob(pulse_glob, recursive=True):
-        try:
-            data = load_yaml(path) or {}
-        except Exception:
-            data = {}
-        tags = data.get("tags") or data.get("Tags") or []
-        tags = [str(t) for t in tags if isinstance(t, (str, int))]
+        raw = load_yaml(path)
+        data = coerce_pulse_doc(raw)
+
+        tags_val = data.get("tags", data.get("Tags", []))
+        if isinstance(tags_val, (str, int)):
+            tags = [str(tags_val)]
+        elif isinstance(tags_val, list):
+            tags = [str(t) for t in tags_val if isinstance(t, (str, int))]
+        else:
+            tags = []
+
         pulse_to_tags[path] = tags
 
-        papers = data.get("papers") or []
-        podcasts = data.get("podcasts") or []
-        pulse_resources[path] = {
-            "papers": [str(u) for u in papers if isinstance(u, str)],
-            "podcasts": [str(u) for u in podcasts if isinstance(u, str)],
-        }
+        papers_val = data.get("papers", [])
+        podcasts_val = data.get("podcasts", [])
+        papers = [str(u) for u in papers_val] if isinstance(papers_val, list) else []
+        podcasts = [str(u) for u in podcasts_val] if isinstance(podcasts_val, list) else []
+
+        pulse_resources[path] = {"papers": papers, "podcasts": podcasts}
 
         for t in tags:
             tag_to_pulses[t].append(path)
@@ -178,9 +215,11 @@ def build_edges_from_pulses(pulse_to_tags: Dict[str, List[str]]) -> Dict[Tuple[s
     weights: Dict[Tuple[str, str], int] = defaultdict(int)
     for _, tags in pulse_to_tags.items():
         uniq = sorted(set(tags))
-        for a, b in combinations(uniq, 2):
-            edge = (a, b) if a < b else (b, a)
-            weights[edge] += 1
+        for i in range(len(uniq)):
+            for j in range(i + 1, len(uniq)):
+                a, b = uniq[i], uniq[j]
+                edge = (a, b) if a < b else (b, a)
+                weights[edge] += 1
     return dict(weights)
 
 
@@ -262,13 +301,12 @@ def main():
         # Try to harvest resources by scanning pulses mentioned
         pulse_resources = {}
         for p in pulse_to_tags.keys():
-            data = load_yaml(p) or {}
+            data = coerce_pulse_doc(load_yaml(p))
             papers = data.get("papers") or []
             podcasts = data.get("podcasts") or []
-            pulse_resources[p] = {
-                "papers": [str(u) for u in papers if isinstance(u, str)],
-                "podcasts": [str(u) for u in podcasts if isinstance(u, str)],
-            }
+            papers = [str(u) for u in papers] if isinstance(papers, list) else []
+            podcasts = [str(u) for u in podcasts] if isinstance(podcasts, list) else []
+            pulse_resources[p] = {"papers": papers, "podcasts": podcasts}
 
     # Apply aliases: collapse tags to canonical
     canonical_tag_to_pulses: Dict[str, Set[str]] = defaultdict(set)
