@@ -1,148 +1,262 @@
 #!/usr/bin/env python3
-import argparse, json, sys, yaml
-from collections import defaultdict
+"""
+Robust tag graph builder for Phi-Mesh.
 
-def load_yaml(path):
-    with open(path, "r") as f:
-        return yaml.safe_load(f)
+Supports multiple tag_index.yml shapes:
+A) {"tags": {tag: {linked_pulses:[...], related_concepts:[...], ...}}}
+B) {tag: ["pulse/…yml", ...]}   # flat
+C) {tag: {pulses:[...], links:[...], ...}}  # rich (links = related tags)
 
-def normalize_tag_map(raw):
-    """
-    Accepts either:
-      - { 'tags': { tag: {links|related_concepts, pulses|linked_pulses} } }
-      - { tag: {links|related_concepts, pulses|linked_pulses} }
-    Returns a dict: { tag: { 'links': [...], 'pulses': [...] } }
-    """
-    obj = raw.get("tags") if isinstance(raw, dict) and "tags" in raw and isinstance(raw["tags"], dict) else raw
-    if not isinstance(obj, dict):
-        raise ValueError("tag_index.yml must be a mapping at top level (optionally under 'tags').")
+Also applies aliases from meta/aliases.yml when provided:
+aliases.yml example:
+  canonical_tag:
+    - alias1
+    - alias2
+"""
 
-    out = {}
-    for tag, entry in obj.items():
-        if not isinstance(entry, dict):
-            continue
-        # Accept both field names
-        links  = entry.get("links", entry.get("related_concepts", [])) or []
-        pulses = entry.get("pulses", entry.get("linked_pulses", [])) or []
-        # Normalize to lists
-        if not isinstance(links, list):  links  = []
-        if not isinstance(pulses, list): pulses = []
-        out[tag] = {"links": links, "pulses": pulses}
-    return out
+from __future__ import annotations
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Dict, List, Set, Tuple
+import yaml
 
-def apply_alias_map(tag_map, alias_map):
+
+def load_yaml(path: Path):
+    with path.open("r", encoding="utf-8") as f:
+        return yaml.safe_load(f) or {}
+
+
+def build_alias_resolver(alias_map: Dict[str, List[str]]) -> Dict[str, str]:
     """
-    alias_map example:
-      CanonicalTag:
-        - alias1
-        - alias2
-    All aliases are merged into CanonicalTag. If alias had links/pulses, they get merged.
+    Returns a mapping alias->canonical. Canonicals map to themselves.
     """
+    resolver: Dict[str, str] = {}
     if not alias_map:
-        return tag_map
-
-    # Build reverse index: alias -> canonical
-    alias_to_canon = {}
-    for canon, aliases in alias_map.items():
-        if not isinstance(aliases, list): 
+        return resolver
+    for canonical, aliases in alias_map.items():
+        # map canonical to itself
+        resolver[canonical] = canonical
+        if not aliases:
             continue
         for a in aliases:
-            alias_to_canon[a] = canon
-
-    merged = dict(tag_map)
-    for alias, canon in alias_to_canon.items():
-        if alias == canon:
-            continue
-        if alias in merged:
-            # Ensure canon exists
-            if canon not in merged:
-                merged[canon] = {"links": [], "pulses": []}
-            # Merge
-            merged[canon]["links"]  = sorted(set(merged[canon]["links"]  + merged[alias]["links"]))
-            merged[canon]["pulses"] = sorted(set(merged[canon]["pulses"] + merged[alias]["pulses"]))
-            # Redirect links pointing to alias → canon
-            for t, data in merged.items():
-                if t == alias:
-                    continue
-                if alias in data["links"]:
-                    data["links"] = sorted({canon if x == alias else x for x in data["links"]})
-            # Drop alias node
-            del merged[alias]
-    return merged
-
-def build_graph(tag_map):
-    """
-    Build nodes/edges for data.js
-    Node size is a simple function of degree + pulse count.
-    """
-    nodes = {}
-    edges = set()
-
-    # Create nodes first
-    for tag, data in tag_map.items():
-        degree = len(set(data.get("links", [])))
-        pulse_count = len(set(data.get("pulses", [])))
-        score = degree + 0.5 * pulse_count  # simple heuristic
-        nodes[tag] = {
-            "id": tag,
-            "degree": degree,
-            "pulses": pulse_count,
-            "score": score,
-        }
-
-    # Edges from links
-    for src, data in tag_map.items():
-        for dst in data.get("links", []):
-            if dst == src:
+            if not a:
                 continue
-            if dst not in nodes:
-                # If a link points to a non-existent tag, still include as a node with zero stats
-                nodes[dst] = {"id": dst, "degree": 0, "pulses": 0, "score": 0}
-            edge = tuple(sorted((src, dst)))
-            edges.add(edge)
+            resolver[str(a)] = canonical
+    return resolver
 
-    # Recompute degrees (now that we ensured all link targets exist)
-    deg = defaultdict(int)
-    for a, b in edges:
-        deg[a] += 1
-        deg[b] += 1
-    for t, d in nodes.items():
-        d["degree"] = deg[t]
-        d["score"] = d["degree"] + 0.5 * d["pulses"]
 
-    # Convert edges to list of {source,target}
-    edge_list = [{"source": a, "target": b} for (a, b) in sorted(edges)]
+def resolve_tag(name: str, resolver: Dict[str, str]) -> str:
+    if not resolver:
+        return name
+    return resolver.get(name, name)
 
-    return {
-        "nodes": [{"id": n["id"], "degree": n["degree"], "pulses": n["pulses"], "score": n["score"]} for n in nodes.values()],
-        "links": edge_list,
+
+def normalize_tags(tags: Set[str], resolver: Dict[str, str]) -> Set[str]:
+    return {resolve_tag(t, resolver) for t in tags if t}
+
+
+def parse_tag_index(obj: dict) -> Tuple[Dict[str, Set[str]], Dict[str, Set[str]]]:
+    """
+    Returns:
+        pulses_by_tag: {tag -> set(pulse_paths)}
+        links_by_tag : {tag -> set(related_tag)}
+    Handles schemas A, B, C described above.
+    """
+    pulses_by_tag: Dict[str, Set[str]] = {}
+    links_by_tag: Dict[str, Set[str]] = {}
+
+    def ensure(d: Dict[str, Set[str]], k: str) -> Set[str]:
+        if k not in d:
+            d[k] = set()
+        return d[k]
+
+    if not isinstance(obj, dict):
+        return pulses_by_tag, links_by_tag
+
+    # Schema A: top-level "tags"
+    if "tags" in obj and isinstance(obj["tags"], dict):
+        for tag, info in obj["tags"].items():
+            if not isinstance(info, dict):
+                # tolerate odd shapes
+                continue
+            # pulses might be under 'linked_pulses' or 'pulses'
+            for key in ("linked_pulses", "pulses"):
+                val = info.get(key)
+                if isinstance(val, list):
+                    ensure(pulses_by_tag, tag).update([str(x) for x in val])
+
+            # related tags under 'related_concepts' or 'links'
+            for key in ("related_concepts", "links"):
+                val = info.get(key)
+                if isinstance(val, list):
+                    ensure(links_by_tag, tag).update([str(x) for x in val])
+
+    else:
+        # Could be schema B (flat) or C (rich per-tag)
+        for tag, val in obj.items():
+            # flat: list of pulses
+            if isinstance(val, list):
+                ensure(pulses_by_tag, tag).update([str(x) for x in val])
+
+            # rich per-tag dict
+            elif isinstance(val, dict):
+                # pulses possibly under 'pulses' or 'linked_pulses'
+                for key in ("pulses", "linked_pulses"):
+                    v = val.get(key)
+                    if isinstance(v, list):
+                        ensure(pulses_by_tag, tag).update([str(x) for x in v])
+
+                # related tags possibly under 'links' or 'related_concepts'
+                for key in ("links", "related_concepts"):
+                    v = val.get(key)
+                    if isinstance(v, list):
+                        ensure(links_by_tag, tag).update([str(x) for x in v])
+
+            # else: ignore other forms
+
+    return pulses_by_tag, links_by_tag
+
+
+def apply_aliases_to_graph(
+    pulses_by_tag: Dict[str, Set[str]],
+    links_by_tag: Dict[str, Set[str]],
+    resolver: Dict[str, str],
+) -> Tuple[Dict[str, Set[str]], Dict[str, Set[str]]]:
+    if not resolver:
+        return pulses_by_tag, links_by_tag
+
+    # remap pulses_by_tag keys
+    new_pulses: Dict[str, Set[str]] = {}
+    for tag, pulses in pulses_by_tag.items():
+        t = resolve_tag(tag, resolver)
+        new_pulses.setdefault(t, set()).update(pulses)
+
+    # remap links_by_tag keys + targets
+    new_links: Dict[str, Set[str]] = {}
+    for src, targets in links_by_tag.items():
+        s = resolve_tag(src, resolver)
+        for tgt in targets:
+            t = resolve_tag(tgt, resolver)
+            if not t:
+                continue
+            if t == s:
+                # skip self loops after alias merge
+                continue
+            new_links.setdefault(s, set()).add(t)
+
+    return new_pulses, new_links
+
+
+def compute_degree_centrality(links_by_tag: Dict[str, Set[str]]) -> Dict[str, float]:
+    """
+    Simple degree centrality normalized to [0,1].
+    Degree = out + in.
+    """
+    all_tags: Set[str] = set(links_by_tag.keys())
+    for targets in links_by_tag.values():
+        all_tags.update(targets)
+
+    degree: Dict[str, int] = {t: 0 for t in all_tags}
+    for s, targets in links_by_tag.items():
+        degree[s] += len(targets)  # out-degree
+        for t in targets:
+            degree[t] += 1         # in-degree
+
+    if not degree:
+        return {}
+
+    max_deg = max(degree.values()) or 1
+    return {t: (deg / max_deg) for t, deg in degree.items()}
+
+
+def build_nodes_links(
+    pulses_by_tag: Dict[str, Set[str]],
+    links_by_tag: Dict[str, Set[str]],
+) -> Tuple[List[dict], List[dict]]:
+    # nodes: include every tag present in pulses or links
+    all_tags: Set[str] = set(pulses_by_tag.keys()) | set(links_by_tag.keys())
+    for targets in links_by_tag.values():
+        all_tags.update(targets)
+
+    centrality = compute_degree_centrality(links_by_tag)
+
+    nodes = []
+    for t in sorted(all_tags):
+        nodes.append({
+            "id": t,
+            "centrality": round(float(centrality.get(t, 0.0)), 4),
+            "pulseCount": len(pulses_by_tag.get(t, set())),
+        })
+
+    links = []
+    for s, targets in links_by_tag.items():
+        for t in targets:
+            if s == t:
+                continue
+            links.append({"source": s, "target": t})
+
+    return nodes, links
+
+
+def write_js(out_path: Path, nodes: List[dict], links: List[dict], stats: dict):
+    payload = {
+        "nodes": nodes,
+        "links": links,
+        "stats": stats,
     }
+    js = "window.PHI_DATA = " + json.dumps(payload, ensure_ascii=False, indent=2) + ";\n"
+    out_path.write_text(js, encoding="utf-8")
+
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tag-index", required=True)
-    ap.add_argument("--alias-map", required=False)
-    ap.add_argument("--out-js", required=True)
+    ap.add_argument("--tag-index", required=True, help="Path to meta/tag_index.yml")
+    ap.add_argument("--alias-map", default=None, help="Optional path to meta/aliases.yml")
+    ap.add_argument("--out-js", required=True, help="Output JS file (docs/data.js)")
     args = ap.parse_args()
 
-    tag_raw = load_yaml(args.tag_index)
-    tag_map = normalize_tag_map(tag_raw)
+    tag_index_path = Path(args.tag_index)
+    alias_map_path = Path(args.alias_map) if args.alias_map else None
+    out_js_path = Path(args.out_js)
 
-    alias_map = None
-    if args.alias_map:
-        alias_map = load_yaml(args.alias_map) or {}
+    if not tag_index_path.exists():
+        print(f"ERROR: tag index not found at {tag_index_path}", file=sys.stderr)
+        sys.exit(2)
 
-    tag_map = apply_alias_map(tag_map, alias_map)
+    tag_obj = load_yaml(tag_index_path)
 
-    graph = build_graph(tag_map)
+    alias_resolver: Dict[str, str] = {}
+    if alias_map_path and alias_map_path.exists():
+        raw_aliases = load_yaml(alias_map_path) or {}
+        # Support both {canonical: [aliases]} and {aliases: {canonical:[…]}}
+        if isinstance(raw_aliases, dict) and "aliases" in raw_aliases and isinstance(raw_aliases["aliases"], dict):
+            alias_resolver = build_alias_resolver(raw_aliases["aliases"])
+        else:
+            alias_resolver = build_alias_resolver(raw_aliases)
 
-    # Write docs/data.js as a JS assignment
-    out = "window.GRAPH_DATA = " + json.dumps(graph, ensure_ascii=False, separators=(",", ":")) + ";\n"
-    with open(args.out_js, "w") as f:
-        f.write(out)
+    pulses_by_tag, links_by_tag = parse_tag_index(tag_obj)
+    pulses_by_tag, links_by_tag = apply_aliases_to_graph(pulses_by_tag, links_by_tag, alias_resolver)
 
-    # Helpful stdout summary (shows up in Actions logs)
-    print(f"[generate_graph_data] nodes={len(graph['nodes'])} links={len(graph['links'])}")
+    nodes, links = build_nodes_links(pulses_by_tag, links_by_tag)
+
+    stats = {
+        "tagCount": len(nodes),
+        "edgeCount": len(links),
+        "hasAliases": bool(alias_resolver),
+    }
+
+    # If nothing parsed, fail loudly so CI catches it (your workflow sanity step also checks size)
+    if stats["tagCount"] == 0:
+        # Still write a tiny payload so the workflow can show the file, but exit non-zero
+        write_js(out_js_path, [], [], stats)
+        print("ERROR: No tags parsed from tag_index.yml (schema mismatch?).", file=sys.stderr)
+        sys.exit(3)
+
+    write_js(out_js_path, nodes, links, stats)
+    print(f"Wrote {out_js_path} with {stats['tagCount']} tags and {stats['edgeCount']} edges.")
+
 
 if __name__ == "__main__":
     main()
