@@ -1,189 +1,377 @@
 #!/usr/bin/env python3
-import argparse, glob, json, os, sys, yaml
-from collections import defaultdict
+# -*- coding: utf-8 -*-
+"""
+Generate docs/data.js (alias-aware) for the Tag Browser.
 
-def safe_load_yaml(path):
+- If meta/tag_index.yml exists and has content, use it as the source of truth.
+- Otherwise, scan pulse/**/*.yml to build tag→pulses and resources.
+- Optionally apply alias map from meta/aliases.yml (or any provided path).
+- Writes a single JS file that assigns to window.tagData for non-module pages.
+
+CLI:
+  python generate_graph_data.py \
+      --tag-index meta/tag_index.yml \
+      --alias-map meta/aliases.yml \
+      --pulse-glob "pulse/**/*.yml" \
+      --out-js docs/data.js
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import os
+from pathlib import Path
+from glob import glob
+from typing import Dict, List, Tuple, Any, Set
+
+try:
+    import yaml
+except Exception as e:
+    print(f"ERROR: pyyaml not available: {e}", file=sys.stderr)
+    sys.exit(2)
+
+
+# ---------------------------- IO helpers --------------------------------- #
+
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def write_text(path: Path, data: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(data, encoding="utf-8")
+
+
+def load_yaml(path: Path) -> Any:
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            return yaml.safe_load(f)
-    except Exception:
+        return yaml.safe_load(read_text(path))
+    except FileNotFoundError:
+        return None
+    except Exception as e:
+        print(f"WARN: Failed to parse YAML {path}: {e}", file=sys.stderr)
         return None
 
-def load_tag_index(path):
-    if not os.path.isfile(path):
+
+# ---------------------------- Aliases ------------------------------------ #
+
+def load_alias_map(alias_path: Path | None) -> Dict[str, str]:
+    """
+    alias map format (YAML):
+      canonical_tag:
+        - alias_one
+        - alias-two
+      Another Canonical:
+        - another_alias
+
+    Returns dict mapping normalized_alias -> canonical_tag.
+    """
+    if not alias_path or not alias_path.exists():
         return {}
-    data = safe_load_yaml(path) or {}
-    # Accept either {} or the richer meta/map formats; normalize to {tag: {pulses: [...], links: [...]}}
-    if isinstance(data, dict) and data:
-        return data
+
+    raw = load_yaml(alias_path)
+    if not isinstance(raw, dict):
+        return {}
+
+    norm = lambda s: str(s).strip()
+
+    mapping: Dict[str, str] = {}
+    for canonical, aliases in raw.items():
+        can = norm(canonical)
+        if not isinstance(aliases, list):
+            continue
+        for a in aliases:
+            alias = norm(a)
+            if alias and alias not in mapping:
+                mapping[alias] = can
+    return mapping
+
+
+def canonicalize(tag: str, alias_map: Dict[str, str]) -> str:
+    if not tag:
+        return tag
+    t = tag.strip()
+    # direct match
+    if t in alias_map:
+        return alias_map[t]
+    # case-insensitive match
+    lower_map = _LOWER_ALIAS_CACHE.get(id(alias_map))
+    if lower_map is None:
+        lm = {k.lower(): v for k, v in alias_map.items()}
+        _LOWER_ALIAS_CACHE[id(alias_map)] = lm
+        lower_map = lm
+    return lower_map.get(t.lower(), t)
+
+
+_LOWER_ALIAS_CACHE: Dict[int, Dict[str, str]] = {}
+
+
+# ----------------------- Tag index loading -------------------------------- #
+
+def load_tag_index(path: Path | None) -> Dict[str, Any]:
+    if not path or not path.exists():
+        return {}
+    data = load_yaml(path)
+    if not isinstance(data, dict):
+        return {}
+    # Support both “flat” and “rich” formats used in the repo history.
+    # We normalize into: { tag: { "links": [...], "pulses": [...], "summary": "" } }
+    # If already in that shape, keep as-is.
+    normalized: Dict[str, Any] = {}
+
+    # new structured shape?
+    # e.g. { AI_alignment: {links:[...], pulses:[...], summary:""} }
+    all_values_are_dicts = all(isinstance(v, dict) for v in data.values()) if data else False
+    if all_values_are_dicts:
+        for tag, entry in data.items():
+            e = dict(entry) if isinstance(entry, dict) else {}
+            links = e.get("links") if isinstance(e.get("links"), list) else []
+            pulses = e.get("pulses") if isinstance(e.get("pulses"), list) else []
+            summary = e.get("summary") if isinstance(e.get("summary"), str) else ""
+            normalized[tag] = {"links": links, "pulses": pulses, "summary": summary}
+        return normalized
+
+    # older flat shape? e.g. { AI_alignment: ["pulse/a.yml", "pulse/b.yml"], ... }
+    all_values_are_lists = all(isinstance(v, list) for v in data.values()) if data else False
+    if all_values_are_lists:
+        for tag, files in data.items():
+            pulses = []
+            for f in files:
+                # allow either full path strings or filenames
+                pulses.append(str(f))
+            normalized[tag] = {"links": [], "pulses": pulses, "summary": ""}
+        return normalized
+
+    # unknown / empty
     return {}
 
-def merge_alias_map(path):
-    if not os.path.isfile(path):
-        return {}
-    data = safe_load_yaml(path) or {}
-    # Expect {canonical: [aliases...]} but tolerate {canonical: {aliases: [...]}}
-    out = {}
-    if isinstance(data, dict):
-        for k, v in data.items():
-            if isinstance(v, dict) and "aliases" in v and isinstance(v["aliases"], list):
-                out[k] = [str(a) for a in v["aliases"]]
-            elif isinstance(v, list):
-                out[k] = [str(a) for a in v]
+
+# ----------------------- Pulse directory scan ----------------------------- #
+
+def merge_tag_sets(dst: Dict[str, Set[str]], tag: str, pulse_rel: str) -> None:
+    if tag not in dst:
+        dst[tag] = set()
+    dst[tag].add(pulse_rel)
+
+
+def coerce_tags_from_yaml(y: Any) -> List[str]:
+    """
+    Accepts a variety of shapes:
+      - dict with 'tags': list[str]
+      - list of dicts where each may contain 'tags'
+      - list[str] directly
+    Returns a flat list[str].
+    """
+    out: List[str] = []
+    if y is None:
+        return out
+    if isinstance(y, dict):
+        t = y.get("tags") or y.get("Tags") or []
+        if isinstance(t, list):
+            out.extend([str(x) for x in t])
+        return out
+    if isinstance(y, list):
+        # could be a plain list of tags, or a list of blocks that include tags
+        if all(isinstance(x, (str, int, float)) for x in y):
+            return [str(x) for x in y]
+        for item in y:
+            if isinstance(item, dict):
+                t = item.get("tags") or item.get("Tags") or []
+                if isinstance(t, list):
+                    out.extend([str(x) for x in t])
+        return out
     return out
 
-def expand_globs(glob_arg):
-    parts = [p.strip() for p in glob_arg.split(",") if p.strip()]
-    files = []
-    for pat in parts:
-        files.extend(glob.glob(pat, recursive=True))
-    # de-dup while keeping order
-    seen, dedup = set(), []
-    for f in files:
-        if f not in seen:
-            seen.add(f); dedup.append(f)
-    return dedup
 
-def scan_pulses_for_tags(pulse_globs, verbose=False):
-    paths = expand_globs(pulse_globs)
-    tag_to_pulses = defaultdict(list)
-    pulse_to_tags = {}
-    pulse_resources = {}
+def extract_resources(y: Any) -> Dict[str, List[str]]:
+    res = {"papers": [], "podcasts": [], "links": []}
+    if not isinstance(y, dict):
+        return res
+    for key in ("papers", "podcasts", "links"):
+        v = y.get(key)
+        if isinstance(v, list):
+            res[key] = [str(x) for x in v]
+    return res
 
+
+def scan_pulses_for_tags(pattern: str) -> Tuple[Dict[str, List[str]],
+                                                Dict[str, List[str]],
+                                                Dict[str, Dict[str, List[str]]]]:
+    """
+    Returns:
+      tag_to_pulses: tag -> [rel pulse paths]
+      pulse_to_tags: pulse -> [tags]
+      pulse_resources: pulse -> {papers:[], podcasts:[], links:[]}
+    """
+    tag_to_sets: Dict[str, Set[str]] = {}
+    pulse_to_tags: Dict[str, List[str]] = {}
+    pulse_resources: Dict[str, Dict[str, List[str]]] = {}
+
+    root = Path(".").resolve()
+    paths = sorted(Path(p).resolve() for p in glob(pattern, recursive=True))
     for p in paths:
-        y = safe_load_yaml(p)
-        if not isinstance(y, dict):  # skip lists/nulls/strings
-            if verbose: print(f"[skip] {p}: not a mapping", file=sys.stderr)
+        if not p.is_file():
             continue
-
-        # tags: list[str]
-        tags = y.get("tags") or y.get("Tags") or []
-        if not isinstance(tags, list):
-            if verbose: print(f"[skip] {p}: tags not a list", file=sys.stderr)
+        rel = str(p.relative_to(root))
+        y = load_yaml(p)
+        if y is None:
             continue
-        tags = [str(t).strip() for t in tags if t is not None and str(t).strip()]
+        tags = coerce_tags_from_yaml(y)
+        if not tags and isinstance(y, dict):
+            # Sometimes tags are under 'tags:' but empty; still record resources.
+            pass
+        pulse_resources[rel] = extract_resources(y)
 
-        # resources (optional)
-        papers = y.get("papers") or []
-        podcasts = y.get("podcasts") or []
-        r = {}
-        if isinstance(papers, list) and papers:
-            r["papers"] = [str(u) for u in papers]
-        if isinstance(podcasts, list) and podcasts:
-            r["podcasts"] = [str(u) for u in podcasts]
-        if r:
-            pulse_resources[p] = r
-
-        pulse_to_tags[p] = tags
+        unique_tags = []
+        seen = set()
         for t in tags:
-            if p not in tag_to_pulses[t]:
-                tag_to_pulses[t].append(p)
+            if not t:
+                continue
+            if t not in seen:
+                seen.add(t)
+                unique_tags.append(t)
 
-    return tag_to_pulses, pulse_to_tags, pulse_resources, paths
+        for t in unique_tags:
+            merge_tag_sets(tag_to_sets, t, rel)
+        pulse_to_tags[rel] = unique_tags
 
-def apply_aliases(tag_to_pulses, alias_map, soft=True):
-    """Return (canonical_tag_to_pulses, alias_edges) where alias_edges are (alias -> canonical)."""
+    tag_to_list = {k: sorted(list(v)) for k, v in tag_to_sets.items()}
+    return tag_to_list, pulse_to_tags, pulse_resources
+
+
+# ----------------------- Build browser payload ---------------------------- #
+
+def apply_aliases_to_tag_index(tag_index: Dict[str, Any],
+                               alias_map: Dict[str, str]) -> Dict[str, Any]:
+    if not alias_map or not tag_index:
+        return tag_index
+
+    merged: Dict[str, Any] = {}
+    for tag, entry in tag_index.items():
+        canon = canonicalize(tag, alias_map)
+        # merge
+        dst = merged.setdefault(canon, {"links": [], "pulses": [], "summary": ""})
+        # unify lists
+        links = entry.get("links", [])
+        pulses = entry.get("pulses", [])
+        if isinstance(links, list):
+            dst["links"].extend(links)
+        if isinstance(pulses, list):
+            dst["pulses"].extend(pulses)
+        # keep first non-empty summary
+        if not dst.get("summary") and isinstance(entry.get("summary"), str):
+            dst["summary"] = entry["summary"]
+
+    # de-dup + sort
+    for v in merged.values():
+        v["links"] = sorted(set(v.get("links", [])))
+        v["pulses"] = sorted(set(v.get("pulses", [])))
+    return merged
+
+
+def apply_aliases_to_scan(tag_to_pulses: Dict[str, List[str]],
+                          alias_map: Dict[str, str]) -> Dict[str, List[str]]:
     if not alias_map:
-        return tag_to_pulses, []
+        return tag_to_pulses
+    out: Dict[str, Set[str]] = {}
+    for tag, plist in tag_to_pulses.items():
+        canon = canonicalize(tag, alias_map)
+        out.setdefault(canon, set()).update(plist)
+    return {k: sorted(list(v)) for k, v in out.items()}
 
-    canon = defaultdict(list)
-    edges = []
-    alias_lookup = {}
-    for k, aliases in alias_map.items():
-        for a in aliases:
-            alias_lookup[a] = k
 
-    for t, plist in tag_to_pulses.items():
-        if t in alias_lookup:
-            k = alias_lookup[t]
-            # soft = merge alias into canonical, still keep canonical key only
-            for p in plist:
-                if p not in canon[k]:
-                    canon[k].append(p)
-            edges.append((t, k))
-        else:
-            for p in plist:
-                if p not in canon[t]:
-                    canon[t].append(p)
+def build_payload_from_index(tag_index: Dict[str, Any]) -> Dict[str, Any]:
+    tags = []
+    for tag, entry in sorted(tag_index.items(), key=lambda kv: kv[0].lower()):
+        pulses = entry.get("pulses", [])
+        links = entry.get("links", [])
+        summary = entry.get("summary", "")
+        tags.append({
+            "id": tag,
+            "count": len(pulses),
+            "pulses": pulses,
+            "links": links,
+            "summary": summary or ""
+        })
+    return {"tags": tags}
 
-    # if soft=False, also keep alias tags explicitly (edge case rarely needed)
-    if not soft:
-        for alias, k in alias_lookup.items():
-            if alias in tag_to_pulses:
-                for p in tag_to_pulses[alias]:
-                    if p not in canon[alias]:
-                        canon[alias].append(p)
-                edges.append((alias, k))
 
-    return canon, edges
+def build_payload_from_scan(tag_to_pulses: Dict[str, List[str]],
+                            pulse_resources: Dict[str, Dict[str, List[str]]]
+                            ) -> Dict[str, Any]:
+    tags = []
+    for tag, pulses in sorted(tag_to_pulses.items(), key=lambda kv: kv[0].lower()):
+        # optional: aggregate resources per tag (simple union)
+        agg_links: Set[str] = set()
+        for p in pulses:
+            r = pulse_resources.get(p, {})
+            for key in ("papers", "podcasts", "links"):
+                for u in r.get(key, []):
+                    agg_links.add(u)
+        tags.append({
+            "id": tag,
+            "count": len(pulses),
+            "pulses": pulses,
+            "links": sorted(agg_links),
+            "summary": ""
+        })
+    return {"tags": tags}
 
-def write_data_js(out_path, tags_map, resources, alias_edges):
-    payload = {
-        "tags": tags_map,                  # {tag: [pulses]}
-        "resources": resources,            # {pulse_path: {papers:[], podcasts:[]}}
-        "aliasEdges": alias_edges          # [[alias, canonical], ...]
-    }
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write("const tagData = ")
-        json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
-        f.write(";\n")
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--tag-index", default="meta/tag_index.yml")
-    ap.add_argument("--alias-map", default="")
-    ap.add_argument("--pulse-glob", default="pulse/**/*.yml,pulse/**/*.yaml",
-                    help="comma-separated globs")
-    ap.add_argument("--out-js", default="docs/data.js")
-    ap.add_argument("--no-soft-alias", action="store_true")
-    ap.add_argument("--verbose", action="store_true")
+# ---------------------------- Writer -------------------------------------- #
+
+def write_js(out_js: Path, payload: Dict[str, Any]) -> None:
+    # IMPORTANT: expose on window so non-module pages can access it.
+    js = "window.tagData=" + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";"
+    write_text(out_js, js)
+    size = out_js.stat().st_size
+    print(f"OK: wrote {out_js} ({size} bytes)")
+
+
+# ---------------------------- Main ---------------------------------------- #
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description="Generate alias-aware graph payload (docs/data.js).")
+    ap.add_argument("--tag-index", default="meta/tag_index.yml", help="Path to tag index YAML.")
+    ap.add_argument("--alias-map", default=None, help="Path to aliases YAML (optional).")
+    ap.add_argument("--pulse-glob", default="pulse/**/*.yml", help="Glob to scan pulses when index is empty.")
+    ap.add_argument("--out-js", default="docs/data.js", help="Output JS file path.")
     args = ap.parse_args()
 
-    verbose = args.verbose
-    os.makedirs(os.path.dirname(args.out_js), exist_ok=True)
+    tag_index_path = Path(args.tag_index)
+    alias_path = Path(args.alias_map) if args.alias_map else None
+    out_js = Path(args.out_js)
 
-    tag_index = load_tag_index(args.tag_index)
-    alias_map = merge_alias_map(args.alias_map) if args.alias_map else {}
+    alias_map = load_alias_map(alias_path)
+    if alias_map:
+        print(f"INFO: loaded {len(alias_map)} aliases from {alias_path}")
 
-    # Prefer scanning pulses; tag_index in your repo is sometimes transient/empty
-    if verbose:
-        print("INFO: scanning pulses …", file=sys.stderr)
+    tag_index = load_tag_index(tag_index_path)
 
-    t2p, p2t, resources, seen_paths = scan_pulses_for_tags(args.pulse_glob, verbose=verbose)
+    if tag_index:
+        print("INFO: using tag_index.yml as source of truth")
+        if alias_map:
+            tag_index = apply_aliases_to_tag_index(tag_index, alias_map)
+        payload = build_payload_from_index(tag_index)
+    else:
+        print("INFO: tag_index.yml empty or unsupported → scanning pulses …")
+        tag_to_pulses, pulse_to_tags, pulse_resources = scan_pulses_for_tags(args.pulse_glob)
+        if alias_map:
+            tag_to_pulses = apply_aliases_to_scan(tag_to_pulses, alias_map)
+        if not tag_to_pulses:
+            print("ERROR: No tags parsed from pulses. Aborting.", file=sys.stderr)
+            sys.exit(3)
+        payload = build_payload_from_scan(tag_to_pulses, pulse_resources)
 
-    if verbose:
-        print(f"INFO: scanned files: {len(seen_paths)}", file=sys.stderr)
-        print(f"INFO: pulses with tags: {sum(1 for _ in p2t)}", file=sys.stderr)
-        print(f"INFO: unique tags: {len(t2p)}", file=sys.stderr)
+    # Write JS
+    write_js(out_js, payload)
 
-    if not t2p:
-        # fallback: try tag_index if present
-        if tag_index:
-            if verbose:
-                print("WARN: no tags from pulses; using tag_index.yml fallback", file=sys.stderr)
-            t2p = defaultdict(list)
-            for tag, entry in tag_index.items():
-                plist = (entry or {}).get("pulses") or []
-                for p in plist:
-                    if p not in t2p[tag]:
-                        t2p[tag].append(p)
+    # Sanity echo (kept short)
+    try:
+        print(f"INFO: tag count = {len(payload.get('tags', []))}")
+    except Exception:
+        pass
 
-    if not t2p:
-        # still empty → write a harmless file but fail clearly
-        write_data_js(args.out_js, {}, {}, [])
-        print("ERROR: No tags discovered. Check pulse YAML format and globs.", file=sys.stderr)
-        sys.exit(3)
-
-    merged, edges = apply_aliases(t2p, alias_map, soft=(not args.no_soft_alias))
-    write_data_js(args.out_js, merged, resources, edges)
-
-    # Basic sanity check
-    if os.path.isfile(args.out_js) and os.path.getsize(args.out_js) < 200:
-        print("ERROR: docs/data.js is suspiciously small.", file=sys.stderr)
-        sys.exit(2)
-
-    if verbose:
-        print(f"OK: wrote {args.out_js} with {len(merged)} tags.", file=sys.stderr)
 
 if __name__ == "__main__":
     main()
