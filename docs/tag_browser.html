@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Phi-Mesh Tag Browser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --fg: #f5f7fb;
+      --muted: #9aa4b2;
+      --accent: #7dd3fc;
+      --panel: rgba(255,255,255,0.06);
+      --chip: rgba(125,211,252,0.14);
+    }
+    html, body { height: 100%; margin: 0; background: var(--bg); color: var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    header { padding: 16px 20px; display: flex; gap: 16px; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    header h1 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: .2px; }
+    header input[type="search"] { flex: 1; max-width: 520px; background: var(--panel); border: 1px solid rgba(255,255,255,0.08); color: var(--fg); border-radius: 12px; padding: 10px 12px; outline: none; }
+    main { display: grid; grid-template-columns: 360px 1fr; height: calc(100% - 66px); }
+    aside { border-right: 1px solid rgba(255,255,255,0.08); overflow-y: auto; }
+    .list { padding: 8px; display: grid; gap: 6px; }
+    .tag { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 12px; background: var(--panel); cursor: pointer; transition: background .15s ease; border: 1px solid rgba(255,255,255,0.06); }
+    .tag:hover { background: rgba(125,211,252,0.10); }
+    .tag .name { font-weight: 600; }
+    .tag .meta { color: var(--muted); font-size: 12px; }
+    section { position: relative; }
+    .details { padding: 16px 20px; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 0 0; }
+    .chip { font-size: 12px; padding: 6px 8px; border-radius: 999px; background: var(--chip); border: 1px solid rgba(125,211,252,0.25); color: var(--fg); }
+    .links { margin-top: 12px; }
+    .links a { color: var(--accent); text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+    .empty { color: var(--muted); padding: 32px 20px; }
+    .count { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Phi-Mesh Tag Browser</h1>
+    <input id="search" type="search" placeholder="Filter tags… (fuzzy, case-insensitive)" />
+  </header>
+  <main>
+    <aside>
+      <div id="list" class="list"></div>
+    </aside>
+    <section>
+      <div id="details" class="details empty">Pick a tag on the left to see details.</div>
+    </section>
+  </main>
+
+  <!-- Graph / Tag data -->
+  <script src="data.js"></script>
+  <script>
+    // Expect window.PHI_DATA = { nodes, links, tagResources }
+    const DATA = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[],links:[],tagResources:{}};
+
+    // Build a tag -> meta map from nodes/links/resources
+    const tagResources = DATA.tagResources || {};
+    const degree = {};
+    DATA.links.forEach(({source, target}) => {
+      degree[source] = (degree[source] || 0) + 1;
+      degree[target] = (degree[target] || 0) + 1;
+    });
+
+    const tags = DATA.nodes.map(n => ({
+      id: n.id,
+      centrality: n.centrality ?? 0,
+      degree: degree[n.id] || 0,
+      resources: tagResources[n.id] || { papers:[], podcasts:[] },
+    })).sort((a,b) => (b.degree - a.degree) || (b.centrality - a.centrality) || a.id.localeCompare(b.id));
+
+    const listEl = document.getElementById('list');
+    const searchEl = document.getElementById('search');
+    const detailsEl = document.getElementById('details');
+
+    function fmtCount(n){ return (n||0).toString(); }
+
+    function renderList(filter="") {
+      listEl.innerHTML = "";
+      const q = filter.trim().toLowerCase();
+      const subset = q ? tags.filter(t => t.id.toLowerCase().includes(q)) : tags;
+      subset.forEach(t => {
+        const row = document.createElement('div');
+        row.className = 'tag';
+        row.onclick = () => renderDetails(t.id);
+        const left = document.createElement('div');
+        left.innerHTML = `<div class="name">${t.id}</div><div class="meta">deg <span class="count">${t.degree}</span> · cent ${t.centrality.toFixed(2)}</div>`;
+        row.appendChild(left);
+        listEl.appendChild(row);
+      });
+      if (!subset.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = 'No tags match your filter.';
+        listEl.appendChild(empty);
+      }
+    }
+
+    function renderDetails(tagId) {
+      const t = tags.find(x => x.id === tagId);
+      if (!t) { detailsEl.className = 'details empty'; detailsEl.textContent = 'Tag not found.'; return; }
+      detailsEl.className = 'details';
+
+      const res = t.resources || { papers:[], podcasts:[] };
+      const pills = [];
+      pills.push(`<span class="chip">degree: ${t.degree}</span>`);
+      pills.push(`<span class="chip">centrality: ${t.centrality.toFixed(2)}</span>`);
+
+      let html = `<h2 style="margin:0 0 6px 0">${t.id}</h2>`;
+      html += `<div class="chips">${pills.join('')}</div>`;
+
+      const hasPapers = res.papers && res.papers.length;
+      const hasPods = res.podcasts && res.podcasts.length;
+
+      if (hasPapers || hasPods) {
+        html += `<div class="links">`;
+        if (hasPapers) {
+          html += `<div><strong>Papers</strong><br/>` + res.papers.map(u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`).join("<br/>") + `</div>`;
+        }
+        if (hasPods) {
+          html += `<div style="margin-top:10px"><strong>Podcasts</strong><br/>` + res.podcasts.map(u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`).join("<br/>") + `</div>`;
+        }
+        html += `</div>`;
+      } else {
+        html += `<div class="empty" style="padding:0;margin-top:12px">No linked resources yet.</div>`;
+      }
+
+      detailsEl.innerHTML = html;
+    }
+
+    searchEl.addEventListener('input', (e) => renderList(e.target.value));
+    renderList();
+  </script>
+</body>
+</html>
