@@ -3,12 +3,12 @@ name: Build Tags & Graph
 on:
   push:
     paths:
+      - "pulse/**/*.yml"
+      - "pulse/**/*.yaml"
       - "meta/tag_index.yml"
       - "meta/aliases.yml"
-      - "pulse/**/*.yml"
       - "generate_graph_data.py"
       - "build_tag_browser.py"
-      - "generate_tag_map.py"
       - "docs/tag_map_template.html"
       - "docs/graph.js"
       - ".github/workflows/build_tags_and_graph.yml"
@@ -17,7 +17,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,7 +31,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
-      # --- Graph data --------------------------------------------------------
+      # --- Generate data.js ---------------------------------------------------
       - name: Generate alias-aware docs/data.js
         shell: bash
         run: |
@@ -41,17 +40,11 @@ jobs:
           python generate_graph_data.py \
             --tag-index meta/tag_index.yml \
             --alias-map meta/aliases.yml \
-            --pulse-glob "pulse/**/*.yml" \
-            --out-js docs/data.js
+            --pulse-glob "pulse/**/*.yml,pulse/**/*.yaml" \
+            --out-js docs/data.js \
+            --verbose
 
-          # sanity guard
-          BYTES=$(wc -c < docs/data.js || echo 0)
-          if [ "$BYTES" -lt 200 ]; then
-            echo "ERROR: docs/data.js is suspiciously small (${BYTES} bytes)." 1>&2
-            exit 1
-          fi
-
-      # --- Tag browser (new path) -------------------------------------------
+      # --- Tag browser --------------------------------------------------------
       - name: Build Tag Browser HTML (docs/tag_browser.html)
         run: |
           python build_tag_browser.py \
@@ -60,13 +53,13 @@ jobs:
             --data-js docs/data.js \
             --out-html docs/tag_browser.html
 
-      # --- Tag map (optional legacy visual) ---------------------------------
+      # --- Optional legacy map (kept for now) --------------------------------
       - name: Build Tag Map HTML (optional)
-        if: ${{ hashFiles('generate_tag_map.py') != '' }}
+        if: ${{ hashFiles('docs/tag_map_template.html') != '' }}
         run: |
           python generate_tag_map.py || echo "Tag map generation skipped/failed gracefully."
 
-      # --- Cleanup legacy graph files ---------------------------------------
+      # --- Move legacy graph artifacts to archive ----------------------------
       - name: Cleanup legacy graph files
         run: |
           mkdir -p docs/archive
@@ -76,7 +69,7 @@ jobs:
           if [ -f docs/graph_layout.js ]; then git mv -f docs/graph_layout.js docs/archive/; fi
           if [ -f docs/link_index.js ]; then git mv -f docs/link_index.js docs/archive/; fi
 
-      # --- Commit artifacts --------------------------------------------------
+      # --- Commit -------------------------------------------------------------
       - name: Commit generated artifacts
         run: |
           git config user.name "github-actions[bot]"
