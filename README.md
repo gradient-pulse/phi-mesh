@@ -67,7 +67,7 @@ phi-mesh/
 	2.	Commit & push — GitHub Actions will update the tag index and regenerate the map automatically.
 	3.	Open the Φ–Mesh Tag Map to see the changes live.
 
-*(Future)* Populate a short `summary` per tag in `docs/data.js` and enable tooltips via `docs/map_node_tooltip.js`.
+*Future Update:* Populate a short `summary` per tag in `docs/data.js` and enable tooltips via `docs/map_node_tooltip.js`.
 
 ---
 
