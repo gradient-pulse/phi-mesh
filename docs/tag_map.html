@@ -1,283 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Phi-Mesh Tag Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --bg:#0b0b0f; --fg:#e7e9ee;
-      --panel:#11141a; --panel-2:#0f1217;
-      --border:#2a2f3a; --accent:#7db7ff;
-      --muted:#9aa2b1; --link:#b7c7ff;
-    }
-    html,body{height:100%;}
-    body{
-      margin:0;background:var(--bg);color:var(--fg);
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      display:grid;grid-template-columns:360px 1fr;gap:0;height:100%;
-    }
-    /* Sidebar */
-    aside{
-      border-right:1px solid var(--border);
-      background:linear-gradient(180deg,var(--panel),var(--panel-2));
-      display:flex;flex-direction:column;gap:12px;overflow:auto;
-    }
-    header{padding:16px 16px 8px;}
-    header h1{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
-    .search-row{display:flex;gap:8px;align-items:center}
-    #tag-search{
-      width:100%;background:var(--panel-2);border:1px solid var(--border);
-      border-radius:10px;padding:10px 12px;color:var(--fg);outline:none;
-    }
-    .clear-btn{
-      width:28px;height:28px;border-radius:8px;border:1px solid var(--border);
-      background:transparent;color:var(--muted);cursor:pointer;
-    }
-    .content{padding:8px 16px 16px;display:flex;flex-direction:column;gap:10px}
-    .pill{display:inline-block;padding:6px 10px;border-radius:9999px;
-          border:1px solid var(--border);background:#0e1420;color:#d8e7ff;
-          font-size:12px;margin-right:8px}
-    h2{font-size:18px;margin:2px 0 6px 0}
-    h3{font-size:12px;margin:12px 0 4px 0;color:#b9c2d0}
-    a.link{
-      color:var(--link);text-decoration:none;border-bottom:1px dotted rgba(183,199,255,.4)
-    }
-    a.link:hover{border-bottom-color:transparent}
-    .empty{color:var(--muted);font-size:14px;margin-top:8px}
+<meta charset="utf-8" />
+<title>Phi-Mesh Tag Map</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --bg:#0b0b0f; --panel:#11141a; --fg:#f5f7fb;
+    --muted:#a2adba; --accent:#7db7ff; --accent2:#9ad3ff; --link:#a7c4ff;
+    --border: rgba(255,255,255,0.08);
+    --linkStroke: rgba(200,215,235,0.30);
+    --linkStrokeDim: rgba(200,215,235,0.08);
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  .app{display:grid;grid-template-columns:360px 1fr;height:100%}
 
-    /* Graph */
-    .graph-wrap{position:relative;overflow:hidden}
-    svg{width:100%;height:100vh;display:block;background:transparent;cursor:grab}
-    .node ellipse{fill:#1bc0ff;stroke:none;opacity:.95;filter:drop-shadow(0 0 2px rgba(0,0,0,.25))}
-    .node text{fill:#fff;font-size:12px;dominant-baseline:hanging;pointer-events:none}
-    .link{stroke:#cfd3da;stroke-opacity:.25}
-    .dim{opacity:.08}
-    .highlight{opacity:1 !important}
-    .tip{
-      position:absolute;pointer-events:none;background:#0e1420;color:#e6f0ff;
-      border:1px solid #224;padding:8px 10px;border-radius:10px;font-size:12px;
-      box-shadow:0 6px 24px rgba(0,0,0,.35);max-width:320px;z-index:20;display:none
-    }
-  </style>
-</head>
+  /* Sidebar */
+  aside{background:linear-gradient(180deg, var(--panel), rgba(25,25,32,.92), rgba(25,25,32,.88));
+        border-right:1px solid var(--border);display:flex;flex-direction:column;}
+  header{padding:16px 16px 8px}
+  h1{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
+  .search-row{display:flex;gap:8px;align-items:center}
+  #tag-search{width:100%;background:#0f131a;border:1px solid var(--border);color:var(--fg);
+              padding:10px 12px;border-radius:10px;outline:none}
+  .clear-btn{background:#1b2230;border:1px solid var(--border);color:#cbd6e6;cursor:pointer;border-radius:10px;padding:8px 10px}
+
+  .sidebar-section{padding:8px 16px 14px 16px;border-top:1px solid var(--border)}
+  .pill{display:inline-block;background:#111b28;border:1px solid var(--border);color:#dbe7ff;
+        padding:6px 10px;border-radius:999px;margin-right:8px;font-size:12px}
+
+  .links h4{margin:8px 0 6px 0;font-size:13px;color:#cfe1ff}
+  .links a{display:block;color:var(--link);text-decoration:none;margin:2px 0;font-size:13px}
+  .links a:hover{text-decoration:underline}
+
+  .empty-hint{color:var(--muted);font-size:13px;padding:16px}
+
+  /* Graph */
+  svg{width:100%;height:100%}
+  .link{stroke:var(--linkStroke);stroke-width:1.2}
+  .link.dim{stroke:var(--linkStrokeDim)}
+  .node ellipse{fill:#2cc4ff;stroke:#022433;stroke-width:1.2;filter:drop-shadow(0 0 1px rgba(0,0,0,.3))}
+  .node.dim ellipse{opacity:.25}
+  .node text{fill:#fff;font-size:11px;pointer-events:none}
+  .node.dim text{opacity:.20}
+  .focus ellipse{stroke:#bdf;stroke-width:2}
+  .tooltip{position:fixed;pointer-events:none;background:rgba(20,24,34,.96);border:1px solid var(--border);
+           padding:8px 10px;border-radius:8px;color:#e6f0ff;font-size:12px;max-width:320px;display:none}
+</style>
+
 <body>
+<div class="app">
   <aside>
     <header>
       <h1>Phi-Mesh Tag Map</h1>
       <div class="search-row">
-        <input id="tag-search" type="text" placeholder="Search tags (prefix)..." autocomplete="off" />
-        <button id="clear" class="clear-btn" title="Clear">×</button>
+        <input id="tag-search" placeholder="Search tags (prefix)…" />
+        <button id="clear-search" class="clear-btn" title="Clear">×</button>
       </div>
     </header>
-    <div id="sidebar" class="content">
-      <div class="empty">Loading…</div>
+
+    <div id="tag-meta" class="sidebar-section">
+      <div class="empty-hint">Pick a tag to see details.</div>
+    </div>
+    <div id="tag-links" class="sidebar-section links" style="display:none;">
+      <h4>Papers</h4>
+      <div id="papers"></div>
+      <h4>Podcasts</h4>
+      <div id="podcasts"></div>
     </div>
   </aside>
 
-  <div class="graph-wrap">
-    <div id="tooltip" class="tip"></div>
-    <svg id="viz"></svg>
-  </div>
+  <svg id="graph" viewBox="0 0 1200 800"></svg>
+</div>
 
-  <!-- Try both common data bundle names; 404s won’t abort execution -->
-  <script src="data.js"></script>
-  <script src="graph.js"></script>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script>
-  (function(){
-    // Pull data from any known global; keep it super defensive.
-    const raw =
-      window.PHI_DATA ||
-      window.tagData ||
-      window.GRAPH_DATA ||
-      window.graphData ||
-      {};
+<div id="tooltip" class="tooltip"></div>
 
-    const nodes = (raw.nodes || raw.tags || []).map(d => ({
-      id: d.id || d.name,
-      degree: d.degree || d.deg || 0,
-      centrality: d.centrality || d.cent || 0
-    }));
-    const links = (raw.links || raw.edges || []).map(l => ({
-      source: l.source, target: l.target
-    }));
-    const resources = raw.tagResources || raw.resources || {};
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+/* ---------- data pickup (works with your current data.js) ---------- */
+const rawNodes = (window.PHI_DATA && PHI_DATA.nodes) || window.nodes || [];
+const rawLinks = (window.PHI_DATA && PHI_DATA.links) || window.links || [];
+const tagResources = (window.PHI_DATA && PHI_DATA.tagResources) || window.tagResources || {};
 
-    // If nothing loaded, let the user know and bail gracefully.
-    const sidebar = document.getElementById('sidebar');
-    if (!nodes.length) {
-      sidebar.innerHTML = '<div class="empty">No data found. Make sure <code>docs/data.js</code> or <code>docs/graph.js</code> defines <code>PHI_DATA</code>, <code>tagData</code>, <code>GRAPH_DATA</code>, or <code>graphData</code>.</div>';
-      return;
-    }
+const nodes = rawNodes.map(d => ({
+  id: d.id || d.name,
+  degree: d.degree || d.deg || 0,
+  centrality: d.centrality || d.cent || 0
+}));
+const links = rawLinks.map(l => ({ source: l.source, target: l.target }));
 
-    const byId = new Map(nodes.map(n => [n.id, n]));
-    const cleanLinks = links.filter(l => byId.has(l.source) && byId.has(l.target));
+/* ---------- helpers ---------- */
+const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
+const byId = new Map(nodes.map(n=>[n.id,n]));
+const neighbors = new Map(nodes.map(n=>[n.id,new Set]));
+links.forEach(l=>{
+  neighbors.get(l.source)?.add(l.target);
+  neighbors.get(l.target)?.add(l.source);
+});
 
-    const searchEl = document.getElementById('tag-search');
-    const clearBtn = document.getElementById('clear');
-    const tooltip = document.getElementById('tooltip');
+function normResources(r){
+  const toObj = (x)=> typeof x==='string' ? {url:x, title:''} : (x||{});
+  const take3 = arr => (arr||[]).slice(0,3).map(toObj);
+  return {
+    papers: take3(r?.papers),
+    podcasts: take3(r?.podcasts),
+    callout: r?.callout || ''
+  };
+}
+function trunc(s,max=60){
+  if(!s) return '';
+  return s.length>max ? s.slice(0,max-1)+'…' : s;
+}
 
-    function fmtNum(n){ return (n||0).toFixed(2); }
-    function truncUrl(u, max=60){
-      try {
-        const {host, pathname} = new URL(u);
-        const s = (host + pathname).replace(/^www\./,'');
-        return s.length > max ? s.slice(0, max-1) + '…' : s;
-      } catch { return (u||'').slice(0, max); }
-    }
-    function topN(arr=[], n=3){ return (arr || []).slice(0, n); }
+/* ---------- sidebar render ---------- */
+const metaEl = document.getElementById('tag-meta');
+const linksPanel = document.getElementById('tag-links');
+const papersEl = document.getElementById('papers');
+const podsEl = document.getElementById('podcasts');
 
-    function renderSidebar(tag){
-      if(!tag){ sidebar.innerHTML = '<div class="empty">Click a tag to focus and see resources.</div>'; return; }
-      const r = resources[tag.id] || {};
-      const papers = topN(r.papers, 3);
-      const podcasts = topN(r.podcasts, 3);
+function showDetails(id){
+  const n = byId.get(id);
+  if(!n){ metaEl.innerHTML = '<div class="empty-hint">Pick a tag to see details.</div>'; linksPanel.style.display='none'; return; }
 
-      sidebar.innerHTML = `
-        <h2>${tag.id}</h2>
-        <span class="pill">degree ${tag.degree}</span>
-        <span class="pill">centrality ${fmtNum(tag.centrality)}</span>
+  metaEl.innerHTML =
+    `<div style="margin-bottom:8px;font-weight:600;font-size:18px">${id}</div>
+     <span class="pill">degree ${n.degree}</span>
+     <span class="pill">centrality ${n.centrality.toFixed(2)}</span>`;
 
-        ${papers.length ? '<h3>Papers</h3>' : ''}
-        ${papers.map(u => `<div><a class="link" href="${u}" target="_blank" rel="noopener">${truncUrl(u)}</a></div>`).join('')}
-
-        ${podcasts.length ? '<h3>Podcasts</h3>' : ''}
-        ${podcasts.map(u => `<div><a class="link" href="${u}" target="_blank" rel="noopener">${truncUrl(u)}</a></div>`).join('')}
-      `;
-    }
-
-    // --- D3 scene setup ---
-    const svg = d3.select('#viz');
-    const width = svg.node().clientWidth;
-    const height = svg.node().clientHeight;
-
-    const zoom = d3.zoom().scaleExtent([0.25, 4]).on('zoom', ({transform}) => g.attr('transform', transform));
-    svg.call(zoom);
-
-    const g = svg.append('g');
-
-    // big transparent catch-all for “click outside to reset”
-    g.append('rect')
-      .attr('x', -1e5).attr('y', -1e5)
-      .attr('width', 2e5).attr('height', 2e5)
-      .attr('fill', 'transparent')
-      .lower()
-      .on('click', resetFocus);
-
-    const link = g.append('g').attr('stroke-width', 1.2)
-      .selectAll('line')
-      .data(cleanLinks)
-      .join('line')
-      .attr('class', 'link');
-
-    const node = g.append('g')
-      .selectAll('g.node')
-      .data(nodes, d => d.id)
-      .join(enter => {
-        const n = enter.append('g').attr('class', 'node').call(drag(sim));
-        n.append('ellipse')
-          .attr('rx', d => 6 + Math.sqrt((d.degree||1))*1.6)
-          .attr('ry', d => 4 + Math.sqrt((d.centrality||.01)*500)*.55);
-        n.append('text')
-          .attr('y', d => (4 + Math.sqrt((d.centrality||.01)*500)*.55) + 6)
-          .attr('text-anchor','middle')
-          .text(d => d.id);
-        return n;
-      });
-
-    // hover tooltip from resources[tag].callout (first ~3 sentences)
-    node.on('mousemove', (event, d) => {
-      const r = resources[d.id] || {};
-      const text = (r.callout || '').trim();
-      if(!text){ tooltip.style.display='none'; return; }
-      const snippet = text.split(/(?<=[.!?])\s+/).slice(0,3).join(' ');
-      tooltip.innerText = snippet;
-      tooltip.style.display = 'block';
-      const pad = 14;
-      tooltip.style.left = (event.clientX + pad) + 'px';
-      tooltip.style.top  = (event.clientY + pad) + 'px';
-    }).on('mouseleave', () => { tooltip.style.display='none'; });
-
-    node.on('click', (event, d) => {
-      event.stopPropagation();
-      focusNode(d.id);
+  const res = normResources(tagResources[id] || {});
+  const renderList = (el, items)=>{
+    el.innerHTML = items.length ? '' : '<div class="empty-hint" style="padding:6px 0 0 0">—</div>';
+    items.forEach(({url,title})=>{
+      const label = title ? trunc(title,68) : trunc(url.replace(/^https?:\/\//,''),68);
+      const a = document.createElement('a');
+      a.href = url; a.textContent = label; a.target = '_blank'; a.rel='noopener';
+      el.appendChild(a);
     });
+  };
+  renderList(papersEl, res.papers);
+  renderList(podsEl, res.podcasts);
+  linksPanel.style.display='block';
+}
 
-    svg.on('click', (event) => {
-      if (event.target === svg.node()) resetFocus();
-    });
+/* ---------- graph ---------- */
+const svg = d3.select('#graph');
+const g = svg.append('g'); // zoom container
+const link = g.append('g').attr('stroke-linecap','round')
+  .selectAll('line').data(links).enter().append('line').attr('class','link');
 
-    const sim = d3.forceSimulation(nodes)
-      .force('link', d3.forceLink(cleanLinks).id(d => d.id).distance(80).strength(.6))
-      .force('charge', d3.forceManyBody().strength(-260))
-      .force('center', d3.forceCenter(width/2, height/2))
-      .force('collide', d3.forceCollide().radius(d => 10 + Math.sqrt((d.degree||1))*1.6).iterations(2));
+const node = g.selectAll('.node').data(nodes).enter().append('g').attr('class','node');
 
-    sim.on('tick', () => {
-      link
-        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-      node.attr('transform', d => `translate(${d.x},${d.y})`);
-    });
+const rx = d => 6 + Math.sqrt((d.centrality||0)*900);
+const ry = d => 4 + Math.sqrt((d.centrality||0)*450);
 
-    function drag(sim){
-      function started(event){
-        if(!event.active) sim.alphaTarget(0.3).restart();
-        event.subject.fx = event.subject.x; event.subject.fy = event.subject.y;
-      }
-      function dragged(event){
-        event.subject.fx = event.x; event.subject.fy = event.y;
-      }
-      function ended(event){
-        if(!event.active) sim.alphaTarget(0);
-        event.subject.fx = null; event.subject.fy = null;
-      }
-      return d3.drag().on('start', started).on('drag', dragged).on('end', ended);
-    }
+node.append('ellipse').attr('rx', rx).attr('ry', ry);
+node.append('text').attr('y', d => ry(d)+12).attr('text-anchor','middle').text(d=>d.id);
 
-    function focusNode(id){
-      const n = byId.get(id);
-      if(!n) return;
+const sim = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(.2))
+  .force('charge', d3.forceManyBody().strength(-420))
+  .force('center', d3.forceCenter(600, 400))
+  .force('collision', d3.forceCollide().radius(d=>rx(d)+6));
 
-      const neighborSet = new Set([id]);
-      cleanLinks.forEach(l => {
-        if(l.source.id === id) neighborSet.add(l.target.id);
-        else if(l.target.id === id) neighborSet.add(l.source.id);
-      });
+sim.on('tick', ()=>{
+  link.attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+  node.attr('transform', d=>`translate(${d.x},${d.y})`);
+});
 
-      node.classed('dim', d => !neighborSet.has(d.id)).classed('highlight', d => neighborSet.has(d.id));
-      link.classed('dim', l => !(l.source.id===id || l.target.id===id));
+/* zoom / pan */
+svg.call(d3.zoom().scaleExtent([0.25, 4]).on('zoom', ({transform}) => { g.attr('transform', transform); }));
 
-      renderSidebar(n);
+/* focus logic */
+let focused = null;
 
-      const k = 1.2;
-      svg.transition().duration(600).call(
-        zoom.transform,
-        d3.zoomIdentity.translate(width/2 - n.x*k, height/2 - n.y*k).scale(k)
-      );
-    }
+function applyFocus(id){
+  focused = id;
+  const N = new Set([id, ...(neighbors.get(id)||[])]);
+  node.classed('dim', d=>!N.has(d.id)).classed('focus', d=>d.id===id);
+  link.classed('dim', d=> !(N.has(d.source.id) && N.has(d.target.id)));
+  showDetails(id);
 
-    function resetFocus(){
-      searchEl.value = '';
-      applySearch('');
-      node.classed('dim', false).classed('highlight', false);
-      link.classed('dim', false);
-      svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
-      renderSidebar(null);
-    }
+  // gently expand spacing for the local cloud
+  sim.force('link').distance(l => (l.source.id===id || l.target.id===id) ? 120 : 90);
+  sim.alpha(0.25).restart();
+}
+function clearFocus(){
+  focused = null;
+  node.classed('dim', false).classed('focus', false);
+  link.classed('dim', false);
+  showDetails(null);
+  sim.force('link').distance(90);
+  sim.alpha(0.15).restart();
+}
 
-    function applySearch(q){
-      const s = (q || '').trim().toLowerCase();
-      if(!s){ node.classed('highlight', false); return; }
-      node.classed('highlight', d => d.id.toLowerCase().startsWith(s));
-    }
-    searchEl.addEventListener('input', e => applySearch(e.target.value));
-    clearBtn.addEventListener('click', () => { searchEl.value=''; applySearch(''); });
+node.on('click', (_,d)=>applyFocus(d.id));
+svg.on('click', (event)=>{
+  // only clear when clicking empty background
+  const target = event.target;
+  if(target.tagName === 'svg') clearFocus();
+});
 
-    // initial
-    renderSidebar(null);
-  })();
-  </script>
-</body>
-</html>
+/* prefix search (highlights only) */
+const search = document.getElementById('tag-search');
+const clearBtn = document.getElementById('clear-search');
+function runSearch(){
+  const q = (search.value||'').trim().toLowerCase();
+  if(!q){
+    node.classed('dim', false);
+    link.classed('dim', false);
+    return;
+  }
+  const matched = new Set(nodes.filter(n=>n.id.toLowerCase().startsWith(q)).map(n=>n.id));
+  node.classed('dim', d=>!matched.has(d.id));
+  link.classed('dim', d=> !(matched.has(d.source.id) && matched.has(d.target.id)));
+}
+search.addEventListener('input', runSearch);
+clearBtn.addEventListener('click', ()=>{ search.value=''; runSearch(); search.focus(); });
+
+/* simple tooltip from callout (first 3 sentences) if present */
+const tip = document.getElementById('tooltip');
+function showTip(html,x,y){
+  tip.innerHTML = html;
+  tip.style.display='block';
+  tip.style.left = `${x+12}px`;
+  tip.style.top  = `${y+12}px`;
+}
+function hideTip(){ tip.style.display='none'; }
+
+node.on('mousemove', (event,d)=>{
+  const res = tagResources[d.id];
+  const callout = res && res.callout ? res.callout : '';
+  if(!callout){ hideTip(); return; }
+  const first3 = callout.split(/(?<=\.)\s+/).slice(0,3).join(' ');
+  showTip(`<strong>${d.id}</strong><br>${first3}`, event.clientX, event.clientY);
+});
+node.on('mouseleave', hideTip);
+
+/* initial state */
+showDetails(null);
+</script>
