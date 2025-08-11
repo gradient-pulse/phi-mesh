@@ -61,7 +61,7 @@ phi-mesh/
 ```
 ---
 
-## Add pulses → grow the map
+## Add pulses → *grow the map*
 
 	1.	Add a new YAML pulse to pulse/….
 	2.	Commit & push — GitHub Actions will update the tag index and regenerate the map automatically.
