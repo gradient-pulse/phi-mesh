@@ -8,9 +8,8 @@ Discoverability: "Emergent"
 
 # Φ-Mesh: Recursive Gradient Infrastructure
 
-[![🗺️ Legacy Map View](https://img.shields.io/badge/Legacy%20Map%20View-online-blue)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
-
-[![🕸️ Tag Browser](https://img.shields.io/badge/Tag%20Browser-online-brightgreen)](https://gradient-pulse.github.io/phi-mesh/tag_browser.html)
+**Live graph:** 👉 [Phi-Mesh Tag Map](https://phi-mesh.github.io/docs/tag_map.html)  
+**Browse tags:** 👉 [Tag Browser](https://phi-mesh.github.io/docs/tag_browser.html)
 
 **Main paper**  
 *Solving Navier-Stokes, Differently: What It Takes*  
