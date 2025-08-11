@@ -30,17 +30,12 @@
     .empty{color:var(--muted); font-size:13px}
     /* Graph */
     #graph{width:100%;height:100%}
-    .link{stroke:#b9c6d244; stroke-width:1}
+    .link{stroke:#b9c6d2; stroke-opacity:.6; stroke-width:1.2}
     .node{cursor:pointer}
-    .node circle{fill:#1ec3ff; stroke:none}
-    .node text{fill:#ffffff; font-size:11px; font-weight:600; text-anchor:middle; pointer-events:none; paint-order:stroke; stroke:#000; stroke-width:3px; stroke-opacity:.35}
+    .node ellipse{fill:#1ec3ff; stroke:none}
+    .node text{fill:#ffffff; font-size:11px; font-weight:500; text-anchor:middle; pointer-events:none; paint-order:stroke; stroke:#000; stroke-width:3px; stroke-opacity:.35}
     .dim{opacity:.12}
     .highlight{opacity:1}
-    .tooltip{
-      position:absolute; pointer-events:none; background:rgba(20,22,28,0.96);
-      color:var(--fg); border:1px solid var(--border); border-radius:10px;
-      padding:8px 10px; font-size:12px; max-width:320px; line-height:1.35
-    }
   </style>
 </head>
 <body>
@@ -59,11 +54,11 @@
 
   <svg id="graph"></svg>
 
-  <!-- Data blob -->
+  <!-- Data blob (must define window.PHI_DATA = {nodes,links,tagResources,tagMeta} ) -->
   <script src="data.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
-  // ---------- Helpers ----------
+  // -------- Data + helpers --------
   const DATA = window.PHI_DATA || {nodes:[],links:[],tagResources:{}, tagMeta:{}};
 
   function truncateText(s, max=80){
@@ -77,7 +72,6 @@
       return truncateText(base, max);
     } catch { return truncateText(u, max); }
   }
-  // Accept string or {url,title}/{href,text}
   function toLinkItems(list){
     if (!Array.isArray(list)) return [];
     const out=[];
@@ -94,7 +88,7 @@
     return out;
   }
 
-  // ---------- Prep degree + lookup ----------
+  // degree + neighbor maps
   const degree = {};
   for (const {source,target} of DATA.links){
     degree[source] = (degree[source]||0)+1;
@@ -107,54 +101,52 @@
     neighbors.get(target)?.add(source);
   }
 
-  // ---------- Graph layout ----------
+  // -------- Graph setup --------
   const svg = d3.select('#graph');
   const width = svg.node().clientWidth;
   const height = svg.node().clientHeight;
-
   const g = svg.append('g'); // zoom container
 
-  // zoom/pan
   const zoom = d3.zoom().scaleExtent([0.25, 3]).on('zoom', (event)=> {
     g.attr('transform', event.transform);
   });
   svg.call(zoom);
 
-  // link + node groups
+  // links
   const link = g.append('g').attr('stroke-linecap','round')
     .selectAll('line')
     .data(DATA.links)
     .enter().append('line')
     .attr('class','link');
 
+  // nodes
   const node = g.append('g')
     .selectAll('g')
     .data(DATA.nodes, d=>d.id)
     .enter().append('g')
     .attr('class','node')
-    .on('click', (event,d)=> focusNode(d.id))
-    .on('mouseover', handleHover)
-    .on('mouseout', handleHoverOut);
+    .on('click', (event,d)=> focusNode(d.id));
 
-  // Node visuals
+  // ellipse sizing (a bit elongated horizontally)
   const sizeScale = d3.scaleSqrt()
     .domain(d3.extent(DATA.nodes, d=> (degree[d.id]||1)))
-    .range([6, 24]); // compact but readable
+    .range([6, 24]);
 
-  node.append('circle')
-    .attr('r', d => sizeScale(degree[d.id]||1));
+  node.append('ellipse')
+    .attr('rx', d => sizeScale(degree[d.id]||1) * 1.2)
+    .attr('ry', d => sizeScale(degree[d.id]||1) * 0.8);
 
-  // Labels UNDER nodes
+  // labels UNDER nodes
   node.append('text')
-    .attr('dy', d => (sizeScale(degree[d.id]||1) + 12)) // below circle
+    .attr('dy', d => (sizeScale(degree[d.id]||1) * 0.8 + 12))
     .text(d => d.id);
 
-  // Simulation (a bit looser for readability)
+  // layout (looser for readability)
   const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(DATA.links).id(d=>d.id).distance(90).strength(0.35))
-    .force('charge', d3.forceManyBody().strength(-220))
+    .force('link', d3.forceLink(DATA.links).id(d=>d.id).distance(110).strength(0.35))
+    .force('charge', d3.forceManyBody().strength(-260))
     .force('center', d3.forceCenter(width/2, height/2))
-    .force('collision', d3.forceCollide().radius(d=> sizeScale(degree[d.id]||1) + 10));
+    .force('collision', d3.forceCollide().radius(d=> sizeScale(degree[d.id]||1) + 14));
 
   sim.on('tick', () => {
     link
@@ -163,7 +155,7 @@
     node.attr('transform', d=>`translate(${d.x},${d.y})`);
   });
 
-  // ---------- Sidebar rendering ----------
+  // -------- Sidebar --------
   const sidebar = document.getElementById('sidebar');
 
   function renderSidebar(tagId){
@@ -202,21 +194,21 @@
     sidebar.innerHTML = html;
   }
 
-  // ---------- Focus behavior (center + neighbor cloud) ----------
+  // -------- Focus behavior --------
   function focusNode(tagId){
     const neigh = neighbors.get(tagId) || new Set();
-    // dim all
-    node.classed('dim', true); link.classed('dim', true);
-    // highlight focus + neighbors
-    node.filter(d=> d.id===tagId || neigh.has(d.id)).classed('dim', false).classed('highlight', true);
+    node.classed('dim', true).classed('highlight', false);
+    link.classed('dim', true);
+
+    node.filter(d=> d.id===tagId || neigh.has(d.id))
+        .classed('dim', false).classed('highlight', true);
     link.filter(d=> d.source.id===tagId || d.target.id===tagId || (neigh.has(d.source.id)&&neigh.has(d.target.id)))
         .classed('dim', false);
 
-    // center on node
     const d = nodeById.get(tagId);
     if (d){
       const t = d3.zoomTransform(svg.node());
-      const scale = Math.max(1.1, t.k); // zoom in a touch
+      const scale = Math.max(1.1, t.k);
       const tx = (width/2) - d.x*scale;
       const ty = (height/2) - d.y*scale;
       svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity.translate(tx,ty).scale(scale));
@@ -224,40 +216,18 @@
     renderSidebar(tagId);
   }
 
-  // ---------- Hover tooltip (simple) ----------
-  const tip = d3.select('body').append('div').attr('class','tooltip').style('opacity',0);
-  function handleHover(event, d){
-    const meta = (DATA.tagMeta && DATA.tagMeta[d.id]) || {};
-    const callout = meta.callout || '';
-    const deg = degree[d.id] || 0;
-    const cent = (typeof d.centrality === 'number' ? d.centrality.toFixed(2) : '0.00');
-    const lines = [
-      `<strong>${d.id}</strong>`,
-      `<span style="color:${getComputedStyle(document.documentElement).getPropertyValue('--muted')}">deg ${deg} · cent ${cent}</span>`,
-    ];
-    if (callout) lines.push(`<div style="margin-top:6px">${truncateText(callout, 240)}</div>`);
-    tip.html(lines.join('<br/>'))
-       .style('left', (event.pageX + 14) + 'px')
-       .style('top', (event.pageY + 12) + 'px')
-       .transition().duration(120).style('opacity',1);
-  }
-  function handleHoverOut(){
-    tip.transition().duration(120).style('opacity',0);
-  }
-
-  // ---------- Search (prefix highlight only) ----------
+  // -------- Search (prefix highlight only) --------
   const searchEl = document.getElementById('tag-search');
   const clearBtn = document.getElementById('clear-search');
 
   function applySearch(term){
     const q = (term||'').trim();
     if (!q){
-      // clear highlighting/filters
       node.classed('dim', false).classed('highlight', false);
       link.classed('dim', false);
       return;
     }
-    const matches = new Set(DATA.nodes.filter(n=> n.id.startsWith(q)).map(n=>n.id));
+    const matches = new Set(DATA.nodes.filter(n=> n.id.toLowerCase().startsWith(q.toLowerCase())).map(n=>n.id));
     node.classed('dim', d=> !matches.has(d.id))
         .classed('highlight', d=> matches.has(d.id));
     link.classed('dim', d=> !(matches.has(d.source.id) || matches.has(d.target.id)));
@@ -265,8 +235,6 @@
 
   searchEl.addEventListener('input', e => applySearch(e.target.value));
   clearBtn.addEventListener('click', () => { searchEl.value=''; applySearch(''); });
-
-  // ESC clears search (and Safari fullscreen wonk: we stop propagation)
   window.addEventListener('keydown', (e)=>{
     if (e.key === 'Escape'){
       e.stopPropagation();
@@ -274,9 +242,8 @@
     }
   });
 
-  // ---------- Initial subtle layout settle ----------
+  // settle layout
   setTimeout(()=> sim.alpha(0.6).restart(), 0);
-
   </script>
 </body>
 </html>
