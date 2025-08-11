@@ -61,22 +61,13 @@ phi-mesh/
 ```
 ---
 
-## How to view the map locally
-
-Open `docs/tag_map.html` in a browser.  
-The page loads `docs/data.js` and renders the graph (pan/zoom, click-to-focus, prefix search).
-
-> The sidebar shows **papers** and **podcasts** for the selected tag with real, clickable links.
-
----
-
 ## Add pulses → grow the map
 
-1. Add a new YAML pulse to `pulse/…`.  
-2. Commit/push — the workflow updates the tag index and regenerates the map assets.  
-3. Reload `docs/tag_map.html`.
+	1.	Add a new YAML pulse to pulse/….
+	2.	Commit & push — GitHub Actions will update the tag index and regenerate the map automatically.
+	3.	Open the Φ–Mesh Tag Map to see the changes live.
 
-*(Optional later)* Populate a short `summary` per tag in `docs/data.js` and enable tooltips via `docs/map_node_tooltip.js`.
+*(Future)* Populate a short `summary` per tag in `docs/data.js` and enable tooltips via `docs/map_node_tooltip.js`.
 
 ---
 
