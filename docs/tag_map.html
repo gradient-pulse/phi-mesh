@@ -9,8 +9,7 @@
       --bg:#0b0b0f; --fg:#e7e9ee;
       --panel:#11141a; --panel-2:#0f1217;
       --border:#2a2f3a; --accent:#7db7ff;
-      --accent2:#a2dabf; --muted:#9aa2b1;
-      --link:#b7c7ff;
+      --muted:#9aa2b1; --link:#b7c7ff;
     }
     html,body{height:100%;}
     body{
@@ -18,7 +17,6 @@
       font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       display:grid;grid-template-columns:360px 1fr;gap:0;height:100%;
     }
-
     /* Sidebar */
     aside{
       border-right:1px solid var(--border);
@@ -36,7 +34,6 @@
       width:28px;height:28px;border-radius:8px;border:1px solid var(--border);
       background:transparent;color:var(--muted);cursor:pointer;
     }
-
     .content{padding:8px 16px 16px;display:flex;flex-direction:column;gap:10px}
     .pill{display:inline-block;padding:6px 10px;border-radius:9999px;
           border:1px solid var(--border);background:#0e1420;color:#d8e7ff;
@@ -74,7 +71,7 @@
       </div>
     </header>
     <div id="sidebar" class="content">
-      <div class="empty">Click a tag to focus and see resources.</div>
+      <div class="empty">Loading…</div>
     </div>
   </aside>
 
@@ -83,13 +80,20 @@
     <svg id="viz"></svg>
   </div>
 
-  <!-- data bundle built by generate_tag_map.py -->
+  <!-- Try both common data bundle names; 404s won’t abort execution -->
   <script src="data.js"></script>
+  <script src="graph.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
   (function(){
-    // --- data plumbing (supports window.PHI_DATA or legacy tagData) ---
-    const raw = window.PHI_DATA || window.tagData || {};
+    // Pull data from any known global; keep it super defensive.
+    const raw =
+      window.PHI_DATA ||
+      window.tagData ||
+      window.GRAPH_DATA ||
+      window.graphData ||
+      {};
+
     const nodes = (raw.nodes || raw.tags || []).map(d => ({
       id: d.id || d.name,
       degree: d.degree || d.deg || 0,
@@ -98,14 +102,18 @@
     const links = (raw.links || raw.edges || []).map(l => ({
       source: l.source, target: l.target
     }));
-    const resources = raw.tagResources || raw.resources || {}; // { tag: { papers:[], podcasts:[], callout? } }
+    const resources = raw.tagResources || raw.resources || {};
+
+    // If nothing loaded, let the user know and bail gracefully.
+    const sidebar = document.getElementById('sidebar');
+    if (!nodes.length) {
+      sidebar.innerHTML = '<div class="empty">No data found. Make sure <code>docs/data.js</code> or <code>docs/graph.js</code> defines <code>PHI_DATA</code>, <code>tagData</code>, <code>GRAPH_DATA</code>, or <code>graphData</code>.</div>';
+      return;
+    }
 
     const byId = new Map(nodes.map(n => [n.id, n]));
-    // Filter links that reference missing nodes
     const cleanLinks = links.filter(l => byId.has(l.source) && byId.has(l.target));
 
-    // --- helpers ---
-    const sidebar = document.getElementById('sidebar');
     const searchEl = document.getElementById('tag-search');
     const clearBtn = document.getElementById('clear');
     const tooltip = document.getElementById('tooltip');
@@ -147,10 +155,9 @@
     const zoom = d3.zoom().scaleExtent([0.25, 4]).on('zoom', ({transform}) => g.attr('transform', transform));
     svg.call(zoom);
 
-    // Graph root
     const g = svg.append('g');
 
-    // Big transparent backdrop to catch clicks even after transforms
+    // big transparent catch-all for “click outside to reset”
     g.append('rect')
       .attr('x', -1e5).attr('y', -1e5)
       .attr('width', 2e5).attr('height', 2e5)
@@ -169,11 +176,9 @@
       .data(nodes, d => d.id)
       .join(enter => {
         const n = enter.append('g').attr('class', 'node').call(drag(sim));
-        // ellipse sizing based on degree/centrality
         n.append('ellipse')
           .attr('rx', d => 6 + Math.sqrt((d.degree||1))*1.6)
           .attr('ry', d => 4 + Math.sqrt((d.centrality||.01)*500)*.55);
-        // label under the node (dominant-baseline: hanging in CSS)
         n.append('text')
           .attr('y', d => (4 + Math.sqrt((d.centrality||.01)*500)*.55) + 6)
           .attr('text-anchor','middle')
@@ -181,7 +186,7 @@
         return n;
       });
 
-    // Hover tooltip (3-sentence-ish from callout if available)
+    // hover tooltip from resources[tag].callout (first ~3 sentences)
     node.on('mousemove', (event, d) => {
       const r = resources[d.id] || {};
       const text = (r.callout || '').trim();
@@ -194,18 +199,15 @@
       tooltip.style.top  = (event.clientY + pad) + 'px';
     }).on('mouseleave', () => { tooltip.style.display='none'; });
 
-    // Focus behavior
     node.on('click', (event, d) => {
-      event.stopPropagation();        // <- keep background from resetting immediately
+      event.stopPropagation();
       focusNode(d.id);
     });
 
-    // Reset view when clicking “empty space” (the big transparent rect handles most cases)
     svg.on('click', (event) => {
       if (event.target === svg.node()) resetFocus();
     });
 
-    // simulation
     const sim = d3.forceSimulation(nodes)
       .force('link', d3.forceLink(cleanLinks).id(d => d.id).distance(80).strength(.6))
       .force('charge', d3.forceManyBody().strength(-260))
@@ -216,7 +218,6 @@
       link
         .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-
       node.attr('transform', d => `translate(${d.x},${d.y})`);
     });
 
@@ -235,26 +236,21 @@
       return d3.drag().on('start', started).on('drag', dragged).on('end', ended);
     }
 
-    // --- focus / reset ---
     function focusNode(id){
       const n = byId.get(id);
       if(!n) return;
 
-      // neighbors
       const neighborSet = new Set([id]);
       cleanLinks.forEach(l => {
         if(l.source.id === id) neighborSet.add(l.target.id);
         else if(l.target.id === id) neighborSet.add(l.source.id);
       });
 
-      // dim rest
       node.classed('dim', d => !neighborSet.has(d.id)).classed('highlight', d => neighborSet.has(d.id));
       link.classed('dim', l => !(l.source.id===id || l.target.id===id));
 
-      // sidebar
       renderSidebar(n);
 
-      // center + zoom toward selection
       const k = 1.2;
       svg.transition().duration(600).call(
         zoom.transform,
@@ -271,13 +267,9 @@
       renderSidebar(null);
     }
 
-    // --- search (prefix highlight) ---
     function applySearch(q){
       const s = (q || '').trim().toLowerCase();
-      if(!s){
-        node.classed('highlight', false);
-        return;
-      }
+      if(!s){ node.classed('highlight', false); return; }
       node.classed('highlight', d => d.id.toLowerCase().startsWith(s));
     }
     searchEl.addEventListener('input', e => applySearch(e.target.value));
