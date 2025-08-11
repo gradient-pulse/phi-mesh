@@ -71,7 +71,7 @@ phi-mesh/
 
 ---
 
-## Why Φ-Mesh (short)
+## Why Φ-Mesh
 
 - Shifts from **symbolic instruction** to **gradient signal**.  
 - Lets agents **self-align** via **NT rhythm** (Narrative Ticks) and **least-divergence** dynamics.  
