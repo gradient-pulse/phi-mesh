@@ -265,18 +265,23 @@ def main():
         # nodes
         nodes = build_nodes_from_tag_map(tag_map)
 
-        # edges: from explicit links if present
+        # edges: start from explicit links, then merge in co-occurrence edges from pulses
         edges = []
         for t, info in tag_map.items():
             for other in (info.get("links") or []):
                 edges.append(tuple(sorted((t, str(other)))))
-        edges = sorted(set(edges))
+
+        # derive co-occurrence edges by scanning pulses (so we always have connections)
+        _, _, _, _, scan_edges = scan_pulses_for_tags(args.pulse_glob)
+        edges = sorted(set(edges) | set(tuple(sorted(e)) for e in scan_edges))
+
         link_objs = [{"source": a, "target": b} for (a, b) in edges]
 
-        # tag_to_pulses (for resources & first-seen); tolerate either field name
-        tag_to_pulses = {}
+        # tag_to_pulses (for resources & first-seen); tolerate either field name; dict/str safe
+        tag_to_pulses: Dict[str, List[str]] = {}
         for t, info in tag_map.items():
-            pulses = _as_ids(info.get("pulses", []), "pulse") + _as_ids(info.get("pulse", []), "pulse")
+            raw_pulses = (info.get("pulses") or []) + (info.get("pulse") or [])
+            pulses = _as_ids(raw_pulses, "pulse")
             tag_to_pulses[t] = list(dict.fromkeys(pulses))  # preserve order
 
         # pulse resources / meta must be derived by scanning pulses (non-fatal if missing)
