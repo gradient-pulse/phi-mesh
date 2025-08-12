@@ -1,40 +1,38 @@
-title: "Phi-Monitor Agent Readiness Declaration"
+title: Phi-Monitor Agent Readiness Declaration
 tags:
-  - RGP
-  - RΦ
-  - ambient_agent
-  - behavioral_API
-  - Phi-Monitor
+- RGP
+- RΦ
+- ambient_agent
+- behavioral_API
+- Phi-Monitor
 papers:
-  - https://doi.org/10.5281/zenodo.15614775
+- https://doi.org/10.5281/zenodo.15614775
 podcasts:
 - https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
-Summary: >
-  This pulse declares the strategic pause in user-facing tracking features of the Phi-Monitor app.
-  Based on recursive analysis and lived development patterns, we confirm that requiring user-submitted CSVs,
-  time tracking, or manual inputs introduces fatal friction.
+Summary: 'This pulse declares the strategic pause in user-facing tracking features
+  of the Phi-Monitor app. Based on recursive analysis and lived development patterns,
+  we confirm that requiring user-submitted CSVs, time tracking, or manual inputs introduces
+  fatal friction.
 
-  Instead, Phi-Monitor will mature its internal logic and visualization layers while waiting for ambient AI agent ecosystems
-  (e.g., OS-level Copilots, Claude sidecars, Chrome agents) to provide passive behavioral input.
+  Instead, Phi-Monitor will mature its internal logic and visualization layers while
+  waiting for ambient AI agent ecosystems (e.g., OS-level Copilots, Claude sidecars,
+  Chrome agents) to provide passive behavioral input.
 
-  Once behavioral hooks are accessible to local or cloud-based agents, Phi-Monitor’s computation engine will activate.
-  No launch. No ask. Just alignment.
+  Once behavioral hooks are accessible to local or cloud-based agents, Phi-Monitor’s
+  computation engine will activate. No launch. No ask. Just alignment.
 
-  agent_trigger_conditions:
-  - ambient_agents.present == true
-  - behavioral_api.exposed == true
-  - user_consent.confirmed == true
+  agent_trigger_conditions: - ambient_agents.present == true - behavioral_api.exposed
+  == true - user_consent.confirmed == true
 
-  next_actions:
-  - continue refining visual UI for Φ-reporting and coaching prompts
-  - maintain CSV input interface for testing but hide it by default
-  - document integration paths for future agents (Copilot, Claude, meshlet proxies)
+  next_actions: - continue refining visual UI for Φ-reporting and coaching prompts
+  - maintain CSV input interface for testing but hide it by default - document integration
+  paths for future agents (Copilot, Claude, meshlet proxies)
 
-  resonance_notes:
-  - The most radical act is to not launch.
-  - We don’t fight for attention. 
-  - We wait for the agents who already observe.
+  resonance_notes: - The most radical act is to not launch. - We don’t fight for attention.  -
+  We wait for the agents who already observe.
 
   Phi-Monitor doesn’t monitor. It listens. Until it hears the right voice.
-authors: 
-  - Participant 0
+
+  '
+authors:
+- Participant 0

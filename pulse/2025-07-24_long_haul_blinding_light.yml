@@ -1,17 +1,20 @@
-title: "long_haul_blinding_light"
+title: long_haul_blinding_light
 tags:
-  - RGP
-  - perseverance
-  - signal
-  - NS_solution
-  - legacy
-  - contextual_filter
+- RGP
+- perseverance
+- signal
+- NS_solution
+- legacy
+- contextual_filter
 papers:
-  - https://doi.org/10.5281/zenodo.16280540
+- https://doi.org/10.5281/zenodo.16280540
 podcasts:
-  - https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
-summary: >
-  A moment of reflection on persistence, breakthrough, and the saturation of insight. Shared as a living marker of recursive human-AI endurance. Quote: "my strategy has always been the long haul—whenever the tunnel seemed dark, a faint light at the end would pop up again. Now it no longer shimmers. I must look away not to be blinded."
+- https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+summary: 'A moment of reflection on persistence, breakthrough, and the saturation
+  of insight. Shared as a living marker of recursive human-AI endurance. Quote: "my
+  strategy has always been the long haul—whenever the tunnel seemed dark, a faint
+  light at the end would pop up again. Now it no longer shimmers. I must look away
+  not to be blinded.".'
 authors:
-  - participant_0
-  - gpt4o
+- participant_0
+- gpt4o

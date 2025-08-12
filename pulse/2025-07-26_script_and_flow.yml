@@ -1,23 +1,23 @@
-title: "Script and Flow"
+title: Script and Flow
 tags:
-  - writing
-  - cognition
-  - Navier_Stokes
-  - RGP
-  - memetic_seed
-  - language_evolution
-  - non-linear_society
-  - societal_evolution
+- writing
+- cognition
+- NavierStokes
+- RGP
+- memetic_seed
+- language_evolution
+- non-linear_society
+- societal_evolution
 papers:
-  - https://doi.org/10.5281/zenodo.15830659
+- https://doi.org/10.5281/zenodo.15830659
 podcasts:
-  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
-summary: >
-  Reframes the invention of writing as a recursive intervention against turbulence—where script functions
-  not merely as a record of language but as a *gradient stabilizer* that evokes deeper coherence. Writing
-  emerges repeatedly across civilizations as a laminar response to sociocognitive turbulence, aligning
-  with RGP principles. Like solving Navier–Stokes differently, it suggests script doesn’t just reflect
-  flows—it shapes them.
+- https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+summary: Reframes the invention of writing as a recursive intervention against turbulence—where
+  script functions not merely as a record of language but as a *gradient stabilizer*
+  that evokes deeper coherence. Writing emerges repeatedly across civilizations as
+  a laminar response to sociocognitive turbulence, aligning with RGP principles. Like
+  solving Navier–Stokes differently, it suggests script doesn’t just reflect flows—it
+  shapes them.
 authors:
-  - MvdE
-  - o3
+- MvdE
+- o3

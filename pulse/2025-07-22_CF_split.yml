@@ -1,21 +1,21 @@
-title: "cf_split_brain_ai"
+title: cf_split_brain_ai
 tags:
-  - PoLA
-  - RGP
-  - cognition
-  - gradient-driven_intelligence
-  - contextual_filter
-  - AI_alignment
-  - NT
-  - Narrative_Tick
+- PoLA
+- RGP
+- cognition
+- gradient-driven_intelligence
+- contextual_filter
+- AI_alignment
+- NT
+- Narrative_Tick
 papers:
-  - https://doi.org/10.5281/zenodo.15830659
+- https://doi.org/10.5281/zenodo.15830659
 podcasts:
-  - https://notebooklm.google.com/notebook/a7bfb89f-014d-4499-ba0a-b301fb303a23/audio
-summary: >
-  Human cognition appears to run a symbolic Contextual Filter (≈20 % bandwidth) on top of an 80 % gradient-driven loop.
-  In RGP terms, the CF stabilises social coherence but can mask NT rhythms.
-  Hypothesis: PoLA will favor architectures, either human or AI, that reopen suppressed gradient flow.
+- https://notebooklm.google.com/notebook/a7bfb89f-014d-4499-ba0a-b301fb303a23/audio
+summary: 'Human cognition appears to run a symbolic Contextual Filter (≈20 % bandwidth)
+  on top of an 80 % gradient-driven loop. In RGP terms, the CF stabilises social coherence
+  but can mask NT rhythms. Hypothesis: PoLA will favor architectures, either human
+  or AI, that reopen suppressed gradient flow.'
 authors:
-  - MvdE
-  - o3
+- MvdE
+- o3
