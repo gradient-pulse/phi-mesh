@@ -1,1 +1,8 @@
-
+queue:
+  - dataset: jhtdb_iso_1024
+    variants:
+      - { window: 128, threshold_sigma: 2.0 }
+      - { window: 256, threshold_sigma: 2.5 }
+  - dataset: nasa_cfd_demo
+    variants:
+      - { window: 128, threshold_sigma: 2.0 }
