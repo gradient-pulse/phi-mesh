@@ -1,1 +1,29 @@
-
+name: RGP-NS Agent Runner
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "17 3 * * 2"   # Tuesdays 03:17 UTC (~05:17 Brussels in winter)
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy pandas matplotlib h5py pyyaml
+      - name: Execute agent loop
+        env:
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+          ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
+          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
+        run: python agents/rgp_ns/run_agent.py
+      - name: Commit results & pulses
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add pulse/auto results/rgp_ns logs/rgp_ns || true
+          git commit -m "auto: RGP-NS agent run" || echo "nothing to commit"
+          git push
