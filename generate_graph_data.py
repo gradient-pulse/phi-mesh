@@ -4,7 +4,7 @@ Builds docs/data.js for the Phi-Mesh tag browser & graph map.
 
 Priority order:
 1) If meta/tag_index.yml exists and is non-empty → use it.
-2) Otherwise, scan pulse/*.yml (skipping pulse/archive and pulse/telemetry).
+2) Otherwise, scan pulse/**/*.yml (skipping pulse/archive and pulse/telemetry).
 
 Outputs docs/data.js with:
   window.PHI_DATA = {
@@ -67,6 +67,30 @@ def is_skipped_pulse_path(path: str) -> bool:
     return False
 
 
+def _as_ids(items, kind: str):
+    """
+    Accept list of strings or list of dicts and return an order-preserving, de-duped list of IDs.
+    kind == "pulse"  → prefer dict['path'] then dict['title']
+    kind == "paper"  → prefer dict['doi'] or dict['link'] or dict['title']
+    kind == "pod"    → prefer dict['link'] or dict['title']
+    """
+    out, seen = [], set()
+    for x in items or []:
+        if isinstance(x, dict):
+            if kind == "pulse":
+                key = x.get("path") or x.get("title") or str(x)
+            elif kind == "paper":
+                key = x.get("doi") or x.get("link") or x.get("title") or str(x)
+            else:  # pod
+                key = x.get("link") or x.get("title") or str(x)
+        else:
+            key = str(x)
+        if key and key not in seen:
+            seen.add(key)
+            out.append(key)
+    return out
+
+
 # --------------------------- pulse scanning ---------------------------- #
 
 def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
@@ -82,7 +106,8 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
     pulse_meta: Dict[str, Dict[str, str]] = {}
     edges_set = set()
 
-    candidates = sorted(glob.glob(glob_pattern))
+    # recursive so pulse/auto/*.yml is included
+    candidates = sorted(glob.glob(glob_pattern, recursive=True))
     for fp in candidates:
         if not fp.endswith((".yml", ".yaml")):
             continue
@@ -123,7 +148,7 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
                     if isinstance(x, str):
                         out.append({"url": x})
                     elif isinstance(x, dict):
-                        url = x.get("url") or ""
+                        url = x.get("url") or x.get("link") or ""
                         ttl = x.get("title")
                         if url or ttl:
                             item = {}
@@ -224,7 +249,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag-index", default="meta/tag_index.yml")
     ap.add_argument("--alias-map", default="meta/aliases.yml")
-    ap.add_argument("--pulse-glob", default="pulse/*.yml")
+    ap.add_argument("--pulse-glob", default="pulse/**/*.yml")  # recursive
     ap.add_argument("--out-js", default="docs/data.js")
     args = ap.parse_args()
 
@@ -249,8 +274,10 @@ def main():
         link_objs = [{"source": a, "target": b} for (a, b) in edges]
 
         # tag_to_pulses (for resources & first-seen); tolerate either field name
-        tag_to_pulses = {t: list(set((info.get("pulses") or []) + (info.get("pulse") or [])))
-                         for t, info in tag_map.items()}
+        tag_to_pulses = {}
+        for t, info in tag_map.items():
+            pulses = _as_ids(info.get("pulses", []), "pulse") + _as_ids(info.get("pulse", []), "pulse")
+            tag_to_pulses[t] = list(dict.fromkeys(pulses))  # preserve order
 
         # pulse resources / meta must be derived by scanning pulses (non-fatal if missing)
         _, _, pulse_resources, pulse_meta, _ = scan_pulses_for_tags(args.pulse_glob)
