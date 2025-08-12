@@ -1,0 +1,19 @@
+---
+title: "Call for Experimenters — RGP vs Navier–Stokes"
+date: 2025-08-12T00:00:00Z
+summary: >
+  One‑page call published inviting replications of the NT‑rhythm test via the agent runner
+  or a 90‑minute local script. Pass criterion: conserved NT‑distance rhythm across ≥2 datasets
+  (α=0.01) with consistent effect size.
+tags: [RGP, NavierStokes, Turbulence, NT, Rhythm, Replication]
+status: announce
+papers:
+  - { title: "Experimenter’s Guide — Solving Navier–Stokes, Differently", doi: "10.5281/zenodo.15830659" }
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+  - https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
+links:
+  - { label: "One‑pager", path: "docs/rgp_ns_call.md" }
+  - { label: "Agent entrypoint", path: "agents/rgp_ns/run_agent.py" }
+notes: >
+  Use Issues with tag rgp-ns-replication to report runs; attach the run folder path and the generated pulse.
