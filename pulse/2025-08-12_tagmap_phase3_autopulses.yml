@@ -1,0 +1,17 @@
+---
+title: "Tag Map Phase 3: Auto‑Pulses Integration"
+date: 2025-08-12T00:00:00Z
+summary: >
+  Plan to surface pulses from /pulse/auto/ in the Tag Map. New recursive indexer
+  scans pulse/**/*.yml while excluding pulse/archive/ and pulse/telemetry/.
+  Agent workflow will refresh tag_index.yml and rebuild the map after each run.
+tags: [PhiMesh, TagMap, Automation, RGP, Infrastructure]
+status: planning
+links:
+  - { label: "New indexer", path: "meta/update_tag_index.py" }
+  - { label: "Runner hooks", path: ".github/workflows/rgp_ns_runner.yml" }
+actions:
+  - "Deploy recursive indexer; verify meta/tag_index.yml updates."
+  - "Trigger rebuild; confirm auto‑pulses appear in sidebar under RGP/NT/etc."
+notes: >
+  Until the recursive indexer is merged, avoid copying auto pulses to root to prevent duplication.
