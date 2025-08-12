@@ -5,28 +5,68 @@ on:
   schedule:
     - cron: "17 3 * * 2"  # Tuesdays 03:17 UTC
 
+permissions:
+  contents: write  # allow commits from this workflow
+
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
           pip install numpy scipy pandas matplotlib h5py pyyaml
+
       - name: Execute agent loop
         env:
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
           ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
         run: python agents/rgp_ns/run_agent.py
+
+      - name: Debug — show new files
+        run: |
+          echo "Tree after agent run:"
+          ls -la
+          echo "--- pulse ---"
+          ls -la pulse || true
+          echo "--- pulse/auto ---"
+          ls -la pulse/auto || true
+          echo "--- results ---"
+          ls -la results || true
+          echo "--- results/rgp_ns ---"
+          ls -la results/rgp_ns || true
+
       - name: Commit results & pulses
         run: |
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
           git commit -m "auto: RGP-NS agent run" || echo "nothing to commit"
+          git push
+
+      - name: Refresh Tag Index & Map
+        run: |
+          python meta/update_tag_index.py
+          # Build the map using whichever builder exists
+          if [ -f meta/generate_tag_map.py ]; then
+            python meta/generate_tag_map.py
+          elif [ -f build_tag_browser.py ]; then
+            python build_tag_browser.py
+          else
+            echo "No map builder found; skipping map build."
+          fi
+
+      - name: Commit index & map
+        run: |
+          git add -A
+          git commit -m "auto: refresh tag index & map" || echo "nothing to commit"
           git push
