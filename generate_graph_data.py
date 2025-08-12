@@ -262,33 +262,37 @@ def main():
         # normalize and build from index
         tag_map = normalize_tag_map(tag_index_obj)
 
-        # nodes
+        # nodes from index
         nodes = build_nodes_from_tag_map(tag_map)
 
-        # edges: start from explicit links, then merge in co-occurrence edges from pulses
+        # edges: explicit links + co-occurrence from scan
         edges = []
         for t, info in tag_map.items():
             for other in (info.get("links") or []):
                 edges.append(tuple(sorted((t, str(other)))))
 
         # derive co-occurrence edges by scanning pulses (so we always have connections)
-        _, _, _, _, scan_edges = scan_pulses_for_tags(args.pulse_glob)
+        _, _, pulse_resources, pulse_meta, scan_edges = scan_pulses_for_tags(args.pulse_glob)
         edges = sorted(set(edges) | set(tuple(sorted(e)) for e in scan_edges))
-
         link_objs = [{"source": a, "target": b} for (a, b) in edges]
 
-        # tag_to_pulses (for resources & first-seen); tolerate either field name; dict/str safe
+        # tag_to_pulses (resources & first-seen); tolerate either field name; dict/str safe
         tag_to_pulses: Dict[str, List[str]] = {}
         for t, info in tag_map.items():
             raw_pulses = (info.get("pulses") or []) + (info.get("pulse") or [])
             pulses = _as_ids(raw_pulses, "pulse")
             tag_to_pulses[t] = list(dict.fromkeys(pulses))  # preserve order
 
-        # pulse resources / meta must be derived by scanning pulses (non-fatal if missing)
-        _, _, pulse_resources, pulse_meta, _ = scan_pulses_for_tags(args.pulse_glob)
-
         tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
         tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
+
+        # If we somehow ended with no edges, fall back to scan-derived nodes/edges
+        if not link_objs:
+            print("INFO: No edges from index/scan merge → falling back to scan graph.")
+            tag_to_pulses, _, pulse_resources, pulse_meta, scan_edges = scan_pulses_for_tags(args.pulse_glob)
+            nodes, link_objs = build_nodes_edges_from_scan(tag_to_pulses, scan_edges)
+            tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
+            tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
 
     else:
         print("INFO: tag_index.yml empty or unsupported → scanning pulses …")
@@ -312,7 +316,6 @@ def main():
     # basic sanity
     if not nodes:
         print("WARN: No tags detected; window.PHI_DATA has empty nodes/links.")
-
     print(f"OK: wrote {args.out_js} ({Path(args.out_js).stat().st_size} bytes)")
     print(f"INFO: tag count = {len(nodes)}")
 
