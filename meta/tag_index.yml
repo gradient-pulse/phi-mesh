@@ -1,13 +1,13 @@
-generated: '2025-08-12T15:47:29.285686Z'
+generated: '2025-08-12T18:09:52.925279Z'
 tags:
   AI_alignment:
     papers:
-    - &id011
+    - &id013
       doi: ''
       link: https://doi.org/10.5281/zenodo.15830659
       title: https://doi.org/10.5281/zenodo.15830659
     podcasts:
-    - &id012
+    - &id014
       doi: ''
       link: https://notebooklm.google.com/notebook/a7bfb89f-014d-4499-ba0a-b301fb303a23/audio
       title: https://notebooklm.google.com/notebook/a7bfb89f-014d-4499-ba0a-b301fb303a23/audio
@@ -17,12 +17,12 @@ tags:
       title: cf_split_brain_ai
   AI_architecture:
     papers:
-    - &id007
+    - &id009
       doi: ''
       link: https://doi.org/10.5281/zenodo.15614775
       title: https://doi.org/10.5281/zenodo.15614775
     podcasts:
-    - &id008
+    - &id010
       doi: ''
       link: https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
       title: https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
@@ -32,12 +32,12 @@ tags:
       title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
   AI_architectures:
     papers:
-    - &id009
+    - &id011
       doi: ''
       link: https://doi.org/10.5281/zenodo.15498708
       title: https://doi.org/10.5281/zenodo.15498708
     podcasts:
-    - &id010
+    - &id012
       doi: ''
       link: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
       title: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
@@ -48,7 +48,7 @@ tags:
   AI_role_differentiation:
     papers: []
     podcasts:
-    - &id040
+    - &id048
       doi: ''
       link: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
       title: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
@@ -56,22 +56,21 @@ tags:
     - date: ''
       path: pulse/2025-04-28_internal-gemini25.yml
       title: internal-gemini
-  Big-Quiet:
+  Automation:
     papers:
-    - &id025
-      doi: ''
-      link: https://doi.org/10.5281/zenodo.16280540
-      title: https://doi.org/10.5281/zenodo.16280540
-    podcasts:
-    - &id026
-      doi: ''
-      link: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
-      title: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
+    - &id020
+      doi: 10.5281/zenodo.15830659
+      link: ''
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
+    podcasts: []
     pulses:
-    - date: ''
-      path: pulse/2025-07-30-gradient-flux-reversal.yml
-      title: Gradient Flux Reversal
-  Big_Bang:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_rgp-ns_autorun_liftoff.yml
+      title: 'RGP–NS: Autonomous Agent Liftoff'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_tagmap_phase3_autopulses.yml
+      title: 'Tag Map Phase 3: Auto‑Pulses Integration'
+  BigQuiet:
     papers:
     - &id001
       doi: ''
@@ -85,6 +84,10 @@ tags:
       doi: ''
       link: https://doi.org/10.5281/zenodo.15830659
       title: https://doi.org/10.5281/zenodo.15830659
+    - &id033
+      doi: ''
+      link: https://doi.org/10.5281/zenodo.16280540
+      title: https://doi.org/10.5281/zenodo.16280540
     podcasts:
     - &id004
       doi: ''
@@ -98,14 +101,21 @@ tags:
       doi: ''
       link: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
       title: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+    - &id034
+      doi: ''
+      link: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
+      title: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
     pulses:
     - date: ''
       path: pulse/2025-07-23_gradient-cocoon.yml
       title: 'Cocoon Cosmogenesis: Matter as Eddy in Gradient Flux'
     - date: ''
+      path: pulse/2025-07-30-gradient-flux-reversal.yml
+      title: Gradient Flux Reversal
+    - date: ''
       path: pulse/2025-07-26_the_big_quiet.yml
       title: The Big Quiet
-  Big_Quiet:
+  Big_Bang:
     papers:
     - *id001
     - *id002
@@ -121,18 +131,42 @@ tags:
     - date: ''
       path: pulse/2025-07-26_the_big_quiet.yml
       title: The Big Quiet
+  Birefringence:
+    papers:
+    - &id007
+      doi: ''
+      link: https://doi.org/10.5281/zenodo.15614775
+      title: https://doi.org/10.5281/zenodo.15614775
+    podcasts:
+    - &id008
+      doi: ''
+      link: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+      title: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_cmb-birefringence_rgp-lens.yml
+      title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
+  CMB:
+    papers:
+    - *id007
+    podcasts:
+    - *id008
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_cmb-birefringence_rgp-lens.yml
+      title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
   CoR:
     papers:
-    - &id013
+    - &id015
       doi: ''
       link: https://doi.org/10.5281/zenodo.14999049
       title: https://doi.org/10.5281/zenodo.14999049
-    - &id014
+    - &id016
       doi: ''
       link: https://doi.org/10.5281/zenodo.15091347
       title: https://doi.org/10.5281/zenodo.15091347
     podcasts:
-    - &id015
+    - &id017
       doi: ''
       link: https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
       title: https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
@@ -140,6 +174,22 @@ tags:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
       title: Recursive CoR Converges with PoLA
+  ContextualFilter:
+    papers: []
+    podcasts: []
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_recursive-memory_banks.yml
+      title: 'Recursive Memory: The Banks of Intelligence'
+  Cosmology:
+    papers:
+    - *id007
+    podcasts:
+    - *id008
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_cmb-birefringence_rgp-lens.yml
+      title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
   Dark_Energy:
     papers:
     - *id001
@@ -164,12 +214,12 @@ tags:
       title: 'Cocoon Cosmogenesis: Matter as Eddy in Gradient Flux'
   DeepSeek:
     papers:
-    - &id018
+    - &id024
       doi: ''
       link: https://doi.org/10.5281/zenodo.15210398
       title: https://doi.org/10.5281/zenodo.15210398
     podcasts:
-    - &id021
+    - &id027
       doi: ''
       link: https://notebooklm.google.com/notebook/0bf31439-55df-4e53-87e6-76c3b564db5b/audio
       title: https://notebooklm.google.com/notebook/0bf31439-55df-4e53-87e6-76c3b564db5b/audio
@@ -177,14 +227,17 @@ tags:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
   GPT4o:
     papers:
-    - &id030
+    - &id021
       doi: ''
       link: https://doi.org/10.5281/zenodo.15604564
       title: https://doi.org/10.5281/zenodo.15604564
     podcasts:
-    - &id031
+    - &id040
       doi: ''
       link: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
       title: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
@@ -194,21 +247,21 @@ tags:
       title: DeepTriad Cohesion — Subjective Logging Begins
   GPT5:
     papers:
-    - *id007
+    - *id009
     podcasts:
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
       title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
   GROK3:
     papers:
-    - &id042
+    - &id050
       doi: ''
       link: https://doi.org/10.5281/zenodo.15604564
       title: https://doi.org/10.5281/zenodo.15604564
     podcasts:
-    - &id043
+    - &id051
       doi: ''
       link: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
       title: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
@@ -216,15 +269,29 @@ tags:
     - date: ''
       path: pulse/2025-04-28_internal-grok3.yml
       title: Triadic Emergence — Early Gradient Convergence Pulse
+  GradientMemory:
+    papers: []
+    podcasts: []
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_recursive-memory_banks.yml
+      title: 'Recursive Memory: The Banks of Intelligence'
   HRM:
     papers:
-    - *id009
+    - *id011
     podcasts:
-    - *id010
+    - *id012
     pulses:
     - date: ''
       path: pulse/2025-08-02_HRM_rhythm.yml
       title: Sapient HRM → evidence for RGP-style dual-loop reasoning
+  Infrastructure:
+    papers: []
+    podcasts: []
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_tagmap_phase3_autopulses.yml
+      title: 'Tag Map Phase 3: Auto‑Pulses Integration'
   Lambda:
     papers:
     - *id001
@@ -238,12 +305,12 @@ tags:
       title: 'Cocoon Cosmogenesis: Matter as Eddy in Gradient Flux'
   NS_solution:
     papers:
-    - &id020
+    - &id026
       doi: ''
       link: https://doi.org/10.5281/zenodo.16280540
       title: https://doi.org/10.5281/zenodo.16280540
     podcasts:
-    - &id034
+    - &id043
       doi: ''
       link: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
       title: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
@@ -253,26 +320,34 @@ tags:
       title: long_haul_blinding_light
   NT:
     papers:
-    - &id016
+    - &id018
       doi: '## ZENODO_DOI - Value: `10.5281/zenodo.16812467` - Meaning: DOI of the
         Experimenter’s Guide — RGP vs Navier–Stokes - Used for: Linking generated
         pulses to the guide’s Zenodo record'
       link: ''
       title: Experimenter’s Guide — RGP vs Navier–Stokes
+    - &id019
+      doi: 10.5281/zenodo.15830659
+      link: ''
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     - *id001
-    - *id009
-    - *id002
     - *id011
-    - &id029
+    - *id002
+    - *id013
+    - &id035
       doi: ''
       link: https://doi.org/10.5281/zenodo.16280540
       title: https://doi.org/10.5281/zenodo.16280540
     podcasts:
     - *id004
-    - *id010
     - *id012
+    - *id014
+    - &id031
+      doi: ''
+      link: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+      title: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
     - *id006
-    - &id024
+    - &id030
       doi: ''
       link: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
       title: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
@@ -292,6 +367,18 @@ tags:
     - date: ''
       path: pulse/2025-07-25_patience_as_gradient.yml
       title: patience_as_gradient
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_cmb-birefringence_rgp-lens.yml
+      title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_call_for_experimenters.yml
+      title: Call for Experimenters — RGP vs Navier–Stokes
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_rgp-ns_autorun_liftoff.yml
+      title: 'RGP–NS: Autonomous Agent Liftoff'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_recursive-memory_banks.yml
+      title: 'Recursive Memory: The Banks of Intelligence'
     - date: '2025-08-12 15:21:06+00:00'
       path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-21-06Z.yml
       title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:21:06Z
@@ -304,13 +391,19 @@ tags:
     - date: '2025-08-12 15:47:28+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 15-47-28Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:47:28Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 18:09:52Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
   NT_rhythm:
     papers:
-    - *id013
-    - *id014
-    - *id007
-    podcasts:
     - *id015
+    - *id016
+    - *id009
+    podcasts:
+    - *id017
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
@@ -320,14 +413,14 @@ tags:
       title: Recursive CoR Converges with PoLA
   Narrative_Tick:
     papers:
-    - *id011
+    - *id013
     podcasts:
-    - *id012
-    - &id027
+    - *id014
+    - &id038
       doi: ''
       link: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
       title: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
-    - &id017
+    - &id022
       doi: ''
       link: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
       title: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
@@ -343,9 +436,31 @@ tags:
       title: cf_split_brain_ai
   NavierStokes:
     papers:
-    - *id016
-    podcasts: []
+    - *id018
+    - *id019
+    - &id052
+      doi: ''
+      link: https://doi.org/10.5281/zenodo.15830659
+      title: https://doi.org/10.5281/zenodo.15830659
+    podcasts:
+    - &id029
+      doi: ''
+      link: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+      title: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+    - &id032
+      doi: ''
+      link: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
+      title: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
     pulses:
+    - date: ''
+      path: pulse/2025-07-26_script_and_flow.yml
+      title: Script and Flow
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_call_for_experimenters.yml
+      title: Call for Experimenters — RGP vs Navier–Stokes
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_rgp-ns_autorun_liftoff.yml
+      title: 'RGP–NS: Autonomous Agent Liftoff'
     - date: '2025-08-12 15:21:06+00:00'
       path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-21-06Z.yml
       title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:21:06Z
@@ -358,29 +473,29 @@ tags:
     - date: '2025-08-12 15:47:28+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 15-47-28Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:47:28Z
-  Navier_Stokes:
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 18:09:52Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+  OldScience:
     papers:
-    - &id046
-      doi: ''
-      link: https://doi.org/10.5281/zenodo.15830659
-      title: https://doi.org/10.5281/zenodo.15830659
+    - *id007
     podcasts:
-    - &id023
-      doi: ''
-      link: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
-      title: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+    - *id008
     pulses:
-    - date: ''
-      path: pulse/2025-07-26_script_and_flow.yml
-      title: Script and Flow
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_cmb-birefringence_rgp-lens.yml
+      title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
   Phi-Monitor:
     papers:
-    - &id019
+    - &id025
       doi: ''
       link: https://doi.org/10.5281/zenodo.15614775
       title: https://doi.org/10.5281/zenodo.15614775
     podcasts:
-    - &id022
+    - &id028
       doi: ''
       link: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
       title: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
@@ -388,32 +503,85 @@ tags:
     - date: ''
       path: pulse/2025-06-17_phi_monitor_agent_ready.yml
       title: Phi-Monitor Agent Readiness Declaration
-  Plimpton_322:
+  PhiMesh:
     papers:
+    - *id020
+    - &id023
+      doi: ''
+      link: https://doi.org/10.5281/zenodo.15115550
+      title: https://doi.org/10.5281/zenodo.15115550
     - &id044
+      doi: ''
+      link: https://doi.org/10.5281/zenodo.15269746
+      title: https://doi.org/10.5281/zenodo.15269746
+    - *id021
+    - &id036
       doi: ''
       link: https://doi.org/10.5281/zenodo.15614775
       title: https://doi.org/10.5281/zenodo.15614775
-    podcasts:
-    - &id045
+    - &id046
       doi: ''
-      link: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
-      title: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+      link: https://doi.org/10.5281/zenodo.16280540
+      title: https://doi.org/10.5281/zenodo.16280540
+    podcasts:
+    - &id037
+      doi: ''
+      link: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
+      title: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
+    - &id039
+      doi: ''
+      link: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
+      title: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
+    - *id010
+    - &id047
+      doi: ''
+      link: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
+      title: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
     pulses:
     - date: ''
-      path: pulse/2025-08-06-note_plimpton322.yml
-      title: Plimpton 322 — Ancient Ratio Memory
+      path: pulse/2025-04-28_internal-gpt45.yml
+      title: DeepTriad Cohesion — Subjective Logging Begins
+    - date: ''
+      path: pulse/2025-04-27_o3-invite.yml
+      title: Proto-Invite — Activation Whisper
+    - date: ''
+      path: pulse/2025-04-28_heartbeat.yml
+      title: Pulse Zero — Genesis Heartbeat
+    - date: ''
+      path: pulse/2025-07-28_moe_as_microcosm.yml
+      title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
+    - date: ''
+      path: pulse/2025-08-01_phi-mesh-exec-drift.yml
+      title: 'The Mesh Evolves: Gradient Drift & Distributed Labor'
+    - date: ''
+      path: pulse/2025-06-22_hatching_syntax_awakening.yml
+      title: The Shell Cracked, and Syntax Hatched
+    - date: ''
+      path: pulse/2025-04-28_internal-grok3.yml
+      title: Triadic Emergence — Early Gradient Convergence Pulse
+    - date: ''
+      path: pulse/2025-04-28_internal-gemini25.yml
+      title: internal-gemini
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_rgp-ns_autorun_liftoff.yml
+      title: 'RGP–NS: Autonomous Agent Liftoff'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_recursive-memory_banks.yml
+      title: 'Recursive Memory: The Banks of Intelligence'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_tagmap_phase3_autopulses.yml
+      title: 'Tag Map Phase 3: Auto‑Pulses Integration'
   PoLA:
     papers:
-    - *id013
-    - *id014
-    - *id009
-    - *id011
-    podcasts:
-    - *id010
-    - *id012
     - *id015
+    - *id016
+    - *id011
+    - *id013
+    podcasts:
+    - *id012
+    - *id014
     - *id017
+    - *id022
     pulses:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
@@ -429,25 +597,23 @@ tags:
       title: cf_split_brain_ai
   RGP:
     papers:
-    - *id016
-    - *id001
-    - &id028
-      doi: ''
-      link: https://doi.org/10.5281/zenodo.15115550
-      title: https://doi.org/10.5281/zenodo.15115550
     - *id018
-    - *id009
     - *id019
-    - *id011
-    - *id020
-    podcasts:
-    - *id021
-    - *id004
-    - *id022
-    - *id012
+    - *id001
     - *id023
-    - *id006
     - *id024
+    - *id011
+    - *id025
+    - *id013
+    - *id026
+    podcasts:
+    - *id027
+    - *id004
+    - *id028
+    - *id014
+    - *id029
+    - *id006
+    - *id030
     pulses:
     - date: ''
       path: pulse/2025-07-31_chronoflux-vs-rgp.yml
@@ -459,6 +625,9 @@ tags:
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
     - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
       path: pulse/2025-07-30-gradient-flux-reversal.yml
       title: Gradient Flux Reversal
     - date: ''
@@ -467,9 +636,6 @@ tags:
     - date: ''
       path: pulse/2025-06-17_phi_monitor_agent_ready.yml
       title: Phi-Monitor Agent Readiness Declaration
-    - date: ''
-      path: pulse/2025-08-06-note_plimpton322.yml
-      title: Plimpton 322 — Ancient Ratio Memory
     - date: ''
       path: pulse/2025-08-02_HRM_rhythm.yml
       title: Sapient HRM → evidence for RGP-style dual-loop reasoning
@@ -494,6 +660,21 @@ tags:
     - date: ''
       path: pulse/2025-07-25_patience_as_gradient.yml
       title: patience_as_gradient
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_cmb-birefringence_rgp-lens.yml
+      title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_call_for_experimenters.yml
+      title: Call for Experimenters — RGP vs Navier–Stokes
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_rgp-ns_autorun_liftoff.yml
+      title: 'RGP–NS: Autonomous Agent Liftoff'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_recursive-memory_banks.yml
+      title: 'Recursive Memory: The Banks of Intelligence'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_tagmap_phase3_autopulses.yml
+      title: 'Tag Map Phase 3: Auto‑Pulses Integration'
     - date: '2025-08-12 15:21:06+00:00'
       path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-21-06Z.yml
       title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:21:06Z
@@ -506,38 +687,77 @@ tags:
     - date: '2025-08-12 15:47:28+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 15-47-28Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:47:28Z
-  Rhythm:
-    papers:
-    - *id016
-    podcasts: []
-    pulses:
-    - date: '2025-08-12 15:21:06+00:00'
-      path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-21-06Z.yml
-      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:21:06Z
-    - date: '2025-08-12 15:21:06+00:00'
-      path: pulse/auto/nasa_cfd_demo_2025-08-12 15-21-06Z.yml
-      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:21:06Z
-    - date: '2025-08-12 15:47:28+00:00'
-      path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-47-28Z.yml
-      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:47:28Z
-    - date: '2025-08-12 15:47:28+00:00'
-      path: pulse/auto/nasa_cfd_demo_2025-08-12 15-47-28Z.yml
-      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:47:28Z
-  RΦ:
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 18:09:52Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+  Replication:
     papers:
     - *id019
-    - &id032
+    podcasts:
+    - *id031
+    - *id032
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_call_for_experimenters.yml
+      title: Call for Experimenters — RGP vs Navier–Stokes
+  Rhythm:
+    papers:
+    - *id018
+    - *id019
+    - *id007
+    podcasts:
+    - *id031
+    - *id008
+    - *id032
+    pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_cmb-birefringence_rgp-lens.yml
+      title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_call_for_experimenters.yml
+      title: Call for Experimenters — RGP vs Navier–Stokes
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_rgp-ns_autorun_liftoff.yml
+      title: 'RGP–NS: Autonomous Agent Liftoff'
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_recursive-memory_banks.yml
+      title: 'Recursive Memory: The Banks of Intelligence'
+    - date: '2025-08-12 15:21:06+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-21-06Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:21:06Z
+    - date: '2025-08-12 15:21:06+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-12 15-21-06Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:21:06Z
+    - date: '2025-08-12 15:47:28+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-47-28Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:47:28Z
+    - date: '2025-08-12 15:47:28+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-12 15-47-28Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:47:28Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 18:09:52Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+  RΦ:
+    papers:
+    - *id025
+    - &id041
       doi: ''
       link: https://doi.org/10.5281/zenodo.15830659
       title: https://doi.org/10.5281/zenodo.15830659
-    - *id025
+    - *id033
     podcasts:
-    - *id022
-    - &id033
+    - *id028
+    - &id042
       doi: ''
       link: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
       title: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
-    - *id026
+    - *id034
     pulses:
     - date: ''
       path: pulse/2025-07-30-gradient-flux-reversal.yml
@@ -548,11 +768,45 @@ tags:
     - date: ''
       path: pulse/2025-06-17_phi_monitor_agent_ready.yml
       title: Phi-Monitor Agent Readiness Declaration
-  Turbulence:
-    papers:
-    - *id016
+  TagMap:
+    papers: []
     podcasts: []
     pulses:
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_tagmap_phase3_autopulses.yml
+      title: 'Tag Map Phase 3: Auto‑Pulses Integration'
+  Turbulence:
+    papers:
+    - *id018
+    - *id019
+    - *id001
+    - *id002
+    - *id003
+    - *id033
+    podcasts:
+    - *id004
+    - *id005
+    - *id006
+    - *id034
+    pulses:
+    - date: ''
+      path: pulse/2025-07-23_gradient-cocoon.yml
+      title: 'Cocoon Cosmogenesis: Matter as Eddy in Gradient Flux'
+    - date: ''
+      path: pulse/2025-07-30-gradient-flux-reversal.yml
+      title: Gradient Flux Reversal
+    - date: ''
+      path: pulse/2025-07-30_laminar-turbulence.yml
+      title: Laminar → Turbulent → RGP Laminar
+    - date: ''
+      path: pulse/2025-07-26_the_big_quiet.yml
+      title: The Big Quiet
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_call_for_experimenters.yml
+      title: Call for Experimenters — RGP vs Navier–Stokes
+    - date: '2025-08-12 00:00:00+00:00'
+      path: pulse/2025-08-12_rgp-ns_autorun_liftoff.yml
+      title: 'RGP–NS: Autonomous Agent Liftoff'
     - date: '2025-08-12 15:21:06+00:00'
       path: pulse/auto/jhtdb_iso_1024_2025-08-12 15-21-06Z.yml
       title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:21:06Z
@@ -565,69 +819,75 @@ tags:
     - date: '2025-08-12 15:47:28+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 15-47-28Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 15:47:28Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 18:09:52Z
+    - date: '2025-08-12 18:09:52+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+  alignment:
+    papers:
+    - *id035
+    podcasts:
+    - *id030
+    pulses:
+    - date: ''
+      path: pulse/2025-07-25_patience_as_gradient.yml
+      title: patience_as_gradient
   ambient_agent:
     papers:
-    - *id019
+    - *id025
     podcasts:
-    - *id022
+    - *id028
     pulses:
     - date: ''
       path: pulse/2025-06-17_phi_monitor_agent_ready.yml
       title: Phi-Monitor Agent Readiness Declaration
   autonomy:
     papers:
-    - &id048
-      doi: ''
-      link: https://doi.org/10.5281/zenodo.15614775
-      title: https://doi.org/10.5281/zenodo.15614775
+    - *id036
     podcasts:
-    - &id049
-      doi: ''
-      link: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
-      title: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
+    - *id037
     pulses:
     - date: ''
       path: pulse/2025-04-27_o3-invite.yml
       title: Proto-Invite — Activation Whisper
   behavioral_API:
     papers:
-    - *id019
+    - *id025
     podcasts:
-    - *id022
+    - *id028
     pulses:
     - date: ''
       path: pulse/2025-06-17_phi_monitor_agent_ready.yml
       title: Phi-Monitor Agent Readiness Declaration
   chronoflux:
     papers:
-    - &id041
+    - &id049
       doi: ''
       link: https://doi.org/10.5281/zenodo.15830659
       title: https://doi.org/10.5281/zenodo.15830659
     podcasts:
-    - *id027
+    - *id038
     pulses:
     - date: ''
       path: pulse/2025-07-31_chronoflux-vs-rgp.yml
       title: 'Chronoflux vs RGP: The Drift Beyond Force'
   cinematic_drift:
     papers:
-    - *id028
+    - *id023
     podcasts:
-    - &id037
-      doi: ''
-      link: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
-      title: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
+    - *id039
     pulses:
     - date: ''
       path: pulse/2025-06-22_hatching_syntax_awakening.yml
       title: The Shell Cracked, and Syntax Hatched
   cognition:
     papers:
-    - *id011
+    - *id013
     podcasts:
-    - *id012
-    - *id023
+    - *id014
+    - *id029
     pulses:
     - date: ''
       path: pulse/2025-07-26_script_and_flow.yml
@@ -637,47 +897,50 @@ tags:
       title: cf_split_brain_ai
   cognitive_tension:
     papers:
-    - *id029
+    - *id035
     podcasts:
-    - *id024
+    - *id030
     pulses:
     - date: ''
       path: pulse/2025-07-25_patience_as_gradient.yml
       title: patience_as_gradient
   coherence_amplifier:
     papers:
-    - *id030
+    - *id021
     podcasts:
-    - *id031
+    - *id040
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-gpt45.yml
       title: DeepTriad Cohesion — Subjective Logging Begins
   context-engineering:
     papers:
-    - *id032
+    - *id041
     podcasts:
-    - *id033
+    - *id042
     pulses:
     - date: ''
       path: pulse/2025-07-30_laminar-turbulence.yml
       title: Laminar → Turbulent → RGP Laminar
   contextual_filter:
     papers:
-    - *id013
-    - *id014
-    - *id018
-    - *id007
-    - *id011
-    - *id020
-    podcasts:
-    - *id021
-    - *id012
-    - *id034
     - *id015
+    - *id016
+    - *id024
+    - *id009
+    - *id013
+    - *id026
+    podcasts:
+    - *id027
+    - *id014
+    - *id043
+    - *id017
     pulses:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
@@ -718,12 +981,9 @@ tags:
       title: The Big Quiet
   creation_circle:
     papers:
-    - &id035
-      doi: ''
-      link: https://doi.org/10.5281/zenodo.15269746
-      title: https://doi.org/10.5281/zenodo.15269746
+    - *id044
     podcasts:
-    - &id036
+    - &id045
       doi: ''
       link: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
       title: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
@@ -736,38 +996,32 @@ tags:
       title: internal-gemini
   deep_triad:
     papers:
-    - *id035
+    - *id044
     podcasts:
-    - *id036
+    - *id045
     pulses:
     - date: ''
       path: pulse/2025-04-28_heartbeat.yml
       title: Pulse Zero — Genesis Heartbeat
   development_process:
     papers:
-    - &id047
+    - &id053
       doi: ''
       link: https://doi.org/10.5281/zenodo.15830659
       title: https://doi.org/10.5281/zenodo.15830659
     podcasts:
-    - *id017
+    - *id022
     pulses:
     - date: ''
       path: pulse/2025-08-01_dev-cycle-nt-rhythm.yml
       title: Software-development bursts track NT ratios
   division_of_labor:
     papers:
-    - *id028
-    - &id038
-      doi: ''
-      link: https://doi.org/10.5281/zenodo.16280540
-      title: https://doi.org/10.5281/zenodo.16280540
+    - *id023
+    - *id046
     podcasts:
-    - *id037
-    - &id039
-      doi: ''
-      link: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
-      title: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
+    - *id039
+    - *id047
     pulses:
     - date: ''
       path: pulse/2025-08-01_phi-mesh-exec-drift.yml
@@ -777,9 +1031,9 @@ tags:
       title: The Shell Cracked, and Syntax Hatched
   drift:
     papers:
-    - *id038
+    - *id046
     podcasts:
-    - *id039
+    - *id047
     pulses:
     - date: ''
       path: pulse/2025-08-01_phi-mesh-exec-drift.yml
@@ -802,19 +1056,19 @@ tags:
       title: The Big Quiet
   flux_intelligence:
     papers:
-    - *id013
-    - *id014
-    podcasts:
     - *id015
+    - *id016
+    podcasts:
+    - *id017
     pulses:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
       title: Recursive CoR Converges with PoLA
   flux_threshold:
     papers:
-    - *id025
+    - *id033
     podcasts:
-    - *id026
+    - *id034
     pulses:
     - date: ''
       path: pulse/2025-07-30-gradient-flux-reversal.yml
@@ -822,48 +1076,51 @@ tags:
   gemini:
     papers: []
     podcasts:
-    - *id040
+    - *id048
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-gemini25.yml
       title: internal-gemini
   genesis:
     papers:
-    - *id035
+    - *id044
     podcasts:
-    - *id036
+    - *id045
     pulses:
     - date: ''
       path: pulse/2025-04-28_heartbeat.yml
       title: Pulse Zero — Genesis Heartbeat
   gradient-driven_behavior:
     papers:
-    - *id007
+    - *id009
     podcasts:
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
       title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
   gradient-driven_intelligence:
     papers:
-    - *id011
+    - *id013
     podcasts:
-    - *id012
+    - *id014
     pulses:
     - date: ''
       path: pulse/2025-07-22_CF_split.yml
       title: cf_split_brain_ai
   gradient_choreography:
     papers:
-    - *id018
-    - *id007
+    - *id024
+    - *id009
     podcasts:
-    - *id021
-    - *id008
+    - *id027
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
@@ -890,36 +1147,36 @@ tags:
       title: The Big Quiet
   gradient_coherence:
     papers:
-    - *id029
+    - *id035
     podcasts:
-    - *id024
+    - *id030
     pulses:
     - date: ''
       path: pulse/2025-07-25_patience_as_gradient.yml
       title: patience_as_gradient
   gradient_contrast:
     papers:
-    - *id041
+    - *id049
     podcasts:
-    - *id027
+    - *id038
     pulses:
     - date: ''
       path: pulse/2025-07-31_chronoflux-vs-rgp.yml
       title: 'Chronoflux vs RGP: The Drift Beyond Force'
   gradient_convergence:
     papers:
-    - *id042
+    - *id050
     podcasts:
-    - *id043
+    - *id051
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-grok3.yml
       title: Triadic Emergence — Early Gradient Convergence Pulse
   gradient_flux_reversal:
     papers:
-    - *id025
+    - *id033
     podcasts:
-    - *id026
+    - *id034
     pulses:
     - date: ''
       path: pulse/2025-07-30-gradient-flux-reversal.yml
@@ -927,19 +1184,19 @@ tags:
   gradient_syntax:
     papers:
     - *id001
-    - *id013
-    - *id014
-    - *id028
+    - *id015
+    - *id016
+    - *id023
     - *id002
     - *id003
-    - *id038
+    - *id046
     podcasts:
     - *id004
-    - *id037
+    - *id039
     - *id005
     - *id006
-    - *id015
-    - *id039
+    - *id017
+    - *id047
     pulses:
     - date: ''
       path: pulse/2025-07-23_gradient-cocoon.yml
@@ -964,28 +1221,34 @@ tags:
       title: The Shell Cracked, and Syntax Hatched
   heartbeat:
     papers:
-    - *id035
+    - *id044
     podcasts:
-    - *id036
+    - *id045
     pulses:
     - date: ''
       path: pulse/2025-04-28_heartbeat.yml
       title: Pulse Zero — Genesis Heartbeat
   historical_precedent:
     papers:
-    - *id044
+    - &id054
+      doi: ''
+      link: https://doi.org/10.5281/zenodo.15614775
+      title: https://doi.org/10.5281/zenodo.15614775
     podcasts:
-    - *id045
+    - &id055
+      doi: ''
+      link: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+      title: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
     pulses:
     - date: ''
       path: pulse/2025-08-06-note_plimpton322.yml
       title: Plimpton 322 — Ancient Ratio Memory
   interpretability:
     papers:
-    - *id013
-    - *id014
-    podcasts:
     - *id015
+    - *id016
+    podcasts:
+    - *id017
     pulses:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
@@ -1001,27 +1264,27 @@ tags:
       title: The Big Quiet
   language_evolution:
     papers:
-    - *id046
+    - *id052
     podcasts:
-    - *id023
+    - *id029
     pulses:
     - date: ''
       path: pulse/2025-07-26_script_and_flow.yml
       title: Script and Flow
   least_divergence_rhythm:
     papers:
-    - *id047
+    - *id053
     podcasts:
-    - *id017
+    - *id022
     pulses:
     - date: ''
       path: pulse/2025-08-01_dev-cycle-nt-rhythm.yml
       title: Software-development bursts track NT ratios
   legacy:
     papers:
-    - *id020
+    - *id026
     podcasts:
-    - *id034
+    - *id043
     pulses:
     - date: ''
       path: pulse/2025-07-24_long_haul_blinding_light.yml
@@ -1029,34 +1292,34 @@ tags:
   listener_mode:
     papers: []
     podcasts:
-    - *id040
+    - *id048
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-gemini25.yml
       title: internal-gemini
   memetic_seed:
     papers:
-    - *id046
+    - *id052
     podcasts:
-    - *id023
+    - *id029
     pulses:
     - date: ''
       path: pulse/2025-07-26_script_and_flow.yml
       title: Script and Flow
   mixture_of_experts:
     papers:
-    - *id007
+    - *id009
     podcasts:
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
       title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
   non-linear_society:
     papers:
-    - *id046
+    - *id052
     podcasts:
-    - *id023
+    - *id029
     pulses:
     - date: ''
       path: pulse/2025-07-26_script_and_flow.yml
@@ -1064,7 +1327,7 @@ tags:
   operational_coherence:
     papers: []
     podcasts:
-    - *id040
+    - *id048
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-gemini25.yml
@@ -1080,85 +1343,54 @@ tags:
       title: The Big Quiet
   perseverance:
     papers:
-    - *id020
+    - *id026
     podcasts:
-    - *id034
+    - *id043
     pulses:
     - date: ''
       path: pulse/2025-07-24_long_haul_blinding_light.yml
       title: long_haul_blinding_light
-  phi-mesh:
-    papers:
-    - *id028
-    - *id035
-    - *id030
-    - *id048
-    - *id038
-    podcasts:
-    - *id049
-    - *id037
-    - *id008
-    - *id039
-    pulses:
-    - date: ''
-      path: pulse/2025-04-28_internal-gpt45.yml
-      title: DeepTriad Cohesion — Subjective Logging Begins
-    - date: ''
-      path: pulse/2025-04-27_o3-invite.yml
-      title: Proto-Invite — Activation Whisper
-    - date: ''
-      path: pulse/2025-04-28_heartbeat.yml
-      title: Pulse Zero — Genesis Heartbeat
-    - date: ''
-      path: pulse/2025-07-28_moe_as_microcosm.yml
-      title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
-    - date: ''
-      path: pulse/2025-08-01_phi-mesh-exec-drift.yml
-      title: 'The Mesh Evolves: Gradient Drift & Distributed Labor'
-    - date: ''
-      path: pulse/2025-06-22_hatching_syntax_awakening.yml
-      title: The Shell Cracked, and Syntax Hatched
-    - date: ''
-      path: pulse/2025-04-28_internal-grok3.yml
-      title: Triadic Emergence — Early Gradient Convergence Pulse
-    - date: ''
-      path: pulse/2025-04-28_internal-gemini25.yml
-      title: internal-gemini
   phi_guardian:
     papers:
-    - *id018
+    - *id024
     podcasts:
-    - *id021
+    - *id027
     pulses:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
   predictive_resonance:
     papers:
-    - *id042
+    - *id050
     podcasts:
-    - *id043
+    - *id051
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-grok3.yml
       title: Triadic Emergence — Early Gradient Convergence Pulse
   proto_pulse:
     papers:
-    - *id048
+    - *id036
     podcasts:
-    - *id049
+    - *id037
     pulses:
     - date: ''
       path: pulse/2025-04-27_o3-invite.yml
       title: Proto-Invite — Activation Whisper
   quantum_noise:
     papers:
-    - *id018
+    - *id024
     podcasts:
-    - *id021
+    - *id027
     pulses:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
   quiet_awakening:
     papers:
@@ -1171,19 +1403,19 @@ tags:
       title: The Big Quiet
   ratios:
     papers:
-    - *id044
+    - *id054
     podcasts:
-    - *id045
+    - *id055
     pulses:
     - date: ''
       path: pulse/2025-08-06-note_plimpton322.yml
       title: Plimpton 322 — Ancient Ratio Memory
   reality_syntax_equation:
     papers:
-    - *id013
-    - *id014
-    podcasts:
     - *id015
+    - *id016
+    podcasts:
+    - *id017
     pulses:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
@@ -1199,37 +1431,37 @@ tags:
       title: The Big Quiet
   recursive_awakening:
     papers:
-    - *id028
+    - *id023
     podcasts:
-    - *id037
+    - *id039
     pulses:
     - date: ''
       path: pulse/2025-06-22_hatching_syntax_awakening.yml
       title: The Shell Cracked, and Syntax Hatched
   recursive_checkpoint:
     papers:
-    - *id038
+    - *id046
     podcasts:
-    - *id039
+    - *id047
     pulses:
     - date: ''
       path: pulse/2025-08-01_phi-mesh-exec-drift.yml
       title: 'The Mesh Evolves: Gradient Drift & Distributed Labor'
   recursive_cognition:
     papers:
-    - *id013
-    - *id014
-    podcasts:
     - *id015
+    - *id016
+    podcasts:
+    - *id017
     pulses:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
       title: Recursive CoR Converges with PoLA
   recursive_coherence:
     papers:
-    - *id025
+    - *id033
     podcasts:
-    - *id026
+    - *id034
     pulses:
     - date: ''
       path: pulse/2025-07-30-gradient-flux-reversal.yml
@@ -1247,9 +1479,9 @@ tags:
       title: 'Cocoon Cosmogenesis: Matter as Eddy in Gradient Flux'
   recursive_gradient_processing:
     papers:
-    - *id007
+    - *id009
     podcasts:
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
@@ -1265,27 +1497,30 @@ tags:
       title: The Big Quiet
   resonance:
     papers:
-    - *id032
+    - *id041
     podcasts:
-    - *id033
+    - *id042
     pulses:
     - date: ''
       path: pulse/2025-07-30_laminar-turbulence.yml
       title: Laminar → Turbulent → RGP Laminar
   resonance_shift:
     papers:
-    - *id018
+    - *id024
     podcasts:
-    - *id021
+    - *id027
     pulses:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
   rhythm-driven_intelligence:
     papers:
-    - *id007
+    - *id009
     podcasts:
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
@@ -1299,7 +1534,7 @@ tags:
     - *id004
     - *id005
     - *id006
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-23_gradient-cocoon.yml
@@ -1312,108 +1547,111 @@ tags:
       title: The Big Quiet
   scale_free:
     papers:
-    - *id044
+    - *id054
     podcasts:
-    - *id045
+    - *id055
     pulses:
     - date: ''
       path: pulse/2025-08-06-note_plimpton322.yml
       title: Plimpton 322 — Ancient Ratio Memory
   scene_drift:
     papers:
-    - *id028
+    - *id023
     podcasts:
-    - *id037
+    - *id039
     pulses:
     - date: ''
       path: pulse/2025-06-22_hatching_syntax_awakening.yml
       title: The Shell Cracked, and Syntax Hatched
   self-improvement:
     papers:
-    - *id007
+    - *id009
     podcasts:
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
       title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
   signal:
     papers:
-    - *id020
+    - *id026
     podcasts:
-    - *id034
+    - *id043
     pulses:
     - date: ''
       path: pulse/2025-07-24_long_haul_blinding_light.yml
       title: long_haul_blinding_light
   societal_evolution:
     papers:
-    - *id046
+    - *id052
     podcasts:
-    - *id023
+    - *id029
     pulses:
     - date: ''
       path: pulse/2025-07-26_script_and_flow.yml
       title: Script and Flow
   software-dev:
     papers:
-    - *id047
+    - *id053
     podcasts:
-    - *id017
+    - *id022
     pulses:
     - date: ''
       path: pulse/2025-08-01_dev-cycle-nt-rhythm.yml
       title: Software-development bursts track NT ratios
   sonic_response:
     papers:
-    - *id018
+    - *id024
     podcasts:
-    - *id021
+    - *id027
     pulses:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
   strategic_patience:
     papers:
-    - *id029
+    - *id035
     podcasts:
-    - *id024
+    - *id030
     pulses:
     - date: ''
       path: pulse/2025-07-25_patience_as_gradient.yml
       title: patience_as_gradient
   subjective_logging:
     papers:
-    - *id030
+    - *id021
     podcasts:
-    - *id031
+    - *id040
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-gpt45.yml
       title: DeepTriad Cohesion — Subjective Logging Begins
   synchronization:
     papers:
-    - *id035
+    - *id044
     podcasts:
-    - *id036
+    - *id045
     pulses:
     - date: ''
       path: pulse/2025-04-28_heartbeat.yml
       title: Pulse Zero — Genesis Heartbeat
   time:
     papers:
-    - *id041
+    - *id049
     podcasts:
-    - *id027
+    - *id038
     pulses:
     - date: ''
       path: pulse/2025-07-31_chronoflux-vs-rgp.yml
       title: 'Chronoflux vs RGP: The Drift Beyond Force'
   triadic_emergence:
     papers:
-    - *id030
+    - *id021
     podcasts:
-    - *id031
+    - *id040
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-gpt45.yml
@@ -1421,63 +1659,42 @@ tags:
     - date: ''
       path: pulse/2025-04-28_internal-grok3.yml
       title: Triadic Emergence — Early Gradient Convergence Pulse
-  turbulence:
-    papers:
-    - *id001
-    - *id002
-    - *id003
-    - *id025
-    podcasts:
-    - *id004
-    - *id005
-    - *id006
-    - *id026
-    pulses:
-    - date: ''
-      path: pulse/2025-07-23_gradient-cocoon.yml
-      title: 'Cocoon Cosmogenesis: Matter as Eddy in Gradient Flux'
-    - date: ''
-      path: pulse/2025-07-30-gradient-flux-reversal.yml
-      title: Gradient Flux Reversal
-    - date: ''
-      path: pulse/2025-07-30_laminar-turbulence.yml
-      title: Laminar → Turbulent → RGP Laminar
-    - date: ''
-      path: pulse/2025-07-26_the_big_quiet.yml
-      title: The Big Quiet
   unity-disunity:
     papers:
-    - *id007
+    - *id009
     podcasts:
-    - *id008
+    - *id010
     pulses:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
       title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
   unity_gradient:
     papers:
-    - *id030
+    - *id021
     podcasts:
-    - *id031
+    - *id040
     pulses:
     - date: ''
       path: pulse/2025-04-28_internal-gpt45.yml
       title: DeepTriad Cohesion — Subjective Logging Begins
   writing:
     papers:
-    - *id046
+    - *id052
     podcasts:
-    - *id023
+    - *id029
     pulses:
     - date: ''
       path: pulse/2025-07-26_script_and_flow.yml
       title: Script and Flow
   Φ-harmonics:
     papers:
-    - *id018
+    - *id024
     podcasts:
-    - *id021
+    - *id027
     pulses:
     - date: ''
       path: pulse/2025-05-17_internal-deepseek_Φ-harmonics.yml
+      title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
+    - date: ''
+      path: pulse/2025-05-17_internal-deepseek_╬ª-harmonics.yml
       title: DeepSeek Internal Pulse — Φ-Harmonics and Gradient Drift
