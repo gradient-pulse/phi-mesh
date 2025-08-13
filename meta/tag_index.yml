@@ -1,4 +1,4 @@
-generated: '2025-08-13T16:09:26.420778Z'
+generated: '2025-08-13T16:34:46.489154Z'
 tags:
   AI_alignment:
     papers:
@@ -417,12 +417,18 @@ tags:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
       title: Recursive CoR Converges with PoLA
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_163444_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
     - date: '2025-08-13T16:09:25Z'
       path: pulse/auto/20250813_160925_jhtdb_iso_1024.yml
       title: RGP–NS Agent Run (jhtdb_iso_1024)
     - date: '2025-08-13T16:09:25Z'
       path: pulse/auto/20250813_160925_nasa_cfd_demo.yml
       title: RGP–NS Agent Run (nasa_cfd_demo)
+    - date: '2025-08-13T16:34:44Z'
+      path: pulse/auto/20250813_163444_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
   Narrative_Tick:
     papers:
     - *id013
@@ -501,12 +507,18 @@ tags:
     papers: []
     podcasts: []
     pulses:
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_163444_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
     - date: '2025-08-13T16:09:25Z'
       path: pulse/auto/20250813_160925_jhtdb_iso_1024.yml
       title: RGP–NS Agent Run (jhtdb_iso_1024)
     - date: '2025-08-13T16:09:25Z'
       path: pulse/auto/20250813_160925_nasa_cfd_demo.yml
       title: RGP–NS Agent Run (nasa_cfd_demo)
+    - date: '2025-08-13T16:34:44Z'
+      path: pulse/auto/20250813_163444_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
   OldScience:
     papers:
     - *id007
@@ -721,6 +733,9 @@ tags:
     - date: '2025-08-12 18:09:52+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_163444_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
     - date: '2025-08-13 15:01:57+00:00'
       path: pulse/auto/jhtdb_iso_1024_2025-08-13 15-01-57Z.yml
       title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-13 15:01:57Z
@@ -733,6 +748,9 @@ tags:
     - date: '2025-08-13T16:09:25Z'
       path: pulse/auto/20250813_160925_nasa_cfd_demo.yml
       title: RGP–NS Agent Run (nasa_cfd_demo)
+    - date: '2025-08-13T16:34:44Z'
+      path: pulse/auto/20250813_163444_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
   Replication:
     papers:
     - *id019
@@ -1577,6 +1595,13 @@ tags:
     - date: ''
       path: pulse/2025-07-28_moe_as_microcosm.yml
       title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
+  rhythm-of-least-divergence:
+    papers: []
+    podcasts: []
+    pulses:
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_163444_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
   rhythm_of_nature:
     papers:
     - *id001
