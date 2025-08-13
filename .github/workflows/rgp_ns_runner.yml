@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write  # allow commits from this workflow
 
+# Prevent overlapping runs
+concurrency:
+  group: rgp-ns-runner
+  cancel-in-progress: false
+
 jobs:
   run:
     runs-on: ubuntu-latest
