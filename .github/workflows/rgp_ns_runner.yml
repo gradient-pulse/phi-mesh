@@ -6,7 +6,7 @@ on:
     - cron: "17 3 * * 2"  # Tuesdays 03:17 UTC
 
 permissions:
-  contents: write  # allow commits from this workflow
+  contents: write
 
 jobs:
   run:
@@ -69,35 +69,39 @@ jobs:
           echo "--- results/rgp_ns ---"
           ls -la results/rgp_ns || true
 
-      - name: Verify outputs (schema + presence)
+      - name: Verify outputs (schema + presence) with jq
         run: |
           set -euo pipefail
-          echo "Checking pulse/auto/"
-          test -d pulse/auto && ls -1 pulse/auto/*.yml | head -n 2
-          echo "Checking results/rgp_ns/"
-          test -d results/rgp_ns
-          python - << 'PY'
-import json, sys, pathlib
-base = pathlib.Path("results/rgp_ns")
-runs = list(base.glob("*/*/summary.json"))
-assert runs, "No summary.json files found under results/rgp_ns/*/*"
-bad = []
-for s in runs:
-    d = json.loads(s.read_text())
-    for k in ("dataset","variant","nt_test"):
-        if k not in d: bad.append((str(s), f"missing {k}"))
-    t = d.get("nt_test",{})
-    for k in ("p","effect_size","significant"):
-        if k not in t: bad.append((str(s), f"nt_test missing {k}"))
-if bad:
-    for f,msg in bad: print("FAIL", f, "→", msg)
-    sys.exit(1)
-print(f"OK: {len(runs)} summaries look good.")
-PY
+          if [ ! -d results/rgp_ns ]; then
+            echo "No results/rgp_ns directory found"; exit 1
+          fi
+          found=0
+          while IFS= read -r -d '' s; do
+            found=1
+            echo "Checking $s"
+            jq -e '
+              .dataset and .variant and .nt_test and
+              (.nt_test.p != null) and
+              (.nt_test.effect_size != null) and
+              (.nt_test.significant != null)
+            ' "$s" > /dev/null
+          done < <(find results/rgp_ns -type f -name summary.json -print0)
+          if [ "$found" -eq 0 ]; then
+            echo "No summary.json files found under results/rgp_ns/*/*"; exit 1
+          fi
+          echo "OK: summaries look good."
 
       - name: Show latest summary in logs
         run: |
-          ls -1dt results/rgp_ns/*/* | head -n1 | xargs -I {} bash -lc 'echo "::group::{}"; cat {}/summary.json; echo "::endgroup::"'
+          set -e
+          latest_dir=$(ls -1dt results/rgp_ns/*/* 2>/dev/null | head -n1 || true)
+          if [ -n "$latest_dir" ]; then
+            echo "::group::$latest_dir"
+            cat "$latest_dir/summary.json" || true
+            echo "::endgroup::"
+          else
+            echo "No run directories found."
+          fi
 
       - name: Commit results & pulses
         run: |
