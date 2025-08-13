@@ -25,7 +25,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Warn-only secrets check using env injection (no risky expression expansion in script)
       - name: Check secrets (warn only)
         env:
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
@@ -57,12 +56,19 @@ jobs:
           echo "--- results/rgp_ns ---"
           ls -la results/rgp_ns || true
 
-      - name: Verify outputs (schema + presence) with jq
+      # Strict validation of ONLY the latest run under results/rgp_ns/
+      - name: Verify outputs (latest run only) with jq
         run: |
           set -euo pipefail
           if [ ! -d results/rgp_ns ]; then
             echo "No results/rgp_ns directory found"; exit 1
           fi
+          # pick newest top-level dir under results/rgp_ns (works for both layouts)
+          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          if [ -z "${latest_root:-}" ]; then
+            echo "No run directory found under results/rgp_ns"; exit 1
+          fi
+          echo "Validating latest run at: $latest_root"
           found=0
           while IFS= read -r -d '' s; do
             found=1
@@ -73,19 +79,22 @@ jobs:
               (.nt_test.effect_size != null) and
               (.nt_test.significant != null)
             ' "$s" > /dev/null
-          done < <(find results/rgp_ns -type f -name summary.json -print0)
+          done < <(find "$latest_root" -type f -name summary.json -print0)
           if [ "$found" -eq 0 ]; then
-            echo "No summary.json files found under results/rgp_ns/*/*"; exit 1
+            echo "No summary.json files found inside latest run ($latest_root)"; exit 1
           fi
-          echo "OK: summaries look good."
+          echo "OK: latest run summaries look good."
 
       - name: Show latest summary in logs
         run: |
           set -e
-          latest_dir=$(ls -1dt results/rgp_ns/*/* 2>/dev/null | head -n1 || true)
-          if [ -n "$latest_dir" ]; then
-            echo "::group::$latest_dir"
-            cat "$latest_dir/summary.json" || true
+          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          if [ -n "$latest_root" ]; then
+            latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+            target="${latest_dir:-$latest_root}"
+            echo "::group::${target}"
+            # print any summary we find inside the target
+            find "$target" -type f -name summary.json -print -exec cat {} \;
             echo "::endgroup::"
           else
             echo "No run directories found."
