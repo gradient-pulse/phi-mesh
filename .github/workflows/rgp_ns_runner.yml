@@ -8,7 +8,6 @@ on:
 permissions:
   contents: write
 
-# Prevent overlapping runs
 concurrency:
   group: rgp-ns-runner
   cancel-in-progress: false
@@ -52,12 +51,11 @@ jobs:
         run: |
           echo "Tree after agent run:"
           ls -la
-          echo "--- pulse ---";        ls -la pulse || true
-          echo "--- pulse/auto ---";   ls -la pulse/auto || true
-          echo "--- results ---";      ls -la results || true
-          echo "--- results/rgp_ns ---"; ls -la results/rgp_ns || true
+          echo "--- pulse ---";           ls -la pulse || true
+          echo "--- pulse/auto ---";      ls -la pulse/auto || true
+          echo "--- results ---";         ls -la results || true
+          echo "--- results/rgp_ns ---";  ls -la results/rgp_ns || true
 
-      # Strictly validate ONLY the newest run using jq (no heredocs)
       - name: Verify outputs (latest run only) with jq
         run: |
           set -euo pipefail
@@ -78,7 +76,7 @@ jobs:
               (.nt_test.p != null) and
               (.nt_test.effect_size != null) and
               (.nt_test.significant != null)
-            ' "$s" > /dev/null
+            ' "$s" >/dev/null
           done < <(find "$latest_root" -type f -name summary.json -print0)
           if [ "$found" -eq 0 ]; then
             echo "No summary.json files found inside latest run ($latest_root)"; exit 1
@@ -90,7 +88,6 @@ jobs:
           set -e
           latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
           if [ -n "$latest_root" ]; then
-            # pick newest dataset dir inside the latest root
             latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
             target="${latest_dir:-$latest_root}"
             summary="$target/summary.json"
@@ -110,7 +107,6 @@ jobs:
       - name: Show last 3 run summaries (trend)
         run: |
           echo "::group::Last 3 run summaries"
-          # list all summaries by mtime, newest first, take 3
           mapfile -t last3 < <(find results/rgp_ns -type f -name summary.json -printf '%T@ %p\n' | sort -nr | head -n3 | awk '{print $2}')
           if [ "${#last3[@]}" -eq 0 ]; then
             echo "No summaries found."
@@ -136,28 +132,20 @@ jobs:
           if [ ! -f "$summary" ]; then
             echo "No summary.json in $target — skipping pulse creation."; exit 0
           fi
-          sig=$(jq -r '.nt_test.significant' "$summary")
-          if [ "$sig" = "true" ]; then
+          if [ "$(jq -r '.nt_test.significant' "$summary")" = "true" ]; then
             dataset=$(jq -r '.dataset' "$summary")
             effect=$(jq -r '.nt_test.effect_size' "$summary")
             pval=$(jq -r '.nt_test.p' "$summary")
             ts=$(date -u +"%Y%m%d_%H%M%S")
             mkdir -p pulse/auto
             pulse_file="pulse/auto/${ts}_${dataset}.yml"
-            cat > "$pulse_file" <<YML
-title: "Significant NT Rhythm — ${dataset}"
-date: "$(date -u +"%Y-%m-%d")"
-summary: >
-  Automated detection run found statistically significant NT rhythm
-  in dataset \`${dataset}\` (effect size = ${effect}, p = ${pval}).
-tags:
-  - RGP
-  - Navier_Stokes
-  - NT_rhythm
-  - rhythm-of-least-divergence
-papers: []
-podcasts: []
-YML
+            : > "$pulse_file"
+            printf 'title: "Significant NT Rhythm — %s"\n' "$dataset" >> "$pulse_file"
+            printf 'date: "%s"\n' "$(date -u +%Y-%m-%d)" >> "$pulse_file"
+            printf 'summary: >\n  Automated detection run found statistically significant NT rhythm in dataset `%s` (effect size = %s, p = %s).\n' "$dataset" "$effect" "$pval" >> "$pulse_file"
+            printf 'tags:\n  - RGP\n  - Navier_Stokes\n  - NT_rhythm\n  - rhythm-of-least-divergence\n' >> "$pulse_file"
+            printf 'papers: []\n' >> "$pulse_file"
+            printf 'podcasts: []\n' >> "$pulse_file"
             echo "Pulse created: $pulse_file"
           else
             echo "No significant result — skipping pulse creation."
