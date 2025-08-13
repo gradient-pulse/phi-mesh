@@ -17,6 +17,7 @@ Outputs docs/data.js with:
 This version:
 - Drops resource items (papers/podcasts) that lack a valid URL → prevents 404s.
 - Deduplicates resources by normalized URL (dx.doi.org → doi.org; casefold).
+- Accepts tag_index 'pulses' as strings or dicts (e.g., {"pulse": "pulse/…yml"}).
 """
 
 import argparse
@@ -143,9 +144,9 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
                         if s.startswith(("http://", "https://")):
                             nu = _norm_url(s)
                             if nu:
+                                # store original (normalized) for display and dedupe
                                 out.append({"url": nu})
                         else:
-                            # No URL → skip to avoid 404 in sidebar
                             print(f"WARN: dropping resource without URL in {fp}: {x!r}")
                     elif isinstance(x, dict):
                         url = _norm_url(x.get("url", ""))
@@ -215,9 +216,6 @@ def build_nodes_edges_from_scan(tag_to_pulses: Dict[str, List[str]],
 
 def aggregate_tag_resources(tag_to_pulses: Dict[str, List[str]],
                             pulse_resources: Dict[str, Dict[str, List[dict]]]) -> Dict[str, Dict[str, List[dict]]]:
-    def norm_url_for_key(u: str) -> str:
-        return _norm_url(u)
-
     out: Dict[str, Dict[str, List[dict]]] = {}
     for tag, pulses in tag_to_pulses.items():
         papers, pods = [], []
@@ -226,7 +224,7 @@ def aggregate_tag_resources(tag_to_pulses: Dict[str, List[str]],
             res = pulse_resources.get(p, {})
             # papers
             for item in res.get("papers", []):
-                url_key = norm_url_for_key(item.get("url", ""))
+                url_key = _norm_url(item.get("url", ""))
                 if not url_key:
                     continue
                 if url_key not in seen_p:
@@ -234,7 +232,7 @@ def aggregate_tag_resources(tag_to_pulses: Dict[str, List[str]],
                     papers.append({"title": item.get("title"), "url": item.get("url")})
             # podcasts
             for item in res.get("podcasts", []):
-                url_key = norm_url_for_key(item.get("url", ""))
+                url_key = _norm_url(item.get("url", ""))
                 if not url_key:
                     continue
                 if url_key not in seen_q:
@@ -288,8 +286,32 @@ def main():
         link_objs = [{"source": a, "target": b} for (a, b) in edges]
 
         # tag_to_pulses (for resources & first-seen); tolerate either field name
-        tag_to_pulses = {t: list(set((info.get("pulses") or []) + (info.get("pulse") or [])))
-                         for t, info in tag_map.items()}
+        # and tolerate pulses specified as str or as dicts like {"pulse": "..."}.
+        def coerce_pulses(x) -> List[str]:
+            out: List[str] = []
+            if not x:
+                return out
+            if isinstance(x, str):
+                return [x]
+            if isinstance(x, list):
+                for v in x:
+                    if isinstance(v, str):
+                        out.append(v)
+                    elif isinstance(v, dict):
+                        for key in ("pulse", "file", "path"):
+                            val = v.get(key)
+                            if isinstance(val, str) and val:
+                                out.append(val)
+                                break
+            return out
+
+        tag_to_pulses = {
+            t: sorted(set(
+                coerce_pulses(info.get("pulses")) +
+                coerce_pulses(info.get("pulse"))
+            ))
+            for t, info in tag_map.items()
+        }
 
         # pulse resources / meta must be derived by scanning pulses (non-fatal if missing)
         _, _, pulse_resources, pulse_meta, _ = scan_pulses_for_tags(args.pulse_glob)
