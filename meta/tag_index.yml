@@ -1,4 +1,4 @@
-generated: '2025-08-12T18:09:52.925279Z'
+generated: '2025-08-13T15:01:58.031585Z'
 tags:
   AI_alignment:
     papers:
@@ -397,6 +397,12 @@ tags:
     - date: '2025-08-12 18:09:52+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-13 15:01:57Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-13 15:01:57Z
   NT_rhythm:
     papers:
     - *id015
@@ -479,6 +485,12 @@ tags:
     - date: '2025-08-12 18:09:52+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-13 15:01:57Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-13 15:01:57Z
   OldScience:
     papers:
     - *id007
@@ -693,6 +705,12 @@ tags:
     - date: '2025-08-12 18:09:52+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-13 15:01:57Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-13 15:01:57Z
   Replication:
     papers:
     - *id019
@@ -743,6 +761,12 @@ tags:
     - date: '2025-08-12 18:09:52+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-13 15:01:57Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-13 15:01:57Z
   RΦ:
     papers:
     - *id025
@@ -825,6 +849,12 @@ tags:
     - date: '2025-08-12 18:09:52+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-12 18-09-52Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-12 18:09:52Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/jhtdb_iso_1024_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-13 15:01:57Z
+    - date: '2025-08-13 15:01:57+00:00'
+      path: pulse/auto/nasa_cfd_demo_2025-08-13 15-01-57Z.yml
+      title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-13 15:01:57Z
   alignment:
     papers:
     - *id035
