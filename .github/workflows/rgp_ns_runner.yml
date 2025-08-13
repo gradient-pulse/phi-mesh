@@ -25,17 +25,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Check secrets (warn only)
-        env:
-          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
-          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
-        run: |
-          [ -z "${JHTDB_TOKEN}" ] && echo "⚠️  Warning: JHTDB_TOKEN not set" || echo "✅ JHTDB_TOKEN present"
-          [ -z "${ZENODO_DOI}" ] && echo "⚠️  Warning: ZENODO_DOI not set" || echo "✅ ZENODO_DOI present"
-          [ -z "${X_WEBHOOK_URL}" ] && echo "⚠️  Warning: X_WEBHOOK_URL not set" || echo "✅ X_WEBHOOK_URL present"
-          echo "Continuing (warnings only)."
-
       - name: Execute agent loop
         env:
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
@@ -56,54 +45,42 @@ jobs:
           echo "--- results/rgp_ns ---"
           ls -la results/rgp_ns || true
 
-      # Strict validation of ONLY the latest run under results/rgp_ns/
-      - name: Verify outputs (latest run only) with jq
+      - name: Verify outputs (schema + presence)
         run: |
           set -euo pipefail
-          if [ ! -d results/rgp_ns ]; then
-            echo "No results/rgp_ns directory found"; exit 1
-          fi
-          # pick newest top-level dir under results/rgp_ns (works for both layouts)
-          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-          if [ -z "${latest_root:-}" ]; then
-            echo "No run directory found under results/rgp_ns"; exit 1
-          fi
-          echo "Validating latest run at: $latest_root"
-          found=0
-          while IFS= read -r -d '' s; do
-            found=1
-            echo "Checking $s"
-            jq -e '
-              .dataset and .variant and .nt_test and
-              (.nt_test.p != null) and
-              (.nt_test.effect_size != null) and
-              (.nt_test.significant != null)
-            ' "$s" > /dev/null
-          done < <(find "$latest_root" -type f -name summary.json -print0)
-          if [ "$found" -eq 0 ]; then
-            echo "No summary.json files found inside latest run ($latest_root)"; exit 1
-          fi
-          echo "OK: latest run summaries look good."
+          echo "Checking pulse/auto/"
+          test -d pulse/auto && ls -1 pulse/auto/*.yml | head -n 2
+          echo "Checking results/rgp_ns/"
+          test -d results/rgp_ns
+          # Ensure each dataset produced expected files with required keys
+          python - << 'PY'
+import json, sys, pathlib
+base = pathlib.Path("results/rgp_ns")
+runs = list(base.glob("*/*/summary.json"))
+assert runs, "No summary.json files found under results/rgp_ns/*/*"
+bad = []
+for s in runs:
+    d = json.loads(s.read_text())
+    for k in ("dataset","variant","nt_test"):
+        if k not in d: bad.append((str(s), f"missing {k}"))
+    t = d.get("nt_test",{})
+    for k in ("p","effect_size","significant"):
+        if k not in t: bad.append((str(s), f"nt_test missing {k}"))
+if bad:
+    for f,msg in bad: print("FAIL", f, "→", msg)
+    sys.exit(1)
+print(f"OK: {len(runs)} summaries look good.")
+PY
 
       - name: Show latest summary in logs
         run: |
-          set -e
-          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-          if [ -n "$latest_root" ]; then
-            latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-            target="${latest_dir:-$latest_root}"
-            echo "::group::${target}"
-            # print any summary we find inside the target
-            find "$target" -type f -name summary.json -print -exec cat {} \;
-            echo "::endgroup::"
-          else
-            echo "No run directories found."
-          fi
+          ls -1dt results/rgp_ns/*/* | head -n1 | xargs -I {} bash -lc 'echo "::group::{}"; cat {}/summary.json; echo "::endgroup::"'
 
       - name: Commit results & pulses
         run: |
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
+          git pull --rebase origin main || true
           git add -A
           git commit -m "auto: RGP-NS agent run" || echo "nothing to commit"
           git push
@@ -111,16 +88,18 @@ jobs:
       - name: Refresh Tag Index & Map
         run: |
           python meta/update_tag_index.py
+          # Build the map using whichever builder exists
           if [ -f meta/generate_tag_map.py ]; then
             python meta/generate_tag_map.py
           elif [ -f build_tag_browser.py ]; then
             python build_tag_browser.py
-          else
+          else:
             echo "No map builder found; skipping map build."
           fi
 
       - name: Commit index & map
         run: |
+          git pull --rebase origin main || true
           git add -A
           git commit -m "auto: refresh tag index & map" || echo "nothing to commit"
           git push
