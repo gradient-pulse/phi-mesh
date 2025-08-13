@@ -99,5 +99,16 @@ def main():
 
     print(f"[RGP-NS] All datasets processed. Results in {results_dir}")
 
+    # --- NEW: show latest summary.json in logs ---
+    summaries = sorted(results_dir.glob("*/*/summary.json"), key=lambda p: p.stat().st_mtime, reverse=True)
+    if summaries:
+        latest = summaries[0]
+        print("\n===== Latest Summary =====")
+        print(latest)
+        print(latest.read_text())
+        print("==========================\n")
+    else:
+        print("[RGP-NS] No summary.json files found to display.")
+
 if __name__ == "__main__":
     sys.exit(main())
