@@ -6,12 +6,7 @@ on:
     - cron: "17 3 * * 2"  # Tuesdays 03:17 UTC
 
 permissions:
-  contents: write  # allow commits from this workflow
-
-# Prevent overlapping runs
-concurrency:
-  group: rgp-ns-runner
-  cancel-in-progress: false
+  contents: write
 
 jobs:
   run:
@@ -57,7 +52,6 @@ jobs:
           test -d pulse/auto && ls -1 pulse/auto/*.yml | head -n 2
           echo "Checking results/rgp_ns/"
           test -d results/rgp_ns
-          # Ensure each dataset produced expected files with required keys
           python - << 'PY'
 import json, sys, pathlib
 base = pathlib.Path("results/rgp_ns")
@@ -81,11 +75,46 @@ PY
         run: |
           ls -1dt results/rgp_ns/*/* | head -n1 | xargs -I {} bash -lc 'echo "::group::{}"; cat {}/summary.json; echo "::endgroup::"'
 
+      - name: Auto-create pulse if significant
+        run: |
+          latest_dir=$(ls -1dt results/rgp_ns/*/* | head -n1)
+          summary_file="$latest_dir/summary.json"
+          if [ -f "$summary_file" ]; then
+            sig=$(jq -r '.nt_test.significant' "$summary_file")
+            if [ "$sig" = "true" ]; then
+              dataset=$(jq -r '.dataset' "$summary_file")
+              effect=$(jq -r '.nt_test.effect_size' "$summary_file")
+              pval=$(jq -r '.nt_test.p' "$summary_file")
+              ts=$(date -u +"%Y%m%d_%H%M%S")
+              pulse_file="pulse/auto/${ts}_${dataset}.yml"
+              mkdir -p pulse/auto
+              cat > "$pulse_file" <<YML
+title: "Significant NT Rhythm — ${dataset}"
+date: "$(date -u +"%Y-%m-%d")"
+summary: >
+  Automated detection run found statistically significant NT rhythm
+  in dataset \`${dataset}\` (effect size = ${effect}, p = ${pval}).
+tags:
+  - RGP
+  - Navier_Stokes
+  - NT_rhythm
+  - rhythm-of-least-divergence
+papers: []
+podcasts: []
+YML
+              echo "Pulse created: $pulse_file"
+            else
+              echo "No significant result — skipping pulse creation."
+            fi
+          else
+            echo "No summary.json found — skipping pulse creation."
+          fi
+
       - name: Commit results & pulses
         run: |
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git pull --rebase origin main || true
+          git pull --rebase
           git add -A
           git commit -m "auto: RGP-NS agent run" || echo "nothing to commit"
           git push
@@ -93,18 +122,17 @@ PY
       - name: Refresh Tag Index & Map
         run: |
           python meta/update_tag_index.py
-          # Build the map using whichever builder exists
           if [ -f meta/generate_tag_map.py ]; then
             python meta/generate_tag_map.py
           elif [ -f build_tag_browser.py ]; then
             python build_tag_browser.py
-          else:
+          else
             echo "No map builder found; skipping map build."
           fi
 
       - name: Commit index & map
         run: |
-          git pull --rebase origin main || true
+          git pull --rebase
           git add -A
           git commit -m "auto: refresh tag index & map" || echo "nothing to commit"
           git push
