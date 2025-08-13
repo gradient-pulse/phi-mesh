@@ -4,7 +4,7 @@ RGP–NS agent loop
 - Loads config.yml
 - Iterates over datasets
 - Runs NT rhythm detection + statistical test
-- Writes results + optional pulse
+- Writes results + optional pulse if significant
 """
 
 import os
@@ -31,7 +31,6 @@ def now_utc():
     return datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
 
 def _has_jhtdb_token() -> bool:
-    """Check if JHTDB_TOKEN is in environment."""
     return bool(os.environ.get("JHTDB_TOKEN"))
 
 # ---------------------------------------------------------------------
@@ -44,7 +43,7 @@ def detect_nt_rhythm(dataset_id, source, config):
     Replace with real logic that loads dataset, detects NTs, runs stats.
     """
     print(f"[RGP-NS] Processing dataset: {dataset_id} (source={source})")
-    # Simulated results for demonstration:
+    # Simulated result for demonstration:
     return {
         "dataset": dataset_id,
         "variant": "demo",
@@ -68,11 +67,13 @@ def main():
     timestamp = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
     results_dir = repo_root / "results" / "rgp_ns" / timestamp
 
+    alpha = config.get("rhythm_test", {}).get("alpha", 0.01)
+    effect_min = config.get("rhythm_test", {}).get("effect_size_min", 0.2)
+
     for ds_meta in config.get("datasets", []):
         ds_id = ds_meta.get("id", "unknown")
         source = ds_meta.get("source", "unknown")
 
-        # Skip JHTDB datasets if no token available
         if source == "jhtdb" and not _has_jhtdb_token():
             print(f"[RGP-NS] SKIP {ds_id} — no JHTDB_TOKEN in environment")
             continue
@@ -81,7 +82,12 @@ def main():
         out_dir = results_dir / ds_id
         save_json(out_dir / "summary.json", res)
 
-        if config.get("publishing", {}).get("make_pulse", False):
+        nt_test = res.get("nt_test", {})
+        pval = nt_test.get("p", 1.0)
+        effsize = nt_test.get("effect_size", 0.0)
+        sig = pval < alpha and effsize >= effect_min
+
+        if sig and config.get("publishing", {}).get("make_pulse", False):
             pulse_dir = repo_root / "pulse" / "auto"
             pulse_dir.mkdir(parents=True, exist_ok=True)
             pulse_file = pulse_dir / f"{timestamp}_{ds_id}.yml"
@@ -89,17 +95,19 @@ def main():
                 "title": f"RGP–NS Agent Run ({ds_id})",
                 "date": now_utc(),
                 "tags": ["RGP", "Navier_Stokes", "NT_rhythm"],
-                "summary": f"Automated NT rhythm analysis for dataset {ds_id}.",
+                "summary": f"Automated NT rhythm analysis for dataset {ds_id}. Significant result (p={pval:.4f}, effect_size={effsize:.2f}).",
                 "papers": [],
                 "podcasts": []
             }
             with open(pulse_file, "w", encoding="utf-8") as f:
                 yaml.safe_dump(pulse, f, sort_keys=False)
             print(f"[RGP-NS] Pulse written: {pulse_file}")
+        else:
+            print(f"[RGP-NS] No pulse created for {ds_id} (p={pval:.4f}, effect_size={effsize:.2f}).")
 
     print(f"[RGP-NS] All datasets processed. Results in {results_dir}")
 
-    # --- NEW: show latest summary.json in logs ---
+    # Show latest summary.json
     summaries = sorted(results_dir.glob("*/*/summary.json"), key=lambda p: p.stat().st_mtime, reverse=True)
     if summaries:
         latest = summaries[0]
