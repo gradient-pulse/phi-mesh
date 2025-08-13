@@ -1,4 +1,4 @@
-generated: '2025-08-13T17:05:56.971066Z'
+generated: '2025-08-13T17:57:34.464433Z'
 tags:
   AI_alignment:
     papers:
@@ -426,6 +426,9 @@ tags:
     - date: '2025-08-13'
       path: pulse/auto/20250813_170555_nasa_cfd_demo.yml
       title: Significant NT Rhythm — nasa_cfd_demo
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_175733_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
     - date: '2025-08-13T16:09:25Z'
       path: pulse/auto/20250813_160925_jhtdb_iso_1024.yml
       title: RGP–NS Agent Run (jhtdb_iso_1024)
@@ -441,6 +444,12 @@ tags:
     - date: '2025-08-13T17:05:55Z'
       path: pulse/auto/20250813_170555_jhtdb_iso_1024.yml
       title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T17:57:32Z'
+      path: pulse/auto/20250813_175732_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T17:57:32Z'
+      path: pulse/auto/20250813_175732_nasa_cfd_demo.yml
+      title: RGP–NS Agent Run (nasa_cfd_demo)
   Narrative_Tick:
     papers:
     - *id013
@@ -528,6 +537,9 @@ tags:
     - date: '2025-08-13'
       path: pulse/auto/20250813_170555_nasa_cfd_demo.yml
       title: Significant NT Rhythm — nasa_cfd_demo
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_175733_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
     - date: '2025-08-13T16:09:25Z'
       path: pulse/auto/20250813_160925_jhtdb_iso_1024.yml
       title: RGP–NS Agent Run (jhtdb_iso_1024)
@@ -543,6 +555,12 @@ tags:
     - date: '2025-08-13T17:05:55Z'
       path: pulse/auto/20250813_170555_jhtdb_iso_1024.yml
       title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T17:57:32Z'
+      path: pulse/auto/20250813_175732_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T17:57:32Z'
+      path: pulse/auto/20250813_175732_nasa_cfd_demo.yml
+      title: RGP–NS Agent Run (nasa_cfd_demo)
   OldScience:
     papers:
     - *id007
@@ -766,6 +784,9 @@ tags:
     - date: '2025-08-13'
       path: pulse/auto/20250813_170555_nasa_cfd_demo.yml
       title: Significant NT Rhythm — nasa_cfd_demo
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_175733_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
     - date: '2025-08-13 15:01:57+00:00'
       path: pulse/auto/jhtdb_iso_1024_2025-08-13 15-01-57Z.yml
       title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-13 15:01:57Z
@@ -787,6 +808,12 @@ tags:
     - date: '2025-08-13T17:05:55Z'
       path: pulse/auto/20250813_170555_jhtdb_iso_1024.yml
       title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T17:57:32Z'
+      path: pulse/auto/20250813_175732_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T17:57:32Z'
+      path: pulse/auto/20250813_175732_nasa_cfd_demo.yml
+      title: RGP–NS Agent Run (nasa_cfd_demo)
   Replication:
     papers:
     - *id019
@@ -1643,6 +1670,9 @@ tags:
       title: Significant NT Rhythm — nasa_cfd_demo
     - date: '2025-08-13'
       path: pulse/auto/20250813_170555_nasa_cfd_demo.yml
+      title: Significant NT Rhythm — nasa_cfd_demo
+    - date: '2025-08-13'
+      path: pulse/auto/20250813_175733_nasa_cfd_demo.yml
       title: Significant NT Rhythm — nasa_cfd_demo
   rhythm_of_nature:
     papers:
