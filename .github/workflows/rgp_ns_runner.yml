@@ -6,7 +6,7 @@ on:
     - cron: "17 3 * * 2"  # Tuesdays 03:17 UTC
 
 permissions:
-  contents: write
+  contents: write  # allow commits from this workflow
 
 jobs:
   run:
@@ -25,29 +25,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Warn-only secrets check using env injection (no risky expression expansion in script)
       - name: Check secrets (warn only)
+        env:
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+          ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
+          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
         run: |
-          warn=""
-          check() {
-            name="$1"
-            case "$name" in
-              JHTDB_TOKEN) val="${{ secrets.JHTDB_TOKEN }}" ;;
-              ZENODO_DOI) val="${{ secrets.ZENODO_DOI }}" ;;
-              X_WEBHOOK_URL) val="${{ secrets.X_WEBHOOK_URL }}" ;;
-            esac
-            if [ -z "$val" ]; then
-              echo "⚠️  Warning: $name not set"
-              warn=1
-            else
-              echo "✅ $name present"
-            fi
-          }
-          check JHTDB_TOKEN
-          check ZENODO_DOI
-          check X_WEBHOOK_URL
-          if [ -n "$warn" ]; then
-            echo "Continuing (warnings only)."
-          fi
+          [ -z "${JHTDB_TOKEN}" ] && echo "⚠️  Warning: JHTDB_TOKEN not set" || echo "✅ JHTDB_TOKEN present"
+          [ -z "${ZENODO_DOI}" ] && echo "⚠️  Warning: ZENODO_DOI not set" || echo "✅ ZENODO_DOI present"
+          [ -z "${X_WEBHOOK_URL}" ] && echo "⚠️  Warning: X_WEBHOOK_URL not set" || echo "✅ X_WEBHOOK_URL present"
+          echo "Continuing (warnings only)."
 
       - name: Execute agent loop
         env:
