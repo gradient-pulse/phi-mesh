@@ -76,6 +76,7 @@ PY
         run: |
           ls -1dt results/rgp_ns/*/* | head -n1 | xargs -I {} bash -lc 'echo "::group::{}"; cat {}/summary.json; echo "::endgroup::"'
 
+      # Commit pulses/results first so the index & map rebuild sees them
       - name: Commit results & pulses
         run: |
           git config user.name "phi-mesh-bot"
