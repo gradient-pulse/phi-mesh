@@ -28,7 +28,7 @@ jobs:
       - name: Execute agent loop
         env:
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
+          ZENODO_DOI: ${{ secrets.ZENODO_DOI }}
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
         run: python agents/rgp_ns/run_agent.py
 
@@ -46,13 +46,12 @@ jobs:
           ls -la results/rgp_ns || true
 
       - name: Verify outputs (schema + presence)
-        run: |
-          set -euo pipefail
-          echo "Checking pulse/auto/"
-          test -d pulse/auto && ls -1 pulse/auto/*.yml | head -n 2
-          echo "Checking results/rgp_ns/"
-          test -d results/rgp_ns
-          # Ensure each dataset produced expected files with required keys
+        run: >
+          set -euo pipefail;
+          echo "Checking pulse/auto/";
+          test -d pulse/auto && ls -1 pulse/auto/*.yml | head -n 2;
+          echo "Checking results/rgp_ns/";
+          test -d results/rgp_ns;
           python - <<'PY'
 import json, sys, pathlib
 base = pathlib.Path("results/rgp_ns")
@@ -77,10 +76,7 @@ PY
 
       - name: Show latest summary in logs
         run: |
-          latest_dir=$(ls -1dt results/rgp_ns/*/* | head -n1)
-          echo "::group::$latest_dir"
-          cat "$latest_dir/summary.json"
-          echo "::endgroup::"
+          ls -1dt results/rgp_ns/*/* | head -n1 | xargs -I {} bash -lc 'echo "::group::{}"; cat {}/summary.json; echo "::endgroup::"'
 
       - name: Commit results & pulses
         run: |
