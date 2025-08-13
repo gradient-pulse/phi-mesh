@@ -2,36 +2,29 @@
 """
 Builds docs/data.js for the Phi-Mesh tag browser & graph map.
 
-Priority order:
-1) If meta/tag_index.yml exists and is non-empty → use it.
-2) Otherwise, scan pulse/*.yml (skipping pulse/archive and pulse/telemetry).
+Behavior:
+- If meta/tag_index.yml exists → use it for the node list/degree proxy.
+- Regardless, ALWAYS scan pulse/*.yml to derive:
+    • edges via tag co-occurrence,
+    • resources (papers/podcasts) with URL-only policy + dedupe,
+    • first-seen pulse info.
 
 Outputs docs/data.js with:
   window.PHI_DATA = {
     nodes: [{id, centrality}],
     links: [{source, target}],
-    tagResources: { [tag]: {papers: [{title?, url}], podcasts: [{title?, url}] } },
+    tagResources: { [tag]: {papers:[{title?,url}], podcasts:[{title?,url}] } },
     tagFirstSeen: { [tag]: {pulse, callout} }
   }
-
-This version:
-- Drops resource items (papers/podcasts) that lack a valid URL → prevents 404s.
-- Deduplicates resources by normalized URL (dx.doi.org → doi.org; casefold).
-- Accepts tag_index 'pulses' as strings or dicts (e.g., {"pulse": "pulse/…yml"}).
 """
 
-import argparse
-import glob
-import json
-import os
-import re
+import argparse, glob, json, os, re
 from pathlib import Path
 from typing import Dict, List, Tuple, Any
-
 import yaml
 
 
-# ------------------------------- utils --------------------------------- #
+# ------------------------------- helpers -------------------------------- #
 
 def safe_load_yaml(path: str) -> Any:
     try:
@@ -42,39 +35,29 @@ def safe_load_yaml(path: str) -> Any:
         return {}
 
 def looks_like_tag_index(obj: Any) -> bool:
-    if not isinstance(obj, dict):
-        return False
-    # Accept two common shapes:
-    # A) { tag: { pulses:[...], links:[...], ... }, ... }
-    # B) { tags: { tag: {...} } }
+    if not isinstance(obj, dict): return False
     return bool(obj) and (True in [
         all(isinstance(k, str) and isinstance(v, dict) for k, v in obj.items()),
         ("tags" in obj and isinstance(obj["tags"], dict))
     ])
 
 def normalize_tag_map(tag_index_obj: Any) -> Dict[str, Dict]:
-    """Return a unified map: { tag: { pulses:[...], links:[...], ... } }"""
     if "tags" in tag_index_obj and isinstance(tag_index_obj["tags"], dict):
         return tag_index_obj["tags"]
     return tag_index_obj
 
 def add_edge(a: str, b: str, edge_set: set):
-    if a == b:
-        return
-    edge_set.add(tuple(sorted((a, b))))
+    if a != b:
+        edge_set.add(tuple(sorted((a, b))))
 
 def is_skipped_pulse_path(path: str) -> bool:
     p = Path(path).as_posix()
-    # skip archive & telemetry folders
-    if "/pulse/archive/" in p or p.endswith("/pulse/archive") or "/pulse/telemetry/" in p or p.endswith("/pulse/telemetry"):
-        return True
-    return False
+    return ("/pulse/archive/" in p or p.endswith("/pulse/archive")
+            or "/pulse/telemetry/" in p or p.endswith("/pulse/telemetry"))
 
 def _norm_url(u: str) -> str:
-    """Normalize URLs for dedupe: unify DOI host & casefold."""
     u = (u or "").strip()
-    if not u:
-        return ""
+    if not u: return ""
     u = re.sub(r"^https?://(dx\.)?doi\.org/", "https://doi.org/", u, flags=re.I)
     return u.lower()
 
@@ -96,25 +79,18 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
 
     candidates = sorted(glob.glob(glob_pattern))
     for fp in candidates:
-        if not fp.endswith((".yml", ".yaml")):
-            continue
-        if is_skipped_pulse_path(fp):
-            continue
+        if not fp.endswith((".yml", ".yaml")): continue
+        if is_skipped_pulse_path(fp): continue
 
         data = safe_load_yaml(fp)
-        if not isinstance(data, dict):
-            continue
+        if not isinstance(data, dict): continue
 
         tags = data.get("tags") or data.get("Tags") or []
-        if isinstance(tags, str):
-            tags = [tags]
-        if not isinstance(tags, list) or not tags:
-            continue
+        if isinstance(tags, str): tags = [tags]
+        if not isinstance(tags, list) or not tags: continue
 
-        # minimal normalization
         tags = [str(t).strip() for t in tags if str(t).strip()]
-        if not tags:
-            continue
+        if not tags: continue
 
         pulse_key = Path(fp).as_posix()
         title = str(data.get("title") or Path(fp).stem)
@@ -125,27 +101,17 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
         for t in tags:
             tag_to_pulses.setdefault(t, []).append(pulse_key)
 
-        # --- collect resources (accept strings or {title,url}); drop items without URL --- #
+        # collect resources; drop items without URL
         def norm_items(raw):
-            """
-            Accept:
-              - "https://doi.org/10...."
-              - {"url": "...", "title": "..."}   (title optional)
-            Drop items that don't have a resolvable URL to avoid 404s.
-            """
             out = []
-            if not raw:
-                return out
-
+            if not raw: return out
             if isinstance(raw, list):
                 for x in raw:
                     if isinstance(x, str):
                         s = x.strip()
                         if s.startswith(("http://", "https://")):
                             nu = _norm_url(s)
-                            if nu:
-                                # store original (normalized) for display and dedupe
-                                out.append({"url": nu})
+                            if nu: out.append({"url": nu})
                         else:
                             print(f"WARN: dropping resource without URL in {fp}: {x!r}")
                     elif isinstance(x, dict):
@@ -153,19 +119,18 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
                         ttl = x.get("title")
                         if url:
                             item = {"url": url}
-                            if ttl:
-                                item["title"] = str(ttl)
+                            if ttl: item["title"] = str(ttl)
                             out.append(item)
                         else:
                             if ttl:
                                 print(f"WARN: dropping '{ttl}' (no URL) in {fp}")
             return out
 
-        papers = norm_items(data.get("papers"))
+        papers   = norm_items(data.get("papers"))
         podcasts = norm_items(data.get("podcasts"))
         pulse_resources[pulse_key] = {"papers": papers, "podcasts": podcasts}
 
-        # co-occurrence edges inside this pulse
+        # co-occurrence edges
         for i in range(len(tags)):
             for j in range(i + 1, len(tags)):
                 add_edge(tags[i], tags[j], edges_set)
@@ -174,38 +139,28 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
     return tag_to_pulses, pulse_to_tags, pulse_resources, pulse_meta, edges
 
 
-# ----------------------------- node stats ------------------------------ #
+# ----------------------------- nodes/links ----------------------------- #
 
 def build_nodes_from_tag_map(tag_map: Dict[str, Dict]) -> List[Dict]:
-    """Build nodes with a simple centrality proxy (normalized degree)."""
+    """Nodes with a simple centrality proxy (normalized degree)."""
     tags = list(tag_map.keys())
     deg = {t: 0 for t in tags}
-    # infer degree from 'links' if present; else from pulses count
     for t, info in tag_map.items():
         links = info.get("links") or []
-        if isinstance(links, list):
-            deg[t] += len(links)
+        if isinstance(links, list): deg[t] += len(links)
         pulses = info.get("pulses") or []
-        if isinstance(pulses, list):
-            # small bonus for appearing in many pulses
-            deg[t] += len(pulses) * 0.25
-
+        if isinstance(pulses, list): deg[t] += len(pulses) * 0.25
     maxd = max(deg.values()) if deg else 1.0
-    nodes = [{"id": t, "centrality": (deg[t] / maxd) if maxd else 0.0} for t in tags]
-    return nodes
-
+    return [{"id": t, "centrality": (deg[t] / maxd) if maxd else 0.0} for t in tags]
 
 def build_nodes_edges_from_scan(tag_to_pulses: Dict[str, List[str]],
                                 edges: List[Tuple[str, str]]) -> Tuple[List[Dict], List[Dict]]:
     tags = sorted(tag_to_pulses.keys())
     deg = {t: 0 for t in tags}
     for (a, b) in edges:
-        deg[a] += 1
-        deg[b] += 1
-    # small bonus for multi-pulse presence
+        deg[a] += 1; deg[b] += 1
     for t, ps in tag_to_pulses.items():
         deg[t] += len(ps) * 0.25
-
     maxd = max(deg.values()) if deg else 1.0
     nodes = [{"id": t, "centrality": (deg[t] / maxd) if maxd else 0.0} for t in tags]
     link_objs = [{"source": a, "target": b} for (a, b) in edges]
@@ -222,25 +177,18 @@ def aggregate_tag_resources(tag_to_pulses: Dict[str, List[str]],
         seen_p, seen_q = set(), set()
         for p in sorted(pulses):
             res = pulse_resources.get(p, {})
-            # papers
             for item in res.get("papers", []):
-                url_key = _norm_url(item.get("url", ""))
-                if not url_key:
-                    continue
-                if url_key not in seen_p:
-                    seen_p.add(url_key)
+                key = _norm_url(item.get("url", ""))
+                if key and key not in seen_p:
+                    seen_p.add(key)
                     papers.append({"title": item.get("title"), "url": item.get("url")})
-            # podcasts
             for item in res.get("podcasts", []):
-                url_key = _norm_url(item.get("url", ""))
-                if not url_key:
-                    continue
-                if url_key not in seen_q:
-                    seen_q.add(url_key)
+                key = _norm_url(item.get("url", ""))
+                if key and key not in seen_q:
+                    seen_q.add(key)
                     pods.append({"title": item.get("title"), "url": item.get("url")})
         out[tag] = {"papers": papers, "podcasts": pods}
     return out
-
 
 def compute_first_seen(tag_to_pulses: Dict[str, List[str]],
                        pulse_meta: Dict[str, Dict[str, str]]) -> Dict[str, Dict[str, str]]:
@@ -248,10 +196,7 @@ def compute_first_seen(tag_to_pulses: Dict[str, List[str]],
     for tag, pulses in tag_to_pulses.items():
         first = sorted(pulses)[0]
         meta = pulse_meta.get(first, {})
-        tag_first[tag] = {
-            "pulse": Path(first).stem,
-            "callout": meta.get("callout", "") or ""
-        }
+        tag_first[tag] = {"pulse": Path(first).stem, "callout": meta.get("callout", "") or ""}
     return tag_first
 
 
@@ -260,73 +205,39 @@ def compute_first_seen(tag_to_pulses: Dict[str, List[str]],
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag-index", default="meta/tag_index.yml")
-    ap.add_argument("--alias-map", default="meta/aliases.yml")
     ap.add_argument("--pulse-glob", default="pulse/*.yml")
     ap.add_argument("--out-js", default="docs/data.js")
     args = ap.parse_args()
 
-    # 0) Try tag_index.yml
-    tag_index_obj = {}
-    if os.path.exists(args.tag_index):
-        tag_index_obj = safe_load_yaml(args.tag_index)
-
+    # 1) Nodes: prefer tag_index if available
+    tag_index_obj = safe_load_yaml(args.tag_index) if os.path.exists(args.tag_index) else {}
     if looks_like_tag_index(tag_index_obj):
-        # normalize and build from index
         tag_map = normalize_tag_map(tag_index_obj)
-
-        # nodes
-        nodes = build_nodes_from_tag_map(tag_map)
-
-        # edges: from explicit links if present
-        edges = []
-        for t, info in tag_map.items():
-            for other in (info.get("links") or []):
-                edges.append(tuple(sorted((t, str(other)))))
-        edges = sorted(set(edges))
-        link_objs = [{"source": a, "target": b} for (a, b) in edges]
-
-        # tag_to_pulses (for resources & first-seen); tolerate either field name
-        # and tolerate pulses specified as str or as dicts like {"pulse": "..."}.
-        def coerce_pulses(x) -> List[str]:
-            out: List[str] = []
-            if not x:
-                return out
-            if isinstance(x, str):
-                return [x]
-            if isinstance(x, list):
-                for v in x:
-                    if isinstance(v, str):
-                        out.append(v)
-                    elif isinstance(v, dict):
-                        for key in ("pulse", "file", "path"):
-                            val = v.get(key)
-                            if isinstance(val, str) and val:
-                                out.append(val)
-                                break
-            return out
-
-        tag_to_pulses = {
-            t: sorted(set(
-                coerce_pulses(info.get("pulses")) +
-                coerce_pulses(info.get("pulse"))
-            ))
-            for t, info in tag_map.items()
-        }
-
-        # pulse resources / meta must be derived by scanning pulses (non-fatal if missing)
-        _, _, pulse_resources, pulse_meta, _ = scan_pulses_for_tags(args.pulse_glob)
-
-        tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
-        tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
-
+        nodes_from_index = build_nodes_from_tag_map(tag_map)
+        node_ids = {n["id"] for n in nodes_from_index}
     else:
-        print("INFO: tag_index.yml empty or unsupported → scanning pulses …")
-        tag_to_pulses, pulse_to_tags, pulse_resources, pulse_meta, edges = scan_pulses_for_tags(args.pulse_glob)
-        nodes, link_objs = build_nodes_edges_from_scan(tag_to_pulses, edges)
-        tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
-        tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
+        tag_map = {}
+        nodes_from_index = None
+        node_ids = set()
 
-    # payload
+    # 2) ALWAYS scan pulses for edges/resources/first-seen
+    tag_to_pulses, _, pulse_resources, pulse_meta, edges = scan_pulses_for_tags(args.pulse_glob)
+
+    # If we didn't get nodes from tag_index, derive from scan
+    if nodes_from_index is None:
+        nodes, link_objs = build_nodes_edges_from_scan(tag_to_pulses, edges)
+    else:
+        # Keep node set from tag_index but use edges from scan (filtered to known nodes if index exists)
+        if node_ids:
+            filt_edges = [(a, b) for (a, b) in edges if a in node_ids and b in node_ids]
+        else:
+            filt_edges = edges
+        nodes = nodes_from_index
+        link_objs = [{"source": a, "target": b} for (a, b) in filt_edges]
+
+    tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
+    tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
+
     payload = {
         "nodes": nodes,
         "links": link_objs,
@@ -334,16 +245,14 @@ def main():
         "tagFirstSeen": tag_first,
     }
 
-    os.makedirs(Path(args.out_js).parent, exist_ok=True)
+    Path(args.out_js).parent.mkdir(parents=True, exist_ok=True)
     with open(args.out_js, "w", encoding="utf-8") as f:
         f.write("window.PHI_DATA = " + json.dumps(payload) + ";")
 
-    # basic sanity
     if not nodes:
         print("WARN: No tags detected; window.PHI_DATA has empty nodes/links.")
-
     print(f"OK: wrote {args.out_js} ({Path(args.out_js).stat().st_size} bytes)")
-    print(f"INFO: tag count = {len(nodes)}")
+    print(f"INFO: tag count = {len(nodes)}, edge count = {len(link_objs)}")
 
 
 if __name__ == "__main__":
