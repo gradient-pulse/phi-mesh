@@ -1,4 +1,4 @@
-generated: '2025-08-13T15:01:58.031585Z'
+generated: '2025-08-13T16:09:26.420778Z'
 tags:
   AI_alignment:
     papers:
@@ -417,6 +417,12 @@ tags:
     - date: ''
       path: pulse/2025-07-21_recursive_cor_pola_convergence.yml
       title: Recursive CoR Converges with PoLA
+    - date: '2025-08-13T16:09:25Z'
+      path: pulse/auto/20250813_160925_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T16:09:25Z'
+      path: pulse/auto/20250813_160925_nasa_cfd_demo.yml
+      title: RGP–NS Agent Run (nasa_cfd_demo)
   Narrative_Tick:
     papers:
     - *id013
@@ -491,6 +497,16 @@ tags:
     - date: '2025-08-13 15:01:57+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-13 15-01-57Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-13 15:01:57Z
+  Navier_Stokes:
+    papers: []
+    podcasts: []
+    pulses:
+    - date: '2025-08-13T16:09:25Z'
+      path: pulse/auto/20250813_160925_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T16:09:25Z'
+      path: pulse/auto/20250813_160925_nasa_cfd_demo.yml
+      title: RGP–NS Agent Run (nasa_cfd_demo)
   OldScience:
     papers:
     - *id007
@@ -711,6 +727,12 @@ tags:
     - date: '2025-08-13 15:01:57+00:00'
       path: pulse/auto/nasa_cfd_demo_2025-08-13 15-01-57Z.yml
       title: RGP–NS Auto Run — nasa_cfd_demo — 2025-08-13 15:01:57Z
+    - date: '2025-08-13T16:09:25Z'
+      path: pulse/auto/20250813_160925_jhtdb_iso_1024.yml
+      title: RGP–NS Agent Run (jhtdb_iso_1024)
+    - date: '2025-08-13T16:09:25Z'
+      path: pulse/auto/20250813_160925_nasa_cfd_demo.yml
+      title: RGP–NS Agent Run (nasa_cfd_demo)
   Replication:
     papers:
     - *id019
