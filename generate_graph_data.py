@@ -4,7 +4,7 @@ Builds docs/data.js for the Phi-Mesh tag browser & graph map.
 
 Priority order:
 1) If meta/tag_index.yml exists and is non-empty → use it.
-2) Otherwise, scan pulse/**/*.yml (skipping pulse/archive and pulse/telemetry).
+2) Otherwise, scan pulse/*.yml (skipping pulse/archive and pulse/telemetry).
 
 Outputs docs/data.js with:
   window.PHI_DATA = {
@@ -13,12 +13,17 @@ Outputs docs/data.js with:
     tagResources: { [tag]: {papers: [{title?, url}], podcasts: [{title?, url}] } },
     tagFirstSeen: { [tag]: {pulse, callout} }
   }
+
+This version:
+- Drops resource items (papers/podcasts) that lack a valid URL → prevents 404s.
+- Deduplicates resources by normalized URL (dx.doi.org → doi.org; casefold).
 """
 
 import argparse
 import glob
 import json
 import os
+import re
 from pathlib import Path
 from typing import Dict, List, Tuple, Any
 
@@ -52,12 +57,10 @@ def normalize_tag_map(tag_index_obj: Any) -> Dict[str, Dict]:
         return tag_index_obj["tags"]
     return tag_index_obj
 
-
 def add_edge(a: str, b: str, edge_set: set):
     if a == b:
         return
     edge_set.add(tuple(sorted((a, b))))
-
 
 def is_skipped_pulse_path(path: str) -> bool:
     p = Path(path).as_posix()
@@ -66,29 +69,13 @@ def is_skipped_pulse_path(path: str) -> bool:
         return True
     return False
 
-
-def _as_ids(items, kind: str):
-    """
-    Accept list of strings or list of dicts and return an order-preserving, de-duped list of IDs.
-    kind == "pulse"  → prefer dict['path'] then dict['title']
-    kind == "paper"  → prefer dict['doi'] or dict['link'] or dict['title']
-    kind == "pod"    → prefer dict['link'] or dict['title']
-    """
-    out, seen = [], set()
-    for x in items or []:
-        if isinstance(x, dict):
-            if kind == "pulse":
-                key = x.get("path") or x.get("title") or str(x)
-            elif kind == "paper":
-                key = x.get("doi") or x.get("link") or x.get("title") or str(x)
-            else:  # pod
-                key = x.get("link") or x.get("title") or str(x)
-        else:
-            key = str(x)
-        if key and key not in seen:
-            seen.add(key)
-            out.append(key)
-    return out
+def _norm_url(u: str) -> str:
+    """Normalize URLs for dedupe: unify DOI host & casefold."""
+    u = (u or "").strip()
+    if not u:
+        return ""
+    u = re.sub(r"^https?://(dx\.)?doi\.org/", "https://doi.org/", u, flags=re.I)
+    return u.lower()
 
 
 # --------------------------- pulse scanning ---------------------------- #
@@ -106,8 +93,7 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
     pulse_meta: Dict[str, Dict[str, str]] = {}
     edges_set = set()
 
-    # recursive so pulse/auto/*.yml is included
-    candidates = sorted(glob.glob(glob_pattern, recursive=True))
+    candidates = sorted(glob.glob(glob_pattern))
     for fp in candidates:
         if not fp.endswith((".yml", ".yaml")):
             continue
@@ -138,23 +124,40 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
         for t in tags:
             tag_to_pulses.setdefault(t, []).append(pulse_key)
 
-        # collect resources (accept strings or {title,url})
+        # --- collect resources (accept strings or {title,url}); drop items without URL --- #
         def norm_items(raw):
+            """
+            Accept:
+              - "https://doi.org/10...."
+              - {"url": "...", "title": "..."}   (title optional)
+            Drop items that don't have a resolvable URL to avoid 404s.
+            """
             out = []
             if not raw:
                 return out
+
             if isinstance(raw, list):
                 for x in raw:
                     if isinstance(x, str):
-                        out.append({"url": x})
+                        s = x.strip()
+                        if s.startswith(("http://", "https://")):
+                            nu = _norm_url(s)
+                            if nu:
+                                out.append({"url": nu})
+                        else:
+                            # No URL → skip to avoid 404 in sidebar
+                            print(f"WARN: dropping resource without URL in {fp}: {x!r}")
                     elif isinstance(x, dict):
-                        url = x.get("url") or x.get("link") or ""
+                        url = _norm_url(x.get("url", ""))
                         ttl = x.get("title")
-                        if url or ttl:
-                            item = {}
-                            if ttl: item["title"] = str(ttl)
-                            if url: item["url"] = str(url)
+                        if url:
+                            item = {"url": url}
+                            if ttl:
+                                item["title"] = str(ttl)
                             out.append(item)
+                        else:
+                            if ttl:
+                                print(f"WARN: dropping '{ttl}' (no URL) in {fp}")
             return out
 
         papers = norm_items(data.get("papers"))
@@ -212,20 +215,31 @@ def build_nodes_edges_from_scan(tag_to_pulses: Dict[str, List[str]],
 
 def aggregate_tag_resources(tag_to_pulses: Dict[str, List[str]],
                             pulse_resources: Dict[str, Dict[str, List[dict]]]) -> Dict[str, Dict[str, List[dict]]]:
+    def norm_url_for_key(u: str) -> str:
+        return _norm_url(u)
+
     out: Dict[str, Dict[str, List[dict]]] = {}
     for tag, pulses in tag_to_pulses.items():
         papers, pods = [], []
-        seen = set()
+        seen_p, seen_q = set(), set()
         for p in sorted(pulses):
             res = pulse_resources.get(p, {})
+            # papers
             for item in res.get("papers", []):
-                key = (item.get("title"), item.get("url"))
-                if key not in seen:
-                    seen.add(key); papers.append(item)
+                url_key = norm_url_for_key(item.get("url", ""))
+                if not url_key:
+                    continue
+                if url_key not in seen_p:
+                    seen_p.add(url_key)
+                    papers.append({"title": item.get("title"), "url": item.get("url")})
+            # podcasts
             for item in res.get("podcasts", []):
-                key = (item.get("title"), item.get("url"))
-                if key not in seen:
-                    seen.add(key); pods.append(item)
+                url_key = norm_url_for_key(item.get("url", ""))
+                if not url_key:
+                    continue
+                if url_key not in seen_q:
+                    seen_q.add(url_key)
+                    pods.append({"title": item.get("title"), "url": item.get("url")})
         out[tag] = {"papers": papers, "podcasts": pods}
     return out
 
@@ -249,7 +263,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag-index", default="meta/tag_index.yml")
     ap.add_argument("--alias-map", default="meta/aliases.yml")
-    ap.add_argument("--pulse-glob", default="pulse/**/*.yml")  # recursive
+    ap.add_argument("--pulse-glob", default="pulse/*.yml")
     ap.add_argument("--out-js", default="docs/data.js")
     args = ap.parse_args()
 
@@ -262,37 +276,26 @@ def main():
         # normalize and build from index
         tag_map = normalize_tag_map(tag_index_obj)
 
-        # nodes from index
+        # nodes
         nodes = build_nodes_from_tag_map(tag_map)
 
-        # edges: explicit links + co-occurrence from scan
+        # edges: from explicit links if present
         edges = []
         for t, info in tag_map.items():
             for other in (info.get("links") or []):
                 edges.append(tuple(sorted((t, str(other)))))
-
-        # derive co-occurrence edges by scanning pulses (so we always have connections)
-        _, _, pulse_resources, pulse_meta, scan_edges = scan_pulses_for_tags(args.pulse_glob)
-        edges = sorted(set(edges) | set(tuple(sorted(e)) for e in scan_edges))
+        edges = sorted(set(edges))
         link_objs = [{"source": a, "target": b} for (a, b) in edges]
 
-        # tag_to_pulses (resources & first-seen); tolerate either field name; dict/str safe
-        tag_to_pulses: Dict[str, List[str]] = {}
-        for t, info in tag_map.items():
-            raw_pulses = (info.get("pulses") or []) + (info.get("pulse") or [])
-            pulses = _as_ids(raw_pulses, "pulse")
-            tag_to_pulses[t] = list(dict.fromkeys(pulses))  # preserve order
+        # tag_to_pulses (for resources & first-seen); tolerate either field name
+        tag_to_pulses = {t: list(set((info.get("pulses") or []) + (info.get("pulse") or [])))
+                         for t, info in tag_map.items()}
+
+        # pulse resources / meta must be derived by scanning pulses (non-fatal if missing)
+        _, _, pulse_resources, pulse_meta, _ = scan_pulses_for_tags(args.pulse_glob)
 
         tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
         tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
-
-        # If we somehow ended with no edges, fall back to scan-derived nodes/edges
-        if not link_objs:
-            print("INFO: No edges from index/scan merge → falling back to scan graph.")
-            tag_to_pulses, _, pulse_resources, pulse_meta, scan_edges = scan_pulses_for_tags(args.pulse_glob)
-            nodes, link_objs = build_nodes_edges_from_scan(tag_to_pulses, scan_edges)
-            tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
-            tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
 
     else:
         print("INFO: tag_index.yml empty or unsupported → scanning pulses …")
@@ -316,6 +319,7 @@ def main():
     # basic sanity
     if not nodes:
         print("WARN: No tags detected; window.PHI_DATA has empty nodes/links.")
+
     print(f"OK: wrote {args.out_js} ({Path(args.out_js).stat().st_size} bytes)")
     print(f"INFO: tag count = {len(nodes)}")
 
