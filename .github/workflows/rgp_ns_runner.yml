@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+# Prevent overlapping runs
+concurrency:
+  group: rgp-ns-runner
+  cancel-in-progress: false
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -25,6 +30,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Check secrets (warn only)
+        env:
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+          ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
+          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
+        run: |
+          [ -z "${JHTDB_TOKEN}" ] && echo "⚠️  Warning: JHTDB_TOKEN not set" || echo "✅ JHTDB_TOKEN present"
+          [ -z "${ZENODO_DOI}" ] && echo "⚠️  Warning: ZENODO_DOI not set" || echo "✅ ZENODO_DOI present"
+          [ -z "${X_WEBHOOK_URL}" ] && echo "⚠️  Warning: X_WEBHOOK_URL not set" || echo "✅ X_WEBHOOK_URL present"
+          echo "Continuing (warnings only)."
+
       - name: Execute agent loop
         env:
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
@@ -36,59 +52,99 @@ jobs:
         run: |
           echo "Tree after agent run:"
           ls -la
-          echo "--- pulse ---"
-          ls -la pulse || true
-          echo "--- pulse/auto ---"
-          ls -la pulse/auto || true
-          echo "--- results ---"
-          ls -la results || true
-          echo "--- results/rgp_ns ---"
-          ls -la results/rgp_ns || true
+          echo "--- pulse ---";        ls -la pulse || true
+          echo "--- pulse/auto ---";   ls -la pulse/auto || true
+          echo "--- results ---";      ls -la results || true
+          echo "--- results/rgp_ns ---"; ls -la results/rgp_ns || true
 
-      - name: Verify outputs (schema + presence)
+      # Strictly validate ONLY the newest run using jq (no heredocs)
+      - name: Verify outputs (latest run only) with jq
         run: |
           set -euo pipefail
-          echo "Checking pulse/auto/"
-          test -d pulse/auto && ls -1 pulse/auto/*.yml | head -n 2
-          echo "Checking results/rgp_ns/"
-          test -d results/rgp_ns
-          python - << 'PY'
-import json, sys, pathlib
-base = pathlib.Path("results/rgp_ns")
-runs = list(base.glob("*/*/summary.json"))
-assert runs, "No summary.json files found under results/rgp_ns/*/*"
-bad = []
-for s in runs:
-    d = json.loads(s.read_text())
-    for k in ("dataset","variant","nt_test"):
-        if k not in d: bad.append((str(s), f"missing {k}"))
-    t = d.get("nt_test",{})
-    for k in ("p","effect_size","significant"):
-        if k not in t: bad.append((str(s), f"nt_test missing {k}"))
-if bad:
-    for f,msg in bad: print("FAIL", f, "→", msg)
-    sys.exit(1)
-print(f"OK: {len(runs)} summaries look good.")
-PY
+          if [ ! -d results/rgp_ns ]; then
+            echo "No results/rgp_ns directory found"; exit 1
+          fi
+          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          if [ -z "${latest_root:-}" ]; then
+            echo "No run directory found under results/rgp_ns"; exit 1
+          fi
+          echo "Validating latest run at: $latest_root"
+          found=0
+          while IFS= read -r -d '' s; do
+            found=1
+            echo "Checking $s"
+            jq -e '
+              .dataset and .variant and .nt_test and
+              (.nt_test.p != null) and
+              (.nt_test.effect_size != null) and
+              (.nt_test.significant != null)
+            ' "$s" > /dev/null
+          done < <(find "$latest_root" -type f -name summary.json -print0)
+          if [ "$found" -eq 0 ]; then
+            echo "No summary.json files found inside latest run ($latest_root)"; exit 1
+          fi
+          echo "OK: latest run summaries look good."
 
-      - name: Show latest summary in logs
+      - name: Show latest summary in logs (pretty)
         run: |
-          ls -1dt results/rgp_ns/*/* | head -n1 | xargs -I {} bash -lc 'echo "::group::{}"; cat {}/summary.json; echo "::endgroup::"'
+          set -e
+          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          if [ -n "$latest_root" ]; then
+            # pick newest dataset dir inside the latest root
+            latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+            target="${latest_dir:-$latest_root}"
+            summary="$target/summary.json"
+            if [ -f "$summary" ]; then
+              echo "::group::Latest summary: $summary"
+              echo "DATASET: $(jq -r '.dataset' "$summary")"
+              echo "p = $(jq -r '.nt_test.p' "$summary") | effect size = $(jq -r '.nt_test.effect_size' "$summary") | significant = $(jq -r '.nt_test.significant' "$summary")"
+              echo; echo "Full JSON:"; cat "$summary"
+              echo "::endgroup::"
+            else
+              echo "No summary.json found in latest run."
+            fi
+          else
+            echo "No run directories found."
+          fi
+
+      - name: Show last 3 run summaries (trend)
+        run: |
+          echo "::group::Last 3 run summaries"
+          # list all summaries by mtime, newest first, take 3
+          mapfile -t last3 < <(find results/rgp_ns -type f -name summary.json -printf '%T@ %p\n' | sort -nr | head -n3 | awk '{print $2}')
+          if [ "${#last3[@]}" -eq 0 ]; then
+            echo "No summaries found."
+          else
+            for f in "${last3[@]}"; do
+              ds=$(jq -r '.dataset' "$f")
+              p=$(jq -r '.nt_test.p' "$f")
+              es=$(jq -r '.nt_test.effect_size' "$f")
+              sg=$(jq -r '.nt_test.significant' "$f")
+              echo "$f :: dataset=$ds | p=$p | effect_size=$es | significant=$sg"
+            done
+          fi
+          echo "::endgroup::"
 
       - name: Auto-create pulse if significant
         run: |
-          latest_dir=$(ls -1dt results/rgp_ns/*/* | head -n1)
-          summary_file="$latest_dir/summary.json"
-          if [ -f "$summary_file" ]; then
-            sig=$(jq -r '.nt_test.significant' "$summary_file")
-            if [ "$sig" = "true" ]; then
-              dataset=$(jq -r '.dataset' "$summary_file")
-              effect=$(jq -r '.nt_test.effect_size' "$summary_file")
-              pval=$(jq -r '.nt_test.p' "$summary_file")
-              ts=$(date -u +"%Y%m%d_%H%M%S")
-              pulse_file="pulse/auto/${ts}_${dataset}.yml"
-              mkdir -p pulse/auto
-              cat > "$pulse_file" <<YML
+          set -e
+          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          [ -z "$latest_root" ] && echo "No latest run root; skipping pulse creation." && exit 0
+          latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          target="${latest_dir:-$latest_root}"
+          summary="$target/summary.json"
+          if [ ! -f "$summary" ]; then
+            echo "No summary.json in $target — skipping pulse creation."; exit 0
+          fi
+          sig=$(jq -r '.nt_test.significant' "$summary")
+          if [ "$sig" = "true" ]; then
+            dataset=$(jq -r '.dataset' "$summary")
+            effect=$(jq -r '.nt_test.effect_size' "$summary")
+            pval=$(jq -r '.nt_test.p' "$summary")
+            ts=$(date -u +"%Y%m%d_%H%M%S")
+            mkdir -p pulse/auto
+            pulse_file="pulse/auto/${ts}_${dataset}.yml"
+            cat > "$pulse_file" <<YML
 title: "Significant NT Rhythm — ${dataset}"
 date: "$(date -u +"%Y-%m-%d")"
 summary: >
@@ -102,19 +158,16 @@ tags:
 papers: []
 podcasts: []
 YML
-              echo "Pulse created: $pulse_file"
-            else
-              echo "No significant result — skipping pulse creation."
-            fi
+            echo "Pulse created: $pulse_file"
           else
-            echo "No summary.json found — skipping pulse creation."
+            echo "No significant result — skipping pulse creation."
           fi
 
       - name: Commit results & pulses
         run: |
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git pull --rebase
+          git pull --rebase origin main || true
           git add -A
           git commit -m "auto: RGP-NS agent run" || echo "nothing to commit"
           git push
@@ -132,7 +185,7 @@ YML
 
       - name: Commit index & map
         run: |
-          git pull --rebase
+          git pull --rebase origin main || true
           git add -A
           git commit -m "auto: refresh tag index & map" || echo "nothing to commit"
           git push
