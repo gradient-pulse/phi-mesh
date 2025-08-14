@@ -31,6 +31,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
+      # --- Curate index from pulses (recursive) ------------------------------
+      - name: Rebuild meta/tag_index.yml
+        shell: bash
+        run: |
+          set -euo pipefail
+          python meta/update_tag_index.py
+          test -s meta/tag_index.yml || (echo "tag_index.yml missing" && exit 1)
+
       # --- Graph data --------------------------------------------------------
       - name: Generate alias-aware docs/data.js (recursive pulse scan)
         shell: bash
