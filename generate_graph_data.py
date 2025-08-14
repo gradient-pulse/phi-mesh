@@ -77,7 +77,7 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
     pulse_meta: Dict[str, Dict[str, str]] = {}
     edges_set = set()
 
-    candidates = sorted(glob.glob(glob_pattern))
+    candidates = sorted(glob.glob(glob_pattern, recursive=True))
     for fp in candidates:
         if not fp.endswith((".yml", ".yaml")): continue
         if is_skipped_pulse_path(fp): continue
