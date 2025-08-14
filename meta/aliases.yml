@@ -50,7 +50,7 @@ aliases:
   Navier_Stokes:
     - NS_solution
     - navier-stokes
-    - NavierStokes   # common variant seen in pulses
+    - NavierStokes         # ← add this
 
   Big Bang:
     - Big_Bang
@@ -84,6 +84,7 @@ aliases:
     - ContextualFilter
     - contextual_filter
     - contectual_filter
+    - contextual-filter    # ← hyphen form (seen in older pulses)
 
   Gradient_Syntax:
     - gradient_syntax
