@@ -40,7 +40,7 @@ jobs:
           if [[ -f generate_graph_data.py ]]; then
             if [[ -f meta/aliases.yml ]]; then
               python generate_graph_data.py \
-                --tag-index meta/tag_index.yml \
+                --tag-index _skip_.yml \
                 --alias-map meta/aliases.yml \
                 --pulse-glob "pulse/**/*.yml" \
                 --out-js docs/data.js
