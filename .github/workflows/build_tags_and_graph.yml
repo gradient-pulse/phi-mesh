@@ -92,13 +92,23 @@ jobs:
             echo "     - generate_graph_data.py scanned with --pulse-glob 'pulse/**/*.yml'"
           fi
 
-- name: Fix title-only paper links
-  run: |
-    python tools/fix_pulse_links.py
-    git config user.name "github-actions[bot]"
-    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    git add pulse/**/*.yml
-    git commit -m "fix: attach DOIs/URLs to title-only papers" || echo "nothing to commit"
+      # --- Fix title-only paper links (one-time safe; can leave enabled) -----
+      - name: Fix title-only paper links
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/fix_pulse_links.py || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pulse/**/*.yml || true
+          git commit -m "fix: attach DOIs/URLs to title-only papers" || echo "nothing to commit"
+
+      # --- Force a changed artifact so Pages will deploy ---------------------
+      - name: Write build stamp
+        shell: bash
+        run: |
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/build_id.txt
+          echo "Wrote docs/build_id.txt: $(cat docs/build_id.txt)"
 
       # --- Commit artifacts --------------------------------------------------
       - name: Commit generated artifacts
@@ -107,6 +117,6 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data.js docs/tag_browser.html
-          git commit -m "Auto: build tags & graph (data.js, tag_browser.html)" || echo "No changes to commit"
+          git add docs/data.js docs/tag_browser.html docs/build_id.txt
+          git commit -m "Auto: build tags & graph (data.js, tag_browser.html, stamp)" || echo "No changes to commit"
           git push || echo "Nothing to push"
