@@ -253,14 +253,15 @@ def compute_first_seen(tag_to_pulses: Dict[str, List[str]],
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag-index", default="meta/tag_index.yml")
-    ap.add_argument("--pulse-glob", default="pulse/**/*.yml")  # was: pulse/*.yml
+    ap.add_argument("--pulse-glob", default="pulse/**/*.yml")  # recursive scan
     ap.add_argument("--out-js", default="docs/data.js")
-    # Back-compat: accept --alias-map and ignore it
+    # Back-compat: accept --alias-map and ignore it (we auto-load meta/aliases.yml)
     ap.add_argument("--alias-map", default=None, help="(ignored; back-compat)")
     args = ap.parse_args()
-    # Load alias map and build lookup for canonicalization
+
+    # 0) Load aliases (optional)
     alias_spec = load_aliases("meta/aliases.yml")
-    alias_idx  = build_alias_index(alias_spec)
+    alias_index = build_alias_index(alias_spec) if alias_spec else {}
 
     # 1) Nodes: prefer tag_index if available
     tag_index_obj = safe_load_yaml(args.tag_index) if os.path.exists(args.tag_index) else {}
@@ -273,24 +274,30 @@ def main():
         nodes_from_index = None
         node_ids = set()
 
-    # 2) ALWAYS scan pulses for edges/resources/first-seen
-        tag_to_pulses, _, pulse_resources, pulse_meta, edges = scan_pulses_for_tags(args.pulse_glob, alias_idx)
+    # 2) ALWAYS scan pulses for edges/resources/first-seen (with aliases)
+    try:
+        tag_to_pulses, _, pulse_resources, pulse_meta, edges = scan_pulses_for_tags(
+            args.pulse_glob, alias_index=alias_index
+        )
+    except Exception as e:
+        print(f"WARN: pulse scan failed: {e}")
+        tag_to_pulses, pulse_resources, pulse_meta, edges = {}, {}, {}, []
 
-    # If we didn't get nodes from tag_index, derive from scan
+    # 3) Build nodes/links
     if nodes_from_index is None:
-        nodes, link_objs = build_nodes_edges_from_scan(tag_to_pulses, edges)
+        # No curated index → derive nodes from scan
+        nodes, link_objs = build_nodes_edges_from_scan(tag_to_pulses, edges or [])
     else:
-        # Keep node set from tag_index but use edges from scan (filtered to known nodes if index exists)
-        if node_ids:
-            filt_edges = [(a, b) for (a, b) in edges if a in node_ids and b in node_ids]
-        else:
-            filt_edges = edges
+        # Curated index for nodes; edges come from scan, filtered to known nodes
+        filt_edges = [(a, b) for (a, b) in (edges or []) if a in node_ids and b in node_ids]
         nodes = nodes_from_index
         link_objs = [{"source": a, "target": b} for (a, b) in filt_edges]
 
+    # 4) Resources & first seen
     tag_resources = aggregate_tag_resources(tag_to_pulses, pulse_resources)
     tag_first = compute_first_seen(tag_to_pulses, pulse_meta)
 
+    # 5) Emit
     payload = {
         "nodes": nodes,
         "links": link_objs,
