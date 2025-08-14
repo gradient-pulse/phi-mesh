@@ -55,7 +55,7 @@
     <header>
       <h1>Phi-Mesh Tag Map</h1>
       <div class="search-row">
-        <input id="tag-search" placeholder="Search tags (prefix)…" />
+        <input id="tag-search" placeholder="Search tags…" />
         <button id="clear-search" class="clear-btn" title="Clear">×</button>
       </div>
     </header>
@@ -78,6 +78,7 @@
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
+  
 /* ---------- data pickup (works with your current data.js) ---------- */
 const rawNodes = (window.PHI_DATA && PHI_DATA.nodes) || window.nodes || [];
 const rawLinks = (window.PHI_DATA && PHI_DATA.links) || window.links || [];
@@ -202,23 +203,45 @@ svg.on('click', (event)=>{
   if(target.tagName === 'svg') clearFocus();
 });
 
-/* prefix search (highlights only) */
+/* substring search (case + diacritic insensitive, multi-match) */
 const search = document.getElementById('tag-search');
 const clearBtn = document.getElementById('clear-search');
+
+const normalize = s => (s || '')
+  .toString()
+  .normalize('NFKD')                // split base letter + diacritics
+  .replace(/[\u0300-\u036f]/g, '')  // drop diacritics (Φ/é/etc.)
+  .toLowerCase()
+  .trim();
+
 function runSearch(){
-  const q = (search.value||'').trim().toLowerCase();
+  const q = normalize(search.value);
   if(!q){
     node.classed('dim', false);
     link.classed('dim', false);
     return;
   }
-  const matched = new Set(nodes.filter(n=>n.id.toLowerCase().startsWith(q)).map(n=>n.id));
-  node.classed('dim', d=>!matched.has(d.id));
-  link.classed('dim', d=> !(matched.has(d.source.id) && matched.has(d.target.id)));
+  // substring match on normalized ids
+  const matched = new Set(
+    nodes.filter(n => normalize(n.id).includes(q)).map(n => n.id)
+  );
+  node.classed('dim', d => !matched.has(d.id));
+  link.classed('dim', d => !(matched.has(d.source.id) && matched.has(d.target.id)));
 }
-search.addEventListener('input', runSearch);
-clearBtn.addEventListener('click', ()=>{ search.value=''; runSearch(); search.focus(); });
 
+// small debounce so we don't re-render on every keystroke
+let t = null;
+search.addEventListener('input', () => {
+  if (t) clearTimeout(t);
+  t = setTimeout(runSearch, 80);
+});
+
+clearBtn.addEventListener('click', ()=>{
+  search.value = '';
+  runSearch();
+  search.focus();
+});
+  
 /* simple tooltip from callout (first 3 sentences) if present */
 const tip = document.getElementById('tooltip');
 function showTip(html,x,y){
