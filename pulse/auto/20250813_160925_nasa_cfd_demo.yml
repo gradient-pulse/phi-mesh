@@ -4,6 +4,7 @@ tags:
 - RGP
 - Navier_Stokes
 - NT_rhythm
+- ExperimenterPulse
 summary: Automated NT rhythm analysis for dataset nasa_cfd_demo. Significant result
   (p=0.0042, effect_size=0.37).
 papers: []
