@@ -1,0 +1,21 @@
+title: 'jhtdb_iso_1024: Experimenter auto-pulse'
+date: '2025-08-14T12:16:54Z'
+summary: 'jhtdb_iso_1024 — NT rhythm test → p=0.3435, effect=0.541; significant: no
+  @ α=0.01.'
+tags:
+- RGP
+- jhtdb_iso_1024
+- NavierStokes
+- NT_rhythm
+- ExperimenterPulse
+papers:
+- url: 'https://doi.org/## ZENODO_DOI
+
+    - Value: `10.5281/zenodo.16812467`
+
+    - Meaning: DOI of the Experimenter’s Guide — RGP vs Navier–Stokes
+
+    - Used for: Linking generated pulses to the guide’s Zenodo record'
+  title: Experimenter’s Guide — Solving Navier–Stokes, Differently
+podcasts: []
+status: auto
