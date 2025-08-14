@@ -24,8 +24,6 @@ from typing import Dict, List, Tuple, Any
 import yaml
 
 # --- Aliases ---------------------------------------------------------------
-import re, yaml
-from pathlib import Path
 
 def load_aliases(path: str) -> dict:
     p = Path(path)
@@ -260,6 +258,9 @@ def main():
     # Back-compat: accept --alias-map and ignore it
     ap.add_argument("--alias-map", default=None, help="(ignored; back-compat)")
     args = ap.parse_args()
+    # Load alias map and build lookup for canonicalization
+    alias_spec = load_aliases("meta/aliases.yml")
+    alias_idx  = build_alias_index(alias_spec)
 
     # 1) Nodes: prefer tag_index if available
     tag_index_obj = safe_load_yaml(args.tag_index) if os.path.exists(args.tag_index) else {}
@@ -273,7 +274,7 @@ def main():
         node_ids = set()
 
     # 2) ALWAYS scan pulses for edges/resources/first-seen
-    tag_to_pulses, _, pulse_resources, pulse_meta, edges = scan_pulses_for_tags(args.pulse_glob)
+        tag_to_pulses, _, pulse_resources, pulse_meta, edges = scan_pulses_for_tags(args.pulse_glob, alias_idx)
 
     # If we didn't get nodes from tag_index, derive from scan
     if nodes_from_index is None:
