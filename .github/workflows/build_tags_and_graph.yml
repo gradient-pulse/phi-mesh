@@ -32,7 +32,7 @@ jobs:
           pip install pyyaml networkx
 
       # --- Graph data --------------------------------------------------------
-      - name: Generate alias-aware docs/data.js
+      - name: Generate alias-aware docs/data.js (recursive pulse scan)
         shell: bash
         run: |
           set -euo pipefail
@@ -42,11 +42,13 @@ jobs:
               python generate_graph_data.py \
                 --tag-index meta/tag_index.yml \
                 --alias-map meta/aliases.yml \
+                --pulse-glob "pulse/**/*.yml" \
                 --out-js docs/data.js
             else
               echo "meta/aliases.yml not found → continuing without explicit alias map."
               python generate_graph_data.py \
                 --tag-index meta/tag_index.yml \
+                --pulse-glob "pulse/**/*.yml" \
                 --out-js docs/data.js
             fi
           else
@@ -76,6 +78,19 @@ jobs:
             echo "ERROR: docs/data.js missing window.PHI_DATA"; exit 3
           fi
           echo "OK: docs/data.js looks good."
+
+      # --- Sanity check for ExperimenterPulse (warn-only) --------------------
+      - name: Check ExperimenterPulse is present
+        shell: bash
+        run: |
+          if grep -q '"ExperimenterPulse"' docs/data.js; then
+            echo "✅ ExperimenterPulse present in docs/data.js"
+          else
+            echo "⚠️  ExperimenterPulse not found in docs/data.js (warn only)."
+            echo "    If you expected it, confirm:"
+            echo "     - pulse/auto/*.yml files have tags: [ExperimenterPulse, ...]"
+            echo "     - generate_graph_data.py scanned with --pulse-glob 'pulse/**/*.yml'"
+          fi
 
       # --- Commit artifacts --------------------------------------------------
       - name: Commit generated artifacts
