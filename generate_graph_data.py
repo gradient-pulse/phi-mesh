@@ -205,7 +205,7 @@ def compute_first_seen(tag_to_pulses: Dict[str, List[str]],
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag-index", default="meta/tag_index.yml")
-    ap.add_argument("--pulse-glob", default="pulse/*.yml")
+    ap.add_argument("--pulse-glob", default="pulse/**/*.yml")  # was: pulse/*.yml
     ap.add_argument("--out-js", default="docs/data.js")
     # Back-compat: accept --alias-map and ignore it
     ap.add_argument("--alias-map", default=None, help="(ignored; back-compat)")
