@@ -10,6 +10,7 @@ on:
       - "build_tag_browser.py"
       - "docs/tag_map_template.html"
       - "docs/graph.js"
+      - "tools/ensure_experimenter_refs.py"
       - ".github/workflows/build_tags_and_graph.yml"
   workflow_dispatch: {}
 
@@ -31,13 +32,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
-      # --- Curate index from pulses (recursive) ------------------------------
-      - name: Rebuild meta/tag_index.yml
+      # --- Auto-fix canonical ExperimenterPulse refs (safe/no-op if none) ---
+      - name: Ensure ExperimenterPulse references (auto-fix)
         shell: bash
         run: |
           set -euo pipefail
-          python meta/update_tag_index.py
-          test -s meta/tag_index.yml || (echo "tag_index.yml missing" && exit 1)
+          if [[ -f tools/ensure_experimenter_refs.py ]]; then
+            python tools/ensure_experimenter_refs.py
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add pulse/**/*.yml || true
+            git commit -m "chore: ensure canonical ExperimenterPulse refs" || echo "nothing to commit"
+            git push || true
+          else
+            echo "tools/ensure_experimenter_refs.py not found — skipping auto-fix."
+          fi
 
       # --- Graph data --------------------------------------------------------
       - name: Generate alias-aware docs/data.js (recursive pulse scan)
@@ -46,19 +55,12 @@ jobs:
           set -euo pipefail
           mkdir -p docs
           if [[ -f generate_graph_data.py ]]; then
-            if [[ -f meta/aliases.yml ]]; then
-              python generate_graph_data.py \
-                --tag-index _skip_.yml \
-                --alias-map meta/aliases.yml \
-                --pulse-glob "pulse/**/*.yml" \
-                --out-js docs/data.js
-            else
-              echo "meta/aliases.yml not found → continuing without explicit alias map."
-              python generate_graph_data.py \
-                --tag-index _skip_.yml \
-                --pulse-glob "pulse/**/*.yml" \
-                --out-js docs/data.js
-            fi
+            # generate_graph_data.py already ignores --alias-map if unsupported
+            python generate_graph_data.py \
+              --tag-index meta/tag_index.yml \
+              --alias-map meta/aliases.yml \
+              --pulse-glob "pulse/**/*.yml" \
+              --out-js docs/data.js
           else
             echo "generate_graph_data.py is missing"; exit 1
           fi
@@ -87,43 +89,33 @@ jobs:
           fi
           echo "OK: docs/data.js looks good."
 
-      # --- Sanity check for ExperimenterPulse (warn-only) --------------------
-      - name: Check ExperimenterPulse is present
+      # --- Warn-only verification (non-blocking) -----------------------------
+      - name: Verify canonical refs present in ExperimenterPulse files (warn-only)
         shell: bash
         run: |
-          if grep -q '"ExperimenterPulse"' docs/data.js; then
-            echo "✅ ExperimenterPulse present in docs/data.js"
+          set +e
+          M=0
+          mapfile -t files < <(grep -rl 'ExperimenterPulse' pulse | grep -E '\.ya?ml$')
+          if [[ "${#files[@]}" -eq 0 ]]; then
+            echo "No ExperimenterPulse pulses found — nothing to verify."
           else
-            echo "⚠️  ExperimenterPulse not found in docs/data.js (warn only)."
-            echo "    If you expected it, confirm:"
-            echo "     - pulse/auto/*.yml files have tags: [ExperimenterPulse, ...]"
-            echo "     - generate_graph_data.py scanned with --pulse-glob 'pulse/**/*.yml'"
+            for f in "${files[@]}"; do
+              grep -q 'doi\.org/10\.5281/zenodo\.15830659' "$f" || { echo "WARN: Missing WIT TAKES DOI in $f"; ((M+=1)); }
+              grep -q 'doi\.org/10\.5281/zenodo\.16812467' "$f" || { echo "WARN: Missing GUIDE DOI in $f"; ((M+=1)); }
+              grep -q 'notebooklm\.google\.com/notebook/d49018d3' "$f"     || { echo "WARN: Missing Podcast 1 in $f"; ((M+=1)); }
+              grep -q 'notebooklm\.google\.com/notebook/b7e25629' "$f"     || { echo "WARN: Missing Podcast 2 in $f"; ((M+=1)); }
+            done
           fi
+          echo "Verification complete (warn-only). Missing-count: $M"
+          exit 0
 
-      # --- Force a changed artifact so Pages will deploy ---------------------
-      - name: Write build stamp
-        shell: bash
-        run: |
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/build_id.txt
-          echo "Wrote docs/build_id.txt: $(cat docs/build_id.txt)"
-
-      - name: Ensure ExperimenterPulse references
-        shell: bash
-        run: |
-          python tools/ensure_experimenter_refs.py
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pulse/**/*.yml || true
-          git commit -m "chore: ensure canonical ExperimenterPulse refs" || echo "nothing to commit"
-          git push || true
-
-      # --- Commit artifacts --------------------------------------------------
+      # --- Commit generated artifacts ----------------------------------------
       - name: Commit generated artifacts
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data.js docs/tag_browser.html docs/build_id.txt
-          git commit -m "Auto: build tags & graph (data.js, tag_browser.html, stamp)" || echo "No changes to commit"
+          git add docs/data.js docs/tag_browser.html
+          git commit -m "Auto: build tags & graph (data.js, tag_browser.html)" || echo "No changes to commit"
           git push || echo "Nothing to push"
