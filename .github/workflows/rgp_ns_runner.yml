@@ -15,6 +15,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,6 +47,34 @@ jobs:
           ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
         run: python agents/rgp_ns/run_agent.py
+
+      # ---- Guardrail: ensure all auto-pulses include ExperimenterPulse -------
+      - name: Verify auto-pulses contain ExperimenterPulse
+        run: |
+          python - <<'PY'
+          import glob, sys, yaml, re
+          def norm(s): return re.sub(r'[\s\-]+','_',str(s or '').strip()).casefold()
+          files = sorted(glob.glob('pulse/auto/*.yml'))
+          if not files:
+              print("No auto pulses found — nothing to verify.")
+              sys.exit(0)
+          bad = []
+          for f in files:
+              try:
+                  with open(f, 'r', encoding='utf-8') as fh:
+                      data = yaml.safe_load(fh) or {}
+              except Exception as e:
+                  print(f"❌ parse error in {f}: {e}")
+                  bad.append(f); continue
+              tags = data.get('tags') or []
+              if not any(norm(t) == norm('ExperimenterPulse') for t in tags):
+                  print(f"❌ missing ExperimenterPulse in {f}")
+                  bad.append(f)
+          if bad:
+              print(f"[FAIL] {len(bad)} auto pulse(s) missing required tag.")
+              sys.exit(1)
+          print(f"[OK] {len(files)} auto pulse(s) validated: ExperimenterPulse present.")
+          PY
 
       - name: Debug — show new files
         run: |
@@ -121,6 +150,7 @@ jobs:
           fi
           echo "::endgroup::"
 
+      # (Keeps legacy path; now includes ExperimenterPulse in tags)
       - name: Auto-create pulse if significant
         run: |
           set -e
@@ -143,7 +173,7 @@ jobs:
             printf 'title: "Significant NT Rhythm — %s"\n' "$dataset" >> "$pulse_file"
             printf 'date: "%s"\n' "$(date -u +%Y-%m-%d)" >> "$pulse_file"
             printf 'summary: >\n  Automated detection run found statistically significant NT rhythm in dataset `%s` (effect size = %s, p = %s).\n' "$dataset" "$effect" "$pval" >> "$pulse_file"
-            printf 'tags:\n  - RGP\n  - Navier_Stokes\n  - NT_rhythm\n  - rhythm-of-least-divergence\n' >> "$pulse_file"
+            printf 'tags:\n  - RGP\n  - ExperimenterPulse\n  - Navier_Stokes\n  - NT_rhythm\n  - rhythm-of-least-divergence\n' >> "$pulse_file"
             printf 'papers: []\n' >> "$pulse_file"
             printf 'podcasts: []\n' >> "$pulse_file"
             echo "Pulse created: $pulse_file"
