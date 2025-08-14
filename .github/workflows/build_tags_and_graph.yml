@@ -107,18 +107,6 @@ jobs:
           date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/build_id.txt
           echo "Wrote docs/build_id.txt: $(cat docs/build_id.txt)"
 
-      - name: Verify canonical refs present in ExperimenterPulse files
-        shell: bash
-        run: |
-          miss=0
-          for f in $(grep -rl 'ExperimenterPulse' pulse | grep -E '\.ya?ml$'); do
-            grep -q 'doi.org/10.5281/zenodo.15830659' "$f" || { echo "Missing WIT TAKES DOI in $f"; miss=1; }
-            grep -q 'doi.org/10.5281/zenodo.16812467' "$f" || { echo "Missing GUIDE DOI in $f"; miss=1; }
-            grep -q 'notebooklm.google.com/notebook/d49018d3' "$f" || { echo "Missing Podcast 1 in $f"; miss=1; }
-            grep -q 'notebooklm.google.com/notebook/b7e25629' "$f" || { echo "Missing Podcast 2 in $f"; miss=1; }
-          done
-          [ "$miss" -eq 0 ] && echo "OK: all ExperimenterPulse refs present."
-
       - name: Ensure ExperimenterPulse references
         shell: bash
         run: |
