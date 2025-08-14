@@ -1,0 +1,10 @@
+{
+  "dataset": "nasa_cfd_demo",
+  "variant": "local",
+  "nt_test": {
+    "p": 0.0493,
+    "effect_size": 0.066,
+    "significant": false
+  },
+  "timestamp_utc": "2025-08-14T10:06:41Z"
+}
