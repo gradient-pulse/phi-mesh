@@ -47,7 +47,7 @@ jobs:
             else
               echo "meta/aliases.yml not found → continuing without explicit alias map."
               python generate_graph_data.py \
-                --tag-index meta/tag_index.yml \
+                --tag-index _skip_.yml \
                 --pulse-glob "pulse/**/*.yml" \
                 --out-js docs/data.js
             fi
@@ -55,7 +55,7 @@ jobs:
             echo "generate_graph_data.py is missing"; exit 1
           fi
 
-      # --- Tag browser (new path) -------------------------------------------
+      # --- Tag browser -------------------------------------------------------
       - name: Build Tag Browser HTML (docs/tag_browser.html)
         shell: bash
         run: |
@@ -91,17 +91,6 @@ jobs:
             echo "     - pulse/auto/*.yml files have tags: [ExperimenterPulse, ...]"
             echo "     - generate_graph_data.py scanned with --pulse-glob 'pulse/**/*.yml'"
           fi
-
-      # --- Fix title-only paper links (one-time safe; can leave enabled) -----
-      - name: Fix title-only paper links
-        shell: bash
-        run: |
-          set -euo pipefail
-          python tools/fix_pulse_links.py || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pulse/**/*.yml || true
-          git commit -m "fix: attach DOIs/URLs to title-only papers" || echo "nothing to commit"
 
       # --- Force a changed artifact so Pages will deploy ---------------------
       - name: Write build stamp
