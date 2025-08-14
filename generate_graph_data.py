@@ -23,6 +23,47 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Any
 import yaml
 
+# --- Aliases ---------------------------------------------------------------
+import re, yaml
+from pathlib import Path
+
+def load_aliases(path: str) -> dict:
+    p = Path(path)
+    if not p.exists(): 
+        return {}
+    with p.open("r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    # expect: {aliases: { Canonical: [alias1, alias2, ...], ... }}
+    return (data.get("aliases") or {}) if isinstance(data, dict) else {}
+
+def build_alias_index(spec: dict) -> dict:
+    """
+    Return dict mapping every alias (plus a normalized key) to its canonical.
+    """
+    idx = {}
+    def norm(s: str) -> str:
+        return re.sub(r"[\s_\-]+", "_", s).strip().casefold()
+    for canonical, aliases in (spec or {}).items():
+        if not canonical:
+            continue
+        c = str(canonical)
+        idx[c] = c
+        idx[norm(c)] = c
+        for a in (aliases or []):
+            if not a:
+                continue
+            a = str(a)
+            idx[a] = c
+            idx[norm(a)] = c
+    return idx
+
+def normalize_tag(tag: str, idx: dict) -> str:
+    if not isinstance(tag, str):
+        return tag
+    if tag in idx:
+        return idx[tag]
+    key = re.sub(r"[\s_\-]+", "_", tag).strip().casefold()
+    return idx.get(key, tag)
 
 # ------------------------------- helpers -------------------------------- #
 
