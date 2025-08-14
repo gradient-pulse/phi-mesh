@@ -1,28 +1,56 @@
 # meta/aliases.yml
 version: 1
-generated: 2025-08-09
+generated: 2025-08-13
 notes: >
   Canonical → list of known aliases. The updater should map every alias to its
-  canonical form before writing tag_index or graph data.
+  canonical form before writing tag_index or graph data. Keep canonicals stable.
 
 aliases:
+
+  # --- Core program & map terms ------------------------------------------------
 
   RGP:
     - rgp
 
-  Contextual_Filter:
-    - ContextualFilter
-    - contextual_filter
-    - contectual_filter
+  phi-mesh:
+    - phi_mesh
+    - PhiMesh
+    - Phi-mesh
 
-  Gradient_Syntax:
-    - gradient_syntax
-    - gradient-syntax
-    - GradientSyntax
+  phi-mesh-evolution:
+    - phi_mesh_evolution
+
+  AI_architectures:
+    - ai_architecture
+    - ai-architecture
+    - AI_architecture
+    - AIArchitecture
+
+  # --- Experimenter / agent output --------------------------------------------
+
+  ExperimenterPulse:
+    - Experimenter
+    - experimenter_pulse
+    - AgentPulse
+    - agent_result
+    - AutoPulse
+    - auto_pulse
+    - lab_note
+    - finding
+
+  # If you later want a separate lane for significant results, uncomment:
+  # SignificantFinding:
+  #   - significant_finding
+  #   - significant
+  #   - strong_result
+  #   - positive_result
+
+  # --- Physics / cosmology cluster --------------------------------------------
 
   Navier_Stokes:
     - NS_solution
     - navier-stokes
+    - NavierStokes   # common variant seen in pulses
 
   Big Bang:
     - Big_Bang
@@ -32,6 +60,7 @@ aliases:
     - Big_Quiet
     - Big-Quiet
     - big-quiet
+    - BigQuiet       # common variant seen in map labels
 
   cosmogenesis:
     - Cosmogenesis
@@ -43,21 +72,23 @@ aliases:
     - flux_entrenched_universe
     - flux-enthrenched_universe   # common misspelling kept as alias
 
-  Phi-monitor:
-    - Phi_monitor
-    - Phi-monitor  # normalized to this form
+  CMB:
+    - cmb
 
-  proto-pulse:
-    - proto_pulse
+  Birefringence:
+    - birefringence
 
-  coherence-amplifier:
-    - coherence_amplifier
+  # --- RGP vocabulary ----------------------------------------------------------
 
-  subjective-logging:
-    - subjective_logging
+  Contextual_Filter:
+    - ContextualFilter
+    - contextual_filter
+    - contectual_filter
 
-  triadic-emergence:
-    - triadic_emergence
+  Gradient_Syntax:
+    - gradient_syntax
+    - gradient-syntax
+    - GradientSyntax
 
   gradient-choreography:
     - gradient_choreography
@@ -73,6 +104,7 @@ aliases:
 
   narrative_tick:
     - Narrative_Tick
+    - NarrativeTick
 
   rhythm-of-least-divergence:
     - rhythm_of_least_divergence
@@ -83,22 +115,17 @@ aliases:
 
   mixture-of-experts:
     - mixture_of_experts
+    - MoE
+    - moe
 
-  gpt5:
-    - GPT5
+  coherence-amplifier:
+    - coherence_amplifier
 
-  grok3:
-    - GROK3
+  subjective-logging:
+    - subjective_logging
 
-  AI_architectures:
-    - ai_architecture
-    - ai-architecture
-
-  phi-mesh:
-    - phi_mesh
-
-  phi-mesh-evolution:
-    - phi_mesh_evolution
+  triadic-emergence:
+    - triadic_emergence
 
   unity-disunity:
     - unity_disunity
@@ -111,6 +138,27 @@ aliases:
 
   Φ-harmonics:
     - \u03A6-harmonics
+
+  # --- Model names / infra -----------------------------------------------------
+
+  gpt5:
+    - GPT5
+
+  grok3:
+    - GROK3
+
+  # --- Tools / demo / platform -------------------------------------------------
+
+  Phi-monitor:
+    - Phi_monitor
+    - Phi-monitor  # normalized to this form
+    - PhiMonitor
+
+  proto-pulse:
+    - proto_pulse
+    - protopulse
+
+  # --- Robustness / safety nets ------------------------------------------------
 
   big_bang:
     - Big_Bang  # handled already via "Big Bang", but kept here for robustness
