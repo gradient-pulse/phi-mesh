@@ -92,6 +92,14 @@ jobs:
             echo "     - generate_graph_data.py scanned with --pulse-glob 'pulse/**/*.yml'"
           fi
 
+- name: Fix title-only paper links
+  run: |
+    python tools/fix_pulse_links.py
+    git config user.name "github-actions[bot]"
+    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    git add pulse/**/*.yml
+    git commit -m "fix: attach DOIs/URLs to title-only papers" || echo "nothing to commit"
+
       # --- Commit artifacts --------------------------------------------------
       - name: Commit generated artifacts
         shell: bash
