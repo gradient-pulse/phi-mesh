@@ -196,6 +196,8 @@ tags:
     - 20250814_100641_nasa_cfd_demo
     - 20250814_120529_jhtdb_iso_1024
     - 20250814_120529_nasa_cfd_demo
+    - 20250814_121654_jhtdb_iso_1024
+    - 20250814_121654_nasa_cfd_demo
     - jhtdb_iso_1024_2025-08-12 15-21-06Z
     - jhtdb_iso_1024_2025-08-12 15-47-28Z
     - jhtdb_iso_1024_2025-08-12 18-09-52Z
@@ -361,6 +363,8 @@ tags:
     - 20250814_100641_nasa_cfd_demo
     - 20250814_120529_jhtdb_iso_1024
     - 20250814_120529_nasa_cfd_demo
+    - 20250814_121654_jhtdb_iso_1024
+    - 20250814_121654_nasa_cfd_demo
     summary: 'Chain of Reasoning (CoR), traditionally framed as logical deduction,
       is reinterpreted as a recursive search for NT rhythm coherence. Reasoning—whether
       in humans or AI—emerges from alignment with stable NT sequences, governed not
@@ -397,6 +401,7 @@ tags:
     - 20250813_175733_nasa_cfd_demo
     - 20250814_100641_jhtdb_iso_1024
     - 20250814_120529_jhtdb_iso_1024
+    - 20250814_121654_jhtdb_iso_1024
     - jhtdb_iso_1024_2025-08-12 15-21-06Z
     - jhtdb_iso_1024_2025-08-12 15-47-28Z
     - jhtdb_iso_1024_2025-08-12 18-09-52Z
@@ -508,6 +513,8 @@ tags:
     - 20250814_100641_nasa_cfd_demo
     - 20250814_120529_jhtdb_iso_1024
     - 20250814_120529_nasa_cfd_demo
+    - 20250814_121654_jhtdb_iso_1024
+    - 20250814_121654_nasa_cfd_demo
     - jhtdb_iso_1024_2025-08-12 15-21-06Z
     - jhtdb_iso_1024_2025-08-12 15-47-28Z
     - jhtdb_iso_1024_2025-08-12 18-09-52Z
@@ -1136,6 +1143,7 @@ tags:
     pulses:
     - 20250814_100641_jhtdb_iso_1024
     - 20250814_120529_jhtdb_iso_1024
+    - 20250814_121654_jhtdb_iso_1024
     summary: 'jhtdb_iso_1024 — NT rhythm test → p=0.1877, effect=0.213; significant:
       no @ α=0.01.'
   laminarity:
@@ -1254,6 +1262,7 @@ tags:
     pulses:
     - 20250814_100641_nasa_cfd_demo
     - 20250814_120529_nasa_cfd_demo
+    - 20250814_121654_nasa_cfd_demo
     summary: 'nasa_cfd_demo — NT rhythm test → p=0.0493, effect=0.066; significant:
       no @ α=0.01.'
   non-linear_society:
