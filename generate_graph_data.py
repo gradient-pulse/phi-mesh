@@ -105,7 +105,7 @@ def _norm_url(u: str) -> str:
 
 # --------------------------- pulse scanning ---------------------------- #
 
-def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
+def scan_pulses_for_tags(glob_pattern: str, alias_index: dict | None = None) -> Tuple[
     Dict[str, List[str]],  # tag -> [pulse_paths]
     Dict[str, List[str]],  # pulse -> [tags]
     Dict[str, Dict[str, List[dict]]],  # pulse_resources
@@ -127,11 +127,20 @@ def scan_pulses_for_tags(glob_pattern: str) -> Tuple[
         if not isinstance(data, dict): continue
 
         tags = data.get("tags") or data.get("Tags") or []
-        if isinstance(tags, str): tags = [tags]
-        if not isinstance(tags, list) or not tags: continue
+        if isinstance(tags, str):
+            tags = [tags]
+        if not isinstance(tags, list) or not tags:
+            continue
 
-        tags = [str(t).strip() for t in tags if str(t).strip()]
-        if not tags: continue
+        # normalize + alias-map
+        alias_index = alias_index or {}
+        tags = [
+            normalize_tag(str(t).strip(), alias_index)
+            for t in tags
+            if str(t).strip()
+        ]
+        if not tags:
+            continue
 
         pulse_key = Path(fp).as_posix()
         title = str(data.get("title") or Path(fp).stem)
