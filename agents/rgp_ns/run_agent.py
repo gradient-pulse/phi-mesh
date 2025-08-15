@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-RGP-NS Agent Runner (lightweight demo, canonical ExperimenterPulse refs)
+RGP-NS Agent Runner (lightweight)
 - Reads agents/rgp_ns/config.yml for datasets + params
-- Produces per-run summaries under results/rgp_ns/<UTC_TIMESTAMP>/<dataset_id>/
-- Emits auto pulses into pulse/auto/ with proper tags:
-    - always includes ["RGP", "ExperimenterPulse"] plus dataset-related tags
-- Automatically includes canonical ExperimenterPulse papers & podcasts (URL-backed, deduped)
-- Filters out any paper/podcast items without a 'url'
-- Designed to run cleanly in GitHub Actions with minimal dependencies
+- Writes per-run summaries: results/rgp_ns/<UTC_TIMESTAMP>/<dataset_id>/summary.json
+- Emits auto pulses under pulse/auto/ with REQUIRED canonical tags:
+    [ "RGP", "NT (Narrative_Tick)", "Rhythm", "NavierStokes", "turbulence", "ExperimenterPulse" ]
+  (plus a dataset-id tag, normalized, so you can filter by dataset)
+
+Notes
+- Only URL-backed resources are written (no title-only entries)
+- Dependency-light for GH Actions runners
 """
 
 from __future__ import annotations
@@ -17,18 +19,6 @@ from pathlib import Path
 from typing import Dict, Any, Iterable, List
 import yaml
 
-# ---------- canonical ExperimenterPulse refs ----------
-FOUNDATION_PAPERS = [
-    {"title": "Solving Navier-Stokes, Differently: What It Takes (V1.2)",
-     "url": "https://doi.org/10.5281/zenodo.15830659"},
-    {"title": "Experimenter's Guide – Solving Navier-Stokes, Differently (V1.7)",
-     "url": "https://doi.org/10.5281/zenodo.16812467"},
-]
-FOUNDATION_PODCASTS = [
-    {"url": "https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=fef1bd81-e87d-41b5-a501-f862442ce3ef"},
-    {"url": "https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=b1dcf5ac-5216-4a04-bc36-f509ebeeabef"},
-]
-
 # ---------- paths ----------
 ROOT = Path(__file__).resolve().parents[2]
 CFG  = ROOT / "agents" / "rgp_ns" / "config.yml"
@@ -36,47 +26,32 @@ OUT_BASE = ROOT / "results" / "rgp_ns"
 PULSE_DIR = ROOT / "pulse" / "auto"
 
 # ---------- helpers ----------
-def utc_timestamp(for_fs: bool = True) -> str:
+CANONICAL_TAGS = [
+    "RGP",
+    "NT (Narrative_Tick)",
+    "Rhythm",
+    "NavierStokes",
+    "turbulence",
+    "ExperimenterPulse",
+]
+
+def utc_timestamp(fs: bool = True) -> str:
     now = dt.datetime.utcnow()
-    return now.strftime("%Y%m%d_%H%M%S") if for_fs else now.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return now.strftime("%Y%m%d_%H%M%S") if fs else now.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 def _norm_tag(s: str) -> str:
     return re.sub(r"[\s\-]+", "_", (s or "").strip())
 
-def _ensure_experimenter_pulse(tags: Iterable[str]) -> List[str]:
-    base = [t for t in (tags or []) if t]
-    lower = {_norm_tag(t).casefold() for t in base}
-    if "experimenterpulse" not in lower:
-        base.append("ExperimenterPulse")
-    if "rgp" not in lower:
-        base.append("RGP")
+def _stable_tag_union(*groups: Iterable[str]) -> List[str]:
     seen, out = set(), []
-    for t in base:
-        key = _norm_tag(t)
-        if key not in seen:
-            seen.add(key)
-            out.append(t)
-    return out
-
-def _url_item(url: str, title: str | None = None) -> Dict[str, str]:
-    url = (url or "").strip()
-    if not url:
-        return {}
-    item = {"url": url}
-    if title:
-        item["title"] = title
-    return item
-
-def _dedupe_links(items: Iterable[Dict[str, str]]) -> List[Dict[str, str]]:
-    seen, out = set(), []
-    for it in items:
-        if not isinstance(it, dict):
-            continue
-        u = it.get("url", "").strip()
-        if not u or u in seen:
-            continue
-        seen.add(u)
-        out.append(it)
+    for g in groups:
+        for t in (g or []):
+            if not t: 
+                continue
+            key = _norm_tag(t).casefold()
+            if key not in seen:
+                seen.add(key)
+                out.append(t)
     return out
 
 def write_json(path: Path, obj: Any) -> None:
@@ -84,48 +59,55 @@ def write_json(path: Path, obj: Any) -> None:
     with path.open("w", encoding="utf-8") as f:
         json.dump(obj, f, indent=2)
 
-# ---------- pulse writer ----------
-def write_auto_pulse(dataset_id: str,
-                     summary: str,
-                     extra_tags: Iterable[str] | None = None,
-                     papers: Iterable[Dict[str, str]] | None = None,
-                     podcasts: Iterable[Dict[str, str]] | None = None) -> Path:
-    """
-    Create an auto pulse YML in pulse/auto/.
-    Ensures tags contain 'ExperimenterPulse' and 'RGP'.
-    Automatically merges canonical papers/podcasts and dedupes by URL.
-    """
-    extra_tags = list(extra_tags or [])
+def _url_item(url: str, title: str | None = None) -> Dict[str, str]:
+    url = (url or "").strip()
+    if not url: return {}
+    item = {"url": url}
+    if title: item["title"] = title
+    return item
 
-    merged_papers = _dedupe_links((papers or []) + FOUNDATION_PAPERS)
-    merged_podcasts = _dedupe_links((podcasts or []) + FOUNDATION_PODCASTS)
-
-    ts_iso = dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
-    pulse = {
-        "title":   f"{dataset_id}: Experimenter auto-pulse",
-        "date":    ts_iso,
-        "summary": (summary or "").strip(),
-        "tags":    _ensure_experimenter_pulse(["RGP"] + extra_tags),
-        "papers":   merged_papers,
-        "podcasts": merged_podcasts,
-        "status":  "auto",
-    }
-
-    PULSE_DIR.mkdir(parents=True, exist_ok=True)
-    fname = f"{utc_timestamp()}_{_norm_tag(dataset_id)}.yml"
-    outpath = PULSE_DIR / fname
-    with outpath.open("w", encoding="utf-8") as f:
-        yaml.safe_dump(pulse, f, sort_keys=False, allow_unicode=True)
-    print(f"[auto-pulse] wrote {outpath.relative_to(ROOT)}")
-    return outpath
-
-# ---------- fake NT test ----------
+# ---------- simple placeholder stat ----------
 def run_nt_rhythm_test(seed: int = 0) -> Dict[str, Any]:
     rng = random.Random(seed)
     p = round(max(0.0001, min(0.9999, rng.random() * rng.random())), 4)
     eff = round(rng.uniform(0.05, 0.6), 3)
     alpha = 0.01
     return {"p": p, "effect_size": eff, "significant": p < alpha}
+
+# ---------- pulse writer ----------
+def write_auto_pulse(dataset_id: str,
+                     summary_text: str,
+                     extra_tags: Iterable[str] | None = None,
+                     papers: Iterable[Dict[str, str]] | None = None,
+                     podcasts: Iterable[Dict[str, str]] | None = None) -> Path:
+    """
+    Create an auto pulse YML in pulse/auto/.
+    - Always includes the six canonical tags (exact forms requested)
+    - Adds dataset tag (normalized dataset_id) for filtering
+    - Filters out any resource item missing 'url'
+    """
+    dataset_tag = _norm_tag(dataset_id)
+    tags = _stable_tag_union(CANONICAL_TAGS, [dataset_tag], extra_tags or [])
+
+    papers   = [d for d in (papers or [])   if isinstance(d, dict) and d.get("url")]
+    podcasts = [d for d in (podcasts or []) if isinstance(d, dict) and d.get("url")]
+
+    pulse = {
+        "title":   f"{dataset_id}: Experimenter auto-pulse",
+        "date":    dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "summary": (summary_text or "").strip(),
+        "tags":    tags,
+        "papers":   papers,
+        "podcasts": podcasts,
+        "status":  "auto",
+    }
+
+    PULSE_DIR.mkdir(parents=True, exist_ok=True)
+    outpath = PULSE_DIR / f"{utc_timestamp()}_{dataset_tag}.yml"
+    with outpath.open("w", encoding="utf-8") as f:
+        yaml.safe_dump(pulse, f, sort_keys=False, allow_unicode=True)
+    print(f"[auto-pulse] wrote {outpath.relative_to(ROOT)}")
+    return outpath
 
 # ---------- main ----------
 def main():
@@ -139,50 +121,47 @@ def main():
         print("No datasets defined in config.yml → nothing to do.")
         return
 
+    # Optional secret (for future papers attachment, if desired)
     zenodo_doi = (os.environ.get("ZENODO_DOI") or "").strip()
 
     run_stamp = utc_timestamp()
     print(f"[run] UTC stamp = {run_stamp}")
 
     for i, ds in enumerate(datasets):
-        ds_id = str(ds.get("id") or f"dataset_{i+1}")
-        variant = str(ds.get("source") or "local")
-        outdir = OUT_BASE / run_stamp / ds_id
-        outdir.mkdir(parents=True, exist_ok=True)
+        ds_id   = str(ds.get("id") or f"dataset_{i+1}")
+        source  = str(ds.get("source") or "local")
 
+        # Fake stat for now
         seed = abs(hash(ds_id)) % (2**32)
         nt = run_nt_rhythm_test(seed)
 
+        # Write summary.json
+        outdir = OUT_BASE / run_stamp / ds_id
+        outdir.mkdir(parents=True, exist_ok=True)
         summary = {
             "dataset": ds_id,
-            "variant": variant,
+            "variant": source,
             "nt_test": nt,
             "timestamp_utc": dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         }
         write_json(outdir / "summary.json", summary)
         print(f"[summary] {str(outdir / 'summary.json')}")
 
+        # Human-friendly summary text
         sig = "YES" if nt["significant"] else "no"
-        run_summary_text = (
-            f"{ds_id} — NT rhythm test → p={nt['p']}, effect={nt['effect_size']}; "
-            f"significant: {sig} @ α=0.01."
-        )
+        text = f"{ds_id} — NT rhythm test → p={nt['p']}, effect={nt['effect_size']}; significant: {sig} @ α=0.01."
 
-        extra_tags = [ds_id]
-        if variant.lower() in ("jhtdb", "navier-stokes", "ns", "ns_solution"):
-            extra_tags += ["NavierStokes", "NT_rhythm"]
-        else:
-            extra_tags += ["NT_rhythm"]
-
+        # Minimal resources (optional; URL-only policy)
         papers = []
         if zenodo_doi:
             papers.append(_url_item(f"https://doi.org/{zenodo_doi}",
                                     "Experimenter’s Guide — Solving Navier–Stokes, Differently"))
 
+        # Emit pulse
         write_auto_pulse(
             dataset_id=ds_id,
-            summary=run_summary_text,
-            extra_tags=extra_tags,
+            summary_text=text,
+            extra_tags=[],       # you can add per-dataset tags here if needed
             papers=papers,
             podcasts=[],
         )
