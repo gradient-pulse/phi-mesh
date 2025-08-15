@@ -10,7 +10,10 @@ aliases:
   # --- Core program & map terms ------------------------------------------------
 
   RGP:
-    - rgp
+    - Recursive Gradient Processing
+
+  UD:
+    - Unity-Disunity
 
   phi-mesh:
     - phi_mesh
@@ -50,7 +53,9 @@ aliases:
   Navier_Stokes:
     - NS_solution
     - navier-stokes
-    - NavierStokes         # ← add this
+    - NavierStokes
+    - Navier_Stokes
+    - Navier Stokes # ← add this
 
   Big Bang:
     - Big_Bang
@@ -80,6 +85,11 @@ aliases:
 
   # --- RGP vocabulary ----------------------------------------------------------
 
+  "NT (Narrative_Tick)":
+    - NT
+    - Narrative Tick
+    - Narrative_Tick
+    
   Contextual_Filter:
     - ContextualFilter
     - contextual_filter
@@ -106,6 +116,7 @@ aliases:
   narrative_tick:
     - Narrative_Tick
     - NarrativeTick
+    - NT
 
   rhythm-of-least-divergence:
     - rhythm_of_least_divergence
@@ -164,10 +175,7 @@ aliases:
   big_bang:
     - Big_Bang  # handled already via "Big Bang", but kept here for robustness
 
-  big_quiet_alias:
+  big_quiet:
     - Big-Quiet  # handled above; safety net for stragglers
 
   # Soft “typo bucket” that you can flip on/off in the script if desired:
-  _typos:
-    - flux-enthrenched_universe   # typo of entrenched
-    - contectual_filter           # typo of contextual
