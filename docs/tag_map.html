@@ -212,33 +212,19 @@ clearBtn.addEventListener('click', ()=>{ search.value=''; runSearch(); search.fo
 /* ---------- tooltips (reusable module) ---------- */
 const tooltipHTML = (d) => {
   const n  = byId.get(d.id) || { degree: 0, centrality: 0 };
-  const r  = tagResources[d.id] || {};
   const fs = tagFirstSeen[d.id] || {};
-
-  const papers   = (r.papers   || []).slice(0,2);
-  const podcasts = (r.podcasts || []).slice(0,2);
-
   const callout = String(fs.callout || "").split(/(?<=\.)\s+/).slice(0,2).join(" ");
-  const metrics = `degree ${n.degree ?? 0} · centrality ${Number(n.centrality||0).toFixed(2)}`;
-
-  const list = (label, items) => {
-    if (!items.length) return "";
-    const lis = items.map(it => {
-      const txt = esc(it.title || it.url.replace(/^https?:\/\//,""));
-      return `<li><a href="${esc(it.url)}" target="_blank" rel="noopener">${trunc(txt, 88)}</a></li>`;
-    }).join("");
-    return `<div style="margin-top:6px"><div style="color:#cfe1ff;font-weight:600;margin-bottom:2px">${label}</div><ul style="margin:0 0 0 14px;padding:0">${lis}</ul></div>`;
-  };
-
+  const metrics  = `degree ${n.degree ?? 0} · centrality ${Number(n.centrality||0).toFixed(2)}`;
+  const hint     = `<div style="margin-top:6px;opacity:.9"><em>Click for 📄🎧</em></div>`;
   return `
     <div style="font-weight:700;margin-bottom:2px">${esc(d.id)}</div>
     <div style="opacity:0.9;margin-bottom:6px">${metrics}</div>
     ${callout ? `<div>${esc(callout)}</div>` : ``}
-    ${list("Papers", papers)}
-    ${list("Podcasts", podcasts)}
+    ${hint}
   `;
 };
-attachTagTooltips(node, tooltipHTML);
+// attachTagTooltips is provided by map_node_tooltip.js
+attachTagTooltips(d3.selectAll('.node'), tooltipHTML);
 
 /* initial state */
 showDetails(null);
