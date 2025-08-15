@@ -47,6 +47,22 @@ jobs:
           git commit -m "chore: add default tags to ExperimenterPulse" || echo "nothing to commit"
           git push || true
 
+      # --- Auto-add default tags to auto pulses only -------------------------
+      - name: Ensure default tags in auto pulses
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f tools/add_default_tags.py ]]; then
+            python tools/add_default_tags.py
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add pulse/auto/**/*.yml || true
+            git commit -m "chore: add default tags to auto pulses" || echo "nothing to commit"
+            git push || true
+          else
+            echo "tools/add_default_tags.py not found — skipping."
+          fi
+
       # --- Auto-fix canonical ExperimenterPulse refs ---
       - name: Ensure ExperimenterPulse references (auto-fix)
         run: |
