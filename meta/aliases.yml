@@ -51,8 +51,7 @@ aliases:
     - NS_solution
     - navier-stokes
     - NavierStokes
-    - Navier_Stokes
-    - Navier Stokes # ← add this
+    - Navier Stokes
 
   Big Bang:
     - Big_Bang
@@ -62,7 +61,7 @@ aliases:
     - Big_Quiet
     - Big-Quiet
     - big-quiet
-    - BigQuiet       # common variant seen in map labels
+    - BigQuiet
 
   cosmogenesis:
     - Cosmogenesis
@@ -87,15 +86,16 @@ aliases:
     - Narrative Tick
     - Narrative_Tick
     - Narrative-Tick
+    - NarrativeTick
 
   UD:
     - Unity-Disunity
-  
+
   Contextual_Filter:
     - ContextualFilter
     - contextual_filter
     - contectual_filter
-    - contextual-filter    # ← hyphen form (seen in older pulses)
+    - contextual-filter
 
   Gradient_Syntax:
     - gradient_syntax
@@ -158,7 +158,6 @@ aliases:
 
   Phi-monitor:
     - Phi_monitor
-    - Phi-monitor  # normalized to this form
     - PhiMonitor
 
   proto-pulse:
@@ -168,5 +167,4 @@ aliases:
   # --- Robustness / safety nets ------------------------------------------------
 
   big_bang:
-    - Big_Bang  # handled already via "Big Bang", but kept here for robustness
-
+    - Big_Bang
