@@ -48,6 +48,7 @@
 
 <script src="data.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="map_node_tooltip.js"></script>
 
 <body>
 <div class="app">
@@ -241,16 +242,6 @@ clearBtn.addEventListener('click', ()=>{
   runSearch();
   search.focus();
 });
-  
-/* simple tooltip from callout (first 3 sentences) if present */
-const tip = document.getElementById('tooltip');
-function showTip(html,x,y){
-  tip.innerHTML = html;
-  tip.style.display='block';
-  tip.style.left = `${x+12}px`;
-  tip.style.top  = `${y+12}px`;
-}
-function hideTip(){ tip.style.display='none'; }
 
 node.on('mousemove', (event,d)=>{
   const res = tagResources[d.id];
