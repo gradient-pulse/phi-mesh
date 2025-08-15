@@ -6,14 +6,11 @@ on:
       - "meta/tag_index.yml"
       - "meta/aliases.yml"
       - "pulse/**/*.yml"
-      - "tools/repair_auto_pulses.py"
-      - "tools/add_default_tags.py"
-      - "tools/ensure_experimenter_refs.py"
-      - "tools/rebuild_tag_index.py"
       - "generate_graph_data.py"
       - "build_tag_browser.py"
       - "docs/tag_map_template.html"
       - "docs/graph.js"
+      - "tools/ensure_experimenter_refs.py"
       - ".github/workflows/build_tags_and_graph.yml"
   workflow_dispatch: {}
 
@@ -33,9 +30,9 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml networkx
+          pip install pyyaml networkx yamllint
 
-      # --- Repair any malformed auto pulses BEFORE touching tags --------------
+      # --- Repair auto pulses before anything else ---
       - name: Repair auto pulses (trim tails, normalize tags)
         shell: bash
         run: |
@@ -47,11 +44,32 @@ jobs:
             git add pulse/auto/**/*.yml || true
             git commit -m "chore: repair auto pulses (trim tails, normalize tags)" || echo "nothing to commit"
             git push || true
+            git pull --rebase || true
           else
             echo "tools/repair_auto_pulses.py not found — skipping."
           fi
 
-      # --- Auto-add default tags to auto pulses ONLY (safe/idempotent) --------
+      # --- Validate YAML after repair ---
+      - name: Validate YAML after repair
+        run: |
+          yamllint pulse/auto || (echo "YAML validation failed" && exit 1)
+
+      # --- Auto-add default tags to ExperimenterPulse ---
+      - name: Ensure default tags present
+        run: |
+          set -euo pipefail
+          for f in $(grep -rl 'ExperimenterPulse' pulse | grep -E '\.ya?ml$'); do
+            for tag in "RGP" "NT (Narrative_Tick)" "Rhythm" "NavierStokes" "turbulence" "ExperimenterPulse"; do
+              grep -q "^- ${tag}$" "$f" || echo "  - ${tag}" >> "$f"
+            done
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pulse/**/*.yml || true
+          git commit -m "chore: add default tags to ExperimenterPulse" || echo "nothing to commit"
+          git push || true
+
+      # --- Auto-add default tags to auto pulses only ---
       - name: Ensure default tags in auto pulses
         shell: bash
         run: |
@@ -67,15 +85,12 @@ jobs:
             echo "tools/add_default_tags.py not found — skipping."
           fi
 
-      # --- Auto-fix canonical ExperimenterPulse refs --------------------------
+      # --- Auto-fix canonical ExperimenterPulse refs ---
       - name: Ensure ExperimenterPulse references (auto-fix)
-        shell: bash
         run: |
           set -euo pipefail
           if [[ -f tools/ensure_experimenter_refs.py ]]; then
             python tools/ensure_experimenter_refs.py
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add pulse/**/*.yml || true
             git commit -m "chore: ensure canonical ExperimenterPulse refs" || echo "nothing to commit"
             git push || true
@@ -83,7 +98,7 @@ jobs:
             echo "tools/ensure_experimenter_refs.py not found — skipping auto-fix."
           fi
 
-      # --- Rebuild tag_index.yml from pulses (alias-aware) --------------------
+      # --- Rebuild tag_index.yml from pulses (alias-aware) ---
       - name: Rebuild tag_index.yml
         shell: bash
         run: |
@@ -95,11 +110,9 @@ jobs:
           git commit -m "Auto: rebuild meta/tag_index.yml (alias-aware)" || echo "No tag_index changes"
           git push || echo "Nothing to push"
 
-      # --- Graph data ---------------------------------------------------------
+      # --- Graph data ---
       - name: Generate alias-aware docs/data.js (recursive pulse scan)
-        shell: bash
         run: |
-          set -euo pipefail
           mkdir -p docs
           python generate_graph_data.py \
             --tag-index meta/tag_index.yml \
@@ -107,22 +120,18 @@ jobs:
             --pulse-glob "pulse/**/*.yml" \
             --out-js docs/data.js
 
-      # --- Tag browser --------------------------------------------------------
+      # --- Tag browser ---
       - name: Build Tag Browser HTML
-        shell: bash
         run: |
-          set -euo pipefail
           python build_tag_browser.py \
             --tag-index meta/tag_index.yml \
             --alias-map meta/aliases.yml \
             --data-js docs/data.js \
             --out-html docs/tag_browser.html
 
-      # --- Validate output ----------------------------------------------------
+      # --- Validate output ---
       - name: Validate docs/data.js
-        shell: bash
         run: |
-          set -euo pipefail
           if [[ ! -s docs/data.js ]]; then
             echo "ERROR: docs/data.js is empty or missing."; exit 2
           fi
@@ -131,9 +140,8 @@ jobs:
           fi
           echo "OK: docs/data.js looks good."
 
-      # --- Warn-only verification --------------------------------------------
+      # --- Warn-only verification ---
       - name: Verify canonical refs present (warn-only)
-        shell: bash
         run: |
           set +e
           M=0
@@ -144,18 +152,16 @@ jobs:
             for f in "${files[@]}"; do
               grep -q 'doi\.org/10\.5281/zenodo\.15830659' "$f" || { echo "WARN: Missing WIT TAKES DOI in $f"; ((M+=1)); }
               grep -q 'doi\.org/10\.5281/zenodo\.16812467' "$f" || { echo "WARN: Missing GUIDE DOI in $f"; ((M+=1)); }
-              grep -q 'notebooklm\.google\.com/notebook/d49018d3' "$f" || { echo "WARN: Missing Podcast 1 in $f"; ((M+=1)); }
-              grep -q 'notebooklm\.google\.com/notebook/b7e25629' "$f" || { echo "WARN: Missing Podcast 2 in $f"; ((M+=1)); }
+              grep -q 'notebooklm\.google\.com/notebook/d49018d3' "$f"     || { echo "WARN: Missing Podcast 1 in $f"; ((M+=1)); }
+              grep -q 'notebooklm\.google\.com/notebook/b7e25629' "$f"     || { echo "WARN: Missing Podcast 2 in $f"; ((M+=1)); }
             done
           fi
           echo "Verification complete (warn-only). Missing-count: $M"
           exit 0
 
-      # --- Commit generated artifacts ----------------------------------------
+      # --- Commit generated artifacts ---
       - name: Commit generated artifacts
-        shell: bash
         run: |
-          set -euo pipefail
           git add docs/data.js docs/tag_browser.html
           git commit -m "Auto: build tags & graph (data.js, tag_browser.html)" || echo "No changes to commit"
           git push || echo "Nothing to push"
