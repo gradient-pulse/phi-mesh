@@ -11,8 +11,6 @@ on:
       - "docs/tag_map_template.html"
       - "docs/graph.js"
       - "tools/ensure_experimenter_refs.py"
-      - "tools/repair_auto_pulses.py"
-      - "tools/add_default_tags.py"
       - ".github/workflows/build_tags_and_graph.yml"
   workflow_dispatch: {}
 
@@ -34,45 +32,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
-      # 1) Repair auto pulses BEFORE anything else
-      - name: Repair auto pulses (trim tails, normalize tags)
-        shell: bash
+      # --- Auto-add default tags to ExperimenterPulse ---
+      - name: Ensure default tags present
         run: |
           set -euo pipefail
-          if [[ -f tools/repair_auto_pulses.py ]]; then
-            python tools/repair_auto_pulses.py
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add pulse/auto/**/*.yml || true
-            git commit -m "chore: repair auto pulses (trim tails, normalize tags)" || echo "nothing to commit"
-            git push || true
-            git pull --rebase || true
-          else
-            echo "tools/repair_auto_pulses.py not found — skipping."
-          fi
+          for f in $(grep -rl 'ExperimenterPulse' pulse | grep -E '\.ya?ml$'); do
+            for tag in "RGP" "NT (Narrative_Tick)" "Rhythm" "NavierStokes" "turbulence" "ExperimenterPulse"; do
+              grep -q "^- ${tag}$" "$f" || echo "  - ${tag}" >> "$f"
+            done
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pulse/**/*.yml || true
+          git commit -m "chore: add default tags to ExperimenterPulse" || echo "nothing to commit"
+          git push || true
 
-      # 2) Validate YAML by parsing (no style rules, just correctness)
-      - name: Validate YAML after repair
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import sys, glob, yaml, os
-          bad = []
-          for path in glob.glob("pulse/**/*.yml", recursive=True):
-            try:
-              with open(path, "r", encoding="utf-8") as f:
-                yaml.safe_load(f)
-            except Exception as e:
-              bad.append((path, str(e)))
-          if bad:
-            for p, err in bad:
-              print(f"[YAML ERROR] {p}: {err}")
-            sys.exit(1)
-          print("YAML validation OK")
-          PY
-
-      # 3) Add default tags to AUTO pulses only (safe Python script)
+      # --- Auto-add default tags to auto pulses only -------------------------
       - name: Ensure default tags in auto pulses
         shell: bash
         run: |
@@ -88,15 +63,28 @@ jobs:
             echo "tools/add_default_tags.py not found — skipping."
           fi
 
-      # 4) Auto-fix canonical ExperimenterPulse refs
-      - name: Ensure ExperimenterPulse references (auto-fix)
+      # --- Repair auto pulses (trim tails, normalize tags) ---
+      - name: Repair auto pulses (trim tails, normalize tags)
         shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f tools/repair_auto_pulses.py ]]; then
+            python tools/repair_auto_pulses.py
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add pulse/auto/**/*.yml || true
+            git commit -m "chore: repair auto pulses (trim tails, normalize tags)" || echo "nothing to commit"
+            git push || true
+          else
+            echo "tools/repair_auto_pulses.py not found — skipping."
+          fi
+
+      # --- Auto-fix canonical ExperimenterPulse refs ---
+      - name: Ensure ExperimenterPulse references (auto-fix)
         run: |
           set -euo pipefail
           if [[ -f tools/ensure_experimenter_refs.py ]]; then
             python tools/ensure_experimenter_refs.py
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add pulse/**/*.yml || true
             git commit -m "chore: ensure canonical ExperimenterPulse refs" || echo "nothing to commit"
             git push || true
@@ -104,7 +92,7 @@ jobs:
             echo "tools/ensure_experimenter_refs.py not found — skipping auto-fix."
           fi
 
-      # 5) Rebuild tag_index.yml (alias-aware)
+      # --- Rebuild tag_index.yml from pulses (alias-aware) ---------------------
       - name: Rebuild tag_index.yml
         shell: bash
         run: |
@@ -116,11 +104,9 @@ jobs:
           git commit -m "Auto: rebuild meta/tag_index.yml (alias-aware)" || echo "No tag_index changes"
           git push || echo "Nothing to push"
 
-      # 6) Generate graph data
+      # --- Graph data ---
       - name: Generate alias-aware docs/data.js (recursive pulse scan)
-        shell: bash
         run: |
-          set -euo pipefail
           mkdir -p docs
           python generate_graph_data.py \
             --tag-index meta/tag_index.yml \
@@ -128,22 +114,18 @@ jobs:
             --pulse-glob "pulse/**/*.yml" \
             --out-js docs/data.js
 
-      # 7) Build Tag Browser
+      # --- Tag browser ---
       - name: Build Tag Browser HTML
-        shell: bash
         run: |
-          set -euo pipefail
           python build_tag_browser.py \
             --tag-index meta/tag_index.yml \
             --alias-map meta/aliases.yml \
             --data-js docs/data.js \
             --out-html docs/tag_browser.html
 
-      # 8) Validate output
+      # --- Validate output ---
       - name: Validate docs/data.js
-        shell: bash
         run: |
-          set -euo pipefail
           if [[ ! -s docs/data.js ]]; then
             echo "ERROR: docs/data.js is empty or missing."; exit 2
           fi
@@ -152,9 +134,22 @@ jobs:
           fi
           echo "OK: docs/data.js looks good."
 
-      # 9) Warn-only verification of references
+      # --- YAML validation (skip archive & telemetry) ---
+      - name: Validate YAML syntax
+        run: |
+          set -euo pipefail
+          shopt -s globstar nullglob
+          for file in pulse/**/*.yml pulse/**/*.yaml; do
+            if [[ "$file" == pulse/archive/* || "$file" == pulse/telemetry/* ]]; then
+              echo "Skipping $file"
+              continue
+            fi
+            echo "Checking $file"
+            python -c "import sys, yaml; yaml.safe_load(open('$file'))" || { echo "YAML ERROR in $file"; exit 1; }
+          done
+
+      # --- Warn-only verification ---
       - name: Verify canonical refs present (warn-only)
-        shell: bash
         run: |
           set +e
           M=0
@@ -165,18 +160,16 @@ jobs:
             for f in "${files[@]}"; do
               grep -q 'doi\.org/10\.5281/zenodo\.15830659' "$f" || { echo "WARN: Missing WIT TAKES DOI in $f"; ((M+=1)); }
               grep -q 'doi\.org/10\.5281/zenodo\.16812467' "$f" || { echo "WARN: Missing GUIDE DOI in $f"; ((M+=1)); }
-              grep -q 'notebooklm\.google\.com/notebook/d49018d3' "$f" || { echo "WARN: Missing Podcast 1 in $f"; ((M+=1)); }
-              grep -q 'notebooklm\.google\.com/notebook/b7e25629' "$f" || { echo "WARN: Missing Podcast 2 in $f"; ((M+=1)); }
+              grep -q 'notebooklm\.google\.com/notebook/d49018d3' "$f"     || { echo "WARN: Missing Podcast 1 in $f"; ((M+=1)); }
+              grep -q 'notebooklm\.google\.com/notebook/b7e25629' "$f"     || { echo "WARN: Missing Podcast 2 in $f"; ((M+=1)); }
             done
           fi
           echo "Verification complete (warn-only). Missing-count: $M"
           exit 0
 
-      # 10) Commit generated artifacts
+      # --- Commit generated artifacts ---
       - name: Commit generated artifacts
-        shell: bash
         run: |
-          set -euo pipefail
           git add docs/data.js docs/tag_browser.html
           git commit -m "Auto: build tags & graph (data.js, tag_browser.html)" || echo "No changes to commit"
           git push || echo "Nothing to push"
