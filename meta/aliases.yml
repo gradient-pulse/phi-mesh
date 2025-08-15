@@ -12,9 +12,6 @@ aliases:
   RGP:
     - Recursive Gradient Processing
 
-  UD:
-    - Unity-Disunity
-
   phi-mesh:
     - phi_mesh
     - PhiMesh
@@ -89,7 +86,11 @@ aliases:
     - NT
     - Narrative Tick
     - Narrative_Tick
-    
+    - Narrative-Tick
+
+  UD:
+    - Unity-Disunity
+  
   Contextual_Filter:
     - ContextualFilter
     - contextual_filter
@@ -113,14 +114,8 @@ aliases:
   NT_rhythm:
     - NT-rhythm
 
-  narrative_tick:
-    - Narrative_Tick
-    - NarrativeTick
-    - NT
-
   rhythm-of-least-divergence:
     - rhythm_of_least_divergence
-    - rhythm_of_least_divergence  # guard for accidental underscore variant
 
   rhythm_of_nature:
     - rhythm-of-nature
@@ -175,7 +170,3 @@ aliases:
   big_bang:
     - Big_Bang  # handled already via "Big Bang", but kept here for robustness
 
-  big_quiet:
-    - Big-Quiet  # handled above; safety net for stragglers
-
-  # Soft “typo bucket” that you can flip on/off in the script if desired:
