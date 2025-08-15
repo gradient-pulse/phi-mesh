@@ -32,15 +32,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
-      # --- Auto-fix canonical ExperimenterPulse refs (safe/no-op if none) ---
+      # --- Auto-add default tags to ExperimenterPulse ---
+      - name: Ensure default tags present
+        run: |
+          set -euo pipefail
+          for f in $(grep -rl 'ExperimenterPulse' pulse | grep -E '\.ya?ml$'); do
+            for tag in "RGP" "NT (Narrative_Tick)" "Rhythm" "NavierStokes" "turbulence" "ExperimenterPulse"; do
+              grep -q "^- ${tag}$" "$f" || echo "  - ${tag}" >> "$f"
+            done
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pulse/**/*.yml || true
+          git commit -m "chore: add default tags to ExperimenterPulse" || echo "nothing to commit"
+          git push || true
+
+      # --- Auto-fix canonical ExperimenterPulse refs ---
       - name: Ensure ExperimenterPulse references (auto-fix)
-        shell: bash
         run: |
           set -euo pipefail
           if [[ -f tools/ensure_experimenter_refs.py ]]; then
             python tools/ensure_experimenter_refs.py
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add pulse/**/*.yml || true
             git commit -m "chore: ensure canonical ExperimenterPulse refs" || echo "nothing to commit"
             git push || true
@@ -48,39 +60,41 @@ jobs:
             echo "tools/ensure_experimenter_refs.py not found — skipping auto-fix."
           fi
 
-      # --- Graph data --------------------------------------------------------
-      - name: Generate alias-aware docs/data.js (recursive pulse scan)
-        shell: bash
+      # --- Update meta/tag_index.yml automatically ---
+      - name: Update tag index
         run: |
           set -euo pipefail
-          mkdir -p docs
-          if [[ -f generate_graph_data.py ]]; then
-            # generate_graph_data.py already ignores --alias-map if unsupported
-            python generate_graph_data.py \
-              --tag-index meta/tag_index.yml \
-              --alias-map meta/aliases.yml \
-              --pulse-glob "pulse/**/*.yml" \
-              --out-js docs/data.js
+          if [[ -f update_tag_index.py ]]; then
+            python update_tag_index.py
+            git add meta/tag_index.yml
+            git commit -m "Auto: update tag index" || echo "No tag index changes"
+            git push || true
           else
-            echo "generate_graph_data.py is missing"; exit 1
+            echo "update_tag_index.py not found — skipping tag index update."
           fi
 
-      # --- Tag browser -------------------------------------------------------
-      - name: Build Tag Browser HTML (docs/tag_browser.html)
-        shell: bash
+      # --- Graph data ---
+      - name: Generate alias-aware docs/data.js (recursive pulse scan)
         run: |
-          set -euo pipefail
+          mkdir -p docs
+          python generate_graph_data.py \
+            --tag-index meta/tag_index.yml \
+            --alias-map meta/aliases.yml \
+            --pulse-glob "pulse/**/*.yml" \
+            --out-js docs/data.js
+
+      # --- Tag browser ---
+      - name: Build Tag Browser HTML
+        run: |
           python build_tag_browser.py \
             --tag-index meta/tag_index.yml \
             --alias-map meta/aliases.yml \
             --data-js docs/data.js \
             --out-html docs/tag_browser.html
 
-      # --- Validate output so we don't publish empties -----------------------
+      # --- Validate output ---
       - name: Validate docs/data.js
-        shell: bash
         run: |
-          set -euo pipefail
           if [[ ! -s docs/data.js ]]; then
             echo "ERROR: docs/data.js is empty or missing."; exit 2
           fi
@@ -89,9 +103,8 @@ jobs:
           fi
           echo "OK: docs/data.js looks good."
 
-      # --- Warn-only verification (non-blocking) -----------------------------
-      - name: Verify canonical refs present in ExperimenterPulse files (warn-only)
-        shell: bash
+      # --- Warn-only verification ---
+      - name: Verify canonical refs present (warn-only)
         run: |
           set +e
           M=0
@@ -109,13 +122,9 @@ jobs:
           echo "Verification complete (warn-only). Missing-count: $M"
           exit 0
 
-      # --- Commit generated artifacts ----------------------------------------
+      # --- Commit generated artifacts ---
       - name: Commit generated artifacts
-        shell: bash
         run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data.js docs/tag_browser.html
           git commit -m "Auto: build tags & graph (data.js, tag_browser.html)" || echo "No changes to commit"
           git push || echo "Nothing to push"
