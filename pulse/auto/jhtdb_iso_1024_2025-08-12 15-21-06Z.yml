@@ -3,10 +3,10 @@ date: 2025-08-12 15:21:06+00:00
 status: pass
 tags:
 - RGP
-- NT
+- NT (Narrative_Tick)
 - Rhythm
 - NavierStokes
-- Turbulence
+- turbulence
 - ExperimenterPulse
 datasets:
 - jhtdb_iso_1024
