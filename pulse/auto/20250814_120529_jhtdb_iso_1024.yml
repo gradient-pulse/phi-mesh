@@ -1,13 +1,16 @@
 title: 'jhtdb_iso_1024: Experimenter auto-pulse'
 date: '2025-08-14T12:05:29Z'
-summary: 'jhtdb_iso_1024 — NT rhythm test → p=0.6553, effect=0.312; significant: no
-  @ α=0.01.'
 tags:
 - RGP
 - jhtdb_iso_1024
-- NavierStokes
+- Navier_Stokes
 - NT_rhythm
 - ExperimenterPulse
+- NT (Narrative_Tick)
+- Rhythm
+- turbulence
+summary: 'jhtdb_iso_1024 — NT rhythm test → p=0.6553, effect=0.312; significant: no
+  @ α=0.01.'
 papers:
 - title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
   url: https://doi.org/10.5281/zenodo.15830659

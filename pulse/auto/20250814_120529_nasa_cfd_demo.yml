@@ -1,12 +1,16 @@
 title: 'nasa_cfd_demo: Experimenter auto-pulse'
 date: '2025-08-14T12:05:29Z'
-summary: 'nasa_cfd_demo — NT rhythm test → p=0.1302, effect=0.44; significant: no
-  @ α=0.01.'
 tags:
 - RGP
 - nasa_cfd_demo
 - NT_rhythm
 - ExperimenterPulse
+- NT (Narrative_Tick)
+- Rhythm
+- Navier_Stokes
+- turbulence
+summary: 'nasa_cfd_demo — NT rhythm test → p=0.1302, effect=0.44; significant: no
+  @ α=0.01.'
 papers:
 - title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
   url: https://doi.org/10.5281/zenodo.15830659

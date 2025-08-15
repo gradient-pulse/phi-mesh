@@ -1,12 +1,16 @@
 title: RGP–NS Agent Run (jhtdb_iso_1024)
-date: '2025-08-13T16:34:44Z'
+date: '''2025-08-13T16:34:44Z'''
 tags:
 - RGP
 - Navier_Stokes
 - NT_rhythm
 - ExperimenterPulse
-summary: Automated NT rhythm analysis for dataset jhtdb_iso_1024. Significant result
-  (p=0.0042, effect_size=0.37).
+- NT (Narrative_Tick)
+- Rhythm
+- turbulence
+- NavierStokes
+summary: "Automated NT rhythm analysis for dataset jhtdb_iso_1024. Significant result\n\
+  \  (p=0.0042, effect_size=0.37)."
 papers:
 - title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
   url: https://doi.org/10.5281/zenodo.15830659

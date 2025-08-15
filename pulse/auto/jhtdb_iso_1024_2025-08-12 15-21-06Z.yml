@@ -1,20 +1,13 @@
 title: RGP–NS Auto Run — jhtdb_iso_1024 — 2025-08-12 15:21:06Z
-date: 2025-08-12 15:21:06+00:00
-status: pass
+date: '2025-08-12 15:21:06+00:00'
 tags:
 - RGP
-- "NT (Narrative_Tick)"
+- NT (Narrative_Tick)
 - Rhythm
-- NavierStokes
+- Navier_Stokes
 - turbulence
 - ExperimenterPulse
-datasets:
-- jhtdb_iso_1024
-results_path: results/rgp_ns/jhtdb_iso_1024/run_20250812T152106Z
-metrics:
-  p_value: 0.005
-  effect_size: 1.0
-  mean_gap: 22.651162790697676
+- NavierStokes
 papers:
 - title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
   url: https://doi.org/10.5281/zenodo.15830659

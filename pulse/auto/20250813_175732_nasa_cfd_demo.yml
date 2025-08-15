@@ -1,12 +1,16 @@
 title: RGP–NS Agent Run (nasa_cfd_demo)
-date: '2025-08-13T17:57:32Z'
+date: '''2025-08-13T17:57:32Z'''
 tags:
 - RGP
 - Navier_Stokes
 - NT_rhythm
 - ExperimenterPulse
-summary: Automated NT rhythm analysis for dataset nasa_cfd_demo. Significant result
-  (p=0.0042, effect_size=0.37).
+- NT (Narrative_Tick)
+- Rhythm
+- turbulence
+- NavierStokes
+summary: "Automated NT rhythm analysis for dataset nasa_cfd_demo. Significant result\n\
+  \  (p=0.0042, effect_size=0.37)."
 papers:
 - title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
   url: https://doi.org/10.5281/zenodo.15830659
