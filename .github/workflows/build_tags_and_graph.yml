@@ -76,18 +76,17 @@ jobs:
             echo "tools/ensure_experimenter_refs.py not found — skipping auto-fix."
           fi
 
-      # --- Update meta/tag_index.yml automatically ---
-      - name: Update tag index
+      # --- Rebuild tag_index.yml from pulses (alias-aware) ---------------------
+      - name: Rebuild tag_index.yml
+        shell: bash
         run: |
           set -euo pipefail
-          if [[ -f update_tag_index.py ]]; then
-            python update_tag_index.py
-            git add meta/tag_index.yml
-            git commit -m "Auto: update tag index" || echo "No tag index changes"
-            git push || true
-          else
-            echo "update_tag_index.py not found — skipping tag index update."
-          fi
+          python tools/rebuild_tag_index.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add meta/tag_index.yml
+          git commit -m "Auto: rebuild meta/tag_index.yml (alias-aware)" || echo "No tag_index changes"
+          git push || echo "Nothing to push"
 
       # --- Graph data ---
       - name: Generate alias-aware docs/data.js (recursive pulse scan)
