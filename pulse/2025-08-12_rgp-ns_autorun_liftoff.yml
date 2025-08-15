@@ -5,7 +5,7 @@ summary: >
   First fully automated run completed. GitHub Actions now executes the RGP–NS agent,
   writes results under /results/rgp_ns/, and emits YAML pulses under /pulse/auto/.
   This makes Phi‑Mesh self‑experimenting; human role shifts to framing and declaring proof.
-tags: [RGP, NavierStokes, Turbulence, NT, Rhythm, Automation, PhiMesh]
+tags: [RGP, NavierStokes, turbulence, NT (Narrative_Tick), Rhythm, Automation, PhiMesh]
 status: info
 papers:
   - { title: "Experimenter’s Guide — Solving Navier–Stokes, Differently", doi: "10.5281/zenodo.15830659" }
