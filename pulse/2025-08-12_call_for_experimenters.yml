@@ -5,7 +5,7 @@ summary: >
   One‑page call published inviting replications of the NT‑rhythm test via the agent runner
   or a 90‑minute local script. Pass criterion: conserved NT‑distance rhythm across ≥2 datasets
   (α=0.01) with consistent effect size.
-tags: [RGP, NavierStokes, Turbulence, NT, Rhythm, Replication]
+tags: [RGP, NavierStokes, turbulence, NT (Narrative_Tick), Rhythm, Replication]
 status: announce
 papers:
   - { title: "Experimenter’s Guide — Solving Navier–Stokes, Differently", doi: "10.5281/zenodo.15830659" }
