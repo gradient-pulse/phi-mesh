@@ -45,7 +45,6 @@ tags:
     papers: []
     podcasts: []
     pulses:
-    - 2025-08-12_rgp-ns_autorun_liftoff
     - 2025-08-12_tagmap_phase3_autopulses
     summary: ''
   autonomy:
@@ -615,7 +614,6 @@ tags:
     - 2025-07-24_long_haul_blinding_light
     - 2025-07-26_script_and_flow
     - 2025-08-12_call_for_experimenters
-    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -678,7 +676,6 @@ tags:
     - 2025-08-12_call_for_experimenters
     - 2025-08-12_cmb-birefringence_rgp-lens
     - 2025-08-12_recursive-memory_banks
-    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -792,7 +789,6 @@ tags:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-01_phi-mesh-exec-drift
     - 2025-08-12_recursive-memory_banks
-    - 2025-08-12_rgp-ns_autorun_liftoff
     - 2025-08-12_tagmap_phase3_autopulses
     summary: ''
   Phi-monitor:
@@ -1004,7 +1000,6 @@ tags:
     - 2025-08-12_call_for_experimenters
     - 2025-08-12_cmb-birefringence_rgp-lens
     - 2025-08-12_recursive-memory_banks
-    - 2025-08-12_rgp-ns_autorun_liftoff
     - 2025-08-12_tagmap_phase3_autopulses
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
@@ -1048,7 +1043,6 @@ tags:
     - 2025-08-12_call_for_experimenters
     - 2025-08-12_cmb-birefringence_rgp-lens
     - 2025-08-12_recursive-memory_banks
-    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -1245,7 +1239,6 @@ tags:
     - 2025-07-30-gradient-flux-reversal
     - 2025-07-30_laminar-turbulence
     - 2025-08-12_call_for_experimenters
-    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
