@@ -9,13 +9,11 @@ on:
       - 'meta/aliases.yml'
       - 'meta/tag_descriptions.yml'
       - 'tools/**'
-      - 'docs/tag_browser.html'
       - '.github/workflows/build_tags_and_graph.yml'
   workflow_dispatch:
 
 jobs:
   build:
-    # extra safety: only process on main
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
@@ -33,10 +31,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml networkx
 
-      # --- Repair any old polluted auto pulses (no-op if script absent) -------
+      # Repair any old polluted auto pulses
       - name: Repair auto pulses (trim tails, normalize tags)
         run: |
-          set -euo pipefail
           if [[ -f tools/repair_auto_pulses.py ]]; then
             python tools/repair_auto_pulses.py
             git config user.name "github-actions[bot]"
@@ -45,13 +42,12 @@ jobs:
             git commit -m "chore: repair auto pulses (trim tails, normalize tags)" || echo "nothing to commit"
             git push || true
           else
-            echo "tools/repair_auto_pulses.py not found — skipping."
+            echo "repair_auto_pulses.py not found — skipping."
           fi
 
-      # --- Add default tags safely (YAML-aware; no-op if script absent) -------
+      # Add default tags safely (YAML-aware)
       - name: Ensure default tags in auto pulses
         run: |
-          set -euo pipefail
           if [[ -f tools/add_default_tags.py ]]; then
             python tools/add_default_tags.py
             git config user.name "github-actions[bot]"
@@ -60,13 +56,12 @@ jobs:
             git commit -m "chore: add default tags to auto pulses" || echo "nothing to commit"
             git push || true
           else
-            echo "tools/add_default_tags.py not found — skipping."
+            echo "add_default_tags.py not found — skipping."
           fi
 
-      # --- Ensure canonical ExperimenterPulse references ----------------------
+      # Ensure canonical ExperimenterPulse references
       - name: Ensure ExperimenterPulse references (auto-fix)
         run: |
-          set -euo pipefail
           if [[ -f tools/ensure_experimenter_refs.py ]]; then
             python tools/ensure_experimenter_refs.py
             git config user.name "github-actions[bot]"
@@ -78,10 +73,9 @@ jobs:
             echo "tools/ensure_experimenter_refs.py not found — skipping auto-fix."
           fi
 
-      # --- Rebuild the tag index (kept for other consumers; optional) ---------
+      # Rebuild the tag index (if you still need it for other tooling)
       - name: Rebuild tag_index.yml
         run: |
-          set -euo pipefail
           if [[ -f tools/rebuild_tag_index.py ]]; then
             python tools/rebuild_tag_index.py
             git config user.name "github-actions[bot]"
@@ -90,13 +84,12 @@ jobs:
             git commit -m "Auto: rebuild meta/tag_index.yml (alias-aware)" || echo "No tag_index changes"
             git push || echo "Nothing to push"
           else
-            echo "tools/rebuild_tag_index.py not found — skipping tag_index rebuild."
+            echo "tools/rebuild_tag_index.py not found — skipping."
           fi
 
-      # --- Generate data.js for the interactive map --------------------------
-      - name: Generate docs/data.js (aliases + descriptions)
+      # Generate data.js for the tag map
+      - name: Generate alias-aware docs/data.js
         run: |
-          set -euo pipefail
           mkdir -p docs
           python generate_graph_data.py \
             --pulse-glob "pulse/**/*.yml" \
@@ -104,10 +97,22 @@ jobs:
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data.js
 
-      # --- Validate data.js output -------------------------------------------
+      # (Optional) Build Tag Browser HTML, if you still use it
+      - name: Build Tag Browser HTML
+        run: |
+          if [[ -f build_tag_browser.py ]]; then
+            python build_tag_browser.py \
+              --tag-index meta/tag_index.yml \
+              --alias-map meta/aliases.yml \
+              --data-js docs/data.js \
+              --out-html docs/tag_browser.html
+          else
+            echo "build_tag_browser.py not found — skipping tag_browser.html."
+          fi
+
+      # Validate data.js output
       - name: Validate docs/data.js
         run: |
-          set -euo pipefail
           if [[ ! -s docs/data.js ]]; then
             echo "ERROR: docs/data.js is empty or missing."; exit 2
           fi
@@ -116,10 +121,9 @@ jobs:
           fi
           echo "OK: docs/data.js looks good."
 
-      # --- Commit generated artifact -----------------------------------------
+      # Commit generated artifacts
       - name: Commit generated artifacts
         run: |
-          set -euo pipefail
-          git add docs/data.js
-          git commit -m "Auto: build tags & graph (data.js)" || echo "No changes to commit"
+          git add docs/data.js docs/tag_browser.html || true
+          git commit -m "Auto: build tags & graph (data.js, tag_browser.html)" || echo "No changes to commit"
           git push || echo "Nothing to push"
