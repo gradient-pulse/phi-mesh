@@ -1,97 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Phi-Mesh Tag Map</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-  <!-- D3 for the force graph -->
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-
-  <style>
-    html, body { margin:0; padding:0; height:100%; background:#0e0f12; color:#cfd6e4; font:14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-    a { color:#7dc1ff; text-decoration:none; }
-    a:hover { text-decoration:underline; }
-
-    #app { display:grid; grid-template-columns: 320px 1fr 360px; grid-template-rows: 48px 1fr; height:100%; }
-    header { grid-column: 1 / 4; display:flex; align-items:center; gap:12px; padding:8px 12px; border-bottom:1px solid #1f2330; background:#0f1116; }
-    header h1 { font-size:16px; font-weight:600; margin:0 8px 0 0; letter-spacing:.2px; }
-    #status { color:#97a3b6; font-size:12px; margin-left:auto; }
-
-    #left { border-right:1px solid #1f2330; overflow:auto; padding:12px; }
-    #right { border-left:1px solid #1f2330; overflow:auto; padding:12px; }
-    #main { position:relative; overflow:hidden; }
-
-    #search { width:100%; margin-top:6px; padding:8px; border-radius:8px; border:1px solid #2a2f3d; background:#0f1116; color:#cfd6e4; }
-
-    #tooltip { position:absolute; pointer-events:none; z-index:20; background:#11151f; color:#e6edf6; border:1px solid #2a2f3d; border-radius:8px; padding:8px 10px; font-size:13px; max-width:320px; box-shadow:0 6px 24px rgba(0,0,0,.4); display:none; }
-    svg { width:100%; height:100%; display:block; }
-
-    .muted { color:#97a3b6; font-size:12px; }
-
-    /* Graph styling */
-    .link { stroke:#3a4153; stroke-opacity:.35; }
-    .node { cursor:pointer; }
-    .node circle { fill:#52a2ff; opacity:.9; }
-    .node text { fill:#cfd6e4; font-size:11px; pointer-events:none; }
-
-    .satellite { cursor:pointer; }
-    .satellite circle { stroke:#10131a; stroke-width:1.5px; }
-    .age-very-new { fill:#ff6b6b; }
-    .age-new      { fill:#ff9e66; }
-    .age-mid      { fill:#ffc94d; }
-    .age-old      { fill:#8ecbff; }
-    .age-very-old { fill:#6aa4ff; opacity:.85; }
-
-    #right h2 { margin:.1rem 0 .5rem 0; font-size:14px; font-weight:700; }
-    #right ul { margin:.25rem 0 .9rem 1rem; padding:0; }
-  </style>
+<meta charset="utf-8"/>
+<title>Phi-Mesh Tag Browser</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+:root{--bg:#0b0b0f;--fg:#f5f7fb;--muted:#9aa4b2;--accent:#7dd3fc;--panel:rgba(255,255,255,0.06);--chip:rgba(125,211,252,0.14)}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+header{padding:16px 20px;display:flex;gap:16px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08)}
+header h1{margin:0;font-size:20px;font-weight:600;letter-spacing:.2px}
+header input[type="search"]{flex:1;max-width:520px;background:var(--panel);border:1px solid rgba(255,255,255,0.08);color:var(--fg);border-radius:12px;padding:10px 12px;outline:none}
+main{display:grid;grid-template-columns:360px 1fr;height:calc(100% - 66px)}
+aside{border-right:1px solid rgba(255,255,255,0.08);overflow-y:auto}
+.list{padding:8px;display:grid;gap:6px}
+.tag{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:12px;background:var(--panel);cursor:pointer;transition:background .15s ease;border:1px solid rgba(255,255,255,0.06)}
+.tag:hover{background:rgba(125,211,252,0.10)}
+.tag .name{font-weight:600}
+.tag .meta{color:var(--muted);font-size:12px}
+section{position:relative}
+.details{padding:16px 20px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0 0}
+.chip{font-size:12px;padding:6px 8px;border-radius:999px;background:var(--chip);border:1px solid rgba(125,211,252,0.25);color:var(--fg)}
+.links{margin-top:12px}
+.links a{color:var(--accent);text-decoration:none}
+.links a:hover{text-decoration:underline}
+.empty{color:var(--muted);padding:32px 20px}
+.count{font-variant-numeric:tabular-nums}
+</style>
 </head>
 <body>
-  <div id="app">
-    <header>
-      <h1>Phi-Mesh Tag Map</h1>
-      <div class="muted">Hover a tag for its description • Click a tag for pulse satellites • Click a pulse for details</div>
-      <div id="status"></div>
-    </header>
+<header>
+  <h1>Phi-Mesh Tag Browser</h1>
+  <input id="search" type="search" placeholder="Filter tags… (fuzzy, case-insensitive)"/>
+</header>
+<main>
+  <aside>
+    <div id="list" class="list"></div>
+  </aside>
+  <section>
+    <div id="details" class="details empty">Pick a tag on the left to see details.</div>
+  </section>
+</main>
 
-    <aside id="left">
-      <div>
-        <label class="muted">Search</label>
-        <input id="search" placeholder="Find a tag…" />
-      </div>
-      <div style="margin-top:16px">
-        <div class="muted">Hint</div>
-        <div style="font-size:12px;color:#aab6ca">
-          • Newer pulses appear warmer (red/orange), older ones cooler (blue).<br/>
-          • Sidebar lists details of the selected tag or pulse.
-        </div>
-      </div>
-    </aside>
+<script src="data.js"></script>
+<script>
+const DATA = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[],links:[],tagResources:{}};
+const tagResources = DATA.tagResources || {};
+const degree = {};
+(DATA.links||[]).forEach(({source,target})=>{
+  degree[source]=(degree[source]||0)+1;
+  degree[target]=(degree[target]||0)+1;
+});
+const tags = (DATA.nodes||[]).map(n=>({
+  id:n.id,
+  centrality:n.centrality??0,
+  degree:degree[n.id]||0,
+  resources:tagResources[n.id]||{papers:[],podcasts:[]},
+})).sort((a,b)=>(b.degree-a.degree)||(b.centrality-a.centrality)||a.id.localeCompare(b.id));
 
-    <main id="main">
-      <div id="tooltip"></div>
-      <svg id="graph"></svg>
-    </main>
+const listEl=document.getElementById('list');
+const searchEl=document.getElementById('search');
+const detailsEl=document.getElementById('details');
 
-    <aside id="right">
-      <div class="muted">Details</div>
-      <!-- IMPORTANT: graph.js expects #sidebar-content -->
-      <div id="sidebar-content" style="margin-top:8px"></div>
-    </aside>
-  </div>
+function renderList(filter=""){
+  listEl.innerHTML="";
+  const q=filter.trim().toLowerCase();
+  const subset=q?tags.filter(t=>t.id.toLowerCase().includes(q)):tags;
+  subset.forEach(t=>{
+    const row=document.createElement('div');
+    row.className='tag';
+    row.onclick=()=>renderDetails(t.id);
+    const left=document.createElement('div');
+    left.innerHTML=`<div class="name">${t.id}</div><div class="meta">deg <span class="count">${t.degree}</span> · cent ${t.centrality.toFixed(2)}</div>`;
+    row.appendChild(left);
+    listEl.appendChild(row);
+  });
+  if(!subset.length){
+    const empty=document.createElement('div');
+    empty.className='empty';
+    empty.textContent='No tags match your filter.';
+    listEl.appendChild(empty);
+  }
+}
 
-  <!-- Data first, then behavior -->
-  <script src="data.js"></script>
-  <script src="graph.js"></script>
-  <script>
-    // Kick off the render using the generated payload
-    if (window.PHI_DATA) {
-      renderTagMap(window.PHI_DATA);
-      document.getElementById('status').textContent = `tags: ${window.PHI_DATA.nodes?.length ?? 0}`;
-    } else {
-      document.getElementById('status').textContent = 'No data loaded';
-    }
-  </script>
+function renderDetails(tagId){
+  const t=tags.find(x=>x.id===tagId);
+  if(!t){detailsEl.className='details empty';detailsEl.textContent='Tag not found.';return;}
+  detailsEl.className='details';
+  const res=t.resources||{papers:[],podcasts:[]};
+  const pills=[`<span class="chip">degree: ${t.degree}</span>`,`<span class="chip">centrality: ${t.centrality.toFixed(2)}</span>`];
+  let html=`<h2 style="margin:0 0 6px 0">${t.id}</h2>`;
+  html+=`<div class="chips">${pills.join('')}</div>`;
+  const hasP=res.papers&&res.papers.length, hasD=res.podcasts&&res.podcasts.length;
+  if(hasP||hasD){
+    html+=`<div class="links">`;
+    if(hasP){ html+=`<div><strong>Papers</strong><br/>`+res.papers.map(u=>`<a href="${u}" target="_blank" rel="noopener">${u}</a>`).join("<br/>")+`</div>`; }
+    if(hasD){ html+=`<div style="margin-top:10px"><strong>Podcasts</strong><br/>`+res.podcasts.map(u=>`<a href="${u}" target="_blank" rel="noopener">${u}</a>`).join("<br/>")+`</div>`; }
+    html+=`</div>`;
+  } else {
+    html+=`<div class="empty" style="padding:0;margin-top:12px">No linked resources yet.</div>`;
+  }
+  detailsEl.innerHTML=html;
+}
+
+searchEl.addEventListener('input',(e)=>renderList(e.target.value));
+renderList();
+</script>
 </body>
 </html>
