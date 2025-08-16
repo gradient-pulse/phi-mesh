@@ -8,6 +8,7 @@ import re
 import sys
 import glob
 import yaml
+import datetime as _dt
 
 # ---------- utils ----------
 
@@ -65,29 +66,46 @@ def guess_date_from_filename(path: str) -> str:
         return f"{s[0:4]}-{s[4:6]}-{s[6:8]}"
     return ""
 
+def coerce_date(value, fallback: str = "") -> str:
+    """Normalize date field to 'YYYY-MM-DD' or a trimmed string."""
+    if value is None:
+        return fallback
+    if isinstance(value, _dt.datetime):
+        return value.date().isoformat()
+    if isinstance(value, _dt.date):
+        return value.isoformat()
+    # YAML can parse timestamps into datetime; otherwise we get a string
+    s = str(value).strip()
+    # If it's a full ISO timestamp, trim to date
+    m = re.match(r'^(\d{4}-\d{2}-\d{2})[T\s]\d{2}:\d{2}:\d{2}', s)
+    if m:
+        return m.group(1)
+    # If it's already like YYYY-MM-DD, keep
+    if re.match(r'^\d{4}-\d{2}-\d{2}$', s):
+        return s
+    # If it's like YYYY/MM/DD or YYYY.MM.DD convert
+    m = re.match(r'^(\d{4})[/.](\d{2})[/.](\d{2})$', s)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    return s  # last resort: keep as-is (string)
+
 def norm_summary(val) -> str:
     if val is None:
         return ""
     if isinstance(val, list):
-        # join multi-line lists into a paragraph
         s = " ".join(str(x) for x in val)
     elif isinstance(val, dict):
         s = " ".join(f"{k}: {v}" for k, v in val.items())
     else:
         s = str(val)
-    # trim stray backticks and whitespace
-    s = s.strip().strip('`').strip()
-    return s
+    return s.strip().strip('`').strip()
 
 def norm_tags(val) -> list:
     out, seen = [], set()
     def push(tag):
         t = (tag or "").strip()
-        if not t:
-            return
-        if t not in seen:
-            out.append(t)
-            seen.add(t)
+        if t and t not in seen:
+            out.append(t); seen.add(t)
     if val is None:
         return out
     if isinstance(val, list):
@@ -103,7 +121,6 @@ def norm_tags(val) -> list:
         for part in re.split(r'[,\n]+', val):
             push(part)
         return out
-    # fallback
     push(str(val))
     return out
 
@@ -120,8 +137,7 @@ def norm_links(val) -> list:
             u = str(item or "")
         u = u.strip()
         if u and URL_RE.match(u) and u not in seen:
-            urls.append(u)
-            seen.add(u)
+            urls.append(u); seen.add(u)
     return urls
 
 def to_minimal(path: str, data) -> dict | None:
@@ -143,18 +159,12 @@ def to_minimal(path: str, data) -> dict | None:
 
     title = (data.get("title") or "").strip()
     if not title:
-        # derive from filename
         stem = os.path.splitext(os.path.basename(path))[0]
         title = stem.replace('_', ' ').replace('-', ' ').strip()
 
-    date = (data.get("date") or "").strip()
-    if not date:
-        date = guess_date_from_filename(path)
-
+    date = coerce_date(data.get("date"), guess_date_from_filename(path))
     summary = norm_summary(data.get("summary"))
-
     tags = norm_tags(data.get("tags"))
-
     papers = norm_links(data.get("papers"))
     podcasts = norm_links(data.get("podcasts"))
 
@@ -199,9 +209,8 @@ def main():
     fixed = 0
     for path in files:
         changed, status = process_file(path, args.write)
-        if status == "yaml-error":
-            continue
-        if status == "skipped":
+        if status in ("yaml-error", "skipped"):
+            print(f"[{status:10}] {path}")
             continue
         if changed:
             changed_any = True
