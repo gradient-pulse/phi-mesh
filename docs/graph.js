@@ -1,39 +1,65 @@
 /* docs/graph.js
-   One-sidebar version. Tag description tooltips. Pulse satellites on tag click.
-   Requires: window.PHI_DATA from docs/data.js and d3 v7.
+   Renders the force graph + age-colored pulse satellites on tag click.
+   Expects window.PHI_DATA with:
+     - nodes: [{id, centrality?}]
+     - links: [{source, target}]
+     - tagDescriptions: { [tag]: string }
+     - pulsesByTag: { [tag]: [{ id, title?, date?, ageDays?, summary?, papers?, podcasts? }] }
+     - meta: { builtAt? }
 */
-(() => {
-  const DATA = window.PHI_DATA || {nodes:[],links:[]};
 
-  // -------- DOM ----------
-  const svg = d3.select('#graph');
-  const root = svg.append('g');
-  const linkLayer = root.append('g');
-  const nodeLayer = root.append('g');
-  const satLayer  = root.append('g');
-  const tooltip = d3.select('#tooltip');
-  const details = document.getElementById('details');
-  const search  = document.getElementById('search');
+(function () {
+  const DATA = window.PHI_DATA || { nodes: [], links: [] };
 
-  // -------- config ----------
-  const W = svg.node().viewBox.baseVal.width  || 1200;
-  const H = svg.node().viewBox.baseVal.height || 800;
-  const nodeRxBase = 8, nodeRyBase = 5;
-  const linkOpacity = 0.35;
+  // ------- DOM -------
+  const svg      = d3.select('#graph');
+  const tooltip  = d3.select('#tooltip');
+  const sidebar  = document.getElementById('sidebar');
+  const searchEl = document.getElementById('search');
 
-  // Age → class
-  function ageClass(days){
-    if(days == null) return 'age-old';
-    if(days <= 14)  return 'age-very-new';
-    if(days <= 45)  return 'age-new';
-    if(days <= 120) return 'age-mid';
-    if(days <= 270) return 'age-old';
-    return 'age-very-old';
+  // ------- helpers -------
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const A = x => Array.isArray(x) ? x : (x ? [x] : []);
+  const tagDesc = (t) => (DATA.tagDescriptions && DATA.tagDescriptions[t]) || '';
+  const pulsesFor = (t) => (DATA.pulsesByTag && DATA.pulsesByTag[t]) || [];
+
+  // Age → color class
+  function ageClass(days) {
+    if (days == null) return 'pulse-old';
+    if (days <= 14)   return 'pulse-very-new';
+    if (days <= 45)   return 'pulse-new';
+    if (days <= 120)  return 'pulse-mid';
+    if (days <= 270)  return 'pulse-old';
+    return 'pulse-very-old';
   }
 
-  // -------- data prep ----------
-  const nodes = (DATA.nodes||[]).map(d => ({id: d.id || d.name, centrality: +d.centrality||0}));
-  const idToNode = new Map(nodes.map(n => [n.id, n]));
+  // ------- sizing / geometry -------
+  const W = 1280, H = 860;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  // Node size by “importance”
+  const deg = {};
+  (DATA.links||[]).forEach(({source,target})=>{
+    deg[source] = (deg[source]||0)+1;
+    deg[target] = (deg[target]||0)+1;
+  });
+  const rx = d => 6 + Math.sqrt((d.centrality||0) * 900);
+  const ry = d => 4 + Math.sqrt((d.centrality||0) * 450);
+
+  // ------- zoom / layers -------
+  const root = svg.append('g');
+  const linkLayer      = root.append('g').attr('class','links');
+  const nodeLayer      = root.append('g').attr('class','nodes');
+  const satelliteLayer = root.append('g').attr('class','satellites');
+
+  svg.call(
+    d3.zoom()
+      .scaleExtent([0.25, 4])
+      .on('zoom', (ev)=> root.attr('transform', ev.transform))
+  );
+
+  // ------- data plumbing for simulation -------
+  const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
   const links = (DATA.links||[])
     .map(l => ({
       source: idToNode.get(l.source) || l.source,
@@ -41,43 +67,32 @@
     }))
     .filter(l => l.source && l.target);
 
-  // neighbors for dimming
-  const neigh = new Map(nodes.map(n=>[n.id,new Set]));
-  links.forEach(l => {neigh.get(l.source.id)?.add(l.target.id); neigh.get(l.target.id)?.add(l.source.id);});
-
-  // pulsesByTag: guaranteed map (generator now supplies this)
-  const pulsesByTag = DATA.pulsesByTag || {};
-
-  // -------- sim ----------
-  const sim = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id).distance(95).strength(.25))
-    .force('charge', d3.forceManyBody().strength(-440))
+  // Spread a touch more (less density) vs earlier
+  const sim = d3.forceSimulation(DATA.nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.35))
+    .force('charge', d3.forceManyBody().strength(-420))
     .force('center', d3.forceCenter(W/2, H/2))
-    .force('collision', d3.forceCollide().radius(d => 12 + Math.sqrt((d.centrality||0)*500)));
+    .force('collision', d3.forceCollide().radius(d => Math.max(rx(d),ry(d))+4));
 
+  // ------- draw links / nodes -------
   const linkSel = linkLayer.selectAll('line')
     .data(links)
     .join('line')
-    .attr('class','link')
-    .attr('stroke-opacity', linkOpacity);
+    .attr('class','link');
 
   const nodeSel = nodeLayer.selectAll('g.node')
-    .data(nodes, d=>d.id)
+    .data(DATA.nodes, d => d.id)
     .join(enter => {
       const g = enter.append('g').attr('class','node');
-      g.append('ellipse')
-        .attr('rx', d => nodeRxBase + Math.sqrt((d.centrality||0)*700))
-        .attr('ry', d => nodeRyBase + Math.sqrt((d.centrality||0)*350));
+      g.append('ellipse').attr('rx', rx).attr('ry', ry);
       g.append('text')
-        .attr('y', d => (nodeRyBase + Math.sqrt((d.centrality||0)*350)) + 12)
+        .attr('y', d => ry(d) + 12)
         .attr('text-anchor','middle')
-        .text(d=>d.id);
-
-      g.on('mouseover', (ev,d)=>showTagTooltip(ev,d.id))
-       .on('mousemove',  (ev)=>moveTooltip(ev))
-       .on('mouseout',   hideTooltip)
-       .on('click', (_ev,d)=>onTagClick(d.id));
-
+        .text(d => d.id);
+      g.on('mouseover', (ev,d)=> showTagTip(ev, d.id))
+       .on('mousemove', (ev)=> moveTip(ev))
+       .on('mouseout', hideTip)
+       .on('click', (_ev,d)=> onTagClick(d.id));
       return g;
     });
 
@@ -87,126 +102,137 @@
       .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
     nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
 
-    // keep satellites bound to their host
-    satLayer.selectAll('g.satellite')
+    // keep satellites following their host
+    satelliteLayer.selectAll('g.satellite')
       .attr('transform', d => {
-        const x = d.host.x + d.r * Math.cos(d.a);
-        const y = d.host.y + d.r * Math.sin(d.a);
-        return `translate(${x},${y})`;
+        const a = d._angle, r = d._radius, {x,y} = d.host;
+        return `translate(${x + r*Math.cos(a)}, ${y + r*Math.sin(a)})`;
       });
   });
 
-  svg.call(d3.zoom().scaleExtent([0.3, 4]).on('zoom', (e)=>root.attr('transform', e.transform)));
-
-  // -------- tooltip ----------
-  const ESC = s => String(s||'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  function showTagTooltip(ev, tag){
-    const desc = (DATA.tagDescriptions && DATA.tagDescriptions[tag]) || '';
-    const metrics = nodes.find(n=>n.id===tag) || {};
-    const body = `
-      <div style="font-weight:700;margin-bottom:3px">${ESC(tag)}</div>
-      ${desc ? `<div style="white-space:pre-wrap;margin-bottom:6px">${ESC(desc)}</div>`:''}
-      <div style="opacity:.9;font-size:12px">degree ${ (neigh.get(tag)||[]).size } · centrality ${ Number(metrics.centrality||0).toFixed(2) }</div>
-      <div style="opacity:.9;margin-top:6px;font-size:12px"><em>Click to reveal pulse satellites</em></div>
-    `;
-    tooltip.html(body).style('display','block'); moveTooltip(ev);
+  // ------- tooltip -------
+  function showTagTip(ev, tag) {
+    const desc = tagDesc(tag);
+    tooltip
+      .html(`<div style="font-weight:700;margin-bottom:2px">${esc(tag)}</div>
+             ${desc ? `<div style="opacity:.9">${esc(desc)}</div>` :
+                      `<div style="opacity:.7">Click to reveal pulse satellites.</div>`}`)
+      .style('display','block');
+    moveTip(ev);
   }
-  function moveTooltip(ev){ const p=12; tooltip.style('left',(ev.pageX+p)+'px').style('top',(ev.pageY+p)+'px'); }
-  function hideTooltip(){ tooltip.style('display','none'); }
-
-  // -------- sidebar render ----------
-  function showPulseDetails(p){
-    let html = `<div style="font-weight:700">${ESC(p.title || p.id || 'Pulse')}</div>`;
-    if (p.date) html += `<div class="chip">${ESC(p.date)}</div>`;
-    if (p.summary) html += `<div style="white-space:pre-wrap;margin:.5rem 0 0">${ESC(p.summary)}</div>`;
-
-    const papers = Array.isArray(p.papers)?p.papers:[];
-    const pods   = Array.isArray(p.podcasts)?p.podcasts:[];
-    if (papers.length){
-      html += `<div style="margin-top:10px"><strong>Papers</strong><ul style="margin:.25rem 0 0 1.1rem">`;
-      papers.forEach(u=> html += `<li><a href="${u}" target="_blank" rel="noopener">${ESC(u)}</a></li>`);
-      html += `</ul></div>`;
-    }
-    if (pods.length){
-      html += `<div style="margin-top:10px"><strong>Podcasts</strong><ul style="margin:.25rem 0 0 1.1rem">`;
-      pods.forEach(u=> html += `<li><a href="${u}" target="_blank" rel="noopener">${ESC(u)}</a></li>`);
-      html += `</ul></div>`;
-    }
-
-    details.innerHTML = html;
+  function moveTip(ev) {
+    const pad = 12;
+    tooltip
+      .style('left', (window.scrollX + ev.pageX + pad) + 'px')
+      .style('top',  (window.scrollY + ev.pageY + pad) + 'px');
+  }
+  function hideTip() {
+    tooltip.style('display','none');
   }
 
-  // -------- satellites ----------
-  function onTagClick(tag){
-    // focus styling + slight link bias
-    nodeSel.classed('focus', d=>d.id===tag)
-           .classed('dim',   d=>d.id!==tag && !neigh.get(tag)?.has(d.id));
-    linkSel.classed('dim', d=> !(d.source.id===tag || d.target.id===tag ||
-                                 neigh.get(tag)?.has(d.source.id) && neigh.get(tag)?.has(d.target.id)));
+  // ------- sidebar -------
+  function showTagDetails(tag) {
+    const desc = tagDesc(tag);
+    const p = pulsesFor(tag);
+    let html = `<h2>${esc(tag)}</h2>`;
+    if (desc) html += `<div style="white-space:pre-wrap;margin:.25rem 0 1rem 0">${esc(desc)}</div>`;
+    html += `<div class="chip">degree ${deg[tag]||0}</div>`;
+    const centrality = idToNode.get(tag)?.centrality ?? 0;
+    html += `<div class="chip">centrality ${Number(centrality).toFixed(2)}</div>`;
 
-    // remove old satellites
-    satLayer.selectAll('*').remove();
+    // Only list pulses after you click a satellite (per your preference),
+    // so here we keep it minimal.
+    sidebar.innerHTML = html;
+  }
+
+  function showPulseDetails(pulse) {
+    let html = `<h2>${esc(pulse.title || pulse.id || 'Pulse')}`;
+    if (pulse.date) html += ` <span class="muted">(${esc(pulse.date)})</span>`;
+    html += `</h2>`;
+    if (pulse.summary) {
+      html += `<div style="white-space:pre-wrap;margin:.25rem 0 1rem 0">${esc(pulse.summary)}</div>`;
+    }
+    const papers = A(pulse.papers);
+    const pods   = A(pulse.podcasts);
+    if (papers.length) {
+      html += `<div><strong>Papers</strong><ul>`;
+      for (const u of papers) html += `<li><a href="${u}" target="_blank" rel="noopener">${esc(u)}</a></li>`;
+      html += `</ul></div>`;
+    }
+    if (pods.length) {
+      html += `<div style="margin-top:8px"><strong>Podcasts</strong><ul>`;
+      for (const u of pods) html += `<li><a href="${u}" target="_blank" rel="noopener">${esc(u)}</a></li>`;
+      html += `</ul></div>`;
+    }
+    sidebar.innerHTML = html;
+  }
+
+  // ------- satellites (keeps main graph visible) -------
+  const RING_R = 110;
+  const DOT_R  = 4.6;
+
+  function onTagClick(tag) {
+    showTagDetails(tag);
+    satelliteLayer.selectAll('*').remove();
 
     const host = idToNode.get(tag);
     if (!host) return;
 
-    const pulses = Array.isArray(pulsesByTag[tag]) ? pulsesByTag[tag] : [];
-    if (!pulses.length){
-      details.innerHTML = `<div style="color:#9aa6b2">No pulses tagged <strong>${ESC(tag)}</strong> yet.</div>`;
-      return;
+    // Sort newest (smallest ageDays) first
+    const pulses = [...pulsesFor(tag)].sort((a,b)=> (a.ageDays??9e9) - (b.ageDays??9e9));
+    if (!pulses.length) return;
+
+    // If many pulses, use 2 rings
+    const firstRingCount  = Math.min(28, pulses.length);
+    const secondRingCount = Math.max(0, pulses.length - firstRingCount);
+
+    const TWO_PI = Math.PI * 2;
+    const lay = [];
+    for (let i=0;i<firstRingCount;i++){
+      lay.push({ idx:i, total:firstRingCount, r:RING_R });
+    }
+    for (let j=0;j<secondRingCount;j++){
+      lay.push({ idx:j, total:secondRingCount, r:RING_R+46 });
     }
 
-    // multiple rings (newest inside). up to 24 per ring.
-    const sorted = [...pulses].sort((a,b)=>(a.ageDays??9e9)-(b.ageDays??9e9));
-    const perRing = 24, base = 105, step = 32;
-    const satData = sorted.map((p,i) => {
-      const ring = Math.floor(i/perRing);
-      const pos  = i % perRing;
-      const a = (pos / perRing) * Math.PI*2;       // radians
-      const r = base + ring*step;
-      return { ...p, a, r, host };
-    });
+    const sat = satelliteLayer.selectAll('g.satellite')
+      .data(pulses.map((p, i) => {
+        const ring = lay[i] || {idx:i,total:pulses.length,r:RING_R};
+        return {
+          ...p,
+          host,
+          _radius: ring.r,
+          _angle: (ring.idx / ring.total) * TWO_PI
+        };
+      }), d => d.id || `${tag}:${d.date || Math.random()}`);
 
-    const sat = satLayer.selectAll('g.satellite')
-      .data(satData, d=>d.id || `${tag}:${d.date||Math.random()}`)
-      .join(enter=>{
-        const g = enter.append('g').attr('class','satellite');
-        g.append('circle')
-          .attr('r', 5)
-          .attr('class', d=>ageClass(d.ageDays));
-        g.append('title').text(d => `${d.title || d.id || 'pulse'}${d.date?` — ${d.date}`:''}`);
+    const g = sat.enter().append('g').attr('class','satellite');
+    g.append('circle')
+      .attr('r', DOT_R)
+      .attr('class', d => ageClass(d.ageDays));
+    g.append('title').text(d => `${d.title || d.id || 'pulse'}${d.date ? ` — ${d.date}` : ''}`);
+    g.on('click', (_ev,d)=> showPulseDetails(d));
 
-        g.on('click', (_e,d)=>showPulseDetails(d));
-        return g;
-      });
-
-    // gently re-stabilize
-    sim.alpha(0.35).restart();
-
-    // default sidebar message for the selected tag
-    details.innerHTML = `<div style="color:#9aa6b2">
-      Satellites for <strong>${ESC(tag)}</strong> shown on the map.
-      Click a <strong>pulse dot</strong> to see its summary, papers & podcasts here.
-    </div>`;
+    // kick the sim a bit so the ring settles
+    sim.alpha(0.5).restart();
   }
 
-  // -------- search filter ----------
-  function norm(s){ return (s||'').toString().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+  // ------- search filter -------
+  const norm = s => (s||'').toString().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+
   function applyFilter(q){
-    const text = norm(q);
-    if(!text){
-      nodeSel.classed('dim',false); linkSel.classed('dim',false);
+    const query = norm(q);
+    if(!query){
+      nodeSel.classed('dim', false);
+      linkSel.classed('on', false);
       return;
     }
-    const keep = new Set(nodes.filter(n=>norm(n.id).includes(text)).map(n=>n.id));
-    nodeSel.classed('dim', d=>!keep.has(d.id));
-    linkSel.classed('dim', d=> !(keep.has(d.source.id) && keep.has(d.target.id)));
+    const keep = new Set(DATA.nodes.filter(n => norm(n.id).includes(query)).map(n => n.id));
+    nodeSel.classed('dim', d => !keep.has(d.id));
+    linkSel.classed('on', d => keep.has(d.source.id) && keep.has(d.target.id));
   }
-  let t=null;
-  if (search){
-    search.addEventListener('input', e => { clearTimeout(t); t=setTimeout(()=>applyFilter(e.target.value), 80); });
-  }
+  searchEl.addEventListener('input', e => applyFilter(e.target.value));
 
-  // initial details
-  details.innerHTML = `<div style="color:#9aa6b2">Click a pulse to see its summary, papers & podcasts.</div>`;
+  // initial sidebar message
+  sidebar.innerHTML = `<div class="muted">Pick a tag to see details here.</div>`;
 })();
