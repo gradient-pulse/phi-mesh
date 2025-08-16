@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <title>Phi-Mesh Tag Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <style>
-    :root{
-      --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#a7b2c3; --accent:#82c7ff;
-      --border: rgba(255,255,255,.08);
-      --link: #9fc9ff; --linkDim: rgba(180,200,230,.14);
-      --pulseWarm:#ff7a66; --pulseMed:#ffbf66; --pulseCool:#8ecbff; --pulseCooler:#74a9ff;
-    }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
-      font:14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
-    .app{display:grid;grid-template-columns:320px 1fr;height:100%}
+<meta charset="utf-8" />
+<title>Phi-Mesh Tag Map</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+  :root{
+    --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#a7b2c3; --accent:#82c7ff;
+    --border: rgba(255,255,255,0.08);
+    --link:#9fc9ff; --linkDim:rgba(180,200,230,.12);
 
-    /* Sidebar */
-    aside{background:linear-gradient(180deg, var(--panel), rgba(20,22,30,.94));
-          border-right:1px solid var(--border);display:flex;flex-direction:column;}
-    header{padding:14px 16px 8px 16px;border-bottom:1px solid var(--border)}
-    h1{margin:0 0 8px 0;font-size:18px;letter-spacing:.2px}
-    .hint{color:var(--muted);font-size:12px}
-    #search{width:100%;background:#0f131a;border:1px solid var(--border);color:var(--fg);
-            padding:9px 10px;border-radius:10px;outline:none;margin-top:12px}
+    /* pulse colors */
+    --pulseWarm:#ff7a66;   /* 0–14d */
+    --pulseMed:#ffb866;    /* 15–45d */
+    --pulseCool:#8ecbff;   /* 46–120d */
+    --pulseOlder:#74a9ff;  /* 121–270d */
+    --pulseOldest:#5e8dea; /* 270+d */
+  }
 
-    .details{padding:14px 16px;overflow:auto}
-    .details h2{margin:.2rem 0 .6rem 0;font-size:16px}
-    .details a{color:var(--accent);text-decoration:none}
-    .details a:hover{text-decoration:underline}
-    .chip{display:inline-block;border:1px solid var(--border);border-radius:999px;
-          padding:4px 8px;margin:4px 6px 0 0;color:#cfe3ff;background:#0f172a;font-size:12px}
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
+            font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  .app{display:grid;grid-template-columns:320px 1fr;height:100%}
 
-    /* Graph */
-    svg{width:100%;height:100%;background:transparent;}
-    .link{stroke:var(--link);stroke-opacity:.32}
-    .link.dim{stroke:var(--linkDim)}
-    .node{cursor:pointer}
-    .node ellipse{fill:#5fb8ff;stroke:#07324e;stroke-width:1.2}
-    .node text{fill:#ebf3ff;font-size:11px;pointer-events:none}
-    .node.dim ellipse{opacity:.22}
-    .node.dim text{opacity:.18}
+  /* Sidebar */
+  aside{background:linear-gradient(180deg, var(--panel), rgba(20,22,28,.94));
+        border-right:1px solid var(--border);display:flex;flex-direction:column}
+  header{padding:14px 14px 8px;border-bottom:1px solid var(--border)}
+  h1{margin:0 0 8px 0;font-size:18px;letter-spacing:.2px}
+  .hint{color:var(--muted);font-size:12px}
+  #search{width:100%;background:#10131a;border:1px solid var(--border);color:var(--fg);
+          padding:9px 10px;border-radius:10px;outline:none;margin-top:8px}
 
-    /* Satellites (pulses) */
-    .satellite{cursor:pointer}
-    .satellite circle{stroke:#0b0e16;stroke-width:1.3}
-    .age-very-new{fill:var(--pulseWarm)}
-    .age-new{fill:var(--pulseMed)}
-    .age-mid{fill:#ffd966}
-    .age-old{fill:var(--pulseCool)}
-    .age-very-old{fill:var(--pulseCooler);opacity:.9}
+  .details{padding:14px;overflow-y:auto;overflow-x:hidden}
+  .details h2{margin:.2rem 0 .6rem 0;font-size:16px}
+  .muted{color:var(--muted)}
+  .chip{display:inline-block;border:1px solid var(--border);border-radius:999px;
+        padding:4px 8px;margin-right:6px;font-size:12px}
+  .details a{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;
+             white-space:nowrap;color:var(--accent);text-decoration:none}
+  .details a:hover{text-decoration:underline}
 
-    /* Tooltip */
-    #tooltip{position:fixed;z-index:30;pointer-events:none;display:none;
-      background:#0f1420;border:1px solid var(--border);border-radius:10px;
-      padding:10px 12px;max-width:360px;box-shadow:0 10px 30px rgba(0,0,0,.45);}
-    #tooltip .t1{font-weight:700;margin:0 0 4px 0}
-    #tooltip .t2{color:var(--muted);font-size:12px}
-  </style>
+  /* Graph */
+  svg{width:100%;height:100%}
+  .link{stroke:var(--link);stroke-opacity:.35;stroke-width:1.1}
+  .node ellipse{fill:#64b7ff;stroke:#0e2738;stroke-width:1.2}
+  .node text{fill:#fff;font-size:11px;pointer-events:none}
+  .dim{opacity:.18}
+  .focus ellipse{stroke:#bfe1ff;stroke-width:2}
+
+  /* Satellites */
+  .satellite circle{stroke:#10131a;stroke-width:1.4}
+  .age-very-new{fill:var(--pulseWarm)}
+  .age-new{fill:var(--pulseMed)}
+  .age-mid{fill:var(--pulseCool)}
+  .age-old{fill:var(--pulseOlder)}
+  .age-very-old{fill:var(--pulseOldest);opacity:.9}
+
+  /* Tooltip */
+  #tooltip{position:absolute;display:none;pointer-events:none;z-index:10;
+           background:#10141d;border:1px solid var(--border);border-radius:8px;
+           padding:8px 10px;max-width:320px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
+</style>
 </head>
 <body>
 <div class="app">
@@ -64,22 +69,21 @@
     <header>
       <h1>Phi-Mesh Tag Map</h1>
       <div class="hint">Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details</div>
-      <input id="search" placeholder="Type to filter…"/>
+      <input id="search" placeholder="Type to filter…" />
     </header>
-    <div id="sidebar" class="details">
-      <div class="hint">Pick a tag to see details here.</div>
+    <div id="details" class="details">
+      <div class="muted">Pick a tag to see details here.</div>
     </div>
   </aside>
 
-  <main style="position:relative;overflow:hidden">
-    <div id="tooltip"><div class="t1"></div><div class="t2"></div></div>
+  <main style="position:relative">
+    <div id="tooltip"></div>
     <svg id="graph"></svg>
   </main>
 </div>
 
-<!-- data first, then d3, then behavior -->
+<!-- Data, then behavior -->
 <script src="data.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="graph.js?v=2"></script>
+<script src="graph.js?v=tag-sats-2"></script>
 </body>
 </html>
