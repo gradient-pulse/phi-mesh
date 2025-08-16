@@ -1,0 +1,43 @@
+name: Clean Pulses (minimal schema)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'pulse/**/*.yml'
+      - 'pulse/**/*.yaml'
+      - 'tools/clean_pulses_minimal.py'
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Dry-run check
+        run: |
+          python tools/clean_pulses_minimal.py --check || echo "Changes needed"
+
+      - name: Apply fixes
+        run: |
+          python tools/clean_pulses_minimal.py --write
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pulse/**/*.yml pulse/**/*.yaml || true
+          git commit -m "chore: clean pulses to minimal schema (title,date,summary,tags,papers,podcasts)" || echo "No changes to commit"
+          git push || true
