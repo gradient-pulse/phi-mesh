@@ -4,8 +4,10 @@
   <meta charset="utf-8" />
   <title>Phi-Mesh Tag Map</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
   <!-- D3 for the force graph -->
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
   <style>
     html, body { margin:0; padding:0; height:100%; background:#0e0f12; color:#cfd6e4; font:14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
     a { color:#7dc1ff; text-decoration:none; }
@@ -74,12 +76,22 @@
 
     <aside id="right">
       <div class="muted">Details</div>
-      <div id="details" style="margin-top:8px"></div>
+      <!-- IMPORTANT: graph.js expects #sidebar-content -->
+      <div id="sidebar-content" style="margin-top:8px"></div>
     </aside>
   </div>
 
   <!-- Data first, then behavior -->
   <script src="data.js"></script>
   <script src="graph.js"></script>
+  <script>
+    // Kick off the render using the generated payload
+    if (window.PHI_DATA) {
+      renderTagMap(window.PHI_DATA);
+      document.getElementById('status').textContent = `tags: ${window.PHI_DATA.nodes?.length ?? 0}`;
+    } else {
+      document.getElementById('status').textContent = 'No data loaded';
+    }
+  </script>
 </body>
 </html>
