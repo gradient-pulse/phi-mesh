@@ -9,14 +9,15 @@ tags:
   - RGP
   - NavierStokes
   - turbulence
-  - "NT (Narrative_Tick)"
+  - NT (Narrative_Tick)
   - Rhythm
   - Automation
   - PhiMesh
 status: info
 papers:
-  - { title: "Experimenter’s Guide — Solving Navier–Stokes, Differently", doi: "10.5281/zenodo.15830659" }
+  - title: "Experimenter’s Guide — Solving Navier–Stokes, Differently"
+    url: "https://doi.org/10.5281/zenodo.15830659"
 podcasts:
   notes: >
-  Two datasets exercised (local demo + JHTDB stub). Placeholder NT detection is live
-  and will be swapped for the production method next. Webhook posting deferred.
+    Two datasets exercised (local demo + JHTDB stub). Placeholder NT detection is live
+    and will be swapped for the production method next. Webhook posting deferred.
