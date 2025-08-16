@@ -1,409 +1,360 @@
 #!/usr/bin/env python3
-"""
-generate_graph_data.py
-
-Builds docs/data.js (window.PHI_DATA = {...}) from pulse YAML files, aliases,
-and optional tag descriptions.
-
-Resilient to:
-- nested tag lists (e.g. tags: - [A,B])
-- mixed resource formats (string URL OR {url,title})
-- missing/odd fields
-
-CLI:
-  --pulse-glob "pulse/**/*.yml"
-  --alias-map meta/aliases.yml
-  --tag-descriptions meta/tag_descriptions.yml
-  --out-js docs/data.js
-"""
-
-from __future__ import annotations
+# generate_graph_data.py
+# Robust generator for docs/data.js (window.PHI_DATA).
+# - Reads pulses (YAML) from a glob
+# - Applies aliases
+# - Reads tag descriptions
+# - Builds nodes/links, pulsesByTag, tagResources, tagFirstSeen
+# - Tolerates messy YAML: unwraps single-item lists, skips multi-item lists
 
 import argparse
-import datetime as dt
 import glob
 import io
 import json
 import os
 import re
 import sys
-from collections import defaultdict
-from itertools import combinations
+from collections import defaultdict, OrderedDict
 
-try:
-    import yaml
-except Exception:
-    print("Missing dependency: pyyaml", file=sys.stderr)
-    sys.exit(2)
+import yaml
+from datetime import datetime, date
 
-try:
-    import networkx as nx
-except Exception:
-    print("Missing dependency: networkx", file=sys.stderr)
-    sys.exit(2)
+# ----------------------- helpers -----------------------
 
+def warn(msg):
+    print(f"[WARN] {msg}", file=sys.stderr)
 
-# --------------------------- Helpers -----------------------------------------
-def read_yaml(path: str) -> dict | list | None:
-    if not path or not os.path.exists(path):
-        return None
-    with io.open(path, "r", encoding="utf-8") as f:
-        try:
+def info(msg):
+    print(f"[INFO] {msg}", file=sys.stderr)
+
+def load_yaml(path):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
             return yaml.safe_load(f)
-        except Exception as e:
-            print(f"[WARN] YAML load failed for {path}: {e}", file=sys.stderr)
-            return None
-
-
-def listify(x):
-    if x is None:
-        return []
-    if isinstance(x, (list, tuple)):
-        return list(x)
-    return [x]
-
-
-_slug_re = re.compile(r"[^\w\-]+", re.UNICODE)
-
-
-def norm_tag(tag: str) -> str:
-    if tag is None:
-        return ""
-    # Coerce to str (flattened items might not be strings yet)
-    tag = str(tag)
-    # keep underscores already used; spaces -> underscore; strip extras
-    tag = tag.strip()
-    tag = tag.replace(" ", "_")
-    tag = _slug_re.sub("_", tag)
-    tag = re.sub(r"_+", "_", tag)
-    return tag.strip("_")
-
-
-def apply_alias(tag: str, aliases: dict[str, str]) -> str:
-    if not tag:
-        return tag
-    return aliases.get(tag, tag)
-
-
-def coerce_url_item(item):
-    """
-    Accepts:
-      - "https://example.com/..."  (string)
-      - { url: "...", title: "..." }
-      - { title: "...", url: "..." }
-    Returns { "url": "...", "title": "..." } or None if no url.
-    """
-    if not item:
+    except Exception as e:
+        warn(f"YAML load failed for {path}: {e}")
         return None
-    if isinstance(item, str):
-        url = item.strip()
-        return {"url": url, "title": ""}
-    if isinstance(item, dict):
-        url = (item.get("url") or "").strip()
-        title = (item.get("title") or "").strip()
-        if not url:
-            return None
-        return {"url": url, "title": title}
-    # Unknown type
+
+def write_text(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+
+def is_url(s):
+    return isinstance(s, str) and bool(re.match(r"^https?://", s, re.I))
+
+def to_iso_date(val, fallback=""):
+    """Return YYYY-MM-DD string if possible; else trimmed string; else fallback."""
+    if val is None:
+        return fallback
+    if isinstance(val, datetime):
+        return val.date().isoformat()
+    if isinstance(val, date):
+        return val.isoformat()
+    s = str(val).strip()
+    # Trim full ISO timestamp to date
+    m = re.match(r"^(\d{4}-\d{2}-\d{2})[T\s]\d{2}:\d{2}:\d{2}", s)
+    if m:
+        return m.group(1)
+    # Already YYYY-MM-DD
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", s):
+        return s
+    # Try YYYY/MM/DD or YYYY.MM.DD
+    m = re.match(r"^(\d{4})[/.](\d{2})[/.](\d{2})$", s)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    return s or fallback
+
+def date_from_filename(path):
+    base = os.path.basename(path)
+    m = re.search(r"(\d{4}-\d{2}-\d{2})", base)
+    if m:
+        return m.group(1)
+    m = re.search(r"(\d{8})", base)  # YYYYMMDD
+    if m:
+        s = m.group(1)
+        return f"{s[:4]}-{s[4:6]}-{s[6:8]}"
+    return ""
+
+def norm_summary(val):
+    if val is None:
+        return ""
+    if isinstance(val, list):
+        s = " ".join(str(x) for x in val)
+    elif isinstance(val, dict):
+        s = " ".join(f"{k}: {v}" for k, v in val.items())
+    else:
+        s = str(val)
+    # strip errant backticks often left by earlier tools
+    return s.strip().strip("`").strip()
+
+def norm_links(val):
+    """Return list of http(s) URLs, deduped, keep order."""
+    out, seen = [], set()
+    if not val:
+        return out
+    items = val if isinstance(val, list) else [val]
+    for item in items:
+        if isinstance(item, dict):
+            u = (item.get("url") or item.get("href") or "").strip()
+        else:
+            u = str(item or "").strip()
+        if is_url(u) and u not in seen:
+            out.append(u); seen.add(u)
+    return out
+
+def norm_tags(val):
+    out, seen = [], set()
+    def push(tag):
+        t = (tag or "").strip()
+        if t and t not in seen:
+            out.append(t); seen.add(t)
+    if not val:
+        return out
+    if isinstance(val, list):
+        for item in val:
+            if isinstance(item, str):
+                push(item)
+            elif isinstance(item, dict):
+                push(item.get("tag") or item.get("name") or "")
+            else:
+                push(str(item))
+        return out
+    if isinstance(val, str):
+        for part in re.split(r"[,\n]+", val):
+            push(part)
+        return out
+    push(str(val))
+    return out
+
+def apply_aliases(tag, alias_map):
+    """Return canonical tag if tag matches an alias, else tag."""
+    # alias_map: { canonical: [alias1, alias2, ...] }
+    for canon, aliases in alias_map.items():
+        if tag == canon:
+            return canon
+        for a in aliases or []:
+            if tag == a:
+                return canon
+    return tag
+
+def load_alias_map(path):
+    data = load_yaml(path)
+    alias_map = {}
+    if not data or "aliases" not in data:
+        return alias_map
+    # normalize keys to strings; values to list[str]
+    for canon, aliases in data["aliases"].items():
+        canon_s = str(canon)
+        if isinstance(aliases, list):
+            alias_map[canon_s] = [str(x) for x in aliases]
+        elif isinstance(aliases, str):
+            alias_map[canon_s] = [aliases]
+        else:
+            alias_map[canon_s] = []
+    return alias_map
+
+def load_tag_descriptions(path):
+    data = load_yaml(path)
+    if not data:
+        return {}
+    # allow both {tag: desc} or {descriptions: {tag: desc}} or top-level "tags:"
+    if "descriptions" in data and isinstance(data["descriptions"], dict):
+        pool = data["descriptions"]
+    elif "tags" in data and isinstance(data["tags"], dict):
+        pool = data["tags"]
+    else:
+        pool = {k: v for k, v in data.items() if isinstance(v, str)}
+    # stringify keys, ensure string values
+    out = {}
+    for k, v in pool.items():
+        out[str(k)] = str(v or "")
+    return out
+
+# ----------------------- pulse collection -----------------------
+
+def coerce_pulse_dict(path, obj):
+    """
+    Ensure we return a mapping for a pulse YAML.
+    - If dict: ok
+    - If list with single dict: unwrap
+    - If list with many items: skip (bad shape)
+    - Otherwise skip
+    """
+    if isinstance(obj, dict):
+        return obj
+    if isinstance(obj, list):
+        if len(obj) == 1 and isinstance(obj[0], dict):
+            return obj[0]
+        warn(f"Skipping multi-item or non-dict list top-level in {path}")
+        return None
+    warn(f"Skipping pulse (top-level {type(obj).__name__}) in {path}")
     return None
 
-
-def unique_preserve(seq, key=lambda x: x):
-    seen = set()
-    out = []
-    for s in seq:
-        k = key(s)
-        if k in seen:
-            continue
-        seen.add(k)
-        out.append(s)
-    return out
-
-
-def parse_date(s: str | None) -> dt.datetime | None:
-    if not s:
+def normalize_pulse(path, data, alias_map):
+    """
+    Produce a minimal pulse dict:
+      id, title, date, summary, tags, papers, podcasts, ageDays
+    """
+    if data is None:
         return None
-    for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S"):
-        try:
-            return dt.datetime.strptime(s, fmt)
-        except Exception:
-            pass
-    # last try: fromisoformat (py3.11 handles Z poorly; strip it)
+    title = (data.get("title") or "").strip()
+    if not title:
+        stem = os.path.splitext(os.path.basename(path))[0]
+        title = stem.replace("_", " ").replace("-", " ").strip()
+
+    # date
+    raw_date = data.get("date")
+    date_str = to_iso_date(raw_date, date_from_filename(path))
+
+    # tags
+    tags = [apply_aliases(t, alias_map) for t in norm_tags(data.get("tags"))]
+
+    # resources
+    papers = norm_links(data.get("papers"))
+    podcasts = norm_links(data.get("podcasts"))
+
+    summary = norm_summary(data.get("summary"))
+
+    # compute ageDays if date parses
+    age_days = None
     try:
-        return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
+        if re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
+            d = datetime.strptime(date_str, "%Y-%m-%d").date()
+            age_days = (datetime.utcnow().date() - d).days
     except Exception:
-        return None
+        pass
 
+    pid = os.path.relpath(path).replace("\\", "/")
+    return {
+        "id": pid,
+        "title": title,
+        "date": date_str,
+        "summary": summary,
+        "tags": tags,
+        "papers": papers,
+        "podcasts": podcasts,
+        "ageDays": age_days,
+    }
 
-# --------------------------- Core build ---------------------------------------
-def load_alias_map(path: str) -> dict[str, str]:
-    data = read_yaml(path) or {}
-    # Allow either flat mapping {alias: canonical} or under key "aliases"
-    aliases = data.get("aliases") if isinstance(data, dict) else None
-    if isinstance(aliases, dict):
-        # normalize keys/values
-        return {norm_tag(k): norm_tag(v) for k, v in aliases.items()}
-    if isinstance(data, dict):
-        # assume the file itself is {alias: canonical}
-        return {norm_tag(k): norm_tag(v) for k, v in data.items()}
-    return {}
-
-
-def load_tag_descriptions(path: str) -> dict[str, str]:
-    """
-    Supports either:
-      tags:
-        TagA: "desc"
-        TagB: "desc"
-    or a flat mapping { TagA: "desc", ... }
-    """
-    data = read_yaml(path) or {}
-    if isinstance(data, dict) and "tags" in data and isinstance(data["tags"], dict):
-        raw = data["tags"]
-    elif isinstance(data, dict):
-        raw = data
-    else:
-        raw = {}
-
-    out = {}
-    for k, v in raw.items():
-        key = norm_tag(k)
-        if isinstance(v, str):
-            out[key] = v.strip()
-        else:
-            # allow dicts later if we add structured descriptions
-            out[key] = str(v)
-    return out
-
-
-def flatten_tags(raw_tags, aliases: dict[str, str]) -> list[str]:
-    """
-    Robust tag flattening:
-      - handles ["A", "B"]
-      - handles [["A", "B"], "C"]
-      - coerces all items to strings, normalizes + aliasing
-      - de-dups preserving order
-    """
-    # First pass: flatten one level if nested lists exist
-    flat = []
-    for t in listify(raw_tags):
-        if isinstance(t, (list, tuple)):
-            flat.extend(t)
-        else:
-            flat.append(t)
-
-    # Normalize + alias + filter empties
-    normed = []
-    for t in flat:
-        tag = apply_alias(norm_tag(t), aliases)
-        if tag:
-            normed.append(tag)
-
-    # De-dup
-    return list(dict.fromkeys(normed))
-
-
-def collect_pulses(pulse_glob: str, aliases: dict[str, str]) -> tuple[list[dict], dict[str, list[dict]]]:
-    """
-    Read all pulses, return:
-      pulses: list of normalized pulse dicts
-      tag_to_pulses: map tag -> list of pulse dicts (same obj refs as in pulses)
-    """
-    paths = sorted(glob.glob(pulse_glob, recursive=True))
-    now = dt.datetime.utcnow()
+def collect_pulses(pulse_glob, alias_map):
     pulses = []
     tag_to_pulses = defaultdict(list)
 
-    for path in paths:
-        data = read_yaml(path) or {}
-        # Basic fields
-        title = (data.get("title") or "").strip()
-        date_raw = data.get("date")
-        date_dt = parse_date(date_raw)
-        age_days = None
-        if date_dt:
-            age_days = max(0, int((now - date_dt).total_seconds() // 86400))
-
-        # Tags (robust flatten)
-        tags = flatten_tags(data.get("tags"), aliases)
-
-        # Resources
-        papers = []
-        for itm in listify(data.get("papers")):
-            if isinstance(itm, dict) and "url" not in itm and "title" in itm and "link" in itm:
-                # rare weird shapes; try to coerce
-                itm = {"url": itm.get("link", ""), "title": itm.get("title", "")}
-            obj = coerce_url_item(itm)
-            if obj:
-                papers.append(obj)
-        papers = unique_preserve(papers, key=lambda x: x["url"])
-
-        podcasts = []
-        for itm in listify(data.get("podcasts")):
-            obj = coerce_url_item(itm)
-            if obj:
-                podcasts.append(obj)
-        podcasts = unique_preserve(podcasts, key=lambda x: x["url"])
-
-        summary = (data.get("summary") or "").strip()
-
-        # Create a stable-ish id from filename (without dirs) or date+title
-        base = os.path.splitext(os.path.basename(path))[0]
-        pid = base
-
-        pulse = {
-            "id": pid,
-            "path": path,
-            "title": title or base,
-            "date": date_dt.isoformat().replace("+00:00", "Z") if date_dt else "",
-            "ageDays": age_days,
-            "summary": summary,
-            "papers": papers,
-            "podcasts": podcasts,
-            "tags": tags,
-        }
-        pulses.append(pulse)
-        for t in tags:
-            tag_to_pulses[t].append(pulse)
+    files = sorted(glob.glob(pulse_glob, recursive=True))
+    for path in files:
+        obj = load_yaml(path)
+        if obj is None:
+            continue
+        data = coerce_pulse_dict(path, obj)
+        if data is None:
+            continue
+        p = normalize_pulse(path, data, alias_map)
+        if p is None:
+            continue
+        pulses.append(p)
+        for t in p["tags"]:
+            tag_to_pulses[t].append(p)
 
     return pulses, tag_to_pulses
 
+# ----------------------- graph building -----------------------
 
-def build_graph(tag_to_pulses: dict[str, list[dict]]) -> tuple[list[dict], list[dict], dict[str, float]]:
+def build_graph_from_pulses(tag_to_pulses):
     """
-    Build a co-occurrence graph of tags.
-    Returns:
-      nodes: [{id, centrality}]
-      links: [{source, target, weight}]
-      centrality: map tag -> centrality
+    Nodes are unique tags. Links between tags that co-occur in a pulse.
+    Degree = count of distinct neighbors.
+    Centrality is a simple degree-based scaling for display.
     """
-    G = nx.Graph()
+    # gather nodes
+    tags = sorted(tag_to_pulses.keys())
+    nodes = [{"id": t} for t in tags]
 
-    # Add nodes upfront (ensures isolated tags appear)
-    for tag in tag_to_pulses.keys():
-        G.add_node(tag)
-
-    # For each pulse, connect every pair of its tags
-    for tags in tag_to_pulses.values():
-        # 'tags' here is a list of pulse dicts; we need the tag list from each pulse
-        # Build set of unique tags from this tag's pulses? No: we need per pulse pairs
-        # The simple way: we already iterate later per pulse to add edges. Instead:
-        pass
-
-    # Better: re-create pairs by iterating all pulses and using their tag sets
-    # We need all pulses… easiest is: collect unique tag sets per pulse from the reverse index.
-    # Instead, we’ll rebuild an index pulse_id -> tag list from the reverse map.
-    pulse_to_tags = defaultdict(set)
-    for tag, pulse_list in tag_to_pulses.items():
-        for p in pulse_list:
-            pulse_to_tags[p["id"]].add(tag)
-
-    for tagset in pulse_to_tags.values():
-        tlist = sorted(tagset)
-        for a, b in combinations(tlist, 2):
-            if not G.has_edge(a, b):
-                G.add_edge(a, b, weight=0)
-            G[a][b]["weight"] += 1
-
-    # Centrality (degree centrality scaled into [0..1])
-    cent = nx.degree_centrality(G)
-    nodes = [{"id": n, "centrality": float(cent.get(n, 0.0))} for n in G.nodes()]
-    links = [{"source": u, "target": v, "weight": int(d.get("weight", 1))} for u, v, d in G.edges(data=True)]
-
-    # Sort nodes by id for stable output
-    nodes.sort(key=lambda x: x["id"])
-    return nodes, links, cent
-
-
-def build_tag_resources(tag_to_pulses: dict[str, list[dict]]) -> dict[str, dict]:
-    """
-    Aggregate paper/podcast URLs per tag (de-duplicated).
-    Returns: { tag: { papers: [{url,title}], podcasts: [...] } }
-    """
-    tag_resources = {}
-    for tag, plist in tag_to_pulses.items():
-        papers = []
-        podcasts = []
+    # co-occurrence
+    pair_weight = defaultdict(int)
+    for t, plist in tag_to_pulses.items():
         for p in plist:
-            papers.extend(p.get("papers", []))
-            podcasts.extend(p.get("podcasts", []))
-        papers = unique_preserve(papers, key=lambda x: x["url"])
-        podcasts = unique_preserve(podcasts, key=lambda x: x["url"])
-        tag_resources[tag] = {"papers": papers, "podcasts": podcasts}
-    return tag_resources
+            co_tags = [x for x in p["tags"] if x != t]
+            for other in co_tags:
+                a, b = sorted([t, other])
+                pair_weight[(a, b)] += 1
 
+    # links
+    links = [{"source": a, "target": b, "weight": w} for (a, b), w in pair_weight.items() if a != b]
 
-def emit_js(data: dict, out_js: str):
-    os.makedirs(os.path.dirname(out_js) or ".", exist_ok=True)
-    # Compact but still readable
-    payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
-    with io.open(out_js, "w", encoding="utf-8") as f:
-        f.write("window.PHI_DATA=" + payload + ";")
-    print(f"[OK] wrote {out_js} ({len(payload):,} bytes)")
+    # degree
+    deg = defaultdict(int)
+    for l in links:
+        deg[l["source"]] += 1
+        deg[l["target"]] += 1
 
+    # centrality proxy
+    maxd = max(deg.values()) if deg else 1
+    for n in nodes:
+        d = deg.get(n["id"], 0)
+        n["degree"] = d
+        n["centrality"] = (d / maxd) if maxd else 0.0
 
-# --------------------------- main --------------------------------------------
+    return nodes, links
+
+def build_resources_and_first_seen(tag_to_pulses, tag_descriptions):
+    tagResources = {}
+    tagFirstSeen = {}
+    for tag, plist in tag_to_pulses.items():
+        # resources: union of papers/podcasts across pulses (keep order, dedupe)
+        papers, seen_p = [], set()
+        podcasts, seen_c = [], set()
+        first_date = None
+        for p in sorted(plist, key=lambda x: x["date"] or "9999-99-99"):
+            for u in p["papers"]:
+                if u not in seen_p:
+                    papers.append(u); seen_p.add(u)
+            for u in p["podcasts"]:
+                if u not in seen_c:
+                    podcasts.append(u); seen_c.add(u)
+            # track earliest date
+            if p["date"]:
+                if first_date is None or p["date"] < first_date:
+                    first_date = p["date"]
+        tagResources[tag] = {"papers": papers, "podcasts": podcasts}
+        callout = (tag_descriptions.get(tag) or "").strip()
+        tagFirstSeen[tag] = {"date": first_date, "callout": callout}
+    return tagResources, tagFirstSeen
+
+# ----------------------- main -----------------------
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pulse-glob", default="pulse/**/*.yml")
-    ap.add_argument("--alias-map", default="meta/aliases.yml")
-    ap.add_argument("--tag-descriptions", default="meta/tag_descriptions.yml")
-    ap.add_argument("--out-js", default="docs/data.js")
+    ap.add_argument("--pulse-glob", default="pulse/**/*.yml", help="Glob for pulses")
+    ap.add_argument("--alias-map", default="meta/aliases.yml", help="YAML of aliases")
+    ap.add_argument("--tag-descriptions", default="meta/tag_descriptions.yml", help="YAML of tag descriptions")
+    ap.add_argument("--out-js", default="docs/data.js", help="Output JS path (window.PHI_DATA = ...)")
     args = ap.parse_args()
 
-    aliases = load_alias_map(args.alias_map)
+    alias_map = load_alias_map(args.alias_map)
     tag_desc = load_tag_descriptions(args.tag_descriptions)
 
-    pulses, tag_to_pulses = collect_pulses(args.pulse_glob, aliases)
+    pulses, tag_to_pulses = collect_pulses(args.pulse_glob, alias_map)
+    info(f"Collected pulses: {len(pulses)}")
 
-    # Ensure every tag that ever appears becomes a key in the reverse index
-    all_tags = sorted({t for p in pulses for t in p.get("tags", [])})
-    for t in all_tags:
-        tag_to_pulses.setdefault(t, [])
+    # Build graph
+    nodes, links = build_graph_from_pulses(tag_to_pulses)
 
-    nodes, links, centrality = build_graph(tag_to_pulses)
-    tag_resources = build_tag_resources(tag_to_pulses)
+    # Resources + first-seen
+    tagResources, tagFirstSeen = build_resources_and_first_seen(tag_to_pulses, tag_desc)
 
-    # pulsesByTag view (map of tag -> list of pulse objects (subset fields))
-    pulses_by_tag = {}
-    for t, plist in tag_to_pulses.items():
-        # Slice down each pulse to the fields the front-end needs for satellites
-        tmp = []
-        for p in plist:
-            tmp.append({
-                "id": p["id"],
-                "title": p["title"],
-                "date": p["date"],
-                "ageDays": p["ageDays"],
-                "summary": p["summary"],
-                "papers": p["papers"],
-                "podcasts": p["podcasts"],
-                "tags": p["tags"],
-            })
-        # Sort by recency (newest first)
-        tmp.sort(key=lambda x: (x["ageDays"] is None, x["ageDays"]))
-        pulses_by_tag[t] = tmp
+    payload = OrderedDict()
+    payload["nodes"] = nodes
+    payload["links"] = links
+    payload["tagDescriptions"] = tag_desc
+    payload["pulsesByTag"] = {k: v for k, v in sorted(tag_to_pulses.items())}
+    payload["tagResources"] = tagResources
+    payload["tagFirstSeen"] = tagFirstSeen
 
-    # Top-level data
-    data = {
-        "nodes": nodes,
-        "links": links,
-        "tagDescriptions": tag_desc,
-        "tagResources": tag_resources,
-        "pulses": pulses,               # full list (normalized)
-        "tagToPulses": {t: [p["id"] for p in plist] for t, plist in tag_to_pulses.items()},
-        "pulsesByTag": pulses_by_tag,   # convenient map for UI
-        "meta": {
-            "buildAt": dt.datetime.utcnow().isoformat(timespec="seconds") + "Z",
-            "numTags": len(all_tags),
-            "numPulses": len(pulses),
-            "numLinks": len(links),
-        },
-    }
-
-    emit_js(data, args.out_js)
+    js = "window.PHI_DATA = " + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";"
+    write_text(args.out_js, js)
+    info(f"Wrote {args.out_js}")
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
