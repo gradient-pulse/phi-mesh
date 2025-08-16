@@ -7,109 +7,93 @@
   <style>
     :root{
       --bg:#0b0b0f; --panel:#11141a; --fg:#f5f7fb;
-      --muted:#a2adba; --link:#a7c4ff;
+      --muted:#a2adba; --accent:#7db7ff; --link:#a7c4ff;
       --border: rgba(255,255,255,0.08);
       --linkStroke: rgba(200,215,235,0.30);
       --linkStrokeDim: rgba(200,215,235,0.08);
     }
     html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    .app{display:grid;grid-template-columns:360px 1fr;height:100%}
+    .app{display:grid;grid-template-columns:320px 1fr 360px;grid-template-rows:56px 1fr;height:100%}
 
-    /* Sidebar */
-    aside{
-      background:linear-gradient(180deg, var(--panel), rgba(25,25,32,.92), rgba(25,25,32,.88));
-      border-right:1px solid var(--border);display:flex;flex-direction:column;
-    }
-    header{padding:16px 16px 8px}
-    h1{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
-    .search-row{display:flex;gap:8px;align-items:center}
-    #tag-search{
-      width:100%;background:#0f131a;border:1px solid var(--border);color:var(--fg);
-      padding:10px 12px;border-radius:10px;outline:none
-    }
-    .clear-btn{
-      background:#1b2230;border:1px solid var(--border);color:#cbd6e6;cursor:pointer;border-radius:10px;padding:8px 10px
-    }
+    header{grid-column:1/4;display:flex;align-items:center;gap:14px;padding:12px 14px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92))}
+    header h1{font-size:16px;margin:0 6px 0 0;letter-spacing:.2px}
+    #status{margin-left:auto;color:var(--muted);font-size:12px}
 
-    .sidebar-section{padding:8px 16px 14px 16px;border-top:1px solid var(--border)}
-    .pill{
-      display:inline-block;background:#111b28;border:1px solid var(--border);color:#dbe7ff;
-      padding:6px 10px;border-radius:999px;margin-right:8px;font-size:12px
-    }
+    aside{border-right:1px solid var(--border);background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.9))}
+    #right{border-right:none;border-left:1px solid var(--border)}
+    #left,#right{padding:12px;overflow:auto}
 
-    .links h4{margin:8px 0 6px 0;font-size:13px;color:#cfe1ff}
-    .links a{display:block;color:var(--link);text-decoration:none;margin:2px 0;font-size:13px}
-    .links a:hover{text-decoration:underline}
+    label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+    #search{width:100%;background:#0f131a;border:1px solid var(--border);color:var(--fg);padding:10px 12px;border-radius:10px;outline:none}
+    .hint{color:var(--muted);font-size:12px;margin-top:10px}
 
-    .empty-hint{color:var(--muted);font-size:13px;padding:16px}
+    /* graph area */
+    #main{position:relative;overflow:hidden;background:#0c0e13}
+    svg#graph{width:100%;height:100%;display:block}
 
-    /* Graph */
-    svg{width:100%;height:100%}
     .link{stroke:var(--linkStroke);stroke-width:1.2}
     .link.dim{stroke:var(--linkStrokeDim)}
-    /* IMPORTANT: style both circle and ellipse */
-    .node circle, .node ellipse{
-      fill:#2cc4ff;stroke:#022433;stroke-width:1.2;filter:drop-shadow(0 0 1px rgba(0,0,0,.3))
-    }
-    .node.dim circle, .node.dim ellipse{opacity:.25}
+
+    .node{cursor:pointer}
     .node text{fill:#fff;font-size:11px;pointer-events:none}
-    .node.dim text{opacity:.20}
-    .focus circle, .focus ellipse{stroke:#bdf;stroke-width:2}
+    .node circle{fill:#2cc4ff;stroke:#022433;stroke-width:1.2;filter:drop-shadow(0 0 1px rgba(0,0,0,.3))}
+    .node.dim circle{opacity:.25}
+    .node.dim text{opacity:.2}
+    .focus circle{stroke:#bdf;stroke-width:2}
+
+    /* ensure nodes receive pointer events even if other layers exist */
+    .node circle, .node ellipse { pointer-events: all; }
+    /* any potential overlay/rect won’t block interactions */
+    .zoom-catcher, .overlay, .zoom-overlay { pointer-events: none; }
+
+    /* satellites (pulses) */
+    .satellite{cursor:pointer}
+    .satellite circle{stroke:#10131a;stroke-width:1.5px}
+    .age-very-new{fill:#ff6b6b}
+    .age-new{fill:#ff9e66}
+    .age-mid{fill:#ffc94d}
+    .age-old{fill:#8ecbff}
+    .age-very-old{fill:#6aa4ff;opacity:.85}
+
+    /* tooltip */
+    #tooltip{position:absolute;pointer-events:none;z-index:50;background:#11151f;color:#e6edf6;border:1px solid #2a2f3d;border-radius:8px;padding:8px 10px;font-size:13px;max-width:340px;box-shadow:0 6px 24px rgba(0,0,0,.4);display:none}
+    .muted{color:var(--muted)}
+    #sidebar-content a{color:var(--link);text-decoration:none}
+    #sidebar-content a:hover{text-decoration:underline}
   </style>
 </head>
-
 <body>
-<div class="app">
-  <aside>
+  <div class="app">
     <header>
       <h1>Phi-Mesh Tag Map</h1>
-      <div class="search-row">
-        <input id="tag-search" placeholder="Search tags…" />
-        <button id="clear-search" class="clear-btn" title="Clear">×</button>
-      </div>
+      <div class="muted">Hover a tag for its description • Click a tag for pulse satellites • Click a pulse for details</div>
+      <div id="status"></div>
     </header>
 
-    <div id="tag-meta" class="sidebar-section">
-      <div class="empty-hint">Pick a tag to see details.</div>
-    </div>
-    <div id="tag-links" class="sidebar-section links" style="display:none;">
-      <h4>Papers</h4>
-      <div id="papers"></div>
-      <h4>Podcasts</h4>
-      <div id="podcasts"></div>
-    </div>
-  </aside>
+    <aside id="left">
+      <label for="search">Search tags</label>
+      <input id="search" placeholder="Type to filter…" />
+      <div class="hint">Newer pulses appear warmer (red/orange); older ones cooler (blue).</div>
+    </aside>
 
-  <svg id="graph" viewBox="0 0 1200 800"></svg>
-</div>
+    <main id="main">
+      <div id="tooltip"></div>
+      <svg id="graph"></svg>
+    </main>
 
-<!-- Load data first, then D3, then the renderer, then INIT -->
-<script src="data.js"></script>
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="graph.js?v=20250816"></script>
-<script>
-  (function init() {
-    const data = (window.PHI_DATA) ? window.PHI_DATA : {nodes:[], links:[]};
+    <aside id="right">
+      <div class="muted">Details</div>
+      <div id="sidebar-content" style="margin-top:8px"></div>
+    </aside>
+  </div>
 
-    if (typeof window.renderTagMap !== 'function') {
-      console.error('renderTagMap() not found — is graph.js cached? Hard refresh.');
-      return;
-    }
-
-    window.renderTagMap({
-      data,
-      mount: {
-        svg: document.getElementById('graph'),
-        metaEl: document.getElementById('tag-meta'),
-        linksPanel: document.getElementById('tag-links'),
-        papersEl: document.getElementById('papers'),
-        podsEl: document.getElementById('podcasts'),
-        searchEl: document.getElementById('tag-search'),
-        clearBtn: document.getElementById('clear-search'),
-      }
-      // options: {} // add future feature flags here if needed
-    });
-  })();
-</script>
+  <!-- Data first, then D3, then behavior -->
+  <script src="data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="graph.js?v=2025-08-16-2"></script>
+  <script>
+    // sanity check – should print "function"
+    console.log("graph.js present? ->", typeof window.renderTagMap);
+  </script>
 </body>
 </html>
