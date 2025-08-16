@@ -4,96 +4,89 @@
   <meta charset="utf-8" />
   <title>Phi-Mesh Tag Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- D3 v7 -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     :root{
-      --bg:#0b0b0f; --panel:#11141a; --fg:#f5f7fb;
-      --muted:#a2adba; --accent:#7db7ff; --link:#a7c4ff;
-      --border: rgba(255,255,255,0.08);
-      --linkStroke: rgba(200,215,235,0.30);
-      --linkStrokeDim: rgba(200,215,235,0.08);
+      --bg:#0e0f12; --fg:#e6edf6; --muted:#9aa5b1; --panel:#0f1116;
+      --border:#1f2330; --chip:#141a24; --link:#7dc1ff;
+      --linkStroke: rgba(200,215,235,0.32);
+      --linkStrokeDim: rgba(200,215,235,0.10);
+      --nodeFill:#52a2ff;
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    .app{display:grid;grid-template-columns:320px 1fr 360px;grid-template-rows:56px 1fr;height:100%}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
+      font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    a{color:var(--link);text-decoration:none} a:hover{text-decoration:underline}
 
-    header{grid-column:1/4;display:flex;align-items:center;gap:14px;padding:12px 14px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92))}
-    header h1{font-size:16px;margin:0 6px 0 0;letter-spacing:.2px}
+    /* Layout: one left sidebar + main graph */
+    #app{display:grid;grid-template-columns:320px 1fr;grid-template-rows:auto 1fr;height:100%}
+    header{grid-column:1/3;display:flex;gap:16px;align-items:center;
+      padding:10px 12px;border-bottom:1px solid var(--border);background:#0f1116}
+    header h1{font-size:16px;font-weight:600;margin:0}
     #status{margin-left:auto;color:var(--muted);font-size:12px}
 
-    aside{border-right:1px solid var(--border);background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.9))}
-    #right{border-right:none;border-left:1px solid var(--border)}
-    #left,#right{padding:12px;overflow:auto}
+    #left{border-right:1px solid var(--border);padding:12px;overflow:auto;background:linear-gradient(180deg,#0f1116,#0f1116ea,#0f1116e0)}
+    #main{position:relative;overflow:hidden}
+    #search{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);
+      background:var(--panel);color:var(--fg);outline:none}
+    .muted{color:var(--muted);font-size:12px}
+    #details{margin-top:10px}
 
-    label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
-    #search{width:100%;background:#0f131a;border:1px solid var(--border);color:var(--fg);padding:10px 12px;border-radius:10px;outline:none}
-    .hint{color:var(--muted);font-size:12px;margin-top:10px}
+    /* Tooltip */
+    #tooltip{position:absolute;pointer-events:none;z-index:20;background:#11151f;
+      color:#e6edf6;border:1px solid #2a2f3d;border-radius:8px;padding:8px 10px;
+      font-size:13px;max-width:340px;box-shadow:0 6px 24px rgba(0,0,0,.4);display:none}
 
-    /* graph area */
-    #main{position:relative;overflow:hidden;background:#0c0e13}
-    svg#graph{width:100%;height:100%;display:block}
-
+    /* Graph visuals */
+    svg{width:100%;height:100%;display:block}
     .link{stroke:var(--linkStroke);stroke-width:1.2}
     .link.dim{stroke:var(--linkStrokeDim)}
-
     .node{cursor:pointer}
-    .node text{fill:#fff;font-size:11px;pointer-events:none}
-    .node circle{fill:#2cc4ff;stroke:#022433;stroke-width:1.2;filter:drop-shadow(0 0 1px rgba(0,0,0,.3))}
+    .node circle{fill:var(--nodeFill);opacity:.95}
+    .node text{fill:#cfd6e4;font-size:11px;pointer-events:none}
     .node.dim circle{opacity:.25}
-    .node.dim text{opacity:.2}
-    .focus circle{stroke:#bdf;stroke-width:2}
+    .node.dim text{opacity:.25}
 
-    /* ensure nodes receive pointer events even if other layers exist */
-    .node circle, .node ellipse { pointer-events: all; }
-    /* any potential overlay/rect won’t block interactions */
-    .zoom-catcher, .overlay, .zoom-overlay { pointer-events: none; }
+    /* Satellites (pulses) */
+    .satellites{pointer-events:none}
+    .satellites .satellite{pointer-events:all;cursor:pointer}
+    .satellites .satellite circle{stroke:#10131a;stroke-width:1.5px}
 
-    /* satellites (pulses) */
-    .satellite{cursor:pointer}
-    .satellite circle{stroke:#10131a;stroke-width:1.5px}
     .age-very-new{fill:#ff6b6b}
     .age-new{fill:#ff9e66}
     .age-mid{fill:#ffc94d}
     .age-old{fill:#8ecbff}
-    .age-very-old{fill:#6aa4ff;opacity:.85}
+    .age-very-old{fill:#6aa4ff;opacity:.9}
 
-    /* tooltip */
-    #tooltip{position:absolute;pointer-events:none;z-index:50;background:#11151f;color:#e6edf6;border:1px solid #2a2f3d;border-radius:8px;padding:8px 10px;font-size:13px;max-width:340px;box-shadow:0 6px 24px rgba(0,0,0,.4);display:none}
-    .muted{color:var(--muted)}
-    #sidebar-content a{color:var(--link);text-decoration:none}
-    #sidebar-content a:hover{text-decoration:underline}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#141a24;
+      border:1px solid #243047;color:#cfe1ff;font-size:12px;margin:2px 6px 0 0}
   </style>
 </head>
 <body>
-  <div class="app">
+  <div id="app">
     <header>
       <h1>Phi-Mesh Tag Map</h1>
-      <div class="muted">Hover a tag for its description • Click a tag for pulse satellites • Click a pulse for details</div>
-      <div id="status"></div>
+      <div class="muted">Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details</div>
+      <div id="status" class="muted"></div>
     </header>
 
     <aside id="left">
-      <label for="search">Search tags</label>
+      <div class="muted">Search tags</div>
       <input id="search" placeholder="Type to filter…" />
-      <div class="hint">Newer pulses appear warmer (red/orange); older ones cooler (blue).</div>
+      <div style="margin-top:10px" class="muted">
+        Newer pulses appear warmer (red/orange); older ones cooler (blue).
+      </div>
+      <div id="details"></div>
     </aside>
 
     <main id="main">
       <div id="tooltip"></div>
       <svg id="graph"></svg>
     </main>
-
-    <aside id="right">
-      <div class="muted">Details</div>
-      <div id="sidebar-content" style="margin-top:8px"></div>
-    </aside>
   </div>
 
-  <!-- Data first, then D3, then behavior -->
+  <!-- Data then behavior -->
   <script src="data.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="graph.js?v=2025-08-16-2"></script>
-  <script>
-    // sanity check – should print "function"
-    console.log("graph.js present? ->", typeof window.renderTagMap);
-  </script>
+  <script src="graph.js?v=one-sidebar"></script>
 </body>
 </html>
