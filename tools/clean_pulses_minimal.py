@@ -2,7 +2,7 @@
 """
 Clean pulses to a minimal schema:
 
-Kept keys (in this order):
+Kept keys (in this order of insertion):
   - title (str, fallback to filename)
   - date  (str; left as-is)
   - summary (str, folded; empty -> "")
@@ -21,8 +21,6 @@ import argparse
 import glob
 import os
 import sys
-from collections import OrderedDict
-
 import yaml
 
 ALLOWED_KEYS = ("title", "date", "summary", "tags", "papers", "podcasts")
@@ -34,10 +32,10 @@ def load_yaml(path):
 
 
 def dump_yaml(path, data):
-    # Keep our insertion order; use unicode; wide width so lists stay inline
+    # Regular dicts in Python 3.10+ preserve insertion order.
     with open(path, "w", encoding="utf-8") as f:
         yaml.safe_dump(
-            data,
+            dict(data),
             f,
             sort_keys=False,
             allow_unicode=True,
@@ -119,8 +117,8 @@ def as_minimal_mapping(src, filename_fallback):
     papers = extract_urls(src.get("papers"))
     podcasts = extract_urls(src.get("podcasts"))
 
-    # Preserve order explicitly
-    out = OrderedDict()
+    # Build a plain dict in desired order
+    out = {}
     out["title"] = title
     out["date"] = date
     out["summary"] = summary
@@ -178,7 +176,6 @@ def main():
         filename_fallback = os.path.splitext(os.path.basename(path))[0]
         minimal = as_minimal_mapping(data, filename_fallback)
 
-        # If no actual change, skip
         try:
             before_norm = as_minimal_mapping(data, filename_fallback)
             same = looks_same(before_norm, minimal)
