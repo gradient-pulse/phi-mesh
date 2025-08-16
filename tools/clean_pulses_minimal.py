@@ -1,57 +1,52 @@
 #!/usr/bin/env python3
 """
-Clean all pulses to a minimal schema:
+Clean pulses to a minimal schema:
 
-  title (str)
-  date (str, ISO8601 preferred)
-  summary (str; multiline is fine)
-  tags (list[str])
-  papers (list[str or {url,title}] )  # we preserve dict items if present
-  podcasts (list[str or {url,title}])
+Kept keys (in this order):
+  - title (str, fallback to filename)
+  - date  (str; left as-is)
+  - summary (str, folded; empty -> "")
+  - tags (list[str], flattened, de-duped, trimmed)
+  - papers (list[str] URLs or DOIs; dedup)
+  - podcasts (list[str] URLs; dedup)
 
-Everything else is dropped.
+Everything else is removed.
 
-Runs over pulse/**/*.yml while excluding pulse/archive/** and pulse/telemetry/**.
-
-Usage:
-  python tools/clean_pulses_minimal.py --write
-  python tools/clean_pulses_minimal.py --check
-  python tools/clean_pulses_minimal.py --dry-run
+Also fixes a common failure mode where the YAML top-level is a LIST
+(e.g. starting with "- title: ..."). If it's a single-item list that
+is a mapping, we unwrap it; otherwise we skip with a warning.
 """
 
 import argparse
 import glob
-import io
 import os
 import sys
-from typing import Any, Dict, List, Union
+from collections import OrderedDict
 
 import yaml
 
-YAML_PATHS = [
-    "pulse/**/*.yml",
-    "pulse/**/*.yaml",
-]
-EXCLUDE_DIR_TOKENS = ("/archive/", "/telemetry/")
-
-KEEP_KEYS_ORDER = ["title", "date", "summary", "tags", "papers", "podcasts"]
+ALLOWED_KEYS = ("title", "date", "summary", "tags", "papers", "podcasts")
 
 
-def is_excluded(path: str) -> bool:
-    p = path.replace("\\", "/")
-    return any(tok in p for tok in EXCLUDE_DIR_TOKENS)
+def load_yaml(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
 
 
-def load_yaml(path: str):
-    with io.open(path, "r", encoding="utf-8") as f:
-        try:
-            return yaml.safe_load(f)
-        except Exception as e:
-            print(f"[WARN] YAML load failed for {path}: {e}", file=sys.stderr)
-            return None
+def dump_yaml(path, data):
+    # Keep our insertion order; use unicode; wide width so lists stay inline
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(
+            data,
+            f,
+            sort_keys=False,
+            allow_unicode=True,
+            width=1000,
+            default_flow_style=False,
+        )
 
 
-def ensure_list(x) -> List[Any]:
+def norm_list(x):
     if x is None:
         return []
     if isinstance(x, list):
@@ -59,183 +54,159 @@ def ensure_list(x) -> List[Any]:
     return [x]
 
 
-def normalize_tags(v) -> List[str]:
-    out: List[str] = []
-    for item in ensure_list(v):
+def flatten_tags(value):
+    """Flatten/trim/de-dup tags; only strings make it through."""
+    out = []
+    seen = set()
+    for item in norm_list(value):
         if isinstance(item, list):
-            # Very rare malformed case: nested list → flatten
-            for sub in item:
-                if isinstance(sub, str):
-                    s = sub.strip()
-                    if s and s not in out:
-                        out.append(s)
+            for s in item:
+                if isinstance(s, str):
+                    s2 = s.strip()
+                    if s2 and s2 not in seen:
+                        out.append(s2)
+                        seen.add(s2)
         elif isinstance(item, str):
-            s = item.strip()
-            if s and s not in out:
-                out.append(s)
-        else:
-            # ignore non-strings
-            pass
+            s2 = item.strip()
+            if s2 and s2 not in seen:
+                out.append(s2)
+                seen.add(s2)
+        # ignore dicts/others
     return out
 
 
-def normalize_resources(v) -> List[Union[str, Dict[str, Any]]]:
+def extract_urls(items):
     """
-    Accept list of strings or dicts (e.g., {url, title}).
-    - If dict has 'url', keep dict (and preserve title if present).
-    - If string, keep as-is.
-    - Drop empties/unknowns.
+    Accept either:
+      - list[str] (URLs/DOIs)
+      - list[dict] with 'url' or 'doi'
+    Return list[str] (dedup, trimmed).
     """
-    out: List[Union[str, Dict[str, Any]]] = []
-    for item in ensure_list(v):
-        if isinstance(item, str):
-            s = item.strip()
-            if s:
-                out.append(s)
-        elif isinstance(item, dict):
-            url = str(item.get("url", "")).strip()
-            title = item.get("title")
-            if url:
-                d = {"url": url}
-                if isinstance(title, str) and title.strip():
-                    d["title"] = title.strip()
-                out.append(d)
-        # ignore others
+    out, seen = [], set()
+    for it in norm_list(items):
+        s = None
+        if isinstance(it, str):
+            s = it.strip()
+        elif isinstance(it, dict):
+            # prefer url; fall back to doi
+            if it.get("url"):
+                s = str(it["url"]).strip()
+            elif it.get("doi"):
+                s = "https://doi.org/" + str(it["doi"]).strip()
+        # else ignore other shapes
+        if s and s not in seen:
+            out.append(s)
+            seen.add(s)
     return out
 
 
-def as_minimal(doc: Dict[str, Any]) -> Dict[str, Any]:
-    minimal: Dict[str, Any] = {}
-
-    # title
-    title = doc.get("title")
-    if isinstance(title, (str, int, float)):
-        minimal["title"] = str(title).strip()
-
-    # date
-    date = doc.get("date")
-    if isinstance(date, (str, int, float)):
-        minimal["date"] = str(date).strip()
-
-    # summary
-    summary = doc.get("summary")
-    if isinstance(summary, str):
-        minimal["summary"] = summary.rstrip()
-    elif summary is not None:
-        # keep something if it's not a string? safest to stringify
-        minimal["summary"] = str(summary).rstrip()
-
-    # tags
-    minimal["tags"] = normalize_tags(doc.get("tags"))
-
-    # papers
-    minimal["papers"] = normalize_resources(doc.get("papers"))
-
-    # podcasts
-    minimal["podcasts"] = normalize_resources(doc.get("podcasts"))
-
-    # Drop empty fields (but keep tags/papers/podcasts even if empty? up to you)
-    for k in list(minimal.keys()):
-        if minimal[k] in (None, ""):
-            del minimal[k]
-
-    # Reorder keys
-    ordered: Dict[str, Any] = {}
-    for k in KEEP_KEYS_ORDER:
-        if k in minimal:
-            ordered[k] = minimal[k]
-    # If any other unexpected keys slipped in, ignore
-
-    return ordered
-
-
-def dump_yaml(doc: Dict[str, Any]) -> str:
+def as_minimal_mapping(src, filename_fallback):
     """
-    Dump with:
-    - '---' header
-    - block style for long/multiline summary
-    - stable key order (we already ordered)
+    Convert a raw YAML object (dict-like) into our minimal pulse mapping.
     """
-    class Dumper(yaml.SafeDumper):
-        pass
+    title = (src.get("title") or "").strip()
+    if not title:
+        title = filename_fallback
 
-    def str_presenter(dumper, data):
-        if "\n" in data or len(data) > 120:
-            return dumper.represent_scalar("tag:yaml.org,2002:str", data, style="|")
-        return dumper.represent_scalar("tag:yaml.org,2002:str", data)
-
-    Dumper.add_representer(str, str_presenter)
-
-    # Do not sort keys; we already set the order
-    s = yaml.dump(
-        doc,
-        Dumper=Dumper,
-        sort_keys=False,
-        allow_unicode=True,
-        width=100000,
-    )
-    # Add header if desired
-    return f"---\n{s}"
-
-
-def cleanup_file(path: str, write: bool) -> bool:
-    raw = load_yaml(path)
-    if raw is None:
-        return False
-
-    if not isinstance(raw, dict):
-        print(f"[WARN] {path}: top-level YAML must be a mapping; skipping", file=sys.stderr)
-        return False
-
-    minimal = as_minimal(raw)
-    new_text = dump_yaml(minimal)
-
-    with io.open(path, "r", encoding="utf-8") as f:
-        old_text = f.read()
-
-    if old_text.strip() == new_text.strip():
-        return False  # no change
-
-    if write:
-        with io.open(path, "w", encoding="utf-8", newline="\n") as f:
-            f.write(new_text)
-        print(f"[FIX] {path}")
+    date = (src.get("date") or "").strip()
+    summary = src.get("summary")
+    if summary is None:
+        summary = ""
     else:
-        print(f"[NEEDS FIX] {path}")
-    return True
+        summary = str(summary).strip()
+
+    tags = flatten_tags(src.get("tags"))
+    papers = extract_urls(src.get("papers"))
+    podcasts = extract_urls(src.get("podcasts"))
+
+    # Preserve order explicitly
+    out = OrderedDict()
+    out["title"] = title
+    out["date"] = date
+    out["summary"] = summary
+    out["tags"] = tags
+    out["papers"] = papers
+    out["podcasts"] = podcasts
+    return out
+
+
+def looks_same(a, b):
+    return yaml.safe_dump(a, sort_keys=False) == yaml.safe_dump(b, sort_keys=False)
+
+
+def iter_pulse_paths():
+    # recursive search
+    for p in sorted(glob.glob("pulse/**/*.yml", recursive=True) + glob.glob("pulse/**/*.yaml", recursive=True)):
+        p = p.replace("\\", "/")
+        # skip archives/telemetry
+        if "/archive/" in p or "/telemetry/" in p:
+            continue
+        yield p
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--write", action="store_true", help="Apply changes")
-    ap.add_argument("--check", action="store_true", help="Exit 1 if changes are needed")
-    ap.add_argument("--dry-run", action="store_true", help="Alias for --check")
+    ap.add_argument("--check", action="store_true", help="Only report files that would change; exit 1 if any.")
+    ap.add_argument("--write", action="store_true", help="Apply changes in-place.")
     args = ap.parse_args()
 
-    if args.dry_run:
-        args.check = True
+    if not (args.check or args.write):
+        print("Nothing to do: pass --check or --write", file=sys.stderr)
+        return 2
 
-    changed = 0
-    total = 0
+    changed = []
 
-    paths: List[str] = []
-    for pat in YAML_PATHS:
-        paths.extend(glob.glob(pat, recursive=True))
-    paths = [p for p in paths if not is_excluded(p)]
-    paths.sort()
-
-    for p in paths:
-        total += 1
+    for path in iter_pulse_paths():
         try:
-            if cleanup_file(p, write=args.write):
-                changed += 1
+            data = load_yaml(path)
         except Exception as e:
-            print(f"[ERROR] {p}: {e}", file=sys.stderr)
+            print(f"[WARN] YAML load failed: {path}: {e}", file=sys.stderr)
+            continue
 
-    print(f"Checked {total} files; changes: {changed}")
-    if args.check and changed > 0:
-        sys.exit(1)
-    return 0
+        # Unwrap "list at top-level" if it's a single mapping
+        if isinstance(data, list):
+            if len(data) == 1 and isinstance(data[0], dict):
+                data = data[0]
+            else:
+                print(f"[WARN] Skipping (top-level list not a single mapping): {path}", file=sys.stderr)
+                continue
+
+        if not isinstance(data, dict):
+            print(f"[WARN] Skipping (top-level is {type(data).__name__}, expected mapping): {path}", file=sys.stderr)
+            continue
+
+        filename_fallback = os.path.splitext(os.path.basename(path))[0]
+        minimal = as_minimal_mapping(data, filename_fallback)
+
+        # If no actual change, skip
+        try:
+            before_norm = as_minimal_mapping(data, filename_fallback)
+            same = looks_same(before_norm, minimal)
+        except Exception:
+            same = False
+
+        if not same:
+            changed.append(path)
+            if args.write:
+                dump_yaml(path, minimal)
+
+    if args.check:
+        if changed:
+            print("Would change the following files:")
+            for p in changed:
+                print(" -", p)
+            return 1
+        print("All pulses already conform to the minimal schema.")
+        return 0
+
+    if args.write:
+        if changed:
+            print("Updated files:")
+            for p in changed:
+                print(" -", p)
+        else:
+            print("No changes were necessary.")
+        return 0
 
 
 if __name__ == "__main__":
