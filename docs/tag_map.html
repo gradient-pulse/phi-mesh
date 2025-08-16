@@ -6,87 +6,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0e14; --panel:#10141c; --fg:#e6edf6;
-      --muted:#9fb0c3; --accent:#7db7ff; --link:#a7c4ff;
-      --border: rgba(255,255,255,0.10);
-      --edge: rgba(200,215,235,0.28);
-      --edge-dim: rgba(200,215,235,0.08);
+      --bg:#0b0b0f; --panel:#11141a; --fg:#e9edf6; --muted:#9aa7b7;
+      --border:rgba(255,255,255,0.08);
+      --link:#c6d3e9; --link-dim:rgba(198,211,233,.20);
+      --node:#2cc4ff; --node-stroke:#022433;
+      --sat-stroke:#0b1119;
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
-    .app{display:grid;grid-template-columns:320px 1fr;height:100%}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .app{display:grid;grid-template-columns:340px 1fr;height:100%}
 
     /* Sidebar */
-    aside{background:linear-gradient(180deg,var(--panel),rgba(18,22,30,.94),rgba(18,22,30,.90));border-right:1px solid var(--border);display:flex;flex-direction:column;gap:12px;padding:12px}
-    .brand{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center}
-    .brand .logo{width:34px;height:34px;border-radius:8px;background:#172233;display:grid;place-items:center;font-weight:800;letter-spacing:.2px}
-    .brand .title{font-weight:700}
-    .hint{color:var(--muted);font-size:12px;margin-top:2px}
-    .search{display:flex;gap:8px}
-    #search{flex:1;background:#0e1219;border:1px solid var(--border);color:var(--fg);padding:8px 10px;border-radius:10px;outline:none}
-
-    #details{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px;min-height:140px}
-    #details h2{margin:.1rem 0 .5rem 0;font-size:15px}
-    #details .muted{color:var(--muted);}
+    aside{border-right:1px solid var(--border);background:linear-gradient(180deg,var(--panel),rgba(24,26,34,.92));padding:12px;overflow:auto}
+    .hdr{display:flex;align-items:center;gap:10px;margin:2px 0 10px 0}
+    .logo{width:22px;height:22px;border-radius:6px;background:#152133;display:grid;place-items:center;color:#7db7ff;font-weight:700;font-size:12px}
+    h1{font-size:16px;margin:0}
+    .hint{color:var(--muted);font-size:12px;margin-left:auto}
+    .search{width:100%;margin:8px 0 12px 0}
+    .search input{width:100%;padding:9px 11px;border-radius:10px;background:#0e1219;color:var(--fg);border:1px solid var(--border);outline:none}
+    .panel{border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:10px;background:rgba(255,255,255,0.03)}
+    .panel h3{margin:0 0 6px 0;font-size:15px}
+    .panel ul{margin:6px 0 0 16px;padding:0}
+    .panel a{color:#88c2ff;text-decoration:none}
+    .panel a:hover{text-decoration:underline}
+    .muted{color:var(--muted)}
+    .empty{color:var(--muted);font-size:13px}
 
     /* Graph */
     svg{width:100%;height:100%}
-    .link{stroke:var(--edge);stroke-width:1.1}
-    .link.dim{stroke:var(--edge-dim)}
-    .node circle{fill:#2cc4ff;stroke:#022433;stroke-width:1.2;filter:drop-shadow(0 0 1px rgba(0,0,0,.35))}
-    .node.dim circle{opacity:.25}
+    .link{stroke:var(--link);stroke-opacity:.45;stroke-width:1.2}
+    .link.dim{stroke:var(--link-dim)}
+    .node ellipse{fill:var(--node);stroke:var(--node-stroke);stroke-width:1.2;filter:drop-shadow(0 0 1px rgba(0,0,0,.35))}
     .node text{fill:#fff;font-size:11px;pointer-events:none}
-    .node.dim text{opacity:.22}
-    .node.focus circle{stroke:#bfe0ff;stroke-width:2}
+    .node.dim ellipse{opacity:.25}
+    .node.dim text{opacity:.20}
 
-    /* Pulse satellites */
-    .satellite circle{stroke:#0b0e14;stroke-width:1.5}
+    .satellite circle{stroke:var(--sat-stroke);stroke-width:1.2}
     .age-very-new{fill:#ff6b6b}
     .age-new{fill:#ff9e66}
     .age-mid{fill:#ffc94d}
     .age-old{fill:#8ecbff}
-    .age-very-old{fill:#6aa4ff;opacity:.85}
+    .age-very-old{fill:#6aa4ff;opacity:.9}
 
     /* Tooltip */
-    #tooltip{position:fixed;pointer-events:none;z-index:20;background:#0f141d;color:#e6edf6;border:1px solid #243041;border-radius:10px;padding:8px 10px;font-size:13px;max-width:320px;box-shadow:0 6px 24px rgba(0,0,0,.45);display:none}
+    #tooltip{position:fixed;display:none;z-index:30;background:#0f1420;border:1px solid var(--border);padding:8px 10px;border-radius:8px;max-width:320px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
+    #tooltip .t1{font-weight:700;margin-bottom:4px}
+    #tooltip .t2{color:var(--muted)}
   </style>
 </head>
 <body>
   <div class="app">
     <aside>
-      <div class="brand">
+      <div class="hdr">
         <div class="logo">Φ</div>
-        <div>
-          <div class="title">Phi-Mesh Tag Map</div>
-          <div class="hint">
-            Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details
-          </div>
+        <h1>Phi-Mesh Tag Map</h1>
+        <div class="hint">Hover a tag for its description • Click a tag for pulse satellites • Click a pulse for details</div>
+      </div>
+
+      <div class="search"><input id="search" placeholder="Type to filter…" /></div>
+
+      <div class="panel">
+        <div class="muted" style="font-size:12px">
+          Newer pulses appear warmer (red/orange); older ones cooler (blue).
+          Pick a tag to reveal its pulse satellites. Click a pulse to see details here.
         </div>
       </div>
 
-      <div class="search">
-        <input id="search" placeholder="Search tags…" />
-      </div>
-
-      <div class="hint" style="margin-top:-4px">
-        Newer pulses appear warmer (red/orange); older ones cooler (blue).
-      </div>
-
-      <div id="details" class="muted">
-        Pick a tag to see details. Hover a tag for descriptions. Click a tag to reveal pulse satellites (age-colored), then click a pulse to view its summary & links here.
+      <div id="details" class="panel">
+        <div class="empty">Click a pulse to see its summary, papers & podcasts.</div>
       </div>
     </aside>
 
     <main style="position:relative;overflow:hidden">
-      <div id="tooltip"></div>
+      <div id="tooltip"><div class="t1"></div><div class="t2"></div></div>
       <svg id="graph"></svg>
     </main>
   </div>
 
   <!-- Data first -->
   <script src="data.js"></script>
-  <!-- D3 -->
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <!-- Behavior -->
-  <script src="graph.js?v=compat-shim"></script>
+  <script src="graph.js?v=2"></script>
 </body>
 </html>
