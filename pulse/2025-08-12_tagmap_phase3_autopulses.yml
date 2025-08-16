@@ -5,7 +5,12 @@ summary: >
   Plan to surface pulses from /pulse/auto/ in the Tag Map. New recursive indexer
   scans pulse/**/*.yml while excluding pulse/archive/ and pulse/telemetry/.
   Agent workflow will refresh tag_index.yml and rebuild the map after each run.
-tags: [PhiMesh, TagMap, Automation, RGP, Infrastructure]
+tags:
+  - PhiMesh
+  - TagMap
+  - Automation
+  - RGP
+  - Infrastructure
 status: planning
 links:
   - { label: "New indexer", path: "meta/update_tag_index.py" }
