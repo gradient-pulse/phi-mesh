@@ -8,10 +8,13 @@ on:
       - 'pulse/**/*.yaml'
       - 'tools/clean_pulses_minimal.py'
 
+concurrency:
+  group: clean-pulses
+  cancel-in-progress: false
+
 jobs:
   clean:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,7 +29,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
 
-      - name: Dry-run check
+      - name: Dry-run (detect changes)
         run: |
           python tools/clean_pulses_minimal.py --check || echo "Changes needed"
 
