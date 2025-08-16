@@ -1,226 +1,203 @@
 #!/usr/bin/env python3
-# tools/clean_pulses_minimal.py
+"""
+Strict cleaner to keep only: title, date, summary, tags, papers, podcasts.
 
-import argparse
-import io
-import os
-import re
-import sys
-import glob
+- Always rewrites (unless --check), so diffs are visible.
+- Prints exactly what fields were removed/normalized per file.
+- Tolerates datetime dates; serializes to ISO (YYYY-MM-DD) when possible.
+- Normalizes scalar-or-list to list for papers/podcasts.
+- Trims blank strings; omits empty keys.
+- Handles YAML docs that are a list (warns & skips) or invalid (warns).
+"""
+
+import argparse, sys, os, io, re, datetime as dt
+from collections import OrderedDict
+from glob import glob
 import yaml
-import datetime as _dt
 
-# ---------- utils ----------
+yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
+def _repr_str(dumper, data):
+    # Keep Unicode, avoid line wrapping
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data, style=None)
+yaml.SafeDumper.represent_str = _repr_str  # type: ignore
 
-URL_RE = re.compile(r'^https?://', re.IGNORECASE)
+KEEP_KEYS = ["title", "date", "summary", "tags", "papers", "podcasts"]
 
-def read_text(path: str) -> str:
-    with open(path, 'r', encoding='utf-8') as f:
-        return f.read()
+def load_yaml(path):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f), None
+    except Exception as e:
+        return None, f"[WARN] YAML load failed for {path}: {e}"
 
-def write_text(path: str, text: str) -> None:
-    with open(path, 'w', encoding='utf-8', newline='\n') as f:
-        f.write(text)
+def dump_yaml(path, data):
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(
+            data,
+            f,
+            allow_unicode=True,
+            sort_keys=False,
+            default_flow_style=False,
+            width=1000,
+        )
 
-def to_plain(x):
-    """Recursively convert to plain Python types safe_dump can represent."""
-    if isinstance(x, dict):
-        return {str(k): to_plain(v) for k, v in x.items()}
-    if isinstance(x, list):
-        return [to_plain(v) for v in x]
-    if isinstance(x, (str, int, float, bool)) or x is None:
-        return x
-    # Fallback: string form
+def norm_date(x):
+    if x is None: return ""
+    if isinstance(x, str):
+        s = x.strip()
+        # keep ISO date/time if present; otherwise best-effort to YYYY-MM-DD
+        if re.match(r"^\d{4}-\d{2}-\d{2}", s):
+            return s
+        try:
+            return dt.datetime.fromisoformat(s.replace("Z","+00:00")).date().isoformat()
+        except Exception:
+            return s
+    if isinstance(x, (dt.date, dt.datetime)):
+        try:
+            return x.date().isoformat() if isinstance(x, dt.datetime) else x.isoformat()
+        except Exception:
+            return str(x)
     return str(x)
 
-def safe_load_yaml(path: str):
-    try:
-        with open(path, 'r', encoding='utf-8') as f:
-            return yaml.safe_load(f)
-    except Exception as e:
-        print(f"[WARN] YAML load failed for {path}: {e}", file=sys.stderr)
-        return None
+def listify(x):
+    if x is None: return []
+    if isinstance(x, list): return [str(i).strip() for i in x if str(i).strip()]
+    return [str(x).strip()] if str(x).strip() else []
 
-def yaml_dump_minimal(obj) -> str:
-    """Dump with doc start and stable key order, UTF-8."""
-    stream = io.StringIO()
-    yaml.safe_dump(
-        obj,
-        stream,
-        allow_unicode=True,
-        sort_keys=False,
-        width=80,
-        default_flow_style=False,
-    )
-    return "---\n" + stream.getvalue()
-
-def guess_date_from_filename(path: str) -> str:
-    """Try to extract YYYY-MM-DD from filename."""
-    name = os.path.basename(path)
-    m = re.search(r'(\d{4}-\d{2}-\d{2})', name)
-    if m:
-        return m.group(1)
-    m = re.search(r'(\d{8})', name)  # YYYYMMDD
-    if m:
-        s = m.group(1)
-        return f"{s[0:4]}-{s[4:6]}-{s[6:8]}"
-    return ""
-
-def coerce_date(value, fallback: str = "") -> str:
-    """Normalize date field to 'YYYY-MM-DD' or a trimmed string."""
-    if value is None:
-        return fallback
-    if isinstance(value, _dt.datetime):
-        return value.date().isoformat()
-    if isinstance(value, _dt.date):
-        return value.isoformat()
-    # YAML can parse timestamps into datetime; otherwise we get a string
-    s = str(value).strip()
-    # If it's a full ISO timestamp, trim to date
-    m = re.match(r'^(\d{4}-\d{2}-\d{2})[T\s]\d{2}:\d{2}:\d{2}', s)
-    if m:
-        return m.group(1)
-    # If it's already like YYYY-MM-DD, keep
-    if re.match(r'^\d{4}-\d{2}-\d{2}$', s):
-        return s
-    # If it's like YYYY/MM/DD or YYYY.MM.DD convert
-    m = re.match(r'^(\d{4})[/.](\d{2})[/.](\d{2})$', s)
-    if m:
-        return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
-    return s  # last resort: keep as-is (string)
-
-def norm_summary(val) -> str:
-    if val is None:
-        return ""
-    if isinstance(val, list):
-        s = " ".join(str(x) for x in val)
-    elif isinstance(val, dict):
-        s = " ".join(f"{k}: {v}" for k, v in val.items())
-    else:
-        s = str(val)
-    return s.strip().strip('`').strip()
-
-def norm_tags(val) -> list:
-    out, seen = [], set()
-    def push(tag):
-        t = (tag or "").strip()
-        if t and t not in seen:
-            out.append(t); seen.add(t)
-    if val is None:
-        return out
-    if isinstance(val, list):
-        for item in val:
-            if isinstance(item, str):
-                push(item)
-            elif isinstance(item, dict):
-                push(item.get("tag") or item.get("name") or "")
-            else:
-                push(str(item))
-        return out
-    if isinstance(val, str):
-        for part in re.split(r'[,\n]+', val):
-            push(part)
-        return out
-    push(str(val))
-    return out
-
-def norm_links(val) -> list:
-    """Return only http(s) URLs, deduped, keep order."""
-    urls, seen = [], set()
-    if not val:
-        return urls
-    items = val if isinstance(val, list) else [val]
-    for item in items:
-        if isinstance(item, dict):
-            u = item.get("url") or item.get("href") or ""
-        else:
-            u = str(item or "")
-        u = u.strip()
-        if u and URL_RE.match(u) and u not in seen:
-            urls.append(u); seen.add(u)
-    return urls
-
-def to_minimal(path: str, data) -> dict | None:
-    """
-    Normalize one pulse YAML object to:
-    title, date, summary, tags, papers, podcasts
-    """
-    # Unwrap "- title: ..." single-item list
-    if isinstance(data, list):
-        if len(data) == 1 and isinstance(data[0], dict):
-            data = data[0]
-        else:
-            print(f"[WARN] Skipping multi-item or non-mapping list: {path}", file=sys.stderr)
-            return None
-
+def to_minimal(path, data):
+    changes = []
     if not isinstance(data, dict):
-        print(f"[WARN] Skipping (top-level {type(data).__name__}): {path}", file=sys.stderr)
-        return None
+        raise TypeError(f"{os.path.basename(path)} is not a mapping (found {type(data).__name__}).")
 
-    title = (data.get("title") or "").strip()
+    minimal = OrderedDict()
+    # title
+    title = str(data.get("title") or "").strip()
     if not title:
-        stem = os.path.splitext(os.path.basename(path))[0]
-        title = stem.replace('_', ' ').replace('-', ' ').strip()
+        # try to synthesize from filename
+        title = os.path.splitext(os.path.basename(path))[0].replace("_", " ").strip()
+        changes.append("title:synthesized")
+    minimal["title"] = title
 
-    date = coerce_date(data.get("date"), guess_date_from_filename(path))
-    summary = norm_summary(data.get("summary"))
-    tags = norm_tags(data.get("tags"))
-    papers = norm_links(data.get("papers"))
-    podcasts = norm_links(data.get("podcasts"))
+    # date
+    date_raw = data.get("date")
+    date = norm_date(date_raw)
+    if date != (date_raw if isinstance(date_raw,str) else str(date_raw) if date_raw is not None else ""):
+        changes.append("date:normalized")
+    if date: minimal["date"] = date
 
-    minimal = {
-        "title": title,
-        "date": date,
-        "summary": summary,
-        "tags": tags,
-        "papers": papers,
-        "podcasts": podcasts,
-    }
-    return to_plain(minimal)
+    # summary
+    summary = str(data.get("summary") or "").strip()
+    if summary:
+        minimal["summary"] = summary
+    elif "summary" in data:
+        changes.append("summary:trimmed-empty")
 
-def process_file(path: str, write: bool) -> tuple[bool, str]:
-    raw = read_text(path)
-    data = safe_load_yaml(path)
-    if data is None:
-        return False, "yaml-error"
-    minimal = to_minimal(path, data)
-    if minimal is None:
-        return False, "skipped"
-    new_text = yaml_dump_minimal(minimal)
-    changed = (raw.strip() != new_text.strip())
-    if changed and write:
-        write_text(path, new_text)
-        return True, "fixed"
-    return changed, "would-fix" if changed else "ok"
+    # tags
+    tags = data.get("tags")
+    if isinstance(tags, (list, tuple)):
+        tags_norm = []
+        for t in tags:
+            if isinstance(t, str):
+                s = t.strip()
+                if s: tags_norm.append(s)
+            else:
+                # ignore nested structures
+                changes.append("tags:dropped-nonstring")
+        # de-dupe preserve order
+        seen = set(); dedup = []
+        for t in tags_norm:
+            if t not in seen:
+                seen.add(t); dedup.append(t)
+        if dedup:
+            minimal["tags"] = dedup
+    elif isinstance(tags, str) and tags.strip():
+        minimal["tags"] = [tags.strip()]
+        changes.append("tags:listified")
+    elif "tags" in data:
+        changes.append("tags:empty-removed")
+
+    # papers
+    papers = listify(data.get("papers"))
+    if papers: minimal["papers"] = papers
+    elif "papers" in data:
+        changes.append("papers:empty-removed")
+
+    # podcasts
+    podcasts = listify(data.get("podcasts"))
+    if podcasts: minimal["podcasts"] = podcasts
+    elif "podcasts" in data:
+        changes.append("podcasts:empty-removed")
+
+    # report removed keys
+    removed = [k for k in data.keys() if k not in minimal and k in data and k not in KEEP_KEYS]
+    for k in removed:
+        changes.append(f"removed:{k}")
+
+    return minimal, changes
+
+def iter_pulse_files():
+    pats = ["pulse/**/*.yml", "pulse/**/*.yaml"]
+    seen = set()
+    for pat in pats:
+        for p in glob(pat, recursive=True):
+            if p not in seen:
+                seen.add(p)
+                yield p
 
 def main():
-    ap = argparse.ArgumentParser(description="Clean pulses to minimal schema.")
-    ap.add_argument("--write", action="store_true", help="Write changes back to files.")
-    ap.add_argument("--check", action="store_true", help="Exit nonzero if any file would change.")
-    ap.add_argument("--glob", default="pulse/**/*.yml,pulse/**/*.yaml", help="Comma-separated globs.")
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true", help="dry-run; do not write files")
+    ap.add_argument("--write", action="store_true", help="write changes to disk")
+    ap.add_argument("--verbose", action="store_true", help="print per-file diffs/actions")
     args = ap.parse_args()
 
-    globs = [g.strip() for g in args.glob.split(",") if g.strip()]
-    files = []
-    for g in globs:
-        files.extend(sorted(glob.glob(g, recursive=True)))
+    if not args.check and not args.write:
+        # default to check (safe)
+        args.check = True
 
-    changed_any = False
-    fixed = 0
-    for path in files:
-        changed, status = process_file(path, args.write)
-        if status in ("yaml-error", "skipped"):
-            print(f"[{status:10}] {path}")
+    any_issue = False
+    changed_count = 0
+
+    for path in iter_pulse_files():
+        data, err = load_yaml(path)
+        if err:
+            print(err)
+            any_issue = True
             continue
-        if changed:
-            changed_any = True
-        if status == "fixed":
-            fixed += 1
-        print(f"[{status:10}] {path}")
+        if data is None:
+            print(f"[WARN] Empty YAML: {path}")
+            any_issue = True
+            continue
+        if isinstance(data, list):
+            print(f"[WARN] Top-level sequence (not mapping), skipping: {path}")
+            any_issue = True
+            continue
 
-    if args.check and changed_any:
-        return 1
-    return 0
+        try:
+            minimal, changes = to_minimal(path, data)
+        except Exception as e:
+            print(f"[WARN] {path}: {e}")
+            any_issue = True
+            continue
+
+        if args.verbose:
+            if changes:
+                print(f"[fix-ready ] {path}")
+                for c in changes:
+                    print(f"  - {c}")
+            else:
+                print(f"[ok        ] {path} (already minimal)")
+
+        if args.write:
+            dump_yaml(path, minimal)
+            changed_count += 1
+
+    if args.check:
+        print("[check done] Use --write to apply changes.")
+    if args.write:
+        print(f"[write done] Files rewritten: {changed_count}")
+
+    return 1 if any_issue and not args.write else 0
 
 if __name__ == "__main__":
     sys.exit(main())
