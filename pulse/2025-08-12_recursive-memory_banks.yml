@@ -5,7 +5,13 @@ summary: >
   Intelligence without gradient memory is like a river without banks—energy disperses
   instead of composing. Recursive memory forms Contextual Filters (CFs) that constrain
   NT flows, making rhythm writable rather than accidental.
-tags: [RGP, GradientMemory, ContextualFilter, "NT (Narrative_Tick)", Rhythm, PhiMesh]
+tags:
+  - RGP
+  - GradientMemory
+  - ContextualFilter
+  - "NT (Narrative_Tick)"
+  - Rhythm
+  - PhiMesh
 status: insight
 links:
   - { label: "Discussion thread", link: "" }   # paste the X link if you want
