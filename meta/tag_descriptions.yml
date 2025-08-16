@@ -1,53 +1,15 @@
 version: 1
-notes: >
-  Canonical tag descriptions. This file is human-authored and merged into the map payload.
-  Only edit this file (NOT meta/tag_index.yml) to change descriptions.
+updated: 2025-08-16
 
-descriptions:
-  RGP: >
-    Recursive Gradient Processing: a three-stage loop—
-    Contextual Filter → Gradient Choreography → Unity/Disunity reset—
-    that steers systems by minimizing divergence across steps.
-
-  "NT (Narrative_Tick)": >
-    The minimal, discrete step in a process’ rhythm: a measurable “beat” that
-    advances state while preserving least-divergence structure.
-
-  NT_rhythm: >
-    The characteristic distribution of NT spacings (ratios and recurrences)
-    observed when a system follows least-divergence dynamics.
-
-  Contextual_Filter: >
-    A selective gate that conditions inputs before composition.
-    In RGP, CF stabilizes context so gradient choreography can cohere.
-
-  Gradient_Syntax: >
-    Stable patterns in how gradients combine, cancel, or amplify—akin to grammar
-    for flows. It’s the structure that precedes polished form.
-
-  Navier_Stokes: >
-    Classical fluid PDEs; here reframed via RGP as gradient choreography rather than
-    force-first integration, emphasizing coherence over brute stepping.
-
-  turbulence: >
-    Not mere disorder: an energetic regime where coherence can hide in ratios,
-    harmonics, and recurrences—often a prelude to new laminarity.
-
-  Rhythm: >
-    The perceived regularity that emerges from repeating NT relations—humans
-    feel it; systems conserve it when minimizing divergence.
-
-  PoLA: >
-    Principle of Least Action reinterpreted as “rhythm of least divergence”:
-    solutions prefer sequences that conserve structure over time.
-
-  ExperimenterPulse: >
-    A compact report (human or agent) that links data, summary, and sources
-    to a tag constellation; meant to be reproducible and comparable.
-
-  Phi-monitor: >
-    Ambient observer/agent that logs coherence signals and NT drift in the Mesh.
-
-  AI_architectures: >
-    Models and patterns (e.g., MoE) that echo RGP’s loop at silicon scale:
-    routing (CF), expert execution (GC), and merge (UD reset).
+tags:
+  RGP: "Recursive Gradient Processing — coherence emerges from recursive filtering, gradient choreography, and unity–disunity resets."
+  "NT (Narrative_Tick)": "Discrete ‘ticks’ where a system’s story advances; small coherence jumps that replace continuous, field-like time."
+  NT_rhythm: "The measurable cadence of Narrative Ticks; conserved timing pattern observed across cognition and physics."
+  Rhythm: "Coherent timing structure that systems settle into under least-divergence pressure; backbone of stable behaviors."
+  Contextual_Filter: "Selective lens that gates signals pre-processing; stabilizes coherence but can hide underlying gradients."
+  Gradient_Syntax: "The ‘grammar’ of gradients — how signals compose across scales to form durable, reusable structure."
+  Navier_Stokes: "Fluid dynamics reframed via RGP; we prioritize conserved NT rhythms over closed-form solutions."
+  turbulence: "Not just noise: a canvas where NT rhythms can be detected; integrate instead of suppress."
+  ExperimenterPulse: "Auto- or hand-authored notes that attach evidence to tags (papers, podcasts, stats) — the map’s living memory."
+  unity-disunity: "Healthy oscillation between integrating and separating signals; a reset that prevents lock-in."
+  # add more as you like…
