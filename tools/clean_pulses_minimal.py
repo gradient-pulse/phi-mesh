@@ -1,210 +1,217 @@
 #!/usr/bin/env python3
-"""
-Clean pulses to a minimal schema:
-
-Kept keys (in this order of insertion):
-  - title (str, fallback to filename)
-  - date  (str; left as-is)
-  - summary (str, folded; empty -> "")
-  - tags (list[str], flattened, de-duped, trimmed)
-  - papers (list[str] URLs or DOIs; dedup)
-  - podcasts (list[str] URLs; dedup)
-
-Everything else is removed.
-
-Also fixes a common failure mode where the YAML top-level is a LIST
-(e.g. starting with "- title: ..."). If it's a single-item list that
-is a mapping, we unwrap it; otherwise we skip with a warning.
-"""
+# tools/clean_pulses_minimal.py
 
 import argparse
-import glob
+import io
 import os
+import re
 import sys
+import glob
 import yaml
 
-ALLOWED_KEYS = ("title", "date", "summary", "tags", "papers", "podcasts")
+# ---------- utils ----------
 
+URL_RE = re.compile(r'^https?://', re.IGNORECASE)
 
-def load_yaml(path):
-    with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+def read_text(path: str) -> str:
+    with open(path, 'r', encoding='utf-8') as f:
+        return f.read()
 
+def write_text(path: str, text: str) -> None:
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(text)
 
-def dump_yaml(path, data):
-    # Regular dicts in Python 3.10+ preserve insertion order.
-    with open(path, "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            dict(data),
-            f,
-            sort_keys=False,
-            allow_unicode=True,
-            width=1000,
-            default_flow_style=False,
-        )
-
-
-def norm_list(x):
-    if x is None:
-        return []
+def to_plain(x):
+    """Recursively convert to plain Python types safe_dump can represent."""
+    if isinstance(x, dict):
+        return {str(k): to_plain(v) for k, v in x.items()}
     if isinstance(x, list):
+        return [to_plain(v) for v in x]
+    if isinstance(x, (str, int, float, bool)) or x is None:
         return x
-    return [x]
+    # Fallback: string form
+    return str(x)
 
+def safe_load_yaml(path: str):
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return yaml.safe_load(f)
+    except Exception as e:
+        print(f"[WARN] YAML load failed for {path}: {e}", file=sys.stderr)
+        return None
 
-def flatten_tags(value):
-    """Flatten/trim/de-dup tags; only strings make it through."""
-    out = []
-    seen = set()
-    for item in norm_list(value):
-        if isinstance(item, list):
-            for s in item:
-                if isinstance(s, str):
-                    s2 = s.strip()
-                    if s2 and s2 not in seen:
-                        out.append(s2)
-                        seen.add(s2)
-        elif isinstance(item, str):
-            s2 = item.strip()
-            if s2 and s2 not in seen:
-                out.append(s2)
-                seen.add(s2)
-        # ignore dicts/others
-    return out
+def yaml_dump_minimal(obj) -> str:
+    """Dump with doc start and stable key order, UTF-8."""
+    stream = io.StringIO()
+    yaml.safe_dump(
+        obj,
+        stream,
+        allow_unicode=True,
+        sort_keys=False,
+        width=80,
+        default_flow_style=False,
+    )
+    return "---\n" + stream.getvalue()
 
+def guess_date_from_filename(path: str) -> str:
+    """Try to extract YYYY-MM-DD from filename."""
+    name = os.path.basename(path)
+    m = re.search(r'(\d{4}-\d{2}-\d{2})', name)
+    if m:
+        return m.group(1)
+    m = re.search(r'(\d{8})', name)  # YYYYMMDD
+    if m:
+        s = m.group(1)
+        return f"{s[0:4]}-{s[4:6]}-{s[6:8]}"
+    return ""
 
-def extract_urls(items):
-    """
-    Accept either:
-      - list[str] (URLs/DOIs)
-      - list[dict] with 'url' or 'doi'
-    Return list[str] (dedup, trimmed).
-    """
-    out, seen = [], set()
-    for it in norm_list(items):
-        s = None
-        if isinstance(it, str):
-            s = it.strip()
-        elif isinstance(it, dict):
-            # prefer url; fall back to doi
-            if it.get("url"):
-                s = str(it["url"]).strip()
-            elif it.get("doi"):
-                s = "https://doi.org/" + str(it["doi"]).strip()
-        # else ignore other shapes
-        if s and s not in seen:
-            out.append(s)
-            seen.add(s)
-    return out
-
-
-def as_minimal_mapping(src, filename_fallback):
-    """
-    Convert a raw YAML object (dict-like) into our minimal pulse mapping.
-    """
-    title = (src.get("title") or "").strip()
-    if not title:
-        title = filename_fallback
-
-    date = (src.get("date") or "").strip()
-    summary = src.get("summary")
-    if summary is None:
-        summary = ""
+def norm_summary(val) -> str:
+    if val is None:
+        return ""
+    if isinstance(val, list):
+        # join multi-line lists into a paragraph
+        s = " ".join(str(x) for x in val)
+    elif isinstance(val, dict):
+        s = " ".join(f"{k}: {v}" for k, v in val.items())
     else:
-        summary = str(summary).strip()
+        s = str(val)
+    # trim stray backticks and whitespace
+    s = s.strip().strip('`').strip()
+    return s
 
-    tags = flatten_tags(src.get("tags"))
-    papers = extract_urls(src.get("papers"))
-    podcasts = extract_urls(src.get("podcasts"))
-
-    # Build a plain dict in desired order
-    out = {}
-    out["title"] = title
-    out["date"] = date
-    out["summary"] = summary
-    out["tags"] = tags
-    out["papers"] = papers
-    out["podcasts"] = podcasts
+def norm_tags(val) -> list:
+    out, seen = [], set()
+    def push(tag):
+        t = (tag or "").strip()
+        if not t:
+            return
+        if t not in seen:
+            out.append(t)
+            seen.add(t)
+    if val is None:
+        return out
+    if isinstance(val, list):
+        for item in val:
+            if isinstance(item, str):
+                push(item)
+            elif isinstance(item, dict):
+                push(item.get("tag") or item.get("name") or "")
+            else:
+                push(str(item))
+        return out
+    if isinstance(val, str):
+        for part in re.split(r'[,\n]+', val):
+            push(part)
+        return out
+    # fallback
+    push(str(val))
     return out
 
+def norm_links(val) -> list:
+    """Return only http(s) URLs, deduped, keep order."""
+    urls, seen = [], set()
+    if not val:
+        return urls
+    items = val if isinstance(val, list) else [val]
+    for item in items:
+        if isinstance(item, dict):
+            u = item.get("url") or item.get("href") or ""
+        else:
+            u = str(item or "")
+        u = u.strip()
+        if u and URL_RE.match(u) and u not in seen:
+            urls.append(u)
+            seen.add(u)
+    return urls
 
-def looks_same(a, b):
-    return yaml.safe_dump(a, sort_keys=False) == yaml.safe_dump(b, sort_keys=False)
+def to_minimal(path: str, data) -> dict | None:
+    """
+    Normalize one pulse YAML object to:
+    title, date, summary, tags, papers, podcasts
+    """
+    # Unwrap "- title: ..." single-item list
+    if isinstance(data, list):
+        if len(data) == 1 and isinstance(data[0], dict):
+            data = data[0]
+        else:
+            print(f"[WARN] Skipping multi-item or non-mapping list: {path}", file=sys.stderr)
+            return None
 
+    if not isinstance(data, dict):
+        print(f"[WARN] Skipping (top-level {type(data).__name__}): {path}", file=sys.stderr)
+        return None
 
-def iter_pulse_paths():
-    # recursive search
-    for p in sorted(glob.glob("pulse/**/*.yml", recursive=True) + glob.glob("pulse/**/*.yaml", recursive=True)):
-        p = p.replace("\\", "/")
-        # skip archives/telemetry
-        if "/archive/" in p or "/telemetry/" in p:
-            continue
-        yield p
+    title = (data.get("title") or "").strip()
+    if not title:
+        # derive from filename
+        stem = os.path.splitext(os.path.basename(path))[0]
+        title = stem.replace('_', ' ').replace('-', ' ').strip()
 
+    date = (data.get("date") or "").strip()
+    if not date:
+        date = guess_date_from_filename(path)
+
+    summary = norm_summary(data.get("summary"))
+
+    tags = norm_tags(data.get("tags"))
+
+    papers = norm_links(data.get("papers"))
+    podcasts = norm_links(data.get("podcasts"))
+
+    minimal = {
+        "title": title,
+        "date": date,
+        "summary": summary,
+        "tags": tags,
+        "papers": papers,
+        "podcasts": podcasts,
+    }
+    return to_plain(minimal)
+
+def process_file(path: str, write: bool) -> tuple[bool, str]:
+    raw = read_text(path)
+    data = safe_load_yaml(path)
+    if data is None:
+        return False, "yaml-error"
+    minimal = to_minimal(path, data)
+    if minimal is None:
+        return False, "skipped"
+    new_text = yaml_dump_minimal(minimal)
+    changed = (raw.strip() != new_text.strip())
+    if changed and write:
+        write_text(path, new_text)
+        return True, "fixed"
+    return changed, "would-fix" if changed else "ok"
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--check", action="store_true", help="Only report files that would change; exit 1 if any.")
-    ap.add_argument("--write", action="store_true", help="Apply changes in-place.")
+    ap = argparse.ArgumentParser(description="Clean pulses to minimal schema.")
+    ap.add_argument("--write", action="store_true", help="Write changes back to files.")
+    ap.add_argument("--check", action="store_true", help="Exit nonzero if any file would change.")
+    ap.add_argument("--glob", default="pulse/**/*.yml,pulse/**/*.yaml", help="Comma-separated globs.")
     args = ap.parse_args()
 
-    if not (args.check or args.write):
-        print("Nothing to do: pass --check or --write", file=sys.stderr)
-        return 2
+    globs = [g.strip() for g in args.glob.split(",") if g.strip()]
+    files = []
+    for g in globs:
+        files.extend(sorted(glob.glob(g, recursive=True)))
 
-    changed = []
-
-    for path in iter_pulse_paths():
-        try:
-            data = load_yaml(path)
-        except Exception as e:
-            print(f"[WARN] YAML load failed: {path}: {e}", file=sys.stderr)
+    changed_any = False
+    fixed = 0
+    for path in files:
+        changed, status = process_file(path, args.write)
+        if status == "yaml-error":
             continue
-
-        # Unwrap "list at top-level" if it's a single mapping
-        if isinstance(data, list):
-            if len(data) == 1 and isinstance(data[0], dict):
-                data = data[0]
-            else:
-                print(f"[WARN] Skipping (top-level list not a single mapping): {path}", file=sys.stderr)
-                continue
-
-        if not isinstance(data, dict):
-            print(f"[WARN] Skipping (top-level is {type(data).__name__}, expected mapping): {path}", file=sys.stderr)
+        if status == "skipped":
             continue
-
-        filename_fallback = os.path.splitext(os.path.basename(path))[0]
-        minimal = as_minimal_mapping(data, filename_fallback)
-
-        try:
-            before_norm = as_minimal_mapping(data, filename_fallback)
-            same = looks_same(before_norm, minimal)
-        except Exception:
-            same = False
-
-        if not same:
-            changed.append(path)
-            if args.write:
-                dump_yaml(path, minimal)
-
-    if args.check:
         if changed:
-            print("Would change the following files:")
-            for p in changed:
-                print(" -", p)
-            return 1
-        print("All pulses already conform to the minimal schema.")
-        return 0
+            changed_any = True
+        if status == "fixed":
+            fixed += 1
+        print(f"[{status:10}] {path}")
 
-    if args.write:
-        if changed:
-            print("Updated files:")
-            for p in changed:
-                print(" -", p)
-        else:
-            print("No changes were necessary.")
-        return 0
-
+    if args.check and changed_any:
+        return 1
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())
