@@ -42,9 +42,12 @@ tags:
     - 2025-06-17_phi_monitor_agent_ready
     summary: ''
   Automation:
-    papers: []
+    papers:
+    - url: https://doi.org/10.5281/zenodo.15830659
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     podcasts: []
     pulses:
+    - 2025-08-12_rgp-ns_autorun_liftoff
     - 2025-08-12_tagmap_phase3_autopulses
     summary: ''
   autonomy:
@@ -601,7 +604,7 @@ tags:
   Navier_Stokes:
     papers:
     - url: https://doi.org/10.5281/zenodo.15830659
-      title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     - url: https://doi.org/10.5281/zenodo.16280540
     - url: https://doi.org/10.5281/zenodo.16812467
       title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
@@ -614,6 +617,7 @@ tags:
     - 2025-07-24_long_haul_blinding_light
     - 2025-07-26_script_and_flow
     - 2025-08-12_call_for_experimenters
+    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -654,7 +658,7 @@ tags:
     - url: https://doi.org/10.5281/zenodo.15498708
     - url: https://doi.org/10.5281/zenodo.15614775
     - url: https://doi.org/10.5281/zenodo.15830659
-      title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     - url: https://doi.org/10.5281/zenodo.16280540
     - url: https://doi.org/10.5281/zenodo.16812467
       title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
@@ -676,6 +680,7 @@ tags:
     - 2025-08-12_call_for_experimenters
     - 2025-08-12_cmb-birefringence_rgp-lens
     - 2025-08-12_recursive-memory_banks
+    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -773,6 +778,8 @@ tags:
     - url: https://doi.org/10.5281/zenodo.15269746
     - url: https://doi.org/10.5281/zenodo.15604564
     - url: https://doi.org/10.5281/zenodo.15614775
+    - url: https://doi.org/10.5281/zenodo.15830659
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     - url: https://doi.org/10.5281/zenodo.16280540
     podcasts:
     - url: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
@@ -789,6 +796,7 @@ tags:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-01_phi-mesh-exec-drift
     - 2025-08-12_recursive-memory_banks
+    - 2025-08-12_rgp-ns_autorun_liftoff
     - 2025-08-12_tagmap_phase3_autopulses
     summary: ''
   Phi-monitor:
@@ -966,7 +974,7 @@ tags:
     - url: https://doi.org/10.5281/zenodo.15498708
     - url: https://doi.org/10.5281/zenodo.15614775
     - url: https://doi.org/10.5281/zenodo.15830659
-      title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     - url: https://doi.org/10.5281/zenodo.16280540
     - url: https://doi.org/10.5281/zenodo.16812467
       title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
@@ -1000,6 +1008,7 @@ tags:
     - 2025-08-12_call_for_experimenters
     - 2025-08-12_cmb-birefringence_rgp-lens
     - 2025-08-12_recursive-memory_banks
+    - 2025-08-12_rgp-ns_autorun_liftoff
     - 2025-08-12_tagmap_phase3_autopulses
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
@@ -1031,7 +1040,7 @@ tags:
     papers:
     - url: https://doi.org/10.5281/zenodo.15614775
     - url: https://doi.org/10.5281/zenodo.15830659
-      title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     - url: https://doi.org/10.5281/zenodo.16812467
       title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
     podcasts:
@@ -1043,6 +1052,7 @@ tags:
     - 2025-08-12_call_for_experimenters
     - 2025-08-12_cmb-birefringence_rgp-lens
     - 2025-08-12_recursive-memory_banks
+    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -1222,7 +1232,7 @@ tags:
     - url: https://doi.org/10.5281/zenodo.14998826
     - url: https://doi.org/10.5281/zenodo.15614775
     - url: https://doi.org/10.5281/zenodo.15830659
-      title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
+      title: Experimenter’s Guide — Solving Navier–Stokes, Differently
     - url: https://doi.org/10.5281/zenodo.16280540
     - url: https://doi.org/10.5281/zenodo.16812467
       title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
@@ -1239,6 +1249,7 @@ tags:
     - 2025-07-30-gradient-flux-reversal
     - 2025-07-30_laminar-turbulence
     - 2025-08-12_call_for_experimenters
+    - 2025-08-12_rgp-ns_autorun_liftoff
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
