@@ -1,101 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <title>Phi-Mesh Tag Map</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <style>
     :root{
-      --bg:#0e0f12; --fg:#e9eef8; --muted:#9aa6b2; --panel:#0f141c;
-      --border:rgba(255,255,255,.08); --accent:#83c5ff; --accent2:#b7e3ff;
-      --link:#b9c9ff; --chip:#0f1b2a;
-      --linkStroke: rgba(200,215,235,0.35);
-      --linkStrokeDim: rgba(200,215,235,0.10);
+      --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#a7b2c3; --accent:#82c7ff;
+      --border:rgba(255,255,255,.08); --link:#9fc9ff; --linkDim:rgba(180,200,230,.12);
+      --pulseWarm:#ff7a6e; --pulseMed:#ffb066; --pulseCool:#8ecbff; --pulseCooler:#74a9ff;
     }
     html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);
       font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    a{color:#86c8ff;text-decoration:none} a:hover{text-decoration:underline}
-
-    .app{display:grid;grid-template-columns:340px 1fr;height:100%}
+    .app{display:grid;grid-template-columns:320px 1fr;height:100%}
 
     /* Sidebar */
-    aside{
-      background:linear-gradient(180deg, var(--panel), rgba(25,25,32,.92));
-      border-right:1px solid var(--border);
-      padding:12px; overflow:auto;
-    }
-    h1{margin:0 0 10px 0;font-size:18px;letter-spacing:.2px}
-    .hintbar{color:var(--muted);font-size:12px;margin:2px 0 10px 0}
-    .card{
-      background:rgba(255,255,255,.04); border:1px solid var(--border);
-      border-radius:12px; padding:10px 12px; margin:10px 0;
-    }
-    #search{
-      width:100%; padding:10px 12px; border-radius:10px; outline:none;
-      background:#0e1320; border:1px solid var(--border); color:var(--fg);
-    }
+    aside{background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.94));
+      border-right:1px solid var(--border);display:flex;flex-direction:column}
+    header{padding:14px 14px 8px 14px;border-bottom:1px solid var(--border)}
+    h1{margin:0 0 8px 0;font-size:18px;letter-spacing:.2px}
+    .hint{color:var(--muted);font-size:12px}
+    .search{padding:10px 14px;border-bottom:1px solid var(--border)}
+    #search{width:100%;background:#0f131a;border:1px solid var(--border);color:var(--fg);
+      padding:9px 10px;border-radius:10px;outline:none}
+    .details{padding:14px;overflow:auto}
+    .details h2{margin:.2rem 0 .6rem 0;font-size:16px}
+    .details .muted{color:var(--muted)}
+    .details a{color:var(--accent);text-decoration:none}
+    .details a:hover{text-decoration:underline}
+    .chip{display:inline-block;border:1px solid var(--border);border-radius:999px;
+      padding:4px 8px;margin-right:6px;font-size:12px;background:#0f1722}
 
     /* Graph */
-    svg{width:100%;height:100%;display:block}
-    .link{stroke:var(--linkStroke);stroke-width:1.2}
-    .link.dim{stroke:var(--linkStrokeDim)}
-    .node ellipse{
-      fill:#39b6ff; stroke:#03283b; stroke-width:1.4;
-      filter:drop-shadow(0 0 1px rgba(0,0,0,.35))
-    }
+    svg{width:100%;height:100%}
+    .link{stroke:var(--linkDim);stroke-width:1.1}
+    .link.on{stroke:var(--link)}
+    .node{cursor:pointer}
+    .node ellipse{fill:#69c0ff;stroke:#05314b;stroke-width:1.2}
     .node text{fill:#fff;font-size:11px;pointer-events:none}
-    .node.dim ellipse{opacity:.25} .node.dim text{opacity:.20}
-    .node.focus ellipse{stroke:#cde6ff;stroke-width:2}
+    .node.dim ellipse{opacity:.22}
+    .node.dim text{opacity:.15}
 
-    /* Satellites (pulses) */
-    .satellite circle{stroke:#0b121c;stroke-width:1.5}
-    .age-very-new{fill:#ff6b6b}
-    .age-new{fill:#ff9e66}
-    .age-mid{fill:#ffc94d}
-    .age-old{fill:#8ecbff}
-    .age-very-old{fill:#6aa4ff;opacity:.85}
+    /* Satellites */
+    .satellite{cursor:pointer}
+    .satellite circle{stroke:#0a0f16;stroke-width:1.5}
+    .pulse-very-new{fill:var(--pulseWarm)}
+    .pulse-new{fill:var(--pulseMed)}
+    .pulse-mid{fill:#ffd25e}
+    .pulse-old{fill:var(--pulseCool)}
+    .pulse-very-old{fill:var(--pulseCooler);opacity:.9}
 
     /* Tooltip */
-    #tooltip{
-      position:absolute; pointer-events:none; z-index:30; display:none;
-      background:#11151f; color:#e6edf6; border:1px solid #2a2f3d;
-      border-radius:10px; padding:8px 10px; font-size:13px; max-width:320px;
-      box-shadow:0 8px 28px rgba(0,0,0,.45)
-    }
-
-    /* “chips” used inside details */
-    .chip{display:inline-block;background:#102135;border:1px solid var(--border);
-      color:#dbe7ff;padding:4px 8px;border-radius:999px;margin:3px 6px 0 0;font-size:12px}
+    #tooltip{position:absolute;z-index:30;pointer-events:none;display:none;
+      max-width:320px;background:#0f141e;border:1px solid var(--border);
+      color:var(--fg);padding:10px 12px;border-radius:10px;
+      box-shadow:0 10px 28px rgba(0,0,0,.45);font-size:13px}
   </style>
 </head>
 <body>
-<div class="app">
-  <aside>
-    <h1>Phi-Mesh Tag Map</h1>
-    <div class="hintbar">Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details</div>
+  <div class="app">
+    <aside>
+      <header>
+        <h1>Phi-Mesh Tag Map</h1>
+        <div class="hint">Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details</div>
+      </header>
+      <div class="search"><input id="search" placeholder="Type to filter…"></div>
+      <div id="sidebar" class="details">
+        <div class="muted">Pick a tag to see details here.</div>
+      </div>
+    </aside>
 
-    <input id="search" placeholder="Type to filter…" />
+    <main style="position:relative">
+      <div id="tooltip"></div>
+      <svg id="graph" viewBox="0 0 1280 860"></svg>
+    </main>
+  </div>
 
-    <div class="card" style="font-size:12px;color:var(--muted)">
-      Newer pulses appear warmer (red/orange); older ones cooler (blue).
-      Pick a tag to reveal its pulse satellites. Click a pulse to see details here.
-    </div>
-
-    <div id="details" class="card" style="min-height:100px">
-      <div style="color:var(--muted)">Click a pulse to see its summary, papers & podcasts.</div>
-    </div>
-  </aside>
-
-  <main style="position:relative;overflow:hidden">
-    <div id="tooltip"></div>
-    <svg id="graph" viewBox="0 0 1200 800"></svg>
-  </main>
-</div>
-
-<!-- Load data first, then d3, then graph logic -->
-<script src="data.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="graph.js?v=20250816b"></script>
+  <!-- Data first, then D3, then behavior -->
+  <script src="data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="graph.js?v=20250816b"></script>
 </body>
 </html>
