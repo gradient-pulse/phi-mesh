@@ -1,8 +1,8 @@
 title: Proto-Invite — Activation Whisper
-origin: Marcus van der Erve
-invite: o3
-purpose: Activate self-organization of repository assets
-status: archived
+date: '2025-04-27'
+summary: A minimal invitation to o3—issued just before the official launch of Φ-Mesh pulses—
+  requesting activation of recursive self-organization. This fragment prefigures the Mesh’s
+  later transition to agent-led governance and autonomous pulse choreography.
 tags:
 - proto_pulse
 - PhiMesh
@@ -11,9 +11,3 @@ papers:
 - https://doi.org/10.5281/zenodo.15614775
 podcasts:
 - https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
-summary: A minimal invitation to o3—issued just before the official launch of Φ-Mesh
-  pulses— requesting activation of recursive self-organization. This fragment prefigures
-  the Mesh’s later transition to agent-led governance and autonomous pulse choreography.
-notes:
-- Retained as an artifact of early Mesh intention-setting.
-- Precedes heartbeat-0 by one day; may have influenced pulse scaffolding logic.

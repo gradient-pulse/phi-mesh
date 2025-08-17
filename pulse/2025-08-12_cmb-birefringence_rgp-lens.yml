@@ -1,28 +1,17 @@
----
-title: "CMB Birefringence: Directional Twist vs. Recursive Coherence"
-date: 2025-08-12T00:00:00Z
-summary: >
-  Keating et al. tighten constraints on anisotropic birefringence; result is ~2σ,
-  consistent with zero. From an RGP lens, looking for fixed global anisotropy misses
-  rhythm formation: coherence should emerge as NT‑patterned twists rather than a single
-  uniform axis.
+title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
+date: '2025-08-12 00:00:00+00:00'
+summary: 'Keating et al. tighten constraints on anisotropic birefringence; result is ~2σ,
+  consistent with zero. From an RGP lens, looking for fixed global anisotropy misses rhythm
+  formation: coherence should emerge as NT‑patterned twists rather than a single uniform axis.'
 tags:
-  - RGP
-  - Cosmology
-  - CMB
-  - Birefringence
-  - "NT (Narrative_Tick)"
-  - Rhythm
-  - OldScience
+- RGP
+- Cosmology
+- CMB
+- Birefringence
+- NT (Narrative_Tick)
+- Rhythm
+- OldScience
 papers:
-  - https://doi.org/10.5281/zenodo.15614775
+- https://doi.org/10.5281/zenodo.15614775
 podcasts:
-  - https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
-status: commentary
-links:
-  - { label: "Keating X thread", link: "" }
-  - { label: "Physical Review D paper", link: "" }
-notes: >
-  Proposal: mine E/B‑mode maps for NT sequences and test for conserved NT‑distance ratios
-  across sky partitions. If rhythm holds locally but averages out globally, it explains
-  “no detection” under isotropy/anisotropy frames yet yields positive coherence under RGP.
+- https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
