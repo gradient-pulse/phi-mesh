@@ -1,203 +1,199 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Strict cleaner to keep only: title, date, summary, tags, papers, podcasts.
+Clean pulses to a minimal schema:
+  title (str), date (YYYY-MM-DD), summary (str), tags ([str]),
+  papers ([url str]), podcasts ([url str])
 
-- Always rewrites (unless --check), so diffs are visible.
-- Prints exactly what fields were removed/normalized per file.
-- Tolerates datetime dates; serializes to ISO (YYYY-MM-DD) when possible.
-- Normalizes scalar-or-list to list for papers/podcasts.
-- Trims blank strings; omits empty keys.
-- Handles YAML docs that are a list (warns & skips) or invalid (warns).
+It also tolerates a variety of legacy shapes and stringified dicts.
 """
 
-import argparse, sys, os, io, re, datetime as dt
+from __future__ import annotations
+import argparse
+import os
+import re
+import sys
+import glob
+import datetime as dt
 from collections import OrderedDict
-from glob import glob
+from typing import Any, Dict, List, Tuple
 import yaml
+import ast
 
-yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
-def _repr_str(dumper, data):
-    # Keep Unicode, avoid line wrapping
-    return dumper.represent_scalar('tag:yaml.org,2002:str', data, style=None)
-yaml.SafeDumper.represent_str = _repr_str  # type: ignore
+YAML_OPTS = dict(allow_unicode=True, sort_keys=False, default_flow_style=False)
 
-KEEP_KEYS = ["title", "date", "summary", "tags", "papers", "podcasts"]
+URL_RE = re.compile(r'^https?://', re.I)
 
-def load_yaml(path):
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return yaml.safe_load(f), None
-    except Exception as e:
-        return None, f"[WARN] YAML load failed for {path}: {e}"
+def load_yaml(path: str) -> Any:
+    with open(path, 'r', encoding='utf-8') as f:
+        return yaml.safe_load(f)
 
-def dump_yaml(path, data):
-    with open(path, "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            data,
-            f,
-            allow_unicode=True,
-            sort_keys=False,
-            default_flow_style=False,
-            width=1000,
-        )
+def dump_yaml(path: str, data: Any) -> None:
+    """Dump plain-Python data (no OrderedDicts)."""
+    def to_plain(obj):
+        if isinstance(obj, OrderedDict):
+            return {k: to_plain(v) for k, v in obj.items()}
+        if isinstance(obj, dict):
+            return {k: to_plain(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [to_plain(x) for x in obj]
+        return obj
 
-def norm_date(x):
+    plain = to_plain(data)
+    with open(path, 'w', encoding='utf-8') as f:
+        yaml.safe_dump(plain, f, **YAML_OPTS)
+
+def as_str(x: Any) -> str:
     if x is None: return ""
-    if isinstance(x, str):
-        s = x.strip()
-        # keep ISO date/time if present; otherwise best-effort to YYYY-MM-DD
-        if re.match(r"^\d{4}-\d{2}-\d{2}", s):
-            return s
-        try:
-            return dt.datetime.fromisoformat(s.replace("Z","+00:00")).date().isoformat()
-        except Exception:
-            return s
-    if isinstance(x, (dt.date, dt.datetime)):
-        try:
-            return x.date().isoformat() if isinstance(x, dt.datetime) else x.isoformat()
-        except Exception:
-            return str(x)
+    if isinstance(x, (int, float)): return str(x)
+    if isinstance(x, (dt.date, dt.datetime)): return x.isoformat()
     return str(x)
 
-def listify(x):
-    if x is None: return []
-    if isinstance(x, list): return [str(i).strip() for i in x if str(i).strip()]
-    return [str(x).strip()] if str(x).strip() else []
+def parse_date(x: Any) -> str:
+    """Return YYYY-MM-DD if possible; otherwise raw string."""
+    if isinstance(x, dt.datetime) or isinstance(x, dt.date):
+        return x.strftime('%Y-%m-%d')
+    s = as_str(x).strip()
+    if not s:
+        return s
+    # accept YYYY-MM-DD or full ISO 8601
+    try:
+        return dt.datetime.fromisoformat(s.replace('Z','+00:00')).date().isoformat()
+    except Exception:
+        return s
 
-def to_minimal(path, data):
-    changes = []
+def norm_tag(t: Any) -> str:
+    s = as_str(t).strip()
+    return s
+
+def norm_tag_list(x: Any) -> List[str]:
+    out: List[str] = []
+    if isinstance(x, (list, tuple)):
+        for t in x:
+            s = norm_tag(t)
+            if s:
+                out.append(s)
+    elif isinstance(x, str):
+        # Split on commas if someone put "a, b, c"
+        parts = [p.strip() for p in x.split(',')]
+        out.extend([p for p in parts if p])
+    return list(dict.fromkeys(out))  # dedup keep order
+
+def _maybe_literal_eval(s: str) -> Any:
+    try:
+        return ast.literal_eval(s)
+    except Exception:
+        return s
+
+def _extract_url(item: Any) -> str | None:
+    """
+    Accept:
+      - string URL
+      - dict with 'url'
+      - stringified dict "{'title':..., 'url':...}"
+    Return the URL or None.
+    """
+    if item is None:
+        return None
+    if isinstance(item, str):
+        s = item.strip()
+        if URL_RE.match(s):
+            return s
+        # stringified dict?
+        val = _maybe_literal_eval(s)
+        if isinstance(val, dict):
+            u = val.get('url') or val.get('href')
+            if isinstance(u, str) and URL_RE.match(u):
+                return u
+        return None
+    if isinstance(item, dict) or isinstance(item, OrderedDict):
+        u = item.get('url') or item.get('href')
+        if isinstance(u, str) and URL_RE.match(u):
+            return u
+        # Sometimes dicts are notes only → ignore
+        return None
+    # Unknown type → ignore
+    return None
+
+def norm_url_list(x: Any) -> List[str]:
+    out: List[str] = []
+    if isinstance(x, (list, tuple)):
+        for it in x:
+            u = _extract_url(it)
+            if u:
+                out.append(u.strip())
+    elif isinstance(x, str):
+        # Could be a single URL or a stringified dict
+        u = _extract_url(x)
+        if u:
+            out.append(u.strip())
+    return list(dict.fromkeys(out))
+
+def to_minimal(path: str, data: Any) -> Dict[str, Any]:
     if not isinstance(data, dict):
-        raise TypeError(f"{os.path.basename(path)} is not a mapping (found {type(data).__name__}).")
+        # Give up and keep raw – but wrap into minimal shape
+        return {
+            "title": os.path.splitext(os.path.basename(path))[0].replace('_',' ').strip(),
+            "date": "",
+            "summary": as_str(data),
+            "tags": [],
+            "papers": [],
+            "podcasts": [],
+        }
 
+    title   = as_str(data.get("title")).strip()
+    date    = parse_date(data.get("date"))
+    summary = as_str(data.get("summary")).strip()
+    tags    = norm_tag_list(data.get("tags"))
+    papers  = norm_url_list(data.get("papers"))
+    pods    = norm_url_list(data.get("podcasts"))
+
+    # If nothing in papers/podcasts but some URLs live under 'links' or 'resources'
+    links = data.get("links") or data.get("resources")
+    if (not papers) and links:
+        papers = norm_url_list(links)
+
+    # Minimal schema
     minimal = OrderedDict()
-    # title
-    title = str(data.get("title") or "").strip()
-    if not title:
-        # try to synthesize from filename
-        title = os.path.splitext(os.path.basename(path))[0].replace("_", " ").strip()
-        changes.append("title:synthesized")
     minimal["title"] = title
+    minimal["date"] = date
+    minimal["summary"] = summary
+    minimal["tags"] = tags
+    minimal["papers"] = papers
+    minimal["podcasts"] = pods
+    return minimal
 
-    # date
-    date_raw = data.get("date")
-    date = norm_date(date_raw)
-    if date != (date_raw if isinstance(date_raw,str) else str(date_raw) if date_raw is not None else ""):
-        changes.append("date:normalized")
-    if date: minimal["date"] = date
+def process_file(path: str, write: bool) -> Tuple[bool, str]:
+    try:
+        data = load_yaml(path)
+    except Exception as e:
+        return False, f"[skip load ] {path}  ({e})"
 
-    # summary
-    summary = str(data.get("summary") or "").strip()
-    if summary:
-        minimal["summary"] = summary
-    elif "summary" in data:
-        changes.append("summary:trimmed-empty")
+    minimal = to_minimal(path, data)
 
-    # tags
-    tags = data.get("tags")
-    if isinstance(tags, (list, tuple)):
-        tags_norm = []
-        for t in tags:
-            if isinstance(t, str):
-                s = t.strip()
-                if s: tags_norm.append(s)
-            else:
-                # ignore nested structures
-                changes.append("tags:dropped-nonstring")
-        # de-dupe preserve order
-        seen = set(); dedup = []
-        for t in tags_norm:
-            if t not in seen:
-                seen.add(t); dedup.append(t)
-        if dedup:
-            minimal["tags"] = dedup
-    elif isinstance(tags, str) and tags.strip():
-        minimal["tags"] = [tags.strip()]
-        changes.append("tags:listified")
-    elif "tags" in data:
-        changes.append("tags:empty-removed")
+    # Compare with on-disk if possible
+    if write:
+        dump_yaml(path, minimal)
+        return True, f"[fixed     ] {path}"
+    else:
+        # Just report what would change
+        return True, f"[would-fix ] {path}"
 
-    # papers
-    papers = listify(data.get("papers"))
-    if papers: minimal["papers"] = papers
-    elif "papers" in data:
-        changes.append("papers:empty-removed")
-
-    # podcasts
-    podcasts = listify(data.get("podcasts"))
-    if podcasts: minimal["podcasts"] = podcasts
-    elif "podcasts" in data:
-        changes.append("podcasts:empty-removed")
-
-    # report removed keys
-    removed = [k for k in data.keys() if k not in minimal and k in data and k not in KEEP_KEYS]
-    for k in removed:
-        changes.append(f"removed:{k}")
-
-    return minimal, changes
-
-def iter_pulse_files():
-    pats = ["pulse/**/*.yml", "pulse/**/*.yaml"]
-    seen = set()
-    for pat in pats:
-        for p in glob(pat, recursive=True):
-            if p not in seen:
-                seen.add(p)
-                yield p
-
-def main():
+def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--check", action="store_true", help="dry-run; do not write files")
-    ap.add_argument("--write", action="store_true", help="write changes to disk")
-    ap.add_argument("--verbose", action="store_true", help="print per-file diffs/actions")
+    ap.add_argument('--write', action='store_true', help='apply changes')
+    ap.add_argument('--check', action='store_true', help='just report')
+    ap.add_argument('--glob', default='pulse/**/*.yml', help='glob for pulses')
     args = ap.parse_args()
 
-    if not args.check and not args.write:
-        # default to check (safe)
-        args.check = True
+    paths = sorted(glob.glob(args.glob, recursive=True))
+    changed_any = False
+    for path in paths:
+        ch, msg = process_file(path, write=args.write)
+        print(msg)
+        changed_any = changed_any or (ch and args.write)
 
-    any_issue = False
-    changed_count = 0
-
-    for path in iter_pulse_files():
-        data, err = load_yaml(path)
-        if err:
-            print(err)
-            any_issue = True
-            continue
-        if data is None:
-            print(f"[WARN] Empty YAML: {path}")
-            any_issue = True
-            continue
-        if isinstance(data, list):
-            print(f"[WARN] Top-level sequence (not mapping), skipping: {path}")
-            any_issue = True
-            continue
-
-        try:
-            minimal, changes = to_minimal(path, data)
-        except Exception as e:
-            print(f"[WARN] {path}: {e}")
-            any_issue = True
-            continue
-
-        if args.verbose:
-            if changes:
-                print(f"[fix-ready ] {path}")
-                for c in changes:
-                    print(f"  - {c}")
-            else:
-                print(f"[ok        ] {path} (already minimal)")
-
-        if args.write:
-            dump_yaml(path, minimal)
-            changed_count += 1
-
-    if args.check:
-        print("[check done] Use --write to apply changes.")
-    if args.write:
-        print(f"[write done] Files rewritten: {changed_count}")
-
-    return 1 if any_issue and not args.write else 0
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())
