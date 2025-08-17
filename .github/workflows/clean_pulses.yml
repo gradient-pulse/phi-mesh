@@ -29,13 +29,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
 
-      - name: Dry-run (detect changes)
+      - name: Dry-run (detect changes loudly)
         run: |
           python tools/clean_pulses_minimal.py --check || echo "Changes needed"
 
       - name: Apply fixes
         run: |
           python tools/clean_pulses_minimal.py --write
+
+      - name: Show what changed
+        run: |
+          echo "---- git status ----"
+          git status --porcelain
+          echo "---- changed files ----"
+          git diff --name-only | sed -n '1,200p' || true
+          echo "---- sample diff (first 2 files) ----"
+          for f in $(git diff --name-only | head -n 2); do
+            echo "==== $f ===="
+            git diff -- $f | sed -n '1,200p'
+          done
 
       - name: Commit changes (if any)
         run: |
