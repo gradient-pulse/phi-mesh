@@ -175,6 +175,14 @@ tags:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-12_recursive-memory_banks
     summary: ''
+  Continuity:
+    papers:
+    - url: https://doi.org/10.5281/zenodo.15830659
+    podcasts:
+    - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
+    pulses:
+    - 2025-08-17_travel_as_pause
+    summary: ''
   CoR:
     papers:
     - url: https://doi.org/10.5281/zenodo.14999049
@@ -459,6 +467,7 @@ tags:
     - url: https://notebooklm.google.com/notebook/2b3e4507-8a44-4fcb-a6a6-c5a98083cca7/audio
     - url: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
     - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+    - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
     - url: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
     - url: https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
     - url: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
@@ -470,6 +479,7 @@ tags:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-01_phi-mesh-exec-drift
     - 2025-08-06-note_plimpton322
+    - 2025-08-17_travel_as_pause
     summary: ''
   GradientMemory:
     papers: []
@@ -610,6 +620,7 @@ tags:
       title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
     podcasts:
     - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+    - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
     - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=b1dcf5ac-5216-4a04-bc36-f509ebeeabef
     - url: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
     - url: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=fef1bd81-e87d-41b5-a501-f862442ce3ef
@@ -618,6 +629,7 @@ tags:
     - 2025-07-26_script_and_flow
     - 2025-08-12_call_for_experimenters
     - 2025-08-12_rgp-ns_autorun_liftoff
+    - 2025-08-17_travel_as_pause
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -717,12 +729,14 @@ tags:
     - url: https://doi.org/10.5281/zenodo.16812467
       title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
     podcasts:
+    - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
     - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=b1dcf5ac-5216-4a04-bc36-f509ebeeabef
     - url: https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
     - url: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=fef1bd81-e87d-41b5-a501-f862442ce3ef
     pulses:
     - 2025-07-21_recursive_cor_pola_convergence
     - 2025-07-28_moe_as_microcosm
+    - 2025-08-17_travel_as_pause
     - 20250813_160925_jhtdb_iso_1024
     - 20250813_160925_nasa_cfd_demo
     - 20250813_163444_jhtdb_iso_1024
@@ -784,6 +798,7 @@ tags:
     podcasts:
     - url: https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f/audio
     - url: https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e/audio
+    - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
     - url: https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
     - url: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio
     pulses:
@@ -798,6 +813,7 @@ tags:
     - 2025-08-12_recursive-memory_banks
     - 2025-08-12_rgp-ns_autorun_liftoff
     - 2025-08-12_tagmap_phase3_autopulses
+    - 2025-08-17_travel_as_pause
     summary: ''
   Phi-monitor:
     papers:
@@ -1162,6 +1178,14 @@ tags:
     - url: https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
     pulses:
     - 2025-07-24_long_haul_blinding_light
+    summary: ''
+  Silence:
+    papers:
+    - url: https://doi.org/10.5281/zenodo.15830659
+    podcasts:
+    - url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
+    pulses:
+    - 2025-08-17_travel_as_pause
     summary: ''
   societal_evolution:
     papers:
