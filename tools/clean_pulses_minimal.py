@@ -1,218 +1,163 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Brutal pulse cleaner:
-Keeps ONLY: title, date, summary, tags, papers, podcasts
-• papers: list of URL strings or {title, url} dicts (normalized)
-• podcasts: list of URL strings (normalized)
-Everything else is discarded.
+Clean Phi-Mesh pulses down to minimal schema.
+
+Keeps only:
+  - title
+  - date
+  - summary
+  - tags
+  - papers (urls or {title,url})
+  - podcasts (urls)
 """
 
-from __future__ import annotations
-import argparse, glob, os, re, sys, ast, datetime as dt
+import sys, glob, os, argparse, datetime
 from typing import Any, Dict, List, Tuple
 import yaml
 
-ALLOW_KEYS = ("title", "date", "summary", "tags", "papers", "podcasts")
-URL_RE = re.compile(r"^https?://", re.I)
-YAML_OPTS = dict(allow_unicode=True, sort_keys=False, default_flow_style=False)
+# ----------------------------------------------------------------------
+# helpers
 
-# ---------- IO ----------
 def load_yaml(path: str) -> Any:
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
-def dump_yaml(path: str, data: Any, frontmatter: bool = True) -> None:
+def dump_yaml(path: str, data: Any) -> None:
     with open(path, "w", encoding="utf-8") as f:
-        if frontmatter:
-            f.write("---\n")
-        yaml.safe_dump(data, f, **YAML_OPTS)
+        yaml.safe_dump(
+            data,
+            f,
+            sort_keys=False,
+            allow_unicode=True,
+            default_flow_style=False,
+        )
 
-# ---------- helpers ----------
-def as_str(x: Any) -> str:
-    if x is None: return ""
-    if isinstance(x, (int, float)): return str(x)
-    if isinstance(x, (dt.date, dt.datetime)): return x.isoformat()
-    return str(x)
+def _flatten(seq):
+    for el in seq:
+        if isinstance(el, (list, tuple)):
+            yield from _flatten(el)
+        else:
+            yield el
 
-def parse_date(x: Any) -> str:
-    if isinstance(x, (dt.date, dt.datetime)):
-        return x.strftime("%Y-%m-%d")
-    s = as_str(x).strip()
-    if not s: return s
-    try:
-        return dt.datetime.fromisoformat(s.replace("Z", "+00:00")).date().isoformat()
-    except Exception:
-        # leave as-is if not ISO parseable
-        return s
-
-def norm_tags(x: Any) -> List[str]:
+def _as_list(x):
+    if x is None:
+        return []
     if isinstance(x, (list, tuple)):
-        vals = [as_str(t).strip() for t in x if as_str(t).strip()]
-    elif isinstance(x, str):
-        vals = [p.strip() for p in x.split(",") if p.strip()]
-    else:
-        vals = []
-    # dedup, preserve order
-    seen, out = set(), []
-    for t in vals:
-        if t not in seen:
-            seen.add(t); out.append(t)
-    return out
+        return list(_flatten(x))
+    return [x]
 
-def _literal_eval_if_dict_string(s: str) -> Any:
-    try:
-        v = ast.literal_eval(s)
-        return v
-    except Exception:
-        return s
+def _norm_date(val: Any) -> str:
+    if val is None:
+        return ""
+    if isinstance(val, str):
+        return val.strip()
+    if isinstance(val, datetime.date):
+        return val.isoformat()
+    return str(val)
 
-def _norm_paper_item(it: Any) -> Dict[str, Any] | str | None:
-    """
-    Accept:
-      - URL string -> keep as string
-      - dict with url (and optional title) -> {title?, url}
-      - stringified dict -> parse and treat like dict
-    """
+def _norm_str(val: Any) -> str:
+    return (val or "").strip()
+
+def _norm_url_item(it: Any) -> str:
+    if it is None:
+        return ""
+    if isinstance(it, str):
+        return it.strip()
+    if isinstance(it, dict):
+        # if dict with url key
+        u = it.get("url")
+        if isinstance(u, str):
+            return u.strip()
+    return str(it)
+
+def _norm_paper_item(it: Any) -> Any:
     if it is None:
         return None
     if isinstance(it, str):
-        s = it.strip()
-        if URL_RE.match(s):
-            return s
-        val = _literal_eval_if_dict_string(s)
-        if isinstance(val, dict):
-            return _norm_paper_item(val)
-        return None
-    if isinstance(it, dict):
-        url = it.get("url") or it.get("href")
-        title = it.get("title")
-        if isinstance(url, str) and URL_RE.match(url.strip()):
-            url = url.strip()
-            if isinstance(title, str) and title.strip():
-                return {"title": title.strip(), "url": url}
-            return url
-        return None
-    return None
-
-def _norm_url_item(it: Any) -> str | None:
-    if isinstance(it, str) and URL_RE.match(it.strip()):
         return it.strip()
     if isinstance(it, dict):
-        # permissive: dict with url → take it
-        u = it.get("url") or it.get("href")
-        if isinstance(u, str) and URL_RE.match(u.strip()):
-            return u.strip()
-    if isinstance(it, str):
-        # stringified dict?
-        val = _literal_eval_if_dict_string(it)
-        return _norm_url_item(val) if val is not it else None
+        t = _norm_str(it.get("title"))
+        u = _norm_str(it.get("url"))
+        if u:
+            if t:
+                return {"title": t, "url": u}
+            return u
     return None
 
 def norm_papers(x: Any) -> List[Any]:
     out: List[Any] = []
-    seq = x if isinstance(x, (list, tuple)) else [x]
-    for it in seq:
+    for it in _as_list(x):
         v = _norm_paper_item(it)
         if v is not None:
             out.append(v)
-    # dedup (string URLs only; dicts dedup by (title,url))
-    seen = set(); dedup: List[Any] = []
-    for v in out:
-        key = v if isinstance(v, str) else ("__obj__", v.get("title",""), v.get("url",""))
-        if key not in seen:
-            seen.add(key); dedup.append(v)
-    return dedup
+    return out
 
 def norm_podcasts(x: Any) -> List[str]:
     out: List[str] = []
-    seq = x if isinstance(x, (list, tuple)) else [x]
-    for it in seq:
+    for it in _as_list(x):
         u = _norm_url_item(it)
-        if u: out.append(u)
-    # dedup
-    seen=set(); dedup=[]
-    for u in out:
-        if u not in seen:
-            seen.add(u); dedup.append(u)
-    return dedup
+        if u:
+            out.append(u)
+    return out
 
-# ---------- core ----------
-def to_minimal(path: str, data: Any, verbose: bool=False) -> Tuple[Dict[str, Any], List[str]]:
-    removed: List[str] = []
-    if not isinstance(data, dict):
-        # fallback minimal shell
-        minimal = {
-            "title": os.path.splitext(os.path.basename(path))[0].replace("_", " "),
-            "date": "",
-            "summary": as_str(data),
-            "tags": [],
-            "papers": [],
-            "podcasts": [],
-        }
-        return minimal, ["(non-mapping YAML → replaced entirely)"]
+# ----------------------------------------------------------------------
+# core
 
-    # compute what we'll drop
-    for k in list(data.keys()):
-        if k not in ALLOW_KEYS:
-            removed.append(k)
-
-    # Build strictly minimal record
-    minimal: Dict[str, Any] = {
-        "title"   : as_str(data.get("title")).strip(),
-        "date"    : parse_date(data.get("date")),
-        "summary" : as_str(data.get("summary")).strip(),
-        "tags"    : norm_tags(data.get("tags")),
-        "papers"  : norm_papers(data.get("papers", [])),
-        "podcasts": norm_podcasts(data.get("podcasts", [])),
+def to_minimal(path: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "title": _norm_str(data.get("title")),
+        "date": _norm_date(data.get("date")),
+        "summary": _norm_str(data.get("summary")),
+        "tags": list(_as_list(data.get("tags"))),
+        "papers": norm_papers(data.get("papers")),
+        "podcasts": norm_podcasts(data.get("podcasts")),
     }
-
-    # Guarantee keys appear in canonical order and nothing else remains
-    minimal = {k: minimal[k] for k in ALLOW_KEYS}
-
-    if verbose:
-        # show a tiny diff overview
-        if removed:
-            print(f"  removed keys: {', '.join(sorted(removed))}")
-        # show coercions
-        if data.get("date") and minimal["date"] != as_str(data.get("date")).strip():
-            print(f"  coerced date: {as_str(data.get('date'))!r} -> {minimal['date']!r}")
-    return minimal, removed
 
 def process_file(path: str, write: bool, verbose: bool) -> Tuple[bool, str]:
     try:
         data = load_yaml(path)
+        if not isinstance(data, dict):
+            return False, "not a dict"
+        minimal = to_minimal(path, data)
+        changed = minimal != data
+        if write and changed:
+            dump_yaml(path, minimal)
+        return changed, "cleaned" if changed else "ok"
     except Exception as e:
-        return False, f"[skip load ] {path}  ({e})"
+        return False, f"error: {e}"
 
-    minimal, removed = to_minimal(path, data, verbose=verbose)
+def collect_pulse_paths() -> List[str]:
+    patterns = ["pulse/**/*.yml", "pulse/**/*.yaml"]
+    paths = []
+    for pat in patterns:
+        paths.extend(glob.glob(pat, recursive=True))
+    seen = set()
+    out = []
+    for p in sorted(paths):
+        if p not in seen:
+            seen.add(p)
+            out.append(p)
+    return out
 
-    # If write, always overwrite (to forcefully strip clutter)
-    if write:
-        dump_yaml(path, minimal, frontmatter=True)
-        return True, f"[cleaned   ] {path}"
-    else:
-        # Dry-run: just say what would happen
-        prefix = "[would clean]" if removed or True else "[ok        ]"
-        return True, f"{prefix} {path}"
+# ----------------------------------------------------------------------
+# main
 
-def main() -> int:
+def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--write", action="store_true", help="apply changes")
-    ap.add_argument("--glob", default="pulse/**/*.yml", help="glob for pulses")
-    ap.add_argument("--verbose", action="store_true", help="print what changed")
+    ap.add_argument("--write", action="store_true", help="write cleaned files")
+    ap.add_argument("--verbose", action="store_true", help="print details")
     args = ap.parse_args()
 
-    paths = sorted(glob.glob(args.glob, recursive=True))
-    if not paths:
-        print("No pulses found.")
-        return 0
+    paths = collect_pulse_paths()
+    print(f"[info] found {len(paths)} pulse files")
 
-    changed_any = False
-    for p in paths:
-        ch, msg = process_file(p, write=args.write, verbose=args.verbose)
-        print(msg)
-        changed_any = changed_any or ch
+    any_change = False
+    for path in paths:
+        changed, status = process_file(path, args.write, args.verbose)
+        if changed:
+            any_change = True
+        if args.verbose:
+            print(f"[{status:9}] {path}")
 
     return 0
 
