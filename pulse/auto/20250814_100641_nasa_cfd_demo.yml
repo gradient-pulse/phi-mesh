@@ -1,7 +1,7 @@
 title: 'nasa_cfd_demo: Experimenter auto-pulse'
 date: '2025-08-14T10:06:41Z'
-summary: "\"nasa_cfd_demo — NT rhythm test → p=0.0493, effect=0.066; significant: no\\n\\\n\
-  \  \\  @ α=0.01.\""
+summary: "\"nasa_cfd_demo — NT rhythm test → p=0.0493, effect=0.066; significant:\
+  \ no\\n\\\n  \\  @ α=0.01.\""
 tags:
 - RGP
 - NT_rhythm
@@ -17,5 +17,5 @@ papers:
 - title: Experimenter’s Guide — Solving Navier-Stokes, Differently (V1.7)
   url: https://doi.org/10.5281/zenodo.16812467
 podcasts:
-- '{''url'': ''https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=fef1bd81-e87d-41b5-a501-f862442ce3ef''}'
-- '{''url'': ''https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=b1dcf5ac-5216-4a04-bc36-f509ebeeabef''}'
+- url: https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=fef1bd81-e87d-41b5-a501-f862442ce3ef
+- url: https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=b1dcf5ac-5216-4a04-bc36-f509ebeeabef
