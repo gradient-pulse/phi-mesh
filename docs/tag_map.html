@@ -1,73 +1,235 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Phi-Mesh Tag Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6;
-      --accent:#82c7ff; --link:#9fc9ff; --linkDim:rgba(180,200,230,.13);
-      --pulseWarm:#ff7a66; --pulseMed:#ffb066; --pulseCool:#86cbff; --pulseCooler:#74a9ff;
+(function(){
+  // Safari-safe: no ?? and no mixed ?? with ||/&&
+  var DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
+    ? window.PHI_DATA
+    : { nodes: [], links: [] };
+
+  var svg = d3.select('#graph');
+  var tooltip = d3.select('#tooltip');
+  var sidebar = document.getElementById('sidebar-content');
+  var searchInput = document.getElementById('search');
+
+  var width  = svg.node().clientWidth  || 1200;
+  var height = svg.node().clientHeight || 800;
+
+  var minR = 6, maxR = 24, ellipseAspect = 1.6;
+  var satDot = 4.6, spiralStepR = 8, spiralStepTheta = 0.48*Math.PI, spiralStartR = 52;
+
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]);});}
+  function safeArray(x){return Array.isArray(x)?x:[];}
+  function ageClass(d){
+    var a = d && d.ageDays;
+    if (a == null) return 'age-old';
+    if (a <= 14)  return 'age-very-new';
+    if (a <= 45)  return 'age-new';
+    if (a <= 120) return 'age-mid';
+    if (a <= 270) return 'age-old';
+    return 'age-very-old';
+  }
+
+  svg.attr('viewBox', '0 0 ' + width + ' ' + height);
+  var root = svg.append('g');
+  var linkLayer = root.append('g').attr('class','links');
+  var nodeLayer = root.append('g').attr('class','nodes');
+  var satLayer  = root.append('g').attr('class','satellites');
+
+  var zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', function(ev){ root.attr('transform', ev.transform); });
+  svg.call(zoom);
+
+  // clear selection when clicking background
+  svg.on('click', function(ev){
+    if (ev.target === svg.node()){
+      clearSatellites(); clearFocus(); sidebar.innerHTML = '';
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg)}
-    body{font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .app{display:grid;grid-template-columns:320px 1fr;height:100%}
+  });
 
-    /* Sidebar */
-    aside{background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92));border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column}
-    header{padding:14px 14px 8px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
-    h1{margin:0 0 6px 0;font-size:18px;letter-spacing:.2px}
-    .hint{color:var(--muted);font-size:12px}
-    #search{width:100%;background:#10131a;border:1px solid rgba(255,255,255,.08);color:var(--fg);padding:9px 10px;border-radius:8px;outline:none;margin-top:10px}
-    #sidebar-content{padding:14px;overflow:auto}
-    .muted{color:var(--muted)}
+  // Build graph
+  var idToNode = new Map(DATA.nodes.map(function(n){ return [n.id, n]; }));
+  var links = DATA.links.map(function(l){
+    var s = idToNode.get(l.source) || l.source;
+    var t = idToNode.get(l.target) || l.target;
+    return { source:s, target:t };
+  }).filter(function(l){ return l.source && l.target; });
 
-    /* Ellipsize links to one line */
-    .ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  // degree as fallback for sizing
+  var degree = new Map();
+  links.forEach(function(l){
+    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
+    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
+  });
 
-    /* Graph */
-    svg{width:100%;height:100%}
-    .link{stroke:#b9c7dd;stroke-opacity:.28}
-    .link.dim{stroke-opacity:.08}
-    .node text{font-size:12px;fill:#d3e0f2;pointer-events:none}
-    .node ellipse{fill:#74b7ff;stroke:none}
-    .node.dim text{opacity:.18}
-    .node.dim ellipse{opacity:.22}
+  var centralities = DATA.nodes.map(function(n){
+    return (typeof n.centrality === 'number') ? n.centrality : (degree.get(n.id)||0);
+  });
+  var cMin = d3.min(centralities); if (cMin == null) cMin = 0;
+  var cMax = d3.max(centralities); if (cMax == null) cMax = 1;
+  var rScale = d3.scaleSqrt().domain([ (cMin||0.0001), (cMax||1) ]).range([minR, maxR]);
 
-    .satellite circle{stroke:none}
-    .age-very-new{fill:var(--pulseWarm)}
-    .age-new{fill:#ff9b66}
-    .age-mid{fill:var(--pulseMed)}
-    .age-old{fill:var(--pulseCool)}
-    .age-very-old{fill:var(--pulseCooler)}
+  var sim = d3.forceSimulation(DATA.nodes)
+    .force('link', d3.forceLink(links).id(function(d){return d.id;}).distance(75).strength(0.7))
+    .force('charge', d3.forceManyBody().strength(-180))
+    .force('center', d3.forceCenter(width/2, height/2))
+    .force('collision', d3.forceCollide().radius(function(d){
+      var c = (typeof d.centrality === 'number') ? d.centrality : (degree.get(d.id)||1);
+      return rScale(c) * 1.2;
+    }));
 
-    #tooltip{
-      position:fixed;left:0;top:0;display:none;
-      background:#0f1522;color:var(--fg);
-      border:1px solid rgba(255,255,255,.08);border-radius:10px;
-      padding:10px 12px;max-width:300px;box-shadow:0 6px 18px rgba(0,0,0,.35);
-      pointer-events:none;z-index:20;
+  var linkSel = linkLayer.selectAll('line')
+    .data(links)
+    .join('line')
+    .attr('class','link')
+    .attr('stroke','#b9c7dd')
+    .attr('stroke-opacity', .28);
+
+  var nodeSel = nodeLayer.selectAll('g.node')
+    .data(DATA.nodes, function(d){ return d.id; })
+    .join(function(enter){
+      var g = enter.append('g').attr('class','node');
+
+      g.append('ellipse')
+        .attr('rx', function(d){ var c=(typeof d.centrality==='number')?d.centrality:(degree.get(d.id)||1); return rScale(c)*ellipseAspect; })
+        .attr('ry', function(d){ var c=(typeof d.centrality==='number')?d.centrality:(degree.get(d.id)||1); return rScale(c); });
+
+      g.append('text')
+        .attr('x', function(d){ var c=(typeof d.centrality==='number')?d.centrality:(degree.get(d.id)||1); return rScale(c)*ellipseAspect + 4; })
+        .attr('y', 4)
+        .text(function(d){ return d.id; });
+
+      g.on('mouseover', function(ev,d){ showTagTooltip(ev, d.id); })
+       .on('mousemove', moveTooltip)
+       .on('mouseout', hideTooltip)
+       .on('click', function(ev,d){ ev.stopPropagation(); onTagClick(d.id); });
+
+      return g;
+    });
+
+  sim.on('tick', function(){
+    linkSel
+      .attr('x1', function(d){return d.source.x;})
+      .attr('y1', function(d){return d.source.y;})
+      .attr('x2', function(d){return d.target.x;})
+      .attr('y2', function(d){return d.target.y;});
+
+    nodeSel.attr('transform', function(d){ return 'translate('+d.x+','+d.y+')'; });
+
+    // keep satellites stuck to hosts
+    satLayer.selectAll('g.satellite')
+      .attr('transform', function(d){ return 'translate('+(d.host.x + d._xoff)+','+(d.host.y + d._yoff)+')'; });
+  });
+
+  // Tooltip
+  function showTagTooltip(evt, tag){
+    var desc = (DATA.tagDescriptions && DATA.tagDescriptions[tag]) ? DATA.tagDescriptions[tag] : '—';
+    var n = idToNode.get(tag);
+    var deg = degree.get(tag) || 0;
+    var cent = (n && typeof n.centrality==='number') ? n.centrality.toFixed(2) : String(deg||0);
+    tooltip.html(
+      '<div style="font-weight:700; margin-bottom:4px">'+esc(tag)+'</div>'+
+      '<div style="color:#97a3b6; margin-bottom:6px">degree '+deg+' • centrality '+cent+'</div>'+
+      '<div style="white-space:pre-wrap; opacity:.92">'+esc(desc)+'</div>'+
+      '<div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to reveal pulse satellites</div>'
+    ).style('display','block');
+    moveTooltip(evt);
+  }
+  function moveTooltip(evt){
+    var pad=12;
+    tooltip.style('left',(evt.clientX+pad)+'px').style('top',(evt.clientY+pad)+'px');
+  }
+  function hideTooltip(){ tooltip.style('display','none'); }
+
+  // Focus / dim
+  function setFocus(keepIds){
+    var keep = new Set(keepIds);
+    nodeSel.classed('dim', function(d){ return !keep.has(d.id); });
+    linkSel.classed('dim', function(d){ return !(keep.has(d.source.id) && keep.has(d.target.id)); });
+  }
+  function clearFocus(){ nodeSel.classed('dim', false); linkSel.classed('dim', false); }
+
+  // Satellites (spiral)
+  function clearSatellites(){ satLayer.selectAll('*').remove(); }
+  function spiralOffsets(n){
+    var out=[], i;
+    for(i=0;i<n;i++){
+      var r = spiralStartR + i*spiralStepR;
+      var t = i*spiralStepTheta;
+      out.push({_xoff:r*Math.cos(t), _yoff:r*Math.sin(t)});
     }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <!-- Load DATA first (must be data-only!) -->
-  <script src="graph.js"></script>
-  <!-- Then the renderer -->
-  <script defer src="map.js"></script>
-</head>
-<body>
-  <div class="app">
-    <aside>
-      <header>
-        <h1>Phi-Mesh Tag Map</h1>
-        <div class="hint">Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details</div>
-        <input id="search" type="search" placeholder="Type to filter…" />
-      </header>
-      <div id="sidebar-content"></div> <!-- starts EMPTY -->
-    </aside>
-    <svg id="graph" role="img" aria-label="Tag Map"></svg>
-  </div>
-  <div id="tooltip"></div>
-</body>
-</html>
+    return out;
+  }
+
+  function onTagClick(tagId){
+    // dim: tag + immediate neighbors
+    var neighbors = new Set([tagId]);
+    links.forEach(function(l){
+      if (l.source.id===tagId) neighbors.add(l.target.id);
+      if (l.target.id===tagId) neighbors.add(l.source.id);
+    });
+    setFocus(neighbors);
+
+    clearSatellites();
+
+    var host = idToNode.get(tagId);
+    if (!host) return;
+
+    var pulsesObj = DATA.pulsesByTag || {};
+    var pulses = safeArray(pulsesObj[tagId]);
+    if (!pulses.length) return;
+
+    var offs = spiralOffsets(pulses.length);
+    var g = satLayer.selectAll('g.satellite')
+      .data(pulses.map(function(p,i){
+        var o=offs[i], copy={};
+        for (var k in p){ copy[k]=p[k]; }
+        copy.host = host; copy._xoff=o._xoff; copy._yoff=o._yoff;
+        return copy;
+      }), function(d){ return d.id || d.title || d.date || Math.random(); });
+
+    var enter = g.enter().append('g').attr('class','satellite');
+
+    enter.append('circle').attr('r', satDot).attr('class', function(d){ return ageClass(d); });
+    enter.append('text').attr('y', -9).attr('text-anchor','middle').attr('font-size', 9).attr('fill', '#a3b3c7')
+      .text(function(d){ return d.date ? d.date.slice(2,10) : ''; });
+
+    enter.on('click', function(ev,d){ ev.stopPropagation(); showPulseDetails(d); });
+
+    sim.alpha(0.5).restart();
+  }
+
+  // Sidebar
+  function renderLinks(label, items){
+    if (!items || !items.length) return '';
+    var norm = items.map(function(u){
+      if (typeof u === 'string') return {title:u, url:u};
+      if (u && u.url) return {title:(u.title||u.url), url:u.url};
+      return {title:(u && u.title) ? u.title : '', url:(u && u.url) ? u.url : ''};
+    });
+    var html = '<div style="margin-top:12px"><strong>'+esc(label)+'</strong><ul style="padding-left:18px; margin:6px 0 0 0">';
+    norm.forEach(function(it){
+      var title = it.title || it.url || '';
+      var href  = it.url   || it.title || '#';
+      html += '<li><a class="ellipsis" href="'+esc(href)+'" target="_blank" rel="noopener">'+esc(title)+'</a></li>';
+    });
+    html += '</ul></div>';
+    return html;
+  }
+  function showPulseDetails(p){
+    var when = p.date ? ' <span class="muted">('+esc(p.date)+')</span>' : '';
+    var html = '<h2 style="margin:.2rem 0 .6rem 0; font-size:20px">'+esc(p.title || p.id || 'Pulse')+when+'</h2>';
+    if (p.summary) html += '<div style="white-space:pre-wrap; margin:.3rem 0 1rem 0">'+esc(p.summary)+'</div>';
+    html += renderLinks('Papers', p.papers);
+    html += renderLinks('Podcasts', p.podcasts);
+    sidebar.innerHTML = html;
+  }
+
+  // Search
+  function applyFilter(q){
+    var s = (q||'').trim().toLowerCase();
+    if (!s){ clearFocus(); return; }
+    var keep = new Set(DATA.nodes.filter(function(n){ return n.id.toLowerCase().includes(s); }).map(function(n){ return n.id; }));
+    setFocus(keep);
+  }
+  if (searchInput) searchInput.addEventListener('input', function(e){ applyFilter(e.target.value); });
+
+  // Start empty (no redundant helper text)
+  sidebar.innerHTML = '';
+})();
