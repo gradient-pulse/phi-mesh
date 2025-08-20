@@ -1,20 +1,18 @@
-/* docs/graph.js (2025-08-20b)
-   - Slightly brighter links, no node rim
-   - Sidebar links truncated to one line
-   - Satellites show; spiral layout auto for large sets
+/* docs/graph.js (2025-08-20c)
+   - Always spiral layout for satellites
+   - Nodes w/o rim, links subtly bright
+   - Sidebar links truncated, labels shortened
 */
 
 (function () {
   const DATA = window.PHI_DATA || { nodes: [], links: [], tagDescriptions:{}, pulsesByTag:{} };
 
-  // ---------- DOM ----------
   const svg = d3.select('#graph');
   const sidebar = document.getElementById('sidebar');
   const search = document.getElementById('tag-search');
 
   const W = svg.node().clientWidth || 1200;
   const H = svg.node().clientHeight || 800;
-
   svg.attr('viewBox', `0 0 ${W} ${H}`);
   const root = svg.append('g');
   const linkLayer = root.append('g').attr('class', 'links');
@@ -24,17 +22,15 @@
   const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (e)=>root.attr('transform', e.transform));
   svg.call(zoom);
 
-  // ---------- helpers ----------
   const id2node = new Map(DATA.nodes.map(n=>[n.id, n]));
   const links = DATA.links.map(l => ({
     source: id2node.get(l.source) || l.source,
     target: id2node.get(l.target) || l.target
   })).filter(l=>l.source && l.target);
 
-  const nodeRadius = 8;                    // a notch smaller (more labels fit)
+  const nodeRadius = 8;
   const satSize = 4.2;
 
-  // pulse age bucket -> class (warmer = newer)
   function ageClass(age) {
     if (age == null) return 'p4';
     if (age <= 14) return 'p0';
@@ -46,7 +42,6 @@
 
   function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 
-  // Display a pulse in sidebar (summary + papers + podcasts)
   function showPulseDetails(p) {
     let html = `<h2>${esc(p.title || p.id || 'Pulse')}${p.date ? ` <span class="muted">(${esc(p.date)})</span>`:''}</h2>`;
     if (p.summary) html += `<div style="white-space:pre-wrap;margin:.3rem 0 1rem 0">${esc(p.summary)}</div>`;
@@ -86,7 +81,6 @@
     }catch(_e){ return url; }
   }
 
-  // ---------- simulation ----------
   const sim = d3.forceSimulation(DATA.nodes)
     .force('link', d3.forceLink(links).id(d=>d.id).distance(75).strength(0.7))
     .force('charge', d3.forceManyBody().strength(-180))
@@ -121,15 +115,12 @@
       .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
       .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
     nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
-
-    // keep satellites glued to their host
     satLayer.selectAll('g.satellite').attr('transform', d=>{
       const r = d._r, a = d._a;
       return `translate(${d.host.x + r*Math.cos(a)}, ${d.host.y + r*Math.sin(a)})`;
     });
   });
 
-  // ---------- tooltip ----------
   const tip = d3.select('body').append('div')
     .style('position','fixed').style('z-index',1000)
     .style('background','#0f1624').style('border','1px solid rgba(255,255,255,0.08)')
@@ -156,55 +147,37 @@
   function hideTooltip(){ tip.style('display','none'); }
 
   // ---------- satellites ----------
-  let currentHost = null;
-
   function onTagClick(tagId){
-    currentHost = tagId;
     satLayer.selectAll('*').remove();
-
     const host = id2node.get(tagId);
     if (!host) return;
 
     const pulses = (DATA.pulsesByTag?.[tagId] || []).slice();
     if (!pulses.length) return;
 
-    // sort newest→oldest so spiral outward encodes time
     pulses.sort((a,b)=>(a.ageDays ?? 9e9) - (b.ageDays ?? 9e9));
 
-    // layout: spiral for many, ring otherwise
-    const many = pulses.length > 24;
-    const R0 = 56, step = 13; // spiral
-    const ringR = 86;
-
+    const R0 = 56, step = 13;
     const satData = pulses.map((p,i)=>{
-      if (many){
-        const a = i * 0.42;                     // radians between points
-        return { ...p, host, _r: R0 + i*step/4, _a: a };
-      }else{
-        const a = (i/pulses.length)*Math.PI*2;
-        return { ...p, host, _r: ringR, _a: a };
-      }
+      const a = i * 0.42;
+      return { ...p, host, _r: R0 + i*step/4, _a: a };
     });
 
-    const sats = satLayer.selectAll('g.satellite')
+    satLayer.selectAll('g.satellite')
       .data(satData, d=>d.id || d.title || (d.date+':'+i))
       .join(enter=>{
         const g=enter.append('g').attr('class','satellite');
         g.append('circle')
           .attr('r', satSize)
           .attr('class', d=>ageClass(d.ageDays));
-        // small hover title
-        g.append('title')
-          .text(d=>(d.title || d.id || 'pulse') + (d.date ? ` — ${d.date}`:''));
+        g.append('title').text(d=>(d.title || d.id || 'pulse') + (d.date ? ` — ${d.date}`:''));
         g.on('click', (_e,d)=>showPulseDetails(d));
         return g;
       });
 
-    // nudge sim so satellites settle immediately around host
     sim.alpha(0.6).restart();
   }
 
-  // ---------- search ----------
   function applyFilter(q){
     const s = (q||'').trim().toLowerCase();
     if (!s){
@@ -218,6 +191,5 @@
   }
   search && search.addEventListener('input', e=>applyFilter(e.target.value));
 
-  // initial sidebar hint
   sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>`;
 })();
