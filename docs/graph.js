@@ -1,207 +1,223 @@
-/* docs/graph.js
- * Uses window.PHI_DATA:
- *  nodes [{id, degree?, centrality?}], links [{source,target}],
- *  tagDescriptions { [tag]: "..." } or { tags:{[tag]:"..."} },
- *  pulsesByTag { tag: [ {id,title?,date?,ageDays?,summary?,papers?,podcasts?,tags?} ] }
- */
+/* docs/graph.js (2025-08-20b)
+   - Slightly brighter links, no node rim
+   - Sidebar links truncated to one line
+   - Satellites show; spiral layout auto for large sets
+*/
+
 (function () {
-  const DATA = window.PHI_DATA || { nodes: [], links: [] };
+  const DATA = window.PHI_DATA || { nodes: [], links: [], tagDescriptions:{}, pulsesByTag:{} };
 
-  const svg = d3.select("#graph");
-  if (svg.empty()) return;
+  // ---------- DOM ----------
+  const svg = d3.select('#graph');
+  const sidebar = document.getElementById('sidebar');
+  const search = document.getElementById('tag-search');
 
-  const detailsEl = document.getElementById("details");
-  const searchInput = document.getElementById("tag-search");
+  const W = svg.node().clientWidth || 1200;
+  const H = svg.node().clientHeight || 800;
 
-  // ---------- tooltip ----------
-  let tip = document.getElementById("phi-tip");
-  if (!tip) {
-    tip = document.createElement("div");
-    tip.id = "phi-tip";
-    Object.assign(tip.style, {
-      position: "fixed", zIndex: 20, pointerEvents: "none", display: "none",
-      background: "#10141d", border: "1px solid #2a3344", borderRadius: "10px",
-      padding: "8px 10px", color: "#e6edf6", fontSize: "13px",
-      boxShadow: "0 8px 32px rgba(0,0,0,.45)",
-    });
-    document.body.appendChild(tip);
-  }
-  const esc = (s)=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const showTip=(html,x,y)=>{tip.innerHTML=html; tip.style.left=(x+12)+"px"; tip.style.top=(y+12)+"px"; tip.style.display="block";};
-  const moveTip=(x,y)=>{tip.style.left=(x+12)+"px"; tip.style.top=(y+12)+"px";};
-  const hideTip=()=>{tip.style.display="none";};
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  const root = svg.append('g');
+  const linkLayer = root.append('g').attr('class', 'links');
+  const nodeLayer = root.append('g').attr('class', 'nodes');
+  const satLayer  = root.append('g').attr('class', 'satellites');
 
-  function getTagDescription(tag){
-    const td = DATA.tagDescriptions || {};
-    if (typeof td[tag] === "string") return td[tag];
-    if (td.tags && typeof td.tags[tag] === "string") return td.tags[tag];
-    return "";
-  }
-  function ageClass(days){
-    if (days == null) return "age-old";
-    if (days <= 14) return "age-very-new";
-    if (days <= 45) return "age-new";
-    if (days <= 120) return "age-mid";
-    if (days <= 270) return "age-old";
-    return "age-very-old";
+  const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (e)=>root.attr('transform', e.transform));
+  svg.call(zoom);
+
+  // ---------- helpers ----------
+  const id2node = new Map(DATA.nodes.map(n=>[n.id, n]));
+  const links = DATA.links.map(l => ({
+    source: id2node.get(l.source) || l.source,
+    target: id2node.get(l.target) || l.target
+  })).filter(l=>l.source && l.target);
+
+  const nodeRadius = 8;                    // a notch smaller (more labels fit)
+  const satSize = 4.2;
+
+  // pulse age bucket -> class (warmer = newer)
+  function ageClass(age) {
+    if (age == null) return 'p4';
+    if (age <= 14) return 'p0';
+    if (age <= 45) return 'p1';
+    if (age <= 120) return 'p2';
+    if (age <= 270) return 'p3';
+    return 'p4';
   }
 
-  function showPulseDetails(p){
-    if (!detailsEl) return;
-    const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : "";
-    let html = `<h2>${esc(p.title || p.id || "Pulse")}${when}</h2>`;
+  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+  // Display a pulse in sidebar (summary + papers + podcasts)
+  function showPulseDetails(p) {
+    let html = `<h2>${esc(p.title || p.id || 'Pulse')}${p.date ? ` <span class="muted">(${esc(p.date)})</span>`:''}</h2>`;
     if (p.summary) html += `<div style="white-space:pre-wrap;margin:.3rem 0 1rem 0">${esc(p.summary)}</div>`;
 
-    const papers = Array.isArray(p.papers)?p.papers:[];
-    const pods = Array.isArray(p.podcasts)?p.podcasts:[];
+    const papers = Array.isArray(p.papers) ? p.papers : [];
+    const pods = Array.isArray(p.podcasts) ? p.podcasts : [];
+
     if (papers.length){
-      html += `<div><strong>Papers</strong><ul>`;
+      html += `<div style="margin:.6rem 0 .25rem 0"><strong>Papers</strong></div>`;
+      html += `<div>`;
       for (const it of papers){
-        if (typeof it === "string"){
-          html += `<li><a href="${it}" target="_blank" rel="noopener">${esc(it)}</a></li>`;
-        }else if (it && (it.url || it.doi)){
-          const url = it.url || (it.doi ? `https://doi.org/${it.doi}` : "");
-          const label = it.title || url;
-          if (url) html += `<li><a href="${url}" target="_blank" rel="noopener">${esc(label)}</a></li>`;
-        }
+        const u = typeof it === 'string' ? it : (it.url || '');
+        const label = typeof it === 'string' ? shortLinkText(u) : (it.title || shortLinkText(u));
+        html += `<a class="truncate" href="${esc(u)}" target="_blank" rel="noopener">${esc(label)}</a>`;
       }
-      html += `</ul></div>`;
+      html += `</div>`;
     }
     if (pods.length){
-      html += `<div style="margin-top:8px"><strong>Podcasts</strong><ul>`;
-      for (const it of pods){
-        const url = typeof it === "string" ? it : it?.url;
-        if (url) html += `<li><a href="${url}" target="_blank" rel="noopener">${esc(url)}</a></li>`;
+      html += `<div style="margin:.8rem 0 .25rem 0"><strong>Podcasts</strong></div>`;
+      html += `<div>`;
+      for (const u of pods){
+        const url = typeof u === 'string' ? u : (u.url || '');
+        html += `<a class="truncate" href="${esc(url)}" target="_blank" rel="noopener">${esc(shortLinkText(url))}</a>`;
       }
-      html += `</ul></div>`;
+      html += `</div>`;
     }
-    detailsEl.innerHTML = html;
+
+    sidebar.innerHTML = html;
   }
 
-  // ---------- layout ----------
-  const width = svg.node().clientWidth || 1200;
-  const height = svg.node().clientHeight || 800;
-  svg.attr("viewBox", `0 0 ${width} ${height}`);
+  function shortLinkText(url){
+    try{
+      const u = new URL(url);
+      const parts = u.pathname.split('/').filter(Boolean);
+      const tail = parts.length ? parts[parts.length-1] : '';
+      return `${u.host}/…/${tail}`;
+    }catch(_e){ return url; }
+  }
 
-  const root = svg.append("g");
-  const linkLayer = root.append("g").attr("class","links");
-  const nodeLayer = root.append("g").attr("class","nodes");
-  const satLayer  = root.append("g").attr("class","satellites");
-
-  svg.call(d3.zoom().scaleExtent([0.25,4]).on("zoom", (e)=>root.attr("transform", e.transform)));
-
-  const idToNode = new Map(DATA.nodes.map(n=>[n.id,n]));
-  const links = DATA.links.map(l=>({source:idToNode.get(l.source)||l.source, target:idToNode.get(l.target)||l.target})).filter(l=>l.source&&l.target);
-
+  // ---------- simulation ----------
   const sim = d3.forceSimulation(DATA.nodes)
-    .force("link", d3.forceLink(links).id(d=>d.id).distance(90).strength(.25))
-    .force("charge", d3.forceManyBody().strength(-440))
-    .force("center", d3.forceCenter(width/2, height/2))
-    .force("collision", d3.forceCollide().radius(d=>5 + Math.sqrt((d.centrality||0)*700) + 6));
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(75).strength(0.7))
+    .force('charge', d3.forceManyBody().strength(-180))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collision', d3.forceCollide().radius(nodeRadius*1.9));
 
-  // clearer links
-  const linkSel = linkLayer.selectAll("line").data(links).join("line")
-    .attr("class","link")
-    .attr("stroke","rgba(200,215,235,0.68)")
-    .attr("stroke-width",1.5);
+  const linkSel = linkLayer.selectAll('line')
+    .data(links)
+    .join('line')
+    .attr('class','link');
 
-  // smaller node ellipses
-  const rx = (d)=> 5 + Math.sqrt((d.centrality||0)*700);
-  const ry = (d)=> 3.5 + Math.sqrt((d.centrality||0)*350);
-
-  const nodeSel = nodeLayer.selectAll("g.node").data(DATA.nodes, d=>d.id).join(enter=>{
-    const g = enter.append("g").attr("class","node").style("cursor","pointer");
-
-    g.append("ellipse")
-      .attr("rx", rx).attr("ry", ry)
-      .attr("fill","#2cc4ff").attr("stroke","#022433").attr("stroke-width",1.2)
-      .style("filter","drop-shadow(0 0 1px rgba(0,0,0,.3))");
-
-    g.append("text")
-      .attr("y", d=>ry(d)+12)
-      .attr("text-anchor","middle")
-      .attr("fill","#fff").attr("font-size",11)
-      .style("pointer-events","none")
-      .text(d=>d.id);
-
-    g.on("mouseover",(ev,d)=>{
-      const desc = getTagDescription(d.id);
-      const deg = d.degree ?? d.deg ?? 0;
-      const cen = Number(d.centrality||0).toFixed(2);
-      const body = desc ? `<div style="opacity:.9;margin-top:4px">${esc(desc)}</div>` : `<div style="opacity:.7;margin-top:4px">—</div>`;
-      showTip(`
-        <div style="font-weight:700;margin-bottom:2px">${esc(d.id)}</div>
-        <div style="opacity:.85">degree ${deg} · centrality ${cen}</div>
-        ${body}
-        <div style="margin-top:6px;opacity:.9"><em>Click to reveal pulse satellites</em></div>
-      `, ev.clientX, ev.clientY);
-    }).on("mousemove",(ev)=>moveTip(ev.clientX, ev.clientY))
-      .on("mouseout", hideTip)
-      .on("click", (_e,d)=>revealSatellites(d.id));
-
-    return g;
-  });
-
-  sim.on("tick", ()=>{
-    linkSel
-      .attr("x1", d=>d.source.x).attr("y1", d=>d.source.y)
-      .attr("x2", d=>d.target.x).attr("y2", d=>d.target.y);
-    nodeSel.attr("transform", d=>`translate(${d.x},${d.y})`);
-    satLayer.selectAll("g.sat").attr("transform", d=>{
-      const a = d._angle||0, r=d._radius||100, h=d.host;
-      return `translate(${h.x + r*Math.cos(a)},${h.y + r*Math.sin(a)})`;
-    });
-  });
-
-  // ---------- satellites ----------
-  function revealSatellites(tagId){
-    hideTip();
-    satLayer.selectAll("*").remove();
-
-    const host = idToNode.get(tagId);
-    if (!host) return;
-    const pulses = Array.isArray(DATA.pulsesByTag?.[tagId]) ? DATA.pulsesByTag[tagId] : [];
-    if (!pulses.length) return;
-
-    const sorted = [...pulses].sort((a,b)=>(a.ageDays??99999)-(b.ageDays??99999));
-    const n = sorted.length, TWO_PI = Math.PI*2, R = 100;
-
-    satLayer.selectAll("g.sat").data(sorted.map((p,i)=>({
-      ...p, host, _angle:(i/n)*TWO_PI, _radius:R
-    })), d=>d.id||d.title||`${tagId}:${d.date||""}`)
+  const nodeSel = nodeLayer.selectAll('g.node')
+    .data(DATA.nodes, d=>d.id)
     .join(enter=>{
-      const g = enter.append("g").attr("class","sat").style("cursor","pointer");
+      const g = enter.append('g').attr('class','node');
+      g.append('circle').attr('r', nodeRadius);
+      g.append('text')
+        .attr('x', nodeRadius + 3)
+        .attr('y', 3)
+        .text(d=>d.id);
 
-      g.append("circle")
-        .attr("r",5).attr("class", d=>ageClass(d.ageDays))
-        .attr("fill", d=>{
-          const m = {"age-very-new":"#ff6b6b","age-new":"#ff9e66","age-mid":"#ffc94d","age-old":"#8ecbff","age-very-old":"#6aa4ff"};
-          return m[ageClass(d.ageDays)] || "#8ecbff";
-        }).attr("stroke","#10131a").attr("stroke-width",1.25);
+      g.on('mouseover', (e,d)=>showTagTooltip(e,d.id))
+       .on('mousemove', moveTooltip)
+       .on('mouseout', hideTooltip)
+       .on('click', (_e,d)=>onTagClick(d.id));
 
-      g.append("title").text(d=>`${d.title||d.id||"pulse"}${d.date?` — ${d.date}`:""}`);
-
-      g.on("click", (_e,d)=> showPulseDetails(d));
       return g;
     });
 
-    sim.alpha(0.35).restart();
+  sim.on('tick', ()=>{
+    linkSel
+      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+    nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
+
+    // keep satellites glued to their host
+    satLayer.selectAll('g.satellite').attr('transform', d=>{
+      const r = d._r, a = d._a;
+      return `translate(${d.host.x + r*Math.cos(a)}, ${d.host.y + r*Math.sin(a)})`;
+    });
+  });
+
+  // ---------- tooltip ----------
+  const tip = d3.select('body').append('div')
+    .style('position','fixed').style('z-index',1000)
+    .style('background','#0f1624').style('border','1px solid rgba(255,255,255,0.08)')
+    .style('padding','10px 12px').style('border-radius','10px')
+    .style('box-shadow','0 6px 24px rgba(0,0,0,.35)').style('display','none')
+    .style('max-width','320px').style('color','#eaf1ff');
+
+  function showTagTooltip(evt, tag){
+    const d = (DATA.tagDescriptions && DATA.tagDescriptions[tag]) || '';
+    const deg = (DATA.meta?.degree && DATA.meta.degree[tag]) ?? null;
+    const cent = (DATA.meta?.centrality && DATA.meta.centrality[tag]) ?? null;
+    const metrics = (deg!=null || cent!=null) ? `<div class="muted" style="margin-top:4px">degree ${deg ?? '—'} · centrality ${cent?.toFixed?.(2) ?? '—'}</div>` : '';
+    tip.html(`<div style="font-weight:600;margin-bottom:4px">${esc(tag)}</div>
+              <div class="muted" style="white-space:pre-wrap">${esc(d || '—')}</div>
+              ${metrics}
+              <div class="muted" style="margin-top:6px">Click to reveal pulse satellites</div>`)
+       .style('display','block');
+    moveTooltip(evt);
+  }
+  function moveTooltip(evt){
+    const pad=12;
+    tip.style('left', (evt.clientX + pad)+'px').style('top', (evt.clientY + pad)+'px');
+  }
+  function hideTooltip(){ tip.style('display','none'); }
+
+  // ---------- satellites ----------
+  let currentHost = null;
+
+  function onTagClick(tagId){
+    currentHost = tagId;
+    satLayer.selectAll('*').remove();
+
+    const host = id2node.get(tagId);
+    if (!host) return;
+
+    const pulses = (DATA.pulsesByTag?.[tagId] || []).slice();
+    if (!pulses.length) return;
+
+    // sort newest→oldest so spiral outward encodes time
+    pulses.sort((a,b)=>(a.ageDays ?? 9e9) - (b.ageDays ?? 9e9));
+
+    // layout: spiral for many, ring otherwise
+    const many = pulses.length > 24;
+    const R0 = 56, step = 13; // spiral
+    const ringR = 86;
+
+    const satData = pulses.map((p,i)=>{
+      if (many){
+        const a = i * 0.42;                     // radians between points
+        return { ...p, host, _r: R0 + i*step/4, _a: a };
+      }else{
+        const a = (i/pulses.length)*Math.PI*2;
+        return { ...p, host, _r: ringR, _a: a };
+      }
+    });
+
+    const sats = satLayer.selectAll('g.satellite')
+      .data(satData, d=>d.id || d.title || (d.date+':'+i))
+      .join(enter=>{
+        const g=enter.append('g').attr('class','satellite');
+        g.append('circle')
+          .attr('r', satSize)
+          .attr('class', d=>ageClass(d.ageDays));
+        // small hover title
+        g.append('title')
+          .text(d=>(d.title || d.id || 'pulse') + (d.date ? ` — ${d.date}`:''));
+        g.on('click', (_e,d)=>showPulseDetails(d));
+        return g;
+      });
+
+    // nudge sim so satellites settle immediately around host
+    sim.alpha(0.6).restart();
   }
 
   // ---------- search ----------
-  if (searchInput){
-    const norm = s => (s||"").toString().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
-    const run = ()=>{
-      const q = norm(searchInput.value);
-      if (!q){
-        nodeSel.classed("dim",false).attr("opacity",1);
-        linkSel.attr("opacity",0.68);
-        return;
-      }
-      const keep = new Set(DATA.nodes.filter(n=>norm(n.id).includes(q)).map(n=>n.id));
-      nodeSel.attr("opacity", d=>keep.has(d.id)?1:.15);
-      linkSel.attr("opacity", l=> (keep.has(l.source.id)&&keep.has(l.target.id)) ? 0.68 : 0.08);
-    };
-    let t=null; searchInput.addEventListener("input", ()=>{clearTimeout(t); t=setTimeout(run,80);});
+  function applyFilter(q){
+    const s = (q||'').trim().toLowerCase();
+    if (!s){
+      nodeSel.classed('dim', false);
+      linkSel.classed('dim', false);
+      return;
+    }
+    const keep = new Set(DATA.nodes.filter(n=>n.id.toLowerCase().includes(s)).map(n=>n.id));
+    nodeSel.classed('dim', d=>!keep.has(d.id));
+    linkSel.classed('dim', d=>!(keep.has(d.source.id) && keep.has(d.target.id)));
   }
+  search && search.addEventListener('input', e=>applyFilter(e.target.value));
+
+  // initial sidebar hint
+  sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>`;
 })();
