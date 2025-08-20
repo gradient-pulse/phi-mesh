@@ -10,9 +10,9 @@
       --accent:#82c7ff; --link:#9fc9ff; --linkDim:rgba(180,200,230,.13);
       --pulseWarm:#ff7a66; --pulseMed:#ffb066; --pulseCool:#86cbff; --pulseCooler:#74a9ff;
     }
-    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); }
-    body { font:14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
-    .app { display:grid; grid-template-columns: 320px 1fr; height:100% }
+    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg) }
+    body { font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
+    .app { display:grid; grid-template-columns:320px 1fr; height:100% }
 
     /* Sidebar */
     aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid rgba(255,255,255,.06); display:flex; flex-direction:column }
@@ -22,18 +22,11 @@
     #search { width:100%; background:#10131a; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; margin-top:10px }
 
     #sidebar-content { padding:14px; overflow:auto; }
-    #sidebar-content h2 { margin:.2rem 0 .6rem 0; font-size:20px }
-    #sidebar-content .muted { color:var(--muted) }
-    #sidebar-content a { color:var(--accent); text-decoration:none }
-    #sidebar-content a:hover { text-decoration:underline }
 
-    /* Chips */
-    .chip { display:inline-block; border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:4px 8px; margin:2px 4px 2px 0; font-size:12px; background:#0f1725 }
+    /* Ellipsize links to one line */
+    .ellipsis { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block }
 
-    /* Ellipsize links to 1 line */
-    .ellipsis { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-    /* Canvas */
+    /* Graph */
     svg { width:100%; height:100% }
     .link { stroke:#b9c7dd; stroke-opacity:.28 }
     .link.dim { stroke-opacity:.08 }
@@ -42,7 +35,6 @@
     .node.dim text { opacity:.18 }
     .node.dim ellipse { opacity:.22 }
 
-    /* Satellites (pulses) */
     .satellite circle { stroke:none }
     .age-very-new { fill:var(--pulseWarm) }
     .age-new { fill:#ff9b66 }
@@ -50,7 +42,6 @@
     .age-old { fill:var(--pulseCool) }
     .age-very-old { fill:var(--pulseCooler) }
 
-    /* Tooltip */
     #tooltip {
       position:fixed; left:0; top:0; display:none;
       background:#0f1522; color:var(--fg);
@@ -60,9 +51,9 @@
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <!-- data.js must define window.PHI_DATA -->
-  <script src="data.js"></script>
-  <script src="graph.js"></script>
+  <!-- IMPORTANT: keep your existing data file as-is -->
+  <script src="graph.js"></script> <!-- this is the DATA your build produces -->
+  <script src="map.js"></script>   <!-- this is the RENDERER below -->
 </head>
 <body>
   <div class="app">
@@ -72,7 +63,7 @@
         <div class="hint">Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details</div>
         <input id="search" type="search" placeholder="Type to filter…" />
       </header>
-      <div id="sidebar-content"><div class="muted">Pick a pulse to see its summary, papers & podcasts.</div></div>
+      <div id="sidebar-content"></div> <!-- starts EMPTY now -->
     </aside>
     <svg id="graph" role="img" aria-label="Tag Map"></svg>
   </div>
