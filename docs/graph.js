@@ -1,242 +1,266 @@
-/* docs/graph.js — spiral satellites, dimming, ovals, less density, tidy sidebar links
-   Expects window.PHI_DATA = { nodes, links, tagDescriptions?, tagResources?, pulsesByTag? }
-*/
+/* docs/graph.js
+ * Bootstraps the Tag Map using window.PHI_DATA
+ * DATA expectations:
+ *  - nodes: [{ id, centrality? }]
+ *  - links: [{ source, target }]
+ *  - tagDescriptions: { [tag]: "…" }
+ *  - pulsesByTag: { [tag]: [{ id, title?, date?, ageDays?, summary?, papers?, podcasts? }] }
+ */
+
 (function () {
   const DATA = window.PHI_DATA || { nodes: [], links: [] };
 
-  // DOM
+  // ----- DOM -----
   const svg = d3.select('#graph');
-  const sidebar = document.getElementById('sidebar');
   const tooltip = d3.select('#tooltip');
-  const searchInput = document.getElementById('tag-search');
+  const sidebar = document.getElementById('sidebar-content');
+  const searchInput = document.getElementById('search');
 
-  // sizing
-  const width = svg.node().clientWidth || 1200;
+  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+  function safeArray(x){return Array.isArray(x)?x:[]}
+
+  // ----- Config -----
+  const width  = svg.node().clientWidth  || 1200;
   const height = svg.node().clientHeight || 800;
 
-  // node ellipse size (oval, not round)
-  const rx = 9, ry = 6;                 // tag node ellipse radii
-  const labelDx = rx + 3, labelDy = 3;
+  const minR = 6, maxR = 24;              // ellipse base radii
+  const ellipseAspect = 1.6;              // rx = r*aspect, ry = r
+  const linkOpacity = 0.28;               // stronger than before
+  const linkOpacityDim = 0.08;
 
-  // link styling
-  const LINK_OPA = 0.30;
-  const LINK_OPA_DIM = 0.10;
+  const satDot = 4.6;                     // satellite dot size
+  const spiralStepR = 8;                  // constant radial step (px) between pulses
+  const spiralStepTheta = 0.48 * Math.PI; // angle step
+  const spiralStartR = 52;
 
-  // simulation tunables to reduce density
-  const LINK_DIST = 110;
-  const CHARGE = -340;
-  const COLLIDE_R = 12;                 // mild padding to reduce overlaps
-
-  // age color (newer warmer)
-  function ageColor(ageDays) {
-    if (ageDays == null) return "#8fbfff";
-    if (ageDays <= 14) return "#ff8161";
-    if (ageDays <= 45) return "#ffb36e";
-    if (ageDays <= 120) return "#ffd07e";
-    if (ageDays <= 270) return "#a8c9ff";
-    return "#8fbfff";
+  // age -> class bucket
+  function ageClass(d){
+    const a = d?.ageDays;
+    if (a == null) return 'age-old';
+    if (a <= 14)  return 'age-very-new';
+    if (a <= 45)  return 'age-new';
+    if (a <= 120) return 'age-mid';
+    if (a <= 270) return 'age-old';
+    return 'age-very-old';
   }
 
-  // Build graph layers
-  svg.attr('viewBox', [0, 0, width, height].join(' '));
+  // ----- SVG layers & zoom -----
+  svg.attr('viewBox', `0 0 ${width} ${height}`);
   const root = svg.append('g');
-  const linkLayer = root.append('g').attr('class', 'links');
-  const nodeLayer = root.append('g').attr('class', 'nodes');
-  const satLayer  = root.append('g').attr('class', 'sats');
+  const linkLayer = root.append('g').attr('class','links');
+  const nodeLayer = root.append('g').attr('class','nodes');
+  const satLayer  = root.append('g').attr('class','satellites');
 
-  const zoom = d3.zoom().scaleExtent([0.35, 5]).on('zoom', (ev) => root.attr('transform', ev.transform));
+  const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (ev)=>root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // map id -> node object
+  // background click clears selection
+  svg.on('click', (ev) => {
+    if (ev.target === svg.node()) {
+      clearSatellites();
+      clearFocus();
+      sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>`;
+    }
+  });
+
+  // ----- Prep data -----
   const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
   const links = DATA.links
-    .map(l => ({ source: idToNode.get(l.source) || l.source, target: idToNode.get(l.target) || l.target }))
+    .map(l => ({
+      source: idToNode.get(l.source) || l.source,
+      target: idToNode.get(l.target) || l.target
+    }))
     .filter(l => l.source && l.target);
 
-  // simulation
-  const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(LINK_DIST).strength(0.75))
-    .force('charge', d3.forceManyBody().strength(CHARGE))
-    .force('center', d3.forceCenter(width/2, height/2))
-    .force('collide', d3.forceCollide().radius(COLLIDE_R));
+  // degree fallback for sizing
+  const degree = new Map();
+  links.forEach(l => {
+    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
+    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
+  });
 
-  // render links
+  const centralities = DATA.nodes.map(n => (typeof n.centrality === 'number' ? n.centrality : degree.get(n.id)||0));
+  const cMin = d3.min(centralities) ?? 0, cMax = d3.max(centralities) ?? 1;
+  const rScale = d3.scaleSqrt().domain([cMin||0.0001, cMax||1]).range([minR, maxR]);
+
+  // ----- Simulation -----
+  const sim = d3.forceSimulation(DATA.nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(75).strength(0.7))
+    .force('charge', d3.forceManyBody().strength(-180))
+    .force('center', d3.forceCenter(width/2, height/2))
+    .force('collision', d3.forceCollide().radius(d => rScale(d.centrality ?? degree.get(d.id) || 1)*1.2));
+
   const linkSel = linkLayer.selectAll('line')
     .data(links)
     .join('line')
     .attr('class','link')
-    .attr('opacity', LINK_OPA);
+    .attr('stroke-opacity', linkOpacity);
 
-  // render nodes (oval ellipses)
   const nodeSel = nodeLayer.selectAll('g.node')
     .data(DATA.nodes, d=>d.id)
     .join(enter => {
       const g = enter.append('g').attr('class','node');
-      g.append('ellipse').attr('rx', rx).attr('ry', ry);
-      g.append('text').attr('x', labelDx).attr('y', labelDy).text(d=>d.id);
 
-      // interactions
-      g.on('mouseover', (ev,d)=> showTagTooltip(ev, d.id))
+      g.append('ellipse')
+        .attr('rx', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect)
+        .attr('ry', d => rScale(d.centrality ?? degree.get(d.id) || 1));
+
+      g.append('text')
+        .attr('x', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect + 4)
+        .attr('y', 4)
+        .text(d => d.id);
+
+      g.on('mouseover', (ev,d) => showTagTooltip(ev, d.id))
        .on('mousemove', moveTooltip)
        .on('mouseout', hideTooltip)
-       .on('click', (_ev,d)=> onTagClick(d.id));
+       .on('click', (ev,d) => { ev.stopPropagation(); onTagClick(d.id); });
 
       return g;
     });
 
-  // tick
   sim.on('tick', () => {
     linkSel
-      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
-      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+      .attr('x1', d=>d.source.x)
+      .attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x)
+      .attr('y2', d=>d.target.y);
 
     nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
 
-    // position satellites (spiral is static off host pos)
-    satLayer.selectAll('circle.sat-dot').attr('cx', d=>d._x).attr('cy', d=>d._y);
+    // keep satellites aligned to host
+    satLayer.selectAll('g.satellite')
+      .attr('transform', d => {
+        const x = d.host.x + d._xoff;
+        const y = d.host.y + d._yoff;
+        return `translate(${x},${y})`;
+      });
   });
 
-  // ---------------- Tooltip ----------------
-  const esc = (s)=> String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[c]);
-
+  // ----- Tooltip -----
   function showTagTooltip(evt, tag) {
-    const desc = DATA.tagDescriptions?.[tag] || '';
-    tooltip.html(
-      `<div class="t-h">${esc(tag)}</div>`+
-      `<div class="t-d">${esc(desc || '—')}</div>`+
-      `<div class="t-hint">Click to reveal pulse satellites</div>`
-    ).style('display','block');
+    const desc = DATA.tagDescriptions?.[tag] || '—';
+    const n = idToNode.get(tag);
+    const deg = degree.get(tag) || 0;
+    const cent = (typeof n?.centrality==='number') ? n.centrality.toFixed(2) : (deg||0);
+    tooltip.html(`
+      <div style="font-weight:700; margin-bottom:4px">${esc(tag)}</div>
+      <div class="muted" style="margin-bottom:6px">degree ${deg} • centrality ${cent}</div>
+      <div style="white-space:pre-wrap; opacity:.92">${esc(desc)}</div>
+      <div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to reveal pulse satellites</div>
+    `).style('display','block');
     moveTooltip(evt);
   }
   function moveTooltip(evt){
-    const pad=14;
-    tooltip.style('left', (evt.clientX+pad)+'px').style('top', (evt.clientY+pad)+'px');
+    const pad=12; tooltip.style('left', (evt.clientX+pad)+'px').style('top',(evt.clientY+pad)+'px');
   }
   function hideTooltip(){ tooltip.style('display','none'); }
 
-  // ---------------- Sidebar ----------------
-  function sidebarPulse(p){
-    const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
-    let html = `<div class="details"><h2>${esc(p.title||p.id||'Pulse')}${when}</h2>`;
-    if (p.summary) html += `<div style="white-space:pre-wrap;margin:.4rem 0 1rem 0">${esc(p.summary)}</div>`;
-
-    const papers = Array.isArray(p.papers)? p.papers : [];
-    const pods = Array.isArray(p.podcasts)? p.podcasts : [];
-
-    if (papers.length){
-      html += `<div class="muted" style="margin:.6rem 0 .2rem 0">Papers</div><div class="linklist">`;
-      for(const it of papers){
-        if (typeof it==='string'){
-          html += `<a href="${it}" target="_blank" rel="noopener">${esc(it)}</a>`;
-        }else if (it && (it.url||it.doi||it.link)){
-          const url = it.url || it.doi || it.link;
-          const label = it.title ? `${it.title}` : url;
-          html += `<a href="${url}" target="_blank" rel="noopener">${esc(label)}</a>`;
-        }
-      }
-      html += `</div>`;
-    }
-    if (pods.length){
-      html += `<div class="muted" style="margin:.6rem 0 .2rem 0">Podcasts</div><div class="linklist">`;
-      for(const u of pods){
-        if (typeof u==='string') html += `<a href="${u}" target="_blank" rel="noopener">${esc(u)}</a>`;
-        else if (u && u.url) html += `<a href="${u.url}" target="_blank" rel="noopener">${esc(u.url)}</a>`;
-      }
-      html += `</div>`;
-    }
-
-    html += `</div>`;
-    sidebar.innerHTML = html;
+  // ----- Focus & dimming -----
+  function setFocus(keepIds){
+    const keep = new Set(keepIds);
+    nodeSel.classed('dim', d => !keep.has(d.id));
+    linkSel.classed('dim', d => !(keep.has(d.source.id) && keep.has(d.target.id)));
+  }
+  function clearFocus(){
+    nodeSel.classed('dim', false);
+    linkSel.classed('dim', false);
   }
 
-  // ---------------- Satellites (spiral) ----------------
-  let focusedTag = null;
+  // ----- Satellites (spiral) -----
+  let currentTag = null;
+
+  function clearSatellites(){
+    currentTag = null;
+    satLayer.selectAll('*').remove();
+  }
+
+  function placeSpiralOffsets(n){
+    // returns [{_xoff,_yoff}, ...] with constant radial spacing
+    const out = [];
+    for (let i=0;i<n;i++){
+      const r = spiralStartR + i*spiralStepR;
+      const t = i*spiralStepTheta;
+      out.push({ _xoff: r*Math.cos(t), _yoff: r*Math.sin(t) });
+    }
+    return out;
+  }
 
   function onTagClick(tagId){
-    focusedTag = tagId;
-    drawSatellites(tagId);
-    applyFocusDimming(tagId);
-  }
+    currentTag = tagId;
 
-  function drawSatellites(tagId){
-    // nuke old
+    // dim to neighbors of tagId (+ itself)
+    const neighbors = new Set([tagId]);
+    links.forEach(l => {
+      if (l.source.id===tagId) neighbors.add(l.target.id);
+      if (l.target.id===tagId) neighbors.add(l.source.id);
+    });
+    setFocus(neighbors);
+
+    // clear + draw satellites
     satLayer.selectAll('*').remove();
 
     const host = idToNode.get(tagId);
     if (!host) return;
-    const pulses = (DATA.pulsesByTag?.[tagId] || []);
+
+    const pulses = safeArray(DATA.pulsesByTag?.[tagId]);
     if (!pulses.length) return;
 
-    // Archimedean spiral around host — ensure close spacing
-    const TWO_PI = Math.PI*2;
-    const n = pulses.length;
-    const a = 26;          // spiral start radius
-    const b = 10;          // radial growth per turn (smaller => tighter spiral)
-    const turnEvery = 8;   // dots per loop to keep visual spiral
+    const offs = placeSpiralOffsets(pulses.length);
 
-    const sorted = [...pulses].sort((a,b)=> (a.ageDays??9e9) - (b.ageDays??9e9)); // newest first (warmer)
+    const g = satLayer.selectAll('g.satellite')
+      .data(pulses.map((p,i)=>({...p, host, ...offs[i]})), d => d.id || d.title || (d.date||'') );
 
-    const sat = satLayer.selectAll('circle.sat-dot')
-      .data(sorted.map((p,i)=>{
-        const theta = (i/turnEvery)*TWO_PI;
-        const r = a + b*theta;
-        const x = host.x + r*Math.cos(theta);
-        const y = host.y + r*Math.sin(theta);
-        return { ...p, _x:x, _y:y, _i:i };
-      }), d=> d.id || d.title || `${tagId}:${d.date || d._i}`);
+    const enter = g.enter().append('g').attr('class','satellite');
 
-    sat.enter()
-      .append('circle')
-      .attr('class','sat-dot')
-      .attr('r', 4.2)
-      .attr('fill', d=> ageColor(d.ageDays))
-      .attr('cx', d=>d._x)
-      .attr('cy', d=>d._y)
-      .on('click', (_ev,d)=> sidebarPulse(d));
+    enter.append('circle')
+      .attr('r', satDot)
+      .attr('class', d => ageClass(d));
+
+    // show date label (small)
+    enter.append('text')
+      .attr('y', -9)
+      .attr('text-anchor','middle')
+      .attr('font-size', 9)
+      .attr('fill', '#a3b3c7')
+      .text(d => d.date ? d.date.slice(2,10) : '');
+
+    enter.on('click', (ev,d) => { ev.stopPropagation(); showPulseDetails(d); });
+
+    sim.alpha(0.5).restart();
   }
 
-  // Dimming: keep host + its neighbors + satellites vivid; dim rest
-  function applyFocusDimming(tagId){
-    // collect neighbor ids
-    const keep = new Set([tagId]);
-    links.forEach(l=>{
-      const a=l.source.id||l.source, b=l.target.id||l.target;
-      if (a===tagId) keep.add(b);
-      if (b===tagId) keep.add(a);
-    });
-
-    nodeSel.classed('dim', d=> !keep.has(d.id));
-    linkSel
-      .classed('dim', d=> !(keep.has(d.source.id) && keep.has(d.target.id)))
-      .attr('opacity', d=> (keep.has(d.source.id) && keep.has(d.target.id)) ? LINK_OPA : LINK_OPA_DIM);
-
-    // satellites inherit by being a separate layer (not dimmed)
+  // ----- Sidebar rendering -----
+  function renderLinksBlock(label, items){
+    if (!items?.length) return '';
+    const norm = items.map(u => typeof u==='string' ? {title:u, url:u} : (u?.url ? u : {title:u?.title||u?.url, url:u?.url||''}));
+    let html = `<div style="margin-top:12px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
+    for (const it of norm){
+      const title = it.title || it.url;
+      const href  = it.url || it.title || '#';
+      html += `<li><a class="ellipsis" href="${esc(href)}" target="_blank" rel="noopener">${esc(title)}</a></li>`;
+    }
+    html += `</ul></div>`;
+    return html;
   }
 
-  // clicking empty background clears focus
-  svg.on('click', (ev)=>{
-    // ignore if a node/sat handled it
-    if (ev.target.closest('.node, .sat-dot')) return;
+  function showPulseDetails(p){
+    const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
+    let html = `<h2>${esc(p.title || p.id || 'Pulse')}${when}</h2>`;
+    if (p.summary) html += `<div style="white-space:pre-wrap; margin:.3rem 0 1rem 0">${esc(p.summary)}</div>`;
+    html += renderLinksBlock('Papers', p.papers);
+    html += renderLinksBlock('Podcasts', p.podcasts);
+    sidebar.innerHTML = html;
+  }
 
-    focusedTag = null;
-    satLayer.selectAll('*').remove();
-    nodeSel.classed('dim', false);
-    linkSel.classed('dim', false).attr('opacity', LINK_OPA);
-    // keep sidebar content; no reset text
-  });
-
-  // ---------------- Search ----------------
+  // ----- Search -----
   function applyFilter(q){
     const s = (q||'').trim().toLowerCase();
-    if (!s){
-      nodeSel.classed('dim', false);
-      linkSel.classed('dim', false).attr('opacity', LINK_OPA);
-      return;
-    }
-    const keep = new Set(DATA.nodes.filter(n=> n.id.toLowerCase().includes(s)).map(n=>n.id));
-    nodeSel.classed('dim', d=> !keep.has(d.id));
-    linkSel.classed('dim', d=> !(keep.has(d.source.id) && keep.has(d.target.id)))
-           .attr('opacity', d=> (keep.has(d.source.id) && keep.has(d.target.id)) ? LINK_OPA : LINK_OPA_DIM);
+    if (!s){ clearFocus(); return; }
+    const keep = new Set(DATA.nodes.filter(n => n.id.toLowerCase().includes(s)).map(n=>n.id));
+    setFocus(keep);
   }
-  if (searchInput) searchInput.addEventListener('input', (e)=> applyFilter(e.target.value));
+  if (searchInput) searchInput.addEventListener('input', e => applyFilter(e.target.value));
+
+  // ----- Initial sidebar -----
+  sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>`;
 })();
