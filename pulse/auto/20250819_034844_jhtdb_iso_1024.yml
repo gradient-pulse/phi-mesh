@@ -1,16 +1,17 @@
 title: Significant NT Rhythm — jhtdb_iso_1024
 date: '2025-08-19T03:48:44Z'
-summary: 'jhtdb_iso_1024 — NT rhythm test → p=0.1372, effect=0.13; significant: no
-  @ α=0.01.'
 tags:
 - RGP
 - NT (Narrative_Tick)
 - NT_rhythm
 - Rhythm
-- NavierStokes
+- Navier_Stokes
 - turbulence
 - ExperimenterPulse
 - jhtdb_iso_1024
+- NavierStokes
+summary: 'jhtdb_iso_1024 — NT rhythm test → p=0.1372, effect=0.13; significant: no
+  @ α=0.01.'
 papers:
 - title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
   url: https://doi.org/10.5281/zenodo.15830659

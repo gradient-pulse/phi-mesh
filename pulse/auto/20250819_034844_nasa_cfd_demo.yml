@@ -1,16 +1,17 @@
 title: Significant NT Rhythm — nasa_cfd_demo
 date: '2025-08-19T03:48:44Z'
-summary: 'nasa_cfd_demo — NT rhythm test → p=0.7853, effect=0.25; significant: no
-  @ α=0.01.'
 tags:
 - RGP
 - NT (Narrative_Tick)
 - NT_rhythm
 - Rhythm
-- NavierStokes
+- Navier_Stokes
 - turbulence
 - ExperimenterPulse
 - nasa_cfd_demo
+- NavierStokes
+summary: 'nasa_cfd_demo — NT rhythm test → p=0.7853, effect=0.25; significant: no
+  @ α=0.01.'
 papers:
 - title: 'Solving Navier-Stokes, Differently: What It Takes (V1.2)'
   url: https://doi.org/10.5281/zenodo.15830659
