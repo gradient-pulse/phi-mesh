@@ -37,7 +37,6 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 ## Quick links
 
 - 📈 **Tag Map** (interactive): [`docs/tag_map.html`](docs/tag_map.html)  
-- 🗂 **Tag Browser** (list + details): [`docs/tag_browser.html`](docs/tag_browser.html)  
 - 🧪 **NS Prototype (90-day benchmark):** [`RGP_NS_prototype/`](RGP_NS_prototype/)  
 - 🏁 **Results schema & leaderboard stub:** [`results/`](results/)  
 - 📚 **Foundational PDFs:** [`foundational_rgp-papers/`](foundational_rgp-papers/)
