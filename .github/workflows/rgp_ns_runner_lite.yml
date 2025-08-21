@@ -1,0 +1,55 @@
+name: RGP-NS Runner (Lite — Harvest Significant Results)
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "23 4 * * 2"  # Tuesdays 04:23 UTC — adjust as you like
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rgp-ns-harvest
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Harvest significant results → emit pulses
+        run: |
+          python tools/harvest_rgp_ns_results.py
+
+      - name: Commit new pulses (if any)
+        run: |
+          set -e
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          # Stage any new/updated files:
+          git add pulse/auto/**/*.yml meta/harvest_log.txt 2>/dev/null || true
+          git add pulse/auto/*.yml meta/harvest_log.txt 2>/dev/null || true
+
+          # Nothing to commit? exit quietly.
+          git diff --cached --quiet && echo "No new pulses." && exit 0
+
+          git commit -m "auto: harvest significant NT rhythm results → pulses"
+          # Gentle rebase to avoid push races
+          git pull --rebase origin "${GITHUB_REF_NAME}" || true
+          git push
