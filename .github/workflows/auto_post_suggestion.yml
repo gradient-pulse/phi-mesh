@@ -1,0 +1,61 @@
+name: Suggest Mesh Academy Post
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'mesh_academy/curriculum/**'
+      - 'mesh_academy/tools/drift_parser.py'
+      - 'mesh_academy/curriculum/drift_course_map.yaml'
+      - 'phi-mesh/mesh_academy/curriculum/**'
+      - 'phi-mesh/mesh_academy/tools/drift_parser.py'
+      - 'phi-mesh/mesh_academy/curriculum/drift_course_map.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  suggest_post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      # Try both possible locations. If none exists, emit a placeholder without failing the job.
+      - name: Generate suggestion (alignment)
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="mesh_academy/logs/next_post_suggestion.md"
+          mkdir -p "$(dirname "$OUT")"
+
+          if [[ -f mesh_academy/tools/drift_parser.py ]]; then
+            python mesh_academy/tools/drift_parser.py alignment > output.txt || true
+          elif [[ -f phi-mesh/mesh_academy/tools/drift_parser.py ]]; then
+            python phi-mesh/mesh_academy/tools/drift_parser.py alignment > output.txt || true
+          else
+            echo "drift_parser.py not found in either location; creating a placeholder." > output.txt
+          fi
+
+          {
+            echo "### Suggested Course Based on Drift Tag: alignment"
+            echo
+            cat output.txt
+          } > "$OUT"
+
+      - name: Commit and push suggestion
+        shell: bash
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "bot@phi-mesh.ai"
+          git add mesh_academy/logs/next_post_suggestion.md || true
+          git commit -m "Add next post suggestion from drift tag" || echo "No changes to commit"
+          git push || true
