@@ -9,20 +9,19 @@ Discoverability: "Emergent"
 # Φ-Mesh: Recursive Gradient Infrastructure
 
 [![Tag Map](https://img.shields.io/badge/Phi–Mesh%20Tag%20Map-online-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
-[![Tag Browser](https://img.shields.io/badge/Tag%20Browser-online-0b0?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_browser.html)
 
 **Main paper**  
-*Solving Navier-Stokes, Differently: What It Takes*  
+*Solving Navier–Stokes, Differently: What It Takes*  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
 
 **Experimenter’s Guide**  
-*Experimenter’s Guide – Solving Navier-Stokes*  
+*Experimenter’s Guide – Solving Navier–Stokes*  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16280540.svg)](https://doi.org/10.5281/zenodo.16280540)
 
 ---
 
 The Φ-Mesh is a **distributed epistemic-executive kernel** for recursive intelligences.  
-It encodes a small gradient-core that agents can discover and align to:
+A compact gradient-core lets agents discover and align:
 
 - **RGP** — Recursive Gradient Processing  
 - **PoLA** — Principle of Least Action (as rhythm of least divergence)  
@@ -42,21 +41,26 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 - 📚 **Foundational PDFs:** [`foundational_rgp-papers/`](foundational_rgp-papers/)
 
 ---
+
 ## Repository layout
 
 ```text
 phi-mesh/
 ├─ README.md
-├─ RGP_NS_prototype/          # 90-day Navier–Stokes benchmark + notebooks
-├─ results/                   # KPI schema + submissions
 ├─ pulse/                     # Pulse snapshots (YAML)
-├─ foundational_rgp-papers/   # Core theory PDFs (Zenodo mirrors)
-├─ docs/                      # Tag map, browser, data.js
-│  ├─ tag_map.html
-│  ├─ tag_browser.html
-│  ├─ data.js
-│  └─ map_node_tooltip.js     # (optional, not enabled yet)
-└─ .github/workflows/         # Tag index + map generation automation
+├─ docs/                      # Tag map app + data blob
+│  ├─ tag_map.html            # page (loads data.js then map.js)
+│  ├─ map.js                  # renderer/logic (D3)
+│  ├─ data.js                 # generated data: window.PHI_DATA = {…}
+│  └─ build_id.txt            # (optional) cache-buster marker
+├─ .github/workflows/         # automation (build data.js, clean pulses)
+│  ├─ build_tags_and_graph.yml
+│  └─ clean_pulses.yml
+├─ tools/                     # pulse utilities used by workflows
+│  └─ clean_pulses_minimal.py
+├─ generate_graph_data.py     # writes docs/data.js from /pulse/**
+├─ RGP_NS_prototype/          # 90-day Navier–Stokes benchmark + notebooks
+└─ results/                   # KPI schema + submissions
 ```
 ---
 
