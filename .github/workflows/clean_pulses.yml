@@ -3,6 +3,7 @@ name: Clean Pulses (minimal schema)
 on:
   workflow_dispatch:
   push:
+    branches: [ main ]
     paths:
       - 'pulse/**/*.yml'
       - 'pulse/**/*.yaml'
@@ -17,13 +18,24 @@ concurrency:
 
 jobs:
   clean:
+    # avoid infinite loops when the workflow itself commits
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Verify cleaner exists
+        shell: bash
+        run: |
+          if [[ ! -f tools/clean_pulses_minimal.py ]]; then
+            echo "tools/clean_pulses_minimal.py not found — nothing to do."
+            exit 0
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -44,21 +56,25 @@ jobs:
           python tools/clean_pulses_minimal.py --write
 
       - name: Commit changes (if any)
+        shell: bash
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Stage anything changed under pulse/ regardless of nesting
+          # Stage any pulse updates (yml/yaml) under pulse/
           git add -A pulse/
 
           echo "---- files staged ----"
           git status --porcelain | sed -n '1,200p' || true
 
-          # Bail out quietly if nothing changed
-          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          # If nothing staged, stop quietly
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
 
           git commit -m "chore: clean pulses to minimal schema (title,date,summary,tags,papers,podcasts)"
-          # Rebase in case of fast parallel writes
+          # In case someone raced a push to main, rebase then push
           git pull --rebase || true
-          git push
+          git push || true
