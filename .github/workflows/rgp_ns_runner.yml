@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -26,8 +28,16 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          # Core repo deps
+          if [[ -f requirements.txt ]]; then
+            pip install -r requirements.txt
+          fi
+          # Tools used in this workflow
+          pip install pyyaml
+          sudo apt-get update -y
+          sudo apt-get install -y jq
 
       - name: Check secrets (warn only)
         env:
@@ -45,7 +55,9 @@ jobs:
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
           ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
-        run: python agents/rgp_ns/run_agent.py
+        run: |
+          set -euo pipefail
+          python agents/rgp_ns/run_agent.py
 
       - name: Debug — show new files
         run: |
@@ -56,7 +68,7 @@ jobs:
           echo "--- results ---";         ls -la results || true
           echo "--- results/rgp_ns ---";  ls -la results/rgp_ns || true
 
-      - name: Verify outputs (latest run only) with jq
+      - name: Verify outputs (latest run only)
         run: |
           set -euo pipefail
           if [ ! -d results/rgp_ns ]; then
@@ -83,113 +95,87 @@ jobs:
           fi
           echo "OK: latest run summaries look good."
 
-      - name: Show latest summary in logs (pretty)
+      - name: Show last summary (pretty)
         run: |
-          set -e
+          set -euo pipefail
           latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-          if [ -n "$latest_root" ]; then
-            latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-            target="${latest_dir:-$latest_root}"
-            summary="$target/summary.json"
-            if [ -f "$summary" ]; then
-              echo "::group::Latest summary: $summary"
-              echo "DATASET: $(jq -r '.dataset' "$summary")"
-              echo "p = $(jq -r '.nt_test.p' "$summary") | effect size = $(jq -r '.nt_test.effect_size' "$summary") | significant = $(jq -r '.nt_test.significant' "$summary")"
-              echo; echo "Full JSON:"; cat "$summary"
-              echo "::endgroup::"
-            else
-              echo "No summary.json found in latest run."
-            fi
-          else
-            echo "No run directories found."
-          fi
-
-      - name: Show last 3 run summaries (trend)
-        run: |
-          echo "::group::Last 3 run summaries"
-          mapfile -t last3 < <(find results/rgp_ns -type f -name summary.json -printf '%T@ %p\n' | sort -nr | head -n3 | awk '{print $2}')
-          if [ "${#last3[@]}" -eq 0 ]; then
-            echo "No summaries found."
-          else
-            for f in "${last3[@]}"; do
-              ds=$(jq -r '.dataset' "$f")
-              p=$(jq -r '.nt_test.p' "$f")
-              es=$(jq -r '.nt_test.effect_size' "$f")
-              sg=$(jq -r '.nt_test.significant' "$f")
-              echo "$f :: dataset=$ds | p=$p | effect_size=$es | significant=$sg"
-            done
-          fi
-          echo "::endgroup::"
-
-      - name: Auto-create pulse if significant
-        run: |
-          set -e
-          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-          [ -z "$latest_root" ] && echo "No latest run root; skipping pulse creation." && exit 0
           latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
           target="${latest_dir:-$latest_root}"
           summary="$target/summary.json"
-          if [ ! -f "$summary" ]; then
-            echo "No summary.json in $target — skipping pulse creation."; exit 0
+          if [ -f "$summary" ]; then
+            echo "::group::Latest summary: $summary"
+            echo "DATASET: $(jq -r '.dataset' "$summary")"
+            echo "p = $(jq -r '.nt_test.p' "$summary") | effect size = $(jq -r '.nt_test.effect_size' "$summary") | significant = $(jq -r '.nt_test.significant' "$summary")"
+            echo; echo "Full JSON:"; cat "$summary"
+            echo "::endgroup::"
+          else
+            echo "No summary.json found."
           fi
+
+      - name: Auto-create minimal pulse if significant
+        run: |
+          set -euo pipefail
+          mkdir -p pulse/auto
+          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          [ -z "${latest_root:-}" ] && echo "No latest run root; skipping pulse creation." && exit 0
+          latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          target="${latest_dir:-$latest_root}"
+          summary="$target/summary.json"
+          [ -f "$summary" ] || { echo "No summary.json in $target — skipping pulse creation."; exit 0; }
+
           if [ "$(jq -r '.nt_test.significant' "$summary")" = "true" ]; then
             dataset=$(jq -r '.dataset' "$summary")
             effect=$(jq -r '.nt_test.effect_size' "$summary")
             pval=$(jq -r '.nt_test.p' "$summary")
             ts=$(date -u +"%Y%m%d_%H%M%S")
-            mkdir -p pulse/auto
-            pulse_file="pulse/auto/${ts}_${dataset}.yml"
-            : > "$pulse_file"
-            printf 'title: "Significant NT Rhythm — %s"\n' "$dataset" >> "$pulse_file"
-            printf 'date: "%s"\n' "$(date -u +%Y-%m-%d)" >> "$pulse_file"
-            printf 'summary: >\n  Automated detection run found statistically significant NT rhythm in dataset `%s` (effect size = %s, p = %s).\n' "$dataset" "$effect" "$pval" >> "$pulse_file"
-            printf 'tags:\n  - RGP\n  - Navier_Stokes\n  - NT_rhythm\n  - rhythm-of-least-divergence\n' >> "$pulse_file"
-            printf 'papers: []\n' >> "$pulse_file"
-            printf 'podcasts: []\n' >> "$pulse_file"
-            echo "Pulse created: $pulse_file"
+            out="pulse/auto/${ts}_${dataset}.yml"
+
+            {
+              printf 'title: "Significant NT Rhythm — %s"\n' "$dataset"
+              printf 'date: "%s"\n' "$(date -u +%Y-%m-%d)"
+              printf 'summary: >-\n  Automated detection found statistically significant NT rhythm in dataset "%s" (effect size = %s, p = %s).\n' "$dataset" "$effect" "$pval"
+              printf 'tags:\n'
+              printf '  - RGP\n'
+              printf '  - Navier_Stokes\n'
+              printf '  - NT_rhythm\n'
+              printf '  - rhythm-of-least-divergence\n'
+              printf '  - ExperimenterPulse\n'
+              printf 'papers: []\n'
+              printf 'podcasts: []\n'
+            } > "$out"
+
+            echo "Pulse created: $out"
           else
             echo "No significant result — skipping pulse creation."
           fi
 
-      # --- NEW: Auto-fix canonical ExperimenterPulse refs (safe/no-op if none) ---
-      - name: Ensure ExperimenterPulse references (auto-fix)
-        shell: bash
+      - name: Clean pulses to minimal schema
+        run: |
+          set -euo pipefail
+          if [[ -f tools/clean_pulses_minimal.py ]]; then
+            python tools/clean_pulses_minimal.py --write
+          else
+            echo "tools/clean_pulses_minimal.py not found — skipping cleaning."
+          fi
+
+      - name: Optional: ensure canonical ExperimenterPulse refs (no-op if absent)
         run: |
           set -euo pipefail
           if [[ -f tools/ensure_experimenter_refs.py ]]; then
-            python tools/ensure_experimenter_refs.py
-            git config user.name "phi-mesh-bot"
-            git config user.email "actions@users.noreply.github.com"
-            git add pulse/**/*.yml || true
-            git commit -m "chore: ensure canonical ExperimenterPulse refs" || echo "nothing to commit"
-            git push || true
+            python tools/ensure_experimenter_refs.py || true
           else
-            echo "tools/ensure_experimenter_refs.py not found — skipping auto-fix."
+            echo "tools/ensure_experimenter_refs.py not found — skipping."
           fi
 
       - name: Commit results & pulses
         run: |
+          set -euo pipefail
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git pull --rebase origin main || true
           git add -A
-          git commit -m "auto: RGP-NS agent run" || echo "nothing to commit"
+          git commit -m "auto: RGP-NS agent run (results + pulses cleaned)" || echo "nothing to commit"
+          # In case of parallel pushes
+          git pull --rebase origin main || true
           git push
 
-      - name: Refresh Tag Index & Map
-        run: |
-          python meta/update_tag_index.py
-          if [ -f meta/generate_tag_map.py ]; then
-            python meta/generate_tag_map.py
-          elif [ -f build_tag_browser.py ]; then
-            python build_tag_browser.py
-          else
-            echo "No map builder found; skipping map build."
-          fi
-
-      - name: Commit index & map
-        run: |
-          git pull --rebase origin main || true
-          git add -A
-          git commit -m "auto: refresh tag index & map" || echo "nothing to commit"
-          git push
+      # DO NOT build the map here. Pushing triggers your Build Tags and Graph workflow.
