@@ -20,29 +20,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
+          # If requirements.txt exists, use it; otherwise install jq (used below) and pyyaml
+          if [[ -f requirements.txt ]]; then
             pip install -r requirements.txt
           else
-            pip install pyyaml jq
+            pip install pyyaml
+            sudo apt-get update && sudo apt-get install -y jq
           fi
 
       - name: Check secrets (warn only)
         env:
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
+          ZENODO_DOI: ${{ secrets.ZENODO_DOI }}
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
         run: |
-          if [ -z "${JHTDB_TOKEN}" ]; then echo "⚠️  Warning: JHTDB_TOKEN not set"; else echo "✅ JHTDB_TOKEN present"; fi
-          if [ -z "${ZENODO_DOI}" ]; then echo "⚠️  Warning: ZENODO_DOI not set"; else echo "✅ ZENODO_DOI present"; fi
-          if [ -z "${X_WEBHOOK_URL}" ]; then echo "⚠️  Warning: X_WEBHOOK_URL not set"; else echo "✅ X_WEBHOOK_URL present"; fi
+          [[ -z "${JHTDB_TOKEN}"   ]] && echo "⚠️  JHTDB_TOKEN not set"   || echo "✅ JHTDB_TOKEN present"
+          [[ -z "${ZENODO_DOI}"    ]] && echo "⚠️  ZENODO_DOI not set"    || echo "✅ ZENODO_DOI present"
+          [[ -z "${X_WEBHOOK_URL}" ]] && echo "⚠️  X_WEBHOOK_URL not set" || echo "✅ X_WEBHOOK_URL present"
           echo "Continuing (warnings only)."
 
       - name: Execute agent loop
@@ -51,32 +53,26 @@ jobs:
           ZENODO_DOI:  ${{ secrets.ZENODO_DOI }}
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
         run: |
-          if [ -f agents/rgp_ns/run_agent.py ]; then
-            python agents/rgp_ns/run_agent.py
-          else
-            echo "No agents/rgp_ns/run_agent.py found — skipping agent run."
-          fi
+          # Your agent entrypoint; adjust if you renamed it
+          python agents/rgp_ns/run_agent.py
 
-      - name: Debug — show new files
+      - name: Debug — list outputs
         run: |
-          echo "Tree after agent run:"
-          ls -la
+          echo "Root:"; ls -la
           echo "--- pulse ---";           ls -la pulse || true
           echo "--- pulse/auto ---";      ls -la pulse/auto || true
           echo "--- results ---";         ls -la results || true
           echo "--- results/rgp_ns ---";  ls -la results/rgp_ns || true
 
-      - name: Verify outputs (latest run only)
+      - name: Verify latest run summaries (jq)
         run: |
           set -euo pipefail
-          if [ ! -d results/rgp_ns ]; then
-            echo "No results/rgp_ns directory found (nothing to verify)."
-            exit 0
+          if [[ ! -d results/rgp_ns ]]; then
+            echo "No results/rgp_ns directory found"; exit 1
           fi
           latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-          if [ -z "${latest_root:-}" ]; then
-            echo "No run directory found under results/rgp_ns"
-            exit 0
+          if [[ -z "${latest_root:-}" ]]; then
+            echo "No run directory found under results/rgp_ns"; exit 1
           fi
           found=0
           while IFS= read -r -d '' s; do
@@ -89,77 +85,86 @@ jobs:
               (.nt_test.significant != null)
             ' "$s" >/dev/null
           done < <(find "$latest_root" -type f -name summary.json -print0)
-          if [ "$found" -eq 0 ]; then
-            echo "No summary.json files found inside latest run ($latest_root)"
+          if [[ "$found" -eq 0 ]]; then
+            echo "No summary.json files found inside latest run ($latest_root)"; exit 1
+          fi
+          echo "OK: latest run summaries look good."
+
+      - name: Log latest summary (pretty)
+        run: |
+          latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+          if [[ -n "${latest_root:-}" ]]; then
+            latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
+            target="${latest_dir:-$latest_root}"
+            summary="$target/summary.json"
+            if [[ -f "$summary" ]]; then
+              echo "::group::Latest summary: $summary"
+              echo "DATASET: $(jq -r '.dataset' "$summary")"
+              echo "p = $(jq -r '.nt_test.p' "$summary") | effect size = $(jq -r '.nt_test.effect_size' "$summary") | significant = $(jq -r '.nt_test.significant' "$summary")"
+              echo; echo "Full JSON:"; cat "$summary"
+              echo "::endgroup::"
+            else
+              echo "No summary.json found in latest run."
+            fi
           else
-            echo "OK: latest run summaries look good."
+            echo "No run directories found."
           fi
 
       - name: Auto-create pulse if significant
         run: |
-          set -e
-          if [ ! -d results/rgp_ns ]; then
-            echo "No results to scan for pulses."
-            exit 0
-          fi
-
+          set -euo pipefail
           latest_root="$(find results/rgp_ns -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
-          if [ -z "${latest_root:-}" ]; then
-            echo "No latest run root; skipping pulse creation."
-            exit 0
+          if [[ -z "${latest_root:-}" ]]; then
+            echo "No latest run root; skipping pulse creation."; exit 0
           fi
-
           latest_dir="$(find "$latest_root" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -nr | head -n1 | awk '{print $2}')"
           target="${latest_dir:-$latest_root}"
           summary="$target/summary.json"
-
-          if [ ! -f "$summary" ]; then
+          if [[ ! -f "$summary" ]]; then
             echo "No summary.json in $target — skipping pulse creation."
             exit 0
           fi
-
-          if [ "$(jq -r '.nt_test.significant' "$summary")" = "true" ]; then
-            dataset=$(jq -r '.dataset' "$summary")
-            effect=$(jq -r '.nt_test.effect_size' "$summary")
-            pval=$(jq -r '.nt_test.p' "$summary")
-            ts=$(date -u +"%Y%m%d_%H%M%S")
-
+          if [[ "$(jq -r '.nt_test.significant' "$summary")" == "true" ]]; then
+            dataset="$(jq -r '.dataset' "$summary")"
+            effect="$(jq -r '.nt_test.effect_size' "$summary")"
+            pval="$(jq -r '.nt_test.p' "$summary")"
+            ts="$(date -u +"%Y%m%d_%H%M%S")"
             mkdir -p pulse/auto
             pulse_file="pulse/auto/${ts}_${dataset}.yml"
-
             {
               printf 'title: "Significant NT Rhythm — %s"\n' "$dataset"
               printf 'date: "%s"\n' "$(date -u +%Y-%m-%d)"
-              printf 'summary: >\n'
-              printf '  Automated detection run found statistically significant NT rhythm in dataset "%s"\n' "$dataset"
-              printf '  (effect size = %s, p = %s).\n' "$effect" "$pval"
-              printf 'tags:\n'
-              printf '  - RGP\n'
-              printf '  - Navier_Stokes\n'
-              printf '  - NT_rhythm\n'
-              printf '  - rhythm-of-least-divergence\n'
+              printf 'summary: >\n  Automated detection run found statistically significant NT rhythm in dataset `%s` (effect size = %s, p = %s).\n' "$dataset" "$effect" "$pval"
+              printf 'tags:\n  - RGP\n  - Navier_Stokes\n  - NT_rhythm\n  - rhythm-of-least-divergence\n'
               printf 'papers: []\n'
               printf 'podcasts: []\n'
             } > "$pulse_file"
-
             echo "Pulse created: $pulse_file"
           else
             echo "No significant result — skipping pulse creation."
           fi
 
-      - name: Ensure ExperimenterPulse references (auto-fix)
+      - name: Clean pulses to minimal schema
         run: |
-          if [ -f tools/ensure_experimenter_refs.py ]; then
-            python tools/ensure_experimenter_refs.py || true
+          if [[ -f tools/clean_pulses_minimal.py ]]; then
+            python tools/clean_pulses_minimal.py --write || true
           else
-            echo "tools/ensure_experimenter_refs.py not found — skipping."
+            echo "tools/clean_pulses_minimal.py not found — skipping clean."
           fi
 
-      - name: Commit results & pulses
+      - name: Rebuild data.js for Tag Map
+        run: |
+          mkdir -p docs
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
+      - name: Commit results, pulses, and map
         run: |
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git pull --rebase origin main || true
           git add -A
-          git commit -m "auto: RGP-NS agent run (results + pulses)" || echo "nothing to commit"
+          git commit -m "auto: RGP-NS run (results, pulses, docs/data.js)" || echo "nothing to commit"
           git push || true
