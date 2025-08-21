@@ -1,37 +1,52 @@
-/* docs/map.js – renderer (data expected in window.PHI_DATA) */
+/* docs/map.js – renderer (data lives in docs/data.js)
+   - Empty sidebar until a pulse is clicked
+   - Clear sidebar when clicking a tag
+   - Dimming + force tweaks for a cleaner layout
+   - Sidebar "Pulses for <tag>" list with colored dots
+*/
 (function () {
-  // ---- DATA ----
-  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
-    ? window.PHI_DATA
-    : { nodes: [], links: [], tagDescriptions: {}, pulsesByTag: {} };
+  const DATA = window.PHI_DATA || { nodes: [], links: [] };
 
-  // ---- DOM ----
+  // ----- DOM -----
   const svg = d3.select('#graph');
   const tooltip = d3.select('#tooltip');
   const sidebar = document.getElementById('sidebar-content');
   const searchInput = document.getElementById('search');
 
-  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-  function safeArray(x){return Array.isArray(x)?x:[]}
+  // Sidebar helpers
+  function setSidebarHTML(html) { sidebar.innerHTML = html || ''; }
+  function clearSidebar() { setSidebarHTML(''); }
 
-  // ---- Config ----
-  const vbW  = (svg.node().clientWidth  || 1200);
-  const vbH  = (svg.node().clientHeight || 800);
-  svg.attr('viewBox', `0 0 ${vbW} ${vbH}`);
+  // Esc helpers
+  const esc = (s)=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  const safeArray = (x)=>Array.isArray(x)?x:[];
 
-  const minR = 6, maxR = 24;           // ellipse base radii
-  const ellipseAspect = 1.6;           // rx = r*aspect, ry = r
-  const linkOpacity = 0.28;
-  const linkOpacityDim = 0.08;
+  // ----- Config -----
+  const width  = svg.node().clientWidth  || 1200;
+  const height = svg.node().clientHeight || 800;
 
-  const satDot = 4.6;                  // satellite dot size
-  const spiralStepR = 8;               // constant radial step (px) between pulses
+  const minR = 6, maxR = 24;
+  const ellipseAspect = 1.6;
+
+  // Layout: open up a bit, but not chaotic
+  const LINK_DIST = 92;
+  const LINK_STR  = 0.7;
+  const CHARGE    = -230;
+  const COLLIDE_K = 1.25;
+
+  // Dimming
+  const linkOpacity = 0.26;
+  const linkOpacityDim = 0.05;
+
+  // Satellite spiral (constant radial step)
+  const satDot = 4.6;
+  const spiralStepR = 8;
   const spiralStepTheta = 0.48 * Math.PI;
   const spiralStartR = 52;
 
-  // age -> class bucket
+  // Age -> CSS class for color
   function ageClass(d){
-    var a = (d && d.ageDays);
+    const a = d?.ageDays;
     if (a == null) return 'age-old';
     if (a <= 14)  return 'age-very-new';
     if (a <= 45)  return 'age-new';
@@ -40,35 +55,8 @@
     return 'age-very-old';
   }
 
-  // ---- Build link objects & degree ----
-  const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
-  const links = DATA.links.map(l => ({
-    source: idToNode.get(l.source) || l.source,
-    target: idToNode.get(l.target) || l.target
-  })).filter(l => l.source && l.target);
-
-  const degree = new Map();
-  links.forEach(l => {
-    degree.set(l.source.id, (degree.get(l.source.id) || 0) + 1);
-    degree.set(l.target.id, (degree.get(l.target.id) || 0) + 1);
-  });
-
-  // centrality helper (no ?? mixed with ||)
-  function getCentrality(d){
-    return (typeof d.centrality === 'number') ? d.centrality : (degree.get(d.id) || 1);
-  }
-
-  // radius scale
-  const centralities = DATA.nodes.map(getCentrality);
-  const cMinRaw = d3.min(centralities);
-  const cMaxRaw = d3.max(centralities);
-  const cMin = (cMinRaw == null ? 0 : cMinRaw);
-  const cMax = (cMaxRaw == null ? 1 : cMaxRaw);
-  const rScale = d3.scaleSqrt()
-    .domain([ (cMin || 0.0001), (cMax || 1) ])
-    .range([ minR, maxR ]);
-
-  // ---- Layers & zoom ----
+  // ----- SVG layers + zoom -----
+  svg.attr('viewBox', `0 0 ${width} ${height}`);
   const root = svg.append('g');
   const linkLayer = root.append('g').attr('class','links');
   const nodeLayer = root.append('g').attr('class','nodes');
@@ -77,21 +65,46 @@
   const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (ev)=>root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // background click clears selection
+  // Background click clears satellites + focus, and empties sidebar
   svg.on('click', (ev) => {
     if (ev.target === svg.node()) {
       clearSatellites();
       clearFocus();
-      sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>`;
+      clearSidebar();
     }
   });
 
-  // ---- Draw ----
+  // ----- Prep DATA -----
+  const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
+  const links = DATA.links
+    .map(l => ({
+      source: idToNode.get(l.source) || l.source,
+      target: idToNode.get(l.target) || l.target
+    }))
+    .filter(l => l.source && l.target);
+
+  // Compute degree for size fallback
+  const degree = new Map();
+  links.forEach(l => {
+    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
+    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
+  });
+
+  const centr = DATA.nodes.map(n => (typeof n.centrality === 'number' ? n.centrality : degree.get(n.id)||0));
+  const cMin = d3.min(centr) ?? 0, cMax = d3.max(centr) ?? 1;
+  const rScale = d3.scaleSqrt().domain([cMin||0.0001, cMax||1]).range([minR, maxR]);
+
+  // ----- Simulation -----
+  const sim = d3.forceSimulation(DATA.nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(LINK_DIST).strength(LINK_STR))
+    .force('charge', d3.forceManyBody().strength(CHARGE))
+    .force('center', d3.forceCenter(width/2, height/2))
+    .force('collision', d3.forceCollide().radius(d => rScale(d.centrality ?? degree.get(d.id) || 1)*COLLIDE_K));
+
   const linkSel = linkLayer.selectAll('line')
     .data(links)
     .join('line')
     .attr('class','link')
-    .attr('stroke','#b9c7dd')
     .attr('stroke-opacity', linkOpacity);
 
   const nodeSel = nodeLayer.selectAll('g.node')
@@ -100,11 +113,11 @@
       const g = enter.append('g').attr('class','node');
 
       g.append('ellipse')
-        .attr('rx', d => rScale(getCentrality(d)) * ellipseAspect)
-        .attr('ry', d => rScale(getCentrality(d)));
+        .attr('rx', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect)
+        .attr('ry', d => rScale(d.centrality ?? degree.get(d.id) || 1));
 
       g.append('text')
-        .attr('x', d => rScale(getCentrality(d)) * ellipseAspect + 4)
+        .attr('x', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect + 4)
         .attr('y', 4)
         .text(d => d.id);
 
@@ -116,12 +129,6 @@
       return g;
     });
 
-  const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id).distance(75).strength(0.7))
-    .force('charge', d3.forceManyBody().strength(-180))
-    .force('center', d3.forceCenter(vbW/2, vbH/2))
-    .force('collision', d3.forceCollide().radius(d => rScale(getCentrality(d)) * 1.2));
-
   sim.on('tick', () => {
     linkSel
       .attr('x1', d=>d.source.x)
@@ -131,29 +138,32 @@
 
     nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
 
-    // keep satellites aligned to host
+    // keep satellites aligned to the host node
     satLayer.selectAll('g.satellite')
       .attr('transform', d => `translate(${d.host.x + d._xoff},${d.host.y + d._yoff})`);
   });
 
-  // ---- Tooltip ----
+  // ----- Tooltip -----
   function showTagTooltip(evt, tag) {
-    var desc = (DATA.tagDescriptions && DATA.tagDescriptions[tag]) ? DATA.tagDescriptions[tag] : '—';
-    var n = idToNode.get(tag);
-    var deg = (degree.get(tag) || 0);
-    var cent = (n && typeof n.centrality === 'number') ? n.centrality.toFixed(2) : String(deg || 0);
+    const desc = (DATA.tagDescriptions && DATA.tagDescriptions[tag]) ? DATA.tagDescriptions[tag] : '—';
+    const n = idToNode.get(tag);
+    const deg = degree.get(tag) || 0;
+    const cent = (typeof n?.centrality==='number') ? n.centrality.toFixed(2) : (deg||0);
     tooltip.html(
-      '<div style="font-weight:700; margin-bottom:4px">'+esc(tag)+'</div>' +
-      '<div class="muted" style="margin-bottom:6px">degree '+deg+' • centrality '+cent+'</div>' +
-      '<div style="white-space:pre-wrap; opacity:.92">'+esc(desc)+'</div>' +
-      '<div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to reveal pulse satellites</div>'
+      `<div style="font-weight:700; margin-bottom:4px">${esc(tag)}</div>
+       <div class="muted" style="margin-bottom:6px">degree ${deg} • centrality ${cent}</div>
+       <div style="white-space:pre-wrap; opacity:.92">${esc(desc)}</div>
+       <div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to reveal pulse satellites</div>`
     ).style('display','block');
     moveTooltip(evt);
   }
-  function moveTooltip(evt){ var pad=12; tooltip.style('left',(evt.clientX+pad)+'px').style('top',(evt.clientY+pad)+'px'); }
+  function moveTooltip(evt){
+    const pad=12;
+    tooltip.style('left', (evt.clientX+pad)+'px').style('top',(evt.clientY+pad)+'px');
+  }
   function hideTooltip(){ tooltip.style('display','none'); }
 
-  // ---- Focus & dimming ----
+  // ----- Focus & dimming -----
   function setFocus(keepIds){
     const keep = new Set(keepIds);
     nodeSel.classed('dim', d => !keep.has(d.id));
@@ -164,20 +174,59 @@
     linkSel.classed('dim', false);
   }
 
-  // ---- Satellites (spiral) ----
-  function clearSatellites(){ satLayer.selectAll('*').remove(); }
+  // ----- Satellites (spiral) -----
+  let currentTag = null;
 
-  function placeSpiralOffsets(n){
+  function clearSatellites(){
+    currentTag = null;
+    satLayer.selectAll('*').remove();
+  }
+
+  function spiralOffsets(n){
     const out = [];
-    for (var i=0;i<n;i++){
-      var r = spiralStartR + i*spiralStepR;
-      var t = i*spiralStepTheta;
+    for (let i=0;i<n;i++){
+      const r = spiralStartR + i*spiralStepR;
+      const t = i*spiralStepTheta;
       out.push({ _xoff: r*Math.cos(t), _yoff: r*Math.sin(t) });
     }
     return out;
   }
 
+  // Sidebar pulse list (click to open)
+  function renderPulseList(tagId, pulses){
+    if (!pulses.length) { setSidebarHTML(''); return; }
+    const items = pulses.map(p => {
+      const label = p.date ? p.date.slice(2,10) : (p.title || p.id || 'Pulse');
+      const title = p.title || p.id || '';
+      const aClass = `pill ${ageClass(p)}`;
+      return `<li data-id="${esc(p.id||p.title||'')}" title="${esc(title)}">
+                <span class="${aClass}"></span>
+                <span class="ellipsis">${esc(label)} — ${esc(title)}</span>
+              </li>`;
+    }).join('');
+    setSidebarHTML(
+      `<div class="listWrap">
+         <div class="listHead">Pulses for <strong>${esc(tagId)}</strong></div>
+         <ul class="pulseList">${items}</ul>
+       </div>`
+    );
+    // attach click handlers
+    sidebar.querySelectorAll('.pulseList li').forEach(li=>{
+      li.addEventListener('click', ()=>{
+        const id = li.getAttribute('data-id');
+        const p = pulses.find(x => (x.id||x.title||'') === id);
+        if (p) showPulseDetails(p);
+      });
+    });
+  }
+
   function onTagClick(tagId){
+    currentTag = tagId;
+
+    // Clear satellites and sidebar (you asked the last pulse not to linger)
+    clearSatellites();
+    clearSidebar();
+
     // dim to neighbors of tagId (+ itself)
     const neighbors = new Set([tagId]);
     links.forEach(l => {
@@ -186,18 +235,16 @@
     });
     setFocus(neighbors);
 
-    // clear + draw satellites
-    clearSatellites();
-
     const host = idToNode.get(tagId);
     if (!host) return;
 
-    const pulses = safeArray(DATA.pulsesByTag && DATA.pulsesByTag[tagId]);
+    const pulses = safeArray(DATA.pulsesByTag?.[tagId]);
     if (!pulses.length) return;
 
-    const offs = placeSpiralOffsets(pulses.length);
+    // Draw satellites
+    const offs = spiralOffsets(pulses.length);
     const g = satLayer.selectAll('g.satellite')
-      .data(pulses.map((p,i)=>Object.assign({}, p, {host:host}, offs[i])), d => d.id || d.title || (d.date||'') );
+      .data(pulses.map((p,i)=>({...p, host, ...offs[i]})), d => d.id || d.title || (d.date||'') );
 
     const enter = g.enter().append('g').attr('class','satellite');
 
@@ -210,49 +257,48 @@
       .attr('text-anchor','middle')
       .attr('font-size', 9)
       .attr('fill', '#a3b3c7')
-      .text(d => (d.date ? String(d.date).slice(2,10) : ''));
+      .text(d => d.date ? d.date.slice(2,10) : '');
 
     enter.on('click', (ev,d) => { ev.stopPropagation(); showPulseDetails(d); });
 
-    sim.alpha(0.5).restart();
+    // Also list the pulses in the sidebar (one-liners)
+    renderPulseList(tagId, pulses);
+
+    sim.alpha(0.45).restart();
   }
 
-  // ---- Sidebar rendering ----
+  // ----- Pulse details -----
   function renderLinksBlock(label, items){
-    if (!items || !items.length) return '';
-    const norm = items.map(u => {
-      if (typeof u === 'string') return {title:u, url:u};
-      if (u && u.url) return u;
-      return {title:(u && u.title) ? u.title : (u && u.url) ? u.url : '', url:(u && u.url) ? u.url : ''};
-    });
-    var html = '<div style="margin-top:12px"><strong>'+esc(label)+'</strong><ul style="padding-left:18px; margin:6px 0 0 0">';
-    norm.forEach(it => {
-      const title = it.title || it.url || '';
+    if (!items?.length) return '';
+    const norm = items.map(u => typeof u==='string' ? {title:u, url:u} : (u?.url ? u : {title:u?.title||u?.url, url:u?.url||''}));
+    let html = `<div style="margin-top:12px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
+    for (const it of norm){
+      const title = it.title || it.url;
       const href  = it.url || it.title || '#';
-      html += '<li><a class="ellipsis" href="'+esc(href)+'" target="_blank" rel="noopener">'+esc(title)+'</a></li>';
-    });
-    html += '</ul></div>';
+      html += `<li><a class="ellipsis" href="${esc(href)}" target="_blank" rel="noopener">${esc(title)}</a></li>`;
+    }
+    html += `</ul></div>`;
     return html;
   }
 
   function showPulseDetails(p){
-    const when = p.date ? ' <span class="muted">('+esc(p.date)+')</span>' : '';
-    var html = '<h2>'+esc(p.title || p.id || 'Pulse')+ when +'</h2>';
-    if (p.summary) html += '<div style="white-space:pre-wrap; margin:.3rem 0 1rem 0">'+esc(p.summary)+'</div>';
+    const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
+    let html = `<h2>${esc(p.title || p.id || 'Pulse')}${when}</h2>`;
+    if (p.summary) html += `<div style="white-space:pre-wrap; margin:.3rem 0 1rem 0">${esc(p.summary)}</div>`;
     html += renderLinksBlock('Papers', p.papers);
     html += renderLinksBlock('Podcasts', p.podcasts);
-    sidebar.innerHTML = html;
+    setSidebarHTML(html);
   }
 
-  // ---- Search ----
+  // ----- Search -----
   function applyFilter(q){
-    const s = String(q||'').trim().toLowerCase();
+    const s = (q||'').trim().toLowerCase();
     if (!s){ clearFocus(); return; }
-    const keep = new Set(DATA.nodes.filter(n => String(n.id).toLowerCase().includes(s)).map(n=>n.id));
+    const keep = new Set(DATA.nodes.filter(n => n.id.toLowerCase().includes(s)).map(n=>n.id));
     setFocus(keep);
   }
   if (searchInput) searchInput.addEventListener('input', e => applyFilter(e.target.value));
 
-  // ---- Initial sidebar ----
-  sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>`;
+  // Start with an empty sidebar (your preference)
+  clearSidebar();
 })();
