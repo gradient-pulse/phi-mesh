@@ -66,11 +66,12 @@ phi-mesh/
 
 ## Add pulses → *grow the map*
 
-	1.	Add a new YAML pulse to pulse/….
-	2.	Commit & push — GitHub Actions will update the tag index and regenerate the map automatically.
+	1.	Add a new YAML pulse under pulse/… (the minimal schema only: title, date, summary, tags, papers, podcasts).
+	2.	Commit & push — GitHub Actions will:
+		•	clean pulses to the minimal schema,
+		•	regenerate docs/data.js,
+		•	redeploy the Tag Map.
 	3.	Open the Φ–Mesh Tag Map to see the changes live.
-
-*Future Update:* Populate a short `summary` per tag in `docs/data.js` and enable tooltips via `docs/map_node_tooltip.js`.
 
 ---
 
