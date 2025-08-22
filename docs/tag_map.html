@@ -6,126 +6,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0c10; --fg:#e9eef8; --muted:#9aa6b8;
+      --bg:#0b0c10;
+      --fg:#e9eef8;
+      --muted:#97a3b6;
+      --accent:#82c7ff;
+      --link:#9fc9ff;
+      --linkDim:rgba(180,200,230,.13);
       --pulseWarm:#ff7a66; --pulseMed:#ffb066; --pulseCool:#86cbff; --pulseCooler:#74a9ff;
+      --panel:transparent; /* transparent left panel per your preference */
     }
-    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); }
-    body { font:14px/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg)}
+    body{font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
 
-    /* Layout: fixed left text column + canvas + slide-in right column */
-    .app {
-      display:grid;
-      grid-template-columns:320px 1fr;
-      grid-template-areas:"left main";
-      height:100%;
-      position:relative;
+    /* 3-column grid: left sidebar · graph · right (pulse list) */
+    .app{display:grid;grid-template-columns:320px 1fr 300px;gap:0;height:100%}
+
+    /* Sidebar (left) — transparent, no border */
+    aside.left{
+      background:var(--panel);
+      display:flex;flex-direction:column;min-width:0;
     }
+    header{padding:14px 14px 8px 14px}
+    h1{margin:0 0 6px 0;font-size:18px;letter-spacing:.2px}
+    .hint{color:var(--muted);font-size:12px}
+    #search{width:100%;background:#10131a;border:1px solid rgba(255,255,255,.08);color:var(--fg);
+      padding:9px 10px;border-radius:8px;outline:none;margin-top:10px}
+    #sidebar-content{padding:14px;overflow:auto}
+    /* smaller text in the left panel for pulse details */
+    #sidebar-content h2{font-size:16px;margin:.2rem 0 .6rem 0}
+    #sidebar-content .body{font-size:13px}
+    #sidebar-content a{color:var(--link)}
 
-    /* Left “sidebar”—transparent, no borders */
-    aside {
-      grid-area:left;
-      background:transparent;
-      border:none;
-      display:flex;
-      flex-direction:column;
-      padding:14px 14px 10px 14px; /* subtle breathing space */
+    /* Right pulse tray — “invisible sidebar” */
+    aside.right{
+      background:transparent;border-left:none;padding:10px 10px 10px 6px;overflow:auto;
+      font-size:12.5px;color:var(--fg)
     }
-    header { padding-bottom:8px; }
-    h1 { margin:0 0 6px 0; font-size:18px; letter-spacing:.2px; }
-    .hint { color:var(--muted); font-size:12px; }
-    #search {
-      width:100%;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      color:var(--fg);
-      padding:8px 10px;
-      border-radius:10px;
-      outline:none;
-      margin-top:10px;
-    }
-    #sidebar-content { overflow:auto; padding-top:6px; }
-    .muted { color:var(--muted); }
-    .ellipsis{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; }
+    .trayTitle{font-weight:700;margin:4px 0 8px 0;font-size:13px;color:var(--muted)}
+    .pulseRow{display:flex;align-items:center;gap:8px;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dot{width:8px;height:8px;border-radius:50%}
+    .pAge0{background:#ff7a66}.pAge1{background:#ff9b66}.pAge2{background:#ffb066}.pAge3{background:#86cbff}.pAge4{background:#74a9ff}
+    .trayEmpty{color:var(--muted)}
 
-    /* Detail text smaller to balance the constellation */
-    #sidebar-content .details { font-size:13px; line-height:1.42; }
-    #sidebar-content .details h2 { font-size:16px; margin:0 0 .4rem 0; }
-    #sidebar-content .details .block-title { font-weight:600; font-size:12px; margin:.75rem 0 .25rem 0; color:var(--muted); }
-    #sidebar-content a { color:#a9cbff; text-decoration:none; }
-    #sidebar-content a:hover { text-decoration:underline; }
+    /* Graph */
+    svg{width:100%;height:100%}
+    .link{stroke:#b9c7dd;stroke-opacity:.22}
+    .link.dim{stroke-opacity:.07}
+    .node text{font-size:12px;fill:#d3e0f2;pointer-events:none}
+    .node ellipse{fill:#74b7ff;stroke:none}
+    .node.dim text{opacity:.18}
+    .node.dim ellipse{opacity:.22}
 
-    /* MAIN graph canvas */
-    svg { grid-area:main; width:100%; height:100%; }
-    .link { stroke:#b9c7dd; stroke-opacity:.22; }
-    .link.dim { stroke-opacity:.06; }
-    .node text { font-size:12px; fill:#d3e0f2; pointer-events:none; }
-    .node ellipse { fill:#74b7ff; stroke:none; }
-    .node.dim text { opacity:.22; }
-    .node.dim ellipse { opacity:.22; }
+    .satellite circle{stroke:none}
+    .age-very-new{fill:var(--pulseWarm)}
+    .age-new{fill:#ff9b66}
+    .age-mid{fill:var(--pulseMed)}
+    .age-old{fill:var(--pulseCool)}
+    .age-very-old{fill:var(--pulseCooler)}
 
-    .satellite circle { stroke:none; }
-    .age-very-new { fill:var(--pulseWarm); }
-    .age-new      { fill:#ff9b66; }
-    .age-mid      { fill:var(--pulseMed); }
-    .age-old      { fill:var(--pulseCool); }
-    .age-very-old { fill:var(--pulseCooler); }
-
-    /* Tooltip */
-    #tooltip {
-      position:fixed; left:0; top:0; display:none;
-      background:rgba(18,22,34,.95); color:var(--fg);
-      border:1px solid rgba(255,255,255,.08); border-radius:10px;
-      padding:10px 12px; max-width:300px; box-shadow:0 6px 18px rgba(0,0,0,.35);
-      pointer-events:none; z-index:20; font-size:13px;
-    }
-
-    /* RIGHT slide-in pulse list (hidden by default) */
-    #rightbar {
-      position:absolute; right:0; top:0; bottom:0; width:340px;
-      transform: translateX(100%); transition: transform .28s ease;
-      pointer-events:none; /* don't catch clicks when hidden */
-      display:flex; flex-direction:column;
-      padding:14px; gap:8px;
-      background:transparent; border:none;
-    }
-    #rightbar.open { transform: translateX(0); pointer-events:auto; }
-    #rightbar h2 { font-size:16px; margin:2px 0 4px 0; }
-    #rightbar .muted { font-size:12px; }
-    #rightbar ul { list-style:none; padding-left:0; margin:.25rem 0 0 0; }
-    #rightbar li { margin:.3rem 0; }
-    #rightbar a { color:#a9cbff; text-decoration:none; font-size:13px; }
-    #rightbar a:hover { text-decoration:underline; }
-
-    /* Small screens: shrink left column */
-    @media (max-width:900px){
-      .app{ grid-template-columns:260px 1fr; }
-      #rightbar{ width:300px; }
+    #tooltip{
+      position:fixed;left:0;top:0;display:none;background:#0f1522;color:var(--fg);
+      border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;max-width:300px;
+      box-shadow:0 6px 18px rgba(0,0,0,.35);pointer-events:none;z-index:20;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="data.js"></script>  <!-- DATA produced by generate_graph_data.py -->
-  <script src="map.js"></script>   <!-- Renderer -->
+
+  <!-- load in order and defer so DOM exists before scripts run -->
+  <script defer src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script defer src="data.js"></script>
+  <script defer src="map.js"></script>
 </head>
 <body>
   <div class="app">
-    <!-- Left transparent text area -->
-    <aside>
+    <aside class="left">
       <header>
         <h1>Phi-Mesh Tag Map</h1>
         <div class="hint">Hover a tag for its description • Click a tag to show pulse satellites • Click a pulse to see details</div>
         <input id="search" type="search" placeholder="Type to filter…" />
       </header>
-      <div id="sidebar-content"></div>
+      <div id="sidebar-content"><div class="muted">Pick a pulse to see its summary, papers &amp; podcasts.</div></div>
     </aside>
 
-    <!-- Graph canvas -->
     <svg id="graph" role="img" aria-label="Tag Map"></svg>
 
-    <!-- Hidden right-side pulse list -->
-    <section id="rightbar" aria-hidden="true">
-      <div id="rightbar-content"></div>
-    </section>
+    <!-- Right, invisible tray for pulse list (appears when a tag is selected) -->
+    <aside class="right" id="pulse-tray">
+      <div class="trayTitle">Pulses</div>
+      <div class="trayEmpty">Click a tag to list its pulses.</div>
+    </aside>
   </div>
+
   <div id="tooltip"></div>
 </body>
 </html>
