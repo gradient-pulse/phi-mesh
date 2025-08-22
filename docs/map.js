@@ -1,6 +1,6 @@
 /* docs/map.js
  * Renders the Tag Map using window.PHI_DATA (produced by generate_graph_data.py)
- * Expected DATA shape:
+ * DATA:
  *  - nodes: [{ id, centrality? }]
  *  - links: [{ source, target }]
  *  - tagDescriptions: { [tag]: "..." }
@@ -15,6 +15,8 @@
   const tooltip  = d3.select('#tooltip');
   const sidebar  = document.getElementById('sidebar-content');
   const searchEl = document.getElementById('search');
+  const rightBar = document.getElementById('rightbar');
+  const rightCnt = document.getElementById('rightbar-content');
 
   function esc(s){ return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
   function arr(x){ return Array.isArray(x) ? x : []; }
@@ -23,19 +25,18 @@
   const width  = svg.node().clientWidth  || 1200;
   const height = svg.node().clientHeight || 800;
 
-  const ellipseAspect = 1.55; // >1 makes horizontal pills
+  const ellipseAspect = 1.55;
   const minR = 6, maxR = 24;
 
   const linkOpacity     = 0.22;
   const linkOpacityDim  = 0.06;
 
-  // Satellites
+  // Satellites spiral (fixed spacing so large sets stay legible)
   const satDot           = 4.5;
-  const spiralStartR     = 52;     // pixels from tag center
-  const spiralStepR      = 12;     // fixed radial increment (keeps the spiral compact)
-  const spiralStepTheta  = 0.48 * Math.PI; // angular step
+  const spiralStartR     = 52;
+  const spiralStepR      = 12;
+  const spiralStepTheta  = 0.48 * Math.PI;
 
-  // Pulse age -> class
   function ageClass(d){
     const a = d && d.ageDays;
     if (a == null) return 'age-old';
@@ -46,7 +47,7 @@
     return 'age-very-old';
   }
 
-  // ---------- SVG layers & zoom ----------
+  // ---------- SVG & Zoom ----------
   svg.attr('viewBox', `0 0 ${width} ${height}`);
   const root      = svg.append('g');
   const linkLayer = root.append('g').attr('class', 'links');
@@ -56,23 +57,22 @@
   const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (ev) => root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // Click on background clears selection
   svg.on('click', (ev) => {
     if (ev.target === svg.node()) {
       clearSatellites();
       clearFocus();
       showIdleSidebar();
+      hideRightbar();
     }
   });
 
-  // ---------- Prep data ----------
+  // ---------- Data prep ----------
   const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
   const links = DATA.links.map(l => ({
     source: idToNode.get(l.source) || l.source,
     target: idToNode.get(l.target) || l.target
   })).filter(l => l.source && l.target);
 
-  // Degree map (fallback for sizing)
   const degree = new Map();
   links.forEach(l => {
     degree.set(l.source.id, (degree.get(l.source.id) || 0) + 1);
@@ -84,7 +84,7 @@
   const cMax = d3.max(centralities) ?? 1;
   const rScale = d3.scaleSqrt().domain([cMin || 0.0001, cMax || 1]).range([minR, maxR]);
 
-  // SAFARI-SAFE node score (no mixing ?? with ||)
+  // Safari-safe sizing (no ?? with || mixing)
   function nodeScore(d){
     const c = d.centrality;
     if (typeof c === 'number') return c;
@@ -138,7 +138,6 @@
 
     nodeSel.attr('transform', d => `translate(${d.x},${d.y})`);
 
-    // keep satellites glued to their host
     satLayer.selectAll('g.satellite')
       .attr('transform', d => `translate(${d.host.x + d._xoff},${d.host.y + d._yoff})`);
   });
@@ -151,8 +150,8 @@
     const cent = (typeof n?.centrality === 'number') ? n.centrality.toFixed(2) : String(deg);
     tooltip.html(
       `<div style="font-weight:700; margin-bottom:4px">${esc(tag)}</div>
-       <div class="muted" style="margin-bottom:6px">degree ${deg} • centrality ${esc(cent)}</div>
-       <div style="white-space:pre-wrap; opacity:.92">${esc(desc)}</div>
+       <div class="muted" style="margin-bottom:6px; font-size:12px">degree ${deg} • centrality ${esc(cent)}</div>
+       <div style="white-space:pre-wrap; opacity:.92; font-size:12.5px">${esc(desc)}</div>
        <div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to reveal pulse satellites</div>`
     ).style('display','block');
     moveTooltip(evt);
@@ -186,7 +185,7 @@
   function spiralOffsets(n){
     const out = [];
     for (let i = 0; i < n; i++){
-      const r = spiralStartR + i * spiralStepR;          // <- FIXED spacing
+      const r = spiralStartR + i * spiralStepR;
       const t = i * spiralStepTheta;
       out.push({ _xoff: r * Math.cos(t), _yoff: r * Math.sin(t) });
     }
@@ -207,12 +206,13 @@
     // satellites
     satLayer.selectAll('*').remove();
     const host = idToNode.get(tagId);
-    if (!host) { showIdleSidebar(); return; }
+    if (!host) { showIdleSidebar(); hideRightbar(); return; }
 
     const pulses = arr(DATA.pulsesByTag && DATA.pulsesByTag[tagId]);
     if (!pulses.length){
-      // No pulses; show a small message but keep the focus
-      sidebar.innerHTML = `<h2>${esc(tagId)}</h2><div class="muted">No pulses found for this tag.</div>`;
+      showIdleSidebar();
+      renderPulseListRight(tagId, []);
+      showRightbar();
       return;
     }
 
@@ -236,24 +236,25 @@
 
     enter.on('click', (ev, d) => { ev.stopPropagation(); showPulseDetails(d); });
 
-    // Sidebar: pulse list for the tag (click to open details)
-    renderPulseList(tagId, pulses);
+    // Left: keep minimal / detail-on-click; Right: the pulse list
+    renderPulseListRight(tagId, pulses);
+    showRightbar();
 
     sim.alpha(0.5).restart();
   }
 
-  // ---------- Sidebar rendering ----------
+  // ---------- Left details ----------
   function showIdleSidebar(){
     sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>`;
   }
 
-  function renderLinksBlock(label, items){
+  function blockLinks(label, items){
     if (!items || !items.length) return '';
     const norm = items.map(u => typeof u === 'string'
       ? { title: u, url: u }
       : (u && u.url ? u : { title: (u && (u.title || u.url)) || '', url: (u && u.url) || '' })
     );
-    let html = `<div style="margin-top:12px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
+    let html = `<div class="block"><div class="block-title">${label}</div><ul style="padding-left:18px; margin:6px 0 0 0">`;
     for (const it of norm){
       const title = it.title || it.url || '';
       const href  = it.url || it.title || '#';
@@ -265,29 +266,29 @@
 
   function showPulseDetails(p){
     const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
-    let html = `<h2>${esc(p.title || p.id || 'Pulse')}${when}</h2>`;
-    if (p.summary) html += `<div style="white-space:pre-wrap; margin:.3rem 0 1rem 0">${esc(p.summary)}</div>`;
-    html += renderLinksBlock('Papers',   p.papers);
-    html += renderLinksBlock('Podcasts', p.podcasts);
+    let html = `<div class="details">`;
+    html += `<h2>${esc(p.title || p.id || 'Pulse')}${when}</h2>`;
+    if (p.summary) html += `<div style="white-space:pre-wrap; margin:.25rem 0 .8rem 0">${esc(p.summary)}</div>`;
+    html += blockLinks('Papers',   p.papers);
+    html += blockLinks('Podcasts', p.podcasts);
+    html += `</div>`;
     sidebar.innerHTML = html;
   }
 
-  function renderPulseList(tagId, pulses){
-    // Sidebar block with a clickable list of pulses for the selected tag
+  // ---------- Right pulse list ----------
+  function renderPulseListRight(tagId, pulses){
     let html = `<h2>Pulses for <span class="muted">${esc(tagId)}</span> <span class="muted">(${pulses.length})</span></h2>`;
-    html += `<ul style="list-style:none; padding-left:0; margin:.5rem 0 0 0">`;
+    html += `<ul>`;
     for (const p of pulses){
       const label = `${p.date ? p.date : ''} — ${p.title || p.id || 'Pulse'}`.trim();
-      const safeId = esc((p.id || p.title || p.date || Math.random().toString(36).slice(2)));
-      html += `<li style="margin:.25rem 0">
-        <a href="#" data-pulse-key="${safeId}" class="ellipsis">${esc(label)}</a>
-      </li>`;
+      const safeKey = esc((p.id || p.title || p.date || Math.random().toString(36).slice(2)));
+      html += `<li><a href="#" data-pulse-key="${safeKey}" class="ellipsis">${esc(label)}</a></li>`;
     }
     html += `</ul>`;
-    sidebar.innerHTML = html;
+    rightCnt.innerHTML = html;
 
-    // Wire clicks to open details
-    const links = sidebar.querySelectorAll('a[data-pulse-key]');
+    // Wire clicks -> open left details
+    const links = rightCnt.querySelectorAll('a[data-pulse-key]');
     links.forEach((a, i) => {
       a.addEventListener('click', (ev) => {
         ev.preventDefault();
@@ -295,6 +296,8 @@
       });
     });
   }
+  function showRightbar(){ rightBar.classList.add('open'); rightBar.setAttribute('aria-hidden','false'); }
+  function hideRightbar(){ rightBar.classList.remove('open'); rightBar.setAttribute('aria-hidden','true'); rightCnt.innerHTML=''; }
 
   // ---------- Search (tag filter) ----------
   function applyFilter(q){
@@ -305,6 +308,6 @@
   }
   if (searchEl) searchEl.addEventListener('input', (e) => applyFilter(e.target.value));
 
-  // ---------- Initial sidebar ----------
+  // ---------- Start ----------
   showIdleSidebar();
 })();
