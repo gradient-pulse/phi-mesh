@@ -5,56 +5,55 @@
   <title>Phi-Mesh Tag Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root { --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6; --accent:#82c7ff; }
+    :root {
+      --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6;
+      --link:#9fc9ff; --accent:#82c7ff; --pulse:#ff8a70;
+    }
     html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
-    .app { display:grid; grid-template-columns:300px 1fr 320px; height:100% }
+    .app { display:grid; grid-template-columns:300px 1fr 300px; height:100% }
 
-    aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid rgba(255,255,255,.06); }
-    aside.right { border-right:none; border-left:1px solid rgba(255,255,255,.06); }
+    /* sidebars */
+    aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid rgba(255,255,255,.06); display:flex; flex-direction:column }
+    aside.right { border-right:none; border-left:1px solid rgba(255,255,255,.06) }
     header { padding:12px 14px 8px; border-bottom:1px solid rgba(255,255,255,.06) }
-    #search { width:100%; background:#0f1220; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; }
-    #left, #right { display:flex; flex-direction:column }
-    #left .content { padding:12px 14px; overflow:auto; }
-    #right .content { padding:10px 12px; overflow:auto; }
+    #left-hint { color:var(--muted); font-size:12px }
+    #search { width:100%; background:#0f1220; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; margin-top:8px }
+    #left .content, #right .content { padding:10px 12px; overflow:auto }
+    .one-line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block }
+    .muted { color:var(--muted) }
 
+    /* graph */
     svg { width:100%; height:100% }
     .node text { font-size:12px; fill:#d3e0f2; pointer-events:none }
     .node ellipse { fill:#74b7ff; stroke:none }
     .node.dim text, .node.dim ellipse { opacity:.22 }
-    .node.selected ellipse { fill:#ff9b8a }    /* highlight JUST the clicked tag */
+    .node.selected ellipse { fill:var(--pulse) }
     .link { stroke:#b9c7dd; stroke-opacity:.24 }
     .link.dim { stroke-opacity:.08 }
-
-    .one-line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
-    .muted { color:var(--muted) }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="data.js"></script>
-  <script src="map.js"></script>
+  <script defer src="map.js"></script>
 </head>
 <body>
   <div class="app">
-    <!-- LEFT SIDEBAR -->
+    <!-- LEFT -->
     <aside id="left">
       <header>
         <div style="font-weight:700">Phi-Mesh Tag Map</div>
-        <div id="left-hint" class="muted" style="font-size:12px">
-          Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details
-        </div>
-        <div style="margin-top:8px"><input id="search" type="search" placeholder="Type to filter…"></div>
+        <div id="left-hint">Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details</div>
+        <input id="search" type="search" placeholder="Type to filter…">
       </header>
-      <div class="content" id="left-content"></div>
+      <div id="left-content" class="content"></div>
     </aside>
 
     <!-- GRAPH -->
     <svg id="graph" role="img" aria-label="Tag Map"></svg>
 
-    <!-- RIGHT SIDEBAR -->
+    <!-- RIGHT -->
     <aside id="right" class="right">
-      <header>
-        <div style="font-weight:700">Pulses</div>
-      </header>
+      <header><div style="font-weight:700">Pulses</div></header>
       <div class="content">
         <div id="pulse-list" class="muted one-line">Click a tag to list its pulses.</div>
       </div>
