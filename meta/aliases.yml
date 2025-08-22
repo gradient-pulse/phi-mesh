@@ -156,6 +156,9 @@ aliases:
   grok3:
     - GROK3
 
+  gemini:
+    - Gemini
+
   # --- Tools / demo / platform -------------------------------------------------
 
   Phi-monitor:
