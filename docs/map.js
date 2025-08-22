@@ -1,237 +1,210 @@
-/* docs/map.js — renderer (data comes from window.PHI_DATA in docs/data.js) */
-(function () {
-  // Guard until DOM is ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
+/* docs/map.js — render tag graph using window.PHI_DATA */
+(function(){
+  const DATA = window.PHI_DATA || { nodes:[], links:[] };
+
+  // DOM
+  const svg = d3.select('#graph');
+  const tooltip = d3.select('#tooltip');
+  const leftContent = document.getElementById('left-content');
+  const leftHint = document.getElementById('left-hint');
+  const pulseList = document.getElementById('pulse-list');
+  const searchInput = document.getElementById('search');
+
+  // initial left panel hint only (no extra paragraph lives in HTML)
+  leftContent.innerHTML = ''; // keep empty until a pulse is opened
+
+  // sizes
+  const W = svg.node().clientWidth || 1200;
+  const H = svg.node().clientHeight || 800;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  // layers
+  const root = svg.append('g');
+  const linkLayer = root.append('g').attr('class','links');
+  const nodeLayer = root.append('g').attr('class','nodes');
+
+  // maps
+  const idToNode = new Map(DATA.nodes.map(n=>[n.id,n]));
+  const links = DATA.links.map(l => ({
+    source: idToNode.get(l.source) || l.source,
+    target: idToNode.get(l.target) || l.target
+  })).filter(l => l.source && l.target);
+
+  // degree & sizing
+  const degree = new Map();
+  links.forEach(l => {
+    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
+    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
+  });
+  const centralities = DATA.nodes.map(n => (typeof n.centrality==='number' ? n.centrality : (degree.get(n.id)||0)));
+  const cMin = d3.min(centralities) ?? 0, cMax = d3.max(centralities) ?? 1;
+  const rScale = d3.scaleSqrt().domain([cMin||0.0001, cMax||1]).range([6, 22]);
+  const ellipseAspect = 1.6;
+
+  // simulation — slightly looser -> less dense
+  const sim = d3.forceSimulation(DATA.nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(78).strength(0.65))
+    .force('charge', d3.forceManyBody().strength(-200))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collide', d3.forceCollide().radius(d => rScale(d.centrality ?? degree.get(d.id) || 1)*1.25));
+
+  // draw
+  const linkSel = linkLayer.selectAll('line')
+    .data(links)
+    .join('line')
+    .attr('class','link');
+
+  const nodeSel = nodeLayer.selectAll('g.node')
+    .data(DATA.nodes, d=>d.id)
+    .join(enter => {
+      const g = enter.append('g').attr('class','node');
+      g.append('ellipse')
+        .attr('rx', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect)
+        .attr('ry', d => rScale(d.centrality ?? degree.get(d.id) || 1));
+      g.append('text')
+        .attr('x', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect + 4)
+        .attr('y', 4)
+        .text(d => d.id);
+
+      g.on('mouseover', (ev,d)=>showTip(ev,d.id))
+       .on('mousemove', moveTip)
+       .on('mouseout', hideTip)
+       .on('click', (ev,d)=>{ ev.stopPropagation(); onTagClick(d.id); });
+
+      return g;
+    });
+
+  sim.on('tick', () => {
+    linkSel
+      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+    nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
+  });
+
+  // zoom
+  const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', ev => root.attr('transform', ev.transform));
+  svg.call(zoom);
+
+  // background click resets selection
+  svg.on('click', () => {
+    clearFocus();
+    nodeSel.classed('selected', false);
+    pulseList.textContent = 'Click a tag to list its pulses.';
+    pulseList.className = 'muted one-line';
+  });
+
+  // tooltips
+  function showTip(evt, tag){
+    const desc = DATA.tagDescriptions?.[tag] || '—';
+    const deg = degree.get(tag)||0;
+    const cent = (typeof idToNode.get(tag)?.centrality==='number') ? idToNode.get(tag).centrality.toFixed(2) : deg;
+    tooltip.html(
+      `<div style="font-weight:700; margin-bottom:4px">${esc(tag)}</div>
+       <div class="muted" style="margin-bottom:6px">degree ${deg} • centrality ${cent}</div>
+       <div style="white-space:pre-wrap; opacity:.92">${esc(desc)}</div>
+       <div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to list pulses</div>`
+    ).style('display','block');
+    moveTip(evt);
+  }
+  function moveTip(evt){ const p=12; tooltip.style('left',(evt.clientX+p)+'px').style('top',(evt.clientY+p)+'px'); }
+  function hideTip(){ tooltip.style('display','none'); }
+  function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])) }
+
+  // focus/dim
+  function setFocus(keepIds){
+    const keep = new Set(keepIds);
+    nodeSel.classed('dim', d => !keep.has(d.id));
+    linkSel.classed('dim', d => !(keep.has(d.source.id) && keep.has(d.target.id)));
+  }
+  function clearFocus(){ nodeSel.classed('dim', false); linkSel.classed('dim', false); }
+
+  // right sidebar list
+  function renderPulseList(tagId){
+    const raw = Array.isArray(DATA.pulsesByTag?.[tagId]) ? DATA.pulsesByTag[tagId] : [];
+    if (!raw.length){
+      pulseList.textContent = `No pulses for ${tagId}.`;
+      pulseList.className = 'muted one-line';
+      return;
+    }
+    // dedupe by (id || title || date)
+    const seen = new Set();
+    const items = [];
+    for (const p of raw){
+      const key = p.id || p.title || p.date || JSON.stringify(p).slice(0,60);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      items.push(p);
+    }
+    // sort newest first by ISO date `YYYY-MM-DD`
+    items.sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
+
+    const rows = items.map(p => {
+      const title = p.title || p.id || 'Pulse';
+      const date = p.date ? ` (${p.date})` : '';
+      return `<div class="one-line" data-key="${esc(p.id||p.title||'')}" style="padding:6px 4px; cursor:pointer">
+                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff8a70;margin-right:8px;vertical-align:middle"></span>
+                <span>${esc(title)}${esc(date)}</span>
+              </div>`;
+    }).join('');
+    pulseList.className = '';
+    pulseList.innerHTML = `<div style="font-weight:600; margin:2px 0 6px 0">Pulses for ${esc(tagId)}</div>${rows}`;
+
+    // clicking a pulse shows details in the LEFT panel
+    pulseList.querySelectorAll('[data-key]').forEach(el => {
+      el.addEventListener('click', () => {
+        const key = el.getAttribute('data-key');
+        const pulse = items.find(p => (p.id||p.title||'')===key);
+        if (pulse) showPulseLeft(pulse);
+      });
+    });
   }
 
-  function init() {
-    const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
-      ? window.PHI_DATA
-      : { nodes: [], links: [], pulsesByTag: {}, tagDescriptions: {} };
+  function showPulseLeft(p){
+    // clear helper forever
+    leftHint.textContent = '';
+    const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
+    let html = `<div style="font-weight:700; font-size:15px; margin-bottom:6px">${esc(p.title || p.id || 'Pulse')}${when}</div>`;
+    if (p.summary) html += `<div style="white-space:pre-wrap; margin:6px 0 12px 0">${esc(p.summary)}</div>`;
+    html += renderLinkBlock('Papers', p.papers);
+    html += renderLinkBlock('Podcasts', p.podcasts);
+    leftContent.innerHTML = html;
+  }
 
-    // --- DOM targets ---
-    const svg = d3.select('#graph');
-    if (!svg.node()) return;
+  function renderLinkBlock(label, items){
+    if (!Array.isArray(items) || !items.length) return '';
+    const norm = items.map(u => typeof u==='string' ? {title:u, url:u} : (u?.url ? u : {title:u?.title||u?.url, url:u?.url||''}));
+    let s = `<div style="margin-top:10px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
+    for (const it of norm){
+      s += `<li class="one-line"><a href="${esc(it.url||'#')}" target="_blank" rel="noopener">${esc(it.title||it.url||'link')}</a></li>`;
+    }
+    s += `</ul></div>`;
+    return s;
+  }
 
-    const leftBox  = document.getElementById('sidebar-content'); // pulse details
-    const rightBox = document.getElementById('pulse-list');      // list of pulses for a tag
-    const search   = document.getElementById('search');
+  // tag click handler
+  function onTagClick(tagId){
+    // highlight JUST the clicked node
+    nodeSel.classed('selected', d => d.id === tagId);
 
-    // Wipe the left “hint” forever (per request)
-    if (leftBox) leftBox.innerHTML = "";
-
-    // Tooltip (singleton)
-    const tt = d3.select('#tooltip').style('display','none');
-
-    // --- Sizing & layers ---
-    const w = svg.node().clientWidth  || 1200;
-    const h = svg.node().clientHeight || 800;
-    svg.attr('viewBox', `0 0 ${w} ${h}`);
-
-    const root      = svg.append('g');
-    const linkLayer = root.append('g').attr('class','links');
-    const nodeLayer = root.append('g').attr('class','nodes');
-
-    // zoom/pan
-    svg.call(d3.zoom().scaleExtent([0.35, 4]).on('zoom', (ev)=>root.attr('transform', ev.transform)));
-
-    // --- Prep data ---
-    const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
-    const links = (DATA.links || [])
-      .map(l => ({ source: idToNode.get(l.source) || l.source, target: idToNode.get(l.target) || l.target }))
-      .filter(l => l.source && l.target);
-
-    // degree for fallback sizing
-    const degree = new Map();
+    // dim to neighbors (and itself)
+    const keep = new Set([tagId]);
     links.forEach(l => {
-      degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
-      degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
+      if (l.source.id===tagId) keep.add(l.target.id);
+      if (l.target.id===tagId) keep.add(l.source.id);
     });
+    setFocus(keep);
 
-    // size scale (smaller/lighter than before)
-    const mins = d3.min(DATA.nodes, d => (typeof d.centrality==='number') ? d.centrality : (degree.get(d.id)||0)) ?? 0;
-    const maxs = d3.max(DATA.nodes, d => (typeof d.centrality==='number') ? d.centrality : (degree.get(d.id)||1)) ?? 1;
-    const rScale = d3.scaleSqrt().domain([mins || 0.0001, maxs || 1]).range([5, 20]); // slightly smaller
-    const ellipseAspect = 1.55;
+    // fill right sidebar
+    renderPulseList(tagId);
+  }
 
-    function nodeScore(d){
-      const c = d.centrality;
-      return (typeof c === 'number') ? c : ((degree.get(d.id)||1));
-    }
-
-    // --- Simulation (a bit looser) ---
-    const sim = d3.forceSimulation(DATA.nodes)
-      .force('link', d3.forceLink(links).id(d=>d.id).distance(85).strength(0.6))
-      .force('charge', d3.forceManyBody().strength(-220))
-      .force('center', d3.forceCenter(w/2, h/2))
-      .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.15));
-
-    // --- Draw ---
-    const link = linkLayer.selectAll('line')
-      .data(links)
-      .join('line')
-      .attr('class','link')
-      .attr('stroke','#b9c7dd')
-      .attr('stroke-opacity', 0.22);
-
-    const node = nodeLayer.selectAll('g.node')
-      .data(DATA.nodes, d=>d.id)
-      .join(enter => {
-        const g = enter.append('g').attr('class','node');
-
-        g.append('ellipse')
-          .attr('rx', d => rScale(nodeScore(d)) * ellipseAspect)
-          .attr('ry', d => rScale(nodeScore(d)));
-
-        g.append('text')
-          .attr('x', d => rScale(nodeScore(d)) * ellipseAspect + 4)
-          .attr('y', 4)
-          .text(d => d.id);
-
-        g.on('mouseover', (ev,d)=>showTip(ev, d))
-         .on('mousemove', moveTip)
-         .on('mouseout', hideTip)
-         .on('click', (ev,d)=>{ ev.stopPropagation(); onTagClick(d.id); });
-
-        return g;
-      });
-
-    sim.on('tick', () => {
-      link
-        .attr('x1', d=>d.source.x)
-        .attr('y1', d=>d.source.y)
-        .attr('x2', d=>d.target.x)
-        .attr('y2', d=>d.target.y);
-
-      node.attr('transform', d=>`translate(${d.x},${d.y})`);
-    });
-
-    // background click clears everything
-    svg.on('click', () => {
-      activeTag = null;
-      node.classed('dim', false).classed('active', false);
-      link.classed('dim', false);
-      if (rightBox) rightBox.innerHTML = `<div class="muted">Click a tag to list its pulses.</div>`;
-      if (leftBox) leftBox.innerHTML = "";
-    });
-
-    // --- Tooltip ---
-    function showTip(evt, d){
-      const deg = degree.get(d.id) || 0;
-      const cent = (typeof d.centrality==='number') ? d.centrality.toFixed(2) : deg;
-      const desc = (DATA.tagDescriptions && DATA.tagDescriptions[d.id]) ? DATA.tagDescriptions[d.id] : '—';
-      tt.html(`
-        <div style="font-weight:700; margin-bottom:4px">${escapeHTML(d.id)}</div>
-        <div class="muted" style="margin-bottom:6px">degree ${deg} • centrality ${cent}</div>
-        <div style="white-space:pre-wrap; opacity:.92">${escapeHTML(desc)}</div>
-        <div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to list pulses</div>
-      `).style('display','block');
-      moveTip(evt);
-    }
-    function moveTip(evt){ const p=12; tt.style('left',(evt.clientX+p)+'px').style('top',(evt.clientY+p)+'px'); }
-    function hideTip(){ tt.style('display','none'); }
-
-    // --- Focus / dimming ---
-    function setFocus(keepIds){
-      const keep = new Set(keepIds);
-      node.classed('dim', d => !keep.has(d.id));
-      link.classed('dim', d => !(keep.has(d.source.id) && keep.has(d.target.id)));
-    }
-    function clearFocus(){ node.classed('dim', false); link.classed('dim', false); }
-
-    // --- Tag click -> highlight + right list ---
-    let activeTag = null;
-
-    function onTagClick(tag){
-      activeTag = tag;
-
-      // highlight ONLY clicked tag
-      node.classed('active', d => d.id === tag);
-
-      // dim to clicked tag + its neighbors
-      const keep = new Set([tag]);
-      links.forEach(l => {
-        if (l.source.id === tag) keep.add(l.target.id);
-        if (l.target.id === tag) keep.add(l.source.id);
-      });
+  // search filter -> dim everything except matches
+  if (searchInput){
+    searchInput.addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
+      if (!q){ clearFocus(); return; }
+      const keep = new Set(DATA.nodes.filter(n => n.id.toLowerCase().includes(q)).map(n=>n.id));
       setFocus(keep);
-
-      // fill right sidebar with deduped, newest-first single-line list
-      if (!rightBox) return;
-
-      const raw = Array.isArray(DATA.pulsesByTag?.[tag]) ? DATA.pulsesByTag[tag] : [];
-      // dedupe by (id || title || date) “key”
-      const seen = new Set();
-      const unique = [];
-      for (const p of raw) {
-        const k = p.id || p.title || (p.date || Math.random().toString(36).slice(2));
-        if (!seen.has(k)) { seen.add(k); unique.push(p); }
-      }
-      unique.sort((a,b) => (b.date||'').localeCompare(a.date||''));
-
-      const header = `<div class="list-title">Pulses for <span class="tag">${escapeHTML(tag)}</span></div>`;
-      const items  = unique.map(p => {
-        const label = (p.title || p.id || '(untitled)') + (p.date ? ` (${p.date})` : '');
-        return `<li><button class="pill" data-pid="${escapeHTML(p.id || '')}" data-title="${escapeHTML(p.title||'')}"
-                data-date="${escapeHTML(p.date||'')}">${escapeHTML(label)}</button></li>`;
-      }).join('');
-
-      rightBox.innerHTML = `${header}<ul class="pulse-list">${items || '<li class="muted">No pulses.</li>'}</ul>`;
-
-      // wire pulse click -> show details (left)
-      rightBox.querySelectorAll('button.pill').forEach(btn => {
-        btn.onclick = () => {
-          const p = findPulse(btn.dataset.pid, btn.dataset.title, btn.dataset.date, unique);
-          if (p) showPulse(p);
-        };
-      });
-    }
-
-    function findPulse(id, title, date, pool){
-      // robust match across shapes
-      return pool.find(p =>
-        (id && p.id===id) ||
-        (title && p.title===title) ||
-        (date && p.date===date)
-      ) || null;
-    }
-
-    // --- Show pulse details (left) ---
-    function showPulse(p){
-      if (!leftBox) return;
-      const when = p.date ? ` <span class="muted">(${escapeHTML(p.date)})</span>` : '';
-      let html = `<h2 style="margin:0 0 .6rem 0">${escapeHTML(p.title || p.id || 'Pulse')}${when}</h2>`;
-      if (p.summary) html += `<div style="white-space:pre-wrap; margin:.2rem 0 0.6rem 0">${escapeHTML(p.summary)}</div>`;
-      html += renderLinks('Papers', p.papers);
-      html += renderLinks('Podcasts', p.podcasts);
-      leftBox.innerHTML = html;
-    }
-
-    function renderLinks(label, items){
-      if (!items || !items.length) return '';
-      const norm = items.map(u => (typeof u==='string') ? {title:u, url:u} : (u?.url ? u : {title:u?.title||u?.url, url:u?.url||''}));
-      const lis = norm.map(it => {
-        const t = it.title || it.url || '';
-        const u = it.url || it.title || '#';
-        return `<li><a class="ellipsis" href="${escapeHTML(u)}" target="_blank" rel="noopener">${escapeHTML(t)}</a></li>`;
-      }).join('');
-      return `<div class="links"><div class="label">${label}</div><ul>${lis}</ul></div>`;
-    }
-
-    // --- Search (dimming) ---
-    if (search) {
-      search.addEventListener('input', e => {
-        const q = (e.target.value || '').trim().toLowerCase();
-        if (!q) { clearFocus(); return; }
-        const keep = new Set(DATA.nodes.filter(n => n.id.toLowerCase().includes(q)).map(n=>n.id));
-        setFocus(keep);
-      });
-    }
-
-    // --- helpers ---
-    function escapeHTML(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+    });
   }
 })();
