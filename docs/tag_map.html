@@ -6,52 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0c10;
-      --fg:#e9eef8;
-      --muted:#97a3b6;
-      --accent:#82c7ff;
+      --bg:#0b0c10; --fg:#e9eef8; --muted:#97a3b6;
       --link:#9fc9ff;
-      --linkDim:rgba(180,200,230,.13);
       --pulseWarm:#ff7a66; --pulseMed:#ffb066; --pulseCool:#86cbff; --pulseCooler:#74a9ff;
-      --panel:transparent; /* transparent left panel per your preference */
     }
     html,body{height:100%;margin:0;background:var(--bg);color:var(--fg)}
     body{font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
 
-    /* 3-column grid: left sidebar · graph · right (pulse list) */
-    .app{display:grid;grid-template-columns:320px 1fr 300px;gap:0;height:100%}
+    /* 3 columns: left info • graph • right tray */
+    .app{display:grid;grid-template-columns:320px 1fr 300px;height:100%}
 
-    /* Sidebar (left) — transparent, no border */
-    aside.left{
-      background:var(--panel);
-      display:flex;flex-direction:column;min-width:0;
-    }
+    /* Left sidebar — transparent (no box), smaller type */
+    aside.left{background:transparent;display:flex;flex-direction:column;min-width:0}
     header{padding:14px 14px 8px 14px}
-    h1{margin:0 0 6px 0;font-size:18px;letter-spacing:.2px}
+    h1{margin:0 0 6px 0;font-size:18px}
     .hint{color:var(--muted);font-size:12px}
     #search{width:100%;background:#10131a;border:1px solid rgba(255,255,255,.08);color:var(--fg);
       padding:9px 10px;border-radius:8px;outline:none;margin-top:10px}
-    #sidebar-content{padding:14px;overflow:auto}
-    /* smaller text in the left panel for pulse details */
-    #sidebar-content h2{font-size:16px;margin:.2rem 0 .6rem 0}
-    #sidebar-content .body{font-size:13px}
-    #sidebar-content a{color:var(--link)}
 
-    /* Right pulse tray — “invisible sidebar” */
-    aside.right{
-      background:transparent;border-left:none;padding:10px 10px 10px 6px;overflow:auto;
-      font-size:12.5px;color:var(--fg)
-    }
+    #sidebar-content{padding:12px 14px;overflow:auto}
+    #sidebar-content::-webkit-scrollbar{display:none}
+    #sidebar-content{scrollbar-width:none}
+    #sidebar-content h2{font-size:15px;margin:.25rem 0 .5rem 0}
+    #sidebar-content .body{font-size:12.5px}
+    #sidebar-content a{color:var(--link);text-decoration:none}
+    .ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+
+    /* Right tray — invisible panel listing pulses */
+    aside.right{background:transparent;padding:10px 8px 10px 6px;overflow:auto;font-size:12.5px}
+    aside.right::-webkit-scrollbar{display:none}
+    aside.right{scrollbar-width:none}
     .trayTitle{font-weight:700;margin:4px 0 8px 0;font-size:13px;color:var(--muted)}
-    .pulseRow{display:flex;align-items:center;gap:8px;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pulseRow{display:flex;align-items:center;gap:8px;margin:3px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
     .dot{width:8px;height:8px;border-radius:50%}
     .pAge0{background:#ff7a66}.pAge1{background:#ff9b66}.pAge2{background:#ffb066}.pAge3{background:#86cbff}.pAge4{background:#74a9ff}
     .trayEmpty{color:var(--muted)}
 
     /* Graph */
     svg{width:100%;height:100%}
-    .link{stroke:#b9c7dd;stroke-opacity:.22}
-    .link.dim{stroke-opacity:.07}
+    .bgcatch{fill:transparent} /* for reliable background clicks */
+    .link{stroke:#b9c7dd;stroke-opacity:.18}
+    .link.dim{stroke-opacity:.06}
     .node text{font-size:12px;fill:#d3e0f2;pointer-events:none}
     .node ellipse{fill:#74b7ff;stroke:none}
     .node.dim text{opacity:.18}
@@ -71,7 +66,7 @@
     }
   </style>
 
-  <!-- load in order and defer so DOM exists before scripts run -->
+  <!-- Defer so DOM exists before scripts run -->
   <script defer src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script defer src="data.js"></script>
   <script defer src="map.js"></script>
@@ -89,7 +84,6 @@
 
     <svg id="graph" role="img" aria-label="Tag Map"></svg>
 
-    <!-- Right, invisible tray for pulse list (appears when a tag is selected) -->
     <aside class="right" id="pulse-tray">
       <div class="trayTitle">Pulses</div>
       <div class="trayEmpty">Click a tag to list its pulses.</div>
