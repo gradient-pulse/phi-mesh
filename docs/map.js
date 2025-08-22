@@ -99,8 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .attr('ry', d => rScale(nodeScore(d)));
 
       g.append('text')
-        .attr('x', d => rScale(nodeScore(d)) * ellipseAspect + 4)
-        .attr('y', 4)
+        .attr('class', 'tag-label')
+        .attr('text-anchor', 'middle')              // center horizontally
+        .attr('x', 0)                               // at node center (g is translated)
+        .attr('y', d => rScale(nodeScore(d)) + 12)  // just below ellipse bottom
         .text(d => d.id);
 
       g.on('mouseover', (ev,d)=>showTip(ev,d.id))
