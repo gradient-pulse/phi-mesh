@@ -18,6 +18,7 @@ from collections import defaultdict, OrderedDict
 
 import yaml
 from datetime import datetime, date
+from pathlib import Path
 
 # ----------------------- helpers -----------------------
 
@@ -171,6 +172,14 @@ def load_tag_descriptions(path):
         out[str(k)] = str(v or "")
     return out
 
+def _is_archived(path_str: str) -> bool:
+    """
+    True for files under pulse/archive/** (we exclude these from the graph).
+    """
+    parts = list(Path(path_str).parts)
+    # Require at least ["pulse", "archive", ...]
+    return len(parts) >= 2 and parts[0] == "pulse" and parts[1] == "archive"
+
 # ----------------------- pulse collection -----------------------
 
 def coerce_pulse_dict(path, obj):
@@ -242,6 +251,7 @@ def collect_pulses(pulse_glob, alias_map):
     tag_to_pulses = defaultdict(list)
 
     files = sorted(glob.glob(pulse_glob, recursive=True))
+    files = [p for p in files if not _is_archived(p)]
     for path in files:
         obj = load_yaml(path)
         if obj is None:
