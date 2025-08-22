@@ -7,43 +7,51 @@
   <style>
     :root{
       --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6;
-      --accent:#82c7ff; --link:#9fc9ff; --linkDim:rgba(180,200,230,.13);
+      --accent:#82c7ff; --link:#9fc9ff;
       --pulseWarm:#ff7a66; --pulseMed:#ffb066; --pulseCool:#86cbff; --pulseCooler:#74a9ff;
+      --edge:#ffffff10;
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg)}
-    body{font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .app{display:grid;grid-template-columns:320px 1fr;height:100%}
-    aside{background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92));
-          border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column}
-    header{padding:14px 14px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
-    h1{margin:0 0 6px;font-size:18px;letter-spacing:.2px}
-    .hint{color:var(--muted);font-size:12px}
-    #search{width:100%;background:#10131a;border:1px solid rgba(255,255,255,.08);
-            color:var(--fg);padding:9px 10px;border-radius:8px;outline:none;margin-top:10px}
-    #sidebar-content{padding:14px;overflow:auto}
-    .ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); }
+    body { font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; }
+    .app { display:grid; grid-template-columns:320px 1fr; height:100%; }
 
-    svg{width:100%;height:100%}
-    .link{stroke:#b9c7dd;stroke-opacity:.28}
-    .link.dim{stroke-opacity:.08}
-    .node text{font-size:12px;fill:#d3e0f2;pointer-events:none}
-    .node ellipse{fill:#74b7ff;stroke:none}
-    .node.dim text{opacity:.18}
-    .node.dim ellipse{opacity:.22}
-    .satellite circle{stroke:none}
-    .age-very-new{fill:var(--pulseWarm)}
-    .age-new{fill:#ff9b66}
-    .age-mid{fill:var(--pulseMed)}
-    .age-old{fill:var(--pulseCool)}
-    .age-very-old{fill:var(--pulseCooler)}
-    #tooltip{position:fixed;left:0;top:0;display:none;background:#0f1522;color:var(--fg);
-             border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;
-             max-width:300px;box-shadow:0 6px 18px rgba(0,0,0,.35);pointer-events:none;z-index:20}
+    /* Sidebar */
+    aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid var(--edge); display:flex; flex-direction:column; }
+    header { padding:14px 14px 8px 14px; border-bottom:1px solid var(--edge); }
+    h1 { margin:0 0 6px 0; font-size:18px; letter-spacing:.2px; }
+    .hint { color:var(--muted); font-size:12px; }
+    #search { width:100%; background:#10131a; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; margin-top:10px; }
+    #sidebar-content { padding:14px; overflow:auto; }
+    .muted { color:var(--muted); }
+    .ellipsis{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; }
+
+    /* Graph */
+    svg { width:100%; height:100%; }
+    .link { stroke:#b9c7dd; stroke-opacity:.22; }
+    .link.dim { stroke-opacity:.06; }
+    .node text { font-size:12px; fill:#d3e0f2; pointer-events:none; }
+    .node ellipse { fill:#74b7ff; stroke:none; }
+    .node.dim text { opacity:.2; }
+    .node.dim ellipse { opacity:.22; }
+
+    .satellite circle { stroke:none; }
+    .age-very-new { fill:var(--pulseWarm); }
+    .age-new      { fill:#ff9b66; }
+    .age-mid      { fill:var(--pulseMed); }
+    .age-old      { fill:var(--pulseCool); }
+    .age-very-old { fill:var(--pulseCooler); }
+
+    #tooltip {
+      position:fixed; left:0; top:0; display:none;
+      background:#0f1522; color:var(--fg);
+      border:1px solid rgba(255,255,255,.08); border-radius:10px;
+      padding:10px 12px; max-width:300px; box-shadow:0 6px 18px rgba(0,0,0,.35);
+      pointer-events:none; z-index:20;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <!-- Load DATA first, then renderer -->
-  <script src="data.js"></script>
-  <script defer src="map.js"></script>
+  <script src="data.js"></script>  <!-- DATA produced by generate_graph_data.py -->
+  <script src="map.js"></script>   <!-- Renderer -->
 </head>
 <body>
   <div class="app">
