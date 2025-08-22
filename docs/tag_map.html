@@ -5,90 +5,64 @@
   <title>Phi-Mesh Tag Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --bg:#0b0c10; --panel:#0f1219; --fg:#e9eef8; --muted:#96a4b8;
-      --tag:#8ec5ff; --tagDim:rgba(160,190,220,.20);
-      --accent:#ffa38a; /* clicked tag fill */
-      --link:#b9c7dd; --linkDim:rgba(180,200,230,.09);
-    }
-    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg) }
-    body { font:13px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
+    :root { --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6; --accent:#82c7ff; }
+    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
+    .app { display:grid; grid-template-columns:300px 1fr 320px; height:100% }
 
-    /* Layout: left panel (280) | graph | right panel (320) */
-    .app { display:grid; grid-template-columns:280px 1fr 320px; height:100% }
+    aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid rgba(255,255,255,.06); }
+    aside.right { border-right:none; border-left:1px solid rgba(255,255,255,.06); }
+    header { padding:12px 14px 8px; border-bottom:1px solid rgba(255,255,255,.06) }
+    #search { width:100%; background:#0f1220; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; }
+    #left, #right { display:flex; flex-direction:column }
+    #left .content { padding:12px 14px; overflow:auto; }
+    #right .content { padding:10px 12px; overflow:auto; }
 
-    aside { background:linear-gradient(180deg,var(--panel),rgba(20,22,28,.92));
-            border-right:1px solid rgba(255,255,255,.06); }
-    aside.right { border-right:0; border-left:1px solid rgba(255,255,255,.06); }
-
-    header { padding:12px 14px 10px 14px; border-bottom:1px solid rgba(255,255,255,.06) }
-    h1 { margin:0 0 6px 0; font-size:16px; letter-spacing:.2px }
-    .hint { color:var(--muted); font-size:12px }
-    #search { width:100%; background:#0e1218; border:1px solid rgba(255,255,255,.08);
-              color:var(--fg); padding:8px 10px; border-radius:8px; outline:none; margin-top:8px }
-
-    #left, #right { height:calc(100% - 56px); overflow:auto; padding:14px }
-    #left { /* intentionally no default help text */ }
-
-    /* Small, airy pulse detail text */
-    #left h2 { margin:.2rem 0 .35rem 0; font-size:18px }
-    #left .muted { color:var(--muted) }
-    #left .block { margin:.7rem 0 }
-    #left a { color:#9fc9ff; text-decoration:none }
-    #left a:hover { text-decoration:underline }
-
-    /* Graph */
     svg { width:100%; height:100% }
-    .link { stroke:var(--link); stroke-opacity:.22; }
-    .link.dim { stroke:var(--linkDim); }
     .node text { font-size:12px; fill:#d3e0f2; pointer-events:none }
-    .node ellipse { fill:var(--tag); stroke:none; }
-    .node.dim text { opacity:.20 }
-    .node.dim ellipse { opacity:.22 }
-    .node.highlight ellipse { fill:var(--accent); }
+    .node ellipse { fill:#74b7ff; stroke:none }
+    .node.dim text, .node.dim ellipse { opacity:.22 }
+    .node.selected ellipse { fill:#ff9b8a }    /* highlight JUST the clicked tag */
+    .link { stroke:#b9c7dd; stroke-opacity:.24 }
+    .link.dim { stroke-opacity:.08 }
 
-    /* Right sidebar: one-line, hard-truncated list */
-    .pulse-list { list-style:none; padding:0; margin:8px 0 0 0 }
-    .pulse-list li { margin:0; padding:8px 10px; border-radius:8px }
-    .pulse-list li:hover { background:rgba(255,255,255,.05); cursor:pointer }
-    .pulse-dot { display:inline-block; width:6px; height:6px; border-radius:50%;
-                 background:#ff7a66; margin-right:8px; vertical-align:middle }
-    .ellipsis { display:inline-block; max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; vertical-align:middle }
-
-    /* Make left+right text slightly smaller per your request */
-    #left, #right { font-size:13px }
+    .one-line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+    .muted { color:var(--muted) }
   </style>
+
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="data.js"></script>  <!-- window.PHI_DATA -->
-  <script defer src="map.js"></script>
+  <script src="data.js"></script>
+  <script src="map.js"></script>
 </head>
 <body>
   <div class="app">
-    <aside>
+    <!-- LEFT SIDEBAR -->
+    <aside id="left">
       <header>
-        <h1>Phi-Mesh Tag Map</h1>
-        <div class="hint">Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details</div>
-        <input id="search" type="search" placeholder="Type to filter…">
+        <div style="font-weight:700">Phi-Mesh Tag Map</div>
+        <div id="left-hint" class="muted" style="font-size:12px">
+          Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details
+        </div>
+        <div style="margin-top:8px"><input id="search" type="search" placeholder="Type to filter…"></div>
       </header>
-      <div id="left"></div>
+      <div class="content" id="left-content"></div>
     </aside>
 
+    <!-- GRAPH -->
     <svg id="graph" role="img" aria-label="Tag Map"></svg>
 
-    <aside class="right">
+    <!-- RIGHT SIDEBAR -->
+    <aside id="right" class="right">
       <header>
-        <h1>Pulses</h1>
-        <div class="hint">Click a tag to list its pulses.</div>
+        <div style="font-weight:700">Pulses</div>
       </header>
-      <div id="right"></div>
+      <div class="content">
+        <div id="pulse-list" class="muted one-line">Click a tag to list its pulses.</div>
+      </div>
     </aside>
   </div>
 
-  <!-- one shared tooltip -->
-  <div id="tooltip" style="
-      position:fixed; left:0; top:0; display:none; pointer-events:none; z-index:20;
-      background:#0f1522; color:#e9eef8; border:1px solid rgba(255,255,255,.08);
-      border-radius:10px; padding:10px 12px; max-width:320px;
-      box-shadow:0 6px 18px rgba(0,0,0,.35);"></div>
+  <div id="tooltip" style="position:fixed; left:0; top:0; display:none;
+       background:#0f1522; color:#e9eef8; border:1px solid rgba(255,255,255,.08);
+       border-radius:10px; padding:10px 12px; max-width:300px; box-shadow:0 6px 18px rgba(0,0,0,.35);"></div>
 </body>
 </html>
