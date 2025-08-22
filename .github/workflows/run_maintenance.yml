@@ -1,0 +1,62 @@
+# .github/workflows/run_maintenance.yml
+name: One-time Mesh Maintenance
+
+on:
+  workflow_dispatch:
+    inputs:
+      keep:
+        description: "Keep last N auto-pulses per dataset"
+        required: true
+        default: "3"
+      merge_file:
+        description: "Path to descriptions YAML to merge (e.g., meta/new_tag_descriptions.yml)"
+        required: false
+        default: ""
+      rebuild_data:
+        description: "Rebuild docs/data.js?"
+        required: true
+        default: "true"
+        type: choice
+        options: ["true","false"]
+      dry_run:
+        description: "Dry run (no writes)?"
+        required: true
+        default: "false"
+        type: choice
+        options: ["false","true"]
+
+permissions:
+  contents: write
+
+jobs:
+  maint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml networkx
+
+      - name: Run maintenance
+        run: |
+          python tools/mesh_maint.py \
+            --keep "${{ inputs.keep }}" \
+            $([[ -n "${{ inputs.merge_file }}" ]] && echo --merge-file "${{ inputs.merge_file }}") \
+            $([[ "${{ inputs.rebuild_data }}" == "true" ]] && echo --rebuild-data) \
+            $([[ "${{ inputs.dry_run }}" == "true" ]] && echo --dry-run)
+
+      - name: Commit & push (if changed)
+        run: |
+          git config user.name  "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: maintenance (archive auto-pulses, merge descriptions, rebuild data)" || echo "No changes to commit"
+          git push || true
