@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- simulation (looser => less dense; slight upward bias) ---
   const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id).distance(92).strength(0.48))
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(92).strength(0.47))
     .force('charge', d3.forceManyBody().strength(-295))
-    .force('center', d3.forceCenter(W/2, H/2.4))
-    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.4));
+    .force('center', d3.forceCenter(W/2, H/2.3))
+    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.5));
 
   // --- draw ---
   const linkSel = linkLayer.selectAll('line')
