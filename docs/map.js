@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (leftContent) leftContent.innerHTML = '';
 
   // --- sizes & viewBox ---
-  const W = (svg.node() && svg.node().clientWidth)  || 1200;
-  const H = (svg.node() && svg.node().clientHeight) || 800;
-  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  const nodeEl = svg.node();
+  const W = (nodeEl && nodeEl.clientWidth)  || 1200;
+  const H = (nodeEl && nodeEl.clientHeight) || 800;
+  svg.attr('viewBox', `0 0 ${W} ${H}`)
+     .attr('preserveAspectRatio','xMidYMin meet'); // keep graph anchored to top
 
   // --- layers ---
   const root = svg.append('g');
@@ -55,11 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ellipseAspect = 1.6;
 
-  // --- simulation (looser => less dense) ---
+  // ---- age → color for pulse list dots (hot -> cold) ----
+  function ageColor(days){
+    if (days == null) return '#86cbff';
+    if (days <= 14)  return '#ff7a66';
+    if (days <= 45)  return '#ff9b66';
+    if (days <= 120) return '#ffb066';
+    if (days <= 270) return '#86cbff';
+    return '#74a9ff';
+  }
+
+  // --- simulation (looser => less dense; slight upward bias) ---
   const sim = d3.forceSimulation(DATA.nodes)
     .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.50))
     .force('charge', d3.forceManyBody().strength(-290))
-    .force('center', d3.forceCenter(W/2, H/2))
+    .force('center', d3.forceCenter(W/2, H/2.4))
     .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.35));
 
   // --- draw ---
@@ -164,8 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const rows = items.map(p => {
       const title = p.title || p.id || 'Pulse';
       const date = p.date ? ` (${p.date})` : '';
+      const dot = ageColor(p.ageDays);
       return `<div class="one-line" data-key="${esc(p.id||p.title||'')}" style="padding:6px 4px; cursor:pointer">
-                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pulse);margin-right:8px;vertical-align:middle"></span>
+                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${dot};margin-right:8px;vertical-align:middle"></span>
                 <span>${esc(title)}${esc(date)}</span>
               </div>`;
     }).join('');
@@ -202,11 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!leftContent) return;
 
     const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
-    let html = `<div style="font-weight:700; font-size:15px; margin-bottom:6px">${esc(p.title || p.id || 'Pulse')}${when}</div>`;
+    let html = `<div class="pulse-detail"><div style="font-weight:700; font-size:15px; margin-bottom:6px">${esc(p.title || p.id || 'Pulse')}${when}</div>`;
     if (p.summary) html += `<div style="white-space:pre-wrap; margin:6px 0 12px 0">${esc(p.summary)}</div>`;
     html += renderLinkBlock('Papers', p.papers);
     html += renderLinkBlock('Podcasts', p.podcasts);
-    leftContent.innerHTML = html;
+    leftContent.innerHTML = html + `</div>`;
   }
 
   // --- tag click ---
@@ -227,7 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- search filter ---
   if (searchInput){
     searchInput.addEventListener('input', e => {
-      const q = (e.target && e.target.value ? e.target.value : '').trim().toLowerCase();
+      const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
+      const q = v.trim().toLowerCase();
       if (!q){ clearFocus(); return; }
       const keep = new Set(DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q)).map(n=>n.id));
       setFocus(keep);
