@@ -39,7 +39,7 @@ tags:
   alignment: "Keeping models in phase with intended gradients—less about rules, more about resonance."
   cognitive_tension: "Useful pressure between competing gradients; releases as ticks when structure improves."
   legacy: "Persistent structures that bias future gradients; can be memory—or inertia."
-  infrastructure: "Scaffolding that carries gradients reliably: data paths, CF banks, and evaluation loops."
+  Infrastructure: "Scaffolding that carries gradients reliably: data paths, CF banks, and evaluation loops."
   interpretability: "Making gradients and filters legible enough to steer without destroying coherence."
   compositionality: "Ability to recombine gradient-grown parts without re-learning everything."
   language_evolution: "How gradient structures enter syntax and discourse; where NT rhythm becomes text."
