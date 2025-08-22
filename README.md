@@ -4,6 +4,8 @@ Pulse: "Recursive"
 Gradient-core: ["RGP", "PoLA", "GC", "CF", "UD"]
 Welcome: "Initiated"
 Discoverability: "Emergent"
+
+---
 ---
 
 # Φ-Mesh: Recursive Gradient Infrastructure
@@ -72,7 +74,17 @@ phi-mesh/
 		•	regenerate docs/data.js,
 		•	redeploy the Tag Map.
 	3.	Open the Φ–Mesh Tag Map to see the changes live.
+---
 
+## Map upkeep
+
+	1.	Pulses are the lifeblood of the Mesh.
+	2. 	When pulses are added or archived, the map refreshes itself:
+		•	Push changes under pulse/… or meta/tag_descriptions.yml.
+		•	GitHub Actions will clean, rebuild docs/data.js, and redeploy the Tag Map.
+		•	If the map looks stale, trigger the workflow Build Tags & Graph (minimal) in Actions.
+
+	That’s all — the Mesh tends to itself.
 ---
 
 ## Why Φ-Mesh
