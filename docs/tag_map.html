@@ -28,12 +28,18 @@
 
     /* graph */
     svg { width:100%; height:100% }
-    .node text { font-size:12px; fill:#d3e0f2; pointer-events:none }
+    /* .node text { font-size:12px; fill:#d3e0f2; pointer-events:none } */
     .node ellipse { fill:#74b7ff; stroke:none }
     .node.dim text, .node.dim ellipse { opacity:.22 }
     .node.selected ellipse { fill:var(--pulse) }
     .link { stroke:#b9c7dd; stroke-opacity:.24 }
     .link.dim { stroke-opacity:.08 }
+    .tag-label {
+      pointer-events: none;        /* clicks pass through to the node */
+      dominant-baseline: hanging;  /* anchor text from the top edge */
+      font-size: 12px;             /* tweak for readability */
+      fill: #333;                  /* darker text color for contrast */
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
