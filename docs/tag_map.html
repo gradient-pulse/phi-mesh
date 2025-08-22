@@ -6,32 +6,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6;
-      --accent:#82c7ff; --link:#9fc9ff;
+      --bg:#0b0c10; --fg:#e9eef8; --muted:#9aa6b8;
       --pulseWarm:#ff7a66; --pulseMed:#ffb066; --pulseCool:#86cbff; --pulseCooler:#74a9ff;
-      --edge:#ffffff10;
     }
     html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); }
-    body { font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; }
-    .app { display:grid; grid-template-columns:320px 1fr; height:100%; }
+    body { font:14px/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
 
-    /* Sidebar */
-    aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid var(--edge); display:flex; flex-direction:column; }
-    header { padding:14px 14px 8px 14px; border-bottom:1px solid var(--edge); }
+    /* Layout: fixed left text column + canvas + slide-in right column */
+    .app {
+      display:grid;
+      grid-template-columns:320px 1fr;
+      grid-template-areas:"left main";
+      height:100%;
+      position:relative;
+    }
+
+    /* Left “sidebar”—transparent, no borders */
+    aside {
+      grid-area:left;
+      background:transparent;
+      border:none;
+      display:flex;
+      flex-direction:column;
+      padding:14px 14px 10px 14px; /* subtle breathing space */
+    }
+    header { padding-bottom:8px; }
     h1 { margin:0 0 6px 0; font-size:18px; letter-spacing:.2px; }
     .hint { color:var(--muted); font-size:12px; }
-    #search { width:100%; background:#10131a; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; margin-top:10px; }
-    #sidebar-content { padding:14px; overflow:auto; }
+    #search {
+      width:100%;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--fg);
+      padding:8px 10px;
+      border-radius:10px;
+      outline:none;
+      margin-top:10px;
+    }
+    #sidebar-content { overflow:auto; padding-top:6px; }
     .muted { color:var(--muted); }
     .ellipsis{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; }
 
-    /* Graph */
-    svg { width:100%; height:100%; }
+    /* Detail text smaller to balance the constellation */
+    #sidebar-content .details { font-size:13px; line-height:1.42; }
+    #sidebar-content .details h2 { font-size:16px; margin:0 0 .4rem 0; }
+    #sidebar-content .details .block-title { font-weight:600; font-size:12px; margin:.75rem 0 .25rem 0; color:var(--muted); }
+    #sidebar-content a { color:#a9cbff; text-decoration:none; }
+    #sidebar-content a:hover { text-decoration:underline; }
+
+    /* MAIN graph canvas */
+    svg { grid-area:main; width:100%; height:100%; }
     .link { stroke:#b9c7dd; stroke-opacity:.22; }
     .link.dim { stroke-opacity:.06; }
     .node text { font-size:12px; fill:#d3e0f2; pointer-events:none; }
     .node ellipse { fill:#74b7ff; stroke:none; }
-    .node.dim text { opacity:.2; }
+    .node.dim text { opacity:.22; }
     .node.dim ellipse { opacity:.22; }
 
     .satellite circle { stroke:none; }
@@ -41,12 +70,36 @@
     .age-old      { fill:var(--pulseCool); }
     .age-very-old { fill:var(--pulseCooler); }
 
+    /* Tooltip */
     #tooltip {
       position:fixed; left:0; top:0; display:none;
-      background:#0f1522; color:var(--fg);
+      background:rgba(18,22,34,.95); color:var(--fg);
       border:1px solid rgba(255,255,255,.08); border-radius:10px;
       padding:10px 12px; max-width:300px; box-shadow:0 6px 18px rgba(0,0,0,.35);
-      pointer-events:none; z-index:20;
+      pointer-events:none; z-index:20; font-size:13px;
+    }
+
+    /* RIGHT slide-in pulse list (hidden by default) */
+    #rightbar {
+      position:absolute; right:0; top:0; bottom:0; width:340px;
+      transform: translateX(100%); transition: transform .28s ease;
+      pointer-events:none; /* don't catch clicks when hidden */
+      display:flex; flex-direction:column;
+      padding:14px; gap:8px;
+      background:transparent; border:none;
+    }
+    #rightbar.open { transform: translateX(0); pointer-events:auto; }
+    #rightbar h2 { font-size:16px; margin:2px 0 4px 0; }
+    #rightbar .muted { font-size:12px; }
+    #rightbar ul { list-style:none; padding-left:0; margin:.25rem 0 0 0; }
+    #rightbar li { margin:.3rem 0; }
+    #rightbar a { color:#a9cbff; text-decoration:none; font-size:13px; }
+    #rightbar a:hover { text-decoration:underline; }
+
+    /* Small screens: shrink left column */
+    @media (max-width:900px){
+      .app{ grid-template-columns:260px 1fr; }
+      #rightbar{ width:300px; }
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -55,6 +108,7 @@
 </head>
 <body>
   <div class="app">
+    <!-- Left transparent text area -->
     <aside>
       <header>
         <h1>Phi-Mesh Tag Map</h1>
@@ -63,7 +117,14 @@
       </header>
       <div id="sidebar-content"></div>
     </aside>
+
+    <!-- Graph canvas -->
     <svg id="graph" role="img" aria-label="Tag Map"></svg>
+
+    <!-- Hidden right-side pulse list -->
+    <section id="rightbar" aria-hidden="true">
+      <div id="rightbar-content"></div>
+    </section>
   </div>
   <div id="tooltip"></div>
 </body>
