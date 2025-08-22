@@ -30,23 +30,39 @@
     target: idToNode.get(l.target) || l.target
   })).filter(l => l.source && l.target);
 
-  // degree & sizing
-  const degree = new Map();
-  links.forEach(l => {
-    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
-    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
-  });
-  const centralities = DATA.nodes.map(n => (typeof n.centrality==='number' ? n.centrality : (degree.get(n.id)||0)));
-  const cMin = d3.min(centralities) ?? 0, cMax = d3.max(centralities) ?? 1;
-  const rScale = d3.scaleSqrt().domain([cMin||0.0001, cMax||1]).range([6, 22]);
-  const ellipseAspect = 1.6;
+// --- degree & sizing ---
+const degree = new Map();
+links.forEach(l => {
+  degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
+  degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
+});
 
-  // simulation — slightly looser -> less dense
-  const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id).distance(78).strength(0.65))
-    .force('charge', d3.forceManyBody().strength(-200))
-    .force('center', d3.forceCenter(W/2, H/2))
-    .force('collide', d3.forceCollide().radius(d => rScale(d.centrality ?? degree.get(d.id) || 1)*1.25));
+// Helper: safe node score (avoid mixing ?? and ||)
+function nodeScore(d){
+  const c = d.centrality;
+  return (typeof c === 'number') ? c : (degree.get(d.id) || 1);
+}
+
+const centralities = DATA.nodes.map(nodeScore);
+
+// Avoid `??` — compute once, then ternary default
+const mmMin = d3.min(centralities);
+const mmMax = d3.max(centralities);
+const cMin = (mmMin == null ? 0 : mmMin);
+const cMax = (mmMax == null ? 1 : mmMax);
+
+const rScale = d3.scaleSqrt()
+  .domain([ (cMin === 0 ? 0.0001 : cMin), (cMax === 0 ? 1 : cMax) ])
+  .range([6, 22]);
+
+const ellipseAspect = 1.6;
+
+// --- simulation (a bit looser -> less dense) ---
+const sim = d3.forceSimulation(DATA.nodes)
+  .force('link', d3.forceLink(links).id(d=>d.id).distance(82).strength(0.62))
+  .force('charge', d3.forceManyBody().strength(-220))
+  .force('center', d3.forceCenter(W/2, H/2))
+  .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.3));
 
   // draw
   const linkSel = linkLayer.selectAll('line')
@@ -59,10 +75,11 @@
     .join(enter => {
       const g = enter.append('g').attr('class','node');
       g.append('ellipse')
-        .attr('rx', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect)
-        .attr('ry', d => rScale(d.centrality ?? degree.get(d.id) || 1));
+        .attr('rx', d => rScale(nodeScore(d)) * ellipseAspect)
+        .attr('ry', d => rScale(nodeScore(d)));
+
       g.append('text')
-        .attr('x', d => rScale(d.centrality ?? degree.get(d.id) || 1) * ellipseAspect + 4)
+        .attr('x', d => rScale(nodeScore(d)) * ellipseAspect + 4)
         .attr('y', 4)
         .text(d => d.id);
 
