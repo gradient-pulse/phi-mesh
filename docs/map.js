@@ -11,8 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const pulseList = document.getElementById('pulse-list');
   const searchInput = document.getElementById('search');
 
-  // left panel starts empty (hint stays in header)
+  // left panel starts empty (hint lives in header)
   if (leftContent) leftContent.innerHTML = '';
+
+  // helper: reset left panel to the header hint
+  function clearLeftPanel(){
+    if (leftContent) leftContent.innerHTML = '';
+    if (leftHint) {
+      leftHint.textContent =
+        'Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details';
+    }
+  }
 
   // --- sizes & viewBox ---
   const nodeEl = svg.node();
@@ -113,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // --- background click clears focus & right list hint ---
+  // --- background click clears focus, right hint, and LEFT PANEL ---
   svg.on('click', () => {
     clearFocus();
     nodeSel.classed('selected', false);
@@ -121,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pulseList.textContent = 'Click a tag to list its pulses.';
       pulseList.className = 'muted one-line';
     }
+    clearLeftPanel(); // ← new
   });
 
   // --- tooltip helpers ---
@@ -224,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- tag click ---
   function onTagClick(tagId){
+    clearLeftPanel(); // ← clear left when switching tags
     nodeSel.classed('selected', d => d.id === tagId); // just the clicked node
 
     // keep only neighbors + self
@@ -242,6 +253,9 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', e => {
       const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
       const q = v.trim().toLowerCase();
+
+      clearLeftPanel(); // ← typing changes context
+
       if (!q){ clearFocus(); return; }
       const keep = new Set(DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q)).map(n=>n.id));
       setFocus(keep);
