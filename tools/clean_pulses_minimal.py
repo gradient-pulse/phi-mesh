@@ -1,310 +1,130 @@
 #!/usr/bin/env python3
 """
-Clean pulses to a minimal schema.
-
-We KEEP only:
-  - title (str)
-  - date  (str; inferred from filename if missing: 2025-08-12_example.yml -> "2025-08-12")
-  - summary (str)
-  - tags (list[str])
-  - papers (list[str] or list[{title,url}])
-  - podcasts (list[str])
-
-We DROP everything else.
-
-The script prints *every* file it considers and says exactly what it did.
-
-Exit codes:
-  --check : exit 1 if any file would change, else 0
-  default : exit 0
-
+Clean pulses to a minimal schema AND prune auto-pulses:
+- Minimal schema fields: title, date, summary, tags, papers, podcasts
+- Keep only the latest N auto pulses (default 3); move older ones to pulse/archive/auto/
 """
 
 from __future__ import annotations
-import argparse
-import json
-import re
-import sys
+import sys, os, shutil, re
 from pathlib import Path
-from typing import Any, Dict, List, Tuple, Union
+from datetime import datetime
+from typing import Dict, Any, List
 
 import yaml
 
-KEEP = ("title", "date", "summary", "tags", "papers", "podcasts")
-DATE_RE = re.compile(r"(\d{4}-\d{2}-\d{2})")
+ROOT = Path(__file__).resolve().parents[1]
+PULSE_DIR = ROOT / "pulse"
+AUTO_DIR = PULSE_DIR / "auto"
+ARCHIVE_AUTO_DIR = PULSE_DIR / "archive" / "auto"
 
+KEEP_AUTO = int(os.environ.get("KEEP_AUTO_PULSES", "3"))
 
-# ---------------- YAML IO ----------------
+ALLOWED_KEYS = {"title", "date", "summary", "tags", "papers", "podcasts"}
 
-def load_yaml(path: Path) -> Any:
-    try:
-        with path.open("r", encoding="utf-8") as f:
-            return yaml.safe_load(f)
-    except Exception as e:
-        print(f"[WARN] cannot read YAML: {path} -> {e}", file=sys.stderr)
-        return None
+# ---------- helpers ----------
+def load_yaml(p: Path) -> Dict[str, Any]:
+    with p.open("r", encoding="utf-8") as f:
+        return yaml.safe_load(f) or {}
 
+def dump_yaml(p: Path, data: Dict[str, Any]) -> None:
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("w", encoding="utf-8") as f:
+        yaml.safe_dump(data, f, sort_keys=False, allow_unicode=True)
 
-def dump_yaml(path: Path, data: Dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="\n") as f:
-        yaml.safe_dump(
-            data,
-            f,
-            sort_keys=False,
-            allow_unicode=True,
-            width=88,
-            default_flow_style=False,
-        )
+def to_list(x: Any) -> List[Any]:
+    if x is None: return []
+    if isinstance(x, list): return x
+    return [x]
 
-
-# --------------- helpers -----------------
-
-def as_str(x: Any) -> str:
-    return "" if x is None else str(x).strip()
-
-
-def ensure_list(x: Any) -> List[Any]:
-    if x is None:
-        return []
-    return x if isinstance(x, list) else [x]
-
-
-def flatten_once(seq: List[Any]) -> List[Any]:
-    out: List[Any] = []
-    for el in seq:
-        if isinstance(el, list):
-            out.extend(el)
-        else:
-            out.append(el)
+def coerce_minimal(d: Dict[str, Any]) -> Dict[str, Any]:
+    out: Dict[str, Any] = {}
+    for k in ("title", "date", "summary", "tags", "papers", "podcasts"):
+        if k in d:
+            out[k] = d[k]
+    # types
+    out["tags"] = [str(t) for t in to_list(out.get("tags"))]
+    out["papers"] = [str(u) if not isinstance(u, dict) else u for u in to_list(out.get("papers"))]
+    out["podcasts"] = [str(u) if not isinstance(u, dict) else u for u in to_list(out.get("podcasts"))]
     return out
 
+def parse_ts_from_name(name: str) -> datetime | None:
+    """
+    Try to parse timestamps from names like:
+    20250813_170555_jhtdb_iso_1024.yml  or  jhtdb_iso_1024_2025-08-12_15-21-06Z.yml
+    """
+    # style A: 20250813_170555_...
+    m = re.match(r"^(\d{8})_(\d{6})_", name)
+    if m:
+        try:
+            return datetime.strptime(m.group(1)+m.group(2), "%Y%m%d%H%M%S")
+        except Exception:
+            pass
+    # style B: ..._YYYY-MM-DD_HH-MM-SSZ.yml
+    m = re.search(r"(\d{4}-\d{2}-\d{2})[_T](\d{2}-\d{2}-\d{2})(?:Z)?", name)
+    if m:
+        try:
+            return datetime.strptime(m.group(1)+" "+m.group(2), "%Y-%m-%d %H-%M-%S")
+        except Exception:
+            pass
+    return None
 
-def infer_date_from_filename(path: Path) -> str:
-    m = DATE_RE.search(path.name)
-    return m.group(1) if m else ""
-
-
-def try_parse_stringified_dict(s: str) -> Union[Dict[str, Any], None]:
-    s = s.strip()
-    if not (s.startswith("{") and s.endswith("}")):
-        return None
-    # try JSON
-    try:
-        obj = json.loads(s)
-        return obj if isinstance(obj, dict) else None
-    except Exception:
-        pass
-    # try single-quote dict as JSON
-    try:
-        s2 = s.replace("'", '"')
-        obj = json.loads(s2)
-        return obj if isinstance(obj, dict) else None
-    except Exception:
-        return None
-
-
-def norm_paper_item(item: Any) -> Union[str, Dict[str, str], None]:
-    if item is None:
-        return None
-    if isinstance(item, str):
-        s = item.strip()
-        if s.startswith("{") and s.endswith("}"):
-            parsed = try_parse_stringified_dict(s)
-            if parsed is not None:
-                return norm_paper_item(parsed)
-        return s
-    if isinstance(item, dict):
-        title = as_str(item.get("title"))
-        url = as_str(item.get("url") or item.get("doi") or item.get("link"))
-        if url and title:
-            return {"title": title, "url": url}
-        if url:
-            return url
-        return None
-    # fallback: stringify
-    s = as_str(item)
-    return s if s else None
-
-
-def norm_links(x: Any, *, papers: bool) -> List[Union[str, Dict[str, str]]]:
-    items = ensure_list(x)
-    if len(items) == 1 and isinstance(items[0], list):
-        items = flatten_once(items)
-
-    out: List[Union[str, Dict[str, str]]] = []
-    for el in items:
-        if isinstance(el, list):
-            for sub in el:
-                v = norm_paper_item(sub) if papers else as_str(sub)
-                if v:
-                    out.append(v)
-        else:
-            v = norm_paper_item(el) if papers else as_str(el)
-            if v:
-                out.append(v)
-
-    # dedup while preserving order
-    seen = set()
-    dedup: List[Union[str, Dict[str, str]]] = []
-    for v in out:
-        key = json.dumps(v, sort_keys=True, ensure_ascii=False) if isinstance(v, dict) else str(v)
-        if key in seen:
+# ---------- 1) minimal cleanup ----------
+def clean_minimal() -> None:
+    changed = False
+    for p in PULSE_DIR.rglob("*.yml"):
+        # never rewrite inside archive
+        if "/archive/" in str(p.as_posix()):
             continue
-        seen.add(key)
-        dedup.append(v)
-    return dedup
-
-
-def norm_tags(x: Any) -> List[str]:
-    items = ensure_list(x)
-    out: List[str] = []
-    for el in items:
-        if isinstance(el, list):
-            for sub in el:
-                s = as_str(sub)
-                if s:
-                    out.append(s)
-        elif isinstance(el, dict):
-            for val in el.values():
-                s = as_str(val)
-                if s:
-                    out.append(s)
-        else:
-            s = as_str(el)
-            if s:
-                out.append(s)
-    # dedup preserve order
-    seen = set()
-    ret: List[str] = []
-    for s in out:
-        if s not in seen:
-            seen.add(s)
-            ret.append(s)
-    return ret
-
-
-def coerce_mapping(root: Any) -> Dict[str, Any]:
-    if isinstance(root, dict):
-        return root
-    if isinstance(root, list):
-        for el in root:
-            if isinstance(el, dict):
-                return el
-        return {}
-    return {}
-
-
-def jsonish(x: Any) -> str:
-    return json.dumps(x, sort_keys=True, ensure_ascii=False)
-
-
-def build_minimal(mapping: Dict[str, Any], path: Path) -> Dict[str, Any]:
-    minimal: Dict[str, Any] = {}
-
-    title = as_str(mapping.get("title"))
-    if title:
-        minimal["title"] = title
-
-    date = as_str(mapping.get("date"))
-    if not date:
-        date = infer_date_from_filename(path)
-    if date:
-        minimal["date"] = date
-
-    summary = as_str(mapping.get("summary"))
-    if summary:
-        minimal["summary"] = summary
-
-    tags = norm_tags(mapping.get("tags"))
-    if tags:
-        minimal["tags"] = tags
-
-    papers = norm_links(mapping.get("papers"), papers=True)
-    if papers:
-        minimal["papers"] = papers
-
-    podcasts = norm_links(mapping.get("podcasts"), papers=False)
-    if podcasts:
-        minimal["podcasts"] = podcasts
-
-    return minimal
-
-
-def normalize_current_subset(mapping: Dict[str, Any], path: Path) -> Dict[str, Any]:
-    subset = {k: mapping.get(k) for k in KEEP if k in mapping}
-    return build_minimal(subset, path)
-
-
-# --------------- sweep -------------------
-
-def sweep(root: Path, write: bool) -> Tuple[int, int]:
-    files = list(root.rglob("*.yml")) + list(root.rglob("*.yaml"))
-    files.sort()
-    total = 0
-    changed = 0
-
-    print(f"[scan] found {len(files)} files under {root}/")
-
-    for path in files:
-        if not path.is_file():
+        try:
+            data = load_yaml(p)
+        except Exception as e:
+            print(f"[warn] skip unreadable {p}: {e}")
             continue
+        minimal = coerce_minimal(data)
+        if minimal != data:
+            dump_yaml(p, minimal)
+            changed = True
+            print(f"[fix] minimalized {p.relative_to(ROOT)}")
+    if not changed:
+        print("[ok] no minimal-schema changes")
 
-        total += 1
-        data = load_yaml(path)
-        if data is None:
-            print(f"[skip] {path} (unreadable)")
-            continue
+# ---------- 2) prune older auto-pulses ----------
+def prune_auto_keep_latest_n(n: int = KEEP_AUTO) -> None:
+    if not AUTO_DIR.exists():
+        print("[ok] no pulse/auto directory")
+        return
+    ARCHIVE_AUTO_DIR.mkdir(parents=True, exist_ok=True)
 
-        mapping = coerce_mapping(data)
-        minimal = build_minimal(mapping, path)
-        current_kept = normalize_current_subset(mapping, path)
+    files = [p for p in AUTO_DIR.glob("*.yml") if p.is_file()]
+    if len(files) <= n:
+        print(f"[ok] auto-pulses <= {n}; nothing to prune")
+        return
 
-        extras = sorted(set(mapping.keys()) - set(KEEP))
+    # sort newest first (filename timestamp if possible, else mtime)
+    def sort_key(p: Path):
+        ts = parse_ts_from_name(p.name)
+        return ts or datetime.fromtimestamp(p.stat().st_mtime)
 
-        needs_trim = bool(extras)
-        needs_update = (jsonish(minimal) != jsonish(current_kept))
+    files_sorted = sorted(files, key=sort_key, reverse=True)
+    keep = files_sorted[:n]
+    drop = files_sorted[n:]
 
-        if write:
-            if needs_trim or needs_update:
-                dump_yaml(path, minimal)
-                changed += 1
-                what = []
-                if needs_trim:
-                    what.append(f"trim(-{', '.join(extras)})")
-                if needs_update and not needs_trim:
-                    what.append("update")
-                print(f"[fixed] {path} :: {', '.join(what)}")
-            else:
-                print(f"[ok]   {path}")
-        else:
-            if needs_trim or needs_update:
-                what = []
-                if needs_trim:
-                    what.append(f"trim(-{', '.join(extras)})")
-                if needs_update and not needs_trim:
-                    what.append("update")
-                print(f"[would] {path} :: {', '.join(what)}")
-            else:
-                print(f"[ok]    {path}")
+    for p in drop:
+        dest = ARCHIVE_AUTO_DIR / p.name
+        # if name collision in archive, append suffix
+        i = 1
+        while dest.exists():
+            dest = ARCHIVE_AUTO_DIR / f"{p.stem}__dup{i}{p.suffix}"
+            i += 1
+        shutil.move(str(p), str(dest))
+        print(f"[archive] {p.relative_to(ROOT)} -> {dest.relative_to(ROOT)}")
 
-    return total, changed
+    print(f"[ok] kept {len(keep)} newest auto-pulses, archived {len(drop)} older ones")
 
-
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--write", action="store_true", help="apply changes")
-    ap.add_argument("--check", action="store_true", help="exit 1 if any file would change")
-    args = ap.parse_args()
-
-    pulse_root = Path("pulse")
-    total, changed = sweep(pulse_root, write=args.write)
-    print(f"\nScanned {total} files; {'changed' if args.write else 'would change'} {changed}.")
-
-    if args.check:
-        return 1 if changed > 0 else 0
-    return 0
-
+def main():
+    clean_minimal()
+    prune_auto_keep_latest_n()
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
