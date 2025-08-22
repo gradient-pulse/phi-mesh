@@ -8,7 +8,7 @@
     // ----- DOM -----
     const svgSel = d3.select('#graph');
     const svgNode = svgSel.node();
-    if (!svgNode) return; // safety if DOM not ready (shouldn't happen with defer)
+    if (!svgNode) return;
 
     const tooltip = d3.select('#tooltip');
     const sidebar = document.getElementById('sidebar-content');
@@ -17,22 +17,23 @@
 
     function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
     function safeArray(x){return Array.isArray(x)?x:[]}
+    function clip(s, n){ s=String(s||''); return s.length>n ? s.slice(0,n-1)+'…' : s; }
 
     // ----- Config -----
     const width  = svgNode.clientWidth  || 1200;
     const height = svgNode.clientHeight || 800;
 
-    const minR = 6, maxR = 24;           // ellipse base radii
-    const ellipseAspect = 1.6;           // rx = r*aspect, ry = r
-    const linkOpacity = 0.22;
-    const linkOpacityDim = 0.07;
+    const minR = 6, maxR = 24;
+    const ellipseAspect = 1.6;
+    const linkOpacity = 0.18;
 
-    const satDot = 4.6;                  // satellite dot size
-    const spiralStepR = 8;               // constant spacing between pulses
+    const satDot = 4.6;
+    const spiralStepR = 8;
     const spiralStepTheta = 0.48 * Math.PI;
     const spiralStartR = 52;
+    const SATELLITE_MAX = 16; // draw spiral only up to this many pulses
 
-    // age -> class bucket and tray dot class
+    // age helpers
     function ageClass(d){
       const a = d?.ageDays;
       if (a == null) return 'age-old';
@@ -55,6 +56,10 @@
     // ----- Layers & zoom -----
     svgSel.attr('viewBox', `0 0 ${width} ${height}`);
     const root = svgSel.append('g');
+
+    // full-size transparent rect to reliably capture background clicks
+    root.append('rect').attr('class','bgcatch').attr('x',0).attr('y',0).attr('width',width).attr('height',height);
+
     const linkLayer = root.append('g').attr('class','links');
     const nodeLayer = root.append('g').attr('class','nodes');
     const satLayer  = root.append('g').attr('class','satellites');
@@ -62,9 +67,9 @@
     const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (ev)=>root.attr('transform', ev.transform));
     svgSel.call(zoom);
 
-    // Clear selection on empty background click
-    svgSel.on('click', (ev) => {
-      if (ev.target === svgNode) {
+    // Clear selection on background click
+    root.on('click', (ev) => {
+      if (ev.target && ev.target.classList && ev.target.classList.contains('bgcatch')) {
         clearSatellites();
         clearFocus();
         sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers &amp; podcasts.</div>`;
@@ -94,18 +99,18 @@
     const cMin = d3.min(centralities) ?? 0, cMax = d3.max(centralities) ?? 1;
     const rScale = d3.scaleSqrt().domain([cMin || 0.0001, cMax || 1]).range([minR, maxR]);
 
-    // SAFARI-SAFE sizing helper (avoid mixing ?? and ||)
+    // Safari-safe node score
     function nodeScore(d){
       const c = d.centrality;
       return (typeof c === 'number') ? c : (degree.get(d.id) || 1);
     }
 
-    // ----- Simulation -----
+    // ----- Simulation (LESS DENSE) -----
     const sim = d3.forceSimulation(DATA.nodes)
-      .force('link', d3.forceLink(links).id(d=>d.id).distance(75).strength(0.7))
-      .force('charge', d3.forceManyBody().strength(-180))
+      .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.7))
+      .force('charge', d3.forceManyBody().strength(-230))
       .force('center', d3.forceCenter(width/2, height/2))
-      .force('collision', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.2));
+      .force('collision', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.1));
 
     const linkSel = linkLayer.selectAll('line')
       .data(links)
@@ -179,7 +184,7 @@
       linkSel.classed('dim', false);
     }
 
-    // ----- Satellites (spiral) -----
+    // ----- Satellites (spiral/list) -----
     let currentTag = null;
 
     function clearSatellites(){
@@ -188,7 +193,6 @@
     }
 
     function placeSpiralOffsets(n){
-      // returns [{_xoff,_yoff}, ...] with constant radial spacing
       const out = [];
       for (let i=0;i<n;i++){
         const r = spiralStartR + i*spiralStepR;
@@ -201,7 +205,7 @@
     function onTagClick(tagId){
       currentTag = tagId;
 
-      // dim to neighbors of tagId (+ itself)
+      // focus to neighbors of tagId (+ itself)
       const neighbors = new Set([tagId]);
       links.forEach(l => {
         if (l.source.id===tagId) neighbors.add(l.target.id);
@@ -209,41 +213,37 @@
       });
       setFocus(neighbors);
 
-      // draw satellites
+      // satellites + tray
       satLayer.selectAll('*').remove();
       const host = idToNode.get(tagId);
-      if (!host) return;
-
       const pulses = safeArray(DATA.pulsesByTag?.[tagId]);
-      if (!pulses.length){
-        renderTray(tagId, []);
-        return;
-      }
 
-      const offs = placeSpiralOffsets(pulses.length);
-      const g = satLayer.selectAll('g.satellite')
-        .data(pulses.map((p,i)=>({...p, host, ...offs[i]})), d => d.id || d.title || (d.date||'') );
-
-      const enter = g.enter().append('g').attr('class','satellite');
-
-      enter.append('circle')
-        .attr('r', satDot)
-        .attr('class', d => ageClass(d));
-
-      // small date label above each dot
-      enter.append('text')
-        .attr('y', -9)
-        .attr('text-anchor','middle')
-        .attr('font-size', 9)
-        .attr('fill', '#a3b3c7')
-        .text(d => d.date ? d.date.slice(2,10) : '');
-
-      enter.on('click', (ev,d) => { ev.stopPropagation(); showPulseDetails(d); });
-
-      // update right tray list
+      // Always show the list on the right
       renderTray(tagId, pulses);
 
-      // clear any old pulse body to avoid confusion when selecting new tag
+      // Only draw spiral if not too many pulses
+      if (host && pulses.length && pulses.length <= SATELLITE_MAX){
+        const offs = placeSpiralOffsets(pulses.length);
+        const g = satLayer.selectAll('g.satellite')
+          .data(pulses.map((p,i)=>({...p, host, ...offs[i]})), d => d.id || d.title || (d.date||'') );
+
+        const enter = g.enter().append('g').attr('class','satellite');
+
+        enter.append('circle')
+          .attr('r', satDot)
+          .attr('class', d => ageClass(d));
+
+        enter.append('text')
+          .attr('y', -9)
+          .attr('text-anchor','middle')
+          .attr('font-size', 9)
+          .attr('fill', '#a3b3c7')
+          .text(d => d.date ? d.date.slice(2,10) : '');
+
+        enter.on('click', (ev,d) => { ev.stopPropagation(); showPulseDetails(d); });
+      }
+
+      // clear old pulse body when selecting a tag
       sidebar.innerHTML = `<div class="muted">Pick a pulse to see its summary, papers &amp; podcasts.</div>`;
 
       sim.alpha(0.5).restart();
@@ -251,49 +251,47 @@
 
     // ----- Right tray -----
     function renderTray(tagId, pulses){
-      const container = tray;
-      container.innerHTML = '';
+      tray.innerHTML = '';
       const title = document.createElement('div');
-      title.className = 'trayTitle';
+      title.className='trayTitle';
       title.textContent = tagId ? `Pulses for ${tagId}` : 'Pulses';
-      container.appendChild(title);
+      tray.appendChild(title);
 
       if (!pulses || !pulses.length){
         const em = document.createElement('div');
         em.className='trayEmpty';
         em.textContent = tagId ? 'No pulses found for this tag.' : 'Click a tag to list its pulses.';
-        container.appendChild(em);
+        tray.appendChild(em);
         return;
       }
 
-      // sort newest first (if date exists)
       const sorted = [...pulses].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
 
       for (const p of sorted){
         const row = document.createElement('div');
-        row.className = 'pulseRow';
+        row.className='pulseRow';
         row.title = p.title || p.id || '';
         const dot = document.createElement('div');
         dot.className = 'dot pAge' + ageIdx(p);
         const label = document.createElement('div');
         const dt = p.date ? ` ${p.date}` : '';
-        label.textContent = (p.title || p.id || 'Pulse') + dt;
+        label.textContent = clip((p.title || p.id || 'Pulse') + dt, 40);
         row.appendChild(dot);
         row.appendChild(label);
         row.addEventListener('click', (ev)=>{ ev.stopPropagation(); showPulseDetails(p); });
-        container.appendChild(row);
+        tray.appendChild(row);
       }
     }
 
-    // ----- Sidebar rendering -----
+    // ----- Left sidebar pulse details -----
     function renderLinksBlock(label, items){
       if (!items?.length) return '';
       const norm = items.map(u => typeof u==='string' ? {title:u, url:u} : (u?.url ? u : {title:u?.title||u?.url, url:u?.url||''}));
-      let html = `<div style="margin-top:10px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
+      let html = `<div style="margin-top:8px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
       for (const it of norm){
         const title = it.title || it.url;
         const href  = it.url || it.title || '#';
-        html += `<li><a href="${esc(href)}" target="_blank" rel="noopener">${esc(title)}</a></li>`;
+        html += `<li><a class="ellipsis" href="${esc(href)}" target="_blank" rel="noopener">${esc(clip(title, 40))}</a></li>`;
       }
       html += `</ul></div>`;
       return html;
@@ -301,7 +299,7 @@
 
     function showPulseDetails(p){
       const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
-      let html = `<h2>${esc(p.title || p.id || 'Pulse')}${when}</h2>`;
+      let html = `<h2>${esc(clip(p.title || p.id || 'Pulse', 60))}${when}</h2>`;
       if (p.summary) html += `<div class="body" style="white-space:pre-wrap; margin:.3rem 0 1rem 0">${esc(p.summary)}</div>`;
       html += renderLinksBlock('Papers', p.papers);
       html += renderLinksBlock('Podcasts', p.podcasts);
@@ -318,7 +316,6 @@
     if (searchInput) searchInput.addEventListener('input', e => applyFilter(e.target.value));
   }
 
-  // Run once DOM is ready (extra safety even though scripts are deferred)
   if (document.getElementById('graph')) {
     init();
   } else {
