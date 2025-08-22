@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- simulation (looser => less dense) ---
   const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.52))
-    .force('charge', d3.forceManyBody().strength(-270))
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(90).strength(0.50))
+    .force('charge', d3.forceManyBody().strength(-290))
     .force('center', d3.forceCenter(W/2, H/2))
     .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.35));
 
