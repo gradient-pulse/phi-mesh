@@ -6,69 +6,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0c10; --panel:#0e1118; --fg:#e9eef8; --muted:#9aa6b8;
-      --accent:#82c7ff; --tag:#74b7ff; --active:#ffb394;
-      --link:#a9c7ff; --linkDim:rgba(180,200,230,.14);
+      --bg:#0b0c10; --panel:#0f1219; --fg:#e9eef8; --muted:#9aacbf;
+      --node:#86c1ff; --nodeDim:#86c1ff33; --link:#b9c7dd; --linkDim:#b9c7dd22;
+      --accent:#ff9b7a; --chip:#ff7a66;
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg)}
-    body{font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .app{display:grid;grid-template-columns:320px 1fr 320px;gap:0;height:100%}
-
-    /* Left panel (details) */
-    aside.left{background:linear-gradient(180deg,var(--panel),rgba(14,17,24,.92));display:flex;flex-direction:column}
-    header{padding:14px 14px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .app{display:grid;grid-template-columns:330px 1fr 360px;grid-template-rows:100vh;gap:0}
+    aside{background:linear-gradient(180deg,var(--panel),rgba(18,18,28,.94));display:flex;flex-direction:column;min-width:0}
+    aside.right{border-left:1px solid rgba(255,255,255,.06)}
+    header{padding:14px 14px 8px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
     h1{margin:0 0 6px;font-size:18px;letter-spacing:.2px}
     .hint{color:var(--muted);font-size:12px}
-    #search{width:100%;background:#0f1320;border:1px solid rgba(255,255,255,.08);color:var(--fg);
-            padding:9px 10px;border-radius:10px;outline:none;margin-top:10px}
-    #sidebar-content{padding:14px;overflow:auto}
-    /* hide scrollbars but allow scroll */
-    #sidebar-content::-webkit-scrollbar{display:none}
-    #sidebar-content{-ms-overflow-style:none;scrollbar-width:none}
-    /* make details text compact */
-    #sidebar-content h2{margin:.2rem 0 .5rem 0;font-size:17px}
-    #sidebar-content .summary{font-size:13px;opacity:.95}
-    .block-title{margin:.8rem 0 .3rem 0;font-weight:600;font-size:12px;color:#cfd8e8}
-    .ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
-    .linklist{padding-left:18px;margin:.2rem 0 0 0}
-    .linklist a{color:var(--link);text-decoration:none}
-    .linklist a:hover{opacity:.9}
+    #search{width:100%;background:#0f1117;border:1px solid rgba(255,255,255,.08);color:var(--fg);padding:9px 10px;border-radius:10px;outline:none}
 
-    /* Right panel (pulse list) */
-    aside.right{background:linear-gradient(180deg,var(--panel),rgba(14,17,24,.92));border-left:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column}
-    .rhead{padding:12px;border-bottom:1px solid rgba(255,255,255,.06);font-weight:700}
-    #plist-wrap{padding:10px 12px 12px;overflow:auto}
-    #plist-wrap::-webkit-scrollbar{display:none}
-    #plist-wrap{-ms-overflow-style:none;scrollbar-width:none}
-    .pitem{display:flex;align-items:center;gap:8px;padding:6px 4px;border-radius:8px;cursor:pointer}
-    .pitem:hover{background:rgba(255,255,255,.05)}
-    .pdot{width:8px;height:8px;border-radius:50%}
-    .ptitle{font-size:13px}
+    .panel-body{padding:14px;overflow:auto}
+    /* left details */
+    #details h2{margin:.2rem 0 .4rem 0;font-size:18px}
+    #details .date{color:var(--muted);font-weight:600}
+    #details .summary{white-space:pre-wrap;margin:.6rem 0 1rem 0;font-size:13px}
+    #details .block>strong{display:block;margin:.5rem 0 .25rem 0}
+    #details .block a{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
+
+    /* right list */
+    #pulses h2{margin:0 0 6px 0;font-size:16px}
+    #pulse-list{list-style:none;margin:8px 0 0; padding:0}
+    #pulse-list li{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;cursor:pointer}
+    #pulse-list li:hover{background:rgba(255,255,255,.06)}
+    .dot{width:8px;height:8px;border-radius:50%}
+    .dot.recent{background:#ff7a66}
+    .dot.mid{background:#ffb066}
+    .dot.old{background:#86cbff}
+    .title{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}
 
     /* Graph */
-    svg{width:100%;height:100%}
-    .link{stroke:#b9c7dd;stroke-opacity:.22}
-    .link.dim{stroke-opacity:.07}
-    .node text{font-size:11px;fill:#d3e0f2;pointer-events:none}
-    .node ellipse{fill:var(--tag);stroke:none}
-    .node.dim text{opacity:.18}
-    .node.dim ellipse{opacity:.22}
-    .node.active ellipse{fill:var(--active)}
+    svg{width:100%;height:100vh;background:transparent}
+    .link{stroke:var(--link);stroke-opacity:.35}
+    .link.dim{stroke:var(--linkDim)}
+    .node text{font-size:12px;fill:#d7e6fa;paint-order:stroke;stroke:#0007;stroke-width:.8px;pointer-events:none}
+    .node ellipse{fill:var(--node);stroke:none}
+    .node.dim ellipse{fill:var(--nodeDim)}
+    .node.dim text{opacity:.25;filter:grayscale(60%)}
+    .node.selected ellipse{fill:#ff8f77}
 
-    /* Tooltip */
     #tooltip{
       position:fixed;left:0;top:0;display:none;background:#0f1522;color:var(--fg);
-      border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;
-      max-width:320px;box-shadow:0 6px 18px rgba(0,0,0,.35);pointer-events:none;z-index:20;
+      border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;max-width:300px;
+      box-shadow:0 6px 18px rgba(0,0,0,.35);pointer-events:none;z-index:20;font-size:12.5px
     }
-    .muted{color:var(--muted)}
   </style>
-
-  <!-- D3 -->
-  <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
-  <!-- Data & Renderer (deferred) -->
-  <script src="data.js" defer></script>
-  <script src="map.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="data.js"></script>
+  <script defer src="map.js"></script>
 </head>
 <body>
   <div class="app">
@@ -78,18 +66,19 @@
         <div class="hint">Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details</div>
         <input id="search" type="search" placeholder="Type to filter…" />
       </header>
-      <div id="sidebar-content">
-        <div class="muted">Pick a pulse to see its summary, papers & podcasts.</div>
-      </div>
+      <div id="details" class="panel-body"><!-- starts empty --></div>
     </aside>
 
     <svg id="graph" role="img" aria-label="Tag Map"></svg>
 
     <aside class="right">
-      <div class="rhead" id="plist-title">Pulses</div>
-      <div id="plist-wrap">
-        <div class="muted">Click a tag to list its pulses.</div>
-        <div id="plist"></div>
+      <header>
+        <h1>Pulses</h1>
+        <div class="hint" id="pulse-hint">Click a tag to list its pulses.</div>
+      </header>
+      <div id="pulses" class="panel-body">
+        <h2 id="pulses-title"></h2>
+        <ul id="pulse-list"></ul>
       </div>
     </aside>
   </div>
