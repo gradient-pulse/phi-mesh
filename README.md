@@ -71,6 +71,7 @@ phi-mesh/
 	1.	Add new YAML pulse under pulse/YEAR-MM-DD_… (minimal schema only: title, summary, tags, papers, podcasts).
 	2.	Commit & push — GitHub Actions will:
 		•	clean pulses to the minimal schema,
+  		•	add new 1-line tag descriptions to meta/tag_descriptions.yml
 		•	regenerate docs/data.js,
 		•	redeploy the Tag Map.
 	3.	Open the Φ–Mesh Tag Map to see the changes live.
