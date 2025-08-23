@@ -16,3 +16,15 @@ rgp_ns_prototype/
 ├─ notebooks/       # 00_quicklook.ipynb demo
 ├─ dashboard/       # Streamlit app
 └─ README.md
+
+---
+
+## Quick start (local)
+
+```bash
+git clone https://github.com/gradient-pulse/phi-mesh.git
+cd phi-mesh/rgp_ns_prototype
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+python agents/nt_detect.py data/example_G.h5 --sigma 1.5
+streamlit run dashboard/app.py
