@@ -72,11 +72,11 @@ phi-mesh/
    	   `pulse/YYYY-MM-DD_short-title.yml`
 
    	   Minimal fields only:  
-   	   - `title`  
-   	   - `summary`  
-   	   - `tags`  
-   	   - `papers` (links)  
-   	   - `podcasts` (links)  
+   	   - `title:`  
+   	   - `summary:`  
+   	   - `tags:`  
+   	   - `papers:` (links)  
+   	   - `podcasts:` (links)  
 
 	2. Commit & push. GitHub Actions will automatically:  
    	   - check & clean the pulse to match the schema  
