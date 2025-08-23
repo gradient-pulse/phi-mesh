@@ -1,15 +1,7 @@
 name: Suggest Mesh Academy Post
 
 on:
-  workflow_dispatch:
-  push:
-    paths:
-      - 'mesh_academy/curriculum/**'
-      - 'mesh_academy/tools/drift_parser.py'
-      - 'mesh_academy/curriculum/drift_course_map.yaml'
-      - 'phi-mesh/mesh_academy/curriculum/**'
-      - 'phi-mesh/mesh_academy/tools/drift_parser.py'
-      - 'phi-mesh/mesh_academy/curriculum/drift_course_map.yaml'
+  workflow_dispatch: 
 
 permissions:
   contents: write
