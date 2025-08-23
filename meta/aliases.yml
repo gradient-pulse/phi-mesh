@@ -8,8 +8,8 @@ notes: >
 aliases:
 
   # --- Core program & map terms ------------------------------------------------
-  infrastructure:
-    - Infrastructure
+  Infrastructure:
+    - infrastructure
     
   RGP:
     - Recursive Gradient Processing
