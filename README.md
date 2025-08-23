@@ -73,7 +73,7 @@ phi-mesh/
 		•	clean pulses to the minimal schema,
   		•	add new 1-line tag descriptions to meta/tag_descriptions.yml
 		•	regenerate docs/data.js,
-		•	redeploy the Tag Map by running Build_Tags_And_Graph (in Actions).
+		•	redeploy the Tag Map by running the "Build Tags & Graph" workflow (Actions).
 	3.	Open the Φ–Mesh Tag Map to see the changes live.
 ---
 
