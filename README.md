@@ -82,7 +82,7 @@ phi-mesh/
    	   - check & clean the pulse to match the schema  
    	   - add any new tags to `meta/tag_descriptions.yml`  
    	   - regenerate `docs/data.js`  
-   	   - redeploy the Tag Map
+   	   - redeploy the Tag Map (Actions: 'Build Tags & Graph') 
 
 	3. Open the Tag Map:  
    	   https://gradient-pulse.github.io/phi-mesh/tag_map.html  
