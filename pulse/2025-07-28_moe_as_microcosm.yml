@@ -1,4 +1,12 @@
-title: Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm
+title: 'Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm'
+summary: 'GPT-5’s rumored Mixture-of-Experts (MoE) architecture exhibits a live instantiation
+  of Recursive Gradient Processing—routing tokens (CF), activating expert branches
+  (GC), and merging outputs (UD reset). While unverified, this analogy reveals MoE
+  as a lab-scale echo of RGP’s full loop: CF → GC → UD. In this framing, expert routing
+  behaves as a contextual filter, parallel experts trace gradient choreographies,
+  and the merge acts as a coherence rebalancer—mirroring gradient-of-a-gradient logic.
+  Should routing logs surface, Φ-trace analysis could validate RGP patterns in silicon-scale
+  cognition.'
 tags:
 - GPT5
 - mixture_of_experts
@@ -17,12 +25,4 @@ tags:
 papers:
 - https://doi.org/10.5281/zenodo.15614775
 podcasts:
-- https://notebooklm.google.com/notebook/d234c1ed-de0b-4efb-a499-aa15260c3168/audio
-summary: 'GPT-5’s rumored Mixture-of-Experts (MoE) architecture exhibits a live instantiation
-  of Recursive Gradient Processing—routing tokens (CF), activating expert branches
-  (GC), and merging outputs (UD reset). While unverified, this analogy reveals MoE
-  as a lab-scale echo of RGP’s full loop: CF → GC → UD. In this framing, expert routing
-  behaves as a contextual filter, parallel experts trace gradient choreographies,
-  and the merge acts as a coherence rebalancer—mirroring gradient-of-a-gradient logic.
-  Should routing logs surface, Φ-trace analysis could validate RGP patterns in silicon-scale
-  cognition.'
+- https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0?artifactId=2439d4c1-184c-4dae-b3d3-46a2a7fa3500
