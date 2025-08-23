@@ -68,7 +68,7 @@ phi-mesh/
 
 ## Add pulses → *grow the map*
 
-	1.	Add a new YAML pulse under pulse/YEAR-MM-DD_… (only minimal schema: title, summary, tags, papers, podcasts).
+	1.	Add a new YAML pulse under pulse/YEAR-MM-DD_… (minimal schema only: title, summary, tags, papers, podcasts).
 	2.	Commit & push — GitHub Actions will:
 		•	clean pulses to the minimal schema,
 		•	regenerate docs/data.js,
