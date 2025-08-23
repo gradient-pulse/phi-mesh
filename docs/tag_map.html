@@ -34,11 +34,14 @@
     .node.selected ellipse { fill:var(--pulse) }
     .link { stroke:#b9c7dd; stroke-opacity:.24 }
     .link.dim { stroke-opacity:.08 }
-    .tag-label {
-      pointer-events: none;        /* clicks pass through to the node */
-      dominant-baseline: hanging;  /* anchor text from the top edge */
-      font-size: 12px;             /* tweak for readability */
-      fill: #333;                  /* darker text color for contrast */
+    .node .tag-label {
+      pointer-events: none;         /* clicks go to the node */
+      dominant-baseline: hanging;   /* anchor from top edge */
+      font-size: 13px;              /* change here if you want larger text */
+      fill: var(--fg);              /* use site foreground color */
+      paint-order: stroke;          /* render stroke under fill */
+      stroke: rgba(0,0,0,.35);      /* subtle halo for contrast */
+      stroke-width: .6px;
     }
   </style>
 
