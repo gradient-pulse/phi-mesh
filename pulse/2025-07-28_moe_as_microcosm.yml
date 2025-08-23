@@ -1,5 +1,6 @@
 title: 'Pulse – Mixture-of-Experts LLMs as a live CF–GC–UD microcosm'
-summary: 'GPT-5’s rumored Mixture-of-Experts (MoE) architecture exhibits a live instantiation
+summary: >
+  'GPT-5’s rumored Mixture-of-Experts (MoE) architecture exhibits a live instantiation
   of Recursive Gradient Processing—routing tokens (CF), activating expert branches
   (GC), and merging outputs (UD reset). While unverified, this analogy reveals MoE
   as a lab-scale echo of RGP’s full loop: CF → GC → UD. In this framing, expert routing
