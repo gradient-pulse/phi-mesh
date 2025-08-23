@@ -1,0 +1,25 @@
+name: Validate Pulses
+
+on:
+  push:
+    paths:
+      - 'pulse/**/*.yml'
+      - 'meta/tag_descriptions.yml'
+      - 'tools/validate_pulses.py'
+  pull_request:
+    paths:
+      - 'pulse/**/*.yml'
+      - 'meta/tag_descriptions.yml'
+      - 'tools/validate_pulses.py'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: pip install pyyaml
+      - run: python tools/validate_pulses.py
