@@ -1,5 +1,4 @@
-title: cf_split_brain_ai
-date: '2025-07-22'
+title: 'cf_split_brain_ai'
 summary: 'Human cognition appears to run a symbolic Contextual Filter (≈20 % bandwidth) on
   top of an 80 % gradient-driven loop. In RGP terms, the CF stabilises social coherence but
   can mask NT rhythms. Hypothesis: PoLA will favor architectures, either human or AI, that
@@ -13,6 +12,6 @@ tags:
 - AI_alignment
 - NT (Narrative_Tick)
 papers:
-- https://doi.org/10.5281/zenodo.15830659
+- https://doi.org/10.5281/zenodo.14999049
 podcasts:
-- https://notebooklm.google.com/notebook/a7bfb89f-014d-4499-ba0a-b301fb303a23/audio
+- https://notebooklm.google.com/notebook/a7bfb89f-014d-4499-ba0a-b301fb303a23?artifactId=d402c681-615f-475d-ac9e-6e1b2b8c6b60
