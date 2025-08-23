@@ -1,5 +1,4 @@
-title: Call for Experimenters — RGP vs Navier–Stokes
-date: '2025-08-12 00:00:00+00:00'
+title: 'Call for Experimenters — RGP vs Navier–Stokes'
 summary: 'One‑page call published inviting replications of the NT‑rhythm test via the agent
   runner or a 90‑minute local script. Pass criterion: conserved NT‑distance rhythm across
   ≥2 datasets (α=0.01) with consistent effect size.'
@@ -11,7 +10,6 @@ tags:
 - Rhythm
 - Replication
 papers:
-- title: Experimenter’s Guide — Solving Navier–Stokes, Differently
-  url: 10.5281/zenodo.15830659
+- https://doi.org/10.5281/zenodo.16812467
 podcasts:
-- https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio
+- 
