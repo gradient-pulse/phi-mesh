@@ -77,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // --- simulation (looser => less dense; slight upward bias) ---
   const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.47))
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.40))
     .force('charge', d3.forceManyBody().strength(-320))
-    .force('center', d3.forceCenter(W/2, H/2.3))
-    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.5));
+    .force('center', d3.forceCenter(W/2, H/2.0))
+    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.3));
 
   // --- draw ---
   const linkSel = linkLayer.selectAll('line')
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
 
     pulseList.className = ''; // allow multiple rows, but each is one-line
-    pulseList.innerHTML = `<div style="font-weight:600; margin:2px 0 6px 0">Pulses for ${esc(tagId)}</div>${rows}`;
+    pulseList.innerHTML = `<div style="font-weight:600; margin:2px 0 6px 0">${esc(tagId)}</div>${rows}`;
 
     // clicking a pulse shows details in LEFT panel
     pulseList.querySelectorAll('[data-key]').forEach(el => {
