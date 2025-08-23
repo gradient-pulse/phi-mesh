@@ -1,0 +1,17 @@
+title: 'RGP–NS Prototype — Experimenter Launch'
+summary: >
+  Reference implementation for “Solving Navier–Stokes, Differently.”
+  Run it live in Binder, log KPIs to the Streamlit dashboard, and submit
+  results to the leaderboard. Agents handle data pull, NT detection,
+  ratio computation, and validation.
+
+tags:
+  - RGP
+  - Navier_Stokes
+  - turbulence
+  - RGP_NS_prototype
+  - ExperimenterPulse
+papers:
+  - https://doi.org/10.5281/zenodo.15793567
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805
