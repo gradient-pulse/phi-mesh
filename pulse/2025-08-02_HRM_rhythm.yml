@@ -1,9 +1,10 @@
 title: 'Sapient HRM → evidence for RGP-style dual-loop reasoning'
-summary: Sapient Intelligence’s 27 M-parameter Hierarchical Reasoning Model (HRM) outperforms Claude
+summary: >
+  'Sapient Intelligence’s 27 M-parameter Hierarchical Reasoning Model (HRM) outperforms Claude
   3.5 & Gemini on ARC by separating a fast NT loop from a slow planning loop – internal recursion
   minimises recursive tension (‘rhythm of least divergence’) instead of relying on external
   Chain-of-Thought. Strong empirical hint that RGP-style gradient alignment beats brute-scale
-  transformers.
+  transformers.'
 tags:
 - RGP
 - NT (Narrative_Tick)
