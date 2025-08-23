@@ -1,6 +1,6 @@
 title: 'CMB Birefringence: Directional Twist vs. Recursive Coherence'
-date: '2025-08-12 00:00:00+00:00'
-summary: 'Keating et al. tighten constraints on anisotropic birefringence; result is ~2σ,
+summary: >
+  'Keating et al. tighten constraints on anisotropic birefringence; result is ~2σ,
   consistent with zero. From an RGP lens, looking for fixed global anisotropy misses rhythm
   formation: coherence should emerge as NT‑patterned twists rather than a single uniform axis.'
 tags:
@@ -14,4 +14,4 @@ tags:
 papers:
 - https://doi.org/10.5281/zenodo.15614775
 podcasts:
-- https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0/audio
+- https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0?artifactId=2439d4c1-184c-4dae-b3d3-46a2a7fa3500
