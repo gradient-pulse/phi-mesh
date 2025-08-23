@@ -1,4 +1,4 @@
-title: 'Word to Pixel via RGP
+title: 'Word to Pixel via RGP'
 summary: >
   Today’s AI maps words to pixels through discretization (tokens → latents → noise diffusion).
   This produces brittle correlations, not true coherence.  
