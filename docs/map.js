@@ -75,14 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (days <= 270) return '#86cbff';
     return '#74a9ff';
   }
-  // --- simulation (more spacing, still coherent) ---
+  // --- simulation (looser => less dense; slight upward bias) ---
   const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id)
-      .distance(120)            // was 92
-      .strength(0.35))          // was 0.47
-    .force('charge', d3.forceManyBody().strength(-380))   // was -295
-    .force('center', d3.forceCenter(W/2, H/2.2))          // a bit more vertical space
-    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.8)); // was *1.5
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.47))
+    .force('charge', d3.forceManyBody().strength(-320))
+    .force('center', d3.forceCenter(W/2, H/2.3))
+    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.5));
 
   // --- draw ---
   const linkSel = linkLayer.selectAll('line')
