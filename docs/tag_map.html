@@ -38,10 +38,10 @@
       pointer-events: none;         /* clicks go to the node */
       dominant-baseline: hanging;   /* anchor from top edge */
       font-size: 12px;              /* change here if you want larger text */
-      fill: var(--fg);              /* use site foreground color */
-      paint-order: stroke;          /* render stroke under fill */
-      stroke: rgba(0,0,0,.35);      /* subtle halo for contrast */
-      stroke-width: .6px;
+      fill: var(--muted);       /* softer than --fg on dark bg */
+      stroke: none;             /* remove halo that looked bold */
+      font-weight: 400;         /* ensure not bold */
+      opacity: 0.95;            /* tiny soften, optional */
     }
   </style>
 
