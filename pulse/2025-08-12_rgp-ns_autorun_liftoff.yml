@@ -12,8 +12,6 @@ tags:
 - Automation
 - PhiMesh
 papers:
-- title: Experimenter’s Guide — Solving Navier–Stokes, Differently
-  url: https://doi.org/10.5281/zenodo.15830659
+- https://doi.org/10.5281/zenodo.15830659
 podcasts:
-- '{''notes'': ''Two datasets exercised (local demo + JHTDB stub). Placeholder NT detection
-  is live and will be swapped for the production method next. Webhook posting deferred.\n''}'
+- https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e?artifactId=c8057e83-25cb-40ee-b27e-034a2c5104f9
