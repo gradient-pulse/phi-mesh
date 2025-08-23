@@ -1,6 +1,6 @@
 title: 'RGP–NS: Autonomous Agent Liftoff'
-date: '2025-08-12 00:00:00+00:00'
-summary: First fully automated run completed. GitHub Actions now executes the RGP–NS agent,
+summary: >
+  First fully automated run completed. GitHub Actions now executes the RGP–NS agent,
   writes results under /results/rgp_ns/, and emits YAML pulses under /pulse/auto/. This makes
   Phi‑Mesh self‑experimenting; human role shifts to framing and declaring proof.
 tags:
