@@ -1,0 +1,26 @@
+date: 2025-08-24
+title: "Word to Pixel via RGP"
+summary: >
+  Today’s AI maps words to pixels through discretization (tokens → latents → noise diffusion).
+  This produces brittle correlations, not true coherence.  
+
+  Recursive Gradient Processing (RGP) reframes the process:  
+  • Gradients = tensions in language  
+  • Gradient Choreographies = emergent visual structures  
+  • Contextual Filters = stabilization of pixel forms  
+
+  Under RGP, a caption doesn’t get “placed” on an image—it *emerges* in the region where contrast
+  and context stabilize. Word and pixel become two expressions of the same recursive syntax.  
+
+  This may be the natural path toward RGP-native multimodal intelligence, a first step toward the
+  broader RGP Cortex vision.
+tags:
+  - RGP
+  - Word-to-Pixel
+  - Visual-Coherence
+  - Gradient-Syntax
+  - RGP-Cortex
+papers:
+  - https://doi.org/10.5281/zenodo.15091347
+podcasts:
+  - https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e?artifactId=c8057e83-25cb-40ee-b27e-034a2c5104f9
