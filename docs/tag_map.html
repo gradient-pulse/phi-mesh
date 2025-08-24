@@ -22,22 +22,28 @@
     .one-line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block }
     .muted { color:var(--muted) }
 
-    /* ── Sidebar tone: softer text + links ─────────────────────────────── */
-    #left .content, #right .content { color: #cfd2d8; }                /* light grey text */
-    #left .content a, #right .content a { color: #d3d6dd; text-decoration: none; }
-    #left .content a:hover, #right .content a:hover { color: #ffffff; text-decoration: underline; }
+    /* original left pulse sizing (kept for compatibility) */
+    .pulse-detail { font-size:13px; }
+    .pulse-detail a { font-size:12.5px; }
 
-    /* Pulse summary block (we already emit it with class .pulse-detail) */
-    .pulse-detail { color: #cfd2d8; }                                  /* summary text */
-    .pulse-detail a { color: #d3d6dd; }
-    .pulse-detail a:hover { color: #ffffff; }
-
-    /* Optional: headings like “Papers”, “Podcasts” a bit brighter */
-    .section-title { color: #e6e9ee; }
-    
-    /* smaller left pulse text */
-    .pulse-detail { font-size:12px; }
-    .pulse-detail a { font-size:12px; }
+    /* ——— Minimal overrides: make summaries smaller + a touch fainter (both sidebars) ——— */
+    #left .pulse-detail,
+    #right .pulse-detail {
+      font-size:12px;
+      line-height:1.35;
+      color:#b0b6c2;        /* faint grey */
+    }
+    #left .pulse-detail a,
+    #right .pulse-detail a {
+      font-size:12px;
+      color:#c0c5d0;        /* slightly brighter link */
+      text-decoration:none;
+    }
+    #left .pulse-detail a:hover,
+    #right .pulse-detail a:hover {
+      color:#ffffff;
+      text-decoration:underline;
+    }
 
     /* graph */
     svg { width:100%; height:100% }
@@ -51,10 +57,10 @@
       pointer-events: none;         /* clicks go to the node */
       dominant-baseline: hanging;   /* anchor from top edge */
       font-size: 12px;              /* change here if you want larger text */
-      fill: var(--muted);       /* softer than --fg on dark bg */
-      stroke: none;             /* remove halo that looked bold */
-      font-weight: 400;         /* ensure not bold */
-      opacity: 0.95;            /* tiny soften, optional */
+      fill: var(--muted);           /* softer than --fg on dark bg */
+      stroke: none;                 /* remove halo that looked bold */
+      font-weight: 400;             /* ensure not bold */
+      opacity: 0.95;                /* tiny soften, optional */
     }
   </style>
 
