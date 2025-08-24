@@ -1,36 +1,26 @@
-# meta/aliases.yml
-version: 1
-generated: 2025-08-13
-notes: >
-  Canonical → list of known aliases. The updater should map every alias to its
-  canonical form before writing tag_index or graph data. Keep canonicals stable.
-
 aliases:
 
-  # --- Core program & map terms ------------------------------------------------
-  Infrastructure:
-    - infrastructure
-    
-  RGP:
+  # --- Core program & map terms ----------------------------------------
+  rgp:
+    - RGP
     - Recursive Gradient Processing
 
-  phi-mesh:
-    - phi_mesh
+  phi_mesh:
+    - phi-mesh
     - PhiMesh
     - Phi-mesh
 
-  phi-mesh-evolution:
-    - phi_mesh_evolution
+  phi_mesh_evolution:
+    - phi-mesh-evolution
 
-  AI_architectures:
+  ai_architectures:
     - ai_architecture
     - ai-architecture
     - AI_architecture
     - AIArchitecture
 
-  # --- Experimenter / agent output --------------------------------------------
-
-  ExperimenterPulse:
+  experimenter_pulse:
+    - ExperimenterPulse
     - Experimenter
     - experimenter_pulse
     - AgentPulse
@@ -40,30 +30,24 @@ aliases:
     - lab_note
     - finding
 
-  # If you later want a separate lane for significant results, uncomment:
-  # SignificantFinding:
-  #   - significant_finding
-  #   - significant
-  #   - strong_result
-  #   - positive_result
-
-  # --- Physics / cosmology cluster --------------------------------------------
-
-  Navier_Stokes:
-    - NS_solution
+  # --- Physics / cosmology cluster -------------------------------------
+  navier_stokes:
+    - Navier_Stokes
     - navier-stokes
     - NavierStokes
     - Navier Stokes
+    - NS_solution
 
-  Big Bang:
+  big_bang:
+    - Big Bang
     - Big_Bang
-    - big_bang
+    - big-bang
 
   big_quiet:
     - Big_Quiet
     - Big-Quiet
-    - big-quiet
     - BigQuiet
+    - big-quiet
 
   cosmogenesis:
     - Cosmogenesis
@@ -71,85 +55,91 @@ aliases:
   cosmology:
     - Cosmology
 
-  flux-entrenched_universe:
-    - flux_entrenched_universe
+  flux_entrenched_universe:
+    - flux-entrenched_universe
     - flux-enthrenched_universe   # common misspelling kept as alias
 
-  CMB:
-    - cmb
+  cmb:
+    - CMB
 
-  Birefringence:
-    - birefringence
+  birefringence:
+    - Birefringence
 
-  # --- RGP vocabulary ----------------------------------------------------------
-
-  "NT (Narrative_Tick)":
+  # --- RGP vocabulary ---------------------------------------------------
+  nt_narrative_tick:
+    - "NT (Narrative_Tick)"
     - NT
     - Narrative Tick
     - Narrative_Tick
     - Narrative-Tick
     - NarrativeTick
 
-  UD:
+  ud:
+    - UD
     - Unity-Disunity
+    - unity-disunity
 
-  Contextual_Filter:
+  contextual_filter:
+    - Contextual_Filter
     - ContextualFilter
-    - contextual_filter
-    - contectual_filter
     - contextual-filter
+    - contectual_filter
 
-  Gradient_Syntax:
-    - gradient_syntax
+  gradient_syntax:
+    - Gradient_Syntax
     - gradient-syntax
     - GradientSyntax
 
-  gradient-choreography:
-    - gradient_choreography
+  gradient_choreography:
+    - gradient-choreography
 
-  gradient-driven-behavior:
+  gradient_driven_behavior:
     - gradient-driven_behavior
+    - gradient-driven-behavior
 
-  gradient-driven-intelligence:
-    - gradient-driven_intelligence
+  gradient_driven_intelligence:
+    - gradient-driven-intelligence
 
-  NT_rhythm:
+  nt_rhythm:
     - NT-rhythm
 
-  rhythm-of-least-divergence:
-    - rhythm_of_least_divergence
+  rhythm_of_least_divergence:
+    - rhythm-of-least-divergence
 
   rhythm_of_nature:
     - rhythm-of-nature
 
-  mixture-of-experts:
-    - mixture_of_experts
+  mixture_of_experts:
+    - mixture-of-experts
     - MoE
     - moe
 
-  coherence-amplifier:
-    - coherence_amplifier
+  coherence_amplifier:
+    - coherence-amplifier
 
-  subjective-logging:
-    - subjective_logging
+  subjective_logging:
+    - subjective-logging
 
-  triadic-emergence:
-    - triadic_emergence
+  triadic_emergence:
+    - triadic-emergence
 
-  unity-disunity:
-    - unity_disunity
+  recursive_checkpoint:
+    - recursive-checkpoint
 
-  recursive-checkpoint:
-    - recursive_checkpoint
+  recursive_cognition:
+    - recursive-cognition
 
-  recursive-cognition:
-    - recursive_cognition
+  phi_harmonics:
+    - "Φ-harmonics"
+    - "\u03A6-harmonics"
 
-  Φ-harmonics:
-    - \u03A6-harmonics
+  hrm:
+    - HRM
 
-  # --- Model names / infra -----------------------------------------------------
+  r_phi:
+    - RΦ
 
+  # --- Models / infra ---------------------------------------------------
   gpt5:
     - GPT5
 
@@ -159,17 +149,12 @@ aliases:
   gemini:
     - Gemini
 
-  # --- Tools / demo / platform -------------------------------------------------
-
-  Phi-monitor:
+  # --- Tools / platform -------------------------------------------------
+  phi_monitor:
+    - Phi-monitor
     - Phi_monitor
     - PhiMonitor
 
-  proto-pulse:
-    - proto_pulse
+  proto_pulse:
+    - proto-pulse
     - protopulse
-
-  # --- Robustness / safety nets ------------------------------------------------
-
-  big_bang:
-    - Big_Bang
