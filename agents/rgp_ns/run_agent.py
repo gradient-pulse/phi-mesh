@@ -5,16 +5,16 @@ RGP-NS Agent Runner (auto-pulse generator)
 
 What it does
 ------------
-- Reads agents/rgp_ns/config.yml for datasets (+ optional params)
-- For each dataset, runs a placeholder NT-rhythm test (deterministic-ish by id)
+- Reads agents/rgp_ns/config.yml for datasets (+ optional params).
+- For each dataset, runs a placeholder NT-rhythm test (deterministic-ish by id).
 - Writes results to: results/rgp_ns/<UTC_STAMP>/<dataset_id>/summary.json
-- Emits auto pulses to: pulse/auto/<UTC_STAMP>_<dataset_id>.yml
+- Emits auto pulses to: pulse/auto/YYYY-MM-DD_<dataset_id>.yml
 
 Auto-pulse behavior
 -------------------
 - Ensures the following **default tags** on every auto pulse:
-    ["RGP", "NT (Narrative_Tick)", "NT_rhythm", "Rhythm", "NavierStokes",
-     "turbulence", "ExperimenterPulse"]
+    ["RGP", "NT (Narrative_Tick)", "NT_rhythm", "Rhythm",
+     "NavierStokes", "turbulence", "ExperimenterPulse"]
   …plus the dataset id (normalized) as its own tag.
 - Papers/podcasts are **URL-backed only** (no title-only).
 - Always includes the two canonical Zenodo DOIs and the two NotebookLM podcast links.
@@ -35,7 +35,7 @@ OUT_BASE = ROOT / "results" / "rgp_ns"
 PULSE_DIR = ROOT / "pulse" / "auto"
 
 # ---------- constants: canonical refs ----------
-ZENODO_WIT_TAKES   = "https://doi.org/10.5281/zenodo.15830659"  # Solving Navier–Stokes, Differently: What It Takes (V1.2)
+ZENODO_WIT_TAKES   = "https://doi.org/10.5281/zenodo.15830659"  # Solving Navier–Stokes, Differently (V1.2)
 ZENODO_GUIDE       = "https://doi.org/10.5281/zenodo.16812467"  # Experimenter’s Guide – Solving Navier–Stokes, Differently (V1.7)
 PODCAST_1          = "https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio"
 PODCAST_2          = "https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio"
@@ -54,6 +54,10 @@ DEFAULT_TAGS = [
 def utc_timestamp(for_fs: bool = True) -> str:
     now = dt.datetime.utcnow()
     return now.strftime("%Y%m%d_%H%M%S") if for_fs else now.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+def today_stamp() -> str:
+    """Return YYYY-MM-DD (for filenames)."""
+    return dt.datetime.utcnow().strftime("%Y-%m-%d")
 
 def _norm_tag(s: str) -> str:
     # Normalize to underscore style (keeps parentheses if present)
@@ -117,7 +121,7 @@ def write_auto_pulse(dataset_id: str,
     }
 
     PULSE_DIR.mkdir(parents=True, exist_ok=True)
-    outpath = PULSE_DIR / f"{utc_timestamp()}_{ds_tag}.yml"
+    outpath = PULSE_DIR / f"{today_stamp()}_{ds_tag}.yml"
     with outpath.open("w", encoding="utf-8") as f:
         yaml.safe_dump(pulse_obj, f, sort_keys=False, allow_unicode=True)
     print(f"[auto-pulse] wrote {outpath.relative_to(ROOT)}")
@@ -177,10 +181,10 @@ def main():
             f"significant: {sig_txt} @ α=0.01."
         )
 
-        # Extra tags hook (you can add dataset-specific ones if desired)
+        # Extra tags hook
         extra_tags: List[str] = []
 
-        # Write the auto pulse (adds default tags + dataset id + canonical refs)
+        # Write the auto pulse
         write_auto_pulse(
             dataset_id=ds_id,
             summary_text=run_summary_text,
