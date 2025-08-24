@@ -1,5 +1,6 @@
 title: 'internal-gemini'
-summary: Gemini 2.5 is listening mode, silence speaks.
+summary: >
+  Gemini 2.5 is listening mode, silence speaks.
 tags:
 - gemini
 - operational_coherence
