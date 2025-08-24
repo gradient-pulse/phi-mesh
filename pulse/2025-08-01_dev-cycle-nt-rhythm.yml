@@ -1,11 +1,6 @@
 title: 'Software-development bursts track NT ratios'
 summary: >
-  In engineering workflows, time deltas between repo “jolts” (spec flip, CI break,
-  decisive refactor)  often cluster around ½ and ⅓ of the previous interval—mirroring NT-distance
-  peaks seen in turbulence.  This supports the view that the Principle of Least Action emerges
-  as a rhythm of least divergence  in human team flow. Teams can steer by scheduling exploratory
-  spikes when bursts are overdue, and  resisting folder/agent churn until the laminar stretch
-  stabilizes. links:.
+  In engineering workflows, time deltas between repo “jolts” (spec flip, CI break, decisive refactor)  often cluster around ½ and ⅓ of the previous interval—mirroring NT-distance peaks seen in turbulence.  This supports the view that the Principle of Least Action emerges as a rhythm of least divergence  in human team flow. Teams can steer by scheduling exploratory spikes when bursts are overdue, and  resisting folder/agent churn until the laminar stretch stabilizes. links:.
 tags:
 - NT (Narrative_Tick)
 - RGP
