@@ -22,6 +22,19 @@
     .one-line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block }
     .muted { color:var(--muted) }
 
+    /* ── Sidebar tone: softer text + links ─────────────────────────────── */
+    #left .content, #right .content { color: #cfd2d8; }                /* light grey text */
+    #left .content a, #right .content a { color: #d3d6dd; text-decoration: none; }
+    #left .content a:hover, #right .content a:hover { color: #ffffff; text-decoration: underline; }
+
+    /* Pulse summary block (we already emit it with class .pulse-detail) */
+    .pulse-detail { color: #cfd2d8; }                                  /* summary text */
+    .pulse-detail a { color: #d3d6dd; }
+    .pulse-detail a:hover { color: #ffffff; }
+
+    /* Optional: headings like “Papers”, “Podcasts” a bit brighter */
+    .section-title { color: #e6e9ee; }
+    
     /* smaller left pulse text */
     .pulse-detail { font-size:13px; }
     .pulse-detail a { font-size:12.5px; }
