@@ -68,25 +68,30 @@ phi-mesh/
 
 ## Add pulses → *grow the map*
 
-	1. Create a new YAML file in `pulse/` with the format:  
-   	   `pulse/YYYY-MM-DD_short-title.yml`
+1. Create a new YAML file in `pulse/` with the format:  
+   `pulse/YYYY-MM-DD_short-title.yml`
 
-   	   Minimal fields only:  
-   	   - `title:`  
-   	   - `summary:`  
-   	   - `tags:`  
-   	   - `papers:` (links)  
-   	   - `podcasts:` (links)  
+   Minimal fields only:  
+   - `title:`  
+   - `summary:`  
+   - `tags:`  
+   - `papers:` (links)  
+   - `podcasts:` (links)  
 
-	2. Commit & push. GitHub Actions will automatically:  
-   	   - check & clean the pulse to match the schema  
-   	   - add any new tags to `meta/tag_descriptions.yml`  
-   	   - regenerate `docs/data.js`  
-   	   - redeploy the Tag Map
+   **Tag naming convention:**  
+   Use lowercase with underscores (e.g., `whitehead_alfred_north`, `process_philosophy`).  
+   This avoids case mismatches in the Tag Map and keeps everything consistent.
 
-	3. Open the Tag Map:  
-   	   https://gradient-pulse.github.io/phi-mesh/tag_map.html  
-       → Your new pulse and tags should now appear live.
+2. Commit & push. GitHub Actions will automatically:  
+   - check & clean the pulse to match the schema  
+   - add any new tags to `meta/tag_descriptions.yml`  
+   - regenerate `docs/data.js`  
+   - redeploy the Tag Map
+
+3. Open the Tag Map:  
+   https://gradient-pulse.github.io/phi-mesh/tag_map.html  
+   → Your new pulse and tags should now appear live.
+   
 ---
 
 ## Map upkeep
