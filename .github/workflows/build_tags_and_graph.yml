@@ -37,10 +37,11 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml networkx
+          pip install pyyaml
 
-      # ----- NEW: Build "view" that excludes pulse/archive/** -----
+      # Build view that excludes pulse/archive/**
       - name: Prepare pulse build view (exclude archive)
+        shell: bash
         run: |
           set -euo pipefail
           rm -rf pulse/_buildview
@@ -52,14 +53,42 @@ jobs:
             ln -s "../$(basename "$f")" "pulse/_buildview/$(basename "$f")" || true
           done
 
-          # Auto pulses (still included)
-          for f in pulse/auto/*.yml; do
-            base="$(basename "$f")"
-            ln -s "../auto/$base" "pulse/_buildview/auto_$base" || true
-          done
+          # Auto pulses (included)
+          if compgen -G "pulse/auto/*.yml" > /dev/null; then
+            for f in pulse/auto/*.yml; do
+              base="$(basename "$f")"
+              ln -s "../auto/$base" "pulse/_buildview/auto_$base" || true
+            done
+          fi
 
           echo "---- buildview contents ----"
           ls -la pulse/_buildview || true
+
+      # Canary: ensure the root generator is the canonicalizing version
+      - name: Generator canary (canon_tag present)
+        run: |
+          python - << 'PY'
+          import pathlib, re, sys
+          p = pathlib.Path("generate_graph_data.py").read_text(encoding="utf-8")
+          ok = "def canon_tag(" in p
+          print("[GEN] canon_tag present:", ok)
+          sys.exit(0 if ok else 3)
+          PY
+
+      # Enforce root generator & bust stale artifacts
+      - name: Force root generator and bust cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          # If an old tools/generate_graph_data.py exists, turn it into a shim to the root script
+          if [ -f tools/generate_graph_data.py ]; then
+            cat > tools/generate_graph_data.py <<'PY'
+import subprocess, sys
+sys.exit(subprocess.call([sys.executable, "generate_graph_data.py", *sys.argv[1:]]))
+PY
+          fi
+          # Remove previous artifact to avoid stale cache
+          rm -f docs/data.js
 
       - name: Generate docs/data.js
         run: |
@@ -72,9 +101,31 @@ jobs:
 
       - name: Validate data.js
         run: |
-          test -s docs/data.js || (echo "ERROR: docs/data.js is empty"; exit 2)
-          head -n 1 docs/data.js | grep -q "window.PHI_DATA" || (echo "ERROR: data.js missing window.PHI_DATA"; exit 3)
+          test -s docs/data.js || (echo "ERROR: docs/data.js is empty" && exit 2)
+          head -n 1 docs/data.js | grep -q "window.PHI_DATA" || (echo "ERROR: data.js missing window.PHI_DATA" && exit 3)
           echo "OK: docs/data.js looks good."
+
+      # Audit: fail if case-insensitive duplicate tag IDs exist (e.g., Turbulence vs turbulence)
+      - name: Audit for case-insensitive duplicate tags
+        run: |
+          python - << 'PY'
+          import json, re, collections, sys
+          txt = open("docs/data.js","r",encoding="utf-8").read()
+          m = re.search(r"window\.PHI_DATA\s*=\s*(\{.*\});\s*$", txt, re.S)
+          if not m:
+            print("ERROR: Cannot parse window.PHI_DATA from docs/data.js"); sys.exit(4)
+          data = json.loads(m.group(1))
+          ids = [n.get("id","") for n in data.get("nodes",[])]
+          by = collections.defaultdict(list)
+          for t in ids: by[t.lower()].append(t)
+          dupes = {k:v for k,v in by.items() if len(v)>1}
+          if dupes:
+            print("❌ case-insensitive duplicates detected:")
+            for k,v in sorted(dupes.items()):
+              print("  ", k, "=>", v)
+            sys.exit(5)
+          print("✅ no case-insensitive duplicates")
+          PY
 
       - name: Commit generated artifacts
         run: |
@@ -82,6 +133,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data.js
           git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "auto: rebuild data.js (exclude archive)"
+          git commit -m "auto: rebuild data.js (exclude archive, canonicalized)"
           git pull --rebase origin main || true
           git push
