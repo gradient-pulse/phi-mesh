@@ -143,4 +143,9 @@ cor: "Chain-of-Reasoning: stepwise explanation baseline. Useful probe but not id
 hrm: "Harmonic Resonance Metric — shorthand for measuring resonance strength across gradients/filters."
 lambda: "λ as a control knob: gain/regularization trade-offs that shift systems between exploration and stabilization."
 cosmogenesis: "Emergence of large-scale structure from early resonance seeds; RGP lens on how a cosmos ‘grows’ coherence."
+phi_mesh: "The Mesh: pulses, tags, and maps accumulating into a shared gradient memory."
+phi_monitor: "Lightweight productivity pulse that tracks Φ and warns before coherence collapses."
+phi_guardian: "Runtime safeguard: watches gradients/filters and nudges back toward low-divergence behavior."
+nt_narrative_tick: "Discrete ‘ticks’ where a system’s story advances; small coherence jumps that replace continuous, field-like time."
+navier_stokes: "Fluid dynamics through the RGP lens; prioritize conserved rhythms over closed forms."
 # add more as you like…
