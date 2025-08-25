@@ -2,14 +2,14 @@
 # generate_graph_data.py
 # Robust generator for docs/data.js (window.PHI_DATA).
 # - Reads pulses (YAML) from a glob
-# - Applies aliases
-# - Reads tag descriptions
+# - Canonicalizes tags (casefold, hyphen/space → underscore, collapse)
+# - Applies aliases (mapped from canonical alias → canonical target)
+# - Reads tag descriptions (canonical keys)
 # - Builds nodes/links, pulsesByTag, tagResources, tagFirstSeen
 # - Tolerates messy YAML: unwraps single-item lists, skips multi-item lists
 
 import argparse
 import glob
-import io
 import json
 import os
 import re
@@ -128,48 +128,63 @@ def norm_tags(val):
     push(str(val))
     return out
 
-def apply_aliases(tag, alias_map):
-    """Return canonical tag if tag matches an alias, else tag."""
-    # alias_map: { canonical: [alias1, alias2, ...] }
-    for canon, aliases in alias_map.items():
-        if tag == canon:
-            return canon
-        for a in aliases or []:
-            if tag == a:
-                return canon
-    return tag
+# ----------------------- canonicalization -----------------------
+
+_CAN_PAT = re.compile(r"[^a-z0-9()+]+", re.I)
+def canon_tag(s: str) -> str:
+    """
+    Canonical tag id: lowercase; non [a-z0-9()+] -> '_'; collapse repeats; trim '_'.
+    Examples:
+      'RGP-Cortex' -> 'rgp_cortex'
+      'Word to Pixel' -> 'word_to_pixel'
+      'NT (Narrative_Tick)' -> 'nt_(narrative_tick)'
+    """
+    if not s:
+        return ""
+    x = s.strip().casefold()
+    x = _CAN_PAT.sub("_", x)
+    x = re.sub(r"_+", "_", x)
+    return x.strip("_")
 
 def load_alias_map(path):
-    data = load_yaml(path)
-    alias_map = {}
-    if not data or "aliases" not in data:
-        return alias_map
-    # normalize keys to strings; values to list[str]
-    for canon, aliases in data["aliases"].items():
-        canon_s = str(canon)
-        if isinstance(aliases, list):
-            alias_map[canon_s] = [str(x) for x in aliases]
-        elif isinstance(aliases, str):
-            alias_map[canon_s] = [aliases]
-        else:
-            alias_map[canon_s] = []
-    return alias_map
+    """
+    Build lookup dict mapping *canonical alias* -> *canonical target*.
+
+    YAML format:
+      aliases:
+        rgp_cortex: [RGP-Cortex, rgp-cortex, RGP_Cortex]
+    """
+    data = load_yaml(path) or {}
+    raw = data.get("aliases") or {}
+    lookup = {}
+    for target, variants in raw.items():
+        tgt = canon_tag(str(target))
+        if isinstance(variants, str):
+            variants = [variants]
+        for v in (variants or []):
+            a = canon_tag(str(v))
+            if a and a != tgt:
+                lookup[a] = tgt
+        if tgt and tgt not in lookup:
+            lookup[tgt] = tgt  # idempotent
+    return lookup  # alias_lookup[canon] -> canon_target
 
 def load_tag_descriptions(path):
-    data = load_yaml(path)
-    if not data:
-        return {}
-    # allow both {tag: desc} or {descriptions: {tag: desc}} or top-level "tags:"
+    """
+    Return dict of canonical_tag -> description.
+    Accepts:
+      {tags:{...}} or {descriptions:{...}} or flat {tag:desc}
+    """
+    data = load_yaml(path) or {}
     if "descriptions" in data and isinstance(data["descriptions"], dict):
         pool = data["descriptions"]
     elif "tags" in data and isinstance(data["tags"], dict):
         pool = data["tags"]
     else:
         pool = {k: v for k, v in data.items() if isinstance(v, str)}
-    # stringify keys, ensure string values
     out = {}
     for k, v in pool.items():
-        out[str(k)] = str(v or "")
+        out[canon_tag(str(k))] = str(v or "")
     return out
 
 def _is_archived(path_str: str) -> bool:
@@ -177,7 +192,6 @@ def _is_archived(path_str: str) -> bool:
     True for files under pulse/archive/** (we exclude these from the graph).
     """
     parts = list(Path(path_str).parts)
-    # Require at least ["pulse", "archive", ...]
     return len(parts) >= 2 and parts[0] == "pulse" and parts[1] == "archive"
 
 # ----------------------- pulse collection -----------------------
@@ -200,7 +214,7 @@ def coerce_pulse_dict(path, obj):
     warn(f"Skipping pulse (top-level {type(obj).__name__}) in {path}")
     return None
 
-def normalize_pulse(path, data, alias_map):
+def normalize_pulse(path, data, alias_lookup):
     """
     Produce a minimal pulse dict:
       id, title, date, summary, tags, papers, podcasts, ageDays
@@ -216,8 +230,16 @@ def normalize_pulse(path, data, alias_map):
     raw_date = data.get("date")
     date_str = to_iso_date(raw_date, date_from_filename(path))
 
-    # tags
-    tags = [apply_aliases(t, alias_map) for t in norm_tags(data.get("tags"))]
+    # tags -> canonical -> alias collapse (canon alias → canon target)
+    raw_tags = norm_tags(data.get("tags"))
+    tags = []
+    seen = set()
+    for t in raw_tags:
+        c = canon_tag(t)
+        tgt = alias_lookup.get(c, c)
+        if tgt and tgt not in seen:
+            seen.add(tgt)
+            tags.append(tgt)
 
     # resources
     papers = norm_links(data.get("papers"))
@@ -246,7 +268,7 @@ def normalize_pulse(path, data, alias_map):
         "ageDays": age_days,
     }
 
-def collect_pulses(pulse_glob, alias_map):
+def collect_pulses(pulse_glob, alias_lookup):
     pulses = []
     tag_to_pulses = defaultdict(list)
 
@@ -259,7 +281,7 @@ def collect_pulses(pulse_glob, alias_map):
         data = coerce_pulse_dict(path, obj)
         if data is None:
             continue
-        p = normalize_pulse(path, data, alias_map)
+        p = normalize_pulse(path, data, alias_lookup)
         if p is None:
             continue
         pulses.append(p)
@@ -341,10 +363,10 @@ def main():
     ap.add_argument("--out-js", default="docs/data.js", help="Output JS path (window.PHI_DATA = ...)")
     args = ap.parse_args()
 
-    alias_map = load_alias_map(args.alias_map)
+    alias_lookup = load_alias_map(args.alias_map)
     tag_desc = load_tag_descriptions(args.tag_descriptions)
 
-    pulses, tag_to_pulses = collect_pulses(args.pulse_glob, alias_map)
+    pulses, tag_to_pulses = collect_pulses(args.pulse_glob, alias_lookup)
     info(f"Collected pulses: {len(pulses)}")
 
     # Build graph
