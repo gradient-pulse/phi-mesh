@@ -1,7 +1,14 @@
 name: Audit Missing Tooltips
 
 on:
-  workflow_dispatch:   # run manually from the Actions tab
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/data.js'
+      - 'meta/tag_descriptions.yml'
+      - 'meta/aliases.yml'
+      - '.github/workflows/audit_missing_tooltips.yml'
 
 jobs:
   audit:
@@ -11,16 +18,47 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Setup Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - name: Install deps
+      - name: Run tooltip audit (fail if missing)
         run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml
+          python - << 'PY'
+          import json, re, sys, pathlib
 
-      - name: Run audit_missing_tooltips.py
-        run: |
-          python tools/audit_missing_tooltips.py
+          p = pathlib.Path("docs/data.js")
+          if not p.exists():
+              print("❌ docs/data.js not found. Build the graph first.")
+              sys.exit(2)
+
+          txt = p.read_text(encoding="utf-8")
+          m = re.search(r"window\.PHI_DATA\s*=\s*(\{.*\});\s*$", txt, re.S)
+          if not m:
+              print("❌ Could not parse window.PHI_DATA payload.")
+              sys.exit(3)
+
+          data = json.loads(m.group(1))
+          desc = data.get("tagDescriptions", {})
+          nodes = data.get("nodes", [])
+
+          missing = sorted({ n.get("id","") for n in nodes if not (desc.get(n.get("id","")) or "").strip() })
+          if missing:
+              print(f"❌ {len(missing)} tags missing descriptions:")
+              for t in missing:
+                  print(" -", t)
+              # also write an artifact for convenience
+              pathlib.Path("missing_tooltips.txt").write_text("\n".join(missing), encoding="utf-8")
+              sys.exit(7)
+          else:
+              print("✅ All tag nodes have descriptions.")
+          PY
+
+      - name: Upload missing list (if any)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: missing_tooltips
+          path: missing_tooltips.txt
+          if-no-files-found: ignore
