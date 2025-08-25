@@ -45,27 +45,43 @@ jobs:
           rm -rf pulse/_buildview
           mkdir -p pulse/_buildview
           shopt -s nullglob
+
+          # Top-level pulses
           for f in pulse/*.yml; do
             ln -s "../$(basename "$f")" "pulse/_buildview/$(basename "$f")" || true
           done
+
+          # Auto pulses (included)
           if compgen -G "pulse/auto/*.yml" > /dev/null; then
             for f in pulse/auto/*.yml; do
               base="$(basename "$f")"
               ln -s "../auto/$base" "pulse/_buildview/auto_$base" || true
             done
           fi
+
           echo "---- buildview contents ----"
           ls -la pulse/_buildview || true
 
+      # Canary: ensure root generator is the canonicalizing version
       - name: Generator canary (canon_tag present)
         run: |
-          python -c "import pathlib,sys;p=pathlib.Path('generate_graph_data.py').read_text(encoding='utf-8');ok='def canon_tag(' in p;print('[GEN] canon_tag present:', ok);sys.exit(0 if ok else 3)"
+          python - <<'PY'
+          import pathlib, sys
+          txt = pathlib.Path("generate_graph_data.py").read_text(encoding="utf-8")
+          ok = "def canon_tag(" in txt
+          print("[GEN] canon_tag present:", ok)
+          sys.exit(0 if ok else 3)
+          PY
 
+      # Enforce root generator & bust any stale artifact
       - name: Force root generator and bust cache
         run: |
           set -euo pipefail
           if [ -f tools/generate_graph_data.py ]; then
-            printf "import subprocess, sys\nsys.exit(subprocess.call([sys.executable, 'generate_graph_data.py', *sys.argv[1:]]))\n" > tools/generate_graph_data.py
+            cat > tools/generate_graph_data.py <<'PY'
+import subprocess, sys
+sys.exit(subprocess.call([sys.executable, "generate_graph_data.py", *sys.argv[1:]]))
+PY
           fi
           rm -f docs/data.js
 
@@ -84,13 +100,31 @@ jobs:
           head -n 1 docs/data.js | grep -q "window.PHI_DATA" || (echo "ERROR: data.js missing window.PHI_DATA" && exit 3)
           echo "OK: docs/data.js looks good."
 
+      # Audit: fail if case-insensitive duplicate tag IDs exist (e.g., Turbulence vs turbulence)
       - name: Audit for case-insensitive duplicate tags
         run: |
-          python -c "import json,re,collections,sys;txt=open('docs/data.js','r',encoding='utf-8').read();m=re.search(r'window\\.PHI_DATA\\s*=\\s*(\\{.*\\});\\s*$',txt,re.S); \
-data=json.loads(m.group(1)) if m else (_ for _ in ()).throw(SystemExit(4)); \
-ids=[n.get('id','') for n in data.get('nodes',[])]; by=collections.defaultdict(list); [by[t.lower()].append(t) for t in ids]; \
-dupes={k:v for k,v in by.items() if len(v)>1}; \
-(print('ERROR: case-insensitive duplicates detected:') or [print('  ',k,'=>',v) for k,v in sorted(dupes.items())] or sys.exit(5)) if dupes else print('OK: no case-insensitive duplicates')"
+          python - <<'PY'
+          import json, re, collections, sys
+          try:
+              txt = open("docs/data.js","r",encoding="utf-8").read()
+          except Exception as e:
+              print("ERROR: cannot read docs/data.js:", e); sys.exit(4)
+          m = re.search(r"window\.PHI_DATA\s*=\s*(\{.*\});\s*$", txt, re.S)
+          if not m:
+              print("ERROR: cannot parse window.PHI_DATA payload"); sys.exit(4)
+          data = json.loads(m.group(1))
+          ids = [n.get("id","") for n in data.get("nodes",[])]
+          by = collections.defaultdict(list)
+          for t in ids:
+              by[t.lower()].append(t)
+          dupes = {k:v for k,v in by.items() if len(v) > 1}
+          if dupes:
+              print("❌ case-insensitive duplicates detected:")
+              for k,v in sorted(dupes.items()):
+                  print("  ", k, "=>", v)
+              sys.exit(5)
+          print("✅ no case-insensitive duplicates")
+          PY
 
       - name: Commit generated artifacts
         run: |
