@@ -9,15 +9,26 @@ aliases:
     - phi-mesh
     - PhiMesh
     - Phi-mesh
+    - phimesh            # ← audit variant
 
   phi_mesh_evolution:
     - phi-mesh-evolution
+
+  rgp_tag_map:
+    - TagMap             # legacy label
+    - tagmap             # ← audit variant
+
+  # keep tag_map as separate canonical if you use it
+  tag_map:
+    - TagMap
+    - tagmap
 
   ai_architectures:
     - ai_architecture
     - ai-architecture
     - AI_architecture
     - AIArchitecture
+    - ai_architectures
 
   experimenter_pulse:
     - ExperimenterPulse
@@ -29,6 +40,7 @@ aliases:
     - auto_pulse
     - lab_note
     - finding
+    - experimenterpulse   # ← audit variant (squashed)
 
   # --- Physics / cosmology cluster -------------------------------------
   navier_stokes:
@@ -36,6 +48,10 @@ aliases:
     - navier-stokes
     - NavierStokes
     - Navier Stokes
+    - NS_solution         # people sometimes tag the “solution” with NS
+    - navierstokes        # ← audit variant
+
+  ns_solution:
     - NS_solution
 
   big_bang:
@@ -48,6 +64,7 @@ aliases:
     - Big-Quiet
     - BigQuiet
     - big-quiet
+    - bigquiet            # ← audit variant
 
   cosmogenesis:
     - Cosmogenesis
@@ -55,9 +72,18 @@ aliases:
   cosmology:
     - Cosmology
 
+  dark_energy:
+    - Dark_Energy
+    - DarkEnergy
+
+  dark_matter:
+    - Dark_Matter
+    - DarkMatter
+
   flux_entrenched_universe:
     - flux-entrenched_universe
-    - flux-enthrenched_universe   # common misspelling kept as alias
+    - flux-enthrenched_universe   # existing misspelling
+    - flux_enthrenched_universe   # ← audit variant (snake)
 
   cmb:
     - CMB
@@ -73,6 +99,12 @@ aliases:
     - Narrative_Tick
     - Narrative-Tick
     - NarrativeTick
+    - NT_Narrative_Tick
+    - NT_(Narrative_Tick)  # ← audit variant
+    - nt_(narrative_tick)  # ← audit variant
+
+  nt_rhythm:
+    - NT-rhythm
 
   ud:
     - UD
@@ -84,6 +116,7 @@ aliases:
     - ContextualFilter
     - contextual-filter
     - contectual_filter
+    - contextualfilter     # ← audit variant
 
   gradient_syntax:
     - Gradient_Syntax
@@ -93,15 +126,20 @@ aliases:
   gradient_choreography:
     - gradient-choreography
 
+  gradient_memory:
+    - gradient-memory
+    - gradientmemory       # ← audit variant
+
+  gradient_cocoon:
+    - gradient-cocoon
+    - gradient_cocoon_theory   # ← audit variant (fold “theory” into base)
+
   gradient_driven_behavior:
     - gradient-driven_behavior
     - gradient-driven-behavior
 
   gradient_driven_intelligence:
     - gradient-driven-intelligence
-
-  nt_rhythm:
-    - NT-rhythm
 
   rhythm_of_least_divergence:
     - rhythm-of-least-divergence
@@ -122,6 +160,7 @@ aliases:
 
   triadic_emergence:
     - triadic-emergence
+    - deep_triad           # ← audit variant mapped to triadic concept
 
   recursive_checkpoint:
     - recursive-checkpoint
@@ -129,15 +168,27 @@ aliases:
   recursive_cognition:
     - recursive-cognition
 
+  recursive_grammar:
+    - recursive-grammar    # ← audit variant shows up canonical already
+
+  recursive_awakening:
+    - recursive-awakening
+    - recursive_awakening  # audit variant already canonical form
+
+  quiet_awakening:
+    - Quiet_Awakening
+
   phi_harmonics:
     - "Φ-harmonics"
     - "\u03A6-harmonics"
+    - harmonics            # ← audit shorthand
 
   hrm:
     - HRM
 
   r_phi:
     - RΦ
+    - r                    # ← audit variant; map lone “r” into r_phi
 
   # --- Models / infra ---------------------------------------------------
   gpt5:
@@ -159,158 +210,33 @@ aliases:
     - proto-pulse
     - protopulse
 
-  # --- Visual / Cortex cluster ---
-  rgp_cortex:
-    - RGP-Cortex
-    - rgp-cortex
-    - RGP_Cortex
+  # --- Society / language -----------------------------------------------
+  non_linear_society:
+    - non-linear_society   # unify dash vs underscore
+    - Non-linear_society
 
-  word_to_pixel:
-    - Word-to-Pixel
-    - word-to-pixel
-    - Word_to_Pixel
-
-  visual_coherence:
-    - Visual-Coherence
-    - visual-coherence
-    - Visual_Coherence
+  language_evolution:
+    - language-evolution
 
   societal_evolution:
-    - Societal_evolution
-    - Societal-Evolution
     - societal-evolution
 
-  # --- Visual / Cortex cluster ---
-  rgp_cortex:
-    - RGP-Cortex
-    - rgp-cortex
-    - RGP_Cortex
+  writing:
+    - Writing
 
-  word_to_pixel:
-    - Word-to-Pixel
-    - word-to-pixel
-    - Word_to_Pixel
-
-  visual_coherence:
-    - Visual-Coherence
-    - visual-coherence
-    - Visual_Coherence
-
-  societal_evolution:
-    - Societal_evolution
-    - Societal-Evolution
-    - societal-evolution
-
-  # --- Canonical tag capitalization/hyphen fixes ---
-  continuity:
-    - Continuity
-
-  gpt4o:
-    - GPT4o
-    - GPT-4o
-    - gpt-4o
-
-  rgp_tag_map:
-    - TagMap
-    - tagmap
-    - Tag_Map
-
-  cosmogenesis:
-    - Cosmogenesis
-
-  # Map deep_triad → triadic_emergence (same concept)
-  triadic_emergence:
-    - deep_triad
-    - DeepTriad
-    - deep-triad
-
-  recursive_cognition:
-    - Recursive_Cognition
-    - RecursiveCognition
-
-  # Already present but keep completeness in one place
-  phi_monitor:
-    - Phi-Monitor
-    - Phi_monitor
-    - PhiMonitor
-
-  ud:
-    - unity-disunity
-    - Unity-Disunity
-  cor:
-    - CoR
-  pola:
-    - PoLA
-  navier_stokes:
-    - NS_solution
-    - NS-solution
-  ud:
-    - unity-disunity
-    - Unity-Disunity
-  cor:
-    - CoR
-    - chain_of_reasoning
-    - chain-of-reasoning
-
-  nt_narrative_tick:
-    - "NT (Narrative_Tick)"
-    - NT_Narrative_Tick
-    - NT_(Narrative_Tick)
-    - nt_(narrative_tick)
-    - Narrative_Tick
-    - Narrative-Tick
-    - Narrative Tick
-
-  navier_stokes:
-    - navierstokes
-    - NavierStokes
-    - Navier_Stokes
-    - Navier Stokes
-    - navier-stokes
-
-  phi_mesh:
-    - phimesh
-    - PhiMesh
-    - Phi-mesh
-    - phi-mesh
-
-  phi_monitor:
-    - PhiMonitor
-    - Phi_monitor
-    - Phi-monitor
-
-  phi_guardian:
-    - PhiGuardian
-    - Phi_Guardian
-    - phi-guardian
-
-    nt_narrative_tick:
-    - NT_(Narrative_Tick)
-    - nt_(narrative_tick)
-
-  navier_stokes:
-    - navierstokes
-
-  phi_mesh:
-    - phimesh
-
-  tag_map:
-    - tagmap
-
-  contextual_filter:
-    - contextualfilter
-
-  big_quiet:
-    - bigquiet
+  # --- Misc frequently seen ---------------------------------------------
+  automation:
+    - Automation
 
   development_process:
-    - development_process
+    - development-process
 
-  gradient_memory:
-    - gradientmemory
+  old_science:
+    - OldScience
+    - oldscience           # ← audit variant
 
-  phi_harmonics:
-    - harmonics   # if you used this shorthand
+  signal:
+    - Signal
 
-  flux_entrenched_universe:
-    - flux_enthrenched_universe  # common misspelling
+  replication:
+    - Replication
