@@ -1,0 +1,26 @@
+name: Audit Missing Tooltips
+
+on:
+  workflow_dispatch:   # run manually from the Actions tab
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Run audit_missing_tooltips.py
+        run: |
+          python tools/audit_missing_tooltips.py
