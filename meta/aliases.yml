@@ -255,3 +255,35 @@ aliases:
     - CoR
     - chain_of_reasoning
     - chain-of-reasoning
+
+    nt_narrative_tick:
+    - "NT (Narrative_Tick)"
+    - NT_Narrative_Tick
+    - NT_(Narrative_Tick)
+    - nt_(narrative_tick)
+    - Narrative_Tick
+    - Narrative-Tick
+    - Narrative Tick
+
+  navier_stokes:
+    - navierstokes
+    - NavierStokes
+    - Navier_Stokes
+    - Navier Stokes
+    - navier-stokes
+
+  phi_mesh:
+    - phimesh
+    - PhiMesh
+    - Phi-mesh
+    - phi-mesh
+
+  phi_monitor:
+    - PhiMonitor
+    - Phi_monitor
+    - Phi-monitor
+
+  phi_guardian:
+    - PhiGuardian
+    - Phi_Guardian
+    - phi-guardian
