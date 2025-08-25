@@ -237,3 +237,21 @@ aliases:
     - Phi-Monitor
     - Phi_monitor
     - PhiMonitor
+
+  ud:
+    - unity-disunity
+    - Unity-Disunity
+  cor:
+    - CoR
+  pola:
+    - PoLA
+  navier_stokes:
+    - NS_solution
+    - NS-solution
+  ud:
+    - unity-disunity
+    - Unity-Disunity
+  cor:
+    - CoR
+    - chain_of_reasoning
+    - chain-of-reasoning
