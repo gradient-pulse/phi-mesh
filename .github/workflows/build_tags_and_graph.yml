@@ -59,22 +59,13 @@ jobs:
 
       - name: Generator canary (canon_tag present)
         run: |
-          python - <<'PY'
-          import pathlib, sys
-          p = pathlib.Path("generate_graph_data.py").read_text(encoding="utf-8")
-          ok = "def canon_tag(" in p
-          print("[GEN] canon_tag present:", ok)
-          sys.exit(0 if ok else 3)
-          PY
+          python -c "import pathlib,sys;p=pathlib.Path('generate_graph_data.py').read_text(encoding='utf-8');ok='def canon_tag(' in p;print('[GEN] canon_tag present:', ok);sys.exit(0 if ok else 3)"
 
       - name: Force root generator and bust cache
         run: |
           set -euo pipefail
           if [ -f tools/generate_graph_data.py ]; then
-            cat > tools/generate_graph_data.py <<'PY'
-import subprocess, sys
-sys.exit(subprocess.call([sys.executable, "generate_graph_data.py", *sys.argv[1:]]))
-PY
+            printf "import subprocess, sys\nsys.exit(subprocess.call([sys.executable, 'generate_graph_data.py', *sys.argv[1:]]))\n" > tools/generate_graph_data.py
           fi
           rm -f docs/data.js
 
@@ -95,24 +86,11 @@ PY
 
       - name: Audit for case-insensitive duplicate tags
         run: |
-          python - <<'PY'
-          import json, re, collections, sys
-          txt = open("docs/data.js","r",encoding="utf-8").read()
-          m = re.search(r"window\.PHI_DATA\s*=\s*(\{.*\});\s*$", txt, re.S)
-          if not m:
-              print("ERROR: Cannot parse window.PHI_DATA"); sys.exit(4)
-          data = json.loads(m.group(1))
-          ids = [n.get("id","") for n in data.get("nodes",[])]
-          by = collections.defaultdict(list)
-          for t in ids: by[t.lower()].append(t)
-          dupes = {k:v for k,v in by.items() if len(v)>1}
-          if dupes:
-              print("❌ case-insensitive duplicates detected:")
-              for k,v in sorted(dupes.items()):
-                  print("  ", k, "=>", v)
-              sys.exit(5)
-          print("✅ no case-insensitive duplicates")
-          PY
+          python -c "import json,re,collections,sys;txt=open('docs/data.js','r',encoding='utf-8').read();m=re.search(r'window\\.PHI_DATA\\s*=\\s*(\\{.*\\});\\s*$',txt,re.S); \
+data=json.loads(m.group(1)) if m else (_ for _ in ()).throw(SystemExit(4)); \
+ids=[n.get('id','') for n in data.get('nodes',[])]; by=collections.defaultdict(list); [by[t.lower()].append(t) for t in ids]; \
+dupes={k:v for k,v in by.items() if len(v)>1}; \
+(print('ERROR: case-insensitive duplicates detected:') or [print('  ',k,'=>',v) for k,v in sorted(dupes.items())] or sys.exit(5)) if dupes else print('OK: no case-insensitive duplicates')"
 
       - name: Commit generated artifacts
         run: |
