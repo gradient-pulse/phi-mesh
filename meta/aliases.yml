@@ -182,3 +182,58 @@ aliases:
     - Societal-Evolution
     - societal-evolution
 
+aliases:
+
+  # --- Visual / Cortex cluster ---
+  rgp_cortex:
+    - RGP-Cortex
+    - rgp-cortex
+    - RGP_Cortex
+
+  word_to_pixel:
+    - Word-to-Pixel
+    - word-to-pixel
+    - Word_to_Pixel
+
+  visual_coherence:
+    - Visual-Coherence
+    - visual-coherence
+    - Visual_Coherence
+
+  societal_evolution:
+    - Societal_evolution
+    - Societal-Evolution
+    - societal-evolution
+
+  # --- Canonical tag capitalization/hyphen fixes ---
+  continuity:
+    - Continuity
+
+  gpt4o:
+    - GPT4o
+    - GPT-4o
+    - gpt-4o
+
+  rgp_tag_map:
+    - TagMap
+    - tagmap
+    - Tag_Map
+
+  cosmogenesis:
+    - Cosmogenesis
+
+  # Map deep_triad → triadic_emergence (same concept)
+  triadic_emergence:
+    - deep_triad
+    - DeepTriad
+    - deep-triad
+
+  recursive_cognition:
+    - Recursive_Cognition
+    - RecursiveCognition
+
+  # Already present but keep completeness in one place
+  phi_monitor:
+    - Phi-Monitor
+    - Phi_monitor
+    - PhiMonitor
