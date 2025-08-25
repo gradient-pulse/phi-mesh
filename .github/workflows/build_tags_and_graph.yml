@@ -46,12 +46,10 @@ jobs:
           mkdir -p pulse/_buildview
           shopt -s nullglob
 
-          # Top-level pulses
           for f in pulse/*.yml; do
             ln -s "../$(basename "$f")" "pulse/_buildview/$(basename "$f")" || true
           done
 
-          # Auto pulses (included)
           if compgen -G "pulse/auto/*.yml" > /dev/null; then
             for f in pulse/auto/*.yml; do
               base="$(basename "$f")"
@@ -62,7 +60,6 @@ jobs:
           echo "---- buildview contents ----"
           ls -la pulse/_buildview || true
 
-      # Canary: ensure root generator is the canonicalizing version
       - name: Generator canary (canon_tag present)
         run: |
           python - <<'PY'
@@ -73,7 +70,6 @@ jobs:
           sys.exit(0 if ok else 3)
           PY
 
-      # Enforce root generator & bust any stale artifact
       - name: Force root generator and bust cache
         run: |
           set -euo pipefail
@@ -100,7 +96,6 @@ PY
           head -n 1 docs/data.js | grep -q "window.PHI_DATA" || (echo "ERROR: data.js missing window.PHI_DATA" && exit 3)
           echo "OK: docs/data.js looks good."
 
-      # Audit: fail if case-insensitive duplicate tag IDs exist (e.g., Turbulence vs turbulence)
       - name: Audit for case-insensitive duplicate tags
         run: |
           python - <<'PY'
