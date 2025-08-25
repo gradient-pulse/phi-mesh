@@ -7,9 +7,14 @@ TAG_DESC = ROOT / "meta" / "tag_descriptions.yml"  # optional for warnings
 
 DATE_PREFIX = re.compile(r"^\d{4}-\d{2}-\d{2}_")
 URL = re.compile(r"^(https?://|https://doi.org/|doi:)")
+REL_PATH = re.compile(r"""^(
+    (\.\./|\./|/)?                # optional relative/absolute prefix
+    [A-Za-z0-9._\-/]+             # path body
+    (\.[A-Za-z0-9]{1,8})?         # optional short extension
+)$""", re.X)
 
 REQUIRED_KEYS = ["title", "summary", "tags", "papers", "podcasts"]
-ALLOWED_KEYS = set(REQUIRED_KEYS)
+ALLOWED_KEYS = set(REQUIRED_KEYS) | {"links"}  # ← allow links
 
 def fail(msg):
     print(f"❌ {msg}")
@@ -30,13 +35,38 @@ def validate_single_quoted_title(raw_text: str, path: pathlib.Path):
     Accepts: title: '...'
     Rejects: title: "..." or title: ...
     """
-    # find the first 'title:' line (allow leading spaces)
     m = re.search(r'(?m)^\s*title\s*:\s*(.+)$', raw_text)
     if not m:
         fail(f"{path}: missing 'title' line")
     val = m.group(1).strip()
     if not (val.startswith("'") and val.endswith("'") and len(val) >= 2):
         fail(f"{path}: title must be single-quoted (e.g., title: 'Your Title')")
+
+def is_list_of_urls(lst):
+    if not isinstance(lst, list):
+        return False
+    return all(isinstance(x, str) and URL.match(x) for x in lst)
+
+def is_list_of_generic_links(lst):
+    """
+    Accept list of strings, each either a URL or a repo-relative path.
+    """
+    if lst is None:
+        return True
+    if not isinstance(lst, list):
+        return False
+    for x in lst:
+        if not isinstance(x, str):
+            return False
+        s = x.strip()
+        if not s:
+            return False
+        if URL.match(s):
+            continue
+        if REL_PATH.match(s):
+            continue
+        return False
+    return True
 
 def main():
     # optional: load tag descriptions to warn on missing tooltips
@@ -110,23 +140,22 @@ def main():
             errors += 1
             print(f"❌ {f}: 'tags' must be a non-empty list of strings")
         else:
-            # non-fatal tooltip coverage warning
             if isinstance(tag_desc, dict):
                 missing_tooltips = [t for t in tags if t not in tag_desc]
                 if missing_tooltips:
                     warn(f"{f}: tags missing tooltips in tag_descriptions.yml: {missing_tooltips}")
 
-        # 6) papers / podcasts must be lists of links
+        # 6) papers / podcasts must be lists of URL links
         for k in ("papers", "podcasts"):
             lst = data.get(k, [])
-            if not isinstance(lst, list):
+            if not is_list_of_urls(lst):
                 errors += 1
-                print(f"❌ {f}: '{k}' must be a list (can be empty)")
-                continue
-            bad = [x for x in lst if not isinstance(x, str) or not URL.match(x)]
-            if bad:
-                errors += 1
-                print(f"❌ {f}: '{k}' must contain links only; bad entries: {bad}")
+                print(f"❌ {f}: '{k}' must be a list of URL links")
+
+        # 7) links (optional): list of URLs or repo-relative paths
+        if "links" in data and not is_list_of_generic_links(data.get("links")):
+            errors += 1
+            print(f"❌ {f}: 'links' must be a list of URLs or repo-relative paths")
 
         if errors == 0:
             print(f"✅ {f} OK")
