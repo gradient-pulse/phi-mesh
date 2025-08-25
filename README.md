@@ -79,7 +79,7 @@ phi-mesh/
 	   - `podcasts:` (links)  
 
 
-	   *Tag naming convention:*  
+	   **Tag naming convention:**  
 	   Use lowercase with underscores (e.g., `whitehead_alfred_north`, `process_philosophy`).  
 	   This avoids case mismatches in the Tag Map and keeps everything consistent.
 
