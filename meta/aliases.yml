@@ -159,8 +159,6 @@ aliases:
     - proto-pulse
     - protopulse
 
-aliases:
-
   # --- Visual / Cortex cluster ---
   rgp_cortex:
     - RGP-Cortex
@@ -181,8 +179,6 @@ aliases:
     - Societal_evolution
     - Societal-Evolution
     - societal-evolution
-
-aliases:
 
   # --- Visual / Cortex cluster ---
   rgp_cortex:
@@ -256,7 +252,7 @@ aliases:
     - chain_of_reasoning
     - chain-of-reasoning
 
-    nt_narrative_tick:
+  nt_narrative_tick:
     - "NT (Narrative_Tick)"
     - NT_Narrative_Tick
     - NT_(Narrative_Tick)
@@ -287,3 +283,34 @@ aliases:
     - PhiGuardian
     - Phi_Guardian
     - phi-guardian
+
+    nt_narrative_tick:
+    - NT_(Narrative_Tick)
+    - nt_(narrative_tick)
+
+  navier_stokes:
+    - navierstokes
+
+  phi_mesh:
+    - phimesh
+
+  tag_map:
+    - tagmap
+
+  contextual_filter:
+    - contextualfilter
+
+  big_quiet:
+    - bigquiet
+
+  development_process:
+    - development_process
+
+  gradient_memory:
+    - gradientmemory
+
+  phi_harmonics:
+    - harmonics   # if you used this shorthand
+
+  flux_entrenched_universe:
+    - flux_enthrenched_universe  # common misspelling
