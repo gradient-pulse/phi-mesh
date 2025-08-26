@@ -1,3 +1,4 @@
+raise SystemExit("DEPRECATED: use agents/rgp_ns/run_agent.py")
 #!/usr/bin/env python3
 # tools/ensure_experimenter_refs.py
 import yaml, re
