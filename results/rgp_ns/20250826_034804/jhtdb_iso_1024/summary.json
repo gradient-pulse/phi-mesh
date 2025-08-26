@@ -1,0 +1,10 @@
+{
+  "dataset": "jhtdb_iso_1024",
+  "variant": "jhtdb",
+  "nt_test": {
+    "p": 0.0128,
+    "effect_size": 0.398,
+    "significant": false
+  },
+  "timestamp_utc": "2025-08-26T03:48:04Z"
+}
