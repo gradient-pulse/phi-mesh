@@ -1,0 +1,18 @@
+# .github/workflows/results-watch.yml
+name: RGP-NS Results Watch
+on:
+  push:
+    paths:
+      - "results/rgp_ns/**/summary.json"
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Summarize latest results
+        run: |
+          echo "## New NT-rhythm results" >> $GITHUB_STEP_SUMMARY
+          for f in $(git diff --name-only HEAD~1 HEAD | grep 'results/rgp_ns/.*/summary.json' || true); do
+            ds=$(jq -r '.dataset' "$f"); p=$(jq -r '.nt_test.p' "$f"); es=$(jq -r '.nt_test.effect_size' "$f"); sig=$(jq -r '.nt_test.significant' "$f")
+            echo "- \`$ds\`: p=$p, effect=$es, significant=$sig  \`$f\`" >> $GITHUB_STEP_SUMMARY
+          done
