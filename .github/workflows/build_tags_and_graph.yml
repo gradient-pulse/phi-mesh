@@ -1,5 +1,5 @@
-name: Build Tags & Graph (exclude archive)
-
+name: Build Tags & Graph
+# excludes archived pulses
 on:
   push:
     branches: [ main ]
