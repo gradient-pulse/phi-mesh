@@ -1,3 +1,4 @@
+raise SystemExit("DEPRECATED: use Validate Pulses + manual edits or agent writer.")
 #!/usr/bin/env python3
 """
 Clean pulses to a minimal schema AND prune auto-pulses:
