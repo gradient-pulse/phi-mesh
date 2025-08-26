@@ -1,0 +1,11 @@
+title: Significant NT Rhythm — jhtdb_iso_1024 (demo)
+date: '2025-08-26'
+summary: 'Automated detection found statistically significant NT rhythm in dataset `jhtdb_iso_1024`
+  (variant: demo). Effect size = 0.37, p = 0.0042.'
+tags:
+- RGP
+- Navier_Stokes
+- NT_rhythm
+- rhythm-of-least-divergence
+papers: []
+podcasts: []
