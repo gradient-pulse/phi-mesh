@@ -28,6 +28,11 @@ from pathlib import Path
 from typing import Dict, Any, Iterable, List, Optional
 import yaml
 
+# ---------- env guard ----------
+import os
+if os.getenv("ENABLE_AUTOPULSE") != "1":
+    print("Auto-pulse disabled (ENABLE_AUTOPULSE!=1)."); raise SystemExit(0)
+
 # ---------- repo paths ----------
 ROOT = Path(__file__).resolve().parents[2]
 CFG  = ROOT / "agents" / "rgp_ns" / "config.yml"
