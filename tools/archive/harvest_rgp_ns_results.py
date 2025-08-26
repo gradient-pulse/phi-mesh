@@ -1,3 +1,4 @@
+raise SystemExit("DEPRECATED: use agents/rgp_ns/run_agent.py")
 #!/usr/bin/env python3
 """
 Harvest significant NT-rhythm findings from results/rgp_ns/**/summary.json
