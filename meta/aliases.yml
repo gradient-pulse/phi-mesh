@@ -1,9 +1,16 @@
 aliases:
 
   # --- Core program & map terms ----------------------------------------
+ aliases:
   rgp:
     - RGP
+    - rgp
+
+  recursive_gradient_processing:
     - Recursive Gradient Processing
+    - recursive gradient processing
+    - RGP (Recursive Gradient Processing)
+    - rgp_core_loop
 
   phi_mesh:
     - phi-mesh
