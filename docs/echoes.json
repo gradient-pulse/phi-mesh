@@ -1,0 +1,11 @@
+{
+  "version": "0.1",
+  "generated_at": "2025-08-28T00:00:00Z",
+  "nodes": [],
+  "edges": [],
+  "events": [
+    { "t": 0,  "source_tag": "word_to_pixel", "amplitude": 1.0, "half_life": 2.0, "max_hops": 4 },
+    { "t": 6,  "source_tag": "navier_stokes", "amplitude": 1.0, "half_life": 1.8, "max_hops": 3 },
+    { "t": 12, "source_tag": "nt_rhythm",      "amplitude": 1.0, "half_life": 2.2, "max_hops": 4 }
+  ]
+}
