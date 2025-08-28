@@ -1,193 +1,264 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
-  <style>
-    :root { --bg:#0b0f14; --fg:#e6edf3; --panel:#0f141b; --ink:#a9c7ff; --hot:#9fc9ff; }
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
-    button,select{background:#131a22;border:1px solid #2a3442;color:var(--fg);border-radius:8px;padding:6px 10px;cursor:pointer}
-    button.on{outline:2px solid #3a84ff}
-    #legend{opacity:.75;font-size:12px;margin-left:6px}
-    #ticker{position:fixed;right:12px;top:12px;background:#0f1522;border:1px solid #233; color:var(--fg);
-            padding:8px 10px;border-radius:12px;opacity:.92;z-index:10;max-width:52ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    canvas{display:block;width:100vw;height:100vh}
-  </style>
-</head>
-<body>
-  <div id="ui">
-    <button id="play"  class="on">▶︎ Play</button>
-    <button id="pause">⏸︎ Pause</button>
-    <label>Speed
-      <select id="speed">
-        <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
-      </select>
-    </label>
-    <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code></span>
-  </div>
-  <div id="ticker">—</div>
-  <canvas id="c"></canvas>
+<meta charset="utf-8" />
+<title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{--bg:#0b0f14;--ink:#e6edf3;--muted:#9cb0c7;--line:#8fb2e8;--hot:#ffe2ba}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
+    font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;
+    background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
+  button,select{background:#131a22;border:1px solid #2a3442;color:var(--ink);
+    border-radius:8px;padding:6px 10px;cursor:pointer}
+  button.active{outline:2px solid #3da9fc}
+  #legend{opacity:.75;font-size:12px}
+  #ticker{position:fixed;top:12px;right:12px;background:#0f141b;border:1px solid #223;
+    color:var(--muted);padding:6px 10px;border-radius:10px;font-size:12px;z-index:10}
+  canvas{display:block;width:100%;height:100%}
 
-  <!-- Use the same data source as tag_map.html -->
-  <script src="data.js"></script>
-  <script>
-  (async function(){
-    // ------- URL knobs -------
-    const q=new URLSearchParams(location.search);
-    const HALF     = +q.get('half')    || 3.0;
-    const SPACING  = +q.get('spacing') || 5.0;
-    const AUTOPLAY = (q.get('autoplay')||'1') === '1';
+  /* labels that fade in when a tag is “lit” */
+  .label { position:absolute; pointer-events:none; color:var(--hot);
+    font-size:12px; text-shadow:0 0 10px rgba(255,210,130,.55), 0 0 2px rgba(0,0,0,.8);
+    opacity:0; transition:opacity .25s ease }
+  .label.on { opacity:1 }
+</style>
 
-    // ------- Pull graph -------
-    const D = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
-    if(!D || !Array.isArray(D.nodes) || !Array.isArray(D.links)){
-      console.error('[gradient_map] PHI_DATA missing; open tag_map.html first or ensure docs/data.js defines window.PHI_DATA.');
-      return;
-    }
+<div id="ui">
+  <button id="play"  class="active">▶︎ Play</button>
+  <button id="pause">⏸︎ Pause</button>
+  <label>Speed
+    <select id="speed">
+      <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
+    </select>
+  </label>
+  <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code></span>
+</div>
+<div id="ticker">—</div>
+<canvas id="c"></canvas>
+<!-- IMPORTANT: use the same data source as tag_map.html -->
+<script src="data.js"></script>
+<script>
+/* Φ-Mesh Gradient Map — pulse-driven node emphasis
+   - reads window.PHI_DATA (same as tag_map.html)
+   - builds a pulse timeline by scanning pulsesByTag
+   - centers/scales node positions into canvas
+   - highlights all tags belonging to the current pulse (names fade in) */
 
-    // Build indices
-    const idToIdx = new Map(D.nodes.map((n,i)=>[n.id,i]));
-    const N = D.nodes.length;
-    const pos = D.nodes.map(n => ({ x:n.x ?? n.fx ?? n.nx ?? 0, y:n.y ?? n.fy ?? n.ny ?? 0 }));
-    const minX = Math.min(...pos.map(p=>p.x)), maxX = Math.max(...pos.map(p=>p.x));
-    const minY = Math.min(...pos.map(p=>p.y)), maxY = Math.max(...pos.map(p=>p.y));
-    const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
+(async function(){
+  // --- URL knobs ---------------------------------------------------------
+  const q = new URLSearchParams(location.search);
+  const HALF  = +q.get('half')     || 3.0; // seconds half-life for brightness
+  const PACE  = +q.get('spacing')  || 5.0; // seconds between pulses
+  const AUTO  = (q.get('autoplay') || '1') === '1';
 
-    const adj = Array.from({length:N},()=>[]);
-    for(const e of D.links){
-      const a = idToIdx.get(typeof e.source==='object' ? e.source.id : e.source);
-      const b = idToIdx.get(typeof e.target==='object' ? e.target.id : e.target);
-      if(a==null||b==null) continue;
-      adj[a].push(b); adj[b].push(a);
-    }
+  // --- Data handshake (same object tag_map uses) -------------------------
+  const DATA = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
+  if(!DATA || !Array.isArray(DATA.nodes) || !Array.isArray(DATA.links)){
+    console.error('[gradient_map] PHI_DATA missing; open tag_map.html first or ensure docs/data.js defines window.PHI_DATA.');
+    document.getElementById('ticker').textContent = 'PHI_DATA not found.';
+    return;
+  }
 
-    // ------- Build pulse timeline -------
-    const pulseIndex = new Map();
-    const pbt = D.pulsesByTag || {};
-    for(const [tag, list] of Object.entries(pbt)){
-      (list||[]).forEach(p=>{
-        const key = p.id || (String(p.title||'Pulse')+'|'+String(p.date||'')); 
-        let rec = pulseIndex.get(key);
-        if(!rec){ rec = { id:key, title:p.title||'Pulse', date:p.date||'', tags:new Set() }; pulseIndex.set(key,rec); }
+  // Build a global pulse timeline by scanning pulsesByTag
+  function buildTimeline(pulsesByTag){
+    const merged = new Map(); // key → {title,date,tags:Set}
+    if (!pulsesByTag) return [];
+    for (const [tag, arr] of Object.entries(pulsesByTag)){
+      if (!Array.isArray(arr)) continue;
+      for (const p of arr){
+        const title = String(p.title || p.id || 'Pulse').trim();
+        const date  = String(p.date  || '').trim();
+        const key   = title + '|' + date; // crude but stable enough for our use
+        const rec   = merged.get(key) || { title, date, tags:new Set() };
         rec.tags.add(tag);
-      });
-    }
-    const pulses = Array.from(pulseIndex.values()).sort((a,b)=> String(a.date).localeCompare(String(b.date)));
-
-    // ------- Canvas -------
-    const C = document.getElementById('c'), X = C.getContext('2d');
-    function fit(){
-      C.width = innerWidth  * devicePixelRatio;
-      C.height= innerHeight * devicePixelRatio;
-      X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-    }
-    addEventListener('resize', fit, {passive:true}); fit();
-    const toXY = (i) => {
-      const p = pos[i];
-      return { x: (p.x - minX)/dx * C.width/devicePixelRatio, y: (p.y - minY)/dy * C.height/devicePixelRatio };
-    };
-
-    // Hop cache
-    const hopCache = new Map();
-    function hopsFrom(srcIdx){
-      if(hopCache.has(srcIdx)) return hopCache.get(srcIdx);
-      const inf=65535, d=new Uint16Array(N); d.fill(inf); d[srcIdx]=0;
-      const q=[srcIdx];
-      while(q.length){
-        const i=q.shift(), di=d[i]+1;
-        for(const j of adj[i]) if(d[j]===inf){ d[j]=di; q.push(j); }
+        merged.set(key, rec);
       }
-      hopCache.set(srcIdx,d);
-      return d;
     }
+    const out = [...merged.values()];
+    // sort by date asc if present, else keep insertion order
+    out.sort((a,b)=> String(a.date).localeCompare(String(b.date)));
+    return out;
+  }
 
-    // ------- Controls -------
-    let t=0, playing=AUTOPLAY;
-    const speedSel = document.getElementById('speed');
-    const btnPlay  = document.getElementById('play');
-    const btnPause = document.getElementById('pause');
-    const ticker   = document.getElementById('ticker');
-    function setPlay(p){ playing=p; btnPlay.classList.toggle('on', p); btnPause.classList.toggle('on', !p); }
-    btnPlay.onclick  = ()=> setPlay(true);
-    btnPause.onclick = ()=> setPlay(false);
+  const TIMELINE = buildTimeline(DATA.pulsesByTag);
+  if(!TIMELINE.length){
+    document.getElementById('ticker').textContent = 'No pulses found.';
+  }
 
-    // ------- Echo engine -------
-    const TAU = HALF/Math.log(2);
-    const HOP_DECAY = 0.75, MAX_HOPS = 3;
-    const schedule = pulses.map((p,k)=>{
-      const tagIdx = Array.from(p.tags).map(tag => idToIdx.get(tag)).filter(i => i!=null);
-      return { t: k*SPACING, title:p.title, date:p.date, tagIdx };
-    });
+  // --- Graph index & coordinates ----------------------------------------
+  const idToIdx = new Map(DATA.nodes.map((n,i)=>[n.id, i]));
+  const N = DATA.nodes.length;
 
-    function drawFrame(){
-      if(playing) t += (1/60) * (+speedSel.value);
-      const step = Math.floor(t / SPACING);
-      const active = schedule[Math.max(0, Math.min(schedule.length-1, step))];
-      ticker.textContent = active ? `${active.title} — ${active.date}` : '—';
+  // pull saved positions; fallback to 0
+  const raw = DATA.nodes.map(n => ({ x:+(n.x ?? 0), y:+(n.y ?? 0), id:n.id }));
 
-      const I = new Float32Array(N);
-      for(const ev of schedule){
-        const age = t - ev.t;
-        if(age < -SPACING*2) break;
-        const timeDecay = Math.exp(-Math.max(0,age)/TAU);
-        for(const src of ev.tagIdx){
-          const d=hopsFrom(src);
-          for(let i=0;i<N;i++){
-            const h=d[i];
-            if(h>MAX_HOPS || h===65535) continue;
-            I[i] += timeDecay * Math.pow(HOP_DECAY, h);
-          }
+  // compute bounds
+  let minX=+Infinity, maxX=-Infinity, minY=+Infinity, maxY=-Infinity;
+  for(const p of raw){ if(isFinite(p.x)&&isFinite(p.y)){ if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x; if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y; } }
+  if(!isFinite(minX)||!isFinite(maxX)||!isFinite(minY)||!isFinite(maxY)){ minX=0;maxX=1;minY=0;maxY=1; }
+
+  // add a little margin pad
+  const PAD_FAC = 0.06;
+  const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
+  minX -= dx*PAD_FAC; maxX += dx*PAD_FAC; minY -= dy*PAD_FAC; maxY += dy*PAD_FAC;
+
+  // canvas & transforms
+  const C = document.getElementById('c');
+  const X = C.getContext('2d');
+  const labelsLayer = document.createElement('div');
+  labelsLayer.style.position='fixed';
+  labelsLayer.style.inset='0';
+  labelsLayer.style.pointerEvents='none';
+  document.body.appendChild(labelsLayer);
+
+  function fit(){
+    const dpr = devicePixelRatio || 1;
+    C.width  = Math.floor(innerWidth * dpr);
+    C.height = Math.floor(innerHeight* dpr);
+    X.setTransform(dpr,0,0,dpr,0,0); // draw in CSS pixels
+  }
+  addEventListener('resize', fit, {passive:true});
+  fit();
+
+  function mapToCanvas(p){
+    const W = C.width  / (devicePixelRatio||1);
+    const H = C.height / (devicePixelRatio||1);
+    const nx = (p.x - minX) / (maxX - minX);
+    const ny = (p.y - minY) / (maxY - minY);
+    return { x: nx*W, y: ny*H };
+  }
+
+  // pre-map positions & make label elements
+  const P = raw.map((p,i)=>({ ...p, ...mapToCanvas(p), neighbors:[] }));
+  const linkIdx = [];
+  for(const l of DATA.links){
+    const a = idToIdx.get(l.source) ?? idToIdx.get(l.source?.id);
+    const b = idToIdx.get(l.target) ?? idToIdx.get(l.target?.id);
+    if(a==null || b==null) continue;
+    linkIdx.push([a,b]);
+    P[a].neighbors.push(b);
+    P[b].neighbors.push(a);
+  }
+
+  // quick degree → size
+  const deg = P.map(p=>p.neighbors.length);
+  const dmin = Math.min(...deg), dmax = Math.max(...deg);
+  function nodeR(i){
+    const t = (deg[i] - dmin) / Math.max(1,(dmax-dmin));
+    return 2 + 3 + 7*t; // base 5..12 px
+  }
+
+  // --- pulse engine ------------------------------------------------------
+  const TAU = HALF / Math.log(2); // exp half-life → time constant
+  let t=0, playing=AUTO;
+  const speedSel = document.getElementById('speed');
+  const btnPlay  = document.getElementById('play');
+  const btnPause = document.getElementById('pause');
+  const ticker   = document.getElementById('ticker');
+
+  function setButtons(){
+    btnPlay.classList.toggle('active',  playing);
+    btnPause.classList.toggle('active', !playing);
+  }
+  btnPlay.onclick = ()=>{ playing=true;  setButtons(); };
+  btnPause.onclick= ()=>{ playing=false; setButtons(); };
+  setButtons();
+
+  // build label elements for every node (we toggle them on when lit)
+  const labels = P.map(p=>{
+    const el = document.createElement('div');
+    el.className='label';
+    el.textContent = p.id;
+    labelsLayer.appendChild(el);
+    return el;
+  });
+
+  const events = TIMELINE.map((ev,k)=>({
+    ...ev,
+    t: k*PACE,
+    tagSet: ev.tags
+  }));
+
+  function now(){ return performance.now()/1000; }
+  let last = now();
+
+  function frame(){
+    const n = now(), dt = Math.min(0.05, n-last); last=n;
+    if(playing) t += dt * (+speedSel.value || 1);
+
+    // pick current index in loop
+    const totalT = (events.length ? events.length-1 : 0) * PACE;
+    const modt = (events.length ? (t % (totalT + PACE)) : 0);
+    const idx = events.length ? Math.min(events.length-1, Math.floor(modt / PACE)) : -1;
+
+    // compute intensity field
+    const I = new Float32Array(N);
+    if (idx >= 0){
+      const ev = events[idx];
+      const localAge = modt - ev.t; // 0..PACE
+      const timeDecay = Math.exp(-localAge/TAU);
+      // brighten all tags in this pulse + softly their neighbors
+      const activeIdx = [];
+      ev.tagSet.forEach(tag=>{
+        const i = idToIdx.get(tag);
+        if(i!=null){ activeIdx.push(i); I[i] += 0.95*timeDecay; }
+      });
+      for(const i of activeIdx){
+        for(const j of P[i].neighbors){
+          I[j] += 0.35*timeDecay;
         }
       }
-
-      X.clearRect(0,0,C.width,C.height);
-      X.lineWidth=1;
-      for(const e of D.links){
-        const a = idToIdx.get(typeof e.source==='object'?e.source.id:e.source);
-        const b = idToIdx.get(typeof e.target==='object'?e.target.id:e.target);
-        if(a==null||b==null) continue;
-        const A=toXY(a), B=toXY(b);
-        const w = (I[a]+I[b])*0.5;
-        X.globalAlpha = 0.05 + Math.min(0.35, w*0.35);
-        X.strokeStyle = '#9fb6d7';
-        X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
-      }
-
-      for(let i=0;i<N;i++){
-        const p=toXY(i), w=I[i], r=2.5+9*Math.min(1,w);
-        X.globalAlpha = 0.35 + Math.min(0.65,w*0.85);
-        X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
-        X.fillStyle='#b8d6ff'; X.fill();
-      }
-
-      X.globalAlpha=1; X.font='12px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial'; X.textBaseline='middle';
-      for(let i=0;i<N;i++){
-        const w=I[i]; if(w<0.42) continue;
-        const p=toXY(i), tag=D.nodes[i].id||'';
-        const padX=6, padY=3, txtW=X.measureText(tag).width, x=p.x+10, y=p.y;
-        X.fillStyle='rgba(10,16,26,0.85)';
-        X.strokeStyle='rgba(170,190,220,0.35)'; X.lineWidth=1;
-        X.beginPath(); X.roundRect(x-padX,y-10,txtW+padX*2,20,8); X.fill(); X.stroke();
-        X.fillStyle='#d8e7ff'; X.fillText(tag,x,y);
-      }
-
-      requestAnimationFrame(drawFrame);
+      // ticker
+      ticker.textContent = `${ev.title} — ${ev.date || '—'}`;
+    } else {
+      ticker.textContent = '—';
     }
 
-    if(!CanvasRenderingContext2D.prototype.roundRect){
-      CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
-        const rr=Math.min(r,w/2,h/2);
-        this.beginPath(); this.moveTo(x+rr,y);
-        this.arcTo(x+w,y,x+w,y+h,rr); this.arcTo(x+w,y+h,x,y+h,rr);
-        this.arcTo(x,y+h,x,y,rr); this.arcTo(x,y,x+w,y,rr);
-        this.closePath(); return this;
+    // draw
+    X.clearRect(0,0,C.width,C.height);
+
+    // links
+    X.globalAlpha = 0.15;
+    X.lineWidth = 1;
+    X.strokeStyle = '#8fb2e8';
+    for(const [a,b] of linkIdx){
+      const A=P[a], B=P[b];
+      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
+    }
+
+    // nodes + labels
+    for(let i=0;i<N;i++){
+      const p=P[i], r = nodeR(i);
+      const bright = Math.min(1, I[i]);
+      const baseA  = 0.25 + 0.55*bright;
+
+      // node
+      X.beginPath(); X.arc(p.x,p.y, r + 2*bright, 0, Math.PI*2);
+      X.fillStyle = `rgba(180,210,255,${baseA})`;
+      X.fill();
+
+      // subtle glow ring when hot
+      if (bright>0.6){
+        X.beginPath(); X.arc(p.x,p.y, r + 6*bright, 0, Math.PI*2);
+        X.strokeStyle = `rgba(255,220,170,${0.25*(bright-0.6)/(0.4)})`;
+        X.lineWidth = 2;
+        X.stroke();
+      }
+
+      // labels: show when bright, otherwise hide
+      const L = labels[i];
+      if (bright>0.65){
+        L.classList.add('on');
+        // keep on-screen with tiny offset
+        const offx = 8, offy = -18;
+        L.style.transform = `translate(${(p.x+offx)|0}px, ${(p.y+offy)|0}px)`;
+      } else {
+        L.classList.remove('on');
       }
     }
 
-    setPlay(AUTOPLAY);
-    drawFrame();
-  })();
-  </script>
-</body>
-</html>
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
