@@ -3,11 +3,12 @@
 <title>Φ-Mesh — Gradient Map (Pulse Echo)</title>
 <style>
   html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
-  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223; padding:8px 10px;border-radius:10px;z-index:10}
+  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
   button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
   #legend{opacity:.7;font-size:12px}
   canvas{display:block;width:100%;height:100%}
 </style>
+
 <div id="ui">
   <button id="play">▶︎ Play</button>
   <button id="pause">⏸︎ Pause</button>
@@ -20,117 +21,167 @@
 </div>
 <canvas id="c"></canvas>
 
-<!-- load base graph -->
-<script src="data.js"></script>
-<script>
-// --- shim: make sure GRAPH_DATA is always exposed ---
-if (!window.GRAPH_DATA) {
-  if (window.data) window.GRAPH_DATA = window.data;
-  else if (window.GRAPH) window.GRAPH_DATA = window.GRAPH;
-  else if (typeof GRAPH_DATA !== 'undefined') window.GRAPH_DATA = GRAPH_DATA;
-}
-console.log("Shim applied. GRAPH_DATA keys:", window.GRAPH_DATA ? Object.keys(window.GRAPH_DATA) : "not found");
-</script>
-
 <script>
 (async function(){
-  // --- URL knobs -------------------------------------------------------
-  const q=new URLSearchParams(location.search);
-  const HOP  = +q.get('hop')     || 0.75;
-  const HALF = +q.get('half')    || 2.0;
-  const PACE = +q.get('spacing') || 6.0;
-  const AUTOPLAY = q.get('autoplay')==='1';
+  // ---------- URL knobs ----------
+  const q = new URLSearchParams(location.search);
+  const HOP  = +q.get('hop')     || 0.75;  // hop decay per edge
+  const HALF = +q.get('half')    || 2.0;   // seconds half-life
+  const PACE = +q.get('spacing') || 6.0;   // seconds between events
+  const AUTOPLAY = q.get('autoplay') === '1';
 
-  // --- load graph + echoes ---------------------------------------------
-  const G = window.GRAPH_DATA;
-  if (!G || !G.nodes || !G.links) {
-    console.error("No graph found. window.GRAPH_DATA is missing or malformed.");
-    return;
+  // ---------- robust loader for docs/data.js ----------
+  async function loadGraph() {
+    const url = './data.js';
+    const txt = await fetch(url).then(r => {
+      if (!r.ok) throw new Error('data.js fetch failed: '+r.status);
+      return r.text();
+    });
+
+    // 1) Try ESM: export default {...} or named exports
+    try {
+      const blob = new Blob([txt], {type:'text/javascript'});
+      const mod  = await import(URL.createObjectURL(blob));
+      const candidates = [
+        mod.GRAPH_DATA, mod.GRAPH, mod.DATA, mod.graph, mod.data, mod.default
+      ].filter(Boolean)[0];
+      if (candidates && candidates.nodes && candidates.links) return candidates;
+    } catch(e){ /* fall through */ }
+
+    // 2) Try window assignment or const/var in a sandbox
+    try {
+      const sandbox = {window:{}};
+      const fn = new Function('_ctx', `
+        "use strict";
+        const window = _ctx.window; var exports = {};
+        let GRAPH_DATA, DATA, GRAPH, data, graph;
+        ${txt}
+        return window.GRAPH_DATA ?? window.DATA ?? GRAPH_DATA ?? DATA ?? GRAPH ?? data ?? graph ?? null;
+      `);
+      const out = fn(sandbox);
+      if (out && out.nodes && out.links) return out;
+    } catch(e){ /* fall through */ }
+
+    // 3) Try raw JSON
+    try {
+      const maybe = JSON.parse(txt);
+      if (maybe && maybe.nodes && maybe.links) return maybe;
+    } catch(e){ /* fall through */ }
+
+    console.error('data.js loaded, but no graph export found (tried module + window + JSON). Tip: ensure docs/data.js sets `window.GRAPH_DATA = {...}` or exports default.');
+    return null;
   }
-  const E = await fetch('./echoes.json').then(r=>r.json());
 
-  // --- index graph -----------------------------------------------------
-  const idx=new Map(G.nodes.map((n,i)=>[n.id,i]));
-  const N=G.nodes.length;
-  const pos = G.nodes.map(n => ({
-    x: (n.x ?? n.fx ?? n.nx ?? 0),
-    y: (n.y ?? n.fy ?? n.ny ?? 0),
-  }));
-  const adj=Array.from({length:N},()=>[]);
-  for(const e of G.links){
-    const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
-    const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
-    if(a!=null && b!=null){ adj[a].push({j:b,w:1}); adj[b].push({j:a,w:1}); }
+  const G = await loadGraph();
+  if (!G) return;
+
+  // -------- echoes ----------
+  const E = await fetch('./echoes.json').then(r => r.json()).catch(() => ({events:[]}));
+
+  // -------- index graph ----------
+  const idx = new Map(G.nodes.map((n,i)=>[n.id,i]));
+  const N   = G.nodes.length;
+  const pos = G.nodes.map(n => ({ x: (n.x ?? n.fx ?? n.nx ?? 0), y: (n.y ?? n.fy ?? n.ny ?? 0) }));
+  const adj = Array.from({length:N},()=>[]);
+  for (const e of G.links) {
+    const a = idx.get(typeof e.source==='object' ? e.source.id : e.source);
+    const b = idx.get(typeof e.target==='object' ? e.target.id : e.target);
+    if (a!=null && b!=null) { adj[a].push(b); adj[b].push(a); }
   }
 
-  function hopsFrom(srcIdx){
-    const inf=1e9, d=Array(N).fill(inf); d[srcIdx]=0; const q=[srcIdx];
-    while(q.length){ const i=q.shift(); for(const {j} of adj[i]) if(d[j]===inf){ d[j]=d[i]+1; q.push(j); } }
+  // -------- BFS hops ----------
+  function hopsFrom(s) {
+    const inf=1e9, d=Array(N).fill(inf); d[s]=0; const q=[s];
+    while(q.length){ const i=q.shift(); for(const j of adj[i]) if(d[j]===inf){ d[j]=d[i]+1; q.push(j); } }
     return d;
   }
 
-  // --- canvas ----------------------------------------------------------
-  const C=document.getElementById('c'), X=C.getContext('2d');
-  function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio; X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+  // -------- canvas ----------
+  const C = document.getElementById('c');
+  const X = C.getContext('2d');
+  function fit(){
+    C.width = innerWidth * devicePixelRatio;
+    C.height= innerHeight* devicePixelRatio;
+    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  }
   addEventListener('resize',fit,{passive:true}); fit();
 
-  const [minX,maxX]=[Math.min(...pos.map(p=>p.x)), Math.max(...pos.map(p=>p.x))];
-  const [minY,maxY]=[Math.min(...pos.map(p=>p.y)), Math.max(...pos.map(p=>p.y))];
-  const dx = (maxX-minX)||1, dy=(maxY-minY)||1;
-  function tx(p){ return {x:(p.x-minX)/dx * C.width/devicePixelRatio, y:(p.y-minY)/dy * C.height/devicePixelRatio}; }
+  const minX = Math.min(...pos.map(p=>p.x)), maxX = Math.max(...pos.map(p=>p.x));
+  const minY = Math.min(...pos.map(p=>p.y)), maxY = Math.max(...pos.map(p=>p.y));
+  const dx = (maxX-minX) || 1, dy = (maxY-minY) || 1;
+  const toXY = (p) => ({ x:(p.x-minX)/dx * C.width/devicePixelRatio,
+                         y:(p.y-minY)/dy * C.height/devicePixelRatio });
 
-  // --- echo engine -----------------------------------------------------
+  // -------- echo engine ----------
   const TAU = HALF/Math.log(2);
   const events = (E.events||[]).map((ev,k)=>({
-    ...ev, t: k*PACE, source: idx.get(ev.source_tag), hops: null
-  })).filter(ev=>ev.source!=null);
+    ...ev,
+    t: k*PACE,
+    source: idx.get(ev.source_tag),
+    hops: null
+  })).filter(ev => ev.source!=null);
 
-  for(const ev of events){ ev.hops=hopsFrom(ev.source); }
+  for (const ev of events) ev.hops = hopsFrom(ev.source);
 
   let t=0, playing=AUTOPLAY;
-  const speedSel=document.getElementById('speed');
-  document.getElementById('play').onclick=()=>playing=true;
-  document.getElementById('pause').onclick=()=>playing=false;
-  function now(){ return performance.now()/1000; }
-  let last=now();
+  document.getElementById('play').onclick = ()=> playing=true;
+  document.getElementById('pause').onclick= ()=> playing=false;
+  const speedSel = document.getElementById('speed');
 
   window.__ECHO_TIMESERIES__ = [];
+  let last = performance.now()/1000;
 
   function frame(){
-    const n=now(), dt=Math.min(0.05,n-last); last=n; if(playing) t+=dt*(+speedSel.value);
-    const I=new Float32Array(N);
-    for(const ev of events){
-      const age=Math.max(0,t-ev.t); if(age>PACE*events.length+60) continue;
-      const timeDecay=Math.exp(-age/TAU);
-      for(let i=0;i<N;i++){
-        const h=ev.hops[i]; if(!isFinite(h) || h>(ev.max_hops??4)) continue;
-        const hopDecay=Math.pow(HOP,h);
-        I[i]+=(ev.amplitude??1)*timeDecay*hopDecay;
+    const now = performance.now()/1000;
+    const dt  = Math.min(0.05, now-last); last = now;
+    if (playing) t += dt * (+speedSel.value);
+
+    const I = new Float32Array(N);
+    for (const ev of events){
+      const age = Math.max(0, t - ev.t);
+      const timeDecay = Math.exp(-age/TAU);
+      const maxH = ev.max_hops ?? 4;
+      const amp  = ev.amplitude ?? 1;
+      for (let i=0;i<N;i++){
+        const h = ev.hops[i];
+        if (!isFinite(h) || h>maxH) continue;
+        I[i] += amp * timeDecay * Math.pow(HOP, h);
       }
     }
 
-    if((Math.floor(t*4)%1)===0){
-      window.__ECHO_TIMESERIES__.push({t:+t.toFixed(2), top:[...I].map((v,i)=>[G.nodes[i].id,v]).sort((a,b)=>b[1]-a[1]).slice(0,8)});
-      if(window.__ECHO_TIMESERIES__.length>200) window.__ECHO_TIMESERIES__.shift();
+    // light timeseries (top-8) about 4 Hz
+    if ((Math.floor(t*4)%1)===0){
+      window.__ECHO_TIMESERIES__.push({
+        t:+t.toFixed(2),
+        top:[...I].map((v,i)=>[G.nodes[i].id,v]).sort((a,b)=>b[1]-a[1]).slice(0,8)
+      });
+      if (window.__ECHO_TIMESERIES__.length>200) window.__ECHO_TIMESERIES__.shift();
     }
 
+    // draw
     X.clearRect(0,0,C.width,C.height);
-    X.globalAlpha=0.08; X.lineWidth=1;
-    for(const e of G.links){
-      const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
-      const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
-      if(a==null||b==null) continue;
-      const A=tx(pos[a]), B=tx(pos[b]);
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.strokeStyle="#7aa2f7"; X.stroke();
+
+    // links
+    X.globalAlpha=0.08; X.lineWidth=1; X.strokeStyle="#7aa2f7";
+    for (const e of G.links){
+      const a = idx.get(typeof e.source==='object'?e.source.id:e.source);
+      const b = idx.get(typeof e.target==='object'?e.target.id:e.target);
+      if (a==null || b==null) continue;
+      const A = toXY(pos[a]), B = toXY(pos[b]);
+      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
 
-    for(let i=0;i<N;i++){
-      const p=tx(pos[i]); const r=2+10*Math.min(1,I[i]);
+    // nodes
+    for (let i=0;i<N;i++){
+      const p = toXY(pos[i]);
+      const r = 2 + 10*Math.min(1, I[i]);
       X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
-      X.fillStyle=`rgba(180,220,255,${0.25+Math.min(0.75,I[i])})`; X.fill();
+      X.fillStyle = `rgba(180,220,255,${0.25 + Math.min(0.75,I[i])})`;
+      X.fill();
     }
+
     requestAnimationFrame(frame);
   }
-  frame();
+  requestAnimationFrame(frame);
 })();
 </script>
