@@ -5,26 +5,21 @@
   :root{
     --bg:#0b0f14; --fg:#e6edf3;
     --panel:#0f141b; --muted:#a5b1c6;
-    --ink:#b9c7dd; --active:#cfe6ff; --hot:#ffd5a8;
+    --ink:#9fb7d8; --active:#d9ecff;
     --ui:#1a2635; --ui-border:#2f4b6a; --ui-accent:#3fa3ff;
   }
   html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
   canvas{display:block;width:100%;height:100%}
 
-  /* UI */
   #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;
       background:var(--panel);border:1px solid var(--ui-border);padding:8px 10px;border-radius:12px}
   button,select{background:var(--ui);border:1.5px solid var(--ui-accent);color:var(--fg);
       border-radius:10px;padding:6px 12px;cursor:pointer}
-  #legend{opacity:.75;font-size:12px;color:var(--muted)}
+
   #pulsebox{position:fixed;right:12px;top:12px;background:var(--panel);
       border:1px solid var(--ui-border);border-radius:12px;padding:10px 12px;max-width:min(48ch,44vw)}
   #cap{font-size:12px;color:var(--muted);margin-bottom:4px}
   #title{font-size:13px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-  /* Tooltip style for labels-on-hover when paused (optional) */
-  #tip{position:fixed;left:0;top:0;display:none;background:#101725;border:1px solid #2a3a50;
-      padding:6px 8px;border-radius:8px;color:#dce7ff;font-size:12px;pointer-events:none}
 </style>
 
 <div id="ui">
@@ -35,7 +30,6 @@
       <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
     </select>
   </label>
-  <span id="legend">URL: <code>?half=3&spacing=6&autoplay=1</code></span>
 </div>
 
 <div id="pulsebox">
@@ -43,158 +37,155 @@
   <div id="title">—</div>
 </div>
 
-<div id="tip"></div>
 <canvas id="c" aria-label="Pulse-driven tag clusters"></canvas>
 
-<!-- data.js defines window.PHI_DATA (same source as tag_map) -->
+<!-- Same source as tag_map: exposes window.PHI_DATA -->
 <script src="data.js"></script>
 <script>
 (async function(){
-
-  // ---------- URL knobs ----------
+  // -------- URL knobs --------
   const q = new URLSearchParams(location.search);
-  const HALF = +(q.get('half')||3.0);     // seconds half-life
+  const HALF = +(q.get('half')||3.0);     // seconds half-life (for later use)
   const PACE = +(q.get('spacing')||6.0);  // seconds between pulses
   const AUTOPLAY = q.get('autoplay')==='1';
-  const TAU = HALF/Math.log(2);
 
-  // ---------- Inputs ----------
+  // -------- Inputs --------
   const PHI = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : {nodes:[],links:[]};
-  // echoes.json: [{title,date,tags:[...]}]  (order = timeline)
   const events = await fetch('./echoes.json').then(r=>r.json()).catch(()=>({events:[]})).then(x=>x.events||[]);
 
-  // ---------- Index graph (positions from tag_map) ----------
-  const nodes = PHI.nodes.map(n => ({ id:n.id, x:n.x, y:n.y, centrality:n.centrality }));
+  // -------- Nodes/links + layout fallback --------
+  const rawNodes = Array.isArray(PHI.nodes) ? PHI.nodes : [];
+  const nodes = rawNodes.map(n => ({ id:n.id, x:n.x, y:n.y, centrality:n.centrality }));
   const id2i = new Map(nodes.map((n,i)=>[n.id,i]));
-  const links = (PHI.links||[]).map(e => {
+  const links = (PHI.links||[]).map(e=>{
     const a = id2i.get(e.source), b = id2i.get(e.target);
     return (a!=null && b!=null) ? {a,b} : null;
   }).filter(Boolean);
 
-  // Normalize node coords into [0,1] box so we can pan/zoom comfortably
-  const minX = Math.min(...nodes.map(n=>n.x ?? 0)), maxX = Math.max(...nodes.map(n=>n.x ?? 1));
-  const minY = Math.min(...nodes.map(n=>n.y ?? 0)), maxY = Math.max(...nodes.map(n=>n.y ?? 1));
-  const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
-  nodes.forEach(n => { n.nx = ( (n.x??0) - minX)/dx; n.ny = ( (n.y??0) - minY)/dy; });
+  // Do we have usable positions?
+  const hasXY = nodes.length && nodes.some(n => Number.isFinite(n.x) && Number.isFinite(n.y));
+  if(!hasXY){
+    // Radial fallback: sort by centrality (or degree), place around a circle
+    const degree = new Map();
+    for(const e of links){ degree.set(e.a,(degree.get(e.a)||0)+1); degree.set(e.b,(degree.get(e.b)||0)+1); }
+    const score = i => Number.isFinite(nodes[i].centrality) ? nodes[i].centrality : (degree.get(i)||0);
+    const order = nodes.map((_,i)=>i).sort((a,b)=>score(b)-score(a));
+    const N = nodes.length;
+    for(let k=0;k<N;k++){
+      const i = order[k];
+      const ang = 2*Math.PI*(k/N);
+      nodes[i].x = Math.cos(ang);
+      nodes[i].y = Math.sin(ang);
+    }
+  }
 
-  // ---------- Canvas + pan/zoom ----------
+  // Normalize -> [0,1] box
+  const minX = Math.min(...nodes.map(n=>n.x)), maxX = Math.max(...nodes.map(n=>n.x));
+  const minY = Math.min(...nodes.map(n=>n.y)), maxY = Math.max(...nodes.map(n=>n.y));
+  const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
+  nodes.forEach(n => { n.nx = (n.x-minX)/dx; n.ny = (n.y-minY)/dy; });
+
+  // Centrality max for sizing
+  const cMax = nodes.reduce((m,n)=>Math.max(m, Number.isFinite(n.centrality)?n.centrality:0), 0) || 1;
+
+  // -------- Canvas + pan/zoom --------
   const C = document.getElementById('c'), X = C.getContext('2d');
   function fit(){ C.width = innerWidth*devicePixelRatio; C.height = innerHeight*devicePixelRatio; draw(true); }
   addEventListener('resize', fit, {passive:true}); fit();
 
-  // simple pan/zoom state
-  let k = Math.min(C.width, C.height)/1.25;   // scale
-  let tx = (C.width - k)/2, ty = (C.height - k)/2; // center
+  let k = Math.min(C.width, C.height)/1.25;
+  let tx = (C.width - k)/2, ty = (C.height - k)/2;
   let dragging=false, lx=0, ly=0;
 
   C.addEventListener('mousedown', e=>{ dragging=true; lx=e.clientX; ly=e.clientY; });
-  addEventListener('mouseup',   ()=>{ dragging=false; });
+  addEventListener('mouseup',   ()=> dragging=false);
   addEventListener('mousemove', e=>{
     if(!dragging) return;
     tx += (e.clientX-lx)*devicePixelRatio;
     ty += (e.clientY-ly)*devicePixelRatio;
-    lx=e.clientX; ly=e.clientY;
-    draw(true);
+    lx=e.clientX; ly=e.clientY; draw(true);
   });
-
   C.addEventListener('wheel', e=>{
     e.preventDefault();
-    const s = Math.exp(-e.deltaY/450);  // zoom factor
+    const s = Math.exp(-e.deltaY/450);
     const mx = e.clientX*devicePixelRatio, my = e.clientY*devicePixelRatio;
-    // zoom around mouse
-    tx = mx - s*(mx - tx);
-    ty = my - s*(my - ty);
-    k *= s;
-    draw(true);
+    tx = mx - s*(mx - tx); ty = my - s*(my - ty); k *= s; draw(true);
   }, {passive:false});
 
-  function toScreen(n){
-    return { x: tx + n.nx*k, y: ty + n.ny*k };
-  }
+  function P(n){ return { x: tx + n.nx*k, y: ty + n.ny*k }; }
 
-  // ---------- Pulse schedule ----------
+  // -------- Timeline --------
   const timeline = events.map((ev,i)=>({
     title: ev.title || 'Pulse',
     date:  ev.date  || '',
     tags:  Array.isArray(ev.tags) ? ev.tags.filter(t=>id2i.has(t)) : [],
     t: i*PACE
   }));
+  const pulseSets = timeline.map(p => new Set(p.tags));
 
-  // ---------- UI ----------
+  // -------- UI --------
   let playing = AUTOPLAY;
-  const speedSel = document.getElementById('speed');
   document.getElementById('play').onclick = ()=> playing = true;
   document.getElementById('pause').onclick= ()=> playing = false;
-
+  const speedSel = document.getElementById('speed');
   const titleEl = document.getElementById('title');
   function setPulseTitle(s){ titleEl.textContent = s; }
 
-  // ---------- Animation ----------
-  let t = 0; let last = performance.now()/1000;
-
-  // Precompute per-pulse tag set for quick lookups
-  const pulseSets = timeline.map(p => new Set(p.tags));
-
-  function currentPulseIndex(tt){
-    if(!timeline.length) return -1;
-    return Math.min(timeline.length-1, Math.floor(tt/ PACE));
-  }
+  // -------- Animation --------
+  let t = 0, last = performance.now()/1000;
+  function iPulseAt(tt){ if(!timeline.length) return -1; return Math.min(timeline.length-1, Math.floor(tt/ PACE)); }
 
   function draw(full=false){
     X.setTransform(1,0,0,1,0,0);
     X.clearRect(0,0,C.width,C.height);
-    X.save();
 
-    // background links (faded)
-    X.lineWidth = 1; X.globalAlpha = 0.07; X.strokeStyle = "#9fb7d8";
+    // Background links
+    X.lineWidth = 1; X.globalAlpha = 0.08; X.strokeStyle = "#9fb7d8";
     for(const e of links){
-      const a = toScreen(nodes[e.a]), b = toScreen(nodes[e.b]);
+      const a = P(nodes[e.a]), b = P(nodes[e.b]);
       X.beginPath(); X.moveTo(a.x,a.y); X.lineTo(b.x,b.y); X.stroke();
     }
-
-    // background nodes (faded dots)
-    X.globalAlpha = 0.18;
+    // Background nodes
+    X.globalAlpha = 0.20;
     for(const n of nodes){
-      const p = toScreen(n);
+      const p = P(n);
       X.beginPath(); X.arc(p.x,p.y, 3, 0, Math.PI*2);
       X.fillStyle = "#9fb7d8"; X.fill();
     }
-    X.restore();
+    X.globalAlpha = 1.0;
 
-    // Active cluster (brighter)
-    if(!timeline.length) return;
-
-    const iPulse = currentPulseIndex(t);
-    const pulse  = timeline[iPulse];
+    // Active pulse cluster
+    const ip = iPulseAt(t);
+    const pulse = timeline[ip];
     if(pulse){
       setPulseTitle(`${pulse.title} — ${pulse.date}`);
-      const active = pulseSets[iPulse];
+      const active = pulseSets[ip];
 
-      // Active links: only between active nodes
-      X.globalAlpha = 0.28; X.lineWidth = 1.25; X.strokeStyle = "#cfe6ff";
+      // Links within active cluster
+      X.globalAlpha = 0.30; X.lineWidth = 1.3; X.strokeStyle = "#cfe6ff";
       for(const e of links){
         const aId = nodes[e.a].id, bId = nodes[e.b].id;
         if(active.has(aId) && active.has(bId)){
-          const a = toScreen(nodes[e.a]), b = toScreen(nodes[e.b]);
+          const a = P(nodes[e.a]), b = P(nodes[e.b]);
           X.beginPath(); X.moveTo(a.x,a.y); X.lineTo(b.x,b.y); X.stroke();
         }
       }
-
       // Active nodes + labels
       for(const n of nodes){
         if(!active.has(n.id)) continue;
-        const p = toScreen(n);
-        const r = 4.5 + 6*Math.min(1, (n.centrality||0)/Math.max(1, (PHI._centralityMax||1)));
+        const p = P(n);
+        const r = 4.5 + 6*( (Number.isFinite(n.centrality)?n.centrality:0) / cMax );
         X.beginPath(); X.arc(p.x,p.y, r, 0, Math.PI*2);
         X.fillStyle = "#d9ecff"; X.globalAlpha = 0.95; X.fill();
 
-        // label
         X.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-        X.fillStyle = "rgba(230,240,255,0.88)";
+        X.fillStyle = "rgba(230,240,255,0.9)";
         X.textAlign = "left"; X.textBaseline = "middle";
         X.fillText(n.id, p.x + r + 5, p.y);
       }
       X.globalAlpha = 1.0;
+    } else {
+      setPulseTitle("—");
     }
   }
 
@@ -205,9 +196,5 @@
     requestAnimationFrame(tick);
   }
   draw(true); tick();
-
-  // Expose a tiny debug hook if needed
-  window.__phi_echo_dbg = { timeline, nodes, links };
-
 })();
 </script>
