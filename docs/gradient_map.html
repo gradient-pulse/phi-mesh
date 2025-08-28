@@ -31,49 +31,61 @@
   const AUTOPLAY = q.get('autoplay') === '1';
 
   // ---------- robust loader for docs/data.js ----------
-  async function loadGraph() {
-    const url = './data.js';
-    const txt = await fetch(url).then(r => {
-      if (!r.ok) throw new Error('data.js fetch failed: '+r.status);
-      return r.text();
+  async function loadViaScriptTag() {
+    return new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = './data.js';
+      s.async = true;
+      s.onload = () => {
+        const cand = window.GRAPH_DATA || window.GRAPH || window.DATA || window.graph || window.data;
+        resolve(cand && cand.nodes && cand.links ? cand : null);
+      };
+      s.onerror = () => resolve(null);
+      document.head.appendChild(s);
     });
+  }
 
-    // 1) Try ESM: export default {...} or named exports
+  async function loadViaFallbackParsers() {
     try {
-      const blob = new Blob([txt], {type:'text/javascript'});
-      const mod  = await import(URL.createObjectURL(blob));
-      const candidates = [
-        mod.GRAPH_DATA, mod.GRAPH, mod.DATA, mod.graph, mod.data, mod.default
-      ].filter(Boolean)[0];
-      if (candidates && candidates.nodes && candidates.links) return candidates;
-    } catch(e){ /* fall through */ }
+      const txt = await fetch('./data.js').then(r => { if(!r.ok) throw new Error(r.status); return r.text(); });
 
-    // 2) Try window assignment or const/var in a sandbox
-    try {
-      const sandbox = {window:{}};
-      const fn = new Function('_ctx', `
-        "use strict";
-        const window = _ctx.window; var exports = {};
-        let GRAPH_DATA, DATA, GRAPH, data, graph;
-        ${txt}
-        return window.GRAPH_DATA ?? window.DATA ?? GRAPH_DATA ?? DATA ?? GRAPH ?? data ?? graph ?? null;
-      `);
-      const out = fn(sandbox);
-      if (out && out.nodes && out.links) return out;
-    } catch(e){ /* fall through */ }
+      // 1) Try ESM import (export default / named)
+      try {
+        const blob = new Blob([txt], {type:'text/javascript'});
+        const mod  = await import(URL.createObjectURL(blob));
+        const cand = mod.GRAPH_DATA || mod.GRAPH || mod.DATA || mod.graph || mod.data || mod.default;
+        if (cand && cand.nodes && cand.links) return cand;
+      } catch(_) {}
 
-    // 3) Try raw JSON
-    try {
-      const maybe = JSON.parse(txt);
-      if (maybe && maybe.nodes && maybe.links) return maybe;
-    } catch(e){ /* fall through */ }
+      // 2) Try sandboxed window assignment or const/var captures
+      try {
+        const sandbox = {window:{}};
+        const fn = new Function('_ctx', `
+          "use strict";
+          const window = _ctx.window; var exports = {};
+          let GRAPH_DATA, DATA, GRAPH, data, graph;
+          ${txt}
+          return window.GRAPH_DATA ?? window.DATA ?? GRAPH_DATA ?? DATA ?? GRAPH ?? data ?? graph ?? null;
+        `);
+        const out = fn(sandbox);
+        if (out && out.nodes && out.links) return out;
+      } catch(_) {}
 
-    console.error('data.js loaded, but no graph export found (tried module + window + JSON). Tip: ensure docs/data.js sets `window.GRAPH_DATA = {...}` or exports default.');
+      // 3) Try raw JSON
+      try {
+        const maybe = JSON.parse(txt);
+        if (maybe && maybe.nodes && maybe.links) return maybe;
+      } catch(_) {}
+
+    } catch(_) {}
     return null;
   }
 
-  const G = await loadGraph();
-  if (!G) return;
+  const G = (await loadViaScriptTag()) || (await loadViaFallbackParsers());
+  if (!G) {
+    console.error('data.js loaded, but no graph export found (tried script tag, module, sandbox, JSON). Tip: ensure docs/data.js sets `window.GRAPH_DATA = {...}` or exports default.');
+    return;
+  }
 
   // -------- echoes ----------
   const E = await fetch('./echoes.json').then(r => r.json()).catch(() => ({events:[]}));
