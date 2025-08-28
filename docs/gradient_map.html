@@ -1,241 +1,193 @@
 <!doctype html>
-<meta charset="utf-8" />
-<title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
-<style>
-  :root { --bg:#0b0f14; --fg:#e6edf3; --panel:#0f141b; --ink:#a9c7ff; --hot:#9fc9ff; }
-  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
-  button,select{background:#131a22;border:1px solid #2a3442;color:var(--fg);border-radius:8px;padding:6px 10px;cursor:pointer}
-  button.on{outline:2px solid #3a84ff}
-  #legend{opacity:.75;font-size:12px;margin-left:6px}
-  #ticker{position:fixed;right:12px;top:12px;background:#0f1522;border:1px solid #233; color:var(--fg);
-          padding:8px 10px;border-radius:12px;opacity:.92;z-index:10;max-width:52ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  canvas{display:block;width:100vw;height:100vh}
-</style>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
+  <style>
+    :root { --bg:#0b0f14; --fg:#e6edf3; --panel:#0f141b; --ink:#a9c7ff; --hot:#9fc9ff; }
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
+    button,select{background:#131a22;border:1px solid #2a3442;color:var(--fg);border-radius:8px;padding:6px 10px;cursor:pointer}
+    button.on{outline:2px solid #3a84ff}
+    #legend{opacity:.75;font-size:12px;margin-left:6px}
+    #ticker{position:fixed;right:12px;top:12px;background:#0f1522;border:1px solid #233; color:var(--fg);
+            padding:8px 10px;border-radius:12px;opacity:.92;z-index:10;max-width:52ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    canvas{display:block;width:100vw;height:100vh}
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <button id="play"  class="on">▶︎ Play</button>
+    <button id="pause">⏸︎ Pause</button>
+    <label>Speed
+      <select id="speed">
+        <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
+      </select>
+    </label>
+    <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code></span>
+  </div>
+  <div id="ticker">—</div>
+  <canvas id="c"></canvas>
 
-<div id="ui">
-  <button id="play"  class="on">▶︎ Play</button>
-  <button id="pause">⏸︎ Pause</button>
-  <label>Speed
-    <select id="speed">
-      <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
-    </select>
-  </label>
-  <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code></span>
-</div>
-<div id="ticker">—</div>
-<canvas id="c"></canvas>
+  <!-- Use the same data source as tag_map.html -->
+  <script src="data.js"></script>
+  <script>
+  (async function(){
+    // ------- URL knobs -------
+    const q=new URLSearchParams(location.search);
+    const HALF     = +q.get('half')    || 3.0;
+    const SPACING  = +q.get('spacing') || 5.0;
+    const AUTOPLAY = (q.get('autoplay')||'1') === '1';
 
-<!-- Use the same data source as tag_map.html -->
-<script src="data.js"></script>
-<script>
-(async function(){
-  // ------- URL knobs -------
-  const q=new URLSearchParams(location.search);
-  const HALF     = +q.get('half')    || 3.0;  // seconds half-life
-  const SPACING  = +q.get('spacing') || 5.0;  // seconds between pulse steps
-  const AUTOPLAY = (q.get('autoplay')||'1') === '1';
-
-  // ------- Pull graph from data.js (no edits to data.js required) -------
-  const D = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
-  if(!D || !Array.isArray(D.nodes) || !Array.isArray(D.links)){
-    console.error('[gradient_map] PHI_DATA missing; open tag_map.html first or ensure docs/data.js defines window.PHI_DATA.");
-    return;
-  }
-
-  // Build indices
-  const idToIdx = new Map(D.nodes.map((n,i)=>[n.id,i]));
-  const N = D.nodes.length;
-  const pos = D.nodes.map(n => ({ x:n.x ?? n.fx ?? n.nx ?? 0, y:n.y ?? n.fy ?? n.ny ?? 0 }));
-
-  // Normalize to canvas coords later; first capture extents
-  const minX = Math.min(...pos.map(p=>p.x)), maxX = Math.max(...pos.map(p=>p.x));
-  const minY = Math.min(...pos.map(p=>p.y)), maxY = Math.max(...pos.map(p=>p.y));
-  const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
-
-  // Adjacency (undirected)
-  const adj = Array.from({length:N},()=>[]);
-  for(const e of D.links){
-    const a = idToIdx.get(typeof e.source==='object' ? e.source.id : e.source);
-    const b = idToIdx.get(typeof e.target==='object' ? e.target.id : e.target);
-    if(a==null||b==null) continue;
-    adj[a].push(b); adj[b].push(a);
-  }
-
-  // ------- Build a pulse timeline with tags-per-pulse -------
-  // We only have pulses grouped under tags. Fold into a pulse-index and collect all tags per pulse.
-  const pulseIndex = new Map(); // key -> {title,date,tags:Set}
-  const pbt = D.pulsesByTag || {};
-  for(const [tag, list] of Object.entries(pbt)){
-    (list||[]).forEach(p=>{
-      const key = p.id || (String(p.title||'Pulse')+'|'+String(p.date||'')); // stable key
-      let rec = pulseIndex.get(key);
-      if(!rec){ rec = { id:key, title:p.title||'Pulse', date:p.date||'', tags:new Set() }; pulseIndex.set(key,rec); }
-      rec.tags.add(tag);
-    });
-  }
-  // Sort by date (string sort OK for YYYY-MM-DD)
-  const pulses = Array.from(pulseIndex.values()).sort((a,b)=> String(a.date).localeCompare(String(b.date)));
-
-  // ------- Canvas setup -------
-  const C = document.getElementById('c'), X = C.getContext('2d');
-  function fit(){
-    C.width = innerWidth  * devicePixelRatio;
-    C.height= innerHeight * devicePixelRatio;
-    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  }
-  addEventListener('resize', fit, {passive:true}); fit();
-
-  const toXY = (i) => {
-    const p = pos[i];
-    return {
-      x: (p.x - minX)/dx * C.width/devicePixelRatio,
-      y: (p.y - minY)/dy * C.height/devicePixelRatio
-    };
-  };
-
-  // ------- Simple hop-distance cache -------
-  const hopCache = new Map(); // idx -> Uint16Array distances
-  function hopsFrom(srcIdx){
-    if(hopCache.has(srcIdx)) return hopCache.get(srcIdx);
-    const inf=65535, d=new Uint16Array(N); d.fill(inf); d[srcIdx]=0;
-    const q=[srcIdx];
-    while(q.length){
-      const i=q.shift(), di=d[i]+1;
-      for(const j of adj[i]) if(d[j]===inf){ d[j]=di; q.push(j); }
-    }
-    hopCache.set(srcIdx,d);
-    return d;
-  }
-
-  // ------- Controls -------
-  let t=0, playing=AUTOPLAY;
-  const speedSel = document.getElementById('speed');
-  const btnPlay  = document.getElementById('play');
-  const btnPause = document.getElementById('pause');
-  const ticker   = document.getElementById('ticker');
-
-  function setPlay(p){
-    playing=p;
-    btnPlay.classList.toggle('on', p);
-    btnPause.classList.toggle('on', !p);
-  }
-  btnPlay.onclick  = ()=> setPlay(true);
-  btnPause.onclick = ()=> setPlay(false);
-
-  // ------- Echo engine (multi-source per pulse) -------
-  const TAU = HALF/Math.log(2);       // exponential time decay
-  const HOP_DECAY = 0.75;             // per-hop decay
-  const MAX_HOPS  = 3;                // how far glow spreads
-
-  // Map pulses to an internal schedule with the node-indices for all their tags
-  const schedule = pulses.map((p,k)=>{
-    const tagIdx = Array.from(p.tags)
-      .map(tag => idToIdx.get(tag))
-      .filter(i => i!=null);
-    return { t: k*SPACING, title:p.title, date:p.date, tagIdx };
-  });
-
-  // ------- Animation loop -------
-  function drawFrame(){
-    // time
-    if(playing) t += (1/60) * (+speedSel.value);
-
-    // current pulse index (for the badge)
-    const step = Math.floor(t / SPACING);
-    const active = schedule[Math.max(0, Math.min(schedule.length-1, step))];
-    ticker.textContent = active ? `${active.title} — ${active.date}` : '—';
-
-    // intensities
-    const I = new Float32Array(N);
-
-    // accumulate glow from each scheduled pulse (with time decay)
-    for(const ev of schedule){
-      const age = t - ev.t;
-      if(age < -SPACING*2) break;                 // not yet
-      if(age >  SPACING*schedule.length+10) continue; // long past, safely negligible
-      const timeDecay = Math.exp(-Math.max(0,age)/TAU);
-
-      for(const src of ev.tagIdx){
-        const d=hopsFrom(src);
-        for(let i=0;i<N;i++){
-          const h=d[i];
-          if(h>MAX_HOPS || h===65535) continue;
-          I[i] += timeDecay * Math.pow(HOP_DECAY, h);
-        }
-      }
+    // ------- Pull graph -------
+    const D = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
+    if(!D || !Array.isArray(D.nodes) || !Array.isArray(D.links)){
+      console.error('[gradient_map] PHI_DATA missing; open tag_map.html first or ensure docs/data.js defines window.PHI_DATA.');
+      return;
     }
 
-    // ---- draw ----
-    X.clearRect(0,0,C.width,C.height);
+    // Build indices
+    const idToIdx = new Map(D.nodes.map((n,i)=>[n.id,i]));
+    const N = D.nodes.length;
+    const pos = D.nodes.map(n => ({ x:n.x ?? n.fx ?? n.nx ?? 0, y:n.y ?? n.fy ?? n.ny ?? 0 }));
+    const minX = Math.min(...pos.map(p=>p.x)), maxX = Math.max(...pos.map(p=>p.x));
+    const minY = Math.min(...pos.map(p=>p.y)), maxY = Math.max(...pos.map(p=>p.y));
+    const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
 
-    // links (subtle, intensity-tinted by average of endpoints)
-    X.lineWidth = 1;
+    const adj = Array.from({length:N},()=>[]);
     for(const e of D.links){
       const a = idToIdx.get(typeof e.source==='object' ? e.source.id : e.source);
       const b = idToIdx.get(typeof e.target==='object' ? e.target.id : e.target);
       if(a==null||b==null) continue;
-      const A=toXY(a), B=toXY(b);
-      const w = (I[a]+I[b])*0.5;
-      X.globalAlpha = 0.05 + Math.min(0.35, w*0.35);
-      X.strokeStyle = '#9fb6d7';
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
+      adj[a].push(b); adj[b].push(a);
     }
 
-    // nodes
-    for(let i=0;i<N;i++){
-      const p=toXY(i);
-      const w=I[i];
-      const r = 2.5 + 9*Math.min(1,w);
-      X.globalAlpha = 0.35 + Math.min(0.65, w*0.85);
-      X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
-      X.fillStyle = '#b8d6ff';
-      X.fill();
+    // ------- Build pulse timeline -------
+    const pulseIndex = new Map();
+    const pbt = D.pulsesByTag || {};
+    for(const [tag, list] of Object.entries(pbt)){
+      (list||[]).forEach(p=>{
+        const key = p.id || (String(p.title||'Pulse')+'|'+String(p.date||'')); 
+        let rec = pulseIndex.get(key);
+        if(!rec){ rec = { id:key, title:p.title||'Pulse', date:p.date||'', tags:new Set() }; pulseIndex.set(key,rec); }
+        rec.tags.add(tag);
+      });
+    }
+    const pulses = Array.from(pulseIndex.values()).sort((a,b)=> String(a.date).localeCompare(String(b.date)));
+
+    // ------- Canvas -------
+    const C = document.getElementById('c'), X = C.getContext('2d');
+    function fit(){
+      C.width = innerWidth  * devicePixelRatio;
+      C.height= innerHeight * devicePixelRatio;
+      X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    }
+    addEventListener('resize', fit, {passive:true}); fit();
+    const toXY = (i) => {
+      const p = pos[i];
+      return { x: (p.x - minX)/dx * C.width/devicePixelRatio, y: (p.y - minY)/dy * C.height/devicePixelRatio };
+    };
+
+    // Hop cache
+    const hopCache = new Map();
+    function hopsFrom(srcIdx){
+      if(hopCache.has(srcIdx)) return hopCache.get(srcIdx);
+      const inf=65535, d=new Uint16Array(N); d.fill(inf); d[srcIdx]=0;
+      const q=[srcIdx];
+      while(q.length){
+        const i=q.shift(), di=d[i]+1;
+        for(const j of adj[i]) if(d[j]===inf){ d[j]=di; q.push(j); }
+      }
+      hopCache.set(srcIdx,d);
+      return d;
     }
 
-    // labels for bright nodes
-    X.globalAlpha = 1;
-    X.font = '12px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial';
-    X.textBaseline = 'middle';
-    for(let i=0;i<N;i++){
-      const w=I[i];
-      if(w < 0.42) continue;  // label threshold
-      const p=toXY(i);
-      const tag = D.nodes[i].id || '';
-      // background pill
-      const padX=6, padY=3;
-      const txtW = X.measureText(tag).width;
-      const x=p.x+10, y=p.y;
-      X.fillStyle='rgba(10,16,26,0.85)';
-      X.strokeStyle='rgba(170,190,220,0.35)';
+    // ------- Controls -------
+    let t=0, playing=AUTOPLAY;
+    const speedSel = document.getElementById('speed');
+    const btnPlay  = document.getElementById('play');
+    const btnPause = document.getElementById('pause');
+    const ticker   = document.getElementById('ticker');
+    function setPlay(p){ playing=p; btnPlay.classList.toggle('on', p); btnPause.classList.toggle('on', !p); }
+    btnPlay.onclick  = ()=> setPlay(true);
+    btnPause.onclick = ()=> setPlay(false);
+
+    // ------- Echo engine -------
+    const TAU = HALF/Math.log(2);
+    const HOP_DECAY = 0.75, MAX_HOPS = 3;
+    const schedule = pulses.map((p,k)=>{
+      const tagIdx = Array.from(p.tags).map(tag => idToIdx.get(tag)).filter(i => i!=null);
+      return { t: k*SPACING, title:p.title, date:p.date, tagIdx };
+    });
+
+    function drawFrame(){
+      if(playing) t += (1/60) * (+speedSel.value);
+      const step = Math.floor(t / SPACING);
+      const active = schedule[Math.max(0, Math.min(schedule.length-1, step))];
+      ticker.textContent = active ? `${active.title} — ${active.date}` : '—';
+
+      const I = new Float32Array(N);
+      for(const ev of schedule){
+        const age = t - ev.t;
+        if(age < -SPACING*2) break;
+        const timeDecay = Math.exp(-Math.max(0,age)/TAU);
+        for(const src of ev.tagIdx){
+          const d=hopsFrom(src);
+          for(let i=0;i<N;i++){
+            const h=d[i];
+            if(h>MAX_HOPS || h===65535) continue;
+            I[i] += timeDecay * Math.pow(HOP_DECAY, h);
+          }
+        }
+      }
+
+      X.clearRect(0,0,C.width,C.height);
       X.lineWidth=1;
-      X.beginPath();
-      X.roundRect(x-padX, y-10, txtW+padX*2, 20, 8);
-      X.fill(); X.stroke();
-      // text
-      X.fillStyle = '#d8e7ff';
-      X.fillText(tag, x, y);
+      for(const e of D.links){
+        const a = idToIdx.get(typeof e.source==='object'?e.source.id:e.source);
+        const b = idToIdx.get(typeof e.target==='object'?e.target.id:e.target);
+        if(a==null||b==null) continue;
+        const A=toXY(a), B=toXY(b);
+        const w = (I[a]+I[b])*0.5;
+        X.globalAlpha = 0.05 + Math.min(0.35, w*0.35);
+        X.strokeStyle = '#9fb6d7';
+        X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
+      }
+
+      for(let i=0;i<N;i++){
+        const p=toXY(i), w=I[i], r=2.5+9*Math.min(1,w);
+        X.globalAlpha = 0.35 + Math.min(0.65,w*0.85);
+        X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
+        X.fillStyle='#b8d6ff'; X.fill();
+      }
+
+      X.globalAlpha=1; X.font='12px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial'; X.textBaseline='middle';
+      for(let i=0;i<N;i++){
+        const w=I[i]; if(w<0.42) continue;
+        const p=toXY(i), tag=D.nodes[i].id||'';
+        const padX=6, padY=3, txtW=X.measureText(tag).width, x=p.x+10, y=p.y;
+        X.fillStyle='rgba(10,16,26,0.85)';
+        X.strokeStyle='rgba(170,190,220,0.35)'; X.lineWidth=1;
+        X.beginPath(); X.roundRect(x-padX,y-10,txtW+padX*2,20,8); X.fill(); X.stroke();
+        X.fillStyle='#d8e7ff'; X.fillText(tag,x,y);
+      }
+
+      requestAnimationFrame(drawFrame);
     }
 
-    requestAnimationFrame(drawFrame);
-  }
-  // polyfill for roundRect on older canvases
-  if(!CanvasRenderingContext2D.prototype.roundRect){
-    CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
-      const rr = Math.min(r, w/2, h/2);
-      this.beginPath();
-      this.moveTo(x+rr,y);
-      this.arcTo(x+w,y,x+w,y+h,rr);
-      this.arcTo(x+w,y+h,x,y+h,rr);
-      this.arcTo(x,y+h,x,y,rr);
-      this.arcTo(x,y,x+w,y,rr);
-      this.closePath();
-      return this;
+    if(!CanvasRenderingContext2D.prototype.roundRect){
+      CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+        const rr=Math.min(r,w/2,h/2);
+        this.beginPath(); this.moveTo(x+rr,y);
+        this.arcTo(x+w,y,x+w,y+h,rr); this.arcTo(x+w,y+h,x,y+h,rr);
+        this.arcTo(x,y+h,x,y,rr); this.arcTo(x,y,x+w,y,rr);
+        this.closePath(); return this;
+      }
     }
-  }
 
-  // init play state / kick off
-  setPlay(AUTOPLAY);
-  drawFrame();
-})();
-</script>
+    setPlay(AUTOPLAY);
+    drawFrame();
+  })();
+  </script>
+</body>
+</html>
