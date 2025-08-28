@@ -14,137 +14,125 @@
   <button id="play">▶︎ Play</button>
   <button id="pause">⏸︎ Pause</button>
   <label>Speed
-    <select id="speed">
-      <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
-    </select>
+    <select id="speed"><option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option></select>
   </label>
   <span id="legend">URL knobs: <code>?hop=0.75&half=2.0&spacing=6&autoplay=1</code></span>
 </div>
 <canvas id="c"></canvas>
 
+<!-- 1) MODULE BRIDGE: normalize whatever docs/data.js exports to window.GRAPH_DATA -->
+<script type="module">
+  try {
+    const m = await import('./data.js');
+    const g =
+      m.GRAPH_DATA ||
+      m.default ||
+      m.GRAPH ||
+      (m.DATA && m.DATA.graph) ||
+      (typeof window!=='undefined' && (window.GRAPH_DATA || window.graphData || (window.DATA&&window.DATA.graph)));
+    if (g && g.nodes && g.links) {
+      window.GRAPH_DATA = g;            // <- plain global for non-module scripts
+    } else {
+      console.warn('data.js module loaded but no recognizable graph export.');
+    }
+  } catch (e) {
+    console.warn('Failed to import data.js as module; relying on window globals.', e);
+  }
+</script>
+
+<!-- 2) VIEWER: waits for window.GRAPH_DATA; then runs echo animation -->
 <script>
 (async function(){
-  // --- URL knobs --------------------------------------------------------
+  // --- small helper to wait for the bridge to expose GRAPH_DATA ----------
+  async function waitForGraph(ms=3000){
+    const t0=performance.now();
+    while(performance.now()-t0<ms){
+      const G = window.GRAPH_DATA || window.graphData || (window.DATA && window.DATA.graph);
+      if (G && G.nodes && G.links) return G;
+      await new Promise(r=>setTimeout(r,50));
+    }
+    return null;
+  }
+
+  // knobs
   const q=new URLSearchParams(location.search);
-  const HOP  = +q.get('hop')     || 0.75;  // hop-decay (γ)
-  const HALF = +q.get('half')    || 2.0;   // seconds half-life (τ = HALF/ln2)
-  const PACE = +q.get('spacing') || 6.0;   // seconds between events in loop
+  const HOP  = +q.get('hop')     || 0.75;
+  const HALF = +q.get('half')    || 2.0;
+  const PACE = +q.get('spacing') || 6.0;
   const AUTOPLAY = q.get('autoplay')==='1';
 
-  // --- load graph, tolerant of all build styles ------------------------
-  let G=null, mod=null;
-  try {
-    mod = await import('./data.js'); // if data.js is an ES module
-    G = mod.GRAPH_DATA || mod.default || mod.GRAPH || (mod.DATA && mod.DATA.graph) || null;
-  } catch { /* continue to fallbacks */ }
-
-  // Bare globals (top-level const/let aren’t on window, so use safe eval)
-  if (!G) {
-    const grab = name => { try { return (0,eval)(name); } catch { return undefined; } };
-    G = grab('GRAPH_DATA') || grab('graphData') || (function(){ const D=grab('DATA'); return D && D.graph; })();
-  }
-
-  // Window fallbacks
-  if (!G) {
-    const w = window;
-    G = w.GRAPH_DATA || w.graphData || (w.DATA && w.DATA.graph) || w.data || null;
-  }
-
-  if (!G || !G.nodes || !G.links) {
+  // get graph (from bridge/global)
+  const G = await waitForGraph(4000);
+  if (!G){
     const err = document.createElement('div');
     err.id='err';
-    err.textContent="data.js loaded, but no graph export found (tried module exports GRAPH_DATA/default/GRAPH/DATA.graph and window fallbacks). Tip: ensure docs/data.js sets `window.GRAPH_DATA = {...}` or exports default.";
+    err.textContent="data.js loaded, but no graph export found (tried module + window). Tip: append `window.GRAPH_DATA = <graph>` to docs/data.js or export default.";
     document.body.appendChild(err);
-    console.error("No graph found. window keys sample:", Object.keys(window).slice(0,50));
+    console.error('Window keys sample:', Object.keys(window).slice(0,50));
     return;
   }
 
-  // --- echoes -----------------------------------------------------------
+  // echoes
   const E = await fetch('./echoes.json').then(r=>r.json()).catch(()=>({events:[]}));
 
-  // --- index graph ------------------------------------------------------
+  // index
   const idx=new Map(G.nodes.map((n,i)=>[n.id,i]));
   const N=G.nodes.length;
-  const pos = G.nodes.map(n => ({
-    x: (n.x ?? n.fx ?? n.nx ?? 0),
-    y: (n.y ?? n.fy ?? n.ny ?? 0),
-  }));
+  const pos = G.nodes.map(n => ({ x:(n.x ?? n.fx ?? n.nx ?? 0), y:(n.y ?? n.fy ?? n.ny ?? 0) }));
   const adj=Array.from({length:N},()=>[]);
   for(const e of G.links){
     const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
     const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
     if(a!=null && b!=null){ adj[a].push({j:b,w:1}); adj[b].push({j:a,w:1}); }
   }
-
-  // --- simple shortest-hop BFS (once per event source) -----------------
-  function hopsFrom(srcIdx){
-    const inf=1e9, d=Array(N).fill(inf); d[srcIdx]=0; const q=[srcIdx];
+  function hopsFrom(src){
+    const inf=1e9, d=Array(N).fill(inf); d[src]=0; const q=[src];
     while(q.length){ const i=q.shift(); for(const {j} of adj[i]) if(d[j]===inf){ d[j]=d[i]+1; q.push(j); } }
     return d;
   }
 
-  // --- canvas setup -----------------------------------------------------
+  // canvas
   const C=document.getElementById('c'), X=C.getContext('2d');
   function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio; X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
   addEventListener('resize',fit,{passive:true}); fit();
 
-  // map normalized node coords [0..1] to canvas
   const [minX,maxX]=[Math.min(...pos.map(p=>p.x)), Math.max(...pos.map(p=>p.x))];
   const [minY,maxY]=[Math.min(...pos.map(p=>p.y)), Math.max(...pos.map(p=>p.y))];
   const dx=(maxX-minX)||1, dy=(maxY-minY)||1;
-  const tx=p=>({ x:(p.x-minX)/dx * C.width/devicePixelRatio,
-                 y:(p.y-minY)/dy * C.height/devicePixelRatio });
+  const tx=p=>({ x:(p.x-minX)/dx*C.width/devicePixelRatio, y:(p.y-minY)/dy*C.height/devicePixelRatio });
 
-  // --- echo engine ------------------------------------------------------
+  // echo engine
   const TAU = HALF/Math.log(2);
   const events = (E.events||[]).map((ev,k)=>({
-    ...ev,
-    t: k*PACE,                     // re-space evenly; preserves order
-    source: idx.get(ev.source_tag),
-    hops: null
+    ...ev, t:k*PACE, source: idx.get(ev.source_tag), hops:null
   })).filter(ev=>ev.source!=null);
-
-  for(const ev of events){ ev.hops = hopsFrom(ev.source); }
+  for(const ev of events) ev.hops = hopsFrom(ev.source);
 
   let t=0, playing=AUTOPLAY;
   const speedSel=document.getElementById('speed');
   document.getElementById('play').onclick=()=>playing=true;
   document.getElementById('pause').onclick=()=>playing=false;
-  const now=()=>performance.now()/1000;
-  let last=now();
+  const now=()=>performance.now()/1000; let last=now();
 
-  // headless hook (for agents)
-  window.__ECHO_TIMESERIES__ = [];
+  window.__ECHO_TIMESERIES__=[];
 
   function frame(){
     const n=now(), dt=Math.min(0.05,n-last); last=n; if(playing) t+=dt*(+speedSel.value);
-
-    // instantaneous intensity per node
     const I=new Float32Array(N);
     for(const ev of events){
-      const age=Math.max(0,t-ev.t);
-      if(age>PACE*events.length+60) continue;
+      const age=Math.max(0,t-ev.t); if(age>PACE*events.length+60) continue;
       const timeDecay=Math.exp(-age/TAU);
       for(let i=0;i<N;i++){
-        const h=ev.hops[i];
-        if(!isFinite(h) || h>(ev.max_hops??4)) continue;
-        const hopDecay=Math.pow(HOP,h);
-        I[i]+= (ev.amplitude??1)*timeDecay*hopDecay;
+        const h=ev.hops[i]; if(!isFinite(h) || h>(ev.max_hops??4)) continue;
+        I[i]+= (ev.amplitude??1)*timeDecay*Math.pow(HOP,h);
       }
     }
-
-    // light timeseries (every ~0.25s)
     if((Math.floor(t*4)%1)===0){
-      window.__ECHO_TIMESERIES__.push({
-        t:+t.toFixed(2),
-        top:[...I].map((v,i)=>[G.nodes[i].id,v]).sort((a,b)=>b[1]-a[1]).slice(0,8)
-      });
+      window.__ECHO_TIMESERIES__.push({t:+t.toFixed(2), top:[...I].map((v,i)=>[G.nodes[i].id,v]).sort((a,b)=>b[1]-a[1]).slice(0,8)});
       if(window.__ECHO_TIMESERIES__.length>200) window.__ECHO_TIMESERIES__.shift();
     }
 
-    // draw
     X.clearRect(0,0,C.width,C.height);
-    // links
     X.globalAlpha=0.08; X.lineWidth=1;
     for(const e of G.links){
       const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
@@ -153,9 +141,8 @@
       const A=tx(pos[a]), B=tx(pos[b]);
       X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.strokeStyle="#7aa2f7"; X.stroke();
     }
-    // nodes
     for(let i=0;i<N;i++){
-      const p=tx(pos[i]); const r=2 + 10*Math.min(1,I[i]);
+      const p=tx(pos[i]); const r=2+10*Math.min(1,I[i]);
       X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
       X.fillStyle=`rgba(180,220,255,${0.25+Math.min(0.75,I[i])})`;
       X.fill();
