@@ -1,0 +1,130 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Φ-Mesh — Gradient Map (Pulse Echo)</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223; padding:8px 10px;border-radius:10px}
+  button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
+  #legend{opacity:.7;font-size:12px}
+  canvas{display:block;width:100%;height:100%}
+</style>
+<div id="ui">
+  <button id="play">▶︎ Play</button>
+  <button id="pause">⏸︎ Pause</button>
+  <label>Speed
+    <select id="speed">
+      <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
+    </select>
+  </label>
+  <span id="legend">URL knobs: <code>?hop=0.75&half=2.0&spacing=6&autoplay=1</code></span>
+</div>
+<canvas id="c"></canvas>
+<script>
+(async function(){
+  // --- URL knobs (easy to tweak) ---------------------------------------
+  const q=new URLSearchParams(location.search);
+  const HOP  = +q.get('hop')     || 0.75;  // hop-decay (γ)
+  const HALF = +q.get('half')    || 2.0;   // seconds half-life (τ = HALF/ln2)
+  const PACE = +q.get('spacing') || 6.0;   // seconds between events in loop
+  const AUTOPLAY = q.get('autoplay')==='1';
+
+  // --- load base graph + echoes ----------------------------------------
+  // data.js defines window.GRAPH_DATA = { nodes:[{id, x, y, ...}], links:[{source,target}] , pulses:[...] }
+  await import('./data.js');
+  const G = window.GRAPH_DATA;
+  const E = await fetch('./echoes.json').then(r=>r.json());
+
+  // --- index graph ------------------------------------------------------
+  const idx=new Map(G.nodes.map((n,i)=>[n.id,i]));
+  const N=G.nodes.length;
+  const pos=G.nodes.map(n=>({x:n.x,y:n.y}));
+  const adj=Array.from({length:N},()=>[]);
+  for(const e of G.links){
+    const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
+    const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
+    if(a!=null && b!=null){ adj[a].push({j:b,w:1}); adj[b].push({j:a,w:1}); }
+  }
+
+  // --- simple shortest-hop BFS (once per event source) -----------------
+  function hopsFrom(srcIdx){
+    const inf=1e9, d=Array(N).fill(inf); d[srcIdx]=0; const q=[srcIdx];
+    while(q.length){ const i=q.shift(); for(const {j} of adj[i]) if(d[j]===inf){ d[j]=d[i]+1; q.push(j); } }
+    return d;
+  }
+
+  // --- canvas setup -----------------------------------------------------
+  const C=document.getElementById('c'), X=C.getContext('2d');
+  function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio; X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+  addEventListener('resize',fit,{passive:true}); fit();
+
+  // map normalized node coords [0..1] to canvas
+  const [minX,maxX]=[Math.min(...pos.map(p=>p.x)), Math.max(...pos.map(p=>p.x))];
+  const [minY,maxY]=[Math.min(...pos.map(p=>p.y)), Math.max(...pos.map(p=>p.y))];
+  function tx(p){ return { x:(p.x-minX)/(maxX-minX)*C.width/devicePixelRatio, y:(p.y-minY)/(maxY-minY)*C.height/devicePixelRatio }; }
+
+  // --- echo engine ------------------------------------------------------
+  const TAU = HALF/Math.log(2);
+  const events = (E.events||[]).map((ev,k)=>({
+    ...ev,
+    t: k*(PACE), // re-space evenly; preserves order
+    source: idx.get(ev.source_tag),
+    hops: null
+  })).filter(ev=>ev.source!=null);
+
+  // precompute hop distances for event sources
+  for(const ev of events){ ev.hops = hopsFrom(ev.source); }
+
+  let t=0, playing=AUTOPLAY;
+  const speedSel=document.getElementById('speed');
+  document.getElementById('play').onclick=()=>playing=true;
+  document.getElementById('pause').onclick=()=>playing=false;
+  function now(){ return performance.now()/1000; }
+  let last=now();
+
+  // expose timeseries hook for agents (headless) -------------------------
+  window.__ECHO_TIMESERIES__ = [];
+
+  function frame(){
+    const n=now(), dt=Math.min(0.05,n-last); last=n; if(playing) t+=dt*(+speedSel.value);
+    // compute instantaneous intensity per node
+    const I=new Float32Array(N);
+    for(const ev of events){
+      const age = Math.max(0, t - ev.t);
+      if(age>PACE*events.length+60) continue;
+      const timeDecay = Math.exp(-age/TAU);
+      for(let i=0;i<N;i++){
+        const h=ev.hops[i];
+        if(!isFinite(h) || h> (ev.max_hops??4)) continue;
+        const hopDecay = Math.pow(HOP, h);
+        I[i] += (ev.amplitude??1) * timeDecay * hopDecay;
+      }
+    }
+    // record a very light timeseries (every ~0.25s)
+    if((Math.floor(t*4)%1)===0){
+      window.__ECHO_TIMESERIES__.push({t: +t.toFixed(2), top: [...I].map((v,i)=>[G.nodes[i].id,v]).sort((a,b)=>b[1]-a[1]).slice(0,8) });
+      if(window.__ECHO_TIMESERIES__.length>200) window.__ECHO_TIMESERIES__.shift();
+    }
+
+    // draw
+    X.clearRect(0,0,C.width,C.height);
+    // links (subtle)
+    X.globalAlpha=0.08; X.lineWidth=1;
+    for(const e of G.links){
+      const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
+      const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
+      if(a==null||b==null) continue;
+      const A=tx(pos[a]), B=tx(pos[b]);
+      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.strokeStyle="#7aa2f7"; X.stroke();
+    }
+    // nodes
+    for(let i=0;i<N;i++){
+      const p=tx(pos[i]); const r=2 + 10*Math.min(1, I[i]);
+      X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
+      X.fillStyle = `rgba(180,220,255,${0.25 + Math.min(0.75,I[i])})`;
+      X.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
