@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8" />
-<title>Φ-Mesh — Gradient Map (Pulse Echo)</title>
+<title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
 <style>
   html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
   #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
@@ -17,109 +17,156 @@
       <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
     </select>
   </label>
-  <span id="legend">URL knobs: <code>?hop=0.75&half=2.0&spacing=6&autoplay=1</code></span>
+  <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code> • fires follow pulse dates</span>
 </div>
-
 <canvas id="c"></canvas>
-
-<!-- 1) the big blob -->
-<script src="data.js"></script>
-<!-- 2) the 1-line alias to publish window.GRAPH_DATA -->
-<script src="phi_data_alias.js"></script>
 
 <script>
 (async function(){
-  // --- URL knobs ---
-  const q=new URLSearchParams(location.search);
-  const HOP  = +q.get('hop')     || 0.75;   // per-hop decay
-  const HALF = +q.get('half')    || 2.0;    // seconds half-life
-  const PACE = +q.get('spacing') || 6.0;    // seconds between events
-  const AUTOPLAY = q.get('autoplay')==='1';
+  // -------- URL knobs --------
+  const q = new URLSearchParams(location.search);
+  const HALF = +q.get('half')    || 3.0;  // seconds half-life (τ = HALF/ln2)
+  const GAP  = +q.get('spacing') || 5.0;  // seconds between consecutive pulse events
+  const AUTOPLAY = q.get('autoplay') === '1';
+  const TAU = HALF / Math.log(2);
 
-  // --- resolve graph from window (thanks to alias shim) ---
-  const G = (window.GRAPH_DATA || window.PHI_DATA || window.DATA || window.data || window.GRAPH);
-  if (!G || !Array.isArray(G.nodes) || !Array.isArray(G.links)) {
-    console.error('No graph found. window.GRAPH_DATA is missing or malformed.');
+  // -------- Pull graph directly from Tag Map data --------
+  // Tag Map exposes `window.PHI_DATA = { nodes:[{id,x,y,centrality…}], links:[{source,target}], pulsesByTag:{tag:[{title,date,…}]}, … }`
+  const D = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
+  if(!D || !Array.isArray(D.nodes) || !Array.isArray(D.links)){
+    console.error('PHI_DATA missing; open tag_map.html first or ensure docs/data.js defines window.PHI_DATA.');
     return;
   }
 
-  // --- load event echoes (hand-made) ---
-  const E = await fetch('./echoes.json').then(r=>r.json()).catch(()=>({events:[]}));
+  // Index + positions (already in screen coords for Tag Map; normalize to [0,1] here)
+  const idx = new Map(D.nodes.map((n,i)=>[n.id,i]));
+  let pos = D.nodes.map(n => ({x:(n.x ?? 0), y:(n.y ?? 0)}));
+  const minX=Math.min(...pos.map(p=>p.x)), maxX=Math.max(...pos.map(p=>p.x));
+  const minY=Math.min(...pos.map(p=>p.y)), maxY=Math.max(...pos.map(p=>p.y));
+  const dx=(maxX-minX)||1, dy=(maxY-minY)||1;
+  pos = pos.map(p => ({x:(p.x-minX)/dx, y:(p.y-minY)/dy}));
 
-  // --- index graph ---
-  const idx=new Map(G.nodes.map((n,i)=>[n.id,i]));
-  const N=G.nodes.length;
-  const pos = G.nodes.map(n => ({ x:(n.x ?? n.fx ?? n.nx ?? 0), y:(n.y ?? n.fy ?? n.ny ?? 0) }));
-  const adj=Array.from({length:N},()=>[]);
-  for(const e of G.links){
-    const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
-    const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
-    if(a!=null && b!=null){ adj[a].push({j:b}); adj[b].push({j:a}); }
+  // Resolve links to indices
+  const links = D.links.map(l => {
+    const a = idx.get(typeof l.source==='object' ? l.source.id : l.source);
+    const b = idx.get(typeof l.target==='object' ? l.target.id : l.target);
+    return (a!=null && b!=null) ? {a,b} : null;
+  }).filter(Boolean);
+
+  // -------- Build time-ordered “fires” from pulse dates --------
+  // Flatten pulsesByTag into [{tag, date: 'YYYY-MM-DD'}], sort by date, assign times t=k*GAP.
+  function parseDate(s){
+    // allow 'YYYY-MM-DD' or 'YYYY-MM-DD_…'
+    if(!s) return null;
+    const m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if(!m) return null;
+    return new Date(+m[1], +m[2]-1, +m[3]);
   }
 
-  // BFS once per source
-  function hopsFrom(src){
-    const inf=1e9, d=Array(N).fill(inf); d[src]=0; const q=[src];
-    while(q.length){ const i=q.shift(); for(const {j} of adj[i]) if(d[j]===inf){ d[j]=d[i]+1; q.push(j); } }
-    return d;
+  const rawEvents = [];
+  if (D.pulsesByTag && typeof D.pulsesByTag==='object'){
+    for (const [tag, arr] of Object.entries(D.pulsesByTag)){
+      if(!Array.isArray(arr)) continue;
+      for (const p of arr){
+        const dt = parseDate(p && p.date);
+        if (dt && idx.has(tag)) rawEvents.push({tag, date: dt});
+      }
+    }
   }
 
-  // --- canvas ---
-  const C=document.getElementById('c'), X=C.getContext('2d');
+  rawEvents.sort((a,b)=>a.date - b.date);
+  const events = rawEvents.map((ev,k)=>({
+    tag: ev.tag,
+    node: idx.get(ev.tag),
+    t: k * GAP
+  }));
+
+  // If there are no dated pulses, provide a gentle default (walk through top centrality tags)
+  if (!events.length){
+    const top = [...D.nodes]
+      .map((n,i)=>({i, c: (typeof n.centrality==='number'? n.centrality : 0)}))
+      .sort((a,b)=>b.c-a.c)
+      .slice(0,24);
+    top.forEach((o,k)=>events.push({tag:D.nodes[o.i].id, node:o.i, t:k*GAP}));
+  }
+
+  // -------- Canvas plumbing --------
+  const C = document.getElementById('c'), X = C.getContext('2d');
   function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio; X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
   addEventListener('resize',fit,{passive:true}); fit();
 
-  // normalize positions to canvas
-  const [minX,maxX]=[Math.min(...pos.map(p=>p.x)), Math.max(...pos.map(p=>p.x))];
-  const [minY,maxY]=[Math.min(...pos.map(p=>p.y)), Math.max(...pos.map(p=>p.y))];
-  const dx=(maxX-minX)||1, dy=(maxY-minY)||1;
-  const tx=p=>({ x:(p.x-minX)/dx * C.width/devicePixelRatio,
-                 y:(p.y-minY)/dy * C.height/devicePixelRatio });
+  const M = 0.05; // margin
+  const tx = p => ({
+    x: (M + (1-2*M)*p.x) * C.width  / devicePixelRatio,
+    y: (M + (1-2*M)*p.y) * C.height / devicePixelRatio
+  });
 
-  // --- echo engine ---
-  const TAU = HALF/Math.log(2);
-  const events = (E.events||[]).map((ev,k)=>({
-    ...ev,
-    t: k*(PACE),
-    source: idx.get(ev.source_tag),
-    hops: null
-  })).filter(ev=>ev.source!=null);
-  for(const ev of events){ ev.hops = hopsFrom(ev.source); }
-
+  // -------- Playback state --------
   let t=0, playing=AUTOPLAY;
-  const speedSel=document.getElementById('speed');
-  document.getElementById('play').onclick=()=>playing=true;
-  document.getElementById('pause').onclick=()=>playing=false;
-  const now=()=>performance.now()/1000; let last=now();
+  const speedSel = document.getElementById('speed');
+  document.getElementById('play').onclick  = () => (playing=true);
+  document.getElementById('pause').onclick = () => (playing=false);
+  function now(){ return performance.now()/1000 }
+  let last = now();
 
-  window.__ECHO_TIMESERIES__=[];
+  // Precompute for node-centric access: eventsByNode[i] = [t0,t1,...]
+  const fires = Array.from({length:D.nodes.length}, ()=>[]);
+  for (const ev of events){ if (ev.node!=null) fires[ev.node].push(ev.t); }
+
+  // -------- Draw loop --------
+  function nodeIntensity(i, time){
+    // Sum decays from all fires of node i
+    let s = 0;
+    const ts = fires[i];
+    // walk last few only (performance)
+    for (let k=ts.length-1; k>=0; k--){
+      const age = time - ts[k]; if (age < 0) continue;
+      const w = Math.exp(-age/TAU);
+      if (w < 1e-3) break;
+      s += w;
+    }
+    return s;
+  }
 
   function frame(){
-    const n=now(), dt=Math.min(0.05,n-last); last=n; if(playing) t+=dt*(+speedSel.value);
-    const I=new Float32Array(N);
-    for(const ev of events){
-      const age=Math.max(0,t-ev.t); const timeDecay=Math.exp(-age/TAU);
-      for(let i=0;i<N;i++){
-        const h=ev.hops[i];
-        if(!isFinite(h) || h>(ev.max_hops??4)) continue;
-        I[i]+= (ev.amplitude??1) * timeDecay * Math.pow(HOP,h);
-      }
-    }
-    // draw
+    const n = now(), dt = Math.min(0.05, n-last); last = n;
+    if (playing) t += dt * (+speedSel.value);
+
+    // Compute intensities
+    const I = new Float32Array(D.nodes.length);
+    for (let i=0;i<I.length;i++) I[i] = nodeIntensity(i, t);
+
+    // Draw
     X.clearRect(0,0,C.width,C.height);
-    X.globalAlpha=0.08; X.lineWidth=1;
-    for(const e of G.links){
-      const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
-      const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
-      if(a==null||b==null) continue;
-      const A=tx(pos[a]), B=tx(pos[b]);
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.strokeStyle="#7aa2f7"; X.stroke();
+
+    // Links glow when both ends are active (product)
+    X.lineWidth = 1.2;
+    for (const {a,b} of links){
+      const A = tx(pos[a]), B = tx(pos[b]);
+      const glow = Math.min(1, I[a]*I[b]);
+      X.strokeStyle = `rgba(122,162,247,${0.06 + 0.34*glow})`;
+      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
-    for(let i=0;i<N;i++){
-      const p=tx(pos[i]); const r=2 + 10*Math.min(1,I[i]);
-      X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
-      X.fillStyle=`rgba(180,220,255,${0.25+Math.min(0.75,I[i])})`; X.fill();
+
+    // Nodes: base dot + intensity halo
+    for (let i=0;i<D.nodes.length;i++){
+      const p = tx(pos[i]);
+      const j = Math.min(1, I[i]);
+      const r = 4 + 12*j;
+
+      // halo
+      if (j>0){
+        const g = X.createRadialGradient(p.x,p.y, r*0.4, p.x,p.y, r);
+        g.addColorStop(0, `rgba(145,200,255,${0.20*j})`);
+        g.addColorStop(1, `rgba(145,200,255,0)`);
+        X.fillStyle = g;
+        X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fill();
+      }
+      // core
+      X.fillStyle = `rgba(200,230,255,${0.45 + 0.5*j})`;
+      X.beginPath(); X.arc(p.x,p.y, 2.5 + 2*j, 0, Math.PI*2); X.fill();
     }
+
     requestAnimationFrame(frame);
   }
   frame();
