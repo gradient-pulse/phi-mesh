@@ -7,7 +7,7 @@
   button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
   button.active{outline:2px solid #6ea8ff}
   #legend{opacity:.7;font-size:12px}
-  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:12px;opacity:.9;z-index:10;max-width:38ch}
+  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:12px;opacity:.9;z-index:10;max-width:40ch}
   #warn{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#1a212b;border:1px solid #334;padding:14px 16px;border-radius:12px;font-size:14px;display:none;max-width:520px}
   canvas{display:block;width:100%;height:100%}
 </style>
@@ -41,7 +41,7 @@
     el.style.display = 'block';
   };
 
-  // -------- Ensure PHI_DATA is present (from docs/data.js) --------
+  // -------- Ensure PHI_DATA (from docs/data.js) --------
   async function ensurePHIData(timeoutMs=2500){
     if (window.PHI_DATA && typeof window.PHI_DATA==='object') return window.PHI_DATA;
 
@@ -68,13 +68,22 @@
     return;
   }
 
-  // -------- Index + normalized positions --------
+  // -------- Index + robust positions (x|fx|nx, y|fy|ny) --------
   const idx = new Map(D.nodes.map((n,i)=>[n.id,i]));
-  let pos = D.nodes.map(n => ({x:(n.x ?? 0), y:(n.y ?? 0)}));
+  let pos = D.nodes.map(n => ({
+    x: (n.x ?? n.fx ?? n.nx ?? 0),
+    y: (n.y ?? n.fy ?? n.ny ?? 0),
+  }));
+
   const minX=Math.min(...pos.map(p=>p.x)), maxX=Math.max(...pos.map(p=>p.x));
   const minY=Math.min(...pos.map(p=>p.y)), maxY=Math.max(...pos.map(p=>p.y));
   const dx=(maxX-minX)||1, dy=(maxY-minY)||1;
+
+  // Normalize to [0..1]
   pos = pos.map(p => ({x:(p.x-minX)/dx, y:(p.y-minY)/dy}));
+
+  console.log('[gradient_map] nodes:', D.nodes.length, 'links:', D.links.length);
+  console.log('[gradient_map] min/max x,y:', {minX,maxX,minY,maxY});
 
   // Resolve links to indices
   const links = D.links.map(l => {
@@ -128,7 +137,8 @@
   }
   addEventListener('resize',fit,{passive:true}); fit();
 
-  const M = 0.05; // margin around edges
+  // Layout transform to viewport with margin
+  const M = 0.05; // margin fraction
   const tx = p => ({
     x: (M + (1-2*M)*p.x) * innerWidth,
     y: (M + (1-2*M)*p.y) * innerHeight
@@ -182,12 +192,19 @@
     // draw
     X.clearRect(0,0,C.width,C.height);
 
+    // frame & center crosshair (debug visual)
+    X.strokeStyle = 'rgba(120,140,170,.25)';
+    X.lineWidth = 1;
+    X.strokeRect(0.5,0.5, innerWidth-1, innerHeight-1);
+    X.beginPath(); X.moveTo(innerWidth/2-8, innerHeight/2); X.lineTo(innerWidth/2+8, innerHeight/2); X.stroke();
+    X.beginPath(); X.moveTo(innerWidth/2, innerHeight/2-8); X.lineTo(innerWidth/2, innerHeight/2+8); X.stroke();
+
     // links
     X.lineWidth = 1.25;
     for (const {a,b} of links){
       const A = tx(pos[a]), B = tx(pos[b]);
       const glow = Math.min(1, I[a]*I[b]);
-      X.strokeStyle = `rgba(122,162,247,${0.12 + 0.38*glow})`;
+      X.strokeStyle = `rgba(122,162,247,${0.18 + 0.34*glow})`;
       X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
 
