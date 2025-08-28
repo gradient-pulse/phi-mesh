@@ -7,7 +7,7 @@
   button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
   button.active{outline:2px solid #6ea8ff}
   #legend{opacity:.7;font-size:12px}
-  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:12px;opacity:.9;z-index:10;max-width:40ch}
+  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:12px;opacity:.9;z-index:10;max-width:42ch}
   #warn{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#1a212b;border:1px solid #334;padding:14px 16px;border-radius:12px;font-size:14px;display:none;max-width:520px}
   canvas{display:block;width:100%;height:100%}
 </style>
@@ -26,203 +26,157 @@
 <div id="warn"></div>
 <canvas id="c"></canvas>
 
+<!-- match tag_map.html: d3 + data.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="data.js"></script>
+
 <script>
 (async function(){
-  // -------- URL knobs --------
+  // ---- knobs ----
   const q = new URLSearchParams(location.search);
-  const HALF = +q.get('half')    || 3.0;  // seconds half-life (τ = HALF/ln2)
-  const GAP  = +q.get('spacing') || 5.0;  // seconds between pulse events
+  const HALF = +q.get('half')    || 3.0;   // seconds half-life
+  const GAP  = +q.get('spacing') || 5.0;   // seconds between pulses
   const AUTOPLAY = q.get('autoplay') === '1';
   const TAU = HALF / Math.log(2);
 
-  const warn = (msg) => {
-    const el = document.getElementById('warn');
-    el.textContent = msg;
-    el.style.display = 'block';
-  };
+  const warn = (msg)=>{ const el=document.getElementById('warn'); el.textContent=msg; el.style.display='block'; };
 
-  // -------- Ensure PHI_DATA (from docs/data.js) --------
-  async function ensurePHIData(timeoutMs=2500){
-    if (window.PHI_DATA && typeof window.PHI_DATA==='object') return window.PHI_DATA;
-
-    if (!document.querySelector('script[data-role="phi-data"]')){
-      const s = document.createElement('script');
-      s.src = 'data.js';
-      s.async = true;
-      s.dataset.role = 'phi-data';
-      document.head.appendChild(s);
-    }
-
-    const t0 = performance.now();
-    while (performance.now() - t0 < timeoutMs){
-      if (window.PHI_DATA && typeof window.PHI_DATA==='object') return window.PHI_DATA;
-      await new Promise(r=>setTimeout(r, 60));
-    }
-    return null;
-  }
-
-  const D = await ensurePHIData();
+  const D = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
   if(!D || !Array.isArray(D.nodes) || !Array.isArray(D.links)){
-    warn("Tag data not found.\n\nTip: run “Build Tags & Graph” to regenerate docs/data.js, then reload.\nThis page expects window.PHI_DATA provided by docs/data.js.");
-    console.error('PHI_DATA missing; ensure docs/data.js defines window.PHI_DATA.');
+    warn("Tag data not found.\n\nTip: open /tag_map.html first (confirms docs/data.js is present) or run “Build Tags & Graph”.");
     return;
   }
 
-  // -------- Index + robust positions (x|fx|nx, y|fy|ny) --------
-  const idx = new Map(D.nodes.map((n,i)=>[n.id,i]));
-  let pos = D.nodes.map(n => ({
-    x: (n.x ?? n.fx ?? n.nx ?? 0),
-    y: (n.y ?? n.fy ?? n.ny ?? 0),
-  }));
+  // ---- get or make positions ----
+  // if x/y missing, compute a quick force layout (like the tag map)
+  let haveXY = D.nodes.every(n => Number.isFinite(n.x) && Number.isFinite(n.y));
+  if(!haveXY){
+    // resolve links
+    const idToNode = new Map(D.nodes.map(n => [n.id, n]));
+    const links = D.links.map(l => ({
+      source: idToNode.get(l.source) || l.source,
+      target: idToNode.get(l.target) || l.target
+    })).filter(l => l.source && l.target);
 
-  const minX=Math.min(...pos.map(p=>p.x)), maxX=Math.max(...pos.map(p=>p.x));
-  const minY=Math.min(...pos.map(p=>p.y)), maxY=Math.max(...pos.map(p=>p.y));
-  const dx=(maxX-minX)||1, dy=(maxY-minY)||1;
+    // simulate
+    const W = 1200, H = 800;
+    const sim = d3.forceSimulation(D.nodes)
+      .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.40))
+      .force('charge', d3.forceManyBody().strength(-320))
+      .force('center', d3.forceCenter(W/2, H/2))
+      .force('collide', d3.forceCollide().radius( d => 10 ));
 
-  // Normalize to [0..1]
-  pos = pos.map(p => ({x:(p.x-minX)/dx, y:(p.y-minY)/dy}));
-
-  console.log('[gradient_map] nodes:', D.nodes.length, 'links:', D.links.length);
-  console.log('[gradient_map] min/max x,y:', {minX,maxX,minY,maxY});
-
-  // Resolve links to indices
-  const links = D.links.map(l => {
-    const a = idx.get(typeof l.source==='object' ? l.source.id : l.source);
-    const b = idx.get(typeof l.target==='object' ? l.target.id : l.target);
-    return (a!=null && b!=null) ? {a,b} : null;
-  }).filter(Boolean);
-
-  // -------- Build time-ordered pulse events from pulsesByTag --------
-  function parseDate(s){
-    if(!s) return null;
-    const m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})/);
-    if(!m) return null;
-    return new Date(+m[1], +m[2]-1, +m[3]);
+    // run for N ticks to settle (headless)
+    sim.tick(300).stop();
+    haveXY = true;
   }
 
-  const evRaw = [];
-  if (D.pulsesByTag && typeof D.pulsesByTag==='object'){
-    for (const [tag, arr] of Object.entries(D.pulsesByTag)){
+  // normalize to [0..1]
+  let minX=+Infinity,maxX=-Infinity,minY=+Infinity,maxY=-Infinity;
+  for(const n of D.nodes){ minX = Math.min(minX, n.x); maxX=Math.max(maxX, n.x); minY=Math.min(minY, n.y); maxY=Math.max(maxY, n.y); }
+  const dx=(maxX-minX)||1, dy=(maxY-minY)||1;
+  const pos = D.nodes.map(n => ({ x:(n.x-minX)/dx, y:(n.y-minY)/dy }));
+
+  // link indices
+  const idx = new Map(D.nodes.map((n,i)=>[n.id,i]));
+  const linksIdx = D.links.map(l=>{
+    const a = idx.get(typeof l.source==='object'?l.source.id:l.source);
+    const b = idx.get(typeof l.target==='object'?l.target.id:l.target);
+    return (a!=null && b!=null)?{a,b}:null;
+  }).filter(Boolean);
+
+  // ---- build time-ordered pulse events from pulsesByTag ----
+  function parseDate(s){ const m=String(s||'').match(/^(\d{4})-(\d{2})-(\d{2})/); return m? new Date(+m[1],+m[2]-1,+m[3]) : null; }
+
+  const evRaw=[];
+  if (D.pulsesByTag){
+    for(const [tag, arr] of Object.entries(D.pulsesByTag)){
       if(!Array.isArray(arr)) continue;
-      for (const p of arr){
-        const dt = parseDate(p && p.date);
-        if (dt && idx.has(tag)) evRaw.push({tag, date: dt, title: p.title||'Pulse', dateStr: p.date, weight: p.weight||1});
+      for(const p of arr){
+        const dt=parseDate(p.date);
+        if(dt && idx.has(tag)) evRaw.push({tag, date:dt, title:p.title||'Pulse', dateStr:p.date, weight:p.weight||1});
       }
     }
   }
-  evRaw.sort((a,b)=>a.date - b.date);
+  evRaw.sort((a,b)=>a.date-b.date);
+  const events = evRaw.map((e,k)=>({i:idx.get(e.tag), t:k*GAP, meta:e}));
 
-  const events = evRaw.map((e,k)=>({ node: idx.get(e.tag), t:k*GAP, meta:e }));
-
-  // Fallback if no dated pulses: animate top-central tags
-  if (!events.length){
-    const top = [...D.nodes]
-      .map((n,i)=>({i, c: (typeof n.centrality==='number'? n.centrality : 0)}))
-      .sort((a,b)=>b.c-a.c)
-      .slice(0,24);
-    top.forEach((o,k)=>events.push({node:o.i, t:k*GAP, meta:{tag:D.nodes[o.i].id, title:'—', dateStr:''}}));
+  if(!events.length){
+    // fallback: glow the most central nodes in sequence
+    const ranked = [...D.nodes].map((n,i)=>({i, c:(typeof n.centrality==='number'?n.centrality:0)}))
+      .sort((a,b)=>b.c-a.c).slice(0,24);
+    ranked.forEach((o,k)=>events.push({i:o.i, t:k*GAP, meta:{tag:D.nodes[o.i].id, title:'—', dateStr:''}}));
   }
 
-  // Group fires by node
+  // group per node
   const fires = Array.from({length:D.nodes.length}, ()=>[]);
-  for (const ev of events){ if (ev.node!=null) fires[ev.node].push({t:ev.t, w:(ev.meta.weight||1)}); }
+  for(const ev of events){ if(ev.i!=null) fires[ev.i].push({t:ev.t, w:(ev.meta.weight||1)}); }
 
-  // -------- Canvas + transform --------
-  const C = document.getElementById('c'), X = C.getContext('2d');
-  function fit(){
-    const dpr = devicePixelRatio || 1;
-    C.width = innerWidth * dpr;
-    C.height = innerHeight * dpr;
-    X.setTransform(dpr,0,0,dpr,0,0); // draw in CSS pixels
-  }
+  // ---- canvas + transform ----
+  const C=document.getElementById('c'), X=C.getContext('2d');
+  function fit(){ const dpr=devicePixelRatio||1; C.width=innerWidth*dpr; C.height=innerHeight*dpr; X.setTransform(dpr,0,0,dpr,0,0); }
   addEventListener('resize',fit,{passive:true}); fit();
 
-  // Layout transform to viewport with margin
-  const M = 0.05; // margin fraction
-  const tx = p => ({
-    x: (M + (1-2*M)*p.x) * innerWidth,
-    y: (M + (1-2*M)*p.y) * innerHeight
-  });
+  const M=0.05; // margin
+  const tx=p=>({ x:(M+(1-2*M)*p.x)*innerWidth, y:(M+(1-2*M)*p.y)*innerHeight });
 
-  // -------- Playback --------
+  // ---- playback ----
   let t=0, playing=AUTOPLAY;
-  const playBtn = document.getElementById('play');
-  const pauseBtn = document.getElementById('pause');
-  const speedSel = document.getElementById('speed');
+  const playBtn=document.getElementById('play'), pauseBtn=document.getElementById('pause'), speedSel=document.getElementById('speed');
+  function setButtons(){ playBtn.classList.toggle('active',playing); pauseBtn.classList.toggle('active',!playing); }
+  playBtn.onclick=()=>{playing=true; setButtons();}; pauseBtn.onclick=()=>{playing=false; setButtons();}; setButtons();
 
-  function setButtons(){
-    playBtn.classList.toggle('active', playing);
-    pauseBtn.classList.toggle('active', !playing);
-  }
-  playBtn.onclick  = () => { playing=true; setButtons(); };
-  pauseBtn.onclick = () => { playing=false; setButtons(); };
-  setButtons();
-
-  function now(){ return performance.now()/1000 }
-  let last = now();
-
-  const ticker = document.getElementById('ticker');
+  const ticker=document.getElementById('ticker');
   function updateTicker(time){
-    if (!events.length){ ticker.textContent='—'; return; }
-    const k = Math.max(0, Math.min(events.length-1, Math.floor(time/GAP)));
-    const m = events[k].meta || {};
-    ticker.textContent = `${m.title || 'Pulse'}${m.dateStr ? ' — '+m.dateStr : ''}`;
+    if(!events.length){ ticker.textContent='—'; return; }
+    const k=Math.max(0,Math.min(events.length-1,Math.floor(time/GAP)));
+    const m=events[k].meta||{};
+    ticker.textContent=`${m.title||'Pulse'}${m.dateStr ? ' — '+m.dateStr : ''}`;
   }
 
-  function nodeIntensity(i, time){
-    let s = 0;
-    const ts = fires[i];
-    for (let k=ts.length-1; k>=0; k--){
-      const age = time - ts[k].t; if (age < 0) continue;
-      const w = ts[k].w * Math.exp(-age/TAU);
-      if (w < 1e-3) break; // too old to matter
-      s += w;
+  function nodeIntensity(i,time){
+    let s=0; const ts=fires[i];
+    for(let k=ts.length-1;k>=0;k--){
+      const age=time-ts[k].t; if(age<0) continue;
+      const w=ts[k].w * Math.exp(-age/TAU);
+      if(w<1e-3) break;
+      s+=w;
     }
     return s;
   }
 
+  function now(){ return performance.now()/1000 }
+  let last=now();
+
   function frame(){
-    const n = now(), dt = Math.min(0.05, n-last); last = n;
-    if (playing) t += dt * (+speedSel.value);
+    const n=now(), dt=Math.min(0.05,n-last); last=n;
+    if(playing) t+=dt*(+speedSel.value);
 
-    // intensities
-    const I = new Float32Array(D.nodes.length);
-    for (let i=0;i<I.length;i++) I[i] = nodeIntensity(i, t);
+    const I=new Float32Array(D.nodes.length);
+    for(let i=0;i<I.length;i++) I[i]=nodeIntensity(i,t);
 
-    // draw
     X.clearRect(0,0,C.width,C.height);
 
-    // frame & center crosshair (debug visual)
-    X.strokeStyle = 'rgba(120,140,170,.25)';
-    X.lineWidth = 1;
-    X.strokeRect(0.5,0.5, innerWidth-1, innerHeight-1);
-    X.beginPath(); X.moveTo(innerWidth/2-8, innerHeight/2); X.lineTo(innerWidth/2+8, innerHeight/2); X.stroke();
-    X.beginPath(); X.moveTo(innerWidth/2, innerHeight/2-8); X.lineTo(innerWidth/2, innerHeight/2+8); X.stroke();
-
     // links
-    X.lineWidth = 1.25;
-    for (const {a,b} of links){
-      const A = tx(pos[a]), B = tx(pos[b]);
-      const glow = Math.min(1, I[a]*I[b]);
+    X.lineWidth=1.25;
+    for(const {a,b} of linksIdx){
+      const A=tx(pos[a]), B=tx(pos[b]);
+      const glow=Math.min(1, I[a]*I[b]);
       X.strokeStyle = `rgba(122,162,247,${0.18 + 0.34*glow})`;
       X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
 
     // nodes
-    for (let i=0;i<D.nodes.length;i++){
-      const p = tx(pos[i]);
-      const j = Math.min(1, I[i]);
-      const r = 4 + 12*j;
-
-      if (j>0){
-        const g = X.createRadialGradient(p.x,p.y, r*0.4, p.x,p.y, r);
-        g.addColorStop(0, `rgba(145,200,255,${0.22*j})`);
-        g.addColorStop(1, `rgba(145,200,255,0)`);
-        X.fillStyle = g;
-        X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fill();
+    for(let i=0;i<D.nodes.length;i++){
+      const p=tx(pos[i]); const j=Math.min(1,I[i]); const r=4+12*j;
+      if(j>0){
+        const g=X.createRadialGradient(p.x,p.y,r*0.4,p.x,p.y,r);
+        g.addColorStop(0,`rgba(145,200,255,${0.22*j})`);
+        g.addColorStop(1,`rgba(145,200,255,0)`);
+        X.fillStyle=g; X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fill();
       }
-      X.fillStyle = `rgba(200,230,255,${0.50 + 0.45*j})`;
-      X.beginPath(); X.arc(p.x,p.y, 2.5 + 2*j, 0, Math.PI*2); X.fill();
+      X.fillStyle=`rgba(200,230,255,${0.50+0.45*j})`;
+      X.beginPath(); X.arc(p.x,p.y,2.5+2*j,0,Math.PI*2); X.fill();
     }
 
     updateTicker(t);
