@@ -16,10 +16,10 @@
     color:var(--muted);padding:6px 10px;border-radius:10px;font-size:12px;z-index:10}
   canvas{display:block;width:100%;height:100%}
 
-  /* labels that fade in when a tag is “lit” */
+  /* labels fade on when lit; tiny glow for legibility */
   .label { position:absolute; pointer-events:none; color:var(--hot);
     font-size:12px; text-shadow:0 0 10px rgba(255,210,130,.55), 0 0 2px rgba(0,0,0,.8);
-    opacity:0; transition:opacity .25s ease }
+    opacity:0; transition:opacity .22s ease }
   .label.on { opacity:1 }
 </style>
 
@@ -35,90 +35,79 @@
 </div>
 <div id="ticker">—</div>
 <canvas id="c"></canvas>
-<!-- IMPORTANT: use the same data source as tag_map.html -->
 <script src="data.js"></script>
 <script>
-/* Φ-Mesh Gradient Map — pulse-driven node emphasis
-   - reads window.PHI_DATA (same as tag_map.html)
-   - builds a pulse timeline by scanning pulsesByTag
-   - centers/scales node positions into canvas
-   - highlights all tags belonging to the current pulse (names fade in) */
-
 (async function(){
-  // --- URL knobs ---------------------------------------------------------
+  // ---- URL knobs ---------------------------------------------------------
   const q = new URLSearchParams(location.search);
-  const HALF  = +q.get('half')     || 3.0; // seconds half-life for brightness
+  const HALF  = +q.get('half')     || 3.0; // seconds half-life
   const PACE  = +q.get('spacing')  || 5.0; // seconds between pulses
   const AUTO  = (q.get('autoplay') || '1') === '1';
 
-  // --- Data handshake (same object tag_map uses) -------------------------
+  // ---- Data handshake (same object as tag_map) --------------------------
   const DATA = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
   if(!DATA || !Array.isArray(DATA.nodes) || !Array.isArray(DATA.links)){
-    console.error('[gradient_map] PHI_DATA missing; open tag_map.html first or ensure docs/data.js defines window.PHI_DATA.');
     document.getElementById('ticker').textContent = 'PHI_DATA not found.';
+    console.error('[gradient_map] PHI_DATA missing; ensure docs/data.js defines window.PHI_DATA.');
     return;
   }
 
-  // Build a global pulse timeline by scanning pulsesByTag
+  // Build timeline by merging pulses with same (title,date)
   function buildTimeline(pulsesByTag){
-    const merged = new Map(); // key → {title,date,tags:Set}
-    if (!pulsesByTag) return [];
-    for (const [tag, arr] of Object.entries(pulsesByTag)){
+    const merged = new Map();
+    for (const [tag, arr] of Object.entries(pulsesByTag||{})){
       if (!Array.isArray(arr)) continue;
       for (const p of arr){
         const title = String(p.title || p.id || 'Pulse').trim();
         const date  = String(p.date  || '').trim();
-        const key   = title + '|' + date; // crude but stable enough for our use
+        const key   = title + '|' + date;
         const rec   = merged.get(key) || { title, date, tags:new Set() };
         rec.tags.add(tag);
         merged.set(key, rec);
       }
     }
     const out = [...merged.values()];
-    // sort by date asc if present, else keep insertion order
     out.sort((a,b)=> String(a.date).localeCompare(String(b.date)));
     return out;
   }
-
   const TIMELINE = buildTimeline(DATA.pulsesByTag);
-  if(!TIMELINE.length){
-    document.getElementById('ticker').textContent = 'No pulses found.';
-  }
 
-  // --- Graph index & coordinates ----------------------------------------
+  // ---- Index & coordinates (with robust fallbacks) ----------------------
   const idToIdx = new Map(DATA.nodes.map((n,i)=>[n.id, i]));
   const N = DATA.nodes.length;
 
-  // pull saved positions; fallback to 0
-  const raw = DATA.nodes.map(n => ({ x:+(n.x ?? 0), y:+(n.y ?? 0), id:n.id }));
+  const raw = DATA.nodes.map(n => ({
+    id: n.id,
+    x: +(n.x ?? n.fx ?? n.nx ?? 0),
+    y: +(n.y ?? n.fy ?? n.ny ?? 0),
+  }));
 
-  // compute bounds
+  // bounds with padding
   let minX=+Infinity, maxX=-Infinity, minY=+Infinity, maxY=-Infinity;
-  for(const p of raw){ if(isFinite(p.x)&&isFinite(p.y)){ if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x; if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y; } }
+  for(const p of raw){
+    if(isFinite(p.x)&&isFinite(p.y)){
+      if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
+      if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
+    }
+  }
   if(!isFinite(minX)||!isFinite(maxX)||!isFinite(minY)||!isFinite(maxY)){ minX=0;maxX=1;minY=0;maxY=1; }
-
-  // add a little margin pad
-  const PAD_FAC = 0.06;
+  const PAD = 0.06;
   const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
-  minX -= dx*PAD_FAC; maxX += dx*PAD_FAC; minY -= dy*PAD_FAC; maxY += dy*PAD_FAC;
+  minX -= dx*PAD; maxX += dx*PAD; minY -= dy*PAD; maxY += dy*PAD;
 
-  // canvas & transforms
-  const C = document.getElementById('c');
-  const X = C.getContext('2d');
+  // canvas
+  const C = document.getElementById('c'), X = C.getContext('2d');
   const labelsLayer = document.createElement('div');
-  labelsLayer.style.position='fixed';
-  labelsLayer.style.inset='0';
-  labelsLayer.style.pointerEvents='none';
+  labelsLayer.style.position='fixed'; labelsLayer.style.inset='0'; labelsLayer.style.pointerEvents='none';
   document.body.appendChild(labelsLayer);
 
   function fit(){
     const dpr = devicePixelRatio || 1;
     C.width  = Math.floor(innerWidth * dpr);
     C.height = Math.floor(innerHeight* dpr);
-    X.setTransform(dpr,0,0,dpr,0,0); // draw in CSS pixels
+    X.setTransform(dpr,0,0,dpr,0,0);
   }
-  addEventListener('resize', fit, {passive:true});
-  fit();
+  addEventListener('resize', fit, {passive:true}); fit();
 
   function mapToCanvas(p){
     const W = C.width  / (devicePixelRatio||1);
@@ -128,28 +117,41 @@
     return { x: nx*W, y: ny*H };
   }
 
-  // pre-map positions & make label elements
-  const P = raw.map((p,i)=>({ ...p, ...mapToCanvas(p), neighbors:[] }));
+  const P = raw.map(p => ({ ...p, ...mapToCanvas(p), neighbors:[] }));
+
+  // links + neighbor lists
   const linkIdx = [];
   for(const l of DATA.links){
     const a = idToIdx.get(l.source) ?? idToIdx.get(l.source?.id);
     const b = idToIdx.get(l.target) ?? idToIdx.get(l.target?.id);
-    if(a==null || b==null) continue;
+    if(a==null||b==null) continue;
     linkIdx.push([a,b]);
-    P[a].neighbors.push(b);
-    P[b].neighbors.push(a);
+    P[a].neighbors.push(b); P[b].neighbors.push(a);
   }
 
-  // quick degree → size
+  // degree → radius scale
   const deg = P.map(p=>p.neighbors.length);
   const dmin = Math.min(...deg), dmax = Math.max(...deg);
   function nodeR(i){
     const t = (deg[i] - dmin) / Math.max(1,(dmax-dmin));
-    return 2 + 3 + 7*t; // base 5..12 px
+    return 5 + 7*t; // 5..12 px
   }
 
-  // --- pulse engine ------------------------------------------------------
-  const TAU = HALF / Math.log(2); // exp half-life → time constant
+  // labels (tiny jitter to reduce perfect overlap)
+  const labels = P.map((p,i)=>{
+    const el = document.createElement('div');
+    el.className='label';
+    el.textContent = p.id;
+    // precompute a stable small jitter based on id hash
+    let h=0; for (let k=0;k<p.id.length;k++) h = (h*131 + p.id.charCodeAt(k))|0;
+    el.dataset.jx = ((h%7)-3); // -3..3 px
+    el.dataset.jy = (((h>>3)%5)-2); // -2..2 px
+    labelsLayer.appendChild(el);
+    return el;
+  });
+
+  // pulse engine
+  const TAU = HALF / Math.log(2);
   let t=0, playing=AUTO;
   const speedSel = document.getElementById('speed');
   const btnPlay  = document.getElementById('play');
@@ -164,94 +166,71 @@
   btnPause.onclick= ()=>{ playing=false; setButtons(); };
   setButtons();
 
-  // build label elements for every node (we toggle them on when lit)
-  const labels = P.map(p=>{
-    const el = document.createElement('div');
-    el.className='label';
-    el.textContent = p.id;
-    labelsLayer.appendChild(el);
-    return el;
-  });
-
-  const events = TIMELINE.map((ev,k)=>({
-    ...ev,
-    t: k*PACE,
-    tagSet: ev.tags
-  }));
+  const events = TIMELINE.map((ev,k)=>({ ...ev, t:k*PACE, tagSet:ev.tags }));
 
   function now(){ return performance.now()/1000; }
   let last = now();
 
   function frame(){
-    const n = now(), dt = Math.min(0.05, n-last); last=n;
+    const n=now(), dt=Math.min(0.05,n-last); last=n;
     if(playing) t += dt * (+speedSel.value || 1);
 
-    // pick current index in loop
+    // loop timeline
     const totalT = (events.length ? events.length-1 : 0) * PACE;
-    const modt = (events.length ? (t % (totalT + PACE)) : 0);
-    const idx = events.length ? Math.min(events.length-1, Math.floor(modt / PACE)) : -1;
+    const modt   = (events.length ? (t % (totalT + PACE)) : 0);
+    const idx    = events.length ? Math.min(events.length-1, Math.floor(modt / PACE)) : -1;
 
-    // compute intensity field
+    // intensity field
     const I = new Float32Array(N);
+
     if (idx >= 0){
       const ev = events[idx];
-      const localAge = modt - ev.t; // 0..PACE
+      const localAge  = modt - ev.t; // 0..PACE
       const timeDecay = Math.exp(-localAge/TAU);
-      // brighten all tags in this pulse + softly their neighbors
-      const activeIdx = [];
+
+      const active = [];
       ev.tagSet.forEach(tag=>{
         const i = idToIdx.get(tag);
-        if(i!=null){ activeIdx.push(i); I[i] += 0.95*timeDecay; }
+        if(i!=null){ active.push(i); I[i] += 0.95*timeDecay; }
       });
-      for(const i of activeIdx){
+      // neighbor glow
+      for(const i of active){
         for(const j of P[i].neighbors){
           I[j] += 0.35*timeDecay;
         }
       }
-      // ticker
       ticker.textContent = `${ev.title} — ${ev.date || '—'}`;
     } else {
       ticker.textContent = '—';
     }
 
-    // draw
+    // draw background graph faintly so context is always visible
     X.clearRect(0,0,C.width,C.height);
-
-    // links
-    X.globalAlpha = 0.15;
-    X.lineWidth = 1;
-    X.strokeStyle = '#8fb2e8';
-    for(const [a,b] of linkIdx){
-      const A=P[a], B=P[b];
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
-    }
+    X.globalAlpha = 0.12; X.lineWidth = 1; X.strokeStyle = '#8fb2e8';
+    for(const [a,b] of linkIdx){ const A=P[a], B=P[b]; X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke(); }
 
     // nodes + labels
     for(let i=0;i<N;i++){
-      const p=P[i], r = nodeR(i);
+      const p=P[i], r=nodeR(i);
       const bright = Math.min(1, I[i]);
-      const baseA  = 0.25 + 0.55*bright;
+      const baseA  = 0.22 + 0.55*bright;
 
-      // node
       X.beginPath(); X.arc(p.x,p.y, r + 2*bright, 0, Math.PI*2);
       X.fillStyle = `rgba(180,210,255,${baseA})`;
       X.fill();
 
-      // subtle glow ring when hot
       if (bright>0.6){
         X.beginPath(); X.arc(p.x,p.y, r + 6*bright, 0, Math.PI*2);
-        X.strokeStyle = `rgba(255,220,170,${0.25*(bright-0.6)/(0.4)})`;
-        X.lineWidth = 2;
-        X.stroke();
+        X.strokeStyle = `rgba(255,220,170,${0.25*(bright-0.6)/0.4})`;
+        X.lineWidth = 2; X.stroke();
       }
 
-      // labels: show when bright, otherwise hide
+      // labels on lit nodes; jitter + small offset
       const L = labels[i];
       if (bright>0.65){
         L.classList.add('on');
-        // keep on-screen with tiny offset
-        const offx = 8, offy = -18;
-        L.style.transform = `translate(${(p.x+offx)|0}px, ${(p.y+offy)|0}px)`;
+        const jx = +L.dataset.jx || 0, jy = +L.dataset.jy || 0;
+        L.style.transform = `translate(${(p.x+8+jx)|0}px, ${(p.y-18+jy)|0}px)`;
       } else {
         L.classList.remove('on');
       }
