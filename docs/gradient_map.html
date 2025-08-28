@@ -6,6 +6,8 @@
   #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
   button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
   #legend{opacity:.7;font-size:12px}
+  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:12px;opacity:.85;z-index:10;max-width:36ch}
+  #warn{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#1a212b;border:1px solid #334;padding:14px 16px;border-radius:12px;font-size:14px;display:none;max-width:520px}
   canvas{display:block;width:100%;height:100%}
 </style>
 
@@ -17,8 +19,10 @@
       <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
     </select>
   </label>
-  <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code> • fires follow pulse dates</span>
+  <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code></span>
 </div>
+<div id="ticker">—</div>
+<div id="warn"></div>
 <canvas id="c"></canvas>
 
 <script>
@@ -26,19 +30,46 @@
   // -------- URL knobs --------
   const q = new URLSearchParams(location.search);
   const HALF = +q.get('half')    || 3.0;  // seconds half-life (τ = HALF/ln2)
-  const GAP  = +q.get('spacing') || 5.0;  // seconds between consecutive pulse events
+  const GAP  = +q.get('spacing') || 5.0;  // seconds between pulse events
   const AUTOPLAY = q.get('autoplay') === '1';
   const TAU = HALF / Math.log(2);
 
-  // -------- Pull graph directly from Tag Map data --------
-  // Tag Map exposes `window.PHI_DATA = { nodes:[{id,x,y,centrality…}], links:[{source,target}], pulsesByTag:{tag:[{title,date,…}]}, … }`
-  const D = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
+  const warn = (msg) => {
+    const el = document.getElementById('warn');
+    el.textContent = msg;
+    el.style.display = 'block';
+  };
+
+  // -------- Ensure PHI_DATA is present (from docs/data.js) --------
+  async function ensurePHIData(timeoutMs=2500){
+    if (window.PHI_DATA && typeof window.PHI_DATA==='object') return window.PHI_DATA;
+
+    // inject script tag once
+    if (!document.querySelector('script[data-role="phi-data"]')){
+      const s = document.createElement('script');
+      s.src = 'data.js';              // same folder (docs/)
+      s.async = true;
+      s.dataset.role = 'phi-data';
+      document.head.appendChild(s);
+    }
+
+    // wait up to timeout
+    const t0 = performance.now();
+    while (performance.now() - t0 < timeoutMs){
+      if (window.PHI_DATA && typeof window.PHI_DATA==='object') return window.PHI_DATA;
+      await new Promise(r=>setTimeout(r, 60));
+    }
+    return null;
+  }
+
+  const D = await ensurePHIData();
   if(!D || !Array.isArray(D.nodes) || !Array.isArray(D.links)){
-    console.error('PHI_DATA missing; open tag_map.html first or ensure docs/data.js defines window.PHI_DATA.');
+    warn("Tag data not found.\n\nTip: run “Build Tags & Graph” to regenerate docs/data.js, then reload.\nThis page expects window.PHI_DATA provided by docs/data.js.");
+    console.error('PHI_DATA missing; ensure docs/data.js defines window.PHI_DATA.');
     return;
   }
 
-  // Index + positions (already in screen coords for Tag Map; normalize to [0,1] here)
+  // -------- Index + normalized positions --------
   const idx = new Map(D.nodes.map((n,i)=>[n.id,i]));
   let pos = D.nodes.map(n => ({x:(n.x ?? 0), y:(n.y ?? 0)}));
   const minX=Math.min(...pos.map(p=>p.x)), maxX=Math.max(...pos.map(p=>p.x));
@@ -53,44 +84,42 @@
     return (a!=null && b!=null) ? {a,b} : null;
   }).filter(Boolean);
 
-  // -------- Build time-ordered “fires” from pulse dates --------
-  // Flatten pulsesByTag into [{tag, date: 'YYYY-MM-DD'}], sort by date, assign times t=k*GAP.
+  // -------- Build time-ordered pulse events from pulsesByTag --------
   function parseDate(s){
-    // allow 'YYYY-MM-DD' or 'YYYY-MM-DD_…'
     if(!s) return null;
     const m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})/);
     if(!m) return null;
     return new Date(+m[1], +m[2]-1, +m[3]);
   }
 
-  const rawEvents = [];
+  const evRaw = [];
   if (D.pulsesByTag && typeof D.pulsesByTag==='object'){
     for (const [tag, arr] of Object.entries(D.pulsesByTag)){
       if(!Array.isArray(arr)) continue;
       for (const p of arr){
         const dt = parseDate(p && p.date);
-        if (dt && idx.has(tag)) rawEvents.push({tag, date: dt});
+        if (dt && idx.has(tag)) evRaw.push({tag, date: dt, title: p.title||'Pulse', dateStr: p.date, weight: p.weight||1});
       }
     }
   }
+  evRaw.sort((a,b)=>a.date - b.date);
 
-  rawEvents.sort((a,b)=>a.date - b.date);
-  const events = rawEvents.map((ev,k)=>({
-    tag: ev.tag,
-    node: idx.get(ev.tag),
-    t: k * GAP
-  }));
+  const events = evRaw.map((e,k)=>({ node: idx.get(e.tag), t:k*GAP, meta:e }));
 
-  // If there are no dated pulses, provide a gentle default (walk through top centrality tags)
+  // Fallback if no dated pulses
   if (!events.length){
     const top = [...D.nodes]
       .map((n,i)=>({i, c: (typeof n.centrality==='number'? n.centrality : 0)}))
       .sort((a,b)=>b.c-a.c)
       .slice(0,24);
-    top.forEach((o,k)=>events.push({tag:D.nodes[o.i].id, node:o.i, t:k*GAP}));
+    top.forEach((o,k)=>events.push({node:o.i, t:k*GAP, meta:{tag:D.nodes[o.i].id, title:'—', dateStr:''}}));
   }
 
-  // -------- Canvas plumbing --------
+  // Group fires by node
+  const fires = Array.from({length:D.nodes.length}, ()=>[]);
+  for (const ev of events){ if (ev.node!=null) fires[ev.node].push({t:ev.t, w:(ev.meta.weight||1)}); }
+
+  // -------- Canvas + transform --------
   const C = document.getElementById('c'), X = C.getContext('2d');
   function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio; X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
   addEventListener('resize',fit,{passive:true}); fit();
@@ -101,7 +130,7 @@
     y: (M + (1-2*M)*p.y) * C.height / devicePixelRatio
   });
 
-  // -------- Playback state --------
+  // -------- Playback --------
   let t=0, playing=AUTOPLAY;
   const speedSel = document.getElementById('speed');
   document.getElementById('play').onclick  = () => (playing=true);
@@ -109,19 +138,25 @@
   function now(){ return performance.now()/1000 }
   let last = now();
 
-  // Precompute for node-centric access: eventsByNode[i] = [t0,t1,...]
-  const fires = Array.from({length:D.nodes.length}, ()=>[]);
-  for (const ev of events){ if (ev.node!=null) fires[ev.node].push(ev.t); }
+  const ticker = document.getElementById('ticker');
+  function updateTicker(time){
+    // find latest event not after t
+    let k = Math.min(events.length-1, Math.floor(time/GAP));
+    if (k >= 0){
+      const m = events[k].meta || {};
+      ticker.textContent = `${m.title || 'Pulse'}${m.dateStr ? ' — '+m.dateStr : ''}`;
+    } else {
+      ticker.textContent = '—';
+    }
+  }
 
-  // -------- Draw loop --------
   function nodeIntensity(i, time){
-    // Sum decays from all fires of node i
+    // sum exponential decays from recent fires
     let s = 0;
     const ts = fires[i];
-    // walk last few only (performance)
     for (let k=ts.length-1; k>=0; k--){
-      const age = time - ts[k]; if (age < 0) continue;
-      const w = Math.exp(-age/TAU);
+      const age = time - ts[k].t; if (age < 0) continue;
+      const w = ts[k].w * Math.exp(-age/TAU);
       if (w < 1e-3) break;
       s += w;
     }
@@ -132,14 +167,14 @@
     const n = now(), dt = Math.min(0.05, n-last); last = n;
     if (playing) t += dt * (+speedSel.value);
 
-    // Compute intensities
+    // intensities
     const I = new Float32Array(D.nodes.length);
     for (let i=0;i<I.length;i++) I[i] = nodeIntensity(i, t);
 
-    // Draw
+    // draw
     X.clearRect(0,0,C.width,C.height);
 
-    // Links glow when both ends are active (product)
+    // links
     X.lineWidth = 1.2;
     for (const {a,b} of links){
       const A = tx(pos[a]), B = tx(pos[b]);
@@ -148,13 +183,12 @@
       X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
 
-    // Nodes: base dot + intensity halo
+    // nodes
     for (let i=0;i<D.nodes.length;i++){
       const p = tx(pos[i]);
       const j = Math.min(1, I[i]);
       const r = 4 + 12*j;
 
-      // halo
       if (j>0){
         const g = X.createRadialGradient(p.x,p.y, r*0.4, p.x,p.y, r);
         g.addColorStop(0, `rgba(145,200,255,${0.20*j})`);
@@ -162,11 +196,11 @@
         X.fillStyle = g;
         X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fill();
       }
-      // core
       X.fillStyle = `rgba(200,230,255,${0.45 + 0.5*j})`;
       X.beginPath(); X.arc(p.x,p.y, 2.5 + 2*j, 0, Math.PI*2); X.fill();
     }
 
+    updateTicker(t);
     requestAnimationFrame(frame);
   }
   frame();
