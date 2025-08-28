@@ -2,17 +2,15 @@
 <meta charset="utf-8" />
 <title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
 <style>
-  html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;
-    background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
+  html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
   button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
   #legend{opacity:.7;font-size:12px}
-  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;
-    padding:8px 12px;border-radius:10px;font-size:14px;opacity:.95;z-index:10;max-width:46vw}
+  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:13px;opacity:.9;z-index:10}
   canvas{display:block;width:100%;height:100%}
 </style>
 
+<!-- IMPORTANT: reuse the same data bundle the tag map uses -->
 <script src="data.js"></script>
 
 <div id="ui">
@@ -20,168 +18,236 @@
   <button id="pause">⏸︎ Pause</button>
   <label>Speed
     <select id="speed">
-      <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
+      <option>0.5</option><option>1.0</option><option>1.5</option><option selected>2.0</option>
     </select>
   </label>
-  <span id="legend">URL: <code>?half=2.5&spacing=6&maxhops=2&autoplay=1</code></span>
+  <span id="legend">URL: <code>?half=3&spacing=6&maxhops=2&autoplay=1</code></span>
 </div>
-<div id="ticker"></div>
+<div id="ticker">—</div>
 <canvas id="c"></canvas>
 
 <script>
 (async function(){
-  // ---- knobs ----
-  const q=new URLSearchParams(location.search);
-  const HALF  = +q.get('half')    || 2.5;     // seconds half-life
-  const PACE  = +q.get('spacing') || 6.0;     // seconds between pulses
-  const AUTOPLAY = q.get('autoplay')==='1';
-  const HOP_DECAY = +q.get('hop') || 0.75;    // per-hop decay
-  const MAX_HOPS  = +(q.get('maxhops')||2);
+  // ---------- URL knobs ----------
+  const q = new URLSearchParams(location.search);
+  const HALF     = +q.get('half')     || 3;     // seconds half-life for the echo
+  const SPACING  = +q.get('spacing')  || 6;     // seconds between pulses
+  const MAXHOPS  = +q.get('maxhops')  || 2;     // neighbor radius to light
+  const LABELS   = (q.get('labels')||'1') !== '0';
+  const AUTOPLAY = q.get('autoplay')  === '1';
 
-  // appearance
-  const BACK_NODE_OPACITY = 0.06;   // quiet mesh
-  const BACK_LINK_OPACITY = 0.06;
-  const ACTIVE_LINK_OPACITY = 0.22; // links touching lit nodes
-  const LABEL_THRESHOLD = 0.20;     // intensity needed to render label
-  const GLOW_SCALE = 1.6;           // stronger glow for lit nodes
+  // ---------- Data (from docs/data.js) ----------
+  // Accept either PHI_DATA (tag map) or GRAPH_DATA (older build)
+  const D = (window.PHI_DATA && window.PHI_DATA.nodes && window.PHI_DATA.links)
+          ? window.PHI_DATA
+          : (window.GRAPH_DATA || {nodes:[],links:[],pulses:[]});
 
-  // ---- graph (PHI_DATA from data.js) ----
-  const PHI=(window.PHI_DATA&&typeof window.PHI_DATA==='object')?window.PHI_DATA:{nodes:[],links:[],pulsesByTag:{}};
-  const nodes=(PHI.nodes||[]).map(n=>({id:n.id,x:n.x??n.fx??n.nx??0,y:n.y??n.fy??n.ny??0}));
-  const id2i=new Map(nodes.map((n,i)=>[n.id,i]));
-  const links=(PHI.links||[]).map(e=>({a:id2i.get(e.source),b:id2i.get(e.target)})).filter(e=>e.a!=null&&e.b!=null);
+  const nodes = D.nodes || [];
+  const links = (D.links || []).map(l => {
+    // normalize to ids
+    const s = (typeof l.source === 'object') ? l.source.id : l.source;
+    const t = (typeof l.target === 'object') ? l.target.id : l.target;
+    return {source:s, target:t};
+  });
 
-  // normalize coords to [0..1] if needed
-  function spreadOK(arr,sel){const xs=arr.map(sel),lo=Math.min(...xs),hi=Math.max(...xs);return isFinite(lo)&&isFinite(hi)&&(hi-lo)>1e-6}
-  const haveXY=spreadOK(nodes,n=>+n.x)&&spreadOK(nodes,n=>+n.y);
-  if(!haveXY){
-    // quick radial fallback
-    const N=nodes.length; for(let i=0;i<N;i++){const t=2*Math.PI*i/N;nodes[i].x=(Math.cos(t)+1)/2;nodes[i].y=(Math.sin(t)+1)/2;}
-  }else{
-    const minX=Math.min(...nodes.map(n=>n.x)),maxX=Math.max(...nodes.map(n=>n.x));
-    const minY=Math.min(...nodes.map(n=>n.y)),maxY=Math.max(...nodes.map(n=>n.y));
-    const w=maxX-minX,h=maxY-minY;
-    if(w>1.01||h>1.01){for(const n of nodes){n.x=(n.x-minX)/Math.max(1e-6,w);n.y=(n.y-minY)/Math.max(1e-6,h);}}
-  }
-
-  const N=nodes.length;
-  const adj=Array.from({length:N},()=>[]); for(const e of links){adj[e.a].push(e.b);adj[e.b].push(e.a);}
-
-  // ---- pulse timeline (invert pulsesByTag) ----
-  const pMap=new Map();
-  function kOf(p){return (p.title||'')+'|'+(p.date||'');}
-  for(const [tag,arr] of Object.entries(PHI.pulsesByTag||{})){
-    for(const p of (arr||[])){
-      const k=kOf(p); if(!pMap.has(k)) pMap.set(k,{title:p.title||'Pulse',date:p.date||'',tags:new Set()});
-      pMap.get(k).tags.add(tag);
-    }
-  }
-  const pulses=[...pMap.values()].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-
-  // ---- canvas ---
-  const C=document.getElementById('c'), X=C.getContext('2d');
-  function fit(){C.width=innerWidth*devicePixelRatio;C.height=innerHeight*devicePixelRatio;
-    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);} addEventListener('resize',fit,{passive:true}); fit();
-  function tx(n){return {x:n.x*C.width/devicePixelRatio,y:n.y*C.height/devicePixelRatio};}
-
-  // ---- controls ----
-  let t=0, playing=AUTOPLAY, last=performance.now()/1000;
-  const speedSel=document.getElementById('speed');
-  document.getElementById('play').onclick=()=>playing=true;
-  document.getElementById('pause').onclick=()=>playing=false;
-  const ticker=document.getElementById('ticker');
-  const TAU = HALF/Math.log(2);
-
-  // BFS brighten with hop limit; also collect edge mask near lit set
-  function brightenFrom(seeds, I, edgeMask){
-    const seen=new Int16Array(N); seen.fill(-1);
-    const q=[]; for(const s of seeds){ if(s!=null && seen[s]===-1){ seen[s]=0; q.push(s); } }
-    while(q.length){
-      const i=q.shift(); const h=seen[i]; const amp=Math.pow(HOP_DECAY,h);
-      I[i]+=amp;
-      if(h<MAX_HOPS){
-        for(const j of adj[i]){
-          if(seen[j]===-1){ seen[j]=h+1; q.push(j); }
-          // mark edges touching the active neighborhood
-          edgeMask.add(i<j ? (i+'_'+j) : (j+'_'+i));
-        }
+  // Build a chronological pulse list with tag arrays
+  // Prefer D.pulses if present; else reconstruct from pulsesByTag (best-effort)
+  let pulses = Array.isArray(D.pulses) ? D.pulses.slice() : [];
+  if (!pulses.length && D.pulsesByTag){
+    const rows = [];
+    for (const [tag, arr] of Object.entries(D.pulsesByTag)){
+      for (const p of (arr||[])){
+        const key = p.id || p.title || p.date || JSON.stringify(p).slice(0,60);
+        rows.push({key, date: p.date || '', title: p.title || key, tags: [tag]});
       }
     }
+    // merge rows with same key
+    const byKey = new Map();
+    for (const r of rows){
+      if (!byKey.has(r.key)) byKey.set(r.key, {date:r.date, title:r.title, tags:new Set()});
+      r.tags.forEach(t => byKey.get(r.key).tags.add(t));
+    }
+    pulses = [...byKey.values()]
+      .map(x => ({date:x.date, title:x.title, tags:[...x.tags]}))
+      .sort((a,b)=> String(a.date).localeCompare(String(b.date)));
   }
+
+  // ---------- Indexing & layout ----------
+  const idx = new Map(nodes.map((n,i)=>[n.id, i]));
+  const adj = Array.from({length:nodes.length}, ()=>[]);
+  for (const e of links){
+    const a = idx.get(e.source), b = idx.get(e.target);
+    if (a==null || b==null) continue;
+    adj[a].push(b); adj[b].push(a);
+  }
+
+  // Use precomputed x,y if provided; else scatter them on a circle
+  const N = nodes.length;
+  const pos = nodes.map((n,i)=>{
+    let x = (n.x ?? n.fx ?? n.nx), y = (n.y ?? n.fy ?? n.ny);
+    if (typeof x !== 'number' || typeof y !== 'number'){
+      const th = (i/N)*Math.PI*2;
+      x = Math.cos(th); y = Math.sin(th);
+    }
+    return {x, y};
+  });
+  const minX = Math.min(...pos.map(p=>p.x)), maxX = Math.max(...pos.map(p=>p.x));
+  const minY = Math.min(...pos.map(p=>p.y)), maxY = Math.max(...pos.map(p=>p.y));
+
+  // ---------- Canvas ----------
+  const C = document.getElementById('c');
+  const X = C.getContext('2d');
+  function fit(){
+    C.width  = innerWidth * devicePixelRatio;
+    C.height = innerHeight * devicePixelRatio;
+    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  }
+  addEventListener('resize', fit, {passive:true}); fit();
+  function toCanvas(p){
+    // pad 5% around
+    const pad = 0.05;
+    const nx = (p.x - minX) / (maxX - minX || 1);
+    const ny = (p.y - minY) / (maxY - minY || 1);
+    return {
+      x: (pad + nx*(1-2*pad)) * C.width / devicePixelRatio,
+      y: (pad + ny*(1-2*pad)) * C.height/ devicePixelRatio
+    };
+  }
+
+  // ---------- Hop expansion ----------
+  function expandFromTags(tagIds, maxhops){
+    const q = [];
+    const seen = new Map(); // id -> hop
+    for (const t of tagIds){
+      const i = idx.get(t);
+      if (i!=null){ seen.set(i,0); q.push(i); }
+    }
+    while(q.length){
+      const i = q.shift();
+      const h = seen.get(i);
+      if (h >= maxhops) continue;
+      for (const j of adj[i]){
+        if (!seen.has(j)){ seen.set(j, h+1); q.push(j); }
+      }
+    }
+    return seen; // Map(nodeIndex -> hop)
+  }
+
+  // ---------- Echo & animation ----------
+  const TAU = HALF / Math.log(2);
+  const ticker = document.getElementById('ticker');
+
+  // schedule: evenly spaced by SPACING
+  const events = pulses.map((p,k) => ({
+    t: k*SPACING,
+    title: p.title || 'Pulse',
+    date:  p.date  || '',
+    tags:  (p.tags || []).filter(t => idx.has(t))
+  }));
+
+  let t = 0;
+  let playing = AUTOPLAY;
+  const speedSel = document.getElementById('speed');
+  document.getElementById('play').onclick  = () => playing = true;
+  document.getElementById('pause').onclick = () => playing = false;
+  function now(){ return performance.now()/1000; }
+  let last = now();
 
   function frame(){
-    const now=performance.now()/1000, dt=Math.min(0.05, now-last); last=now; if(playing) t+=dt*(+speedSel.value);
+    const n = now(), dt = Math.min(0.05, n-last); last = n;
+    if (playing) t += dt * (+speedSel.value || 1);
 
-    // choose most recent pulse whose time has arrived
-    let active=null;
-    for(let i=0;i<pulses.length;i++){
-      const evT=i*PACE; if(t>=evT) active={i, ev:{t:evT, title:pulses[i].title, date:pulses[i].date, idx:[...pulses[i].tags].map(tag=>id2i.get(tag)).filter(x=>x!=null)}};
-      else break;
+    // Which events are “active enough” to matter right now?
+    // (We draw faded echoes, but skip those older than ~6 half-lives)
+    const live = [];
+    for (const ev of events){
+      const age = t - ev.t;
+      if (age < -SPACING) continue; // not yet
+      const amp = Math.exp(-Math.max(0,age)/TAU);
+      if (amp < 0.02) continue;
+      live.push({ev, amp});
     }
 
-    // intensities for CURRENT pulse only
-    const I=new Float32Array(N);
-    const edgeMask=new Set(); // string keys "a_b" near-lit
-    if(active){
-      const age=t-active.ev.t; const timeDecay=Math.exp(-Math.max(0,age)/TAU);
-      brightenFrom(active.ev.idx,I,edgeMask);
-      for(let i=0;i<N;i++) I[i]*=timeDecay;
+    // Build a lit set with min hop per node across all live events
+    const lit = new Map(); // i -> {amp, hop}
+    let headline = '—';
+    if (live.length){
+      const {ev} = live[Math.min(live.length-1, live.findIndex(x=>x.ev.t>=t) >= 0 ? live.findIndex(x=>x.ev.t>=t) : live.length-1)];
+      headline = `${ev.title} — ${ev.date}`;
+    }
+    ticker.textContent = headline;
+
+    for (const {ev, amp} of live){
+      const hops = expandFromTags(ev.tags, MAXHOPS);
+      for (const [i, h] of hops.entries()){
+        const prev = lit.get(i);
+        const w = amp * Math.pow(0.65, h); // hop fade
+        if (!prev || w > prev.amp) lit.set(i, {amp:w, hop:h});
+      }
     }
 
-    // draw
+    // ---------- draw ----------
     X.clearRect(0,0,C.width,C.height);
 
-    // 1) background links (very faint)
-    X.globalAlpha=BACK_LINK_OPACITY; X.lineWidth=1; X.strokeStyle="#7aa2f7";
-    for(const e of links){const A=tx(nodes[e.a]),B=tx(nodes[e.b]);X.beginPath();X.moveTo(A.x,A.y);X.lineTo(B.x,B.y);X.stroke();}
-
-    // 2) background nodes (tiny, faint)
-    for(let i=0;i<N;i++){
-      const p=tx(nodes[i]); X.beginPath(); X.arc(p.x,p.y,2.2,0,Math.PI*2);
-      X.fillStyle=`rgba(180,220,255,${BACK_NODE_OPACITY})`; X.fill();
+    // 1) very faint background links (optional)
+    X.globalAlpha = 0.03;
+    X.lineWidth = 1;
+    X.strokeStyle = '#9bb7e0';
+    for (const e of links){
+      const a = idx.get(e.source), b = idx.get(e.target);
+      if (a==null||b==null) continue;
+      const A = toCanvas(pos[a]), B = toCanvas(pos[b]);
+      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
 
-    // 3) active neighborhood links brighter
-    if(active){
-      X.globalAlpha=ACTIVE_LINK_OPACITY; X.lineWidth=1.2; X.strokeStyle="#a7c7ff";
-      for(const e of links){
-        const key = e.a<e.b ? (e.a+'_'+e.b) : (e.b+'_'+e.a);
-        if(!edgeMask.has(key)) continue;
-        const A=tx(nodes[e.a]),B=tx(nodes[e.b]); X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
-      }
+    // 2) lit links only (touching lit nodes)
+    X.globalAlpha = 0.18;
+    X.lineWidth = 1.2;
+    X.strokeStyle = '#bcd6ff';
+    for (const e of links){
+      const a = idx.get(e.source), b = idx.get(e.target);
+      if (a==null||b==null) continue;
+      if (!lit.has(a) && !lit.has(b)) continue; // key: only draw if lit touches
+      const A = toCanvas(pos[a]), B = toCanvas(pos[b]);
+      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
 
-    // 4) nodes re-drawn with intensity (glow only if lit)
-    for(let i=0;i<N;i++){
-      const p=tx(nodes[i]); const v=I[i];
-      if(v>0){
-        // warm glow
-        const r=2 + 10*Math.min(1,v)*GLOW_SCALE;
-        X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
-        X.fillStyle=`rgba(255,186,120,${0.35*Math.min(1,v)})`; X.fill();
-        // bright core
-        X.beginPath(); X.arc(p.x,p.y,2.8+6*Math.min(1,v),0,Math.PI*2);
-        X.fillStyle=`rgba(205,230,255,${0.35+0.65*Math.min(1,v)})`; X.fill();
-      }
+    // 3) dim all nodes as tiny points
+    X.globalAlpha = 0.12;
+    for (let i=0;i<N;i++){
+      const p = toCanvas(pos[i]);
+      X.beginPath(); X.arc(p.x,p.y,2,0,Math.PI*2); X.fillStyle='#cfe4ff'; X.fill();
     }
 
-    // 5) labels for lit tags (only)
-    if(active){
-      X.font='13px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial';
-      X.textBaseline='middle';
-      for(const i of active.ev.idx){
-        if(I[i] < LABEL_THRESHOLD) continue;
-        const p=tx(nodes[i]); const name=nodes[i].id||'';
-        X.lineWidth=4; X.strokeStyle='rgba(10,12,18,.65)'; X.strokeText(name,p.x+10,p.y);
-        X.fillStyle='rgba(255,215,170,.98)'; X.fillText(name,p.x+10,p.y);
+    // 4) draw lit nodes brighter & bigger
+    for (const [i, info] of lit.entries()){
+      const p = toCanvas(pos[i]);
+      const r = 2 + 6*Math.min(1, info.amp);
+      X.globalAlpha = 0.25 + 0.65*Math.min(1, info.amp);
+      X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fillStyle='#e6f2ff'; X.fill();
+
+      // halo
+      X.globalAlpha = 0.12 * Math.min(1, info.amp);
+      X.beginPath(); X.arc(p.x,p.y,r*2.3,0,Math.PI*2); X.strokeStyle='#ffd38a'; X.lineWidth=2; X.stroke();
+    }
+
+    // 5) labels for lit nodes
+    if (LABELS){
+      X.textAlign = 'left';
+      X.textBaseline = 'middle';
+      for (const [i, info] of lit.entries()){
+        const p = toCanvas(pos[i]);
+        const id = nodes[i].id || '';
+        const alpha = 0.85 * Math.min(1, info.amp);
+        X.globalAlpha = alpha;
+        X.font = '12px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial';
+        X.fillStyle = '#ffd8a0';
+        X.fillText(id, p.x + 8, p.y);
       }
-      ticker.textContent=`${active.ev.title} — ${active.ev.date||'—'}`;
-    } else {
-      ticker.textContent='';
     }
 
     requestAnimationFrame(frame);
   }
-  frame();
+  requestAnimationFrame(frame);
 })();
 </script>
