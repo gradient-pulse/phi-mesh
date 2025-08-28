@@ -5,8 +5,9 @@
   html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
   #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
   button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
+  button.active{outline:2px solid #6ea8ff}
   #legend{opacity:.7;font-size:12px}
-  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:12px;opacity:.85;z-index:10;max-width:36ch}
+  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:12px;opacity:.9;z-index:10;max-width:38ch}
   #warn{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#1a212b;border:1px solid #334;padding:14px 16px;border-radius:12px;font-size:14px;display:none;max-width:520px}
   canvas{display:block;width:100%;height:100%}
 </style>
@@ -44,16 +45,14 @@
   async function ensurePHIData(timeoutMs=2500){
     if (window.PHI_DATA && typeof window.PHI_DATA==='object') return window.PHI_DATA;
 
-    // inject script tag once
     if (!document.querySelector('script[data-role="phi-data"]')){
       const s = document.createElement('script');
-      s.src = 'data.js';              // same folder (docs/)
+      s.src = 'data.js';
       s.async = true;
       s.dataset.role = 'phi-data';
       document.head.appendChild(s);
     }
 
-    // wait up to timeout
     const t0 = performance.now();
     while (performance.now() - t0 < timeoutMs){
       if (window.PHI_DATA && typeof window.PHI_DATA==='object') return window.PHI_DATA;
@@ -106,7 +105,7 @@
 
   const events = evRaw.map((e,k)=>({ node: idx.get(e.tag), t:k*GAP, meta:e }));
 
-  // Fallback if no dated pulses
+  // Fallback if no dated pulses: animate top-central tags
   if (!events.length){
     const top = [...D.nodes]
       .map((n,i)=>({i, c: (typeof n.centrality==='number'? n.centrality : 0)}))
@@ -121,43 +120,52 @@
 
   // -------- Canvas + transform --------
   const C = document.getElementById('c'), X = C.getContext('2d');
-  function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio; X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+  function fit(){
+    const dpr = devicePixelRatio || 1;
+    C.width = innerWidth * dpr;
+    C.height = innerHeight * dpr;
+    X.setTransform(dpr,0,0,dpr,0,0); // draw in CSS pixels
+  }
   addEventListener('resize',fit,{passive:true}); fit();
 
-  const M = 0.05; // margin
+  const M = 0.05; // margin around edges
   const tx = p => ({
-    x: (M + (1-2*M)*p.x) * C.width  / devicePixelRatio,
-    y: (M + (1-2*M)*p.y) * C.height / devicePixelRatio
+    x: (M + (1-2*M)*p.x) * innerWidth,
+    y: (M + (1-2*M)*p.y) * innerHeight
   });
 
   // -------- Playback --------
   let t=0, playing=AUTOPLAY;
+  const playBtn = document.getElementById('play');
+  const pauseBtn = document.getElementById('pause');
   const speedSel = document.getElementById('speed');
-  document.getElementById('play').onclick  = () => (playing=true);
-  document.getElementById('pause').onclick = () => (playing=false);
+
+  function setButtons(){
+    playBtn.classList.toggle('active', playing);
+    pauseBtn.classList.toggle('active', !playing);
+  }
+  playBtn.onclick  = () => { playing=true; setButtons(); };
+  pauseBtn.onclick = () => { playing=false; setButtons(); };
+  setButtons();
+
   function now(){ return performance.now()/1000 }
   let last = now();
 
   const ticker = document.getElementById('ticker');
   function updateTicker(time){
-    // find latest event not after t
-    let k = Math.min(events.length-1, Math.floor(time/GAP));
-    if (k >= 0){
-      const m = events[k].meta || {};
-      ticker.textContent = `${m.title || 'Pulse'}${m.dateStr ? ' — '+m.dateStr : ''}`;
-    } else {
-      ticker.textContent = '—';
-    }
+    if (!events.length){ ticker.textContent='—'; return; }
+    const k = Math.max(0, Math.min(events.length-1, Math.floor(time/GAP)));
+    const m = events[k].meta || {};
+    ticker.textContent = `${m.title || 'Pulse'}${m.dateStr ? ' — '+m.dateStr : ''}`;
   }
 
   function nodeIntensity(i, time){
-    // sum exponential decays from recent fires
     let s = 0;
     const ts = fires[i];
     for (let k=ts.length-1; k>=0; k--){
       const age = time - ts[k].t; if (age < 0) continue;
       const w = ts[k].w * Math.exp(-age/TAU);
-      if (w < 1e-3) break;
+      if (w < 1e-3) break; // too old to matter
       s += w;
     }
     return s;
@@ -175,11 +183,11 @@
     X.clearRect(0,0,C.width,C.height);
 
     // links
-    X.lineWidth = 1.2;
+    X.lineWidth = 1.25;
     for (const {a,b} of links){
       const A = tx(pos[a]), B = tx(pos[b]);
       const glow = Math.min(1, I[a]*I[b]);
-      X.strokeStyle = `rgba(122,162,247,${0.06 + 0.34*glow})`;
+      X.strokeStyle = `rgba(122,162,247,${0.12 + 0.38*glow})`;
       X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
     }
 
@@ -191,12 +199,12 @@
 
       if (j>0){
         const g = X.createRadialGradient(p.x,p.y, r*0.4, p.x,p.y, r);
-        g.addColorStop(0, `rgba(145,200,255,${0.20*j})`);
+        g.addColorStop(0, `rgba(145,200,255,${0.22*j})`);
         g.addColorStop(1, `rgba(145,200,255,0)`);
         X.fillStyle = g;
         X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fill();
       }
-      X.fillStyle = `rgba(200,230,255,${0.45 + 0.5*j})`;
+      X.fillStyle = `rgba(200,230,255,${0.50 + 0.45*j})`;
       X.beginPath(); X.arc(p.x,p.y, 2.5 + 2*j, 0, Math.PI*2); X.fill();
     }
 
