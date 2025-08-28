@@ -7,7 +7,7 @@
   button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
   #legend{opacity:.7;font-size:12px}
   canvas{display:block;width:100%;height:100%}
-  #err{position:fixed;inset:auto 12px 12px 12px;background:#1a1f27;border:1px solid #352; padding:10px 12px;border-radius:10px;display:none}
+  #err{position:fixed;inset:auto 12px 12px 12px;background:#1a1f27;border:1px solid #352;padding:10px 12px;border-radius:10px;display:none}
 </style>
 
 <div id="ui">
@@ -23,145 +23,80 @@
 <div id="err"></div>
 <canvas id="c"></canvas>
 
-<!-- Tag Map’s data bundle; exposes a graph on window under one of several keys -->
-<script src="data.js"></script>
-
 <script>
 (async function(){
-  // --- URL knobs --------------------------------------------------------
-  const q = new URLSearchParams(location.search);
-  const HOP  = +q.get('hop')     || 0.75; // hop-decay (γ)
-  const HALF = +q.get('half')    || 2.0;  // seconds half-life (τ = HALF/ln2)
-  const PACE = +q.get('spacing') || 6.0;  // seconds between events
-  const AUTOPLAY = q.get('autoplay') === '1';
+  // --- URL knobs
+  const q=new URLSearchParams(location.search);
+  const HOP=+q.get('hop')||0.75, HALF=+q.get('half')||2.0, PACE=+q.get('spacing')||6.0, AUTOPLAY=q.get('autoplay')==='1';
 
-  // --- resolve graph exported by docs/data.js ---------------------------
-  function pickGraphFromWindow(w){
-    // direct
-    if (w.GRAPH_DATA && w.GRAPH_DATA.nodes && w.GRAPH_DATA.links) return w.GRAPH_DATA;
-    if (w.GRAPH && w.GRAPH.nodes && w.GRAPH.links) return w.GRAPH;
-    if (w.graph && w.graph.nodes && w.graph.links) return w.graph;
-    if (w.data && w.data.nodes && w.data.links) return w.data;
-    // nested
-    if (w.DATA) {
-      if (w.DATA.graph && w.DATA.graph.nodes && w.DATA.graph.links) return w.DATA.graph;
-      if (w.DATA.nodes && w.DATA.links) return w.DATA;
-    }
-    if (w.DATAJS && w.DATAJS.graph && w.DATAJS.graph.nodes && w.DATAJS.graph.links) return w.DATAJS.graph;
-    return null;
+  // --- load graph (module-first, window-fallback)
+  let mod=null, G=null;
+  try {
+    mod = await import('./data.js');
+    G = mod.GRAPH_DATA || mod.default || mod.GRAPH || mod.data || (mod.DATA && mod.DATA.graph) || null;
+  } catch (e) {
+    // ignore; try window fallback next
+  }
+  if (!G) {
+    const w = window;
+    G = w.GRAPH_DATA || w.GRAPH || w.graph || w.data || (w.DATA && w.DATA.graph) || null;
   }
 
-  const G = pickGraphFromWindow(window);
-  const errBox = document.getElementById('err');
-  if (!G) {
-    const msg = 'data.js loaded, but no graph object found (tried GRAPH_DATA, GRAPH, DATA.graph, etc.).';
-    console.error(msg, 'Window keys sample:', Object.keys(window).slice(0,50));
-    errBox.textContent = msg;
-    errBox.style.display = 'block';
+  const errBox=document.getElementById('err');
+  if (!G || !G.nodes || !G.links) {
+    const msg='data.js loaded, but no graph export found (tried module exports GRAPH_DATA/default/GRAPH/data and window fallbacks).';
+    console.error(msg, {moduleKeys: mod ? Object.keys(mod) : '(no module)', windowKeys: Object.keys(window).slice(0,50)});
+    errBox.textContent=msg;
+    errBox.style.display='block';
     return;
   }
 
-  // echoes file lives alongside data.js
   const E = await fetch('./echoes.json').then(r=>r.json()).catch(()=>({events:[]}));
 
-  // --- index graph ------------------------------------------------------
-  const idx = new Map(G.nodes.map((n,i)=>[n.id,i]));
-  const N = G.nodes.length;
-  const pos = G.nodes.map(n => ({ x: (n.x ?? n.fx ?? n.nx ?? 0), y: (n.y ?? n.fy ?? n.ny ?? 0) }));
-  const adj = Array.from({length:N}, ()=>[]);
-  for (const e of G.links || []) {
-    const a = idx.get(typeof e.source==='object' ? e.source.id : e.source);
-    const b = idx.get(typeof e.target==='object' ? e.target.id : e.target);
-    if (a!=null && b!=null){ adj[a].push({j:b}); adj[b].push({j:a}); }
+  // --- index graph
+  const idx=new Map(G.nodes.map((n,i)=>[n.id,i]));
+  const N=G.nodes.length;
+  const pos=G.nodes.map(n=>({x:(n.x??n.fx??n.nx??0), y:(n.y??n.fy??n.ny??0)}));
+  const adj=Array.from({length:N},()=>[]);
+  for(const e of (G.links||[])){
+    const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
+    const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
+    if(a!=null&&b!=null){adj[a].push({j:b});adj[b].push({j:a});}
   }
+  function hopsFrom(s){const inf=1e9,d=Array(N).fill(inf);d[s]=0;const q=[s];while(q.length){const i=q.shift();for(const {j} of adj[i])if(d[j]===inf){d[j]=d[i]+1;q.push(j);}}return d;}
 
-  function hopsFrom(srcIdx){
-    const inf=1e9, d=Array(N).fill(inf); d[srcIdx]=0; const q=[srcIdx];
-    while(q.length){ const i=q.shift(); for(const {j} of adj[i]) if(d[j]===inf){ d[j]=d[i]+1; q.push(j); } }
-    return d;
-  }
+  // --- canvas
+  const C=document.getElementById('c'),X=C.getContext('2d');
+  function fit(){C.width=innerWidth*devicePixelRatio;C.height=innerHeight*devicePixelRatio;X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);} addEventListener('resize',fit,{passive:true}); fit();
+  const [minX,maxX]=[Math.min(...pos.map(p=>p.x)),Math.max(...pos.map(p=>p.x))];
+  const [minY,maxY]=[Math.min(...pos.map(p=>p.y)),Math.max(...pos.map(p=>p.y))];
+  const dx=(maxX-minX)||1, dy=(maxY-minY)||1;
+  const tx=p=>({x:(p.x-minX)/dx*C.width/devicePixelRatio, y:(p.y-minY)/dy*C.height/devicePixelRatio});
 
-  // --- canvas setup -----------------------------------------------------
-  const C = document.getElementById('c'), X = C.getContext('2d');
-  function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio; X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
-  addEventListener('resize',fit,{passive:true}); fit();
+  // --- echo engine
+  const TAU=HALF/Math.log(2);
+  const events=(E.events||[]).map((ev,k)=>({...ev,t:k*PACE,source:idx.get(ev.source_tag),hops:null})).filter(ev=>ev.source!=null);
+  for(const ev of events){ev.hops=hopsFrom(ev.source);}
 
-  // normalize to canvas
-  const [minX,maxX] = [Math.min(...pos.map(p=>p.x)), Math.max(...pos.map(p=>p.x))];
-  const [minY,maxY] = [Math.min(...pos.map(p=>p.y)), Math.max(...pos.map(p=>p.y))];
-  const dx = (maxX-minX) || 1, dy = (maxY-minY) || 1;
-  function tx(p){ return { x:(p.x-minX)/dx * C.width/devicePixelRatio, y:(p.y-minY)/dy * C.height/devicePixelRatio }; }
-
-  // --- echo engine ------------------------------------------------------
-  const TAU = HALF/Math.log(2);
-  const events = (E.events||[]).map((ev,k)=>({
-    ...ev,
-    t: k*PACE,                        // even spacing for loop
-    source: idx.get(ev.source_tag),   // tag id -> node index
-    hops: null
-  })).filter(ev => ev.source!=null);
-
-  for (const ev of events){ ev.hops = hopsFrom(ev.source); }
-
-  let t=0, playing=AUTOPLAY;
-  const speedSel = document.getElementById('speed');
-  document.getElementById('play').onclick = ()=> playing=true;
-  document.getElementById('pause').onclick = ()=> playing=false;
-  function now(){ return performance.now()/1000; }
-  let last = now();
-
-  // light timeseries for agents
-  window.__ECHO_TIMESERIES__ = [];
+  let t=0, playing=AUTOPLAY; const speedSel=document.getElementById('speed');
+  document.getElementById('play').onclick=()=>playing=true; document.getElementById('pause').onclick=()=>playing=false;
+  const now=()=>performance.now()/1000; let last=now();
+  window.__ECHO_TIMESERIES__=[];
 
   function frame(){
     const n=now(), dt=Math.min(0.05,n-last); last=n; if(playing) t+=dt*(+speedSel.value);
-
-    const I = new Float32Array(N);
-    for (const ev of events){
-      const age = Math.max(0, t - ev.t);
-      if (age > PACE*events.length + 60) continue;
-      const timeDecay = Math.exp(-age/TAU);
-      for (let i=0;i<N;i++){
-        const h = ev.hops[i];
-        if (!isFinite(h) || h > (ev.max_hops ?? 4)) continue;
-        const hopDecay = Math.pow(HOP, h);
-        I[i] += (ev.amplitude ?? 1) * timeDecay * hopDecay;
-      }
+    const I=new Float32Array(N);
+    for(const ev of events){
+      const age=Math.max(0,t-ev.t); if(age>PACE*events.length+60) continue;
+      const timeDecay=Math.exp(-age/TAU);
+      for(let i=0;i<N;i++){const h=ev.hops[i]; if(!isFinite(h)||h>(ev.max_hops??4)) continue; I[i]+= (ev.amplitude??1)*timeDecay*Math.pow( HOP, h );}
     }
-
-    // sample ~4 Hz
-    if ((Math.floor(t*4)%1)===0){
-      window.__ECHO_TIMESERIES__.push({
-        t: +t.toFixed(2),
-        top: [...I].map((v,i)=>[G.nodes[i].id,v]).sort((a,b)=>b[1]-a[1]).slice(0,8)
-      });
-      if (window.__ECHO_TIMESERIES__.length > 200) window.__ECHO_TIMESERIES__.shift();
-    }
-
-    // draw
+    if((Math.floor(t*4)%1)===0){window.__ECHO_TIMESERIES__.push({t:+t.toFixed(2),top:[...I].map((v,i)=>[G.nodes[i].id,v]).sort((a,b)=>b[1]-a[1]).slice(0,8)}); if(window.__ECHO_TIMESERIES__.length>200) window.__ECHO_TIMESERIES__.shift();}
     X.clearRect(0,0,C.width,C.height);
-
-    // links
     X.globalAlpha=0.08; X.lineWidth=1;
-    for (const e of G.links || []){
-      const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
-      const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
-      if(a==null||b==null) continue;
-      const A=tx(pos[a]), B=tx(pos[b]);
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y);
-      X.strokeStyle="#7aa2f7"; X.stroke();
-    }
-
-    // nodes
+    for(const e of (G.links||[])){const a=idx.get(typeof e.source==='object'?e.source.id:e.source), b=idx.get(typeof e.target==='object'?e.target.id:e.target); if(a==null||b==null) continue; const A=tx(pos[a]),B=tx(pos[b]); X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.strokeStyle="#7aa2f7"; X.stroke();}
     X.globalAlpha=1.0;
-    for (let i=0;i<N;i++){
-      const p=tx(pos[i]);
-      const r = 2 + 10*Math.min(1, I[i]);
-      X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
-      X.fillStyle = `rgba(180,220,255,${0.25 + Math.min(0.75,I[i])})`;
-      X.fill();
-    }
-
+    for(let i=0;i<N;i++){const p=tx(pos[i]), r=2+10*Math.min(1,I[i]); X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fillStyle=`rgba(180,220,255,${0.25+Math.min(0.75,I[i])})`; X.fill();}
     requestAnimationFrame(frame);
   }
   frame();
