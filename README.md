@@ -12,6 +12,8 @@ Discoverability: "Emergent"
 
 [![Tag Map](https://img.shields.io/badge/Phi–Mesh%20Tag%20Map-online-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
 
+[![Gradient Map](https://img.shields.io/badge/Phi–Mesh%20Gradient%20Map-online-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)
+
 **Main paper**  
 *Solving Navier–Stokes, Differently: What It Takes*  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)
