@@ -19,6 +19,7 @@
   <span id="legend">URL knobs: <code>?hop=0.75&half=2.0&spacing=6&autoplay=1</code></span>
 </div>
 <canvas id="c"></canvas>
+<script src="data.js"></script>
 <script>
 (async function(){
   // --- URL knobs (easy to tweak) ---------------------------------------
@@ -30,14 +31,20 @@
 
   // --- load base graph + echoes ----------------------------------------
   // data.js defines window.GRAPH_DATA = { nodes:[{id, x, y, ...}], links:[{source,target}] , pulses:[...] }
-  await import('./data.js');
-  const G = window.GRAPH_DATA;
+  const G = window.GRAPH_DATA || window.DATA || window.graphData || window.data;
+  if (!G || !G.nodes || !G.links) {
+    console.error('data.js did not expose a graph object on window.*');
+    return;
+  }
   const E = await fetch('./echoes.json').then(r=>r.json());
 
   // --- index graph ------------------------------------------------------
   const idx=new Map(G.nodes.map((n,i)=>[n.id,i]));
   const N=G.nodes.length;
-  const pos=G.nodes.map(n=>({x:n.x,y:n.y}));
+  const pos = G.nodes.map(n => ({
+    x: (n.x ?? n.fx ?? n.nx ?? 0),
+    y: (n.y ?? n.fy ?? n.ny ?? 0),
+  }));
   const adj=Array.from({length:N},()=>[]);
   for(const e of G.links){
     const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
@@ -60,8 +67,12 @@
   // map normalized node coords [0..1] to canvas
   const [minX,maxX]=[Math.min(...pos.map(p=>p.x)), Math.max(...pos.map(p=>p.x))];
   const [minY,maxY]=[Math.min(...pos.map(p=>p.y)), Math.max(...pos.map(p=>p.y))];
-  function tx(p){ return { x:(p.x-minX)/(maxX-minX)*C.width/devicePixelRatio, y:(p.y-minY)/(maxY-minY)*C.height/devicePixelRatio }; }
-
+  const dx = (maxX-minX) || 1;
+  const dy = (maxY-minY) || 1;
+  function tx(p){ return {
+    x:(p.x-minX)/dx * C.width/devicePixelRatio,
+    y:(p.y-minY)/dy * C.height/devicePixelRatio
+  };}
   // --- echo engine ------------------------------------------------------
   const TAU = HALF/Math.log(2);
   const events = (E.events||[]).map((ev,k)=>({
