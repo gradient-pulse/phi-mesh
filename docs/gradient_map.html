@@ -1,253 +1,208 @@
 <!doctype html>
 <meta charset="utf-8" />
-<title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
+<title>Φ-Mesh — Gradient Map (Pulse-by-Pulse on Tag Map)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
-  html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
-  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
-  button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
-  #legend{opacity:.7;font-size:12px}
-  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;padding:6px 10px;border-radius:10px;font-size:13px;opacity:.9;z-index:10}
-  canvas{display:block;width:100%;height:100%}
+  :root{
+    --bg:#0b0c10; --panel:#0f141b; --fg:#e6edf3; --muted:#9aa7ba;
+    --link:#b9c7dd; --lit:#9dd1ff; --glow:#cfe8ff; --pulse:#ff8a70;
+  }
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  #ui{position:fixed;top:12px;left:12px;display:flex;gap:10px;align-items:center;background:var(--panel);
+      border:1px solid rgba(255,255,255,.06); padding:8px 10px;border-radius:10px; z-index:10}
+  button,select{background:#131a22;border:1px solid #2a3442;color:var(--fg);border-radius:8px;padding:6px 10px;cursor:pointer}
+  #legend{opacity:.75;font-size:12px}
+  #ticker{position:fixed;top:12px;right:12px;background:var(--panel);border:1px solid rgba(255,255,255,.06);
+          padding:8px 12px;border-radius:12px;font-size:13px;opacity:.95; z-index:10}
+  svg{display:block;width:100%;height:100%}
+  .link{stroke:var(--link);stroke-opacity:.08}
+  .link.lit{stroke-opacity:.35}
+  .node ellipse{fill:#74b7ff; opacity:.22}
+  .node.lit ellipse{fill:var(--lit); opacity:1}
+  .node .glow{filter:blur(6px);opacity:.0;pointer-events:none}
+  .node.lit .glow{opacity:.5}
+  .node text{display:none; font-size:12px; fill:var(--muted); pointer-events:none}
+  .node.lit text{display:block}
 </style>
-
-<!-- IMPORTANT: reuse the same data bundle the tag map uses -->
-<script src="data.js"></script>
 
 <div id="ui">
   <button id="play">▶︎ Play</button>
   <button id="pause">⏸︎ Pause</button>
   <label>Speed
     <select id="speed">
-      <option>0.5</option><option>1.0</option><option>1.5</option><option selected>2.0</option>
+      <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
     </select>
   </label>
-  <span id="legend">URL: <code>?half=3&spacing=6&maxhops=2&autoplay=1</code></span>
+  <span id="legend">URL: <code>?half=3&spacing=6&autoplay=1</code></span>
 </div>
 <div id="ticker">—</div>
-<canvas id="c"></canvas>
 
+<svg id="graph" role="img" aria-label="Gradient Map (Pulse)"></svg>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="data.js"></script>
 <script>
 (async function(){
-  // ---------- URL knobs ----------
-  const q = new URLSearchParams(location.search);
-  const HALF     = +q.get('half')     || 3;     // seconds half-life for the echo
-  const SPACING  = +q.get('spacing')  || 6;     // seconds between pulses
-  const MAXHOPS  = +q.get('maxhops')  || 2;     // neighbor radius to light
-  const LABELS   = (q.get('labels')||'1') !== '0';
-  const AUTOPLAY = q.get('autoplay')  === '1';
+  // ---------------- URL knobs ----------------
+  const Q = new URLSearchParams(location.search);
+  const HALF     = +Q.get('half')     || 3;   // seconds half-life for lit intensity
+  const SPACING  = +Q.get('spacing')  || 6;   // seconds between pulses
+  const AUTOPLAY = Q.get('autoplay')==='1';
 
-  // ---------- Data (from docs/data.js) ----------
-  // Accept either PHI_DATA (tag map) or GRAPH_DATA (older build)
-  const D = (window.PHI_DATA && window.PHI_DATA.nodes && window.PHI_DATA.links)
-          ? window.PHI_DATA
-          : (window.GRAPH_DATA || {nodes:[],links:[],pulses:[]});
-
-  const nodes = D.nodes || [];
-  const links = (D.links || []).map(l => {
-    // normalize to ids
-    const s = (typeof l.source === 'object') ? l.source.id : l.source;
-    const t = (typeof l.target === 'object') ? l.target.id : l.target;
-    return {source:s, target:t};
-  });
-
-  // Build a chronological pulse list with tag arrays
-  // Prefer D.pulses if present; else reconstruct from pulsesByTag (best-effort)
-  let pulses = Array.isArray(D.pulses) ? D.pulses.slice() : [];
-  if (!pulses.length && D.pulsesByTag){
-    const rows = [];
-    for (const [tag, arr] of Object.entries(D.pulsesByTag)){
-      for (const p of (arr||[])){
-        const key = p.id || p.title || p.date || JSON.stringify(p).slice(0,60);
-        rows.push({key, date: p.date || '', title: p.title || key, tags: [tag]});
-      }
-    }
-    // merge rows with same key
-    const byKey = new Map();
-    for (const r of rows){
-      if (!byKey.has(r.key)) byKey.set(r.key, {date:r.date, title:r.title, tags:new Set()});
-      r.tags.forEach(t => byKey.get(r.key).tags.add(t));
-    }
-    pulses = [...byKey.values()]
-      .map(x => ({date:x.date, title:x.title, tags:[...x.tags]}))
-      .sort((a,b)=> String(a.date).localeCompare(String(b.date)));
-  }
-
-  // ---------- Indexing & layout ----------
-  const idx = new Map(nodes.map((n,i)=>[n.id, i]));
-  const adj = Array.from({length:nodes.length}, ()=>[]);
-  for (const e of links){
-    const a = idx.get(e.source), b = idx.get(e.target);
-    if (a==null || b==null) continue;
-    adj[a].push(b); adj[b].push(a);
-  }
-
-  // Use precomputed x,y if provided; else scatter them on a circle
-  const N = nodes.length;
-  const pos = nodes.map((n,i)=>{
-    let x = (n.x ?? n.fx ?? n.nx), y = (n.y ?? n.fy ?? n.ny);
-    if (typeof x !== 'number' || typeof y !== 'number'){
-      const th = (i/N)*Math.PI*2;
-      x = Math.cos(th); y = Math.sin(th);
-    }
-    return {x, y};
-  });
-  const minX = Math.min(...pos.map(p=>p.x)), maxX = Math.max(...pos.map(p=>p.x));
-  const minY = Math.min(...pos.map(p=>p.y)), maxY = Math.max(...pos.map(p=>p.y));
-
-  // ---------- Canvas ----------
-  const C = document.getElementById('c');
-  const X = C.getContext('2d');
-  function fit(){
-    C.width  = innerWidth * devicePixelRatio;
-    C.height = innerHeight * devicePixelRatio;
-    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  }
-  addEventListener('resize', fit, {passive:true}); fit();
-  function toCanvas(p){
-    // pad 5% around
-    const pad = 0.05;
-    const nx = (p.x - minX) / (maxX - minX || 1);
-    const ny = (p.y - minY) / (maxY - minY || 1);
-    return {
-      x: (pad + nx*(1-2*pad)) * C.width / devicePixelRatio,
-      y: (pad + ny*(1-2*pad)) * C.height/ devicePixelRatio
-    };
-  }
-
-  // ---------- Hop expansion ----------
-  function expandFromTags(tagIds, maxhops){
-    const q = [];
-    const seen = new Map(); // id -> hop
-    for (const t of tagIds){
-      const i = idx.get(t);
-      if (i!=null){ seen.set(i,0); q.push(i); }
-    }
-    while(q.length){
-      const i = q.shift();
-      const h = seen.get(i);
-      if (h >= maxhops) continue;
-      for (const j of adj[i]){
-        if (!seen.has(j)){ seen.set(j, h+1); q.push(j); }
-      }
-    }
-    return seen; // Map(nodeIndex -> hop)
-  }
-
-  // ---------- Echo & animation ----------
-  const TAU = HALF / Math.log(2);
   const ticker = document.getElementById('ticker');
-
-  // schedule: evenly spaced by SPACING
-  const events = pulses.map((p,k) => ({
-    t: k*SPACING,
-    title: p.title || 'Pulse',
-    date:  p.date  || '',
-    tags:  (p.tags || []).filter(t => idx.has(t))
-  }));
-
-  let t = 0;
-  let playing = AUTOPLAY;
   const speedSel = document.getElementById('speed');
-  document.getElementById('play').onclick  = () => playing = true;
-  document.getElementById('pause').onclick = () => playing = false;
-  function now(){ return performance.now()/1000; }
-  let last = now();
+  const playBtn  = document.getElementById('play');
+  const pauseBtn = document.getElementById('pause');
 
-  function frame(){
-    const n = now(), dt = Math.min(0.05, n-last); last = n;
-    if (playing) t += dt * (+speedSel.value || 1);
+  // ---------------- Data ----------------
+  // Expect window.PHI_DATA (same as tag_map)
+  const DATA = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : {nodes:[],links:[],pulsesByTag:{}};
 
-    // Which events are “active enough” to matter right now?
-    // (We draw faded echoes, but skip those older than ~6 half-lives)
-    const live = [];
-    for (const ev of events){
-      const age = t - ev.t;
-      if (age < -SPACING) continue; // not yet
-      const amp = Math.exp(-Math.max(0,age)/TAU);
-      if (amp < 0.02) continue;
-      live.push({ev, amp});
-    }
-
-    // Build a lit set with min hop per node across all live events
-    const lit = new Map(); // i -> {amp, hop}
-    let headline = '—';
-    if (live.length){
-      const {ev} = live[Math.min(live.length-1, live.findIndex(x=>x.ev.t>=t) >= 0 ? live.findIndex(x=>x.ev.t>=t) : live.length-1)];
-      headline = `${ev.title} — ${ev.date}`;
-    }
-    ticker.textContent = headline;
-
-    for (const {ev, amp} of live){
-      const hops = expandFromTags(ev.tags, MAXHOPS);
-      for (const [i, h] of hops.entries()){
-        const prev = lit.get(i);
-        const w = amp * Math.pow(0.65, h); // hop fade
-        if (!prev || w > prev.amp) lit.set(i, {amp:w, hop:h});
+  // Build a unique, dated pulse list from pulsesByTag
+  // Each entry like {id,title,date,tags:Set([...])}
+  const byKey = new Map();
+  for(const [tag,arr] of Object.entries(DATA.pulsesByTag||{})){
+    for(const p of (arr||[])){
+      const key = (p.id || `${p.title||''}__${p.date||''}` || Math.random().toString(36));
+      if(!byKey.has(key)){
+        byKey.set(key, { id:key, title:p.title||'Pulse', date:p.date||'', tags:new Set() });
       }
+      byKey.get(key).tags.add(tag);
     }
-
-    // ---------- draw ----------
-    X.clearRect(0,0,C.width,C.height);
-
-    // 1) very faint background links (optional)
-    X.globalAlpha = 0.03;
-    X.lineWidth = 1;
-    X.strokeStyle = '#9bb7e0';
-    for (const e of links){
-      const a = idx.get(e.source), b = idx.get(e.target);
-      if (a==null||b==null) continue;
-      const A = toCanvas(pos[a]), B = toCanvas(pos[b]);
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
-    }
-
-    // 2) lit links only (touching lit nodes)
-    X.globalAlpha = 0.18;
-    X.lineWidth = 1.2;
-    X.strokeStyle = '#bcd6ff';
-    for (const e of links){
-      const a = idx.get(e.source), b = idx.get(e.target);
-      if (a==null||b==null) continue;
-      if (!lit.has(a) && !lit.has(b)) continue; // key: only draw if lit touches
-      const A = toCanvas(pos[a]), B = toCanvas(pos[b]);
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
-    }
-
-    // 3) dim all nodes as tiny points
-    X.globalAlpha = 0.12;
-    for (let i=0;i<N;i++){
-      const p = toCanvas(pos[i]);
-      X.beginPath(); X.arc(p.x,p.y,2,0,Math.PI*2); X.fillStyle='#cfe4ff'; X.fill();
-    }
-
-    // 4) draw lit nodes brighter & bigger
-    for (const [i, info] of lit.entries()){
-      const p = toCanvas(pos[i]);
-      const r = 2 + 6*Math.min(1, info.amp);
-      X.globalAlpha = 0.25 + 0.65*Math.min(1, info.amp);
-      X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2); X.fillStyle='#e6f2ff'; X.fill();
-
-      // halo
-      X.globalAlpha = 0.12 * Math.min(1, info.amp);
-      X.beginPath(); X.arc(p.x,p.y,r*2.3,0,Math.PI*2); X.strokeStyle='#ffd38a'; X.lineWidth=2; X.stroke();
-    }
-
-    // 5) labels for lit nodes
-    if (LABELS){
-      X.textAlign = 'left';
-      X.textBaseline = 'middle';
-      for (const [i, info] of lit.entries()){
-        const p = toCanvas(pos[i]);
-        const id = nodes[i].id || '';
-        const alpha = 0.85 * Math.min(1, info.amp);
-        X.globalAlpha = alpha;
-        X.font = '12px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial';
-        X.fillStyle = '#ffd8a0';
-        X.fillText(id, p.x + 8, p.y);
-      }
-    }
-
-    requestAnimationFrame(frame);
   }
-  requestAnimationFrame(frame);
+  const pulses = [...byKey.values()].sort((a,b)=> String(a.date).localeCompare(String(b.date)));
+  if(!pulses.length){
+    ticker.textContent = 'No pulses found in PHI_DATA.pulsesByTag';
+  }
+
+  // ---------------- SVG & Layers ----------------
+  const svg = d3.select('#graph');
+  const W   = (svg.node().clientWidth || 1200);
+  const H   = (svg.node().clientHeight|| 800);
+  svg.attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMin meet');
+
+  const root = svg.append('g');
+  const linkLayer = root.append('g').attr('class','links');
+  const nodeLayer = root.append('g').attr('class','nodes');
+
+  // Map id->node object; rebuild links with node refs
+  const idToNode = new Map(DATA.nodes.map(n=>[n.id,n]));
+  const links = (DATA.links||[]).map(l=>({
+    source:idToNode.get(l.source)||l.source,
+    target:idToNode.get(l.target)||l.target
+  })).filter(l=>l.source && l.target);
+
+  // ---- sizing (copied from tag_map style) ----
+  const degree = new Map();
+  for(const l of links){
+    degree.set(l.source.id,(degree.get(l.source.id)||0)+1);
+    degree.set(l.target.id,(degree.get(l.target.id)||0)+1);
+  }
+  function nodeScore(d){
+    const c = d && d.centrality;
+    return (typeof c === 'number') ? c : (degree.get(d.id)||1);
+  }
+  const centralities = DATA.nodes.map(nodeScore);
+  const mmMin = d3.min(centralities), mmMax = d3.max(centralities);
+  const cMin = (mmMin==null?0:mmMin), cMax=(mmMax==null?1:mmMax);
+  const rScale = d3.scaleSqrt()
+    .domain([ (cMin===0?0.0001:cMin), (cMax===0?1:cMax) ])
+    .range([5, 20]);
+  const ellipseAspect = 1.6;
+
+  // ---- Force simulation (same spirit as tag_map) ----
+  const sim = d3.forceSimulation(DATA.nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.40))
+    .force('charge', d3.forceManyBody().strength(-320))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collide', d3.forceCollide().radius(d=>rScale(nodeScore(d))*1.5));
+
+  // ---- draw static nodes/links once; update classes each tick/pulse ----
+  const linkSel = linkLayer.selectAll('line').data(links).join('line').attr('class','link');
+
+  const nodeSel = nodeLayer.selectAll('g.node')
+    .data(DATA.nodes, d=>d.id)
+    .join(enter=>{
+      const g = enter.append('g').attr('class','node');
+      // soft glow
+      g.append('circle')
+        .attr('class','glow')
+        .attr('r', d=>rScale(nodeScore(d))*1.6)
+        .attr('fill','var(--glow)');
+      // ellipse body
+      g.append('ellipse')
+        .attr('rx', d=>rScale(nodeScore(d))*ellipseAspect)
+        .attr('ry', d=>rScale(nodeScore(d)));
+      // label (anchored just below ellipse)
+      g.append('text')
+        .attr('text-anchor','middle')
+        .attr('x',0)
+        .attr('y', d=>rScale(nodeScore(d)) + 12)
+        .text(d=>d.id);
+      return g;
+    });
+
+  sim.on('tick', ()=>{
+    linkSel
+      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+    nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
+  });
+
+  // ---------------- Pulse engine ----------------
+  const TAU = HALF/Math.log(2); // half-life in seconds → decay const
+  let t = 0, last = performance.now()/1000, playing = AUTOPLAY;
+  playBtn.onclick = ()=> playing = true;
+  pauseBtn.onclick= ()=> playing = false;
+
+  // active set & fade buffer
+  const intensity = new Map(DATA.nodes.map(n=>[n.id, 0])); // decays over time
+
+  // utility: update lit classes based on current pulse + decay
+  function renderState(activeTags){
+    // decay
+    const now = performance.now()/1000;
+    const dt  = Math.min(0.05, now-last);
+    last = now;
+    for(const [id,val] of intensity){
+      const decayed = val * Math.exp(-dt/TAU);
+      intensity.set(id, decayed);
+    }
+    // inject current pulse tags to full intensity
+    if(activeTags){
+      for(const tag of activeTags) intensity.set(tag, 1.0);
+    }
+    // classify nodes
+    nodeSel.classed('lit', d => (intensity.get(d.id)||0) > 0.12);
+    // show only links where both ends are lit (cluster pop)
+    linkSel.classed('lit', d => (nodeSel.filter(n => n===d.source).classed('lit') &&
+                                 nodeSel.filter(n => n===d.target).classed('lit')))
+           .style('display', d => (nodeSel.filter(n => n===d.source).classed('lit') &&
+                                   nodeSel.filter(n => n===d.target).classed('lit')) ? null : 'none');
+  }
+
+  // Build per-frame loop that steps pulses every SPACING seconds
+  let k = 0; // pulse index
+  function stepPulse(){
+    if(!pulses.length) return;
+    const p = pulses[k % pulses.length];
+    ticker.textContent = `${p.title} — ${p.date || '—'}`;
+    renderState(p.tags);
+    if(playing){
+      t += (+speedSel.value) * 0.016; // approx per-call increment
+      // switch pulse when its window elapses
+      if(t >= SPACING){ t = 0; k++; }
+    }
+    requestAnimationFrame(stepPulse);
+  }
+  // kick
+  requestAnimationFrame(stepPulse);
+
+  // Start with first pulse (even if paused)
+  if(pulses.length){
+    const p0 = pulses[0];
+    ticker.textContent = `${p0.title} — ${p0.date || '—'}`;
+    renderState(p0.tags);
+  }
 })();
 </script>
