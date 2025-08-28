@@ -1,30 +1,23 @@
 <!doctype html>
 <meta charset="utf-8" />
 <title>Φ-Mesh — Gradient Map (Tag Pulses)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
-  :root{--bg:#0b0f14;--ink:#e6edf3;--muted:#9cb0c7;--line:#8fb2e8;--hot:#ffe2ba}
-  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
-    font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  html,body{margin:0;height:100%;background:#0b0f14;color:#e6edf3;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
   #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;
     background:#0f141b;border:1px solid #223;padding:8px 10px;border-radius:10px;z-index:10}
-  button,select{background:#131a22;border:1px solid #2a3442;color:var(--ink);
-    border-radius:8px;padding:6px 10px;cursor:pointer}
-  button.active{outline:2px solid #3da9fc}
-  #legend{opacity:.75;font-size:12px}
-  #ticker{position:fixed;top:12px;right:12px;background:#0f141b;border:1px solid #223;
-    color:var(--muted);padding:6px 10px;border-radius:10px;font-size:12px;z-index:10}
+  button,select{background:#131a22;border:1px solid #2a3442;color:#e6edf3;border-radius:8px;padding:6px 10px;cursor:pointer}
+  #legend{opacity:.7;font-size:12px}
+  #ticker{position:fixed;right:12px;top:12px;background:#0f141b;border:1px solid #223;
+    padding:8px 12px;border-radius:10px;font-size:14px;opacity:.92;z-index:10;max-width:46vw}
   canvas{display:block;width:100%;height:100%}
-
-  /* labels fade on when lit; tiny glow for legibility */
-  .label { position:absolute; pointer-events:none; color:var(--hot);
-    font-size:12px; text-shadow:0 0 10px rgba(255,210,130,.55), 0 0 2px rgba(0,0,0,.8);
-    opacity:0; transition:opacity .22s ease }
-  .label.on { opacity:1 }
 </style>
 
+<!-- Load the same data source as tag_map -->
+<script src="data.js"></script>
+
 <div id="ui">
-  <button id="play"  class="active">▶︎ Play</button>
+  <button id="play">▶︎ Play</button>
   <button id="pause">⏸︎ Pause</button>
   <label>Speed
     <select id="speed">
@@ -33,207 +26,188 @@
   </label>
   <span id="legend">URL: <code>?half=3&spacing=5&autoplay=1</code></span>
 </div>
-<div id="ticker">—</div>
+<div id="ticker"></div>
 <canvas id="c"></canvas>
-<script src="data.js"></script>
+
 <script>
 (async function(){
-  // ---- URL knobs ---------------------------------------------------------
-  const q = new URLSearchParams(location.search);
-  const HALF  = +q.get('half')     || 3.0; // seconds half-life
-  const PACE  = +q.get('spacing')  || 5.0; // seconds between pulses
-  const AUTO  = (q.get('autoplay') || '1') === '1';
+  // ---------- knobs ----------
+  const q=new URLSearchParams(location.search);
+  const HALF  = +q.get('half')    || 3.0;     // seconds half-life
+  const PACE  = +q.get('spacing') || 5.0;     // seconds between pulses
+  const AUTOPLAY = q.get('autoplay')==='1';
+  const HOP_DECAY = +q.get('hop') || 0.75;    // brightness drop per hop
+  const MAX_HOPS  = +(q.get('maxhops')||3);
 
-  // ---- Data handshake (same object as tag_map) --------------------------
-  const DATA = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : null;
-  if(!DATA || !Array.isArray(DATA.nodes) || !Array.isArray(DATA.links)){
-    document.getElementById('ticker').textContent = 'PHI_DATA not found.';
-    console.error('[gradient_map] PHI_DATA missing; ensure docs/data.js defines window.PHI_DATA.');
-    return;
-  }
+  // ---------- get graph ----------
+  const PHI = (window.PHI_DATA && typeof window.PHI_DATA==='object')? window.PHI_DATA : {nodes:[],links:[],pulsesByTag:{}};
+  const nodes = (PHI.nodes||[]).map(n=>({id:n.id, x:n.x??n.fx??n.nx??0, y:n.y??n.fy??n.ny??0}));
+  const id2i = new Map(nodes.map((n,i)=>[n.id,i]));
+  const links = (PHI.links||[]).map(e=>({a:id2i.get(e.source), b:id2i.get(e.target)})).filter(e=>e.a!=null&&e.b!=null);
 
-  // Build timeline by merging pulses with same (title,date)
-  function buildTimeline(pulsesByTag){
-    const merged = new Map();
-    for (const [tag, arr] of Object.entries(pulsesByTag||{})){
-      if (!Array.isArray(arr)) continue;
-      for (const p of arr){
-        const title = String(p.title || p.id || 'Pulse').trim();
-        const date  = String(p.date  || '').trim();
-        const key   = title + '|' + date;
-        const rec   = merged.get(key) || { title, date, tags:new Set() };
-        rec.tags.add(tag);
-        merged.set(key, rec);
+  // ---------- layout fallback if positions collapsed ----------
+  function spreadOK(arr,sel){ const xs=arr.map(sel); const lo=Math.min(...xs), hi=Math.max(...xs); return (isFinite(lo)&&isFinite(hi)&&(hi-lo)>1e-6); }
+  if(!(spreadOK(nodes,n=>+n.x) && spreadOK(nodes,n=>+n.y))){
+    // tiny force layout (deterministic)
+    const N=nodes.length; if(N){
+      // init on circle
+      for(let i=0;i<N;i++){ const t=2*Math.PI*i/N; nodes[i].x=Math.cos(t)*200; nodes[i].y=Math.sin(t)*200; }
+      const adj = Array.from({length:N},()=>[]);
+      for(const e of links){ adj[e.a].push(e.b); adj[e.b].push(e.a); }
+      const iters=400, kr=2000, ks=0.02, rest=60, dt=0.04;
+      for(let it=0; it<iters; it++){
+        const fx=new Float32Array(N), fy=new Float32Array(N);
+        // repulsion
+        for(let i=0;i<N;i++){
+          const xi=nodes[i].x, yi=nodes[i].y;
+          for(let j=i+1;j<N;j++){
+            let dx=xi-nodes[j].x, dy=yi-nodes[j].y; let d2=dx*dx+dy*dy + 0.01;
+            const inv=1/Math.sqrt(d2); const f=kr/d2;
+            const fxij=f*dx*inv, fyij=f*dy*inv;
+            fx[i]+=fxij; fy[i]+=fyij; fx[j]-=fxij; fy[j]-=fyij;
+          }
+        }
+        // springs
+        for(const e of links){
+          const i=e.a, j=e.b; let dx=nodes[j].x-nodes[i].x, dy=nodes[j].y-nodes[i].y;
+          const d=Math.sqrt(dx*dx+dy*dy)+1e-6; const ext=d-rest; const f=ks*ext;
+          const ux=dx/d, uy=dy/d; fx[i]+= f*ux; fy[i]+= f*uy; fx[j]-= f*ux; fy[j]-= f*uy;
+        }
+        // integrate (light damping)
+        for(let i=0;i<N;i++){ nodes[i].x += fx[i]*dt; nodes[i].y += fy[i]*dt; nodes[i].x*=0.996; nodes[i].y*=0.996; }
+      }
+      // normalize to [0..1]
+      const minX=Math.min(...nodes.map(n=>n.x)), maxX=Math.max(...nodes.map(n=>n.x));
+      const minY=Math.min(...nodes.map(n=>n.y)), maxY=Math.max(...nodes.map(n=>n.y));
+      for(const n of nodes){
+        n.x = (n.x-minX)/Math.max(1e-6,(maxX-minX));
+        n.y = (n.y-minY)/Math.max(1e-6,(maxY-minY));
       }
     }
-    const out = [...merged.values()];
-    out.sort((a,b)=> String(a.date).localeCompare(String(b.date)));
-    return out;
+  }else{
+    // if values look already normalized-ish, keep; else min-max normalize
+    const minX=Math.min(...nodes.map(n=>n.x)), maxX=Math.max(...nodes.map(n=>n.x));
+    const minY=Math.min(...nodes.map(n=>n.y)), maxY=Math.max(...nodes.map(n=>n.y));
+    const w=maxX-minX, h=maxY-minY;
+    if(w>1.01 || h>1.01){ for(const n of nodes){ n.x=(n.x-minX)/Math.max(1e-6,w); n.y=(n.y-minY)/Math.max(1e-6,h);} }
   }
-  const TIMELINE = buildTimeline(DATA.pulsesByTag);
 
-  // ---- Index & coordinates (with robust fallbacks) ----------------------
-  const idToIdx = new Map(DATA.nodes.map((n,i)=>[n.id, i]));
-  const N = DATA.nodes.length;
+  // build adjacency (for hop diffusion)
+  const N=nodes.length;
+  const adj=Array.from({length:N},()=>[]);
+  for(const e of links){ adj[e.a].push(e.b); adj[e.b].push(e.a); }
 
-  const raw = DATA.nodes.map(n => ({
-    id: n.id,
-    x: +(n.x ?? n.fx ?? n.nx ?? 0),
-    y: +(n.y ?? n.fy ?? n.ny ?? 0),
+  // ---------- make pulse timeline by inverting pulsesByTag ----------
+  // pulsesByTag: { tagId: [ {title,date,...}, ... ], ... }
+  const pulseMap=new Map(); // key => {title,date,tags:Set}
+  function keyOf(p){ return (p.title||'')+'|'+(p.date||''); }
+  const pbt = PHI.pulsesByTag || {};
+  for(const [tag, arr] of Object.entries(pbt)){
+    for(const p of (arr||[])){
+      const k=keyOf(p);
+      if(!pulseMap.has(k)) pulseMap.set(k, {title:p.title||'Pulse', date:p.date||'', tags:new Set()});
+      pulseMap.get(k).tags.add(tag);
+    }
+  }
+  // sorted timeline
+  const pulses=[...pulseMap.values()].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+
+  // ---------- canvas setup ----------
+  const C=document.getElementById('c'), X=C.getContext('2d');
+  function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio;
+    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+  addEventListener('resize',fit,{passive:true}); fit();
+
+  function tx(n){ return { x: n.x*C.width/devicePixelRatio, y: n.y*C.height/devicePixelRatio }; }
+
+  // ---------- echo engine ----------
+  const TAU = HALF/Math.log(2);
+  const events = pulses.map((p,k)=>({
+    t: k*PACE,
+    title: p.title,
+    date:  p.date,
+    idx:   [...p.tags].map(t=>id2i.get(t)).filter(i=>i!=null)
   }));
 
-  // bounds with padding
-  let minX=+Infinity, maxX=-Infinity, minY=+Infinity, maxY=-Infinity;
-  for(const p of raw){
-    if(isFinite(p.x)&&isFinite(p.y)){
-      if(p.x<minX)minX=p.x; if(p.x>maxX)maxX=p.x;
-      if(p.y<minY)minY=p.y; if(p.y>maxY)maxY=p.y;
+  let t=0, playing=AUTOPLAY, last=performance.now()/1000;
+  const speedSel=document.getElementById('speed');
+  document.getElementById('play').onclick=()=>playing=true;
+  document.getElementById('pause').onclick=()=>playing=false;
+  const ticker=document.getElementById('ticker');
+
+  function brightenFrom(seeds, I){
+    // BFS layers from all seed nodes
+    const seen=new Array(N).fill(-1); const q=[];
+    for(const s of seeds){ if(seen[s]===-1){ seen[s]=0; q.push(s); } }
+    while(q.length){
+      const i=q.shift(); const h=seen[i]; const amp=Math.pow(HOP_DECAY, h);
+      I[i]+=amp;
+      if(h<MAX_HOPS){
+        for(const j of adj[i]) if(seen[j]===-1){ seen[j]=h+1; q.push(j); }
+      }
     }
   }
-  if(!isFinite(minX)||!isFinite(maxX)||!isFinite(minY)||!isFinite(maxY)){ minX=0;maxX=1;minY=0;maxY=1; }
-  const PAD = 0.06;
-  const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
-  minX -= dx*PAD; maxX += dx*PAD; minY -= dy*PAD; maxY += dy*PAD;
-
-  // canvas
-  const C = document.getElementById('c'), X = C.getContext('2d');
-  const labelsLayer = document.createElement('div');
-  labelsLayer.style.position='fixed'; labelsLayer.style.inset='0'; labelsLayer.style.pointerEvents='none';
-  document.body.appendChild(labelsLayer);
-
-  function fit(){
-    const dpr = devicePixelRatio || 1;
-    C.width  = Math.floor(innerWidth * dpr);
-    C.height = Math.floor(innerHeight* dpr);
-    X.setTransform(dpr,0,0,dpr,0,0);
-  }
-  addEventListener('resize', fit, {passive:true}); fit();
-
-  function mapToCanvas(p){
-    const W = C.width  / (devicePixelRatio||1);
-    const H = C.height / (devicePixelRatio||1);
-    const nx = (p.x - minX) / (maxX - minX);
-    const ny = (p.y - minY) / (maxY - minY);
-    return { x: nx*W, y: ny*H };
-  }
-
-  const P = raw.map(p => ({ ...p, ...mapToCanvas(p), neighbors:[] }));
-
-  // links + neighbor lists
-  const linkIdx = [];
-  for(const l of DATA.links){
-    const a = idToIdx.get(l.source) ?? idToIdx.get(l.source?.id);
-    const b = idToIdx.get(l.target) ?? idToIdx.get(l.target?.id);
-    if(a==null||b==null) continue;
-    linkIdx.push([a,b]);
-    P[a].neighbors.push(b); P[b].neighbors.push(a);
-  }
-
-  // degree → radius scale
-  const deg = P.map(p=>p.neighbors.length);
-  const dmin = Math.min(...deg), dmax = Math.max(...deg);
-  function nodeR(i){
-    const t = (deg[i] - dmin) / Math.max(1,(dmax-dmin));
-    return 5 + 7*t; // 5..12 px
-  }
-
-  // labels (tiny jitter to reduce perfect overlap)
-  const labels = P.map((p,i)=>{
-    const el = document.createElement('div');
-    el.className='label';
-    el.textContent = p.id;
-    // precompute a stable small jitter based on id hash
-    let h=0; for (let k=0;k<p.id.length;k++) h = (h*131 + p.id.charCodeAt(k))|0;
-    el.dataset.jx = ((h%7)-3); // -3..3 px
-    el.dataset.jy = (((h>>3)%5)-2); // -2..2 px
-    labelsLayer.appendChild(el);
-    return el;
-  });
-
-  // pulse engine
-  const TAU = HALF / Math.log(2);
-  let t=0, playing=AUTO;
-  const speedSel = document.getElementById('speed');
-  const btnPlay  = document.getElementById('play');
-  const btnPause = document.getElementById('pause');
-  const ticker   = document.getElementById('ticker');
-
-  function setButtons(){
-    btnPlay.classList.toggle('active',  playing);
-    btnPause.classList.toggle('active', !playing);
-  }
-  btnPlay.onclick = ()=>{ playing=true;  setButtons(); };
-  btnPause.onclick= ()=>{ playing=false; setButtons(); };
-  setButtons();
-
-  const events = TIMELINE.map((ev,k)=>({ ...ev, t:k*PACE, tagSet:ev.tags }));
-
-  function now(){ return performance.now()/1000; }
-  let last = now();
 
   function frame(){
-    const n=now(), dt=Math.min(0.05,n-last); last=n;
-    if(playing) t += dt * (+speedSel.value || 1);
+    const now=performance.now()/1000, dt=Math.min(0.05, now-last); last=now; if(playing) t+=dt*(+speedSel.value);
 
-    // loop timeline
-    const totalT = (events.length ? events.length-1 : 0) * PACE;
-    const modt   = (events.length ? (t % (totalT + PACE)) : 0);
-    const idx    = events.length ? Math.min(events.length-1, Math.floor(modt / PACE)) : -1;
-
-    // intensity field
-    const I = new Float32Array(N);
-
-    if (idx >= 0){
-      const ev = events[idx];
-      const localAge  = modt - ev.t; // 0..PACE
-      const timeDecay = Math.exp(-localAge/TAU);
-
-      const active = [];
-      ev.tagSet.forEach(tag=>{
-        const i = idToIdx.get(tag);
-        if(i!=null){ active.push(i); I[i] += 0.95*timeDecay; }
-      });
-      // neighbor glow
-      for(const i of active){
-        for(const j of P[i].neighbors){
-          I[j] += 0.35*timeDecay;
+    // find current event (nearest not-yet-expired)
+    const I=new Float32Array(N);
+    let active=null;
+    for(const ev of events){
+      const age = t - ev.t;
+      if(age>=0){
+        const timeDecay = Math.exp(-age/TAU);
+        if(timeDecay>1e-3){
+          brightenFrom(ev.idx, I);
+          if(!active || age<active.age) active={ev, age};
+          // scale the whole field by time decay for this pulse
+          for(let i=0;i<N;i++) I[i]*=timeDecay;
         }
       }
-      ticker.textContent = `${ev.title} — ${ev.date || '—'}`;
-    } else {
-      ticker.textContent = '—';
     }
 
-    // draw background graph faintly so context is always visible
+    // draw
     X.clearRect(0,0,C.width,C.height);
-    X.globalAlpha = 0.12; X.lineWidth = 1; X.strokeStyle = '#8fb2e8';
-    for(const [a,b] of linkIdx){ const A=P[a], B=P[b]; X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke(); }
 
-    // nodes + labels
+    // links (subtle)
+    X.globalAlpha=0.09; X.lineWidth=1; X.strokeStyle="#7aa2f7";
+    for(const e of links){
+      const A=tx(nodes[e.a]), B=tx(nodes[e.b]);
+      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
+    }
+
+    // nodes + optional labels for lit seeds of the active pulse
+    const labelSet = new Set(active ? active.ev.idx : []);
     for(let i=0;i<N;i++){
-      const p=P[i], r=nodeR(i);
-      const bright = Math.min(1, I[i]);
-      const baseA  = 0.22 + 0.55*bright;
-
-      X.beginPath(); X.arc(p.x,p.y, r + 2*bright, 0, Math.PI*2);
-      X.fillStyle = `rgba(180,210,255,${baseA})`;
+      const p=tx(nodes[i]); const v=I[i]; const r=2 + 9*Math.min(1,v);
+      // glow
+      if(v>0.15){
+        const g = 0.35*Math.min(1,v);
+        X.beginPath(); X.arc(p.x,p.y,r*2.2,0,Math.PI*2);
+        X.fillStyle=`rgba(255,186,120,${g})`; X.fill();
+      }
+      // core
+      X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
+      X.fillStyle = `rgba(180,220,255,${0.22 + Math.min(0.78,v)})`;
       X.fill();
+    }
 
-      if (bright>0.6){
-        X.beginPath(); X.arc(p.x,p.y, r + 6*bright, 0, Math.PI*2);
-        X.strokeStyle = `rgba(255,220,170,${0.25*(bright-0.6)/0.4})`;
-        X.lineWidth = 2; X.stroke();
+    // labels for the exact tags in the active pulse
+    if(active){
+      X.font = '12px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial';
+      X.textBaseline='middle'; X.fillStyle='rgba(255,200,150,.92)'; X.strokeStyle='rgba(10,10,10,.55)';
+      X.lineWidth=3;
+      for(const i of active.ev.idx){
+        const p=tx(nodes[i]); const name = nodes[i].id || '';
+        // tiny outline for readability
+        X.strokeText(name, p.x+10, p.y);
+        X.fillText(name,   p.x+10, p.y);
       }
-
-      // labels on lit nodes; jitter + small offset
-      const L = labels[i];
-      if (bright>0.65){
-        L.classList.add('on');
-        const jx = +L.dataset.jx || 0, jy = +L.dataset.jy || 0;
-        L.style.transform = `translate(${(p.x+8+jx)|0}px, ${(p.y-18+jy)|0}px)`;
-      } else {
-        L.classList.remove('on');
-      }
+      // ticker
+      ticker.textContent = `${active.ev.title} — ${active.ev.date || '—'}`;
+    }else{
+      ticker.textContent = '';
     }
 
     requestAnimationFrame(frame);
