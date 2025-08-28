@@ -13,7 +13,7 @@
   canvas{display:block;width:100%;height:100%}
 </style>
 
-<!-- Load the same data source as tag_map -->
+<!-- same source as tag_map -->
 <script src="data.js"></script>
 
 <div id="ui">
@@ -31,183 +31,132 @@
 
 <script>
 (async function(){
-  // ---------- knobs ----------
+  // ---- knobs ----
   const q=new URLSearchParams(location.search);
-  const HALF  = +q.get('half')    || 3.0;     // seconds half-life
+  const HALF  = +q.get('half')    || 3.0;     // seconds half-life (visual fade)
   const PACE  = +q.get('spacing') || 5.0;     // seconds between pulses
   const AUTOPLAY = q.get('autoplay')==='1';
   const HOP_DECAY = +q.get('hop') || 0.75;    // brightness drop per hop
-  const MAX_HOPS  = +(q.get('maxhops')||3);
+  const MAX_HOPS  = +(q.get('maxhops')||2);   // keep local; default 2
 
-  // ---------- get graph ----------
-  const PHI = (window.PHI_DATA && typeof window.PHI_DATA==='object')? window.PHI_DATA : {nodes:[],links:[],pulsesByTag:{}};
-  const nodes = (PHI.nodes||[]).map(n=>({id:n.id, x:n.x??n.fx??n.nx??0, y:n.y??n.fy??n.ny??0}));
-  const id2i = new Map(nodes.map((n,i)=>[n.id,i]));
-  const links = (PHI.links||[]).map(e=>({a:id2i.get(e.source), b:id2i.get(e.target)})).filter(e=>e.a!=null&&e.b!=null);
+  // ---- graph from PHI_DATA ----
+  const PHI = (window.PHI_DATA&&typeof window.PHI_DATA==='object')?window.PHI_DATA:{nodes:[],links:[],pulsesByTag:{}};
+  const nodes=(PHI.nodes||[]).map(n=>({id:n.id,x:n.x??n.fx??n.nx??0,y:n.y??n.fy??n.ny??0}));
+  const id2i=new Map(nodes.map((n,i)=>[n.id,i]));
+  const links=(PHI.links||[]).map(e=>({a:id2i.get(e.source),b:id2i.get(e.target)})).filter(e=>e.a!=null&&e.b!=null);
 
-  // ---------- layout fallback if positions collapsed ----------
-  function spreadOK(arr,sel){ const xs=arr.map(sel); const lo=Math.min(...xs), hi=Math.max(...xs); return (isFinite(lo)&&isFinite(hi)&&(hi-lo)>1e-6); }
-  if(!(spreadOK(nodes,n=>+n.x) && spreadOK(nodes,n=>+n.y))){
-    // tiny force layout (deterministic)
+  // normalize/compute quick layout if collapsed
+  function spreadOK(arr,sel){const xs=arr.map(sel),lo=Math.min(...xs),hi=Math.max(...xs);return isFinite(lo)&&isFinite(hi)&&(hi-lo)>1e-6}
+  if(!(spreadOK(nodes,n=>+n.x)&&spreadOK(nodes,n=>+n.y))){
     const N=nodes.length; if(N){
-      // init on circle
-      for(let i=0;i<N;i++){ const t=2*Math.PI*i/N; nodes[i].x=Math.cos(t)*200; nodes[i].y=Math.sin(t)*200; }
-      const adj = Array.from({length:N},()=>[]);
-      for(const e of links){ adj[e.a].push(e.b); adj[e.b].push(e.a); }
-      const iters=400, kr=2000, ks=0.02, rest=60, dt=0.04;
-      for(let it=0; it<iters; it++){
-        const fx=new Float32Array(N), fy=new Float32Array(N);
-        // repulsion
-        for(let i=0;i<N;i++){
-          const xi=nodes[i].x, yi=nodes[i].y;
-          for(let j=i+1;j<N;j++){
-            let dx=xi-nodes[j].x, dy=yi-nodes[j].y; let d2=dx*dx+dy*dy + 0.01;
-            const inv=1/Math.sqrt(d2); const f=kr/d2;
-            const fxij=f*dx*inv, fyij=f*dy*inv;
-            fx[i]+=fxij; fy[i]+=fyij; fx[j]-=fxij; fy[j]-=fyij;
-          }
+      for(let i=0;i<N;i++){const t=2*Math.PI*i/N;nodes[i].x=Math.cos(t)*200;nodes[i].y=Math.sin(t)*200;}
+      const adj=Array.from({length:N},()=>[]); for(const e of links){adj[e.a].push(e.b);adj[e.b].push(e.a);}
+      const iters=320,kr=1800,ks=0.02,rest=70,dt=0.04;
+      for(let it=0;it<iters;it++){
+        const fx=new Float32Array(N),fy=new Float32Array(N);
+        for(let i=0;i<N;i++){const xi=nodes[i].x,yi=nodes[i].y;
+          for(let j=i+1;j<N;j++){let dx=xi-nodes[j].x,dy=yi-nodes[j].y;let d2=dx*dx+dy*dy+0.01;
+            const inv=1/Math.sqrt(d2),f=kr/d2,fxij=f*dx*inv,fyij=f*dy*inv;fx[i]+=fxij;fy[i]+=fyij;fx[j]-=fxij;fy[j]-=fyij;}
         }
-        // springs
-        for(const e of links){
-          const i=e.a, j=e.b; let dx=nodes[j].x-nodes[i].x, dy=nodes[j].y-nodes[i].y;
-          const d=Math.sqrt(dx*dx+dy*dy)+1e-6; const ext=d-rest; const f=ks*ext;
-          const ux=dx/d, uy=dy/d; fx[i]+= f*ux; fy[i]+= f*uy; fx[j]-= f*ux; fy[j]-= f*uy;
-        }
-        // integrate (light damping)
-        for(let i=0;i<N;i++){ nodes[i].x += fx[i]*dt; nodes[i].y += fy[i]*dt; nodes[i].x*=0.996; nodes[i].y*=0.996; }
+        for(const e of links){const i=e.a,j=e.b;let dx=nodes[j].x-nodes[i].x,dy=nodes[j].y-nodes[i].y;
+          const d=Math.sqrt(dx*dx+dy*dy)+1e-6,ext=d-rest,f=ks*ext,ux=dx/d,uy=dy/d;fx[i]+=f*ux;fy[i]+=f*uy;fx[j]-=f*ux;fy[j]-=f*uy;}
+        for(let i=0;i<N;i++){nodes[i].x+=fx[i]*dt;nodes[i].y+=fy[i]*dt;nodes[i].x*=0.996;nodes[i].y*=0.996;}
       }
-      // normalize to [0..1]
-      const minX=Math.min(...nodes.map(n=>n.x)), maxX=Math.max(...nodes.map(n=>n.x));
-      const minY=Math.min(...nodes.map(n=>n.y)), maxY=Math.max(...nodes.map(n=>n.y));
-      for(const n of nodes){
-        n.x = (n.x-minX)/Math.max(1e-6,(maxX-minX));
-        n.y = (n.y-minY)/Math.max(1e-6,(maxY-minY));
-      }
+      const minX=Math.min(...nodes.map(n=>n.x)),maxX=Math.max(...nodes.map(n=>n.x));
+      const minY=Math.min(...nodes.map(n=>n.y)),maxY=Math.max(...nodes.map(n=>n.y));
+      for(const n of nodes){n.x=(n.x-minX)/Math.max(1e-6,(maxX-minX));n.y=(n.y-minY)/Math.max(1e-6,(maxY-minY));}
     }
   }else{
-    // if values look already normalized-ish, keep; else min-max normalize
-    const minX=Math.min(...nodes.map(n=>n.x)), maxX=Math.max(...nodes.map(n=>n.x));
-    const minY=Math.min(...nodes.map(n=>n.y)), maxY=Math.max(...nodes.map(n=>n.y));
-    const w=maxX-minX, h=maxY-minY;
-    if(w>1.01 || h>1.01){ for(const n of nodes){ n.x=(n.x-minX)/Math.max(1e-6,w); n.y=(n.y-minY)/Math.max(1e-6,h);} }
+    const minX=Math.min(...nodes.map(n=>n.x)),maxX=Math.max(...nodes.map(n=>n.x));
+    const minY=Math.min(...nodes.map(n=>n.y)),maxY=Math.max(...nodes.map(n=>n.y));
+    const w=maxX-minX,h=maxY-minY;
+    if(w>1.01||h>1.01){for(const n of nodes){n.x=(n.x-minX)/Math.max(1e-6,w);n.y=(n.y-minY)/Math.max(1e-6,h);}}
   }
 
-  // build adjacency (for hop diffusion)
   const N=nodes.length;
-  const adj=Array.from({length:N},()=>[]);
-  for(const e of links){ adj[e.a].push(e.b); adj[e.b].push(e.a); }
+  const adj=Array.from({length:N},()=>[]); for(const e of links){adj[e.a].push(e.b);adj[e.b].push(e.a);}
 
-  // ---------- make pulse timeline by inverting pulsesByTag ----------
-  // pulsesByTag: { tagId: [ {title,date,...}, ... ], ... }
-  const pulseMap=new Map(); // key => {title,date,tags:Set}
-  function keyOf(p){ return (p.title||'')+'|'+(p.date||''); }
-  const pbt = PHI.pulsesByTag || {};
-  for(const [tag, arr] of Object.entries(pbt)){
+  // ---- build pulse timeline (invert pulsesByTag) ----
+  const pMap=new Map();
+  function kOf(p){return (p.title||'')+'|'+(p.date||'');}
+  for(const [tag,arr] of Object.entries(PHI.pulsesByTag||{})){
     for(const p of (arr||[])){
-      const k=keyOf(p);
-      if(!pulseMap.has(k)) pulseMap.set(k, {title:p.title||'Pulse', date:p.date||'', tags:new Set()});
-      pulseMap.get(k).tags.add(tag);
+      const k=kOf(p); if(!pMap.has(k)) pMap.set(k,{title:p.title||'Pulse',date:p.date||'',tags:new Set()});
+      pMap.get(k).tags.add(tag);
     }
   }
-  // sorted timeline
-  const pulses=[...pulseMap.values()].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const pulses=[...pMap.values()].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
 
-  // ---------- canvas setup ----------
+  // ---- canvas ----
   const C=document.getElementById('c'), X=C.getContext('2d');
-  function fit(){ C.width=innerWidth*devicePixelRatio; C.height=innerHeight*devicePixelRatio;
-    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
-  addEventListener('resize',fit,{passive:true}); fit();
+  function fit(){C.width=innerWidth*devicePixelRatio;C.height=innerHeight*devicePixelRatio;
+    X.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);} addEventListener('resize',fit,{passive:true}); fit();
+  function tx(n){return {x:n.x*C.width/devicePixelRatio,y:n.y*C.height/devicePixelRatio};}
 
-  function tx(n){ return { x: n.x*C.width/devicePixelRatio, y: n.y*C.height/devicePixelRatio }; }
-
-  // ---------- echo engine ----------
-  const TAU = HALF/Math.log(2);
-  const events = pulses.map((p,k)=>({
-    t: k*PACE,
-    title: p.title,
-    date:  p.date,
-    idx:   [...p.tags].map(t=>id2i.get(t)).filter(i=>i!=null)
-  }));
-
+  // ---- controls ----
   let t=0, playing=AUTOPLAY, last=performance.now()/1000;
   const speedSel=document.getElementById('speed');
   document.getElementById('play').onclick=()=>playing=true;
   document.getElementById('pause').onclick=()=>playing=false;
   const ticker=document.getElementById('ticker');
+  const TAU = HALF/Math.log(2);
 
-  function brightenFrom(seeds, I){
-    // BFS layers from all seed nodes
-    const seen=new Array(N).fill(-1); const q=[];
-    for(const s of seeds){ if(seen[s]===-1){ seen[s]=0; q.push(s); } }
+  function brightenSeedsAndHops(seeds, I){
+    const seen=new Int16Array(N); seen.fill(-1);
+    const q=[]; for(const s of seeds){ if(s!=null && seen[s]===-1){ seen[s]=0; q.push(s); } }
     while(q.length){
-      const i=q.shift(); const h=seen[i]; const amp=Math.pow(HOP_DECAY, h);
+      const i=q.shift(); const h=seen[i]; const amp=Math.pow(HOP_DECAY,h);
       I[i]+=amp;
-      if(h<MAX_HOPS){
-        for(const j of adj[i]) if(seen[j]===-1){ seen[j]=h+1; q.push(j); }
-      }
+      if(h<MAX_HOPS){ for(const j of adj[i]) if(seen[j]===-1){ seen[j]=h+1; q.push(j); } }
     }
   }
 
   function frame(){
     const now=performance.now()/1000, dt=Math.min(0.05, now-last); last=now; if(playing) t+=dt*(+speedSel.value);
 
-    // find current event (nearest not-yet-expired)
-    const I=new Float32Array(N);
+    // pick ONLY the most recent pulse whose time has arrived
     let active=null;
-    for(const ev of events){
-      const age = t - ev.t;
-      if(age>=0){
-        const timeDecay = Math.exp(-age/TAU);
-        if(timeDecay>1e-3){
-          brightenFrom(ev.idx, I);
-          if(!active || age<active.age) active={ev, age};
-          // scale the whole field by time decay for this pulse
-          for(let i=0;i<N;i++) I[i]*=timeDecay;
-        }
-      }
+    for(let i=0;i<pulses.length;i++){
+      const evT = i*PACE;
+      if(t>=evT) active={i, ev:{t:evT, title:pulses[i].title, date:pulses[i].date, idx:[...pulses[i].tags].map(tag=>id2i.get(tag)).filter(x=>x!=null)}};
+      else break;
+    }
+
+    // intensity from current pulse only
+    const I=new Float32Array(N);
+    if(active){
+      const age = t - active.ev.t;
+      const timeDecay = Math.exp(-Math.max(0,age)/TAU);
+      brightenSeedsAndHops(active.ev.idx, I);
+      for(let i=0;i<N;i++) I[i]*=timeDecay;
     }
 
     // draw
     X.clearRect(0,0,C.width,C.height);
-
-    // links (subtle)
+    // links
     X.globalAlpha=0.09; X.lineWidth=1; X.strokeStyle="#7aa2f7";
-    for(const e of links){
-      const A=tx(nodes[e.a]), B=tx(nodes[e.b]);
-      X.beginPath(); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); X.stroke();
-    }
+    for(const e of links){const A=tx(nodes[e.a]),B=tx(nodes[e.b]);X.beginPath();X.moveTo(A.x,A.y);X.lineTo(B.x,B.y);X.stroke();}
 
-    // nodes + optional labels for lit seeds of the active pulse
-    const labelSet = new Set(active ? active.ev.idx : []);
+    // nodes
     for(let i=0;i<N;i++){
-      const p=tx(nodes[i]); const v=I[i]; const r=2 + 9*Math.min(1,v);
-      // glow
-      if(v>0.15){
-        const g = 0.35*Math.min(1,v);
-        X.beginPath(); X.arc(p.x,p.y,r*2.2,0,Math.PI*2);
-        X.fillStyle=`rgba(255,186,120,${g})`; X.fill();
-      }
-      // core
+      const p=tx(nodes[i]); const v=I[i]; const r=2+9*Math.min(1,v);
+      if(v>0.12){ X.beginPath(); X.arc(p.x,p.y,r*2.1,0,Math.PI*2); X.fillStyle=`rgba(255,186,120,${0.33*Math.min(1,v)})`; X.fill(); }
       X.beginPath(); X.arc(p.x,p.y,r,0,Math.PI*2);
-      X.fillStyle = `rgba(180,220,255,${0.22 + Math.min(0.78,v)})`;
-      X.fill();
+      X.fillStyle=`rgba(180,220,255,${0.22+Math.min(0.78,v)})`; X.fill();
     }
 
-    // labels for the exact tags in the active pulse
+    // labels for lit tags of the active pulse
     if(active){
-      X.font = '12px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial';
-      X.textBaseline='middle'; X.fillStyle='rgba(255,200,150,.92)'; X.strokeStyle='rgba(10,10,10,.55)';
-      X.lineWidth=3;
+      X.font='12px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial';
+      X.textBaseline='middle'; X.lineWidth=3;
       for(const i of active.ev.idx){
-        const p=tx(nodes[i]); const name = nodes[i].id || '';
-        // tiny outline for readability
-        X.strokeText(name, p.x+10, p.y);
-        X.fillText(name,   p.x+10, p.y);
+        const p=tx(nodes[i]); const name=nodes[i].id||'';
+        X.strokeStyle='rgba(10,10,10,.55)'; X.strokeText(name,p.x+10,p.y);
+        X.fillStyle='rgba(255,200,150,.95)'; X.fillText(name,p.x+10,p.y);
       }
-      // ticker
-      ticker.textContent = `${active.ev.title} — ${active.ev.date || '—'}`;
-    }else{
-      ticker.textContent = '';
+      ticker.textContent=`${active.ev.title} — ${active.ev.date||'—'}`;
+    } else {
+      ticker.textContent='';
     }
 
     requestAnimationFrame(frame);
