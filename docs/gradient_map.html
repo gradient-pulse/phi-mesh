@@ -3,267 +3,310 @@
 <title>Φ-Mesh — Pulsed Gradient History</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
-  :root{
-    --bg:#0b0f14; --panel:#0f141b; --fg:#e6edf3; --muted:#9fb0c5;
-    --ink:#d8e6ff; --accent:#82c7ff; --pill:#152438; --stroke:#a8c3f6;
-    --link-dim:0.04; --link-lit:0.42;
+  :root {
+    --bg:#0b0f14; --panel:#0f141b; --ink:#e6edf3; --muted:#9fb0c3;
+    --line:#a9bfda; --hot:#d9ecff; --pill:#142034; --pill-b:#2a3b52;
+    --accent:#7fbaff;
   }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,Segoe UI,Roboto,Helvetica,Arial}
-  svg{width:100%;height:100%;display:block;cursor:grab}
-  svg:active{cursor:grabbing}
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--ink);
+              font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
+  canvas { display:block; width:100%; height:100% }
 
-  /* UI – top-left controls */
-  #ui{position:fixed;top:14px;left:14px;display:flex;gap:10px;align-items:center;z-index:10}
-  .btn,select{
-    background:#111a24;border:1px solid #243245;color:var(--fg);
-    padding:8px 12px;border-radius:11px;box-shadow:0 0 0 1px rgba(130,199,255,.05) inset;
+  /* UI ------------------------------------------------------------- */
+  #ui { position:fixed; top:14px; left:14px; display:flex; gap:10px; z-index:5 }
+  .btn, .sel {
+    background: #0f1824; color:var(--ink); border:1px solid #2a3b52;
+    border-radius:12px; padding:8px 12px; cursor:pointer; height:34px;
+    display:flex; align-items:center; gap:8px; box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
   }
-  .btn{cursor:pointer}
-  .btn.active{outline:2px solid rgba(130,199,255,.28)}
-  label{display:flex;gap:6px;align-items:center}
-  select{padding:6px 10px}
+  .btn:active { transform:translateY(1px) }
+  .btn[data-on="1"] { outline:2px solid #24456e }
+  .sel select {
+    appearance:none; background:transparent; color:var(--ink); border:none;
+    font:inherit; padding-right:18px; cursor:pointer;
+  }
 
-  /* Header – top-right */
-  #hdr{
-    position:fixed;top:14px;right:14px;max-width:min(640px,50vw);
-    background:linear-gradient(180deg,var(--panel),rgba(20,24,30,.92));
-    border:1px solid rgba(130,199,255,.22);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.35);z-index:9
+  #hud {
+    position:fixed; top:14px; right:14px; z-index:5;
+    background:linear-gradient(180deg,rgba(20,25,34,.95),rgba(16,21,30,.92));
+    border:1px solid #263648; border-radius:14px; padding:12px 14px; max-width:520px;
+    box-shadow:0 12px 40px rgba(0,0,0,.35);
   }
-  #hdr .in{padding:12px 14px 10px}
-  .title{font-weight:800;letter-spacing:.2px;margin:0 0 8px 0}
-  .blurb{color:var(--muted);margin:6px 0 2px 0}
-  .pill{
-    display:inline-flex;align-items:center;gap:8px;max-width:100%;
-    background:var(--pill);border:1px solid rgba(130,199,255,.28);
-    border-radius:999px;padding:8px 12px;margin-bottom:6px;color:var(--ink)
+  #title { font-weight:700; margin-bottom:8px }
+  #expl { color:var(--muted); font-size:13px; }
+  #pulsepill {
+    display:inline-flex; align-items:center; gap:8px; margin-top:10px;
+    background:var(--pill); border:1px solid var(--pill-b);
+    padding:8px 10px; border-radius:999px; font-size:13px;
+    white-space:nowrap; color:#cfe5ff;
   }
-  .pill small{opacity:.75}
-  .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;max-width:100%}
+  #pulsepill b { color:#e6f2ff; }
 
-  /* Graph styling */
-  .link{stroke:var(--stroke);stroke-opacity:var(--link-dim);stroke-width:1px}
-  .link.lit{stroke-opacity:var(--link-lit);stroke-width:1.3px}
-  .node {opacity:.22}
-  .node.lit{opacity:1}
-  .node ellipse{fill:#77b7ff;stroke:none;fill-opacity:.85}
-  .node text{
-    font-size:12px; fill:#cfe5ff; pointer-events:none;
-    paint-order:stroke; stroke:#0b0f14; stroke-width:3px;
-    display:none;
+  /* small watermark / fallback message */
+  #warn {
+    position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+    color:#9eb1c6; opacity:.9; font-size:15px; text-align:center; max-width:680px;
+    background:rgba(20,26,36,.6); border:1px solid rgba(60,80,110,.5);
+    border-radius:14px; padding:16px 18px; display:none; z-index:6;
   }
-  .node.lit text{display:block}
 </style>
 
-<!-- data.js must define window.PHI_DATA = {nodes:[{id,centrality?}], links:[{source,target}] } -->
+<div id="ui">
+  <button id="play" class="btn" aria-label="Play">▶︎ Play</button>
+  <button id="pause" class="btn" aria-label="Pause">⏸︎ Pause</button>
+  <div class="sel btn" title="Playback speed">
+    <span>Speed</span>
+    <select id="speed">
+      <option>1.0</option>
+      <option>2.0</option>
+      <option>3.0</option>
+    </select>
+  </div>
+</div>
+
+<div id="hud">
+  <div id="title">Pulsed Gradient History: Tags Ignited</div>
+  <div id="expl">Each pulse is a gradient. As it passes, its tags ignite; only links
+    between lit tags intensify. Pan/zoom is live.</div>
+  <div id="pulsepill"><b>Pulse —</b> <span id="pulselabel">—</span></div>
+</div>
+
+<div id="warn"></div>
+
+<canvas id="c" aria-label="Pulsed gradient tag map"></canvas>
 <script src="data.js"></script>
-<body>
-  <div id="ui">
-    <button id="play" class="btn">▶︎ Play</button>
-    <button id="pause" class="btn">⏸︎ Pause</button>
-    <label>Speed
-      <select id="speed">
-        <option>1.0</option><option selected>2.0</option><option>3.0</option>
-      </select>
-    </label>
-  </div>
-
-  <div id="hdr" role="region" aria-label="Pulse header">
-    <div class="in">
-      <div class="title">Pulsed Gradient History: Tags Ignited</div>
-      <div id="pulse-pill" class="pill truncate">
-        Pulse — <span id="pill-title" class="truncate">—</span> <small id="pill-date"></small>
-      </div>
-      <div class="blurb">Each pulse is a gradient. As it passes, its tags ignite; only links between lit tags intensify. Pan/zoom is live.</div>
-    </div>
-  </div>
-
-  <svg id="g" aria-label="Pulsed gradient tag map">
-    <g id="root">
-      <g id="links"></g>
-      <g id="nodes"></g>
-    </g>
-  </svg>
-
-<script type="module">
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-
-(async function main(){
-  // --- URL knobs (tuned defaults) ------------------------------------
+<script>
+(function(){
+  // ---------- URL knobs ----------
   const q = new URLSearchParams(location.search);
-  const HALF     = +(q.get('half')     || 3.0);   // seconds half-life (visual text/alpha tail, reserved)
-  const PACE     = +(q.get('spacing')  || 6.0);   // seconds between pulses
-  const AUTOPLAY =  (q.get('autoplay') || '1') === '1';
+  const HALF  = +q.get('half')     || 3.0;   // seconds half-life for per-pulse fade
+  const PACE  = +q.get('spacing')  || 6.0;   // seconds per pulse step
+  const AUTO  = q.get('autoplay')  === '1';  // start playing
 
-  const SPREAD    = +(q.get('spread')   || 1.45);  // >1 = wider layout
-  const LINK_FADE = +(q.get('linkfade') || 0.42);  // lit link opacity
-  const LINK_W    = +(q.get('linkw')    || 1.3);   // lit link width
-  const DIM_LINK  = +(q.get('dimlink')  || 0.04);  // background link opacity
-  const MAX_HOPS  = +(q.get('maxhops')  || 2);     // BFS reach when tags missing
+  // ---------- Data plumbing ----------
+  // Expect window.PHI_DATA: { nodes:[{id,x,y,centrality?}], links:[{source,target}], pulsesByTag:{ tag:[{title,date,id?}...] } }
+  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object') ? window.PHI_DATA : null;
+  const warn = document.getElementById('warn');
 
-  document.documentElement.style.setProperty('--link-lit', String(LINK_FADE));
-  document.documentElement.style.setProperty('--link-dim', String(DIM_LINK));
+  if(!DATA || !Array.isArray(DATA.nodes) || !Array.isArray(DATA.links)){
+    warn.style.display='block';
+    warn.textContent = "No PHI_DATA found. Open tag_map first or ensure docs/data.js defines window.PHI_DATA = { nodes, links, pulsesByTag }.";
+    return;
+  }
 
-  // --- Data -----------------------------------------------------------
-  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object') ? window.PHI_DATA : {nodes:[],links:[]};
-  const EVENTS = await fetch('echoes.json').then(r=>r.json()).catch(()=>({events:[]}));
-  const pulses = Array.isArray(EVENTS.events) ? EVENTS.events : [];
-
-  const id2node = new Map(DATA.nodes.map(n => [n.id, n]));
-  const links = DATA.links
-    .map(l => ({ source: id2node.get(l.source)||l.source, target: id2node.get(l.target)||l.target }))
-    .filter(l => l.source && l.target);
-
-  // degree + size
-  const degree = new Map();
-  links.forEach(l => {
-    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
-    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
-  });
-  const nodeScore = d => (typeof d.centrality === 'number') ? d.centrality : (degree.get(d.id)||1);
-  const rScale = d3.scaleSqrt()
-    .domain(d3.extent(DATA.nodes.map(nodeScore)))
-    .range([3, 14]);
-
-  // Layout
-  const svg = d3.select('#g');
-  const root = d3.select('#root');
-  const linkLayer = d3.select('#links');
-  const nodeLayer = d3.select('#nodes');
-
-  const vb = svg.node().getBoundingClientRect();
-  const W = vb.width, H = vb.height;
-
-  const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d=>d.id).distance(110*SPREAD).strength(0.20))
-    .force('charge', d3.forceManyBody().strength(-340*SPREAD))
-    .force('center', d3.forceCenter(W/2, H/2))
-    .force('collide', d3.forceCollide().radius(d => rScale(d)*1.05 + 6).iterations(2));
-
-  const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (ev)=> root.attr('transform', ev.transform));
-  svg.call(zoom);
-
-  // Draw
-  const linkSel = linkLayer.selectAll('line')
-    .data(links)
-    .join('line')
-    .attr('class','link');
-
-  const nodeSel = nodeLayer.selectAll('g.node')
-    .data(DATA.nodes)
-    .join(enter => {
-      const g = enter.append('g').attr('class','node'); // starts dim
-
-      g.append('ellipse')
-        .attr('rx', d => rScale(d)*1.55)
-        .attr('ry', d => rScale(d));
-
-      g.append('text')
-        .attr('text-anchor','middle')
-        .attr('y', d => rScale(d) + 12)
-        .text(d => d.id); // hidden by default via CSS; shown when .lit
-
-      return g;
-    });
-
-  sim.on('tick', () => {
-    linkSel
-      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
-      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
-    nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
-  });
-
-  // Pulse engine
-  const pillTitle = document.getElementById('pill-title');
-  const pillDate  = document.getElementById('pill-date');
-
-  // Adjacency for BFS
-  const adj = new Map(DATA.nodes.map(n => [n.id, []]));
-  links.forEach(l => { adj.get(l.source.id).push(l.target.id); adj.get(l.target.id).push(l.source.id); });
-
-  function deriveTags(ev){
-    if (Array.isArray(ev.tags) && ev.tags.length) return ev.tags.filter(t=>id2node.has(t));
-    if (ev.source_tag && id2node.has(ev.source_tag)){
-      const seen = new Set([ev.source_tag]);
-      let frontier = [ev.source_tag];
-      for (let h=0; h<MAX_HOPS; h++){
-        const next=[];
-        for (const v of frontier){
-          for (const u of (adj.get(v)||[])){
-            if (!seen.has(u)){ seen.add(u); next.push(u); }
-          }
-        }
-        frontier = next;
+  // Build pulse timeline by scanning pulsesByTag
+  const pulseMap = new Map(); // key -> {title,date,tags:Set}
+  if (DATA.pulsesByTag && typeof DATA.pulsesByTag === 'object'){
+    for (const [tag, list] of Object.entries(DATA.pulsesByTag)){
+      if (!Array.isArray(list)) continue;
+      for (const p of list){
+        const title = p?.title || p?.id || 'Pulse';
+        const date  = p?.date  || '';
+        const key   = `${title}||${date}`;
+        let obj = pulseMap.get(key);
+        if (!obj){ obj = { title, date, tags:new Set() }; pulseMap.set(key,obj); }
+        obj.tags.add(tag);
       }
-      return [...seen];
     }
-    return [];
+  }
+  // Fall back: no pulses available
+  if (pulseMap.size === 0){
+    warn.style.display='block';
+    warn.textContent = "No pulses found in PHI_DATA.pulsesByTag. The gradient playback needs pulses.";
+    return;
   }
 
-  const sequence = (pulses.length ? pulses : [{title:'—',when:'',tags:[]}]).map((ev,i) => {
-    const tags = deriveTags(ev);
-    return {
-      idx:i,
-      when: ev.date || ev.when || '',
-      title: ev.title || ev.id || ev.name || 'Pulse',
-      tags: new Set(tags)
-    };
+  // Order pulses by date asc (fallback to title)
+  const pulses = Array.from(pulseMap.values()).sort((a,b)=>{
+    const ad=a.date||'', bd=b.date||'';
+    if (ad && bd) return ad.localeCompare(bd);
+    if (ad) return -1; if (bd) return 1;
+    return (a.title||'').localeCompare(b.title||'');
   });
 
-  // Initialize everything to DIM + labels hidden
-  nodeSel.classed('lit', false);
-  linkSel.classed('lit', false);
+  // Node index & positions
+  const idx = new Map(DATA.nodes.map((n,i)=>[n.id,i]));
+  const N   = DATA.nodes.length;
+  const pos = DATA.nodes.map(n=>({
+    x: (n.x ?? n.fx ?? n.nx ?? 0),
+    y: (n.y ?? n.fy ?? n.ny ?? 0)
+  }));
 
-  function renderPulse(k){
-    const p = sequence[k];
-    if (!p){ return; }
+  // Normalize to canvas coords
+  const [minX,maxX] = [Math.min(...pos.map(p=>p.x)), Math.max(...pos.map(p=>p.x))];
+  const [minY,maxY] = [Math.min(...pos.map(p=>p.y)), Math.max(...pos.map(p=>p.y))];
+  const spanX = (maxX-minX)||1, spanY=(maxY-minY)||1;
 
-    pillTitle.textContent = p.title || 'Pulse';
-    pillDate.textContent  = p.when ? `— ${p.when}` : '';
+  // Build adjacency for fast "links between lit nodes"
+  const links = DATA.links.map(l=>{
+    // links can be {source,target} as ids or objects
+    const a = idx.get(typeof l.source==='object'?l.source.id:l.source);
+    const b = idx.get(typeof l.target==='object'?l.target.id:l.target);
+    return (a!=null && b!=null) ? [a,b] : null;
+  }).filter(Boolean);
 
-    // lit set
-    nodeSel.classed('lit', d => p.tags.has(d.id));
-    // links brighten only if both ends lit
-    linkSel
-      .classed('lit', d => (p.tags.has(d.source.id) && p.tags.has(d.target.id)))
-      .attr('stroke-width', d => (p.tags.has(d.source.id) && p.tags.has(d.target.id)) ? LINK_W : 1);
+  // ---------- Canvas & pan/zoom ----------
+  const C = document.getElementById('c');
+  const X = C.getContext('2d');
+
+  function fit(){
+    const dpr = devicePixelRatio||1;
+    C.width  = innerWidth*dpr;
+    C.height = innerHeight*dpr;
+    X.setTransform(dpr,0,0,dpr,0,0);
+    draw(true); // immediate redraw on resize
+  }
+  addEventListener('resize', fit, {passive:true});
+  fit();
+
+  // Pan/zoom (simple, smooth)
+  let zoom = 1.0, panX = 0, panY = 0;
+  let isPanning = false, lastX=0, lastY=0;
+
+  C.addEventListener('mousedown', e => { isPanning=true; lastX=e.clientX; lastY=e.clientY; });
+  addEventListener('mouseup',   ()=> isPanning=false);
+  addEventListener('mouseleave',()=> isPanning=false);
+  addEventListener('mousemove', e=>{
+    if(!isPanning) return;
+    panX += e.clientX - lastX;
+    panY += e.clientY - lastY;
+    lastX = e.clientX; lastY = e.clientY;
+    draw(true);
+  }, {passive:true});
+
+  C.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const Z = Math.exp(-e.deltaY*0.0015); // smooth zoom
+    // zoom toward cursor
+    const wx = (e.clientX - panX), wy = (e.clientY - panY);
+    panX -= wx * (Z-1);
+    panY -= wy * (Z-1);
+    zoom *= Z;
+    zoom = Math.max(0.3, Math.min(4.5, zoom));
+    draw(true);
+  }, {passive:false});
+
+  function toCanvas(p){
+    // center graph then scale
+    const gx = (p.x - minX)/spanX * C.width/ (devicePixelRatio||1);
+    const gy = (p.y - minY)/spanY * C.height/(devicePixelRatio||1);
+    return { x: gx*zoom + panX, y: gy*zoom + panY };
   }
 
-  // Transport
+  // ---------- Pulse engine ----------
+  // playback state
+  const TAU = HALF/Math.log(2);
+  let t=0, last=performance.now()/1000;
+  let playing = AUTO;                       // start?
+  let curPulse = 0;                         // index in pulses
+  let speedSel = document.getElementById('speed');
+
+  const ignited = new Float32Array(N);      // intensity per node (0..~1)
+
+  function ageWeight(age){ return Math.exp(-age/TAU); } // time fade
+
+  function tick(){
+    const now = performance.now()/1000;
+    const dt  = Math.min(0.05, now-last); last=now;
+    if (playing) t += dt * (+speedSel.value||1);
+
+    // Which pulse window are we in?
+    const pulseIdx = Math.floor( t / PACE );
+    if (pulseIdx !== curPulse && pulseIdx>=0 && pulseIdx < pulses.length){
+      curPulse = pulseIdx;
+      setPulseUI();
+    }
+
+    // decay all
+    const decay = Math.exp(-dt/TAU);
+    for (let i=0;i<N;i++) ignited[i] *= decay;
+
+    // add current pulse energy
+    const P = pulses[Math.max(0, Math.min(pulses.length-1, curPulse))];
+    if (P && P.tags){
+      for (const tag of P.tags){
+        const i = idx.get(tag);
+        if (i!=null) ignited[i] = Math.min(1, ignited[i] + 1.0*dt*(1.5/HALF));
+      }
+    }
+    draw(false);
+    requestAnimationFrame(tick);
+  }
+
+  // ---------- Drawing ----------
+  function draw(fast){
+    X.clearRect(0,0,C.width,C.height);
+
+    // links: two passes (background, then lit->lit)
+    // background (very soft)
+    X.globalAlpha = 0.08;
+    X.lineWidth = Math.max(1, 1.0*zoom);
+    X.strokeStyle = '#9fb7d4';
+    X.beginPath();
+    for (const [a,b] of links){
+      const A = toCanvas(pos[a]), B = toCanvas(pos[b]);
+      X.moveTo(A.x,A.y); X.lineTo(B.x,B.y);
+    }
+    X.stroke();
+
+    // intensified links (only between lit nodes, whiten & thicker)
+    X.globalAlpha = 0.55;
+    X.lineWidth = Math.max(1.5, 2.0*zoom);
+    X.strokeStyle = '#e7f1ff';
+    X.beginPath();
+    for (const [a,b] of links){
+      const ia = ignited[a], ib = ignited[b];
+      if (ia>0.18 && ib>0.18){
+        const A = toCanvas(pos[a]), B = toCanvas(pos[b]);
+        X.moveTo(A.x,A.y); X.lineTo(B.x,B.y);
+      }
+    }
+    X.stroke();
+
+    // nodes (soft dot + brighter if ignited)
+    for (let i=0;i<N;i++){
+      const p = toCanvas(pos[i]);
+      const hot = ignited[i];
+      const r   = 3 + (hot>0.15 ? Math.min(10, 12*hot) : 0); // subtle growth
+      // soft base
+      X.globalAlpha = 0.18; X.fillStyle = '#9eb2cc';
+      X.beginPath(); X.arc(p.x,p.y, 6, 0, Math.PI*2); X.fill();
+      // core
+      X.globalAlpha = hot>0.12 ? 0.9 : 0.45;
+      X.fillStyle = hot>0.12 ? '#cfe6ff' : '#a7bfdc';
+      X.beginPath(); X.arc(p.x,p.y, r, 0, Math.PI*2); X.fill();
+    }
+
+    // labels (always visible; brighten when ignited)
+    X.font = `${Math.max(11, 12*zoom)}px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial`;
+    X.textAlign = 'left'; X.textBaseline='middle';
+    for (let i=0;i<N;i++){
+      const p = toCanvas(pos[i]);
+      const hot = ignited[i];
+      X.globalAlpha = hot>0.15 ? 0.95 : 0.38;
+      X.fillStyle = hot>0.15 ? '#e9f3ff' : '#a8b9cf';
+      X.fillText(DATA.nodes[i].id, p.x + 8, p.y);
+    }
+  }
+
+  // ---------- UI ----------
   const playBtn  = document.getElementById('play');
   const pauseBtn = document.getElementById('pause');
-  const speedSel = document.getElementById('speed');
+  const pill     = document.getElementById('pulselabel');
 
-  let playing = AUTOPLAY;
-  let t0 = performance.now()/1000;
-  let cur = 0;
-  renderPulse(0);
-
-  function loop(){
-    const now = performance.now()/1000;
-    const spd = +speedSel.value;
-    if (playing && sequence.length){
-      const elapsed = (now - t0) * spd;
-      const idx = Math.floor(elapsed / PACE);
-      if (idx !== cur && idx < sequence.length){
-        cur = idx; renderPulse(cur);
-      }
-      if (idx >= sequence.length){
-        playing = false;
-        playBtn.classList.remove('active');
-        pauseBtn.classList.add('active');
-      }
-    }
-    requestAnimationFrame(loop);
+  function setPulseUI(){
+    const P = pulses[Math.max(0, Math.min(pulses.length-1, curPulse))];
+    const when = P.date ? ` — ${P.date}` : '';
+    pill.textContent = `${P.title||'Pulse'}${when}`;
   }
-  loop();
 
-  playBtn.onclick  = () => { playing = true;  t0 = performance.now()/1000; playBtn.classList.add('active'); pauseBtn.classList.remove('active'); };
-  pauseBtn.onclick = () => { playing = false;                        pauseBtn.classList.add('active'); playBtn.classList.remove('active'); };
-  if (AUTOPLAY){ playBtn.classList.add('active'); } else { pauseBtn.classList.add('active'); }
+  playBtn.onclick  = ()=>{ playing=true;  playBtn.dataset.on="1"; pauseBtn.dataset.on="0"; };
+  pauseBtn.onclick = ()=>{ playing=false; playBtn.dataset.on="0"; pauseBtn.dataset.on="1"; };
+  // init toggles
+  (AUTO ? playBtn : pauseBtn).click();
 
-  // Space toggles play/pause
-  window.addEventListener('keydown', (e)=>{
-    if (e.code === 'Space'){ e.preventDefault(); (playing ? pauseBtn : playBtn).click(); }
-  });
+  // Kick off
+  setPulseUI();
+  requestAnimationFrame(tick);
 })();
 </script>
