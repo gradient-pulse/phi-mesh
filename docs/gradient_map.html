@@ -11,33 +11,39 @@
             font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
   canvas{display:block;width:100%;height:100%}
 
+  /* HUD */
   #hud{
-    position:fixed; top:14px; right:14px; z-index:5; max-width:560px;
+    position:fixed; top:14px; right:14px; z-index:5; max-width:720px;
     background:linear-gradient(180deg,rgba(20,26,36,.96),rgba(16,22,32,.92));
     border:1px solid var(--border); border-radius:14px; padding:12px 14px;
     box-shadow:0 14px 44px rgba(0,0,0,.35)
   }
   #title{font-weight:800;margin-bottom:8px}
-  #expl{color:var(--muted);font-size:13px}
-  #pulsepill{
-    display:inline-flex;align-items:center;gap:8px;margin-top:10px;
-    background:var(--pill);border:1px solid var(--pillb);
-    padding:8px 10px;border-radius:999px;font-size:13px;color:#cfe5ff
-  }
-  #pulsepill b{color:#e8f3ff}
+  #expl{color:var(--muted);font-size:13px;margin-bottom:8px}
 
-  /* inline controls in HUD */
-  #controls{display:flex;gap:8px;align-items:center;margin-top:10px}
-  .btn,.sel{
+  /* Control row */
+  #controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .btn{
     background:#101a27;border:1px solid var(--border);color:var(--ink);
-    border-radius:12px;height:34px;padding:8px 12px;display:flex;align-items:center;gap:8px;
-    cursor:pointer;user-select:none
+    border-radius:12px;height:36px;padding:8px 12px;display:inline-flex;
+    align-items:center;gap:8px;cursor:pointer;user-select:none;font:inherit
   }
   .btn[data-on="1"]{outline:2px solid #2a4a72}
-  .sel select{appearance:none;background:transparent;border:none;color:var(--ink);font:inherit;cursor:pointer}
 
+  /* Speed select styled like a button */
+  .select.btn{padding-right:10px}
+  .select.btn select{
+    appearance:none;background:transparent;border:none;color:var(--ink);
+    font:inherit;cursor:pointer;outline:none
+  }
+
+  /* Pulse “pill” styled like a button (same height/weight) */
+  #pulsepill.btn{max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #pulsepill b{color:#e8f3ff}
+
+  /* Warn overlay */
   #warn{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
-        color:#cfe0f5;background:rgba(16,22,32,.7);border:1px solid var(--border);
+        color:#cfe0f5;background:rgba(16,22,32,.78);border:1px solid var(--border);
         border-radius:14px;padding:14px 16px;display:none;z-index:6;max-width:720px;text-align:center}
 </style>
 
@@ -47,10 +53,11 @@
   <div id="controls">
     <button id="play"  class="btn" aria-label="Play">▶︎ Play</button>
     <button id="pause" class="btn" aria-label="Pause">⏸︎ Pause</button>
-    <div class="sel btn"><span>Speed</span>
-      <select id="speed"><option>1.0</option><option selected>2.0</option><option>3.0</option></select>
+    <div class="select btn">
+      <span>Speed</span>
+      <select id="speed"><option>1.0</option><option>2.0</option><option>3.0</option></select>
     </div>
-    <div id="pulsepill"><b>Pulse —</b> <span id="pulselabel">—</span></div>
+    <div id="pulsepill" class="btn"><b>Pulse —</b> <span id="pulselabel">—</span></div>
   </div>
 </div>
 
@@ -64,26 +71,26 @@
   const q=new URLSearchParams(location.search);
   const HALF = +q.get('half') || 3.0;        // seconds half-life
   const PACE = +q.get('spacing') || 6.0;     // seconds per pulse
-  const AUTO = q.get('autoplay') === '1';    // start playing?
+  const AUTO = q.has('autoplay') ? (q.get('autoplay')==='1') : true; // default ON
 
   // ---------- Data detection ----------
-  const pick = (w)=> w?.PHI_DATA||w?.GRAPH_DATA||w?.DATA||w?.graph||null;
-  const RAW = pick(window);
-  const warn = document.getElementById('warn');
+  const grab=(w)=>w?.PHI_DATA||w?.GRAPH_DATA||w?.DATA||w?.graph||null;
+  const RAW=grab(window);
+  const warn=document.getElementById('warn');
   if(!RAW || !Array.isArray(RAW.nodes) || !Array.isArray(RAW.links)){
     warn.style.display='block';
-    warn.textContent = "No graph found. Ensure docs/data.js defines window.PHI_DATA (or GRAPH_DATA/DATA/graph) with {nodes, links, pulsesByTag}.";
+    warn.textContent="No graph found. Ensure docs/data.js defines window.PHI_DATA (or GRAPH_DATA/DATA/graph) with {nodes, links, pulsesByTag}.";
     return;
   }
 
-  // Index & positions
+  // Nodes/positions
   const idx=new Map(RAW.nodes.map((n,i)=>[n.id,i]));
   const N=RAW.nodes.length;
   const pos=RAW.nodes.map(n=>({x:(n.x??n.fx??n.nx??0), y:(n.y??n.fy??n.ny??0)}));
 
-  // Pulses from pulsesByTag
+  // Pulses
   const pulsesMap=new Map();
-  if (RAW.pulsesByTag && typeof RAW.pulsesByTag==='object'){
+  if(RAW.pulsesByTag && typeof RAW.pulsesByTag==='object'){
     for(const [tag,arr] of Object.entries(RAW.pulsesByTag)){
       if(!Array.isArray(arr)) continue;
       for(const p of arr){
@@ -105,7 +112,7 @@
     return;
   }
 
-  // Links → [i,j]
+  // Links
   const links = RAW.links.map(e=>{
     const a=idx.get(typeof e.source==='object'?e.source.id:e.source);
     const b=idx.get(typeof e.target==='object'?e.target.id:e.target);
@@ -126,34 +133,31 @@
     return {x: gx*zoom + panX, y: gy*zoom + panY};
   }
   function fitToGraph(margin=0.85){
-    // scale to fit both dimensions with margin
     const dpr=devicePixelRatio||1;
     const W=C.width/dpr, H=C.height/dpr;
     const sx=W/spanX, sy=H/spanY;
     zoom = Math.min(sx,sy) * margin;
-    // center graph
-    const cx = (W - spanX*zoom)/2;
-    const cy = (H - spanY*zoom)/2;
-    panX = cx; panY = cy;
+    panX = (W - spanX*zoom)/2;
+    panY = (H - spanY*zoom)/2;
   }
   function size(){
     const dpr=devicePixelRatio||1;
     C.width=innerWidth*dpr; C.height=innerHeight*dpr;
     X.setTransform(dpr,0,0,dpr,0,0);
     fitToGraph();
-    draw(true);
+    draw(); // <- render immediately so you see the graph before ticking
   }
   addEventListener('resize', size, {passive:true});
   size();
 
-  // pan/zoom interactions
+  // pan/zoom
   let panning=false, lx=0, ly=0;
   C.addEventListener('mousedown', e=>{panning=true; lx=e.clientX; ly=e.clientY;});
   addEventListener('mouseup', ()=>panning=false);
   addEventListener('mouseleave', ()=>panning=false);
   addEventListener('mousemove', e=>{
     if(!panning) return;
-    panX += e.clientX-lx; panY += e.clientY-ly; lx=e.clientX; ly=e.clientY; draw(true);
+    panX += e.clientX-lx; panY += e.clientY-ly; lx=e.clientX; ly=e.clientY; draw();
   }, {passive:true});
   C.addEventListener('wheel', e=>{
     e.preventDefault();
@@ -161,16 +165,17 @@
     const wx=(e.clientX - panX), wy=(e.clientY - panY);
     panX -= wx*(z-1); panY -= wy*(z-1);
     zoom*=z; zoom=Math.max(0.3,Math.min(4.5,zoom));
-    draw(true);
+    draw();
   }, {passive:false});
 
   // ---------- Pulse engine ----------
   const TAU = HALF/Math.log(2);
   const ign = new Float32Array(N);
-  let t=0, last=performance.now()/1000, iPulse=0, playing=(q.get('autoplay')==='1');
-  const speedSel = document.getElementById('speed');
+  let t=0, last=performance.now()/1000, iPulse=0, playing=AUTO;
+  const speedSel=document.getElementById('speed');
 
   function decay(dt){ const d=Math.exp(-dt/TAU); for(let i=0;i<N;i++) ign[i]*=d; }
+
   function tick(){
     const now=performance.now()/1000, dt=Math.min(0.05, now-last); last=now;
     if(playing) t += dt*(+speedSel.value||1);
@@ -182,21 +187,21 @@
       const add = 1.5/HALF * dt;
       for(const tag of P.tags){ const i=idx.get(tag); if(i!=null) ign[i]=Math.min(1,ign[i]+add); }
     }
-    draw(false); requestAnimationFrame(tick);
+    draw(); requestAnimationFrame(tick);
   }
 
   // ---------- Drawing ----------
   function draw(){
     X.clearRect(0,0,C.width,C.height);
 
-    // Background links, soft
+    // Background links
     X.globalAlpha=0.09; X.lineWidth=Math.max(1,1.0*zoom); X.strokeStyle='#9fb7d4';
     X.beginPath();
     for(const [a,b] of links){ const A=toCanvas(pos[a]), B=toCanvas(pos[b]); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); }
     X.stroke();
 
-    // Lit-to-lit links, brighter
-    X.globalAlpha=0.55; X.lineWidth=Math.max(1.5,2.0*zoom); X.strokeStyle='#e7f1ff';
+    // Lit-to-lit links
+    X.globalAlpha=0.5; X.lineWidth=Math.max(1.5,2.0*zoom); X.strokeStyle='#e7f1ff';
     X.beginPath();
     for(const [a,b] of links){
       if(ign[a]>0.18 && ign[b]>0.18){ const A=toCanvas(pos[a]), B=toCanvas(pos[b]); X.moveTo(A.x,A.y); X.lineTo(B.x,B.y); }
@@ -207,7 +212,7 @@
     for(let i=0;i<N;i++){
       const p=toCanvas(pos[i]), hot=ign[i];
       // halo
-      X.globalAlpha=0.18; X.fillStyle='#9eb2cc'; X.beginPath(); X.arc(p.x,p.y,6,0,Math.PI*2); X.fill();
+      X.globalAlpha=0.15; X.fillStyle='#9eb2cc'; X.beginPath(); X.arc(p.x,p.y,6,0,Math.PI*2); X.fill();
       // core
       const r=3 + (hot>0.12? Math.min(10,12*hot):0);
       X.globalAlpha=hot>0.12?0.9:0.45; X.fillStyle=hot>0.12?'#cfe6ff':'#a7bfdc';
@@ -235,11 +240,13 @@
   playBtn.onclick = ()=>{ playing=true;  playBtn.dataset.on="1"; pauseBtn.dataset.on="0"; };
   pauseBtn.onclick= ()=>{ playing=false; playBtn.dataset.on="0"; pauseBtn.dataset.on="1"; };
 
-  // init UI
+  // init HUD state
+  document.getElementById('speed').value = (q.get('speed')||'2.0');
   setPulseLabel();
-  (AUTO?playBtn:pauseBtn).click();
+  (playing?playBtn:pauseBtn).dataset.on="1";
+  (playing?pauseBtn:playBtn).dataset.on="0";
 
-  // go
+  // Start loop
   requestAnimationFrame(tick);
 })();
 </script>
