@@ -1,200 +1,192 @@
 <!doctype html>
 <meta charset="utf-8" />
-<title>Φ-Mesh — Gradient Map (Pulse-Driven Clusters)</title>
+<title>Φ-Mesh — Gradient Map (Pulse Echo)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   :root{
-    --bg:#0b0f14; --fg:#e6edf3;
-    --panel:#0f141b; --muted:#a5b1c6;
-    --ink:#9fb7d8; --active:#d9ecff;
-    --ui:#1a2635; --ui-border:#2f4b6a; --ui-accent:#3fa3ff;
+    --bg:#0b0f14; --panel:#0f141b; --ink:#e6edf3; --muted:#9fb0c4;
+    --wire:#9fb7d8; --wire-dim:rgba(159,183,216,.12);
+    --lit:#d9ecff; --label:#e6f0ff;
+    --ui:#101821; --ui-border:#2a3b49; --ui-accent:#2a7bd8;
   }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  canvas{display:block;width:100%;height:100%}
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);
+    font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  svg{display:block;width:100%;height:100%}
+  /* UI */
+  #ui{position:fixed;top:12px;left:12px;display:flex;gap:10px;align-items:center;
+      background:var(--panel);border:1px solid var(--ui-border);padding:8px 10px;border-radius:12px;z-index:10}
+  button,select{background:var(--ui);border:1.5px solid var(--ui-border);color:var(--ink);
+      border-radius:10px;padding:6px 10px;cursor:pointer}
+  button.active{border-color:var(--ui-accent);outline:2px solid var(--ui-accent);
+      box-shadow:0 0 0 2px rgba(42,123,216,.15) inset}
+  /* Header + current pulse */
+  #legend{position:fixed;top:12px;right:12px;z-index:10;
+      background:var(--panel);border:1px solid var(--ui-border);border-radius:12px;padding:10px 12px;max-width:min(48ch,44vw)}
+  #legend .hdr{font-weight:700}
+  #legend .sub{font-size:12px;color:var(--muted);margin-top:4px}
+  #pulse{position:fixed;top:68px;right:12px;z-index:10;
+      background:var(--panel);border:1px solid var(--ui-border);border-radius:12px;padding:8px 12px;font-size:13px;color:#d9e6f5;display:none}
 
-  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;
-      background:var(--panel);border:1px solid var(--ui-border);padding:8px 10px;border-radius:12px}
-  button,select{background:var(--ui);border:1.5px solid var(--ui-accent);color:var(--fg);
-      border-radius:10px;padding:6px 12px;cursor:pointer}
-
-  #pulsebox{position:fixed;right:12px;top:12px;background:var(--panel);
-      border:1px solid var(--ui-border);border-radius:12px;padding:10px 12px;max-width:min(48ch,44vw)}
-  #cap{font-size:12px;color:var(--muted);margin-bottom:4px}
-  #title{font-size:13px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* Graph styling — faint background + lit cluster */
+  .link{stroke:var(--wire); stroke-opacity:.12}
+  .link.lit{stroke-opacity:.95}
+  .node circle{fill:#9fc9ff; opacity:.18}
+  .node.lit circle{fill:var(--lit); opacity:.95}
+  .node text{display:none; font-size:12px; fill:var(--label);
+             paint-order:stroke; stroke:#0b0f14; stroke-width:3px}
+  .node.lit text{display:block}
 </style>
 
+<!-- LEFT UI -->
 <div id="ui">
-  <button id="play">▶︎ Play</button>
+  <button id="play" class="active">▶︎ Play</button>
   <button id="pause">⏸︎ Pause</button>
   <label>Speed
     <select id="speed">
-      <option>0.5</option><option selected>1.0</option><option>1.5</option><option>2.0</option>
+      <option selected>1.0</option><option>2.0</option><option>3.0</option>
     </select>
   </label>
 </div>
 
-<div id="pulsebox">
-  <div id="cap">Pulse-driven tag clusters: each pulse lights its tags and their links.</div>
-  <div id="title">—</div>
+<!-- RIGHT HEADER + PULSE TICKER -->
+<div id="legend">
+  <div class="hdr">Pulse Gradient History: Tags Ignited</div>
+  <div class="sub">Each pulse is a gradient. When it passes, its tags ignite; only links between lit tags intensify. Pan/zoom is live.</div>
 </div>
+<div id="pulse">—</div>
 
-<canvas id="c" aria-label="Pulse-driven tag clusters"></canvas>
+<!-- GRAPH -->
+<svg id="graph" role="img" aria-label="Gradient Map (Pulse-driven)">
+  <g id="root">
+    <g id="links"></g>
+    <g id="nodes"></g>
+  </g>
+</svg>
 
-<!-- Same source as tag_map: exposes window.PHI_DATA -->
+<!-- Tag Map data (x,y positions & links) -->
 <script src="data.js"></script>
+<!-- d3 for zoom/pan (no force run here) -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script>
 (async function(){
-  // -------- URL knobs --------
-  const q = new URLSearchParams(location.search);
-  const HALF = +(q.get('half')||3.0);     // seconds half-life (for later use)
-  const PACE = +(q.get('spacing')||6.0);  // seconds between pulses
-  const AUTOPLAY = q.get('autoplay')==='1';
+  // ------- helpers -------
+  const waitFor = (fn, ms=3000, step=40) => new Promise(res=>{
+    const t=setInterval(()=>{const v=fn(); if(v){clearInterval(t); res(v);}},step);
+    setTimeout(()=>{clearInterval(t);res(null)},ms);
+  });
+  const esc = s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-  // -------- Inputs --------
-  const PHI = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : {nodes:[],links:[]};
-  const events = await fetch('./echoes.json').then(r=>r.json()).catch(()=>({events:[]})).then(x=>x.events||[]);
+  // ------- wait for PHI_DATA, then fetch pulses -------
+  await waitFor(()=>window.PHI_DATA);
+  const DATA = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : {nodes:[],links:[]};
+  const res = await fetch('./echoes.json').catch(()=>null);
+  const ej = res ? await res.json().catch(()=>({})) : {};
+  const seq = Array.isArray(ej.events) ? ej.events : [];
 
-  // -------- Nodes/links + layout fallback --------
-  const rawNodes = Array.isArray(PHI.nodes) ? PHI.nodes : [];
-  const nodes = rawNodes.map(n => ({ id:n.id, x:n.x, y:n.y, centrality:n.centrality }));
-  const id2i = new Map(nodes.map((n,i)=>[n.id,i]));
-  const links = (PHI.links||[]).map(e=>{
-    const a = id2i.get(e.source), b = id2i.get(e.target);
-    return (a!=null && b!=null) ? {a,b} : null;
+  const playlist = seq
+    .map(e => ({ title: e.title||'Pulse', date: e.date||'', tags: Array.isArray(e.tags)?e.tags:[] }))
+    .filter(e => e.tags.length);
+
+  // ------- SVG + layers -------
+  const svg  = d3.select('#graph');
+  const root = d3.select('#root');
+  const linkLayer = d3.select('#links');
+  const nodeLayer = d3.select('#nodes');
+
+  // zoom/pan (like Tag Map)
+  svg.call(d3.zoom().scaleExtent([0.35, 3]).on('zoom', ev => root.attr('transform', ev.transform)));
+
+  const W = svg.node().clientWidth  || 1280;
+  const H = svg.node().clientHeight || 800;
+  svg.attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMid meet');
+
+  // ------- positions: use Tag Map coords if present; otherwise jitter center -------
+  const idToRaw = new Map(DATA.nodes.map(n=>[n.id,n]));
+  const nodes = DATA.nodes.map(n => ({
+    id: n.id,
+    x: (typeof n.x==='number' ? n.x : W/2 + (Math.random()-0.5)*200),
+    y: (typeof n.y==='number' ? n.y : H/2 + (Math.random()-0.5)*200),
+    r: 4 + Math.sqrt(Math.max(1, (n.centrality ?? 1))) * 2.0
+  }));
+  const id2node = new Map(nodes.map(n=>[n.id,n]));
+
+  const links = (DATA.links||[]).map(l=>{
+    const s = id2node.get(l.source), t = id2node.get(l.target);
+    return (s && t) ? {source:s, target:t} : null;
   }).filter(Boolean);
 
-  // Do we have usable positions?
-  const hasXY = nodes.length && nodes.some(n => Number.isFinite(n.x) && Number.isFinite(n.y));
-  if(!hasXY){
-    // Radial fallback: sort by centrality (or degree), place around a circle
-    const degree = new Map();
-    for(const e of links){ degree.set(e.a,(degree.get(e.a)||0)+1); degree.set(e.b,(degree.get(e.b)||0)+1); }
-    const score = i => Number.isFinite(nodes[i].centrality) ? nodes[i].centrality : (degree.get(i)||0);
-    const order = nodes.map((_,i)=>i).sort((a,b)=>score(b)-score(a));
-    const N = nodes.length;
-    for(let k=0;k<N;k++){
-      const i = order[k];
-      const ang = 2*Math.PI*(k/N);
-      nodes[i].x = Math.cos(ang);
-      nodes[i].y = Math.sin(ang);
-    }
-  }
+  // ------- draw background graph (faint) -------
+  const linkSel = linkLayer.selectAll('line')
+    .data(links)
+    .join('line')
+    .attr('class','link')
+    .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+    .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
 
-  // Normalize -> [0,1] box
-  const minX = Math.min(...nodes.map(n=>n.x)), maxX = Math.max(...nodes.map(n=>n.x));
-  const minY = Math.min(...nodes.map(n=>n.y)), maxY = Math.max(...nodes.map(n=>n.y));
-  const dx = (maxX-minX)||1, dy = (maxY-minY)||1;
-  nodes.forEach(n => { n.nx = (n.x-minX)/dx; n.ny = (n.y-minY)/dy; });
+  const nodeSel = nodeLayer.selectAll('g.node')
+    .data(nodes, d=>d.id)
+    .join(enter=>{
+      const g = enter.append('g').attr('class','node');
+      g.append('circle').attr('r', d=>d.r);
+      g.append('text').attr('text-anchor','middle').attr('y', d=>d.r+12).text(d=>d.id);
+      g.attr('transform', d=>`translate(${d.x},${d.y})`);
+      return g;
+    });
 
-  // Centrality max for sizing
-  const cMax = nodes.reduce((m,n)=>Math.max(m, Number.isFinite(n.centrality)?n.centrality:0), 0) || 1;
+  // Start with all nodes dim
+  nodeSel.classed('lit', false);
 
-  // -------- Canvas + pan/zoom --------
-  const C = document.getElementById('c'), X = C.getContext('2d');
-  function fit(){ C.width = innerWidth*devicePixelRatio; C.height = innerHeight*devicePixelRatio; draw(true); }
-  addEventListener('resize', fit, {passive:true}); fit();
-
-  let k = Math.min(C.width, C.height)/1.25;
-  let tx = (C.width - k)/2, ty = (C.height - k)/2;
-  let dragging=false, lx=0, ly=0;
-
-  C.addEventListener('mousedown', e=>{ dragging=true; lx=e.clientX; ly=e.clientY; });
-  addEventListener('mouseup',   ()=> dragging=false);
-  addEventListener('mousemove', e=>{
-    if(!dragging) return;
-    tx += (e.clientX-lx)*devicePixelRatio;
-    ty += (e.clientY-ly)*devicePixelRatio;
-    lx=e.clientX; ly=e.clientY; draw(true);
-  });
-  C.addEventListener('wheel', e=>{
-    e.preventDefault();
-    const s = Math.exp(-e.deltaY/450);
-    const mx = e.clientX*devicePixelRatio, my = e.clientY*devicePixelRatio;
-    tx = mx - s*(mx - tx); ty = my - s*(my - ty); k *= s; draw(true);
-  }, {passive:false});
-
-  function P(n){ return { x: tx + n.nx*k, y: ty + n.ny*k }; }
-
-  // -------- Timeline --------
-  const timeline = events.map((ev,i)=>({
-    title: ev.title || 'Pulse',
-    date:  ev.date  || '',
-    tags:  Array.isArray(ev.tags) ? ev.tags.filter(t=>id2i.has(t)) : [],
-    t: i*PACE
-  }));
-  const pulseSets = timeline.map(p => new Set(p.tags));
-
-  // -------- UI --------
-  let playing = AUTOPLAY;
-  document.getElementById('play').onclick = ()=> playing = true;
-  document.getElementById('pause').onclick= ()=> playing = false;
+  // ------- UI wiring -------
+  const playBtn  = document.getElementById('play');
+  const pauseBtn = document.getElementById('pause');
   const speedSel = document.getElementById('speed');
-  const titleEl = document.getElementById('title');
-  function setPulseTitle(s){ titleEl.textContent = s; }
+  const pulseBox = document.getElementById('pulse');
 
-  // -------- Animation --------
-  let t = 0, last = performance.now()/1000;
-  function iPulseAt(tt){ if(!timeline.length) return -1; return Math.min(timeline.length-1, Math.floor(tt/ PACE)); }
+  let playing = true;
+  playBtn.onclick  = ()=>{ playing=true;  playBtn.classList.add('active'); pauseBtn.classList.remove('active'); };
+  pauseBtn.onclick = ()=>{ playing=false; playBtn.classList.remove('active'); pauseBtn.classList.add('active'); };
 
-  function draw(full=false){
-    X.setTransform(1,0,0,1,0,0);
-    X.clearRect(0,0,C.width,C.height);
+  // ------- render one pulse: light its tags + links among them -------
+  function showEvent(e){
+    pulseBox.style.display = 'block';
+    pulseBox.innerHTML = `${esc(e.title)} — <span style="color:#aac6ff">${esc(e.date)}</span>`;
 
-    // Background links
-    X.lineWidth = 1; X.globalAlpha = 0.08; X.strokeStyle = "#9fb7d8";
-    for(const e of links){
-      const a = P(nodes[e.a]), b = P(nodes[e.b]);
-      X.beginPath(); X.moveTo(a.x,a.y); X.lineTo(b.x,b.y); X.stroke();
-    }
-    // Background nodes
-    X.globalAlpha = 0.20;
-    for(const n of nodes){
-      const p = P(n);
-      X.beginPath(); X.arc(p.x,p.y, 3, 0, Math.PI*2);
-      X.fillStyle = "#9fb7d8"; X.fill();
-    }
-    X.globalAlpha = 1.0;
+    const lit = new Set(e.tags);
+    nodeSel.classed('lit', d => lit.has(d.id));
+    nodeSel.selectAll('text').style('display', d => lit.has(d.id) ? 'block' : 'none');
 
-    // Active pulse cluster
-    const ip = iPulseAt(t);
-    const pulse = timeline[ip];
-    if(pulse){
-      setPulseTitle(`${pulse.title} — ${pulse.date}`);
-      const active = pulseSets[ip];
-
-      // Links within active cluster
-      X.globalAlpha = 0.30; X.lineWidth = 1.3; X.strokeStyle = "#cfe6ff";
-      for(const e of links){
-        const aId = nodes[e.a].id, bId = nodes[e.b].id;
-        if(active.has(aId) && active.has(bId)){
-          const a = P(nodes[e.a]), b = P(nodes[e.b]);
-          X.beginPath(); X.moveTo(a.x,a.y); X.lineTo(b.x,b.y); X.stroke();
-        }
-      }
-      // Active nodes + labels
-      for(const n of nodes){
-        if(!active.has(n.id)) continue;
-        const p = P(n);
-        const r = 4.5 + 6*( (Number.isFinite(n.centrality)?n.centrality:0) / cMax );
-        X.beginPath(); X.arc(p.x,p.y, r, 0, Math.PI*2);
-        X.fillStyle = "#d9ecff"; X.globalAlpha = 0.95; X.fill();
-
-        X.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-        X.fillStyle = "rgba(230,240,255,0.9)";
-        X.textAlign = "left"; X.textBaseline = "middle";
-        X.fillText(n.id, p.x + r + 5, p.y);
-      }
-      X.globalAlpha = 1.0;
-    } else {
-      setPulseTitle("—");
-    }
+    linkSel.classed('lit', d => lit.has(d.source.id) && lit.has(d.target.id));
   }
 
-  function tick(){
-    const now = performance.now()/1000, dt = Math.min(0.05, now-last); last = now;
-    if(playing) t += dt*(+speedSel.value || 1);
-    draw();
-    requestAnimationFrame(tick);
+  // ------- playback loop -------
+  let idx = 0;
+  let start = performance.now()/1000;
+
+  // show first if available
+  if (playlist.length){ showEvent(playlist[0]); }
+
+  function frame(){
+    const now = performance.now()/1000;
+    if (playing && playlist.length){
+      const speed = +speedSel.value || 1;
+      const SPACING = 6; // seconds per pulse base
+      const virtual = ((now - start) * speed) / SPACING;
+      const nextIdx = Math.floor(virtual) % playlist.length;
+      if (nextIdx !== idx){
+        idx = nextIdx;
+        showEvent(playlist[idx]);
+      }
+    }
+    requestAnimationFrame(frame);
   }
-  draw(true); tick();
+  requestAnimationFrame(frame);
+
+  // Safety note if no nodes loaded (shouldn’t happen after waitFor)
+  if (!nodes.length){
+    const warn = document.createElement('div');
+    warn.textContent = 'No graph data loaded (PHI_DATA empty).';
+    warn.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.7';
+    document.body.appendChild(warn);
+  }
 })();
 </script>
