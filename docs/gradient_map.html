@@ -4,189 +4,217 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   :root{
-    --bg:#0b0f14; --panel:#0f141b; --ink:#e6edf3; --muted:#9fb0c4;
-    --wire:#9fb7d8; --wire-dim:rgba(159,183,216,.12);
-    --lit:#d9ecff; --label:#e6f0ff;
-    --ui:#101821; --ui-border:#2a3b49; --ui-accent:#2a7bd8;
+    --bg:#0b0f14; --panel:#0f141b; --ink:#e6edf3;
+    --muted:#9fb2c9; --edge:#7aa2f7; --edge-dim:#5a6e8c;
+    --node:#a7cdfc; --node-dim:#3a4a61; --lit:#ffd399;
+    --chip:#0f141b; --chip-b:#213044; --chip-on:#2d4965;
   }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
     font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  svg{display:block;width:100%;height:100%}
-  /* UI */
-  #ui{position:fixed;top:12px;left:12px;display:flex;gap:10px;align-items:center;
-      background:var(--panel);border:1px solid var(--ui-border);padding:8px 10px;border-radius:12px;z-index:10}
-  button,select{background:var(--ui);border:1.5px solid var(--ui-border);color:var(--ink);
-      border-radius:10px;padding:6px 10px;cursor:pointer}
-  button.active{border-color:var(--ui-accent);outline:2px solid var(--ui-accent);
-      box-shadow:0 0 0 2px rgba(42,123,216,.15) inset}
-  /* Header + current pulse */
-  #legend{position:fixed;top:12px;right:12px;z-index:10;
-      background:var(--panel);border:1px solid var(--ui-border);border-radius:12px;padding:10px 12px;max-width:min(48ch,44vw)}
-  #legend .hdr{font-weight:700}
-  #legend .sub{font-size:12px;color:var(--muted);margin-top:4px}
-  #pulse{position:fixed;top:68px;right:12px;z-index:10;
-      background:var(--panel);border:1px solid var(--ui-border);border-radius:12px;padding:8px 12px;font-size:13px;color:#d9e6f5;display:none}
-
-  /* Graph styling — faint background + lit cluster */
-  .link{stroke:var(--wire); stroke-opacity:.12}
-  .link.lit{stroke-opacity:.95}
-  .node circle{fill:#9fc9ff; opacity:.18}
-  .node.lit circle{fill:var(--lit); opacity:.95}
-  .node text{display:none; font-size:12px; fill:var(--label);
-             paint-order:stroke; stroke:#0b0f14; stroke-width:3px}
-  .node.lit text{display:block}
+  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;
+    background:var(--panel);border:1px solid #223; padding:8px 10px;border-radius:10px}
+  button,select{background:var(--chip);border:1px solid var(--chip-b);
+    color:var(--ink);border-radius:10px;padding:6px 10px;cursor:pointer}
+  button.active{outline:2px solid var(--chip-on)}
+  label{color:var(--muted)}
+  #hint{position:fixed;top:12px;right:12px;max-width:520px;
+    background:var(--panel);border:1px solid #223;border-radius:12px;
+    padding:12px 14px}
+  #hint h4{margin:0 0 6px 0;font-weight:700}
+  #hint p{margin:0;color:var(--muted);font-size:12.5px}
+  #pulse{position:fixed;top:62px;right:12px;background:var(--panel);
+    border:1px solid #223;border-radius:12px;padding:8px 10px;color:var(--muted)}
+  svg{width:100%;height:100%;display:block}
+  .edge{stroke:var(--edge-dim);stroke-opacity:.12}
+  .edge.hot{stroke:var(--edge);stroke-opacity:.55}
+  .node{fill:var(--node-dim)}
+  .node.lit{fill:var(--node)}
+  .label{font-size:12px;fill:#bcd7ff;pointer-events:none;opacity:.0}
+  .label.show{opacity:.9}
 </style>
 
-<!-- LEFT UI -->
 <div id="ui">
-  <button id="play" class="active">▶︎ Play</button>
+  <button id="play">▶︎ Play</button>
   <button id="pause">⏸︎ Pause</button>
   <label>Speed
     <select id="speed">
-      <option selected>1.0</option><option>2.0</option><option>3.0</option>
+      <option>1.0</option>
+      <option>2.0</option>
+      <option>3.0</option>
     </select>
   </label>
 </div>
 
-<!-- RIGHT HEADER + PULSE TICKER -->
-<div id="legend">
-  <div class="hdr">Pulse Gradient History: Tags Ignited</div>
-  <div class="sub">Each pulse is a gradient. When it passes, its tags ignite; only links between lit tags intensify. Pan/zoom is live.</div>
+<div id="hint">
+  <h4>Pulse Gradient History: Tags Ignited</h4>
+  <p>Each pulse is a gradient. As it passes, its tags ignite; only links between lit tags intensify. Pan/zoom is live.</p>
 </div>
 <div id="pulse">—</div>
 
-<!-- GRAPH -->
-<svg id="graph" role="img" aria-label="Gradient Map (Pulse-driven)">
+<svg id="view" role="img" aria-label="Gradient Map — Pulse Echo">
   <g id="root">
-    <g id="links"></g>
+    <g id="edges"></g>
     <g id="nodes"></g>
+    <g id="labels"></g>
   </g>
 </svg>
 
-<!-- Tag Map data (x,y positions & links) -->
+<!-- data.js should set window.PHI_DATA = {nodes:[{id,x,y,centrality?}], links:[{source,target}] } -->
 <script src="data.js"></script>
-<!-- d3 for zoom/pan (no force run here) -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script>
 (async function(){
-  // ------- helpers -------
-  const waitFor = (fn, ms=3000, step=40) => new Promise(res=>{
-    const t=setInterval(()=>{const v=fn(); if(v){clearInterval(t); res(v);}},step);
-    setTimeout(()=>{clearInterval(t);res(null)},ms);
-  });
-  const esc = s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  // ---- URL knobs --------------------------------------------------------
+  const q = new URLSearchParams(location.search);
+  const AUTOPLAY = q.get('autoplay') === '1';
+  let   SPACING  = +(q.get('spacing') || 2);     // seconds per pulse @ 1×
+  const SPEEDSEL = document.getElementById('speed');
+  SPEEDSEL.value = (q.get('speed') || '1.0');
 
-  // ------- wait for PHI_DATA, then fetch pulses -------
-  await waitFor(()=>window.PHI_DATA);
-  const DATA = (window.PHI_DATA && typeof window.PHI_DATA==='object') ? window.PHI_DATA : {nodes:[],links:[]};
-  const res = await fetch('./echoes.json').catch(()=>null);
-  const ej = res ? await res.json().catch(()=>({})) : {};
-  const seq = Array.isArray(ej.events) ? ej.events : [];
+  // ---- Data -------------------------------------------------------------
+  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
+    ? window.PHI_DATA : {nodes:[],links:[]};
 
-  const playlist = seq
-    .map(e => ({ title: e.title||'Pulse', date: e.date||'', tags: Array.isArray(e.tags)?e.tags:[] }))
-    .filter(e => e.tags.length);
+  const pulses = await fetch('./echoes.json')
+    .then(r => r.json())
+    .then(j => Array.isArray(j.events) ? j.events : [])
+    .catch(()=>[]);
 
-  // ------- SVG + layers -------
-  const svg  = d3.select('#graph');
-  const root = d3.select('#root');
-  const linkLayer = d3.select('#links');
-  const nodeLayer = d3.select('#nodes');
+  // Guard
+  if (!DATA.nodes?.length) {
+    console.error('[gradient_map] No nodes found (PHI_DATA missing).');
+  }
 
-  // zoom/pan (like Tag Map)
-  svg.call(d3.zoom().scaleExtent([0.35, 3]).on('zoom', ev => root.attr('transform', ev.transform)));
+  // ---- Build index & scales --------------------------------------------
+  const idToNode = new Map(DATA.nodes.map(n=>[n.id,n]));
+  const W = document.documentElement.clientWidth;
+  const H = document.documentElement.clientHeight;
+  const pad = 40;
 
-  const W = svg.node().clientWidth  || 1280;
-  const H = svg.node().clientHeight || 800;
-  svg.attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMid meet');
+  const xs = DATA.nodes.map(n=>+n.x || 0);
+  const ys = DATA.nodes.map(n=>+n.y || 0);
+  const minX = Math.min(...xs), maxX = Math.max(...xs);
+  const minY = Math.min(...ys), maxY = Math.max(...ys);
 
-  // ------- positions: use Tag Map coords if present; otherwise jitter center -------
-  const idToRaw = new Map(DATA.nodes.map(n=>[n.id,n]));
+  // Treat coordinates as normalized if they look like 0..1
+  const normalized = (maxX <= 1.2 && minX >= -0.2 && maxY <= 1.2 && minY >= -0.2);
+  const sx = d3.scaleLinear().domain([minX, maxX]).range([pad, W - pad]);
+  const sy = d3.scaleLinear().domain([minY, maxY]).range([pad, H - pad]);
+  const nx = n => {
+    const x = (+n.x || 0);
+    return normalized ? x * (W - 2*pad) + pad : sx(x);
+  };
+  const ny = n => {
+    const y = (+n.y || 0);
+    return normalized ? y * (H - 2*pad) + pad : sy(y);
+  };
+
+  // Derived nodes/links with fixed positions
   const nodes = DATA.nodes.map(n => ({
     id: n.id,
-    x: (typeof n.x==='number' ? n.x : W/2 + (Math.random()-0.5)*200),
-    y: (typeof n.y==='number' ? n.y : H/2 + (Math.random()-0.5)*200),
-    r: 4 + Math.sqrt(Math.max(1, (n.centrality ?? 1))) * 2.0
+    x: nx(n),
+    y: ny(n),
+    r: 4 + Math.sqrt(Math.max(1, (n.centrality ?? 1))) * 1.6
   }));
-  const id2node = new Map(nodes.map(n=>[n.id,n]));
 
-  const links = (DATA.links||[]).map(l=>{
-    const s = id2node.get(l.source), t = id2node.get(l.target);
-    return (s && t) ? {source:s, target:t} : null;
+  const nodeById = new Map(nodes.map(n=>[n.id,n]));
+  const links = DATA.links.map(l => {
+    const a = (typeof l.source === 'object') ? l.source.id : l.source;
+    const b = (typeof l.target === 'object') ? l.target.id : l.target;
+    const A = nodeById.get(a), B = nodeById.get(b);
+    return (A && B) ? {source:A, target:B} : null;
   }).filter(Boolean);
 
-  // ------- draw background graph (faint) -------
-  const linkSel = linkLayer.selectAll('line')
-    .data(links)
+  // ---- SVG layers & zoom -----------------------------------------------
+  const svg = d3.select('#view');
+  const root = d3.select('#root');
+  svg.call(
+    d3.zoom().scaleExtent([0.35, 4]).on('zoom', ev => {
+      root.attr('transform', ev.transform);
+    })
+  );
+
+  // draw edges (static, we’ll toggle classes)
+  const edgeSel = d3.select('#edges')
+    .selectAll('line').data(links)
     .join('line')
-    .attr('class','link')
-    .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
-    .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+    .attr('class','edge')
+    .attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+    .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y)
+    .attr('stroke-width',1);
 
-  const nodeSel = nodeLayer.selectAll('g.node')
-    .data(nodes, d=>d.id)
-    .join(enter=>{
-      const g = enter.append('g').attr('class','node');
-      g.append('circle').attr('r', d=>d.r);
-      g.append('text').attr('text-anchor','middle').attr('y', d=>d.r+12).text(d=>d.id);
-      g.attr('transform', d=>`translate(${d.x},${d.y})`);
-      return g;
-    });
+  // draw nodes
+  const nodeSel = d3.select('#nodes')
+    .selectAll('circle').data(nodes, d=>d.id)
+    .join('circle')
+    .attr('class','node')
+    .attr('r',d=>d.r)
+    .attr('cx',d=>d.x).attr('cy',d=>d.y);
 
-  // Start with all nodes dim
-  nodeSel.classed('lit', false);
+  // labels (only shown for lit nodes)
+  const labelSel = d3.select('#labels')
+    .selectAll('text').data(nodes, d=>d.id)
+    .join('text')
+    .attr('class','label')
+    .attr('text-anchor','middle')
+    .attr('x',d=>d.x)
+    .attr('y',d=>d.y - (d.r + 6))
+    .text(d=>d.id);
 
-  // ------- UI wiring -------
-  const playBtn  = document.getElementById('play');
+  // ---- Pulse playback ---------------------------------------------------
+  const playBtn = document.getElementById('play');
   const pauseBtn = document.getElementById('pause');
-  const speedSel = document.getElementById('speed');
-  const pulseBox = document.getElementById('pulse');
+  const pulseBadge = document.getElementById('pulse');
 
-  let playing = true;
-  playBtn.onclick  = ()=>{ playing=true;  playBtn.classList.add('active'); pauseBtn.classList.remove('active'); };
-  pauseBtn.onclick = ()=>{ playing=false; playBtn.classList.remove('active'); pauseBtn.classList.add('active'); };
+  let playing = AUTOPLAY;
+  playBtn.classList.toggle('active', playing);
+  pauseBtn.classList.toggle('active', !playing);
 
-  // ------- render one pulse: light its tags + links among them -------
-  function showEvent(e){
-    pulseBox.style.display = 'block';
-    pulseBox.innerHTML = `${esc(e.title)} — <span style="color:#aac6ff">${esc(e.date)}</span>`;
+  playBtn.onclick = () => { playing = true;  playBtn.classList.add('active'); pauseBtn.classList.remove('active'); };
+  pauseBtn.onclick= () => { playing = false; pauseBtn.classList.add('active'); playBtn.classList.remove('active'); };
 
-    const lit = new Set(e.tags);
+  // render a pulse index
+  function renderPulse(k){
+    const ev = pulses[k];
+    if (!ev) { pulseBadge.textContent = '—'; return; }
+
+    pulseBadge.textContent = `${ev.title || 'Pulse'} — ${ev.date || ''}`;
+
+    const lit = new Set((ev.tags||[]).filter(t => nodeById.has(t)));
+
+    // nodes: lit vs dim
     nodeSel.classed('lit', d => lit.has(d.id));
-    nodeSel.selectAll('text').style('display', d => lit.has(d.id) ? 'block' : 'none');
 
-    linkSel.classed('lit', d => lit.has(d.source.id) && lit.has(d.target.id));
+    // labels only for lit nodes
+    labelSel.classed('show', d => lit.has(d.id));
+
+    // edges: emphasize if both endpoints lit; otherwise faint (but still visible)
+    edgeSel
+      .classed('hot', d => (lit.has(d.source.id) && lit.has(d.target.id)))
+      .attr('stroke-width', d => (lit.has(d.source.id) && lit.has(d.target.id)) ? 1.6 : 1.0);
   }
 
-  // ------- playback loop -------
-  let idx = 0;
-  let start = performance.now()/1000;
-
-  // show first if available
-  if (playlist.length){ showEvent(playlist[0]); }
-
-  function frame(){
+  // timeline
+  let i = 0;
+  let last = performance.now()/1000;
+  function tick(){
     const now = performance.now()/1000;
-    if (playing && playlist.length){
-      const speed = +speedSel.value || 1;
-      const SPACING = 6; // seconds per pulse base
-      const virtual = ((now - start) * speed) / SPACING;
-      const nextIdx = Math.floor(virtual) % playlist.length;
-      if (nextIdx !== idx){
-        idx = nextIdx;
-        showEvent(playlist[idx]);
+    const dt = now - last; last = now;
+    const speed = +SPEEDSEL.value || 1.0;
+
+    if (playing && pulses.length){
+      // advance when wall time exceeds spacing/speed
+      if (!tick._acc) tick._acc = 0;
+      tick._acc += dt;
+      if (tick._acc >= (SPACING / speed)){
+        tick._acc = 0;
+        i = (i + 1) % pulses.length;
       }
     }
-    requestAnimationFrame(frame);
+    renderPulse(i);
+    requestAnimationFrame(tick);
   }
-  requestAnimationFrame(frame);
-
-  // Safety note if no nodes loaded (shouldn’t happen after waitFor)
-  if (!nodes.length){
-    const warn = document.createElement('div');
-    warn.textContent = 'No graph data loaded (PHI_DATA empty).';
-    warn.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.7';
-    document.body.appendChild(warn);
-  }
+  renderPulse(i);
+  requestAnimationFrame(tick);
 })();
 </script>
