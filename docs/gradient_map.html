@@ -1,220 +1,263 @@
 <!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8" />
 <title>Φ-Mesh — Gradient Map (Pulse Echo)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   :root{
-    --bg:#0b0f14; --panel:#0f141b; --ink:#e6edf3;
-    --muted:#9fb2c9; --edge:#7aa2f7; --edge-dim:#5a6e8c;
-    --node:#a7cdfc; --node-dim:#3a4a61; --lit:#ffd399;
-    --chip:#0f141b; --chip-b:#213044; --chip-on:#2d4965;
+    --bg:#0b0f14; --panel:#10141b; --fg:#e8eef7; --muted:#9aa6b5;
+    --ink:#bcd3f7; --hot:#ffb07a; --link:#b9c7dd;
+    --line-faint: .08;  /* base mesh */
+    --line-lit:   .55;  /* intensified links between lit tags */
+    --node-dim:   .25;  /* base nodes */
+    --node-lit:   .95;  /* lit nodes */
   }
-  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
-    font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  #ui{position:fixed;top:12px;left:12px;display:flex;gap:8px;align-items:center;
-    background:var(--panel);border:1px solid #223; padding:8px 10px;border-radius:10px}
-  button,select{background:var(--chip);border:1px solid var(--chip-b);
-    color:var(--ink);border-radius:10px;padding:6px 10px;cursor:pointer}
-  button.active{outline:2px solid var(--chip-on)}
-  label{color:var(--muted)}
-  #hint{position:fixed;top:12px;right:12px;max-width:520px;
-    background:var(--panel);border:1px solid #223;border-radius:12px;
-    padding:12px 14px}
-  #hint h4{margin:0 0 6px 0;font-weight:700}
-  #hint p{margin:0;color:var(--muted);font-size:12.5px}
-  #pulse{position:fixed;top:62px;right:12px;background:var(--panel);
-    border:1px solid #223;border-radius:12px;padding:8px 10px;color:var(--muted)}
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
   svg{width:100%;height:100%;display:block}
-  .edge{stroke:var(--edge-dim);stroke-opacity:.12}
-  .edge.hot{stroke:var(--edge);stroke-opacity:.55}
-  .node{fill:var(--node-dim)}
-  .node.lit{fill:var(--node)}
-  .label{font-size:12px;fill:#bcd7ff;pointer-events:none;opacity:.0}
-  .label.show{opacity:.9}
+
+  /* --- UI ---- */
+  #ui{position:fixed;left:12px;top:12px;display:flex;gap:8px;align-items:center;z-index:10}
+  .pill{background:#0f1522;border:1px solid rgba(255,255,255,.08);padding:8px 10px;border-radius:12px;display:inline-flex;gap:10px;align-items:center;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  button,select{background:#0f1522;border:1px solid rgba(255,255,255,.12);color:var(--fg);border-radius:10px;padding:6px 10px;cursor:pointer}
+  button.active{box-shadow:0 0 0 2px rgba(130,199,255,.35) inset}
+  label{color:var(--muted)}
+  #speed{min-width:66px}
+
+  /* --- Headline card --- */
+  #card{position:fixed;right:12px;top:12px;max-width:520px;background:var(--panel);
+        border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:12px 14px;z-index:10;
+        box-shadow:0 10px 28px rgba(0,0,0,.35)}
+  #card h3{margin:0 0 6px 0;font-size:15px}
+  #card p{margin:0;color:var(--muted);font-size:13px}
+  #pulse{position:fixed;right:12px;top:72px;background:#0e1524;border:1px solid rgba(255,255,255,.10);
+         border-radius:12px;padding:6px 10px;color:#d7e3ff;font-size:13px;z-index:10}
+
+  /* --- Mesh styles --- */
+  .link{stroke:var(--ink);stroke-width:1;stroke-opacity:var(--line-faint)}
+  .link.hot{stroke:var(--ink);stroke-opacity:var(--line-lit)}
+  .node ellipse{fill:#7fb6ff;opacity:var(--node-dim)}
+  .node.lit ellipse{opacity:var(--node-lit)}
+  .node text{fill:#b7c7dd;font-size:12px;dominant-baseline:middle;text-anchor:middle;opacity:0;pointer-events:none}
+  .node.lit text{opacity:.92}
 </style>
+</head>
+<body>
+  <div id="ui">
+    <div class="pill">
+      <button id="play">▶︎ Play</button>
+      <button id="pause">⏸︎ Pause</button>
+      <label>Speed
+        <select id="speed">
+          <option>1.0</option><option>2.0</option><option>3.0</option>
+        </select>
+      </label>
+    </div>
+  </div>
 
-<div id="ui">
-  <button id="play">▶︎ Play</button>
-  <button id="pause">⏸︎ Pause</button>
-  <label>Speed
-    <select id="speed">
-      <option>1.0</option>
-      <option>2.0</option>
-      <option>3.0</option>
-    </select>
-  </label>
-</div>
+  <div id="card">
+    <h3>Pulse Gradient History: Tags Ignited</h3>
+    <p>Each pulse is a gradient. As it passes, its tags ignite; only links between lit tags intensify. Pan/zoom is live.</p>
+  </div>
+  <div id="pulse">—</div>
 
-<div id="hint">
-  <h4>Pulse Gradient History: Tags Ignited</h4>
-  <p>Each pulse is a gradient. As it passes, its tags ignite; only links between lit tags intensify. Pan/zoom is live.</p>
-</div>
-<div id="pulse">—</div>
+  <!-- Graph -->
+  <svg id="graph" role="img" aria-label="Gradient Map (Pulse Echo)">
+    <g id="root">
+      <g id="links"></g>
+      <g id="nodes"></g>
+    </g>
+  </svg>
 
-<svg id="view" role="img" aria-label="Gradient Map — Pulse Echo">
-  <g id="root">
-    <g id="edges"></g>
-    <g id="nodes"></g>
-    <g id="labels"></g>
-  </g>
-</svg>
+  <!-- Data (same source as tag_map) -->
+  <script src="data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
-<!-- data.js should set window.PHI_DATA = {nodes:[{id,x,y,centrality?}], links:[{source,target}] } -->
-<script src="data.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script>
-(async function(){
-  // ---- URL knobs --------------------------------------------------------
-  const q = new URLSearchParams(location.search);
-  const AUTOPLAY = q.get('autoplay') === '1';
-  let   SPACING  = +(q.get('spacing') || 2);     // seconds per pulse @ 1×
-  const SPEEDSEL = document.getElementById('speed');
-  SPEEDSEL.value = (q.get('speed') || '1.0');
+  <script>
+  (async function(){
 
-  // ---- Data -------------------------------------------------------------
-  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
-    ? window.PHI_DATA : {nodes:[],links:[]};
+    /* =========================
+       URL knobs & controls
+    ========================== */
+    const qs = new URLSearchParams(location.search);
+    const AUTOPLAY = qs.get('autoplay') === '1';
+    const SPACING  = +(qs.get('spacing') || 2);   // seconds between pulses
+    const speedSel = document.getElementById('speed');
+    if (qs.get('speed')) speedSel.value = qs.get('speed');
+    const btnPlay  = document.getElementById('play');
+    const btnPause = document.getElementById('pause');
+    const pulseBadge = document.getElementById('pulse');
 
-  const pulses = await fetch('./echoes.json')
-    .then(r => r.json())
-    .then(j => Array.isArray(j.events) ? j.events : [])
-    .catch(()=>[]);
+    let playing = AUTOPLAY;
 
-  // Guard
-  if (!DATA.nodes?.length) {
-    console.error('[gradient_map] No nodes found (PHI_DATA missing).');
-  }
-
-  // ---- Build index & scales --------------------------------------------
-  const idToNode = new Map(DATA.nodes.map(n=>[n.id,n]));
-  const W = document.documentElement.clientWidth;
-  const H = document.documentElement.clientHeight;
-  const pad = 40;
-
-  const xs = DATA.nodes.map(n=>+n.x || 0);
-  const ys = DATA.nodes.map(n=>+n.y || 0);
-  const minX = Math.min(...xs), maxX = Math.max(...xs);
-  const minY = Math.min(...ys), maxY = Math.max(...ys);
-
-  // Treat coordinates as normalized if they look like 0..1
-  const normalized = (maxX <= 1.2 && minX >= -0.2 && maxY <= 1.2 && minY >= -0.2);
-  const sx = d3.scaleLinear().domain([minX, maxX]).range([pad, W - pad]);
-  const sy = d3.scaleLinear().domain([minY, maxY]).range([pad, H - pad]);
-  const nx = n => {
-    const x = (+n.x || 0);
-    return normalized ? x * (W - 2*pad) + pad : sx(x);
-  };
-  const ny = n => {
-    const y = (+n.y || 0);
-    return normalized ? y * (H - 2*pad) + pad : sy(y);
-  };
-
-  // Derived nodes/links with fixed positions
-  const nodes = DATA.nodes.map(n => ({
-    id: n.id,
-    x: nx(n),
-    y: ny(n),
-    r: 4 + Math.sqrt(Math.max(1, (n.centrality ?? 1))) * 1.6
-  }));
-
-  const nodeById = new Map(nodes.map(n=>[n.id,n]));
-  const links = DATA.links.map(l => {
-    const a = (typeof l.source === 'object') ? l.source.id : l.source;
-    const b = (typeof l.target === 'object') ? l.target.id : l.target;
-    const A = nodeById.get(a), B = nodeById.get(b);
-    return (A && B) ? {source:A, target:B} : null;
-  }).filter(Boolean);
-
-  // ---- SVG layers & zoom -----------------------------------------------
-  const svg = d3.select('#view');
-  const root = d3.select('#root');
-  svg.call(
-    d3.zoom().scaleExtent([0.35, 4]).on('zoom', ev => {
-      root.attr('transform', ev.transform);
-    })
-  );
-
-  // draw edges (static, we’ll toggle classes)
-  const edgeSel = d3.select('#edges')
-    .selectAll('line').data(links)
-    .join('line')
-    .attr('class','edge')
-    .attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
-    .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y)
-    .attr('stroke-width',1);
-
-  // draw nodes
-  const nodeSel = d3.select('#nodes')
-    .selectAll('circle').data(nodes, d=>d.id)
-    .join('circle')
-    .attr('class','node')
-    .attr('r',d=>d.r)
-    .attr('cx',d=>d.x).attr('cy',d=>d.y);
-
-  // labels (only shown for lit nodes)
-  const labelSel = d3.select('#labels')
-    .selectAll('text').data(nodes, d=>d.id)
-    .join('text')
-    .attr('class','label')
-    .attr('text-anchor','middle')
-    .attr('x',d=>d.x)
-    .attr('y',d=>d.y - (d.r + 6))
-    .text(d=>d.id);
-
-  // ---- Pulse playback ---------------------------------------------------
-  const playBtn = document.getElementById('play');
-  const pauseBtn = document.getElementById('pause');
-  const pulseBadge = document.getElementById('pulse');
-
-  let playing = AUTOPLAY;
-  playBtn.classList.toggle('active', playing);
-  pauseBtn.classList.toggle('active', !playing);
-
-  playBtn.onclick = () => { playing = true;  playBtn.classList.add('active'); pauseBtn.classList.remove('active'); };
-  pauseBtn.onclick= () => { playing = false; pauseBtn.classList.add('active'); playBtn.classList.remove('active'); };
-
-  // render a pulse index
-  function renderPulse(k){
-    const ev = pulses[k];
-    if (!ev) { pulseBadge.textContent = '—'; return; }
-
-    pulseBadge.textContent = `${ev.title || 'Pulse'} — ${ev.date || ''}`;
-
-    const lit = new Set((ev.tags||[]).filter(t => nodeById.has(t)));
-
-    // nodes: lit vs dim
-    nodeSel.classed('lit', d => lit.has(d.id));
-
-    // labels only for lit nodes
-    labelSel.classed('show', d => lit.has(d.id));
-
-    // edges: emphasize if both endpoints lit; otherwise faint (but still visible)
-    edgeSel
-      .classed('hot', d => (lit.has(d.source.id) && lit.has(d.target.id)))
-      .attr('stroke-width', d => (lit.has(d.source.id) && lit.has(d.target.id)) ? 1.6 : 1.0);
-  }
-
-  // timeline
-  let i = 0;
-  let last = performance.now()/1000;
-  function tick(){
-    const now = performance.now()/1000;
-    const dt = now - last; last = now;
-    const speed = +SPEEDSEL.value || 1.0;
-
-    if (playing && pulses.length){
-      // advance when wall time exceeds spacing/speed
-      if (!tick._acc) tick._acc = 0;
-      tick._acc += dt;
-      if (tick._acc >= (SPACING / speed)){
-        tick._acc = 0;
-        i = (i + 1) % pulses.length;
-      }
+    function setPlayState(isPlaying){
+      playing = isPlaying;
+      btnPlay.classList.toggle('active', playing);
+      btnPause.classList.toggle('active', !playing);
     }
-    renderPulse(i);
-    requestAnimationFrame(tick);
-  }
-  renderPulse(i);
-  requestAnimationFrame(tick);
-})();
-</script>
+    btnPlay.onclick  = ()=> setPlayState(true);
+    btnPause.onclick = ()=> setPlayState(false);
+    setPlayState(playing);
+
+    /* =========================
+       Helpers
+    ========================== */
+    function warn(msg){ pulseBadge.textContent = msg; }
+
+    // robust pulse loader: echoes.json in a few places → fallback to build from PHI_DATA.pulsesByTag
+    async function loadPulses(DATA){
+      const tries = [
+        './echoes.json','echoes.json','/echoes.json','./docs/echoes.json',
+        location.pathname.replace(/\/[^/]*$/,'/') + 'echoes.json'
+      ];
+      for (const url of tries){
+        try{
+          const r = await fetch(url, {cache:'no-store'});
+          if (r.ok){
+            const j = await r.json();
+            if (Array.isArray(j?.events) && j.events.length) return j.events;
+          }
+        }catch{}
+      }
+      // fallback from DATA.pulsesByTag
+      if (DATA && DATA.pulsesByTag && typeof DATA.pulsesByTag === 'object'){
+        const bucket = new Map(); // date|title → {title,date,tags:Set}
+        for (const [tag,list] of Object.entries(DATA.pulsesByTag)){
+          for (const p of (Array.isArray(list)?list:[])){
+            const key = (p.date||'')+'|'+(p.title||'Pulse');
+            if (!bucket.has(key)) bucket.set(key, {title:(p.title||'Pulse'), date:(p.date||''), tags:new Set()});
+            bucket.get(key).tags.add(tag);
+          }
+        }
+        const ev = [...bucket.values()].map(e=>({title:e.title,date:e.date,tags:[...e.tags]}));
+        ev.sort((a,b)=> String(a.date||'').localeCompare(String(b.date||'')));
+        return ev;
+      }
+      return [];
+    }
+
+    /* =========================
+       Data ingest
+    ========================== */
+    const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
+      ? window.PHI_DATA : {nodes:[],links:[]};
+
+    if (!DATA.nodes?.length){
+      console.error('[gradient_map] PHI_DATA missing or empty.');
+      warn('No tag data — open tag_map.html first.');
+      return;
+    }
+
+    const pulses = await loadPulses(DATA);
+    if (!pulses.length){
+      console.warn('[gradient_map] No pulses found (echoes.json missing/empty).');
+      warn('No pulses found (echoes.json).');
+    }
+
+    // Index
+    const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
+    const links = DATA.links
+      .map(l => ({ source: idToNode.get(l.source) || l.source,
+                   target: idToNode.get(l.target) || l.target }))
+      .filter(l => l.source && l.target);
+
+    // If there's no layout baked into PHI_DATA, do a quick force to spread
+    const needLayout = !(typeof DATA.nodes[0].x === 'number' && typeof DATA.nodes[0].y === 'number');
+
+    /* =========================
+       Draw base mesh
+    ========================== */
+    const svg  = d3.select('#graph');
+    const root = d3.select('#root');
+    const linkLayer = d3.select('#links');
+    const nodeLayer = d3.select('#nodes');
+
+    // zoom/pan
+    svg.call(d3.zoom().scaleExtent([0.35,4]).on('zoom', ev => {
+      root.attr('transform', ev.transform);
+    }));
+
+    // quick layout if needed
+    if (needLayout){
+      const sim = d3.forceSimulation(DATA.nodes)
+        .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.4))
+        .force('charge', d3.forceManyBody().strength(-320))
+        .force('center', d3.forceCenter(innerWidth/2, innerHeight/2))
+        .stop();
+      // run just enough ticks to spread
+      for (let i=0;i<180;i++) sim.tick();
+    }
+
+    // fit viewBox nicely around current coords
+    const minX = d3.min(DATA.nodes, d=>d.x), maxX = d3.max(DATA.nodes, d=>d.x);
+    const minY = d3.min(DATA.nodes, d=>d.y), maxY = d3.max(DATA.nodes, d=>d.y);
+    const pad = 80;
+    const W = (maxX-minX)+pad*2, H = (maxY-minY)+pad*2;
+    svg.attr('viewBox', `${minX-pad} ${minY-pad} ${W} ${H}`)
+       .attr('preserveAspectRatio','xMidYMid meet');
+
+    // base mesh (faint)
+    const linkSel = linkLayer.selectAll('line')
+      .data(links)
+      .join('line')
+      .attr('class','link')
+      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+
+    const nodeSel = nodeLayer.selectAll('g.node')
+      .data(DATA.nodes, d=>d.id)
+      .join(enter => {
+        const g = enter.append('g').attr('class','node').attr('transform', d=>`translate(${d.x},${d.y})`);
+        g.append('ellipse').attr('rx', d=> (d.r || 10)*1.6).attr('ry', d=> (d.r || 10));
+        g.append('text').attr('y', 0).text(d=>d.id);
+        return g;
+      });
+
+    /* =========================
+       Pulse loop (ignite)
+    ========================== */
+    // prebuild an array of frames with start times
+    const frames = (pulses.length ? pulses : [{title:'—',date:'',tags:[]}])
+      .map((p,i)=>({ ...p, t:i*SPACING }));
+
+    let t = 0;
+    let last = performance.now()/1000;
+
+    function drawAt(time){
+      // find current pulse index
+      if (!frames.length){
+        pulseBadge.textContent = '—';
+        return;
+      }
+      const idx = Math.floor(time / SPACING) % frames.length;
+      const ev  = frames[idx];
+
+      // badge
+      const ttl = ev.title || 'Pulse';
+      const dt  = ev.date ? ` — ${ev.date}` : '';
+      pulseBadge.textContent = `${ttl}${dt}`;
+
+      // lit set for this event
+      const lit = new Set(ev.tags || []);
+
+      // nodes: light only the lit set (others remain dim)
+      nodeSel.classed('lit', d => lit.has(d.id));
+
+      // links: intensify only links with both ends lit
+      linkSel.classed('hot', d => lit.has(d.source.id) && lit.has(d.target.id));
+    }
+
+    function tick(){
+      const now = performance.now()/1000;
+      const dt  = Math.min(0.05, now - last);
+      last = now;
+      if (playing) t += dt * parseFloat(speedSel.value || '1.0');
+      drawAt(t);
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+  })();
+  </script>
+</body>
+</html>
