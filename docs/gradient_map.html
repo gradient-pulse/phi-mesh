@@ -12,30 +12,32 @@
     }
     html,body { height:100%; margin:0; background:var(--bg); color:var(--fg); font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
     svg { width:100%; height:100% ; display:block }
+
+    /* UI card */
     .wrap { position:fixed; top:14px; right:14px; background:linear-gradient(180deg,var(--panel),rgba(16,19,26,.92));
-            border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 14px; box-shadow:0 10px 28px rgba(0,0,0,.35); max-width:min(720px,68vw) }
-    .title { font-weight:800; margin-bottom:8px }
-    .sub  { color:var(--muted); margin:2px 0 10px 0 }
+            border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:12px 14px; box-shadow:0 10px 28px rgba(0,0,0,.35); max-width:min(740px,70vw) }
+    .title { font-weight:800; margin-bottom:6px }
+    .sub  { color:var(--muted); margin:0 0 8px 0; font-size:12px; line-height:1.35 } /* smaller explainer */
     .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap }
+    .chip, .pill { font-size:13px } /* match Play/Pause/Speed */
     .chip { display:inline-flex; align-items:center; gap:6px; background:var(--chip); border:1px solid var(--chip-border); color:var(--chip-text);
             border-radius:999px; padding:8px 12px; cursor:pointer; user-select:none }
     .chip:active, .chip:hover { background:var(--chip-hover) }
     .chip[aria-pressed="true"]{ outline:2px solid #2d4a7a }
     .pill { background:var(--chip); border:1px solid var(--chip-border); border-radius:10px; padding:8px 10px; color:var(--chip-text) }
-    .pulse-pill { max-width:calc(68vw - 280px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
-    .sep { opacity:.5; padding:0 4px }
+    .pulse-pill { width:100%; margin-top:8px; font-size:12px; /* smaller pulse line */
+                  max-width:calc(70vw - 28px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 
     /* graph styles */
-    .link { stroke:var(--edge); stroke-opacity:.14 }
-    .link.dim { stroke-opacity:.06 }
-    .link.lit { stroke:var(--edge-lit); stroke-opacity:.95; stroke-width:1.5px }
+    .link { stroke:var(--edge); stroke-opacity:.12 }                 /* base slightly lighter */
+    .link.dim { stroke-opacity:.05 }
+    .link.lit { stroke:var(--edge-lit); stroke-opacity:.60; stroke-width:1.2px } /* lighter + thinner */
     .node { fill:var(--node); opacity:.45 }
-    .node.lit { fill:var(--node-lit); opacity:1 }
+    .node.lit { fill:var(--node-lit); opacity:.88 }                  /* less dominant */
     .label { font-size:12px; fill:#d9e7ff; pointer-events:none; paint-order:stroke; stroke:#0b0c10; stroke-width:3px; opacity:0; }
     .label.lit { opacity:.98 }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <!-- IMPORTANT: uses the same data blob as tag_map -->
   <script src="data.js"></script>
 </head>
 <body>
@@ -44,47 +46,43 @@
   <div class="wrap" id="ui">
     <div class="title">Pulsed Gradient History: Tags Ignited</div>
     <div class="sub">Each pulse is a gradient. As it passes, its tags ignite; only links between lit tags intensify. Pan/zoom is live.</div>
+
+    <!-- controls row -->
     <div class="row">
       <button class="chip" id="play" aria-pressed="false">▶︎ Play</button>
       <button class="chip" id="pause" aria-pressed="true">⏸︎ Pause</button>
       <span class="pill">Speed&nbsp;<span id="speedVal">2.0</span></span>
-      <div class="row" style="gap:6px">
-        <button class="chip" data-speed="1">1×</button>
-        <button class="chip" data-speed="2">2×</button>
-        <button class="chip" data-speed="3">3×</button>
-      </div>
-      <span class="sep">·</span>
-      <span class="pill pulse-pill" id="pulseTitle">Pulse —</span>
+      <button class="chip" data-speed="1">1×</button>
+      <button class="chip" data-speed="2">2×</button>
+      <button class="chip" data-speed="3">3×</button>
     </div>
+
+    <!-- active pulse always shown beneath controls -->
+    <div class="pill pulse-pill" id="pulseTitle">Pulse —</div>
   </div>
 
 <script>
 (function(){
-  // ---------- Helpers ----------
   const Q = new URLSearchParams(location.search);
   const AUTOPLAY = Q.get('autoplay') === '1';
-  const SPACING = Math.max(1, +(Q.get('spacing')||6)); // seconds between pulses base
+  const SPACING = Math.max(1, +(Q.get('spacing')||6));
+
   const speedEl = document.getElementById('speedVal');
   const playBtn = document.getElementById('play');
   const pauseBtn = document.getElementById('pause');
   const pulseTitle = document.getElementById('pulseTitle');
 
-  // Grab DATA exactly like tag_map
   const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object') ? window.PHI_DATA : { nodes:[], links:[] };
 
-  // Build graph
-  const nodes = DATA.nodes?.map(d => ({ id: d.id, centrality: d.centrality })) ?? [];
+  const nodes = (DATA.nodes||[]).map(d => ({ id: d.id, centrality: d.centrality }));
   const idToNode = new Map(nodes.map(n => [n.id, n]));
   const links = (DATA.links||[])
-    .map(l => ({
-      source: idToNode.get(l.source) || {id:l.source},
-      target: idToNode.get(l.target) || {id:l.target}
-    }))
+    .map(l => ({ source: idToNode.get(l.source) || {id:l.source}, target: idToNode.get(l.target) || {id:l.target} }))
     .filter(l => l.source && l.source.id && l.target && l.target.id);
 
-  // Reconstruct pulses from pulsesByTag (no changes to data.js required)
+  // reconstruct pulse list from pulsesByTag
+  const pulseMap = new Map();
   const byTag = DATA.pulsesByTag || {};
-  const pulseMap = new Map(); // key -> {title,date,tags:Set}
   for (const [tag, arr] of Object.entries(byTag)) {
     if (!Array.isArray(arr)) continue;
     for (const p of arr) {
@@ -94,13 +92,12 @@
     }
   }
   let pulses = Array.from(pulseMap.values())
-    .map(x => ({...x, tags:Array.from(x.tags)}))
+    .map(x => ({...x, tags:[...x.tags]}))
     .sort((a,b) => String(a.date||'').localeCompare(String(b.date||'')));
 
-  // Fallback if nothing reconstructed
-  if (pulses.length === 0) pulses = [{title:'Pulse', date:'', tags: nodes.slice(0,8).map(n=>n.id)}];
+  if (!pulses.length) pulses = [{title:'Pulse', date:'', tags:nodes.slice(0,8).map(n=>n.id)}];
 
-  // ---------- SVG + Zoom ----------
+  // svg + layers
   const svg = d3.select('#g');
   const root = svg.append('g');
   const linkLayer = root.append('g').attr('class','links');
@@ -110,13 +107,12 @@
   const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // ---------- Force layout (light) ----------
+  // layout
   const deg = new Map();
   links.forEach(l => {
     deg.set(l.source.id, (deg.get(l.source.id)||0)+1);
     deg.set(l.target.id, (deg.get(l.target.id)||0)+1);
   });
-
   const rScale = d3.scaleSqrt()
       .domain([1, Math.max(2, d3.max(Array.from(deg.values()))||3)])
       .range([3, 12]);
@@ -132,7 +128,7 @@
     sim.alpha(0.1).restart();
   });
 
-  // ---------- Draw ----------
+  // draw
   const linkSel = linkLayer.selectAll('line')
     .data(links)
     .join('line')
@@ -160,13 +156,12 @@
     labelSel.attr('x', d=>d.x).attr('y', d=>d.y - rScale((deg.get(d.id)||1)) - 6);
   });
 
-  // After it settles a bit, cool the sim so map is stable while pulsing
   setTimeout(()=> sim.alphaTarget(0).alpha(0.02), 1200);
 
-  // ---------- Pulse engine ----------
-  let k = 0;                    // current pulse index
-  let playing = AUTOPLAY;       // auto
-  let speed = 2;                // 1,2,3 multiplier for SPACING seconds
+  // pulser
+  let k = 0;
+  let playing = AUTOPLAY;
+  let speed = 2;    // 1/2/3
   speedEl.textContent = speed.toFixed(1);
 
   function setUIPlaying(p){
@@ -188,7 +183,6 @@
     nodeSel.classed('lit', d => lit.has(d.id));
     labelSel.classed('lit', d => lit.has(d.id));
 
-    // Links: lit if both endpoints lit; else dim baseline
     linkSel
       .classed('lit', d => lit.has(d.source.id) && lit.has(d.target.id))
       .classed('dim', d => !(lit.has(d.source.id) && lit.has(d.target.id)));
@@ -199,8 +193,7 @@
     k = (k + 1) % pulses.length;
   }
 
-  // Controls
-  playBtn.onclick = () => { playing = true; setUIPlaying(true); };
+  playBtn.onclick  = () => { playing = true;  setUIPlaying(true);  };
   pauseBtn.onclick = () => { playing = false; setUIPlaying(false); };
 
   document.querySelectorAll('[data-speed]').forEach(btn=>{
@@ -210,23 +203,19 @@
     });
   });
 
-  // Kick first pulse immediately so users see something
+  // show first pulse right away
   applyPulse(pulses[0]);
 
-  // Ticker
+  const interval = () => (SPACING / Math.max(0.25, speed)) * 1000;
   let last = performance.now();
-  const interval = () => (SPACING / Math.max(0.25, speed)) * 1000; // ms
 
   function frame(now){
     if (playing && (now - last) >= interval()){
-      step();
-      last = now;
+      step(); last = now;
     }
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
-
-  // If autoplay=1, start; else paused by default
   if (AUTOPLAY) { playing = true; setUIPlaying(true); }
 })();
 </script>
