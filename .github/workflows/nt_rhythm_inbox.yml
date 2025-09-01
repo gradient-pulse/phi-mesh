@@ -41,27 +41,47 @@ jobs:
 
       - name: Install deps
         run: |
-          python -m pip install --upgrade pip
-          pip install numpy pyyaml
+          python -m pip install --upgrade pip numpy pyyaml
 
       - name: Resolve inputs
         id: inp
+        shell: bash
         run: |
+          set -euo pipefail
+
           if [[ "${{ github.event_name }}" == "push" ]]; then
-            # Take the first changed CSV as target
-            CSV="$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} | grep '^inbox/nt_events/.*\.csv$' | head -n1)"
-            echo "csv=${CSV}" >> $GITHUB_OUTPUT
-            echo "col=t" >> $GITHUB_OUTPUT
-            echo "title=NT Rhythm — Probe" >> $GITHUB_OUTPUT
-            echo "dataset=$(basename "${CSV%.*}")" >> $GITHUB_OUTPUT
-            echo "tags=nt_rhythm turbulence navier_stokes rgp" >> $GITHUB_OUTPUT
+            # First changed CSV under inbox/nt_events
+            CSV="$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} | grep -E '^inbox/nt_events/.*\.csv$' | head -n1 || true)"
+            if [[ -z "${CSV}" ]]; then
+              echo "No CSV change detected in inbox/nt_events; aborting."
+              exit 1
+            fi
+            COL="t"
+            TITLE="NT Rhythm — Probe"
+            # sanitize dataset slug
+            SLUG="$(basename "${CSV%.*}" | tr -cs 'a-zA-Z0-9_-' '-')"
+            TAGS="nt_rhythm turbulence navier_stokes rgp"
           else
-            echo "csv=${{ github.event.inputs.csv_path }}" >> $GITHUB_OUTPUT
-            echo "col=${{ github.event.inputs.col }}" >> $GITHUB_OUTPUT
-            echo "title=${{ github.event.inputs.title }}" >> $GITHUB_OUTPUT
-            echo "dataset=${{ github.event.inputs.dataset }}" >> $GITHUB_OUTPUT
-            echo "tags=${{ github.event.inputs.tags }}" >> $GITHUB_OUTPUT
+            CSV="${{ github.event.inputs.csv_path }}"
+            COL="${{ github.event.inputs.col }}"
+            TITLE="${{ github.event.inputs.title }}"
+            RAW_SLUG="${{ github.event.inputs.dataset }}"
+            SLUG="$(echo "${RAW_SLUG}" | tr -cs 'a-zA-Z0-9_-' '-')"
+            TAGS="${{ github.event.inputs.tags }}"
           fi
+
+          # Guard CSV exists
+          if [[ ! -f "${CSV}" ]]; then
+            echo "CSV not found: ${CSV}"
+            ls -la inbox/nt_events || true
+            exit 1
+          fi
+
+          echo "csv=${CSV}"    >> $GITHUB_OUTPUT
+          echo "col=${COL}"    >> $GITHUB_OUTPUT
+          echo "title=${TITLE}" >> $GITHUB_OUTPUT
+          echo "dataset=${SLUG}" >> $GITHUB_OUTPUT
+          echo "tags=${TAGS}"  >> $GITHUB_OUTPUT
 
       - name: Compute metrics
         run: |
@@ -77,7 +97,7 @@ jobs:
             --metrics "results/agent_rhythm/${{ steps.inp.outputs.dataset }}.metrics.json" \
             --title "${{ steps.inp.outputs.title }}" \
             --dataset "${{ steps.inp.outputs.dataset }}" \
-            --tags ${{ steps.inp.outputs.tags }} \
+            --tags "${{ steps.inp.outputs.tags }}" \
             --outdir pulse/auto
 
       - name: Rebuild Tag/Gradient maps
