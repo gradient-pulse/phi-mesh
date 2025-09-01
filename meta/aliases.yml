@@ -249,3 +249,7 @@ aliases:
   # --- Participants -----------------------------------------------------
   "participant(0)":
     - participant_0
+
+  disruptive_rhythm:
+    - disruptive-rhythm
+    - disruptive rhythm
