@@ -1,0 +1,82 @@
+name: NT Rhythm — FD Probe to Pulse
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Data source'
+        required: true
+        default: 'jhtdb'
+        type: choice
+        options: [jhtdb, nasa]
+      dataset:
+        description: 'Dataset slug (e.g., isotropic1024coarse)'
+        required: true
+      var:
+        description: 'Variable (e.g., u, v, w, speed)'
+        required: true
+        default: 'u'
+      x: { description: 'x', required: true, default: '0.0' }
+      y: { description: 'y', required: true, default: '0.0' }
+      z: { description: 'z', required: true, default: '0.0' }
+      t0: { description: 'start time', required: true, default: '0.0' }
+      t1: { description: 'end time', required: true, default: '10.0' }
+      dt: { description: 'step', required: true, default: '0.1' }
+      title:
+        description: 'Pulse title'
+        required: false
+        default: 'NT Rhythm — FD Probe'
+      tags:
+        description: 'Space-separated tags'
+        required: false
+        default: 'nt_rhythm turbulence navier_stokes rgp'
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip numpy pyyaml requests
+
+      - name: Run FD probe
+        run: |
+          python tools/fd_connectors/run_fd_probe.py \
+            --source "${{ github.event.inputs.source }}" \
+            --dataset "${{ github.event.inputs.dataset }}" \
+            --var "${{ github.event.inputs.var }}" \
+            --x "${{ github.event.inputs.x }}" \
+            --y "${{ github.event.inputs.y }}" \
+            --z "${{ github.event.inputs.z }}" \
+            --t0 "${{ github.event.inputs.t0 }}" \
+            --t1 "${{ github.event.inputs.t1 }}" \
+            --dt "${{ github.event.inputs.dt }}" \
+            --title "${{ github.event.inputs.title }}" \
+            --tags ${{ github.event.inputs.tags }} \
+            --outdir results/agent_rhythm \
+            --pulse_dir pulse/auto
+
+      - name: Rebuild maps
+        run: |
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
+      - name: Commit & push
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "auto: FD probe → NT rhythm pulse + updated maps" || echo "nothing to commit"
+          git push || true
