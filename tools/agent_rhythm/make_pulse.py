@@ -1,68 +1,78 @@
-# tools/agent_rhythm/make_pulse.py
-# Emit a Phi-Mesh pulse YAML from computed NT-rhythm metrics.
-# Filename convention: YYYY-MM-DD_<dataset>.yml  (date-first)
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+make_pulse.py — Convert NT rhythm metrics JSON into a Φ-Mesh pulse YAML.
 
-import argparse
+This script is invoked by the GitHub Action (nt_rhythm_inbox.yml).
+It takes rhythm metrics, a title, dataset slug, and tags, and emits
+a YAML pulse into pulse/auto/YYYY-MM-DD_<dataset>.yml
+
+Strict pulse format:
+  - title
+  - summary
+  - tags (list)
+  - papers (list)
+  - podcasts (list)
+"""
+
+import re
+import yaml
 import json
-import os
-from datetime import date
+import argparse
+from datetime import datetime
+from pathlib import Path
+
+
+def slugify(s: str) -> str:
+    """Turn a dataset string into a safe slug with no trailing separators."""
+    # replace any non-alphanumeric/_/- with underscores
+    s = re.sub(r'[^A-Za-z0-9_-]+', '_', s.strip())
+    # collapse runs of - or _
+    s = re.sub(r'[-_]{2,}', '_', s)
+    # strip leading/trailing separators
+    s = s.strip('-_')
+    return s or "pulse"
+
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--metrics", required=True, help="Path to metrics JSON produced by cli.py")
-    ap.add_argument("--title",   required=True, help="Pulse title")
-    ap.add_argument("--dataset", required=True, help="Dataset slug (used in filename)")
-    ap.add_argument("--tags",    required=True, help="Space-separated tags")
-    ap.add_argument("--outdir",  required=True, help="Output directory for the pulse YAML")
+    ap.add_argument("--metrics", required=True, help="Input metrics JSON path")
+    ap.add_argument("--title", required=True, help="Pulse title")
+    ap.add_argument("--dataset", required=True, help="Dataset slug")
+    ap.add_argument("--tags", required=True, nargs="+", help="Space-separated tags")
+    ap.add_argument("--outdir", required=True, help="Output directory for pulse")
     args = ap.parse_args()
 
-    # Load metrics (robust to missing keys)
-    with open(args.metrics, "r", encoding="utf-8") as f:
-        m = json.load(f) if os.path.getsize(args.metrics) else {}
+    # load metrics
+    with open(args.metrics, "r") as f:
+        metrics = json.load(f)
 
-    n       = m.get("n")
-    mean_dt = m.get("mean_dt")
-    cv_dt   = m.get("cv_dt")  # coefficient of variation
+    date = datetime.utcnow().strftime("%Y-%m-%d")
+    dataset_slug = slugify(args.dataset)
 
-    # Make a compact one-line summary (strict pulse format prefers one-liners).
-    # Unknown values are rendered as '?'.
-    def fmt(x):
-        if x is None:
-            return "?"
-        if isinstance(x, float):
-            # keep it readable but stable
-            return f"{x:.6g}"
-        return str(x)
+    # build pulse dict
+    pulse = {
+        "title": f"{args.title} ({date})",
+        "summary": (
+            f"NT rhythm probe on '{dataset_slug}': "
+            f"n={metrics.get('n','?')}, "
+            f"mean_dt={metrics.get('mean_dt','?')}, "
+            f"cv_dt={metrics.get('cv_dt','?')}."
+        ),
+        "tags": sorted(list({*args.tags})),
+        "papers": [],
+        "podcasts": [],
+    }
 
-    summary = (
-        f"NT rhythm probe on '{args.dataset}': "
-        f"n={fmt(n)}, mean_dt={fmt(mean_dt)}, cv_dt={fmt(cv_dt)}."
-    )
+    outdir = Path(args.outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+    outpath = outdir / f"{date}_{dataset_slug}.yml"
 
-    # Tags: space-separated → YAML list
-    tags = [t for t in args.tags.split() if t.strip()]
+    with open(outpath, "w") as f:
+        yaml.safe_dump(pulse, f, sort_keys=False)
 
-    # Prepare YAML text (strict fields: title, summary, tags, papers, podcasts)
-    yaml_text = (
-        f"title: {args.title}\n"
-        f"summary: '{summary}'\n"
-        f"tags:\n" +
-        "".join([f"  - {t}\n" for t in tags]) +
-        "papers: []\n"
-        "podcasts: []\n"
-    )
+    print(f"[make_pulse] wrote {outpath}")
 
-    # Ensure output dir exists
-    os.makedirs(args.outdir, exist_ok=True)
-
-    # Date-first filename
-    today = date.today().isoformat()
-    out_path = os.path.join(args.outdir, f"{today}_{args.dataset}.yml")
-
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(yaml_text)
-
-    print(f"[make_pulse] Wrote {out_path}")
 
 if __name__ == "__main__":
     main()
