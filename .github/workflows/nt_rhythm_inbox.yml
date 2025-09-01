@@ -1,0 +1,96 @@
+name: NT Rhythm — Inbox to Pulse
+
+on:
+  push:
+    paths:
+      - 'inbox/nt_events/**.csv'
+  workflow_dispatch:
+    inputs:
+      csv_path:
+        description: 'CSV path (e.g., inbox/nt_events/example.csv)'
+        required: true
+      col:
+        description: 'Time column name'
+        required: false
+        default: 't'
+      title:
+        description: 'Pulse title'
+        required: false
+        default: 'NT Rhythm — Probe'
+      dataset:
+        description: 'Dataset slug (for filename)'
+        required: false
+        default: 'probe'
+      tags:
+        description: 'Space-separated tags'
+        required: false
+        default: 'nt_rhythm turbulence navier_stokes rgp'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip pyyaml
+
+      - name: Resolve inputs
+        id: inp
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            # Take the first changed CSV as target
+            CSV="$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} | grep '^inbox/nt_events/.*\.csv$' | head -n1)"
+            echo "csv=${CSV}" >> $GITHUB_OUTPUT
+            echo "col=t" >> $GITHUB_OUTPUT
+            echo "title=NT Rhythm — Probe" >> $GITHUB_OUTPUT
+            echo "dataset=$(basename "${CSV%.*}")" >> $GITHUB_OUTPUT
+            echo "tags=nt_rhythm turbulence navier_stokes rgp" >> $GITHUB_OUTPUT
+          else
+            echo "csv=${{ github.event.inputs.csv_path }}" >> $GITHUB_OUTPUT
+            echo "col=${{ github.event.inputs.col }}" >> $GITHUB_OUTPUT
+            echo "title=${{ github.event.inputs.title }}" >> $GITHUB_OUTPUT
+            echo "dataset=${{ github.event.inputs.dataset }}" >> $GITHUB_OUTPUT
+            echo "tags=${{ github.event.inputs.tags }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Compute metrics
+        run: |
+          mkdir -p results/agent_rhythm
+          python tools/agent_rhythm/cli.py \
+            --csv "${{ steps.inp.outputs.csv }}" \
+            --col "${{ steps.inp.outputs.col }}" \
+            --json-out "results/agent_rhythm/${{ steps.inp.outputs.dataset }}.metrics.json"
+
+      - name: Emit pulse YAML
+        run: |
+          python tools/agent_rhythm/make_pulse.py \
+            --metrics "results/agent_rhythm/${{ steps.inp.outputs.dataset }}.metrics.json" \
+            --title "${{ steps.inp.outputs.title }}" \
+            --dataset "${{ steps.inp.outputs.dataset }}" \
+            --tags ${{ steps.inp.outputs.tags }} \
+            --outdir pulse/auto
+
+      - name: Rebuild Tag/Gradient maps
+        run: |
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
+      - name: Commit & push
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "auto: NT rhythm pulse from inbox + updated maps" || echo "nothing to commit"
+          git push || true
