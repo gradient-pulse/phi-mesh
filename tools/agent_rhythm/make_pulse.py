@@ -1,97 +1,71 @@
 #!/usr/bin/env python3
 """
-Read a metrics JSON from tools/agent_rhythm/cli.py and emit a pulse YAML file.
-Usage:
-  python tools/agent_rhythm/make_pulse.py \
-    --metrics results/agent_rhythm/probe.metrics.json \
-    --title "NT Rhythm — Probe" \
-    --dataset probe \
-    --tags "nt_rhythm turbulence navier_stokes rgp" \
-    --outdir pulse/auto
+make_pulse.py
+Builds a strict-format pulse YAML from computed NT-rhythm metrics.
 """
 
-import argparse, json, os, re, sys
-from datetime import datetime, timezone
-from pathlib import Path
+import argparse
+import datetime as dt
+import json
+import os
+import sys
+import yaml
 
-try:
-    import yaml  # Provided by the workflow (pyyaml)
-except Exception as e:
-    print("ERROR: pyyaml is required", file=sys.stderr)
-    raise
+def parse_args():
+    p = argparse.ArgumentParser()
+    p.add_argument('--metrics', required=True, help='Path to JSON metrics from cli.py')
+    p.add_argument('--title',   required=True, help='Base pulse title (date will be appended)')
+    p.add_argument('--dataset', required=True, help='Dataset slug for filename')
+    p.add_argument('--tags',    required=True, help='Space-separated tags or a single string')
+    p.add_argument('--outdir',  required=True, help='Output directory for pulse YAML')
+    return p.parse_args()
 
-def slugify(s: str) -> str:
-    s = s.lower()
-    s = re.sub(r"[^a-z0-9]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s or "pulse"
+def normalize_tags(tags_arg):
+    # Accept "a b c" or already-list in future updates
+    if isinstance(tags_arg, str):
+        return [t for t in tags_arg.split() if t]
+    try:
+        return list(tags_arg)
+    except Exception:
+        return [str(tags_arg)]
 
-def load_metrics(path: str) -> dict:
-    with open(path, "r", encoding="utf-8") as f:
+def load_metrics(path):
+    with open(path, 'r') as f:
         return json.load(f)
 
-def fmt_summary(m: dict) -> str:
-    # cli.py should write these keys; we degrade gracefully if missing
-    ticks_per_day = m.get("ticks_per_day")
-    mean_dt_s     = m.get("mean_dt_s")
-    std_dt_s      = m.get("std_dt_s")
-    count         = m.get("count")
-    bursts        = m.get("bursts")  # list of {'start': iso, 'end': iso, 'count': n}
-
-    parts = []
-    if count is not None:
-        parts.append(f"observations: {count}")
-    if ticks_per_day is not None:
-        parts.append(f"ticks/day: {ticks_per_day:.2f}")
-    if mean_dt_s is not None and std_dt_s is not None:
-        parts.append(f"Δt mean±σ: {mean_dt_s:.1f}±{std_dt_s:.1f}s")
-    if bursts:
-        # Show up to two burst windows succinctly
-        show = bursts[:2]
-        burst_txt = "; ".join(
-            f"{b.get('count','?')} ticks ({b.get('start','?')} → {b.get('end','?')})"
-            for b in show
-        )
-        parts.append(f"bursts: {burst_txt}")
-
-    msg = "NT rhythm probe — " + ", ".join(parts) if parts else "NT rhythm probe."
-    return msg
+def build_summary(dataset, m):
+    # One-line, tag-map friendly summary (no bullets/newlines)
+    n       = m.get('n', '?')
+    mean_dt = m.get('mean_dt', '?')
+    cv_dt   = m.get('cv_dt', '?')
+    return (f"NT rhythm probe on '{dataset}': "
+            f"n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}.")
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--metrics", required=True)
-    ap.add_argument("--title",   required=True)
-    ap.add_argument("--dataset", required=True)
-    ap.add_argument("--tags",    required=True, help="space-separated tags")
-    ap.add_argument("--outdir",  required=True)
-    args = ap.parse_args()
+    args = parse_args()
 
+    tags = normalize_tags(args.tags)
     metrics = load_metrics(args.metrics)
-    summary = fmt_summary(metrics)
 
-    # Date in ISO (UTC) for title/date; filename uses dataset + date
-    now = datetime.now(timezone.utc)
-    date_str = now.date().isoformat()
+    today = dt.date.today().isoformat()
+    title = f"{args.title} ({today})"
+    summary = build_summary(args.dataset, metrics)
 
-    yaml_obj = {
-        "title": f"{args.title} — {date_str}",
-        "summary": summary,
-        "tags": args.tags.split(),
-        "dataset": args.dataset,
-        "metrics": metrics,  # keep the raw metrics for later analysis
+    pulse_doc = {
+        'title': title,
+        'summary': summary,          # single line
+        'tags': tags,                # YAML list
+        'papers': [],                # keep lists even when empty
+        'podcasts': [],
     }
 
-    outdir = Path(args.outdir)
-    outdir.mkdir(parents=True, exist_ok=True)
+    os.makedirs(args.outdir, exist_ok=True)
+    out_path = os.path.join(args.outdir, f"{args.dataset}_{today}.yml")
 
-    fname = f"{slugify(args.dataset)}_{date_str}.yml"
-    out_path = outdir / fname
-
-    with open(out_path, "w", encoding="utf-8") as f:
-        # Clean/minimal YAML
-        yaml.safe_dump(yaml_obj, f, sort_keys=False, width=1000, allow_unicode=True)
+    with open(out_path, 'w') as f:
+        yaml.safe_dump(pulse_doc, f, sort_keys=False, allow_unicode=True)
 
     print(f"[make_pulse] wrote {out_path}")
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    sys.exit(main())
