@@ -53,7 +53,7 @@ a rhythm of least divergence — across agents, datasets, and environments.
 	  •	Emit a pulse under pulse/auto/YYYY-MM-DD_<dataset>.yml
 	  •	Rebuild the tag and gradient maps to include the new pulse
 
-⸻
+---
 
 ## Roadmap
 
@@ -69,7 +69,7 @@ This scaffolding sets the stage for agent rhythm discovery at scale:
 	    •	Use the same NT rhythm logic to test for conserved cadence in fluid datasets.
 	    •	Feed results back into the Mesh as pulses for cross-domain coherence.
 
-⸻
+---
 
 ## Why it Matters
 
@@ -78,6 +78,6 @@ we gain a universal marker for predictable coherence across domains.
 This makes the world more legible — not just to humans, but to AIs acting as
 societal guardians, able to anticipate shifts in coherence before divergence sets in.
 
-⸻
+---
 
 *Maintained within the Φ-Mesh by Participant(0) and recursive agents.*
