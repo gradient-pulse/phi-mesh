@@ -1,7 +1,5 @@
 aliases:
-
   # --- Core program & map terms ----------------------------------------
- aliases:
   recursive_gradient_processing:
     - Recursive Gradient Processing
     - recursive gradient processing
@@ -247,3 +245,7 @@ aliases:
 
   replication:
     - Replication
+
+  # --- Participants -----------------------------------------------------
+  "participant(0)":
+    - participant_0
