@@ -40,6 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -48,10 +49,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # sanitize dataset slug + validate xyz/twin
+      # Sanitize dataset slug, validate xyz/twin shape, and append a run suffix to avoid overwrites.
       - name: Resolve & validate inputs
         id: inp
         shell: python
+        env:
+          DATASET_IN: ${{ github.event.inputs.dataset }}
+          XYZ_IN:     ${{ github.event.inputs.xyz }}
+          TWIN_IN:    ${{ github.event.inputs.twin }}
+          RUN_NO:     ${{ github.run_number }}
         run: |
           import os, re, sys
           def safe_slug(s:str)->str:
@@ -59,13 +65,25 @@ jobs:
               s = re.sub(r"[^a-z0-9._-]+","_", s)
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          ds_in = os.environ["DATASET_IN"]
+          def parse_triplet(label, s):
+              parts = [p.strip() for p in (s or "").split(",")]
+              if len(parts) != 3:
+                  print(f"::error::{label} must be 'a,b,c' (got: {s!r})")
+                  sys.exit(1)
+              return parts
+          ds_in   = os.environ["DATASET_IN"]
+          xyz_in  = os.environ["XYZ_IN"]
+          twin_in = os.environ["TWIN_IN"]
+          run_no  = os.environ.get("RUN_NO","")
           slug = safe_slug(ds_in)
+          # validate shapes
+          _ = parse_triplet("xyz", xyz_in)
+          _ = parse_triplet("twin", twin_in)
+          # auto-unique suffix to avoid filename collisions per day
+          uniq = f"{slug}-{run_no}" if run_no else slug
+          print(f"::notice::Using dataset slug = {uniq}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-              f.write(f"slug={slug}\n")
-          print(f"::notice::Using dataset slug = {slug}")
-        env:
-          DATASET_IN: ${{ github.event.inputs.dataset }}
+              f.write(f"slug={uniq}\n")
 
       - name: Run FD probe
         env:
