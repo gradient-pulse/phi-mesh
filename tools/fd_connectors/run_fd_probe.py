@@ -1,55 +1,68 @@
 # tools/fd_connectors/run_fd_probe.py
-# Fetch an FD time series, compute NT rhythm metrics, emit JSON and a pulse.
-
-import argparse, json, subprocess, tempfile
+from __future__ import annotations
+import argparse, json, sys
 from pathlib import Path
 
-from tools.agent_rhythm.rhythm import ticks_from_message_times, rhythm_from_events
+# --- make repo root importable ------------------------------------------------
+HERE = Path(__file__).resolve()
+ROOT = HERE.parents[2]          # <repo>/
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+# now this works even when called as a script
+from tools.agent_rhythm.rhythm import (
+    ticks_from_message_times,
+    rhythm_from_events,
+)
+
+def synthetic_series(var: str, t0: float, t1: float, dt: float):
+    import math
+    t = t0
+    out = []
+    while t <= t1 + 1e-12:
+        # simple quasi-periodic signal for offline mode
+        val = (
+            0.7 * math.sin(2.0 * math.pi * 0.5 * t)
+            + 0.3 * math.sin(2.0 * math.pi * 0.13 * t + 0.4)
+        )
+        out.append((t, val))
+        t += dt
+    return out
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True, choices=["jhtdb", "nasa"])
+    ap.add_argument("--source", required=True, choices=["jhtdb", "nasa", "synthetic"])
     ap.add_argument("--dataset", required=True)
     ap.add_argument("--var", required=True)
-    ap.add_argument("--x", type=float, required=True)
-    ap.add_argument("--y", type=float, required=True)
-    ap.add_argument("--z", type=float, required=True)
-    ap.add_argument("--t0", type=float, required=True)
-    ap.add_argument("--t1", type=float, required=True)
-    ap.add_argument("--dt", type=float, required=True)
-    ap.add_argument("--title", default="NT Rhythm — FD Probe")
-    ap.add_argument("--tags", nargs="+", default=["nt_rhythm","turbulence","navier_stokes","rgp"])
-    ap.add_argument("--outdir", default="results/agent_rhythm")
-    ap.add_argument("--pulse_dir", default="pulse/auto")
+    ap.add_argument("--xyz", required=True, help="x,y,z")
+    ap.add_argument("--twin", required=True, help="t0,t1,dt")
+    ap.add_argument("--json-out", required=True)
     args = ap.parse_args()
 
-    if args.source == "jhtdb":
-        from tools.fd_connectors.jhtdb import JHTDBClient
-        cli = JHTDBClient()
-        ts = cli.fetch_timeseries(args.dataset, args.var, args.x, args.y, args.z, args.t0, args.t1, args.dt)
-    else:
-        from tools.fd_connectors.nasa import fetch_timeseries
-        ts = fetch_timeseries(args.dataset, args.var, args.x, args.y, args.z, args.t0, args.t1, args.dt)
+    x, y, z = [float(v) for v in args.xyz.split(",")]
+    t0, t1, dt = [float(v) for v in args.twin.split(",")]
 
-    # Compute NT rhythm
-    ticks = ticks_from_message_times(ts.t)
-    stats = rhythm_from_events(ticks)
+    # until real APIs are wired, always use synthetic
+    series = synthetic_series(args.var, t0, t1, dt)
 
-    Path(args.outdir).mkdir(parents=True, exist_ok=True)
-    metrics_path = Path(args.outdir) / f"{args.dataset}.metrics.json"
-    with open(metrics_path, "w") as f:
-        json.dump(stats, f)
+    # we only need event times for NT rhythm; use time stamps directly
+    times = [t for (t, _) in series]
+    ticks = ticks_from_message_times(times)
+    metrics = rhythm_from_events(ticks)
 
-    # Reuse make_pulse script to generate strict YAML pulse
-    subprocess.check_call([
-        "python",
-        "tools/agent_rhythm/make_pulse.py",
-        "--metrics", str(metrics_path),
-        "--title", args.title,
-        "--dataset", args.dataset,
-        "--tags", *args.tags,
-        "--outdir", args.pulse_dir,
-    ])
+    payload = {
+        "source": args.source,
+        "dataset": args.dataset,
+        "var": args.var,
+        "point": [x, y, z],
+        "twin": [t0, t1, dt],
+        "n": len(ticks),
+        "mean_dt": metrics.get("mean_dt"),
+        "cv_dt": metrics.get("cv_dt"),
+    }
+    Path(args.json_out).parent.mkdir(parents=True, exist_ok=True)
+    with open(args.json_out, "w") as f:
+        json.dump(payload, f, indent=2)
 
 if __name__ == "__main__":
     main()
