@@ -1,0 +1,18 @@
+{
+  "source": "synthetic",
+  "dataset": "demo",
+  "var": "u",
+  "xyz": [
+    0.1,
+    0.1,
+    0.1
+  ],
+  "twin": {
+    "t0": 0.0,
+    "t1": 10.0,
+    "dt": 0.01
+  },
+  "n": null,
+  "mean_dt": null,
+  "cv_dt": null
+}
