@@ -1,78 +1,82 @@
 # tools/fd_connectors/nasa.py
-from dataclasses import dataclass
-from typing import List, Optional
-import os
-import io
-import csv
+from __future__ import annotations
 
-try:
-    # urllib is fine in GH Actions; we avoid requests to keep deps minimal
-    from urllib.request import urlopen  # type: ignore
-except Exception:
-    urlopen = None  # offline or sandboxed
+from dataclasses import dataclass
+from typing import List, Tuple, Optional
+import csv
+import io
+import os
+import urllib.request
+import math
 
 @dataclass
 class Timeseries:
     t: List[float]
     v: List[float]
 
-def _looks_like_inline_csv(s: str) -> bool:
-    # crude but effective: must contain a newline and a comma, usually a header "t,v"
-    return ("\n" in s) and ("," in s) and not os.path.exists(s) and not s.lower().startswith(("http://", "https://"))
+def _is_url(path: str) -> bool:
+    return path.startswith("http://") or path.startswith("https://")
 
-def _read_csv_text(text: str) -> Timeseries:
-    f = io.StringIO(text)
-    reader = csv.DictReader(f)
+def _read_text(path_or_url: str) -> str:
+    if _is_url(path_or_url):
+        with urllib.request.urlopen(path_or_url) as r:
+            return r.read().decode("utf-8")
+    with open(path_or_url, "r", encoding="utf-8") as f:
+        return f.read()
+
+def read_csv_timeseries(path_or_url: str) -> Timeseries:
+    """
+    Read a simple CSV with two columns 't','v' (header required).
+    Returns Timeseries with floats.
+    """
+    text = _read_text(path_or_url)
     t, v = [], []
+    reader = csv.DictReader(io.StringIO(text))
+    if "t" not in reader.fieldnames or "v" not in reader.fieldnames:
+        raise ValueError("NASA CSV must have headers: t,v")
     for row in reader:
-        # tolerate different header casing/spaces
-        tt = row.get("t") or row.get("T") or row.get(" time ") or row.get("time")
-        vv = row.get("v") or row.get("V") or row.get("value")
-        if tt is None or vv is None:
-            continue
-        try:
-            t.append(float(tt))
-            v.append(float(vv))
-        except ValueError:
-            # skip bad lines
-            continue
+        t.append(float(row["t"]))
+        v.append(float(row["v"]))
     return Timeseries(t=t, v=v)
 
-def read_csv_timeseries(path_or_url: Optional[str] = None) -> Timeseries:
+def fetch_timeseries(
+    dataset: str,
+    var: str,
+    x: float, y: float, z: float,
+    t0: float, t1: float, dt: float,
+) -> Timeseries:
     """
-    Read a 2-column CSV (header 't,v') as a time series.
-    - path_or_url: repo-relative path, absolute path, http(s) URL, or inline CSV string.
-    - if None, uses env NASA_CSV (same semantics).
+    Wrapper used by run_fd_probe.py.
+
+    Resolution order to find the CSV:
+      1) If `dataset` looks like a path (contains '/' or endswith .csv), use it.
+      2) Else if NASA_CSV secret is set, use that.
+      3) Else try repo path: data/nasa/{dataset}.csv
+      4) Else fallback demo: data/nasa/demo_timeseries.csv
+
+    NOTE: var / (x,y,z) are accepted for symmetry but not used by the CSV reader.
+    time window (t0,t1,dt) is currently advisory; we return the whole series.
     """
-    target = (path_or_url or "").strip() or os.getenv("NASA_CSV", "").strip()
+    # 1) explicit path-like in the dataset field
+    if "/" in dataset or dataset.lower().endswith(".csv"):
+        target = dataset
+    else:
+        # 2) repo secret (can be URL or path)
+        target = os.getenv("NASA_CSV", "").strip()
+        if not target:
+            # 3) repo path using dataset name
+            candidate = os.path.join("data", "nasa", f"{dataset}.csv")
+            if os.path.exists(candidate):
+                target = candidate
+            else:
+                # 4) final fallback to demo file
+                target = os.path.join("data", "nasa", "demo_timeseries.csv")
+
     if not target:
-        raise ValueError("NASA CSV not provided: set workflow input or NASA_CSV secret.")
+        raise FileNotFoundError("Unable to resolve a NASA CSV path/URL.")
 
-    # Inline CSV content?
-    if _looks_like_inline_csv(target):
-        return _read_csv_text(target)
+    ts = read_csv_timeseries(target)
 
-    # File path?
-    if os.path.exists(target):
-        with open(target, "r", encoding="utf-8") as f:
-            return _read_csv_text(f.read())
-
-    # URL?
-    if target.lower().startswith(("http://", "https://")):
-        if urlopen is None:
-            raise RuntimeError("urllib not available to fetch URL; provide a file path or inline CSV.")
-        with urlopen(target) as resp:  # type: ignore[attr-defined]
-            data = resp.read().decode("utf-8", errors="replace")
-            return _read_csv_text(data)
-
-    # Last attempt: treat as repo-relative path (useful if runner CWD differs)
-    repo_path = os.path.join(os.getcwd(), target)
-    if os.path.exists(repo_path):
-        with open(repo_path, "r", encoding="utf-8") as f:
-            return _read_csv_text(f.read())
-
-    raise FileNotFoundError(f"NASA CSV not found or unreadable: {target!r}")
-
-def list_datasets() -> List[str]:
-    # Placeholder; you can expand with known NASA CFD dataset names later
-    return ["cfd_demo"]
+    # (Optional) windowing: if you want to crop to [t0, t1], do it here.
+    # Keeping it simple: return as-is for now.
+    return ts
