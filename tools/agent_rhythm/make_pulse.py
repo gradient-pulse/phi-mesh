@@ -2,11 +2,8 @@
 """
 make_pulse.py — turn rhythm metrics JSON into a strict Φ-Mesh pulse YAML.
 
-Writes: pulse/auto/YYYY-MM-DD_<dataset>.yml
-If a same-day pulse for <dataset> already exists, writes:
-  YYYY-MM-DD_<dataset>_batch2.yml, _batch3.yml, ...
-
-YAML schema:
+Writes: pulse/auto/YYYY-MM-DD_<dataset>_batchN.yml   (N starts at 1)
+Schema:
   title: '...'
   summary: >
     ...
@@ -40,7 +37,6 @@ def safe_slug(s: str) -> str:
 
 def to_builtin(x: Any) -> Any:
     """Recursively coerce to plain Python builtins so PyYAML is happy."""
-    # numpy is optional
     try:
         import numpy as np
         np_generic = np.generic
@@ -70,22 +66,26 @@ def to_builtin(x: Any) -> Any:
     return str(x)
 
 
-def next_batch_path(base_path: str) -> str:
+def next_batch_path(outdir: str, date_str: str, slug: str) -> str:
     """
-    If base_path exists, append _batch2 / _batch3 / ...
-    Example:
-      base: 2025-09-03_demo.yml
-      -> 2025-09-03_demo_batch2.yml (if base exists)
+    Always allocate a batch path starting at 1:
+      YYYY-MM-DD_<slug>_batch1.yml, _batch2.yml, ...
     """
-    p = pathlib.Path(base_path)
-    if not p.exists():
-        return str(p)
-    i = 2
-    while True:
-        cand = p.with_name(f"{p.stem}_batch{i}{p.suffix}")
-        if not cand.exists():
-            return str(cand)
-        i += 1
+    d = pathlib.Path(outdir)
+    d.mkdir(parents=True, exist_ok=True)
+    pattern = re.compile(rf"^{re.escape(date_str)}_{re.escape(slug)}_batch(\d+)\.yml$")
+    max_n = 0
+    for p in d.glob(f"{date_str}_{slug}_batch*.yml"):
+        m = pattern.match(p.name)
+        if m:
+            try:
+                n = int(m.group(1))
+                if n > max_n:
+                    max_n = n
+            except Exception:
+                pass
+    n_next = max_n + 1
+    return str(d / f"{date_str}_{slug}_batch{n_next}.yml")
 
 
 # ----- main ----------------------------------------------------------------
@@ -115,11 +115,9 @@ def main() -> None:
     today_str = dt.date.today().isoformat()  # YYYY-MM-DD
     slug = safe_slug(args.dataset)
 
-    os.makedirs(args.outdir, exist_ok=True)
-    base_path = os.path.join(args.outdir, f"{today_str}_{slug}.yml")
-    out_path = next_batch_path(base_path)  # batch2/batch3 if needed
+    out_path = next_batch_path(args.outdir, today_str, slug)
 
-    # Build summary (folded > in YAML)
+    # Build summary
     summary_lines: List[str] = []
     summary_lines.append(
         f"NT rhythm probe on “{slug}” — n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}."
@@ -127,7 +125,6 @@ def main() -> None:
     if src:
         summary_lines.append(f"Source: {src}.")
     if details:
-        # include a small, stable subset if present
         try:
             keys = ["var", "xyz", "window", "dataset"]
             subset = {k: details[k] for k in keys if k in details}
@@ -137,20 +134,20 @@ def main() -> None:
             pass
     summary_text = " ".join(str(s).strip() for s in summary_lines if s)
 
-    # Tags: space-separated -> list
+    # Tags list
     tags = [t for t in re.split(r"\s+", args.tags.strip()) if t]
 
-    # Construct pulse dict using ONLY builtins
+    # Pulse dict (plain builtins)
     pulse = {
-        "title": str(args.title),    # ensure plain str
-        "summary": summary_text,     # dumped folded via custom dumper
+        "title": str(args.title),
+        "summary": summary_text,
         "tags": [str(t) for t in tags],
         "papers": [],
         "podcasts": [],
     }
     pulse = to_builtin(pulse)
 
-    # Custom dumper to force folded style (">") for summary
+    # Custom dumper: fold summary (>) and single-quote title
     class _D(yaml.SafeDumper):
         pass
 
@@ -159,7 +156,9 @@ def main() -> None:
         for k, v in data.items():
             key_node = dumper.represent_data(k)
             if k == "summary":
-                val_node = yaml.ScalarNode(tag="tag:yaml.org,2002:str", value=str(v), style=">")
+                val_node = yaml.ScalarNode("tag:yaml.org,2002:str", str(v), style=">")
+            elif k == "title":
+                val_node = yaml.ScalarNode("tag:yaml.org,2002:str", str(v), style="'")
             else:
                 val_node = dumper.represent_data(v)
             node.value.append((key_node, val_node))
