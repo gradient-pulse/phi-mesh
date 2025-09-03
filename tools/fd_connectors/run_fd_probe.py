@@ -7,7 +7,7 @@ compute NT-rhythm metrics, and write metrics JSON (for make_pulse.py).
 
 Args (aligned with fd_probe.yml):
   --source   {synthetic,jhtdb,nasa}
-  --dataset  free-text dataset name/slug (workflow already sanitizes)
+  --dataset  free-text dataset name/slug OR path/URL for nasa
   --var      variable name (e.g., "u")
   --xyz      "x,y,z"
   --twin     "t0,t1,dt"
@@ -15,7 +15,6 @@ Args (aligned with fd_probe.yml):
   --title    (unused here; carried by make_pulse)
   --tags     (unused here; carried by make_pulse)
 """
-
 from __future__ import annotations
 
 import argparse
@@ -35,11 +34,14 @@ from tools.agent_rhythm.rhythm import (
 from tools.fd_connectors import jhtdb as JHT
 from tools.fd_connectors import nasa as NASA
 
+
+# ---------------------------- helpers --------------------------------------
 def parse_triplet(s: str) -> Tuple[float, float, float]:
     parts = [p.strip() for p in (s or "").split(",")]
     if len(parts) != 3:
         raise ValueError(f"Expected three comma-separated values, got: {s!r}")
     return float(parts[0]), float(parts[1]), float(parts[2])
+
 
 def to_builtin(x: Any) -> Any:
     """Coerce dataclasses / numpy / misc types into plain Python types."""
@@ -65,6 +67,7 @@ def to_builtin(x: Any) -> Any:
         return [to_builtin(v) for v in x]
     return str(x)
 
+
 def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], List[float]]:
     n = max(3, int((t1 - t0) / max(dt, 1e-9)))
     ts = [t0 + i * dt for i in range(n)]
@@ -76,6 +79,21 @@ def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], 
     ]
     return ts, vs
 
+
+def looks_like_path_or_url(s: str) -> bool:
+    """Heuristic: decide if a string is a repo path or URL."""
+    s = (s or "").strip().lower()
+    return (
+        "/" in s
+        or s.endswith(".csv")
+        or s.startswith("http://")
+        or s.startswith("https://")
+        or s.startswith("s3://")
+        or s.startswith("gs://")
+    )
+
+
+# ------------------------------ main ---------------------------------------
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", required=True, choices=["synthetic", "jhtdb", "nasa"])
@@ -95,10 +113,10 @@ def main() -> None:
     if args.source == "synthetic":
         ts, vs = synthetic_timeseries(t0, t1, dt)
         source_label = "synthetic"
+
     elif args.source == "jhtdb":
         # offline synthetic inside JHT for now unless token is present
         if os.getenv("JHTDB_OFFLINE", "0") == "1" or not os.getenv("JHTDB_TOKEN"):
-            # use jhtdb's offline helper if present, else reuse our synthetic
             try:
                 ts_obj = JHT.fetch_timeseries(
                     dataset=args.dataset, var=args.var,
@@ -115,11 +133,24 @@ def main() -> None:
             )
             ts, vs = ts_obj.t, ts_obj.v
             source_label = "jhtdb"
+
     else:  # nasa
-        nasa_csv = os.getenv("NASA_CSV", "").strip()
-        if nasa_csv:
-            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # <- CSV/URL/inline
+        # Prefer the UI 'dataset' when it looks like a path/URL;
+        # otherwise fall back to the NASA_CSV secret if present.
+        ui = args.dataset.strip()
+        secret_csv = os.getenv("NASA_CSV", "").strip()
+
+        if looks_like_path_or_url(ui):
+            nasa_csv = ui
+        elif secret_csv:
+            nasa_csv = secret_csv
         else:
+            nasa_csv = ""
+
+        if nasa_csv:
+            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # CSV/URL/inline
+        else:
+            # Fallback: call the (stub) fetch_timeseries; this will raise until wired.
             ts_obj = NASA.fetch_timeseries(
                 dataset=args.dataset, var=args.var,
                 x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
@@ -127,7 +158,7 @@ def main() -> None:
         ts, vs = ts_obj.t, ts_obj.v
         source_label = "nasa"
 
-    # Ensure monotonic time
+    # Ensure monotonic time (some sources may not guarantee order)
     ts = sorted(ts)
 
     # --- compute NT rhythm metrics ---------------------------------------
@@ -159,6 +190,7 @@ def main() -> None:
     cv_dt = metrics.get("cv_dt", "?")
     print(f"::notice title=FD Probe::n={n}, mean_dt={mean_dt}, cv_dt={cv_dt} (src={source_label})")
     print(f"Wrote metrics → {args.json_out}")
+
 
 if __name__ == "__main__":
     main()
