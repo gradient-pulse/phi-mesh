@@ -49,53 +49,53 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # Sanitize dataset into a safe slug and build a consistent "<slug>__<source>" id
-      - name: Resolve & validate inputs
+      # Sanitize dataset -> slug
+      - name: Resolve slug/source/run
         id: inp
         shell: python
         env:
           DATASET_IN: ${{ github.event.inputs.dataset }}
           SOURCE_IN:  ${{ github.event.inputs.source }}
+          RUN_NUM:    ${{ github.run_number }}
         run: |
-          import os, re
+          import os, re, sys
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
-              s = s.replace("/", "_")
-              s = re.sub(r"[^a-z0-9._-]+", "_", s)
-              s = re.sub(r"_+", "_", s).strip("_")
+              s = re.sub(r"[^a-z0-9._-]+","_", s)
+              s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
           slug   = safe_slug(os.environ["DATASET_IN"])
           source = safe_slug(os.environ["SOURCE_IN"])
-          slug_src = f"{slug}__{source}"
-          print(f"::notice::Using dataset slug = {slug}")
-          print(f"::notice::Using dataset+source id = {slug_src}")
+          runnum = os.environ.get("RUN_NUM","0")
+          name   = f"{slug}__{source}__{runnum}"
+          print(f"::notice::slug={slug} source={source} run={runnum} name={name}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
-              f.write(f"slug_src={slug_src}\n")
+              f.write(f"source={source}\n")
+              f.write(f"name={name}\n")
 
       - name: Run FD probe
         env:
           PYTHONPATH: ${{ github.workspace }}
-          # when we wire real APIs these are read by the connectors
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
-          JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV:      ${{ github.event.inputs.dataset }}   # allow path/URL via the dataset box for NASA
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+          NASA_CSV: ${{ secrets.NASA_CSV }}
         run: |
           mkdir -p results/fd_probe
           python tools/fd_connectors/run_fd_probe.py \
-            --source   "${{ github.event.inputs.source }}" \
-            --dataset  "${{ steps.inp.outputs.slug }}" \
-            --var      "${{ github.event.inputs.var }}" \
-            --xyz      "${{ github.event.inputs.xyz }}" \
-            --twin     "${{ github.event.inputs.twin }}" \
-            --json-out "results/fd_probe/${{ steps.inp.outputs.slug_src }}.metrics.json"
+            --source "${{ steps.inp.outputs.source }}" \
+            --dataset "${{ steps.inp.outputs.slug }}" \
+            --var "${{ github.event.inputs.var }}" \
+            --xyz "${{ github.event.inputs.xyz }}" \
+            --twin "${{ github.event.inputs.twin }}" \
+            --json-out "results/fd_probe/${{ steps.inp.outputs.name }}.metrics.json"
 
       - name: Emit pulse YAML
         run: |
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "results/fd_probe/${{ steps.inp.outputs.slug_src }}.metrics.json" \
+            --metrics "results/fd_probe/${{ steps.inp.outputs.name }}.metrics.json" \
             --title   "${{ github.event.inputs.title }}" \
-            --dataset "${{ steps.inp.outputs.slug_src }}" \
+            --dataset "${{ steps.inp.outputs.name }}" \
             --tags    "${{ github.event.inputs.tags }}" \
             --outdir  pulse/auto
 
@@ -112,5 +112,5 @@ jobs:
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug_src }}) pulse + updated maps" || echo "nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.inp.outputs.name }}) pulse + updated maps" || echo "nothing to commit"
           git push || true
