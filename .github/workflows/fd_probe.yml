@@ -8,7 +8,7 @@ on:
         required: true
         default: 'synthetic'
       dataset:
-        description: 'Dataset name or slug (free text; will be auto-sanitized)'
+        description: 'Dataset name/slug or path (free text; will be auto-sanitized)'
         required: true
         default: 'demo'
       var:
@@ -49,33 +49,45 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # Build a collision-safe slug that includes the source (e.g., demo-nasa)
+      # Sanitize dataset slug and suffix with source for uniqueness
       - name: Resolve & validate inputs
         id: inp
         shell: python
         run: |
           import os, re
+          from pathlib import Path
+
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
               s = re.sub(r"[^a-z0-9._-]+","_", s)
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          src_in = os.environ["SOURCE_IN"]
-          ds_in  = os.environ["DATASET_IN"]
-          slug = safe_slug(f"{ds_in}-{src_in}")
+
+          ds_in   = os.environ["DATASET_IN"]
+          src_in  = os.environ["SRC_IN"]
+
+          # If dataset looks like a path or .csv, use basename (no extension)
+          if ("/" in ds_in) or ds_in.lower().endswith(".csv"):
+              base = Path(ds_in).stem
+          else:
+              base = ds_in
+
+          pretty = f"{base}-{src_in}" if src_in else base
+          slug = safe_slug(pretty)
+
           print(f"::notice::Using dataset slug = {slug}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
         env:
-          SOURCE_IN:  ${{ github.event.inputs.source }}
           DATASET_IN: ${{ github.event.inputs.dataset }}
+          SRC_IN:     ${{ github.event.inputs.source }}
 
       - name: Run FD probe
         env:
           PYTHONPATH: ${{ github.workspace }}
-          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
-          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV: ${{ github.event.inputs.nasa_csv || '' }}
+          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}   # set "1" to keep JHTDB synthetic until wired
+          JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}     # real token when calling JHTDB
+          NASA_CSV:      ${{ secrets.NASA_CSV }}        # optional default CSV/URL
         run: |
           mkdir -p results/fd_probe
           python tools/fd_connectors/run_fd_probe.py \
@@ -84,7 +96,9 @@ jobs:
             --var "${{ github.event.inputs.var }}" \
             --xyz "${{ github.event.inputs.xyz }}" \
             --twin "${{ github.event.inputs.twin }}" \
-            --json-out "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json"
+            --json-out "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json" \
+            --title "${{ github.event.inputs.title }}" \
+            --tags "${{ github.event.inputs.tags }}"
 
       - name: Emit pulse YAML
         run: |
