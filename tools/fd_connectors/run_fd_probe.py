@@ -1,19 +1,24 @@
 # tools/fd_connectors/run_fd_probe.py
 import os
+import sys
 import json
 import argparse
 from dataclasses import asdict, is_dataclass
-from typing import Tuple, List
+from typing import Tuple
 
 import numpy as np
 
-# Import rhythm utilities
+# ---- add repo root to sys.path so "tools.*" imports work in Actions ----
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[2]  # repo root
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+# Import rhythm utilities (object or dict returns are both supported)
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
-    rhythm_from_events,  # expected to return object or dict with n, mean_dt, cv_dt
+    rhythm_from_events,
 )
-
-# --- Helpers --------------------------------------------------------------
 
 def parse_xyz(s: str) -> Tuple[float, float, float]:
     try:
@@ -32,54 +37,36 @@ def parse_twin(s: str) -> Tuple[float, float, float]:
         raise argparse.ArgumentTypeError("twin must be 't0,t1,dt' with t1>t0 and dt>0")
 
 def metrics_to_dict(m) -> dict:
-    """Accept dataclass, object with attrs, or dict; return plain dict."""
     if m is None:
         return {"n": 0, "mean_dt": None, "cv_dt": None}
     if isinstance(m, dict):
-        # Normalize keys
-        return {
-            "n": m.get("n"),
-            "mean_dt": m.get("mean_dt"),
-            "cv_dt": m.get("cv_dt"),
-        }
+        return {"n": m.get("n"), "mean_dt": m.get("mean_dt"), "cv_dt": m.get("cv_dt")}
     if is_dataclass(m):
         d = asdict(m)
         return {"n": d.get("n"), "mean_dt": d.get("mean_dt"), "cv_dt": d.get("cv_dt")}
-    # Fallback: attribute access
     return {
         "n": getattr(m, "n", None),
         "mean_dt": getattr(m, "mean_dt", None),
         "cv_dt": getattr(m, "cv_dt", None),
     }
 
-# --- Fake/placeholder connectors -----------------------------------------
-
 def fetch_timeseries_synthetic(t0: float, t1: float, dt: float, base_period: float = 0.7) -> np.ndarray:
-    """Create a synthetic time series with a gently jittered cadence."""
     t = np.arange(t0, t1 + 1e-9, dt)
-    # Example ‘signal’: a noisy sine—only used to demonstrate cadence extraction.
+    # Only need timestamps; a dummy signal is fine for cadence detection
     _ = np.sin(2 * np.pi * t / base_period) + 0.05 * np.random.randn(t.size)
-    return t  # We only need timestamps for NT rhythm
+    return t
 
 def fetch_timeseries_jhtdb(dataset: str, var: str, xyz: Tuple[float, float, float],
                            t0: float, t1: float, dt: float) -> np.ndarray:
-    """
-    Placeholder JHTDB connector.
-    If JHTDB_OFFLINE=1 or no real connector is wired yet, return synthetic timestamps.
-    """
     if os.environ.get("JHTDB_OFFLINE", "0") == "1":
         return fetch_timeseries_synthetic(t0, t1, dt)
-    # TODO: replace with real JHTDB API calls
+    # TODO: real JHTDB call
     return fetch_timeseries_synthetic(t0, t1, dt)
 
 def fetch_timeseries_nasa(dataset: str, var: str, xyz: Tuple[float, float, float],
                           t0: float, t1: float, dt: float) -> np.ndarray:
-    """
-    Placeholder NASA CFD connector.
-    """
+    # TODO: real NASA call
     return fetch_timeseries_synthetic(t0, t1, dt)
-
-# --- Main ----------------------------------------------------------------
 
 def main():
     ap = argparse.ArgumentParser()
@@ -94,23 +81,17 @@ def main():
     x, y, z = args.xyz
     t0, t1, dt = args.twin
 
-    # 1) Fetch timestamps
     if args.source == "synthetic":
         times = fetch_timeseries_synthetic(t0, t1, dt)
     elif args.source == "jhtdb":
         times = fetch_timeseries_jhtdb(args.dataset, args.var, (x, y, z), t0, t1, dt)
-    else:  # nasa
+    else:
         times = fetch_timeseries_nasa(args.dataset, args.var, (x, y, z), t0, t1, dt)
 
-    # 2) Compute rhythm metrics
-    #    (If your rhythm_from_events expects raw times, pass times;
-    #     if it expects tick intervals, use ticks_from_message_times first.)
-    _ticks = ticks_from_message_times(times)  # keep for potential future use
+    _ticks = ticks_from_message_times(times)
     metrics_obj = rhythm_from_events(times)
-
     metrics = metrics_to_dict(metrics_obj)
 
-    # 3) Write JSON
     out = {
         "source": args.source,
         "dataset": args.dataset,
