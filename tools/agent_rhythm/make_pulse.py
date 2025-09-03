@@ -95,7 +95,7 @@ def main() -> None:
     if details:
         try:
             keys = ["var", "xyz", "window", "dataset"]
-            subset = {k: details[k] for k in keys if k in details}
+            subset = {k: details[k] for k in details}
             if subset:
                 summary_lines.append(f"Probe: {subset}.")
         except Exception:
@@ -121,7 +121,13 @@ def main() -> None:
         for k, v in data.items():
             key_node = dumper.represent_data(k)
             if k == "summary":
-                val_node = yaml.ScalarNode(tag="tag:yaml.org,2002:str", value=str(v), style=">")
+                val_node = yaml.ScalarNode(
+                    tag="tag:yaml.org,2002:str", value=str(v), style=">"
+                )
+            elif k == "title":
+                val_node = yaml.ScalarNode(
+                    tag="tag:yaml.org,2002:str", value=str(v), style="'"
+                )
             else:
                 val_node = dumper.represent_data(v)
             node.value.append((key_node, val_node))
