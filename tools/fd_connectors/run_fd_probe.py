@@ -7,7 +7,7 @@ compute NT-rhythm metrics, and write metrics JSON (for make_pulse.py).
 
 Args (aligned with fd_probe.yml):
   --source   {synthetic,jhtdb,nasa}
-  --dataset  free-text dataset name/slug OR path/URL for nasa
+  --dataset  free-text dataset name/slug OR a path/URL (workflow also provides raw)
   --var      variable name (e.g., "u")
   --xyz      "x,y,z"
   --twin     "t0,t1,dt"
@@ -15,6 +15,7 @@ Args (aligned with fd_probe.yml):
   --title    (unused here; carried by make_pulse)
   --tags     (unused here; carried by make_pulse)
 """
+
 from __future__ import annotations
 
 import argparse
@@ -35,7 +36,6 @@ from tools.fd_connectors import jhtdb as JHT
 from tools.fd_connectors import nasa as NASA
 
 
-# ---------------------------- helpers --------------------------------------
 def parse_triplet(s: str) -> Tuple[float, float, float]:
     parts = [p.strip() for p in (s or "").split(",")]
     if len(parts) != 3:
@@ -80,20 +80,6 @@ def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], 
     return ts, vs
 
 
-def looks_like_path_or_url(s: str) -> bool:
-    """Heuristic: decide if a string is a repo path or URL."""
-    s = (s or "").strip().lower()
-    return (
-        "/" in s
-        or s.endswith(".csv")
-        or s.startswith("http://")
-        or s.startswith("https://")
-        or s.startswith("s3://")
-        or s.startswith("gs://")
-    )
-
-
-# ------------------------------ main ---------------------------------------
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", required=True, choices=["synthetic", "jhtdb", "nasa"])
@@ -134,31 +120,35 @@ def main() -> None:
             ts, vs = ts_obj.t, ts_obj.v
             source_label = "jhtdb"
 
-    else:  # nasa
-        # Prefer the UI 'dataset' when it looks like a path/URL;
-        # otherwise fall back to the NASA_CSV secret if present.
-        ui = args.dataset.strip()
-        secret_csv = os.getenv("NASA_CSV", "").strip()
+    else:  # source == "nasa"
+        # Prefer dataset as a path/URL if it looks like one; else try NASA_CSV secret; else synthetic
+        dataset_as_path = args.dataset.strip()
+        looks_like_path = ("/" in dataset_as_path) or dataset_as_path.endswith(".csv")
+        used = None
+        ts = vs = None  # type: ignore
 
-        if looks_like_path_or_url(ui):
-            nasa_csv = ui
-        elif secret_csv:
-            nasa_csv = secret_csv
+        if looks_like_path:
+            try:
+                ts_obj = NASA.read_csv_timeseries(dataset_as_path)
+                ts, vs = ts_obj.t, ts_obj.v
+                used = dataset_as_path
+            except Exception:
+                used = None  # fall through
+
+        if used is None:
+            nasa_csv = os.getenv("NASA_CSV", "").strip()
+            if nasa_csv:
+                ts_obj = NASA.read_csv_timeseries(nasa_csv)
+                ts, vs = ts_obj.t, ts_obj.v
+                used = nasa_csv
+
+        if used is None:
+            ts, vs = synthetic_timeseries(t0, t1, dt)
+            source_label = "nasa_synth"
         else:
-            nasa_csv = ""
+            source_label = "nasa"
 
-        if nasa_csv:
-            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # CSV/URL/inline
-        else:
-            # Fallback: call the (stub) fetch_timeseries; this will raise until wired.
-            ts_obj = NASA.fetch_timeseries(
-                dataset=args.dataset, var=args.var,
-                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-            )
-        ts, vs = ts_obj.t, ts_obj.v
-        source_label = "nasa"
-
-    # Ensure monotonic time (some sources may not guarantee order)
+    # Ensure monotonic time
     ts = sorted(ts)
 
     # --- compute NT rhythm metrics ---------------------------------------
