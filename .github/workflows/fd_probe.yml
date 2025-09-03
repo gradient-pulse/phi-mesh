@@ -83,6 +83,7 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
+          NASA_CSV: ${{ secrets.NASA_CSV }}
         run: |
           mkdir -p results/fd_probe
           python tools/fd_connectors/run_fd_probe.py \
