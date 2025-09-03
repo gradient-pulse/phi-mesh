@@ -23,6 +23,10 @@ on:
         description: 'Time window as t0,t1,dt'
         required: true
         default: '0.0,10.0,0.01'
+      nasa_csv:
+        description: 'NASA: CSV path or URL (required when source=nasa)'
+        required: false
+        default: ''
       title:
         description: 'Pulse title'
         required: true
@@ -40,7 +44,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -49,48 +52,54 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # Sanitize dataset slug, validate xyz/twin shape, and append a run suffix to avoid overwrites.
-      - name: Resolve & validate inputs
+      # sanitize dataset slug
+      - name: Resolve dataset slug
         id: inp
         shell: python
-        env:
-          DATASET_IN: ${{ github.event.inputs.dataset }}
-          XYZ_IN:     ${{ github.event.inputs.xyz }}
-          TWIN_IN:    ${{ github.event.inputs.twin }}
-          RUN_NO:     ${{ github.run_number }}
         run: |
-          import os, re, sys
+          import os, re
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
               s = re.sub(r"[^a-z0-9._-]+","_", s)
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          def parse_triplet(label, s):
-              parts = [p.strip() for p in (s or "").split(",")]
-              if len(parts) != 3:
-                  print(f"::error::{label} must be 'a,b,c' (got: {s!r})")
-                  sys.exit(1)
-              return parts
-          ds_in   = os.environ["DATASET_IN"]
-          xyz_in  = os.environ["XYZ_IN"]
-          twin_in = os.environ["TWIN_IN"]
-          run_no  = os.environ.get("RUN_NO","")
+          ds_in = os.environ["DATASET_IN"]
           slug = safe_slug(ds_in)
-          # validate shapes
-          _ = parse_triplet("xyz", xyz_in)
-          _ = parse_triplet("twin", twin_in)
-          # auto-unique suffix to avoid filename collisions per day
-          uniq = f"{slug}-{run_no}" if run_no else slug
-          print(f"::notice::Using dataset slug = {uniq}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-              f.write(f"slug={uniq}\n")
+              f.write(f"slug={slug}\n")
+          print(f"::notice::Using dataset slug = {slug}")
+        env:
+          DATASET_IN: ${{ github.event.inputs.dataset }}
+
+      # make NASA_CSV explicit (only if source=nasa)
+      - name: Resolve NASA CSV path
+        if: ${{ github.event.inputs.source == 'nasa' }}
+        shell: bash
+        run: |
+          CSV_INPUT="${{ github.event.inputs.nasa_csv }}"
+          if [[ -z "$CSV_INPUT" ]]; then
+            echo "::error::NASA run requires an explicit CSV path or URL (input: nasa_csv)."
+            exit 1
+          fi
+          # If it's not absolute and not a URL, treat as repo-relative
+          if [[ "$CSV_INPUT" != http* && "$CSV_INPUT" != /* ]]; then
+            CSV_ABS="$GITHUB_WORKSPACE/$CSV_INPUT"
+          else
+            CSV_ABS="$CSV_INPUT"
+          fi
+          if [[ ! "$CSV_ABS" =~ ^http && ! -f "$CSV_ABS" ]]; then
+            echo "::error::NASA CSV not found at $CSV_ABS"
+            exit 1
+          fi
+          echo "NASA_CSV=$CSV_ABS" >> $GITHUB_ENV
+          echo "::notice::Using NASA CSV: $CSV_ABS"
 
       - name: Run FD probe
         env:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV: ${{ secrets.NASA_CSV }}
+          NASA_CSV: ${{ env.NASA_CSV }}
         run: |
           mkdir -p results/fd_probe
           python tools/fd_connectors/run_fd_probe.py \
