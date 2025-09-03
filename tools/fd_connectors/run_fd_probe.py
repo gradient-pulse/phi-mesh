@@ -7,25 +7,29 @@ from dataclasses import asdict, is_dataclass
 from typing import Tuple
 
 import numpy as np
-
-# ---- add repo root to sys.path so "tools.*" imports work in Actions ----
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[2]  # repo root
+
+# --- Ensure repo root is on sys.path ---
+ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-# Import rhythm utilities (object or dict returns are both supported)
+# Import rhythm utilities
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
+# -----------------------
+# Helpers
+# -----------------------
 def parse_xyz(s: str) -> Tuple[float, float, float]:
     try:
         x, y, z = (float(v.strip()) for v in s.split(","))
         return x, y, z
     except Exception:
         raise argparse.ArgumentTypeError("xyz must be 'x,y,z' (floats)")
+
 
 def parse_twin(s: str) -> Tuple[float, float, float]:
     try:
@@ -35,6 +39,7 @@ def parse_twin(s: str) -> Tuple[float, float, float]:
         return t0, t1, dt
     except Exception:
         raise argparse.ArgumentTypeError("twin must be 't0,t1,dt' with t1>t0 and dt>0")
+
 
 def metrics_to_dict(m) -> dict:
     if m is None:
@@ -50,24 +55,34 @@ def metrics_to_dict(m) -> dict:
         "cv_dt": getattr(m, "cv_dt", None),
     }
 
+
+# -----------------------
+# Synthetic + stubs
+# -----------------------
 def fetch_timeseries_synthetic(t0: float, t1: float, dt: float, base_period: float = 0.7) -> np.ndarray:
     t = np.arange(t0, t1 + 1e-9, dt)
-    # Only need timestamps; a dummy signal is fine for cadence detection
+    # Simulate a quasi-periodic signal
     _ = np.sin(2 * np.pi * t / base_period) + 0.05 * np.random.randn(t.size)
     return t
+
 
 def fetch_timeseries_jhtdb(dataset: str, var: str, xyz: Tuple[float, float, float],
                            t0: float, t1: float, dt: float) -> np.ndarray:
     if os.environ.get("JHTDB_OFFLINE", "0") == "1":
         return fetch_timeseries_synthetic(t0, t1, dt)
-    # TODO: real JHTDB call
+    # TODO: hook into real JHTDB API
     return fetch_timeseries_synthetic(t0, t1, dt)
+
 
 def fetch_timeseries_nasa(dataset: str, var: str, xyz: Tuple[float, float, float],
                           t0: float, t1: float, dt: float) -> np.ndarray:
-    # TODO: real NASA call
+    # TODO: hook into real NASA FD API
     return fetch_timeseries_synthetic(t0, t1, dt)
 
+
+# -----------------------
+# Main
+# -----------------------
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", required=True, choices=["jhtdb", "nasa", "synthetic"])
@@ -88,7 +103,8 @@ def main():
     else:
         times = fetch_timeseries_nasa(args.dataset, args.var, (x, y, z), t0, t1, dt)
 
-    _ticks = ticks_from_message_times(times)
+    # Rhythm analysis
+    _ = ticks_from_message_times(times)
     metrics_obj = rhythm_from_events(times)
     metrics = metrics_to_dict(metrics_obj)
 
@@ -106,6 +122,7 @@ def main():
     os.makedirs(os.path.dirname(args.json_out), exist_ok=True)
     with open(args.json_out, "w") as f:
         json.dump(out, f, indent=2)
+
 
 if __name__ == "__main__":
     main()
