@@ -22,7 +22,7 @@ from typing import Any, Dict, List
 
 import yaml
 
-# ----- helpers -------------------------------------------------------------
+# ---------- helpers ---------------------------------------------------------
 
 def safe_slug(s: str) -> str:
     s = (s or "").strip().lower()
@@ -31,13 +31,14 @@ def safe_slug(s: str) -> str:
     return s or "dataset"
 
 def to_builtin(x: Any) -> Any:
-    """Recursively coerce to plain Python builtins so PyYAML is happy."""
+    """Coerce to plain Python builtins so PyYAML is happy."""
     try:
         import numpy as np
         np_generic = np.generic
     except Exception:
         class _NP: pass
         np_generic = _NP
+
     if isinstance(x, (str, int, float, bool)) or x is None:
         return x
     if isinstance(x, np_generic):
@@ -45,12 +46,14 @@ def to_builtin(x: Any) -> Any:
             return x.item()
         except Exception:
             return float(x)
+
     try:
         import pathlib
         if isinstance(x, pathlib.Path):
             return str(x)
     except Exception:
         pass
+
     if isinstance(x, (dt.date, dt.datetime, dt.time)):
         return str(x)
     if isinstance(x, dict):
@@ -59,7 +62,7 @@ def to_builtin(x: Any) -> Any:
         return [to_builtin(v) for v in x]
     return str(x)
 
-# ----- main ----------------------------------------------------------------
+# ---------- main ------------------------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -86,53 +89,65 @@ def main() -> None:
     os.makedirs(args.outdir, exist_ok=True)
     out_path = os.path.join(args.outdir, f"{today_str}_{slug}.yml")
 
-    summary_lines: List[str] = []
-    summary_lines.append(
+    # concise narrative summary
+    summary_parts: List[str] = [
         f"NT rhythm probe on “{slug}” — n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}."
-    )
+    ]
     if src:
-        summary_lines.append(f"Source: {src}.")
+        summary_parts.append(f"Source: {src}.")
     if details:
         try:
             keys = ["var", "xyz", "window", "dataset"]
-            subset = {k: details[k] for k in details}
+            subset = {k: details[k] for k in details if k in keys}
             if subset:
-                summary_lines.append(f"Probe: {subset}.")
+                summary_parts.append(f"Probe: {subset}.")
         except Exception:
             pass
-    summary_text = " ".join(str(s).strip() for s in summary_lines if s)
+    summary_text = " ".join(p.strip() for p in summary_parts if p)
 
     tags = [t for t in re.split(r"\s+", args.tags.strip()) if t]
 
     pulse = {
-        "title": str(args.title),
-        "summary": summary_text,
+        "title": str(args.title),     # will be forced to single quotes
+        "summary": summary_text,      # will be emitted with folded style '>'
         "tags": [str(t) for t in tags],
         "papers": [],
         "podcasts": [],
     }
     pulse = to_builtin(pulse)
 
+    # ---------- YAML dumper tweaks ----------------------------------------
+
     class _D(yaml.SafeDumper):
         pass
 
-    def _repr_mapping(dumper, data):
+    def _needs_quote(s: str) -> bool:
+        # Quote anything with spaces or YAML-sensitive characters.
+        # Broad but safe: spaces or any of these trigger quoting.
+        return bool(re.search(r"[ \t:#\[\]{}&*!|>,'%@`?]|^-|^\d", s))
+
+    def _repr_str(dumper: yaml.Dumper, data: str):
+        s = str(data)
+        if _needs_quote(s):
+            return dumper.represent_scalar("tag:yaml.org,2002:str", s, style="'")
+        return dumper.represent_scalar("tag:yaml.org,2002:str", s)
+
+    def _repr_mapping(dumper: yaml.Dumper, data: dict):
+        # Special-case top-level 'summary' and 'title'
         node = yaml.nodes.MappingNode(tag="tag:yaml.org,2002:map", value=[])
         for k, v in data.items():
             key_node = dumper.represent_data(k)
             if k == "summary":
-                val_node = yaml.ScalarNode(
-                    tag="tag:yaml.org,2002:str", value=str(v), style=">"
-                )
+                val_node = yaml.ScalarNode("tag:yaml.org,2002:str", str(v), style=">")
             elif k == "title":
-                val_node = yaml.ScalarNode(
-                    tag="tag:yaml.org,2002:str", value=str(v), style="'"
-                )
+                # always single-quote the title
+                val_node = yaml.ScalarNode("tag:yaml.org,2002:str", str(v), style="'")
             else:
                 val_node = dumper.represent_data(v)
             node.value.append((key_node, val_node))
         return node
 
+    _D.add_representer(str, _repr_str)
     _D.add_representer(dict, _repr_mapping)
 
     with open(out_path, "w", encoding="utf-8") as f:
