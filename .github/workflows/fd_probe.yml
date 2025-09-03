@@ -8,7 +8,7 @@ on:
         required: true
         default: 'synthetic'
       dataset:
-        description: 'Dataset name/slug or path (free text; will be auto-sanitized for filenames)'
+        description: 'Dataset name/slug or path (free text; will be auto-sanitized)'
         required: true
         default: 'demo'
       var:
@@ -31,6 +31,11 @@ on:
         description: 'Space-separated tags'
         required: true
         default: 'nt_rhythm turbulence navier_stokes rgp'
+      # Optional NASA CSV when source=nasa; if omitted, connector stub may fetch remotely later
+      nasa_csv:
+        description: 'NASA CSV path or URL (only used when source=nasa)'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -40,6 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -48,67 +54,65 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # NEW: keep RAW dataset for NASA, but still compute a slug for filenames.
+      # Sanitize dataset slug (kept simple, content checked in the tool)
       - name: Resolve & validate inputs
         id: inp
         shell: python
-        env:
-          DATASET_IN: ${{ github.event.inputs.dataset }}
-          SOURCE_IN:  ${{ github.event.inputs.source }}
-          XYZ_IN:     ${{ github.event.inputs.xyz }}
-          TWIN_IN:    ${{ github.event.inputs.twin }}
         run: |
-          import os, re, sys, json
+          import os, re
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
-              s = re.sub(r"[^a-z0-9._/-]+", "_", s)  # keep / so we can inspect paths
-              s = re.sub(r"_+", "_", s).strip("_")
+              s = re.sub(r"[^a-z0-9._-]+","_", s)
+              s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          def parse_triplet(s):
-              parts = [p.strip() for p in (s or "").split(",")]
-              if len(parts)!=3: raise SystemExit(f"Bad triplet: {s!r}")
-              return parts
-
-          ds_in   = os.environ["DATASET_IN"]
-          src_in  = os.environ["SOURCE_IN"].strip().lower()
-          _ = parse_triplet(os.environ["XYZ_IN"])
-          _ = parse_triplet(os.environ["TWIN_IN"])
-
-          # Slug for filenames (replace / with _ for safety)
-          slug = safe_slug(ds_in).replace("/", "_")
-
-          # Dataset to pass to the probe:
-          # - For NASA: pass RAW input (could be repo path or URL)
-          # - For others: pass slug
-          dataset_arg = ds_in if src_in == "nasa" else slug
-
-          print(f"::notice::Using filename slug = {slug}")
-          print(f"::notice::Probe dataset arg   = {dataset_arg}")
-
+          ds_in = os.environ["DATASET_IN"]
+          slug = safe_slug(ds_in)
+          print(f"::notice::Using dataset slug = {slug}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
-              f.write(f"dataset_arg={dataset_arg}\n")
+        env:
+          DATASET_IN: ${{ github.event.inputs.dataset }}
 
       - name: Run FD probe
         env:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
           JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV:      ${{ secrets.NASA_CSV }}
+          NASA_CSV:      ${{ github.event.inputs.nasa_csv || secrets.NASA_CSV }}
         run: |
+          set -euo pipefail
           mkdir -p results/fd_probe
+
+          slug="${{ steps.inp.outputs.slug }}"
+          base="results/fd_probe/${slug}.metrics.json"
+
+          # --- next free "batch" filename for results ---
+          if [ -f "$base" ]; then
+            i=2
+            while true; do
+              cand="results/fd_probe/${slug}_batch${i}.metrics.json"
+              [ -f "$cand" ] || { JSON_OUT="$cand"; break; }
+              i=$((i+1))
+            done
+          else
+            JSON_OUT="$base"
+          fi
+          echo "JSON_OUT=$JSON_OUT"
+
           python tools/fd_connectors/run_fd_probe.py \
             --source "${{ github.event.inputs.source }}" \
-            --dataset "${{ steps.inp.outputs.dataset_arg }}" \
-            --var     "${{ github.event.inputs.var }}" \
-            --xyz     "${{ github.event.inputs.xyz }}" \
-            --twin    "${{ github.event.inputs.twin }}" \
-            --json-out "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json"
+            --dataset "$slug" \
+            --var "${{ github.event.inputs.var }}" \
+            --xyz "${{ github.event.inputs.xyz }}" \
+            --twin "${{ github.event.inputs.twin }}" \
+            --json-out "$JSON_OUT"
 
       - name: Emit pulse YAML
         run: |
+          # Use the most recently touched metrics for this slug (the one we just wrote)
+          JSON_LATEST=$(ls -t results/fd_probe/${{ steps.inp.outputs.slug }}*.metrics.json | head -n1)
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json" \
+            --metrics "$JSON_LATEST" \
             --title   "${{ github.event.inputs.title }}" \
             --dataset "${{ steps.inp.outputs.slug }}" \
             --tags    "${{ github.event.inputs.tags }}" \
@@ -127,5 +131,5 @@ jobs:
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug }}) pulse + updated maps" || echo "nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug }}) batch update + maps" || echo "nothing to commit"
           git push || true
