@@ -1,128 +1,126 @@
-# tools/fd_connectors/run_fd_probe.py
-import os
-import sys
-import json
+#!/usr/bin/env python3
+"""
+FD probe → rhythm metrics → pulse (auto).
+
+Supports:
+  --source synthetic | jhtdb | nasa
+For jhtdb: uses tools.fd_connectors.jhtdb.fetch_timeseries (offline by default).
+"""
+
+from __future__ import annotations
 import argparse
-from dataclasses import asdict, is_dataclass
+import json
+import os
 from typing import Tuple
 
-import numpy as np
-from pathlib import Path
-
-# --- Ensure repo root is on sys.path ---
-ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-# Import rhythm utilities
+# import rhythm utils
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
-# -----------------------
-# Helpers
-# -----------------------
-def parse_xyz(s: str) -> Tuple[float, float, float]:
-    try:
-        x, y, z = (float(v.strip()) for v in s.split(","))
-        return x, y, z
-    except Exception:
-        raise argparse.ArgumentTypeError("xyz must be 'x,y,z' (floats)")
+# connectors
+from tools.fd_connectors.jhtdb import fetch_timeseries as jhtdb_fetch
 
+def _parse_xyz(s: str) -> Tuple[float, float, float]:
+    x, y, z = (v.strip() for v in s.split(","))
+    return float(x), float(y), float(z)
 
-def parse_twin(s: str) -> Tuple[float, float, float]:
-    try:
-        t0, t1, dt = (float(v.strip()) for v in s.split(","))
-        if dt <= 0 or t1 <= t0:
-            raise ValueError
-        return t0, t1, dt
-    except Exception:
-        raise argparse.ArgumentTypeError("twin must be 't0,t1,dt' with t1>t0 and dt>0")
+def _parse_window(s: str) -> Tuple[float, float, float]:
+    t0, t1, dt = (v.strip() for v in s.split(","))
+    return float(t0), float(t1), float(dt)
 
+def _synthetic_timeseries(dataset: str, var: str, xyz, t0, t1, dt):
+    # delegate to jhtdb offline generator via env if you like;
+    # here keep a tiny local fallback:
+    os.environ.setdefault("JHTDB_OFFLINE", "1")
+    return jhtdb_fetch(dataset=dataset, var=var, xyz=xyz, t0=t0, t1=t1, dt=dt, token=None)
 
-def metrics_to_dict(m) -> dict:
-    if m is None:
-        return {"n": 0, "mean_dt": None, "cv_dt": None}
-    if isinstance(m, dict):
-        return {"n": m.get("n"), "mean_dt": m.get("mean_dt"), "cv_dt": m.get("cv_dt")}
-    if is_dataclass(m):
-        d = asdict(m)
-        return {"n": d.get("n"), "mean_dt": d.get("mean_dt"), "cv_dt": d.get("cv_dt")}
-    return {
-        "n": getattr(m, "n", None),
-        "mean_dt": getattr(m, "mean_dt", None),
-        "cv_dt": getattr(m, "cv_dt", None),
-    }
-
-
-# -----------------------
-# Synthetic + stubs
-# -----------------------
-def fetch_timeseries_synthetic(t0: float, t1: float, dt: float, base_period: float = 0.7) -> np.ndarray:
-    t = np.arange(t0, t1 + 1e-9, dt)
-    # Simulate a quasi-periodic signal
-    _ = np.sin(2 * np.pi * t / base_period) + 0.05 * np.random.randn(t.size)
-    return t
-
-
-def fetch_timeseries_jhtdb(dataset: str, var: str, xyz: Tuple[float, float, float],
-                           t0: float, t1: float, dt: float) -> np.ndarray:
-    if os.environ.get("JHTDB_OFFLINE", "0") == "1":
-        return fetch_timeseries_synthetic(t0, t1, dt)
-    # TODO: hook into real JHTDB API
-    return fetch_timeseries_synthetic(t0, t1, dt)
-
-
-def fetch_timeseries_nasa(dataset: str, var: str, xyz: Tuple[float, float, float],
-                          t0: float, t1: float, dt: float) -> np.ndarray:
-    # TODO: hook into real NASA FD API
-    return fetch_timeseries_synthetic(t0, t1, dt)
-
-
-# -----------------------
-# Main
-# -----------------------
-def main():
+def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True, choices=["jhtdb", "nasa", "synthetic"])
-    ap.add_argument("--dataset", required=True)
-    ap.add_argument("--var", required=True)
-    ap.add_argument("--xyz", required=True, type=parse_xyz, help="x,y,z")
-    ap.add_argument("--twin", required=True, type=parse_twin, help="t0,t1,dt")
-    ap.add_argument("--json-out", required=True, help="Output JSON path for metrics")
+    ap.add_argument("--source", choices=["synthetic", "jhtdb", "nasa"], required=True)
+    ap.add_argument("--dataset", required=True, help="dataset slug (e.g., isotropic1024)")
+    ap.add_argument("--var", required=True, default="u")
+    ap.add_argument("--point", required=True, help="x,y,z (e.g., 0.1,0.1,0.1)")
+    ap.add_argument("--window", required=True, help="t0,t1,dt (e.g., 0.0,10.0,0.01)")
+    ap.add_argument("--json-out", default=None, help="Write metrics JSON here (optional)")
+    ap.add_argument("--title", default="NT Rhythm — FD Probe")
+    ap.add_argument("--tags", default="nt_rhythm turbulence navier_stokes rgp")
     args = ap.parse_args()
 
-    x, y, z = args.xyz
-    t0, t1, dt = args.twin
+    xyz = _parse_xyz(args.point)
+    t0, t1, dtv = _parse_window(args.window)
 
+    # ---- fetch time series ------------------------------------------------
     if args.source == "synthetic":
-        times = fetch_timeseries_synthetic(t0, t1, dt)
+        t, y = _synthetic_timeseries(args.dataset, args.var, xyz, t0, t1, dtv)
     elif args.source == "jhtdb":
-        times = fetch_timeseries_jhtdb(args.dataset, args.var, (x, y, z), t0, t1, dt)
+        token = os.getenv("JHTDB_TOKEN")
+        t, y = jhtdb_fetch(dataset=args.dataset, var=args.var, xyz=xyz,
+                           t0=t0, t1=t1, dt=dtv, token=token)
     else:
-        times = fetch_timeseries_nasa(args.dataset, args.var, (x, y, z), t0, t1, dt)
+        # placeholder for future NASA wiring
+        t, y = _synthetic_timeseries(args.dataset, args.var, xyz, t0, t1, dtv)
 
-    # Rhythm analysis
-    _ = ticks_from_message_times(times)
-    metrics_obj = rhythm_from_events(times)
-    metrics = metrics_to_dict(metrics_obj)
+    # ---- compute rhythm metrics ------------------------------------------
+    # Convert to ticks: here we use sample times directly.
+    ticks = ticks_from_message_times(t)
+    metrics = rhythm_from_events(ticks)
 
-    out = {
+    # include provenance for the pulse summary
+    metrics_out = {
         "source": args.source,
         "dataset": args.dataset,
         "var": args.var,
-        "xyz": [x, y, z],
-        "twin": {"t0": t0, "t1": t1, "dt": dt},
-        "n": metrics["n"],
-        "mean_dt": metrics["mean_dt"],
-        "cv_dt": metrics["cv_dt"],
+        "xyz": list(xyz),
+        "twin": {"t0": t0, "t1": t1, "dt": dtv},
+        "n": metrics.get("n"),
+        "mean_dt": metrics.get("mean_dt"),
+        "cv_dt": metrics.get("cv_dt"),
     }
 
-    os.makedirs(os.path.dirname(args.json_out), exist_ok=True)
-    with open(args.json_out, "w") as f:
-        json.dump(out, f, indent=2)
+    # optional debug artifact
+    out_json = args.json_out or os.path.join("results", "fd_probe", f"{args.dataset}.metrics.json")
+    os.makedirs(os.path.dirname(out_json), exist_ok=True)
+    with open(out_json, "w", encoding="utf-8") as f:
+        json.dump(metrics_out, f, indent=2)
 
+    # emit pulse via make_pulse.py
+    from tools.agent_rhythm.make_pulse import safe_slug  # reuse helper
+    dataset_slug = safe_slug(args.dataset)
+    os.makedirs("pulse/auto", exist_ok=True)
+
+    # Call the pulse maker as a library to avoid another process
+    from tools.agent_rhythm import make_pulse
+    make_pulse_main = getattr(make_pulse, "main", None)
+
+    if make_pulse_main is None:
+        # Fallback: invoke via subprocess if needed (shouldn’t happen the way repo is laid out)
+        import subprocess, sys
+        subprocess.check_call([
+            sys.executable, "tools/agent_rhythm/make_pulse.py",
+            "--metrics", out_json,
+            "--title", args.title,
+            "--dataset", dataset_slug,
+            "--tags", args.tags,
+            "--outdir", "pulse/auto",
+        ])
+    else:
+        # mimic CLI call by building argv for make_pulse.main
+        import sys
+        old_argv = sys.argv[:]
+        try:
+            sys.argv = [
+                "make_pulse.py",
+                "--metrics", out_json,
+                "--title", args.title,
+                "--dataset", dataset_slug,
+                "--tags", args.tags,
+                "--outdir", "pulse/auto",
+            ]
+            make_pulse_main()
+        finally:
+            sys.argv = old_argv
 
 if __name__ == "__main__":
     main()
