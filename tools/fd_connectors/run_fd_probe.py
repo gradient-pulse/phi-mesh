@@ -1,16 +1,43 @@
 #!/usr/bin/env python3
-from __future__ import annotations
-import argparse, json, math, os
-from dataclasses import asdict, is_dataclass
-from typing import Dict, Any, Tuple, List
+"""
+tools/fd_connectors/run_fd_probe.py
 
+Fetch a 1-point time series from a source (synthetic|jhtdb|nasa),
+compute NT-rhythm metrics, and write metrics JSON (for make_pulse.py).
+
+Args (aligned with fd_probe.yml):
+  --source       {synthetic,jhtdb,nasa}
+  --dataset      sanitized slug (used for filenames by the workflow)
+  --dataset-raw  raw dataset string (path/URL/free text), used by NASA
+  --var          variable name (e.g., "u")
+  --xyz          "x,y,z"
+  --twin         "t0,t1,dt"
+  --json-out     path to write metrics JSON
+  --title        (unused here; carried by make_pulse)
+  --tags         (unused here; carried by make_pulse)
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import os
+from dataclasses import asdict, is_dataclass
+from typing import Any, Dict, List, Tuple
+
+# rhythm tools
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
+# source connectors
 from tools.fd_connectors import jhtdb as JHT
 from tools.fd_connectors import nasa as NASA
+
+
+# ---------------- helpers ----------------
 
 def parse_triplet(s: str) -> Tuple[float, float, float]:
     parts = [p.strip() for p in (s or "").split(",")]
@@ -18,25 +45,31 @@ def parse_triplet(s: str) -> Tuple[float, float, float]:
         raise ValueError(f"Expected three comma-separated values, got: {s!r}")
     return float(parts[0]), float(parts[1]), float(parts[2])
 
+
 def to_builtin(x: Any) -> Any:
+    """Coerce dataclasses / numpy / misc types into plain Python types."""
     try:
         import numpy as np
         np_scalar = np.generic
-    except Exception:
+    except Exception:  # numpy not installed
         class _S: ...
         np_scalar = _S  # type: ignore
+
     if is_dataclass(x):
         return {k: to_builtin(v) for k, v in asdict(x).items()}
     if isinstance(x, (str, int, float, bool)) or x is None:
         return x
     if isinstance(x, np_scalar):
-        try: return x.item()
-        except Exception: return float(x)
+        try:
+            return x.item()
+        except Exception:
+            return float(x)
     if isinstance(x, dict):
         return {str(k): to_builtin(v) for k, v in x.items()}
     if isinstance(x, (list, tuple, set)):
         return [to_builtin(v) for v in x]
     return str(x)
+
 
 def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], List[float]]:
     n = max(3, int((t1 - t0) / max(dt, 1e-9)))
@@ -49,18 +82,14 @@ def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], 
     ]
     return ts, vs
 
-def _looks_valid_path_or_url(s: str) -> bool:
-    if not s or s == "***":
-        return False  # masked secret or empty
-    if s.startswith("http://") or s.startswith("https://"):
-        return True
-    # allow repo-relative path (NASA helper will resolve against workspace)
-    return os.path.isabs(s) or "/" in s or "\\" in s
+
+# ---------------- main ----------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", required=True, choices=["synthetic", "jhtdb", "nasa"])
-    ap.add_argument("--dataset", required=True)
+    ap.add_argument("--dataset", required=True)        # sanitized slug (filenames)
+    ap.add_argument("--dataset-raw", default="")       # RAW text (path/URL) for NASA
     ap.add_argument("--var", required=True)
     ap.add_argument("--xyz", required=True, help="x,y,z")
     ap.add_argument("--twin", required=True, help="t0,t1,dt")
@@ -78,10 +107,12 @@ def main() -> None:
         source_label = "synthetic"
 
     elif args.source == "jhtdb":
+        # offline synthetic inside JHT for now unless token is present
         if os.getenv("JHTDB_OFFLINE", "0") == "1" or not os.getenv("JHTDB_TOKEN"):
             try:
                 ts_obj = JHT.fetch_timeseries(
-                    dataset=args.dataset, var=args.var, x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+                    dataset=args.dataset, var=args.var,
+                    x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
                 )
                 ts, vs = ts_obj.t, ts_obj.v
             except Exception:
@@ -89,38 +120,26 @@ def main() -> None:
             source_label = "jhtdb_offline"
         else:
             ts_obj = JHT.fetch_timeseries(
-                dataset=args.dataset, var=args.var, x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+                dataset=args.dataset, var=args.var,
+                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
             )
             ts, vs = ts_obj.t, ts_obj.v
             source_label = "jhtdb"
 
-    else:  # nasa
-        nasa_csv = (os.getenv("NASA_CSV", "") or "").strip()
-        ts_obj = None
+    else:  # ---- NASA ----
+        # Prefer explicit secret NASA_CSV; else use the raw dataset input; else fall back to slug.
+        raw = (os.getenv("NASA_CSV", "").strip()
+               or args.dataset_raw.strip()
+               or args.dataset.strip())
 
-        # 1) Prefer valid secret if it looks like a path/URL (and not masked)
-        if _looks_valid_path_or_url(nasa_csv):
-            try:
-                ts_obj = NASA.read_csv_timeseries(nasa_csv)
-            except Exception:
-                ts_obj = None
-
-        # 2) If dataset input itself is a path/URL, use that
-        if ts_obj is None and _looks_valid_path_or_url(args.dataset):
-            ts_obj = NASA.read_csv_timeseries(args.dataset)
-
-        # 3) Otherwise fall back to the stubbed generator
-        if ts_obj is None:
-            ts_obj = NASA.fetch_timeseries(
-                dataset=args.dataset, var=args.var, x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-            )
-
+        ts_obj = NASA.read_csv_timeseries(raw)  # path or URL; nasa.py resolves short names
         ts, vs = ts_obj.t, ts_obj.v
         source_label = "nasa"
 
+    # Ensure monotonic time
     ts = sorted(ts)
 
-    # --- compute metrics --------------------------------------------------
+    # --- compute NT rhythm metrics ---------------------------------------
     tick_times = ticks_from_message_times(ts)
     mobj = rhythm_from_events(tick_times)
     if is_dataclass(mobj):
@@ -132,13 +151,14 @@ def main() -> None:
 
     metrics["source"] = source_label
     metrics["details"] = {
-        "dataset": args.dataset,
+        "dataset": args.dataset,  # slug used in filenames
         "var": args.var,
         "xyz": [x, y, z],
         "window": [t0, t1, dt],
     }
     metrics = to_builtin(metrics)
 
+    # --- write metrics JSON ----------------------------------------------
     os.makedirs(os.path.dirname(args.json_out), exist_ok=True)
     with open(args.json_out, "w", encoding="utf-8") as f:
         json.dump(metrics, f, ensure_ascii=False, indent=2)
@@ -148,6 +168,7 @@ def main() -> None:
     cv_dt = metrics.get("cv_dt", "?")
     print(f"::notice title=FD Probe::n={n}, mean_dt={mean_dt}, cv_dt={cv_dt} (src={source_label})")
     print(f"Wrote metrics → {args.json_out}")
+
 
 if __name__ == "__main__":
     main()
