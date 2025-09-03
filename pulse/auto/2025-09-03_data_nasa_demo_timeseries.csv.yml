@@ -1,6 +1,6 @@
-title: 'NT Rhythm — FD Probe'
+title: NT Rhythm — FD Probe
 summary: >-
-  NT rhythm probe on “data_nasa_demo_timeseries.csv” — n=?, mean_dt=?, cv_dt=?. Source: nasa. Probe: var=u, xyz=(0.1, 0.1, 0.1), window=[0.0..10.0:0.01], dataset=data/nasa/demo_timeseries.csv.
+  NT rhythm probe on “data_nasa_demo_timeseries.csv” — n=?, mean_dt=?, cv_dt=?. Source: nasa. Probe: {'dataset': 'data/nasa/demo_timeseries.csv', 'var': 'u', 'xyz': [0.1, 0.1, 0.1], 'window': [0.0, 10.0, 0.01]}.
 tags:
 - nt_rhythm
 - turbulence
