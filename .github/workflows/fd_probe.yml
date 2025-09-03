@@ -31,7 +31,6 @@ on:
         description: 'Space-separated tags'
         required: true
         default: 'nt_rhythm turbulence navier_stokes rgp'
-      # Optional NASA CSV when source=nasa; if omitted, connector stub may fetch remotely later
       nasa_csv:
         description: 'NASA CSV path or URL (only used when source=nasa)'
         required: false
@@ -54,8 +53,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # Sanitize dataset slug (kept simple, content checked in the tool)
-      - name: Resolve & validate inputs
+      - name: Resolve slug
         id: inp
         shell: python
         run: |
@@ -65,15 +63,16 @@ jobs:
               s = re.sub(r"[^a-z0-9._-]+","_", s)
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          ds_in = os.environ["DATASET_IN"]
-          slug = safe_slug(ds_in)
+          ds = os.environ["DATASET_IN"]
+          slug = safe_slug(ds)
           print(f"::notice::Using dataset slug = {slug}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
         env:
           DATASET_IN: ${{ github.event.inputs.dataset }}
 
-      - name: Run FD probe
+      - name: Compute metrics (batch-numbered)
+        id: compute
         env:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
@@ -82,22 +81,17 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p results/fd_probe
-
           slug="${{ steps.inp.outputs.slug }}"
-          base="results/fd_probe/${slug}.metrics.json"
-
-          # --- next free "batch" filename for results ---
-          if [ -f "$base" ]; then
-            i=2
-            while true; do
-              cand="results/fd_probe/${slug}_batch${i}.metrics.json"
-              [ -f "$cand" ] || { JSON_OUT="$cand"; break; }
-              i=$((i+1))
-            done
-          else
-            JSON_OUT="$base"
-          fi
-          echo "JSON_OUT=$JSON_OUT"
+          i=1
+          while true; do
+            cand="results/fd_probe/${slug}_batch${i}.metrics.json"
+            if [ ! -f "$cand" ]; then
+              JSON_OUT="$cand"
+              break
+            fi
+            i=$((i+1))
+          done
+          echo "json_out=$JSON_OUT" >> "$GITHUB_OUTPUT"
 
           python tools/fd_connectors/run_fd_probe.py \
             --source "${{ github.event.inputs.source }}" \
@@ -107,12 +101,10 @@ jobs:
             --twin "${{ github.event.inputs.twin }}" \
             --json-out "$JSON_OUT"
 
-      - name: Emit pulse YAML
+      - name: Emit pulse YAML (batch-numbered)
         run: |
-          # Use the most recently touched metrics for this slug (the one we just wrote)
-          JSON_LATEST=$(ls -t results/fd_probe/${{ steps.inp.outputs.slug }}*.metrics.json | head -n1)
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "$JSON_LATEST" \
+            --metrics "${{ steps.compute.outputs.json_out }}" \
             --title   "${{ github.event.inputs.title }}" \
             --dataset "${{ steps.inp.outputs.slug }}" \
             --tags    "${{ github.event.inputs.tags }}" \
