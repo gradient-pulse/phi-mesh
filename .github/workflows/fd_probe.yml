@@ -54,7 +54,7 @@ jobs:
         id: inp
         shell: python
         run: |
-          import os, re, sys, json
+          import os, re
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
               s = re.sub(r"[^a-z0-9._-]+","_", s)
@@ -68,7 +68,6 @@ jobs:
           xyz_in  = os.environ["XYZ_IN"]
           twin_in = os.environ["TWIN_IN"]
           slug = safe_slug(ds_in)
-          # basic shape checks (content checked by run_fd_probe)
           _ = parse_triplet(xyz_in)
           _ = parse_triplet(twin_in)
           print(f"::notice::Using dataset slug = {slug}")
@@ -90,9 +89,11 @@ jobs:
             --source "${{ github.event.inputs.source }}" \
             --dataset "${{ steps.inp.outputs.slug }}" \
             --var "${{ github.event.inputs.var }}" \
-            --xyz "${{ github.event.inputs.xyz }}" \
-            --twin "${{ github.event.inputs.twin }}" \
-            --json-out "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json"
+            --point "${{ github.event.inputs.xyz }}" \
+            --window "${{ github.event.inputs.twin }}" \
+            --json-out "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json" \
+            --title "${{ github.event.inputs.title }}" \
+            --tags "${{ github.event.inputs.tags }}"
 
       - name: Emit pulse YAML
         run: |
