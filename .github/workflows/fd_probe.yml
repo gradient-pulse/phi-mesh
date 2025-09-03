@@ -8,7 +8,7 @@ on:
         required: true
         default: 'synthetic'
       dataset:
-        description: 'Dataset name/slug or path (free text; will be auto-sanitized for filenames)'
+        description: 'Dataset name/slug or path (free text; will be auto-sanitized)'
         required: true
         default: 'demo'
       var:
@@ -23,6 +23,10 @@ on:
         description: 'Time window as t0,t1,dt'
         required: true
         default: '0.0,10.0,0.01'
+      batch:
+        description: 'Batch label for repeat runs (e.g., batch1, batch2)'
+        required: true
+        default: 'batch1'
       title:
         description: 'Pulse title'
         required: true
@@ -49,74 +53,84 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # 1) Sanitize dataset to a safe slug
-      - name: Resolve slug
+      # Sanitize dataset -> slug, and validate basic shapes.
+      - name: Resolve & validate inputs
         id: inp
         shell: python
         run: |
-          import os, re
+          import os, re, sys
+
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
               s = re.sub(r"[^a-z0-9._-]+","_", s)
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          ds_in = os.environ["DATASET_IN"]
+
+          def parse_triplet(s:str):
+              parts = [p.strip() for p in (s or "").split(",")]
+              if len(parts) != 3:
+                  raise SystemExit(f"Bad triplet (need 3 comma-separated numbers): {s!r}")
+              return parts
+
+          ds_in   = os.environ["DATASET_IN"]
+          xyz_in  = os.environ["XYZ_IN"]
+          twin_in = os.environ["TWIN_IN"]
+          source  = os.environ["SRC_IN"].strip().lower()
+          batch   = os.environ["BATCH_IN"].strip() or "batch1"
+
+          # Basic validation (content further checked by the probe script)
+          _ = parse_triplet(xyz_in)
+          _ = parse_triplet(twin_in)
+
           slug = safe_slug(ds_in)
-          print(f"::notice::Using dataset slug = {slug}")
+
+          # Compose names used elsewhere
+          # - result base: <slug>_<source>_<batch>
+          # - pulse dataset: <slug>-<source>_<batch>  (hyphen before source, underscore before batch)
+          result_base = f"{slug}_{source}_{batch}"
+          pulse_dataset = f"{slug}-{source}_{batch}"
+
+          print(f"::notice::Using dataset slug = {slug}, source = {source}, batch = {batch}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
+              f.write(f"source={source}\n")
+              f.write(f"batch={batch}\n")
+              f.write(f"result_base={result_base}\n")
+              f.write(f"pulse_dataset={pulse_dataset}\n")
         env:
           DATASET_IN: ${{ github.event.inputs.dataset }}
+          XYZ_IN:     ${{ github.event.inputs.xyz }}
+          TWIN_IN:    ${{ github.event.inputs.twin }}
+          SRC_IN:     ${{ github.event.inputs.source }}
+          BATCH_IN:   ${{ github.event.inputs.batch }}
 
-      # 2) Compute next batch number for this slug
-      - name: Compute batch number
-        id: batch
-        shell: bash
-        run: |
-          set -euo pipefail
-          slug="${{ steps.inp.outputs.slug }}"
-          mkdir -p results/fd_probe
-          count=$(ls -1 results/fd_probe | grep -E "^${slug}(__batch[0-9]+)?\.metrics\.json$" || true | wc -l)
-          # If no legacy file and no batch yet, next is 1; otherwise next = count + 1
-          next=$((count + 1))
-          echo "Next batch for ${slug} is ${next}"
-          echo "num=${next}" >> "$GITHUB_OUTPUT"
-
-      # 3) Run FD probe and write metrics with batch suffix
       - name: Run FD probe
         env:
-          PYTHONPATH: ${{ github.workspace }}
+          PYTHONPATH:    ${{ github.workspace }}
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
-          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV: ${{ secrets.NASA_CSV }}
+          JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
+          NASA_CSV:      ${{ secrets.NASA_CSV }}
         run: |
+          set -euo pipefail
           mkdir -p results/fd_probe
-          slug="${{ steps.inp.outputs.slug }}"
-          batch="${{ steps.batch.outputs.num }}"
-          json_out="results/fd_probe/${slug}__batch${batch}.metrics.json"
           python tools/fd_connectors/run_fd_probe.py \
-            --source "${{ github.event.inputs.source }}" \
-            --dataset "${slug}" \
-            --dataset-raw "${{ github.event.inputs.dataset }}" \
-            --var "${{ github.event.inputs.var }}" \
-            --xyz "${{ github.event.inputs.xyz }}" \
-            --twin "${{ github.event.inputs.twin }}" \
-            --json-out "${json_out}"
+            --source   "${{ steps.inp.outputs.source }}" \
+            --dataset  "${{ steps.inp.outputs.slug }}" \
+            --var      "${{ github.event.inputs.var }}" \
+            --xyz      "${{ github.event.inputs.xyz }}" \
+            --twin     "${{ github.event.inputs.twin }}" \
+            --batch    "${{ steps.inp.outputs.batch }}" \
+            --json-out "results/fd_probe/${{ steps.inp.outputs.result_base }}.metrics.json"
 
-          echo "JSON_OUT=${json_out}" >> $GITHUB_ENV
-          echo "DATASET_WITH_BATCH=${slug}__batch${batch}" >> $GITHUB_ENV
-
-      # 4) Emit strict Φ-Mesh pulse (date + slug__batchN)
       - name: Emit pulse YAML
         run: |
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "${{ env.JSON_OUT }}" \
+            --metrics "results/fd_probe/${{ steps.inp.outputs.result_base }}.metrics.json" \
             --title   "${{ github.event.inputs.title }}" \
-            --dataset "${{ env.DATASET_WITH_BATCH }}" \
+            --dataset "${{ steps.inp.outputs.pulse_dataset }}" \
             --tags    "${{ github.event.inputs.tags }}" \
             --outdir  pulse/auto
 
-      # 5) Rebuild maps
       - name: Rebuild maps
         run: |
           python generate_graph_data.py \
@@ -125,11 +139,10 @@ jobs:
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data.js
 
-      # 6) Commit & push
       - name: Commit & push
         run: |
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "auto: FD probe (${{ env.DATASET_WITH_BATCH }}) pulse + updated maps" || echo "nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.inp.outputs.result_base }}) pulse + updated maps" || echo "nothing to commit"
           git push || true
