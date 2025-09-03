@@ -1,98 +1,74 @@
-#!/usr/bin/env python3
-"""
-JHTDB connector (safe-by-default).
+# tools/fd_connectors/jhtdb.py
+# Minimal JHTDB connector scaffold with a thin JHTDBClient shim so callers
+# can use either function-style or class-style access.
 
-- list_datasets(): quick-known slugs (informational).
-- fetch_timeseries(...): returns (t, y) 1D arrays.
-  * If JHTDB_OFFLINE is truthy or no token is provided, returns a synthetic signal.
-  * Otherwise, the function shows the call shape you’ll wire to the real API.
-
-Env:
-  JHTDB_TOKEN     : optional API token
-  JHTDB_OFFLINE   : "1" (default) to use synthetic data, "0" to attempt online
-
-Notes:
-  The real JHTDB service historically exposed SOAP/REST endpoints for
-  isotropic/ channel flows. When you’re ready, replace the TODO block with
-  the actual request(s) and parsing.
-"""
-
-from __future__ import annotations
+from dataclasses import dataclass
+from typing import List, Optional
 import math
 import os
-from typing import Iterable, Tuple, List
+
+@dataclass
+class Timeseries:
+    t: List[float]     # time samples (dataset-native or arbitrary units)
+    v: List[float]     # scalar value at (x,y,z), e.g., u or |u|
+
+# --- function-style API ----------------------------------------------------
 
 def list_datasets() -> List[str]:
-    # A few common names you’ll likely probe first.
-    return [
-        "isotropic1024",          # isotropic turbulence (DNS)
-        "isotropic1024coarse",
-        "channel",
-        "channel5200",
-        "boundary_layer",
-    ]
-
-def _linspace(t0: float, t1: float, dt: float):
-    n = max(1, int(round((t1 - t0) / dt)) + 1)
-    return [t0 + i * dt for i in range(n)]
-
-def _synthetic_series(t: Iterable[float]) -> Tuple[List[float], List[float]]:
-    # Smooth + micro jitter, good enough to exercise the rhythm path.
-    y: List[float] = []
-    for i, ti in enumerate(t):
-        y.append(
-            0.7 * math.sin(2.0 * math.pi * 0.22 * ti)
-            + 0.3 * math.sin(2.0 * math.pi * 0.47 * ti + 1.2)
-            + 0.05 * math.sin(2.0 * math.pi * 2.7 * ti + 0.3 * i)
-        )
-    return list(t), y
+    """
+    Return available dataset slugs. In offline mode we just expose a few
+    common names so the UI looks familiar.
+    """
+    if os.getenv("JHTDB_OFFLINE", "0") == "1":
+        return ["isotropic1024coarse", "channel", "rotstrat_turb"]
+    # TODO: call the real JHTDB endpoint to enumerate datasets
+    return ["isotropic1024coarse"]
 
 def fetch_timeseries(
-    *,
     dataset: str,
     var: str,
-    xyz: Tuple[float, float, float],
-    t0: float,
-    t1: float,
-    dt: float,
-    token: str | None = None,
-):
+    x: float, y: float, z: float,
+    t0: float, t1: float, dt: float
+) -> Timeseries:
     """
-    Return (t, y) for the requested dataset/variable at a spatial point and time window.
-
-    If JHTDB_OFFLINE is true or no token is given, returns a synthetic signal.
-    Otherwise this shows the expected call shape; wire the real HTTP call here.
+    Fetch a 1-point time series. In offline mode we synthesize a clean
+    multi-tone signal. Online wiring can replace this body with real calls.
     """
-    offline = os.getenv("JHTDB_OFFLINE", "1").strip() not in ("", "0", "false", "False")
+    offline = os.getenv("JHTDB_OFFLINE", "0") == "1" or not os.getenv("JHTDB_TOKEN", "")
+    if offline:
+        n = max(3, int((t1 - t0) / max(dt, 1e-9)))
+        ts = [t0 + i * dt for i in range(n)]
+        base = 0.4
+        vs = [
+            math.sin(2 * math.pi * base * (t - t0))
+            + 0.15 * math.sin(2 * math.pi * 3 * base * (t - t0))
+            for t in ts
+        ]
+        return Timeseries(t=ts, v=vs)
 
-    # Always build the grid deterministically (synthetic or real)
-    t = _linspace(float(t0), float(t1), float(dt))
+    # TODO: implement real HTTP/SOAP call to JHTDB using JHTDB_TOKEN
+    raise NotImplementedError("Wire JHTDB API here (requires JHTDB_TOKEN).")
 
-    if offline or not token:
-        return _synthetic_series(t)
+# --- class-style shim (for existing callers) -------------------------------
 
-    # --- TODO: real HTTP wiring (kept explicit so it’s easy to fill in) ----
-    # Example shape (pseudocode):
-    #
-    # import requests
-    # base = "https://turbulence.pha.jhu.edu"     # check current host
-    # endpoint = f"{base}/api/{dataset}/timeseries"
-    # payload = {
-    #     "var": var,                # e.g., "u", "v", "w", "p"
-    #     "x": xyz[0], "y": xyz[1], "z": xyz[2],
-    #     "t0": float(t0), "t1": float(t1), "dt": float(dt),
-    # }
-    # headers = {"Authorization": f"Bearer {token}"}
-    # r = requests.get(endpoint, params=payload, headers=headers, timeout=60)
-    # r.raise_for_status()
-    # data = r.json()               # or r.content if binary; adapt as needed
-    #
-    # # Expect data like {"t":[...], "y":[...]} or a flat array—normalize to 1D here.
-    # t = data["t"]
-    # y = data["y"]
-    # return t, y
-    #
-    # For now, keep fail-safe:
-    raise NotImplementedError(
-        "Online JHTDB call not wired yet. Set JHTDB_OFFLINE=1 or add the HTTP request."
-    )
+class JHTDBClient:
+    """
+    Thin wrapper so older code can use client.fetch_timeseries(...).
+    Respects JHTDB_OFFLINE and JHTDB_TOKEN via environment.
+    """
+    def __init__(self, token: Optional[str] = None):
+        # kept for compatibility; function impl reads env directly
+        self.token = token or os.getenv("JHTDB_TOKEN", "")
+        self.offline = os.getenv("JHTDB_OFFLINE", "0") == "1"
+
+    def list_datasets(self) -> List[str]:
+        return list_datasets()
+
+    def fetch_timeseries(
+        self,
+        dataset: str,
+        var: str,
+        x: float, y: float, z: float,
+        t0: float, t1: float, dt: float
+    ) -> Timeseries:
+        return fetch_timeseries(dataset=dataset, var=var, x=x, y=y, z=z, t0=t0, t1=t1, dt=dt)
