@@ -1,9 +1,0 @@
-{
-  "dataset": "nasa_cfd_demo",
-  "variant": "demo",
-  "nt_test": {
-    "p": 0.0042,
-    "effect_size": 0.37,
-    "significant": true
-  }
-}
