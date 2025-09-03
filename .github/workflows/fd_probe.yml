@@ -8,7 +8,7 @@ on:
         required: true
         default: 'synthetic'
       dataset:
-        description: 'Dataset name/slug OR a CSV path/URL (kept raw for NASA path tests)'
+        description: 'Dataset name/slug or path (free text; will be auto-sanitized)'
         required: true
         default: 'demo'
       var:
@@ -49,48 +49,53 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # Sanitize dataset for filenames, but also keep the raw dataset string (path/URL) for NASA.
+      # Sanitize dataset into a safe slug and build a consistent "<slug>__<source>" id
       - name: Resolve & validate inputs
         id: inp
         shell: python
+        env:
+          DATASET_IN: ${{ github.event.inputs.dataset }}
+          SOURCE_IN:  ${{ github.event.inputs.source }}
         run: |
           import os, re
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
-              s = re.sub(r"[^a-z0-9._-]+","_", s)
-              s = re.sub(r"_+","_", s).strip("_")
+              s = s.replace("/", "_")
+              s = re.sub(r"[^a-z0-9._-]+", "_", s)
+              s = re.sub(r"_+", "_", s).strip("_")
               return s or "dataset"
-          raw = os.environ["DATASET_IN"]
-          slug = safe_slug(raw)
+          slug   = safe_slug(os.environ["DATASET_IN"])
+          source = safe_slug(os.environ["SOURCE_IN"])
+          slug_src = f"{slug}__{source}"
           print(f"::notice::Using dataset slug = {slug}")
+          print(f"::notice::Using dataset+source id = {slug_src}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
-              f.write(f"dataset_raw={raw}\n")
-        env:
-          DATASET_IN: ${{ github.event.inputs.dataset }}
+              f.write(f"slug_src={slug_src}\n")
 
       - name: Run FD probe
         env:
           PYTHONPATH: ${{ github.workspace }}
+          # when we wire real APIs these are read by the connectors
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
-          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV: ""   # force use of dataset path/URL when provided
+          JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
+          NASA_CSV:      ${{ github.event.inputs.dataset }}   # allow path/URL via the dataset box for NASA
         run: |
           mkdir -p results/fd_probe
           python tools/fd_connectors/run_fd_probe.py \
-            --source "${{ github.event.inputs.source }}" \
-            --dataset "${{ steps.inp.outputs.dataset_raw }}" \
-            --var "${{ github.event.inputs.var }}" \
-            --xyz "${{ github.event.inputs.xyz }}" \
-            --twin "${{ github.event.inputs.twin }}" \
-            --json-out "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json"
+            --source   "${{ github.event.inputs.source }}" \
+            --dataset  "${{ steps.inp.outputs.slug }}" \
+            --var      "${{ github.event.inputs.var }}" \
+            --xyz      "${{ github.event.inputs.xyz }}" \
+            --twin     "${{ github.event.inputs.twin }}" \
+            --json-out "results/fd_probe/${{ steps.inp.outputs.slug_src }}.metrics.json"
 
       - name: Emit pulse YAML
         run: |
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json" \
+            --metrics "results/fd_probe/${{ steps.inp.outputs.slug_src }}.metrics.json" \
             --title   "${{ github.event.inputs.title }}" \
-            --dataset "${{ steps.inp.outputs.slug }}" \
+            --dataset "${{ steps.inp.outputs.slug_src }}" \
             --tags    "${{ github.event.inputs.tags }}" \
             --outdir  pulse/auto
 
@@ -107,5 +112,5 @@ jobs:
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug }}) pulse + updated maps" || echo "nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug_src }}) pulse + updated maps" || echo "nothing to commit"
           git push || true
