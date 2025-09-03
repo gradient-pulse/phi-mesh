@@ -4,22 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       source:
-        description: 'Data source (jhtdb | nasa | synthetic)'
+        description: 'Data source (jhtdb|nasa|synthetic)'
         required: true
-        default: 'jhtdb'
+        default: 'synthetic'
       dataset:
-        description: 'Dataset slug (e.g., jhtdb_iso_1024)'
+        description: 'Dataset slug'
         required: true
+        default: 'demo'
       var:
-        description: 'Variable name (e.g., u, v, w)'
+        description: 'Variable name'
         required: true
         default: 'u'
       xyz:
-        description: 'Point as x,y,z (e.g., 0.1,0.1,0.1)'
+        description: 'Probe point as x,y,z'
         required: true
         default: '0.1,0.1,0.1'
       twin:
-        description: 'Time window t0,t1,dt (e.g., 0.0,10.0,0.01)'
+        description: 'Time window as t0,t1,dt'
         required: true
         default: '0.0,10.0,0.01'
       title:
@@ -39,40 +40,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install deps
         run: |
-          python -m pip install --upgrade pip numpy pyyaml
+          python -m pip install --upgrade pip pyyaml numpy
 
-      # 1) Fetch / synthesize a time series + compute NT metrics JSON
       - name: Run FD probe
         env:
-          # Set this repo secret to 1 to force synthetic mode inside JHTDB connector while wiring APIs
+          PYTHONPATH: ${{ github.workspace }}
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
         run: |
+          mkdir -p results/fd_probe
           python tools/fd_connectors/run_fd_probe.py \
             --source "${{ github.event.inputs.source }}" \
             --dataset "${{ github.event.inputs.dataset }}" \
             --var "${{ github.event.inputs.var }}" \
             --xyz "${{ github.event.inputs.xyz }}" \
             --twin "${{ github.event.inputs.twin }}" \
-            --json-out "results/agent_rhythm/${{ github.event.inputs.dataset }}.metrics.json"
+            --json-out "results/fd_probe/${{ github.event.inputs.dataset }}.metrics.json"
 
-      # 2) Turn metrics into a strict pulse YAML under pulse/auto/YYYY-MM-DD_<dataset>.yml
       - name: Emit pulse YAML
         run: |
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "results/agent_rhythm/${{ github.event.inputs.dataset }}.metrics.json" \
+            --metrics "results/fd_probe/${{ github.event.inputs.dataset }}.metrics.json" \
             --title "${{ github.event.inputs.title }}" \
             --dataset "${{ github.event.inputs.dataset }}" \
             --tags "${{ github.event.inputs.tags }}" \
             --outdir pulse/auto
 
-      # 3) Rebuild the site data (docs/data.js) so Tag/Gradient maps include the new pulse
       - name: Rebuild maps
         run: |
           python generate_graph_data.py \
