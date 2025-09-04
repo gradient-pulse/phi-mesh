@@ -4,7 +4,7 @@ dataset: data_nasa_demo_timeseries.csv
 var: u
 xyz: 0.1,0.1,0.1
 twin: 0,10,0.01
-title: "NT Rhythm — FD Probe"
+title: 'NT Rhythm — FD Probe'
 tags: "nt_rhythm turbulence navier_stokes rgp"
 # Optional direct override (otherwise it will use $NASA_CSV secret if set):
 # nasa_csv: "https://raw.githubusercontent.com/<you>/<repo>/main/path/to/data_nasa_demo_timeseries.csv"
