@@ -1,38 +1,34 @@
 #!/usr/bin/env python3
 """
-agent_fd_job_runner.py
+agent_fd_job_runner.py — run a one-off FD probe job and fossilize a pulse.
 
-Reads one FD job YAML from inbox/fd_jobs/, runs the probe (synthetic|nasa|jhtdb),
-emits metrics JSON and a strict Φ-Mesh pulse, then moves the job YAML to _done/
-(or _error/ on failure).
+Reads a job YAML with keys:
+  - source: synthetic | jhtdb | nasa
+  - dataset: free-text dataset name (will be slugified)
+  - var: variable name (e.g., "u")
+  - xyz: [x, y, z] OR "x,y,z"
+  - window: [t0, t1, dt] OR "t0,t1,dt"
+  - title: pulse title (single quotes recommended)
+  - tags: list of tags
+  - batch: optional int; appends -batchN to dataset for uniqueness
 
-Required job keys:
-  source: synthetic | nasa | jhtdb
-  dataset: free text or path (slug will be derived)
-  var: variable name (e.g., 'u')
-  xyz: [x, y, z]  (list of 3 numbers)  -- ignored for nasa CSV
-  window: [t0, t1, dt]
-  title: single-quoted string (strict pulse rule)
-  tags: [list, underscore_case]
-
-Optional:
-  batch: e.g., 'batch1'  (appended to dataset for uniqueness per day)
-  nasa_csv: path/URL/inline (if source == 'nasa' and you want to override NASACSV secret)
+Produces:
+  - results/fd_probe/<slug[-batchN]>.metrics.json
+  - pulse/auto/YYYY-MM-DD_<slug[-batchN]>.yml
 """
 
 from __future__ import annotations
+
 import argparse
-import json
 import os
-import shlex
+import re
 import subprocess
 import sys
-import yaml
-import re
-from pathlib import Path
 from typing import Any, Dict, List
 
-ROOT = Path(__file__).resolve().parents[2]  # repo root
+import yaml
+
+# -------- helpers ----------------------------------------------------------
 
 def safe_slug(s: str) -> str:
     s = (s or "").strip().lower()
@@ -40,109 +36,107 @@ def safe_slug(s: str) -> str:
     s = re.sub(r"_+", "_", s).strip("_")
     return s or "dataset"
 
-def run(cmd: List[str], env: Dict[str, str]) -> None:
-    print("::group::" + " ".join(shlex.quote(c) for c in cmd))
-    res = subprocess.run(cmd, env=env, cwd=str(ROOT))
-    print("::endgroup::")
-    if res.returncode != 0:
-        raise SystemExit(res.returncode)
+def triplet_to_string(x: Any, name: str) -> str:
+    """
+    Accept list/tuple of len 3 OR a 'a,b,c' string; return canonical 'a,b,c' string.
+    Raises ValueError if not 3 items.
+    """
+    if isinstance(x, (list, tuple)):
+        if len(x) != 3:
+            raise ValueError(f"{name} must have exactly 3 elements; got {x!r}")
+        return ",".join(str(v) for v in x)
+    if isinstance(x, str):
+        parts = [p.strip() for p in x.split(",") if p.strip() != ""]
+        if len(parts) != 3:
+            raise ValueError(f"{name} must be a 3-value comma string 'a,b,c'; got {x!r}")
+        return ",".join(parts)
+    raise ValueError(f"{name} must be list/tuple of 3 or 'a,b,c' string; got {type(x)}")
+
+def load_job(path: str) -> Dict[str, Any]:
+    with open(path, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    if not isinstance(data, dict):
+        raise ValueError("Job YAML must be a mapping at the top level.")
+    return data
+
+# -------- main -------------------------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--job", required=True, help="Path to inbox/fd_jobs/*.yml")
+    ap.add_argument("--job", required=True, help="Path to job YAML")
     args = ap.parse_args()
 
-    job_path = (ROOT / args.job).resolve()
-    if not job_path.exists():
-        raise FileNotFoundError(f"Job file not found: {job_path}")
+    job = load_job(args.job)
 
-    with open(job_path, "r", encoding="utf-8") as f:
-        job = yaml.safe_load(f) or {}
-
-    # Basic validation
-    required = ["source", "dataset", "var", "window", "title", "tags"]
-    missing = [k for k in required if k not in job]
+    required = ["source", "dataset", "var", "xyz", "window", "title", "tags"]
+    missing = [k for k in required if k not in job or job[k] is None]
     if missing:
         raise ValueError(f"Missing required job keys: {missing}")
 
-    source: str = str(job["source"]).strip().lower()
-    dataset_in: str = str(job["dataset"])
-    var: str = str(job["var"])
-    window = job["window"]
-    title: str = str(job["title"])
-    tags = job.get("tags", [])
-    batch: str = str(job.get("batch", "") or "").strip()
-    xyz = job.get("xyz", [0.0, 0.0, 0.0])
+    source = str(job["source"]).strip()
+    dataset_raw = str(job["dataset"]).strip()
+    var = str(job["var"]).strip()
+    xyz_str = triplet_to_string(job["xyz"], "xyz")
+    window_str = triplet_to_string(job["window"], "window")
+    title = str(job["title"])
+    tags = job["tags"]
+    if isinstance(tags, str):
+        tags_list = [t for t in re.split(r"\s+", tags.strip()) if t]
+    elif isinstance(tags, list):
+        tags_list = [str(t) for t in tags]
+    else:
+        raise ValueError("tags must be a list or space-separated string")
 
-    # Enforce strict rule: title must be single-quoted (we’ll just warn if not)
-    if not (title.startswith("'") and title.endswith("'")):
-        print("::warning title=Title quoting::Pulse title is not single-quoted; "
-              "make_pulse will force single quotes. Consider updating your job template.")
+    slug = safe_slug(dataset_raw)
 
-    # Effective dataset slug (include batch if provided)
-    base_slug = safe_slug(dataset_in)
-    eff_slug = f"{base_slug}_{batch}" if batch else base_slug
+    # Optional batch to force uniqueness (YYYY-MM-DD_<slug>-batchN.yml)
+    batch_suffix = ""
+    if "batch" in job and job["batch"] is not None:
+        try:
+            b = int(job["batch"])
+            if b > 0:
+                batch_suffix = f"-batch{b}"
+        except Exception:
+            pass
 
-    # Build env for subprocesses
+    dataset_with_batch = slug + batch_suffix
+    results_dir = os.path.join("results", "fd_probe")
+    os.makedirs(results_dir, exist_ok=True)
+    metrics_path = os.path.join(results_dir, f"{dataset_with_batch}.metrics.json")
+
+    # Run the FD probe
     env = os.environ.copy()
-    env["PYTHONPATH"] = str(ROOT)
+    env["PYTHONPATH"] = os.getcwd()  # so tools.* imports work in the subproc
+    # pass through optional creds/secrets if present in environment
+    for key in ["JHTDB_TOKEN", "JHTDB_OFFLINE", "NASA_CSV"]:
+        if key in os.environ:
+            env[key] = os.environ[key]
 
-    # NASA CSV override (optional)
-    if source == "nasa":
-        nasa_csv = (job.get("nasa_csv") or os.getenv("NASA_CSV") or "").strip()
-        if nasa_csv:
-            env["NASA_CSV"] = nasa_csv
-
-    # Choose xyz/twin strings
-    def to_triplet(v) -> str:
-        if isinstance(v, (list, tuple)) and len(v) == 3:
-            return ",".join(str(x) for x in v)
-        raise ValueError("xyz/window must be 3-length lists [a,b,c]")
-
-    twin_str = to_triplet(window)
-    xyz_str = to_triplet(xyz if isinstance(xyz, (list, tuple)) else [0.0, 0.0, 0.0])
-
-    metrics_path = ROOT / "results" / "fd_probe" / f"{eff_slug}.metrics.json"
-    metrics_path.parent.mkdir(parents=True, exist_ok=True)
-
-    # 1) Probe → metrics
-    probe_cmd = [
+    probe_cmd: List[str] = [
         sys.executable, "tools/fd_connectors/run_fd_probe.py",
         "--source", source,
-        "--dataset", eff_slug,           # we store batch in dataset slug for traceability
+        "--dataset", slug,
         "--var", var,
         "--xyz", xyz_str,
-        "--twin", twin_str,
-        "--json-out", str(metrics_path),
+        "--twin", window_str,
+        "--json-out", metrics_path,
     ]
-    run(probe_cmd, env)
+    print("Running:", " ".join(probe_cmd))
+    subprocess.run(probe_cmd, check=True, env=env)
 
-    # 2) Metrics → pulse
-    tags_str = " ".join(str(t) for t in tags)
-    pulse_cmd = [
+    # Emit the pulse
+    make_cmd: List[str] = [
         sys.executable, "tools/agent_rhythm/make_pulse.py",
-        "--metrics", str(metrics_path),
-        "--title", title,                # may be plain or quoted; writer will force safe quoting
-        "--dataset", eff_slug,
-        "--tags", tags_str,
+        "--metrics", metrics_path,
+        "--title", title,
+        "--dataset", dataset_with_batch,  # include -batchN in the pulse filename
+        "--tags", " ".join(tags_list),
         "--outdir", "pulse/auto",
     ]
-    run(pulse_cmd, env)
+    print("Making pulse:", " ".join(make_cmd))
+    subprocess.run(make_cmd, check=True, env=env)
 
-    # Move job into _done/
-    done_dir = job_path.parent / "_done"
-    done_dir.mkdir(parents=True, exist_ok=True)
-    target = done_dir / job_path.name
-    job_path.replace(target)
-    print(f"::notice title=FD Job::Moved job to {target}")
+    print("Done. Metrics →", metrics_path)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except SystemExit as e:
-        # Move to _error/ on failure and re-raise for CI to show red
-        try:
-            # best-effort move if we know the job path
-            pass
-        finally:
-            raise
+    main()
