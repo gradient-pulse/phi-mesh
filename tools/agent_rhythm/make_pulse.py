@@ -2,7 +2,7 @@
 """
 make_pulse.py — turn rhythm metrics JSON into a strict Φ-Mesh pulse YAML.
 
-Outputs:  pulse/auto/YYYY-MM-DD_<dataset>.yml
+Outputs: pulse/auto/YYYY-MM-DD_<dataset>.yml
 Schema:
   title: '...'
   summary: >
@@ -25,7 +25,7 @@ from typing import Any, Dict, List
 import yaml
 
 
-# ------------------------------- helpers --------------------------------- #
+# ----- helpers -------------------------------------------------------------
 
 def safe_slug(s: str) -> str:
     s = (s or "").strip().lower()
@@ -35,113 +35,124 @@ def safe_slug(s: str) -> str:
 
 
 def to_builtin(x: Any) -> Any:
-    """Coerce objects to plain Python types so PyYAML is happy."""
-    # optional numpy handling
+    """Recursively coerce to plain Python builtins so PyYAML is happy."""
+    # Late import to avoid a hard dep if numpy isn't installed.
     try:
-        import numpy as np  # type: ignore
-        np_scalar = np.generic
-    except Exception:  # numpy not available
-        class _S: ...
-        np_scalar = _S  # type: ignore
-
+        import numpy as np
+        np_generic = np.generic  # type: ignore[attr-defined]
+    except Exception:  # numpy not installed
+        class _NP: ...
+        np_generic = _NP  # sentinel that never matches
+    # Scalars
     if isinstance(x, (str, int, float, bool)) or x is None:
         return x
-    if isinstance(x, np_scalar):
+    if isinstance(x, np_generic):      # numpy scalar -> Python scalar
         try:
             return x.item()
         except Exception:
             return float(x)
-    # pathlib / datetime to strings
+    # Pathlike / datetime
     try:
         import pathlib
         if isinstance(x, pathlib.Path):
             return str(x)
     except Exception:
         pass
-    import datetime as _dt
-    if isinstance(x, (_dt.date, _dt.datetime, _dt.time)):
+    if isinstance(x, (dt.date, dt.datetime, dt.time)):
         return str(x)
-    # containers
+    # Containers
     if isinstance(x, dict):
         return {str(to_builtin(k)): to_builtin(v) for k, v in x.items()}
     if isinstance(x, (list, tuple, set)):
         return [to_builtin(v) for v in x]
-    # fallback
+    # Fallback
     return str(x)
 
 
-# ------------------------------- main ------------------------------------ #
+# ----- main ----------------------------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--metrics", required=True, help="Path to metrics JSON")
     ap.add_argument("--title",   required=True, help="Pulse title")
-    ap.add_argument("--dataset", required=True, help="Dataset slug for filename (already includes any batch)")
+    ap.add_argument("--dataset", required=True, help="Dataset slug (for filename)")
     ap.add_argument("--tags",    required=True, help="Space-separated tags")
     ap.add_argument("--outdir",  required=True, help="Output directory (e.g., pulse/auto)")
     args = ap.parse_args()
 
-    # Load & sanitize metrics
+    # Load metrics JSON
     with open(args.metrics, "r", encoding="utf-8") as f:
         metrics_raw = json.load(f)
     metrics: Dict[str, Any] = to_builtin(metrics_raw)
 
-    n        = metrics.get("n", "?")
+    # Pull common fields with defaults (some sources may not fill these)
+    n        = metrics.get("n") or metrics.get("count") or "?"
     mean_dt  = metrics.get("mean_dt", "?")
     cv_dt    = metrics.get("cv_dt", "?")
     src      = metrics.get("source", "")
-    details  = metrics.get("details") or {}
+    details  = metrics.get("details") or metrics.get("extra") or {}
 
-    # File name: date + provided dataset slug (no extra batch logic here)
-    today_str = dt.date.today().isoformat()
+    # Filename bits
+    today_str = dt.date.today().isoformat()  # YYYY-MM-DD
     slug = safe_slug(args.dataset)
 
     os.makedirs(args.outdir, exist_ok=True)
     out_path = os.path.join(args.outdir, f"{today_str}_{slug}.yml")
 
     # Summary (compact, folded)
-    summary_lines: List[str] = [
+    summary_lines: List[str] = []
+    summary_lines.append(
         f"NT rhythm probe on “{slug}” — n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}."
-    ]
+    )
     if src:
         summary_lines.append(f"Source: {src}.")
-    if isinstance(details, dict) and details:
-        keep = {k: details[k] for k in ("dataset", "var", "xyz", "window") if k in details}
-        if keep:
-            summary_lines.append(f"Probe: {keep}.")
-    summary_text = " ".join(s.strip() for s in summary_lines if s)
+    if details:
+        try:
+            keys = ["dataset", "var", "xyz", "window"]
+            subset = {k: details[k] for k in keys if k in details}
+            if subset:
+                summary_lines.append(f"Probe: {subset}.")
+        except Exception:
+            pass
+    summary_text = " ".join(str(s).strip() for s in summary_lines if s)
 
-    # Tags -> list
-    tags = [t for t in re.split(r"\s+", (args.tags or "").strip()) if t]
+    # Tags: space-separated -> list
+    tags = [t for t in re.split(r"\s+", args.tags.strip()) if t]
 
+    # Construct pulse dict using ONLY builtins
     pulse = {
-        "title": str(args.title),
-        "summary": summary_text,
+        "title": str(args.title),   # quoting handled by dumper below
+        "summary": summary_text,    # folded style via dumper
         "tags": [str(t) for t in tags],
         "papers": [],
         "podcasts": [],
     }
     pulse = to_builtin(pulse)
 
-    # Custom dumper: title single-quoted; summary folded (>-)
+    # Custom dumper to force folded style for summary and SINGLE QUOTES for title
     class _D(yaml.SafeDumper):
         pass
 
-    def _repr_top_mapping(dumper: yaml.SafeDumper, data: dict) -> yaml.nodes.MappingNode:
+    def _repr_mapping(dumper, data):
         node = yaml.nodes.MappingNode(tag="tag:yaml.org,2002:map", value=[])
         for k, v in data.items():
             key_node = dumper.represent_data(k)
             if k == "summary":
-                val_node = yaml.ScalarNode("tag:yaml.org,2002:str", str(v), style=">")
+                # folded block scalar '>'
+                val_node = yaml.ScalarNode(tag="tag:yaml.org,2002:str", value=str(v), style=">")
             elif k == "title":
-                # force single quotes
-                val_node = yaml.ScalarNode("tag:yaml.org,2002:str", str(v), style="'")
+                # force single quotes per strict pulse rule
+                # Strip wrapping quotes if user passed them to avoid double quoting.
+                sval = str(v)
+                if (sval.startswith("'") and sval.endswith("'")) or (sval.startswith('"') and sval.endswith('"')):
+                    sval = sval[1:-1]
+                val_node = yaml.ScalarNode(tag="tag:yaml.org,2002:str", value=sval, style="'")
             else:
                 val_node = dumper.represent_data(v)
             node.value.append((key_node, val_node))
         return node
 
-    _D.add_representer(dict, _repr_top_mapping)
+    _D.add_representer(dict, _repr_mapping)
 
     with open(out_path, "w", encoding="utf-8") as f:
         yaml.dump(
@@ -149,7 +160,7 @@ def main() -> None:
             stream=f,
             Dumper=_D,
             sort_keys=False,
-            allow_unicode=True,
+            allow_unicode=True,  # keep m-dash, smart quotes, etc.
             width=1000,
         )
 
