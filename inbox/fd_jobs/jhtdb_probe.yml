@@ -1,0 +1,8 @@
+# inbox/fd_jobs/jhtdb_probe.yml
+source: jhtdb
+dataset: isotropic1024
+var: u
+xyz: 0.1,0.1,0.1
+twin: 0,2,0.002
+title: 'NT Rhythm — FD Probe'
+tags: "nt_rhythm turbulence navier_stokes rgp"
