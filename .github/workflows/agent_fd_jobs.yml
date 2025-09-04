@@ -1,40 +1,81 @@
 name: Agent — FD Jobs → Pulse
 
 on:
-  workflow_dispatch: {}   # allow manual trigger from GitHub UI
+  # Auto-run whenever a job YAML is pushed into inbox/fd_jobs/
   push:
     paths:
-      - 'inbox/fd_jobs/*.yml'          # auto-trigger on new/updated job files
-      - '!inbox/fd_jobs/_templates/**' # ignore template files
+      - 'inbox/fd_jobs/*.yml'
+  # Also allow manual runs from the UI
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
-  fd_job_runner:
+  agent:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install deps
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt || true
+          python -m pip install --upgrade pip pyyaml numpy
 
-      - name: Run FD Agent Job
+      # Pick exactly one pending job file from inbox/fd_jobs/ (top-level only).
+      - name: Pick one FD job
+        id: pick
+        shell: bash
         run: |
-          python tools/agent_rhythm/agent_fd_job_runner.py \
-            --inbox inbox/fd_jobs \
-            --out-pulse pulse/auto \
-            --out-results results/fd_probe
+          set -euo pipefail
+          shopt -s nullglob
+          picked=""
+          for p in inbox/fd_jobs/*.yml; do
+            b="$(basename "$p")"
+            # skip hidden or control files (e.g., _done/_error live as dirs anyway)
+            [[ "$b" == _* ]] && continue
+            picked="$p"
+            break
+          done
+          if [[ -z "${picked}" ]]; then
+            echo "No pending jobs."
+            echo "path=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Picked ${picked}"
+          echo "path=${picked}" >> "$GITHUB_OUTPUT"
 
-      - name: Commit & push results
+      - name: Short-circuit if nothing to do
+        if: ${{ steps.pick.outputs.path == '' }}
+        run: echo "No jobs to run in inbox/fd_jobs/."
+
+      - name: Run one FD job
+        if: ${{ steps.pick.outputs.path != '' }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
+          NASA_CSV: ${{ secrets.NASA_CSV }}
+        run: |
+          python tools/agent_rhythm/agent_fd_job_runner.py --job "${{ steps.pick.outputs.path }}"
+
+      - name: Rebuild maps
+        if: ${{ steps.pick.outputs.path != '' }}
+        run: |
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
+      - name: Commit & push
+        if: ${{ steps.pick.outputs.path != '' }}
         run: |
           git config user.name "phi-mesh-bot"
-          git config user.email "actions@github.com"
-          git add pulse/auto results/fd_probe
-          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "No changes"
-          git push
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "nothing to commit"
+          git push || true
