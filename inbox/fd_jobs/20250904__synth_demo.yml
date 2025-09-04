@@ -1,10 +1,8 @@
-# inbox/fd_jobs/20250904__synth_demo.yml
 source: synthetic
 dataset: 'demo'
 var: 'u'
 xyz: [0.1, 0.1, 0.1]
-window: [0.0, 10.0, 0.01]   # list-of-3; also works as "0.0,10.0,0.01"
+window: [0.0, 10.0, 0.01]
 title: 'NT Rhythm — FD Probe'
 tags: ['nt_rhythm','turbulence','navier_stokes','rgp']
-# Optional: uncomment to force unique filenames on same day
-# batch: 1
+batch: batch1
