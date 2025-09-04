@@ -1,0 +1,8 @@
+# inbox/fd_jobs/synth_demo.yml
+source: synthetic
+dataset: demo
+var: u
+xyz: 0.1,0.1,0.1
+twin: 0,10,0.01
+title: "NT Rhythm — FD Probe"
+tags: "nt_rhythm turbulence navier_stokes rgp"
