@@ -1,0 +1,53 @@
+name: Agent — FD Jobs → Pulse
+
+on:
+  push:
+    paths:
+      - 'inbox/fd_jobs/*.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  run-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip pyyaml numpy
+
+      - name: Run job wrapper
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          # If you have them, these secrets will be used by the underlying probe:
+          JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
+          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
+          NASA_CSV:      ${{ secrets.NASA_CSV }}
+        run: |
+          python tools/agent_runner/run_jobs.py \
+            --glob "inbox/fd_jobs/*.yml" \
+            --metrics-dir results/fd_probe \
+            --pulse-dir   pulse/auto
+
+      - name: Rebuild maps
+        run: |
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
+      - name: Commit & push
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "nothing to commit"
+          git push || true
