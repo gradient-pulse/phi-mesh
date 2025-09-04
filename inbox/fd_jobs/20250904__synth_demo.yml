@@ -1,8 +1,8 @@
 source: synthetic
 dataset: demo
 var: u
-xyz: 0.1,0.1,0.1
-twin: 0.0,10.0,0.01
-batch: batch1
+xyz: 0.1,0.1,0.1          # x,y,z as a comma triplet (string)
+window: 0.0,10.0,0.01     # t0,t1,dt as a comma triplet (string)
 title: 'NT Rhythm — FD Probe'
 tags: nt_rhythm turbulence navier_stokes rgp
+# batch: 1                 # optional; omit to let the workflow auto-assign if needed
