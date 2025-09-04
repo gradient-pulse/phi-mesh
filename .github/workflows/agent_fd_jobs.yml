@@ -1,53 +1,40 @@
 name: Agent — FD Jobs → Pulse
 
 on:
+  workflow_dispatch: {}   # allow manual trigger from GitHub UI
   push:
     paths:
-      - 'inbox/fd_jobs/*.yml'
-  workflow_dispatch: {}
-
-permissions:
-  contents: write
+      - 'inbox/fd_jobs/*.yml'          # auto-trigger on new/updated job files
+      - '!inbox/fd_jobs/_templates/**' # ignore template files
 
 jobs:
-  run-jobs:
+  fd_job_runner:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.x'
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip pyyaml numpy
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
 
-      - name: Run job wrapper
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-          # If you have them, these secrets will be used by the underlying probe:
-          JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
-          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
-          NASA_CSV:      ${{ secrets.NASA_CSV }}
+      - name: Run FD Agent Job
         run: |
-          python tools/agent_runner/run_jobs.py \
-            --glob "inbox/fd_jobs/*.yml" \
-            --metrics-dir results/fd_probe \
-            --pulse-dir   pulse/auto
+          python tools/agent_rhythm/agent_fd_job_runner.py \
+            --inbox inbox/fd_jobs \
+            --out-pulse pulse/auto \
+            --out-results results/fd_probe
 
-      - name: Rebuild maps
-        run: |
-          python generate_graph_data.py \
-            --pulse-glob "pulse/**/*.yml" \
-            --alias-map meta/aliases.yml \
-            --tag-descriptions meta/tag_descriptions.yml \
-            --out-js docs/data.js
-
-      - name: Commit & push
+      - name: Commit & push results
         run: |
           git config user.name "phi-mesh-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "nothing to commit"
-          git push || true
+          git config user.email "actions@github.com"
+          git add pulse/auto results/fd_probe
+          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "No changes"
+          git push
