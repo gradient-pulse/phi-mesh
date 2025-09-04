@@ -1,9 +1,8 @@
-# Minimal FD job — synthetic probe
-source: synthetic            # synthetic | nasa | jhtdb
-dataset: demo                # free text; will be slugged
-var: u                       # variable name
-xyz: [0.1, 0.1, 0.1]         # probe point
-twin: [0.0, 10.0, 0.01]      # [t0, t1, dt]
+source: synthetic
+dataset: demo
+var: u
+xyz: 0.1,0.1,0.1
+twin: 0.0,10.0,0.01
+batch: batch1
 title: 'NT Rhythm — FD Probe'
-tags: "nt_rhythm turbulence navier_stokes rgp"
-# batch is optional; omit it to auto-assign (or set 'batch1' explicitly)
+tags: nt_rhythm turbulence navier_stokes rgp
