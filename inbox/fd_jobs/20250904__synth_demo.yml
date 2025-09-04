@@ -1,8 +1,10 @@
+# inbox/fd_jobs/20250904__synth_demo.yml
 source: synthetic
-dataset: demo
-var: u
-xyz: 0.1,0.1,0.1          # x,y,z as a comma triplet (string)
-window: 0.0,10.0,0.01     # t0,t1,dt as a comma triplet (string)
+dataset: 'demo'
+var: 'u'
+xyz: [0.1, 0.1, 0.1]
+window: [0.0, 10.0, 0.01]   # list-of-3; also works as "0.0,10.0,0.01"
 title: 'NT Rhythm — FD Probe'
-tags: nt_rhythm turbulence navier_stokes rgp
-# batch: 1                 # optional; omit to let the workflow auto-assign if needed
+tags: ['nt_rhythm','turbulence','navier_stokes','rgp']
+# Optional: uncomment to force unique filenames on same day
+# batch: 1
