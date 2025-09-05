@@ -2,15 +2,19 @@
 """
 tools/fd_connectors/run_fd_probe.py
 
-Fetch a 1-point time series from a source (synthetic|jhtdb|nasa),
-compute NT-rhythm metrics, and write metrics JSON into results/fd_probe/.
-Auto-assigns a monotonically increasing batch number (_batchN) per
-(dataset, source) result group, and also writes a stable *latest* pointer.
+Fetch a 1-point time series from a source (synthetic | jhtdb | nasa),
+compute NT-rhythm metrics, and write a metrics JSON for make_pulse.py.
 
-- Primary output:
-    results/fd_probe/<slug>-<source>_batchN.metrics.json
-- Stable pointer (for workflows):
-    results/fd_probe/<slug>-<source>_latest.metrics.json
+CLI (aligned with workflows):
+  --source   {synthetic,jhtdb,nasa}
+  --dataset  free-text dataset name/slug (workflow already sanitizes)
+  --var      variable name (e.g., "u")
+  --xyz      "x,y,z"
+  --twin     "t0,t1,dt"
+  --json-out path to write metrics JSON (typically results/fd_probe/<slug>_batchN.metrics.json)
+  --title    (unused here; carried by make_pulse)
+  --tags     (unused here; carried by make_pulse)
+  --also-latest  (optional) also write a '<slug>_latest.metrics.json' alongside the batch file
 """
 
 from __future__ import annotations
@@ -19,30 +23,21 @@ import argparse
 import json
 import math
 import os
-import re
-import glob
 from dataclasses import asdict, is_dataclass
-from typing import Any, Dict, List, Tuple
+from typing import Dict, Any, Tuple, List
 
-# --- rhythm tools (repo-local)
+# rhythm tools
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
-# --- optional source connectors (we use tiny wrappers inside)
+# source connectors
 from tools.fd_connectors import jhtdb as JHT
 from tools.fd_connectors import nasa as NASA
 
 
-# ----------------- helpers -----------------
-
-def safe_slug(s: str) -> str:
-    s = (s or "").strip().lower()
-    s = re.sub(r"[^a-z0-9._-]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s or "dataset"
-
+# ------------------------- helpers -----------------------------------------
 
 def parse_triplet(s: str) -> Tuple[float, float, float]:
     parts = [p.strip() for p in (s or "").split(",")]
@@ -55,8 +50,8 @@ def to_builtin(x: Any) -> Any:
     """Coerce dataclasses / numpy / misc types into plain Python types."""
     try:
         import numpy as np
-        np_scalar = np.generic
-    except Exception:  # numpy might not be available
+        np_scalar = np.generic  # type: ignore[attr-defined]
+    except Exception:  # numpy not installed
         class _S: ...
         np_scalar = _S  # type: ignore
 
@@ -88,76 +83,52 @@ def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], 
     return ts, vs
 
 
-def _next_batch_id(results_dir: str, result_base: str) -> int:
-    """
-    Find the next available batchN for results like:
-      {results_dir}/{result_base}_batchN.metrics.json
-    Returns the integer N to use (1 if none exist yet).
-    """
-    pattern = os.path.join(results_dir, f"{result_base}_batch*.metrics.json")
-    max_n = 0
-    for path in glob.glob(pattern):
-        m = re.search(r"_batch(\d+)\.metrics\.json$", path)
-        if m:
-            try:
-                n = int(m.group(1))
-                if n > max_n:
-                    max_n = n
-            except ValueError:
-                pass
-    return max_n + 1
-
-
-def _write_latest_pointer(latest_path: str, payload: Dict[str, Any]) -> None:
-    """
-    Write the latest pointer JSON. This is a tiny JSON that mirrors the
-    last run's metrics so downstream steps can always read a stable path.
-    """
-    with open(latest_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
-
-
-# ----------------- main -----------------
+# --------------------------- main ------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", required=True, choices=["synthetic", "jhtdb", "nasa"])
-    ap.add_argument("--dataset", required=True, help="Free-text dataset slug/name")
+    ap.add_argument("--dataset", required=True)
     ap.add_argument("--var", required=True)
     ap.add_argument("--xyz", required=True, help="x,y,z")
     ap.add_argument("--twin", required=True, help="t0,t1,dt")
-    # --json-out remains optional; if omitted we compute with auto-batch.
-    ap.add_argument("--json-out", required=False, help="Optional: explicit metrics path")
+    ap.add_argument("--json-out", required=True)
     ap.add_argument("--title")
     ap.add_argument("--tags")
+    # NEW: opt-in “latest” artifact
+    ap.add_argument(
+        "--also-latest",
+        action="store_true",
+        help="Also write '<slug>_latest.metrics.json' next to the batch file.",
+    )
     args = ap.parse_args()
 
     x, y, z = parse_triplet(args.xyz)
-    t0, t1, dtv = parse_triplet(args.twin)
+    t0, t1, dt = parse_triplet(args.twin)
 
     # --- fetch time series ------------------------------------------------
     if args.source == "synthetic":
-        ts, vs = synthetic_timeseries(t0, t1, dtv)
+        ts, vs = synthetic_timeseries(t0, t1, dt)
         source_label = "synthetic"
 
     elif args.source == "jhtdb":
-        # Token determines online vs offline. (We keep a tiny offline fallback.)
-        token = os.getenv("JHTDB_TOKEN", "").strip()
-        if not token or os.getenv("JHTDB_OFFLINE", "0") == "1":
+        # If JHTDB token is missing or offline flag set, fall back to internal synthetic
+        if os.getenv("JHTDB_OFFLINE", "0") == "1" or not os.getenv("JHTDB_TOKEN"):
             try:
                 ts_obj = JHT.fetch_timeseries(
                     dataset=args.dataset, var=args.var,
-                    x=x, y=y, z=z, t0=t0, t1=t1, dt=dtv
+                    x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
                 )
                 ts, vs = ts_obj.t, ts_obj.v
                 source_label = "jhtdb_offline"
             except Exception:
-                ts, vs = synthetic_timeseries(t0, t1, dtv)
-                source_label = "jhtdb_offline"
+                ts, vs = synthetic_timeseries(t0, t1, dt)
+                source_label = "jhtdb_offline_synth"
         else:
+            # Expect jhtdb.py to wire the real API; if not, it may raise NotImplementedError.
             ts_obj = JHT.fetch_timeseries(
                 dataset=args.dataset, var=args.var,
-                x=x, y=y, z=z, t0=t0, t1=t1, dt=dtv
+                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
             )
             ts, vs = ts_obj.t, ts_obj.v
             source_label = "jhtdb"
@@ -165,16 +136,16 @@ def main() -> None:
     else:  # nasa
         nasa_csv = os.getenv("NASA_CSV", "").strip()
         if nasa_csv:
-            ts_obj = NASA.read_csv_timeseries(nasa_csv)
+            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # CSV/URL/inline via secret
         else:
             ts_obj = NASA.fetch_timeseries(
                 dataset=args.dataset, var=args.var,
-                x=x, y=y, z=z, t0=t0, t1=t1, dt=dtv
+                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
             )
         ts, vs = ts_obj.t, ts_obj.v
         source_label = "nasa"
 
-    # Ensure monotonic time
+    # Ensure monotonic time (some sources may return unordered)
     ts = sorted(ts)
 
     # --- compute NT rhythm metrics ---------------------------------------
@@ -183,55 +154,41 @@ def main() -> None:
     if is_dataclass(mobj):
         metrics: Dict[str, Any] = asdict(mobj)
     elif isinstance(mobj, dict):
-        metrics = dict(mobj)
+        metrics = mobj
     else:
         metrics = {}
 
     metrics["source"] = source_label
-    metrics.setdefault("details", {})
-    metrics["details"].update({
+    metrics["details"] = {
         "dataset": args.dataset,
         "var": args.var,
         "xyz": [x, y, z],
-        "window": [t0, t1, dtv],
-    })
+        "window": [t0, t1, dt],
+    }
+    metrics = to_builtin(metrics)
 
-    # --- decide output path(s) with auto-batch ----------------------------
-    results_dir = "results/fd_probe"
-    os.makedirs(results_dir, exist_ok=True)
+    # --- write metrics JSON ----------------------------------------------
+    os.makedirs(os.path.dirname(args.json_out), exist_ok=True)
 
-    slug = safe_slug(args.dataset)
-    result_base = f"{slug}-{source_label}"
+    with open(args.json_out, "w", encoding="utf-8") as f:
+        json.dump(metrics, f, ensure_ascii=False, indent=2)
 
-    # If user provided --json-out, treat it as a base and still batch it.
-    if args.json_out:
-        base_dir = os.path.dirname(args.json_out) or results_dir
-        base_name = os.path.basename(args.json_out)
-        # strip suffix + any accidental batch
-        base_name = re.sub(r"_batch\d+\.metrics\.json$", "", base_name)
-        base_name = re.sub(r"\.metrics\.json$", "", base_name)
-        result_base = base_name
-        results_dir = base_dir
-        os.makedirs(results_dir, exist_ok=True)
+    # OPTIONAL “latest” artifact — now opt-in
+    if args.also_latest:
+        base, ext = os.path.splitext(args.json_out)
+        # strip trailing '_batchN' if present before appending _latest
+        if "_batch" in base:
+            base = base.rsplit("_batch", 1)[0]
+        latest_path = f"{base}_latest{ext}"
+        with open(latest_path, "w", encoding="utf-8") as f:
+            json.dump(metrics, f, ensure_ascii=False, indent=2)
+        print(f"Wrote latest  → {latest_path}")
 
-    batch_id = _next_batch_id(results_dir, result_base)
-    metrics["batch"] = batch_id
-    metrics["details"]["batch"] = batch_id
-
-    json_out = os.path.join(results_dir, f"{result_base}_batch{batch_id}.metrics.json")
-    latest_out = os.path.join(results_dir, f"{result_base}_latest.metrics.json")
-
-    # Save metrics
-    payload = to_builtin(metrics)
-    with open(json_out, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
-
-    # Stable pointer
-    _write_latest_pointer(latest_out, payload)
-
-    # Nicety for logs and for composite actions (if ever used)
-    print(f"::notice title=FD Probe::wrote {os.path.relpath(json_out)} (batch={batch_id}, src={source_label})")
-    print(f"LATEST_METRICS={os.path.relpath(latest_out)}")  # helpful to parse from logs
+    n = metrics.get("n", "?")
+    mean_dt = metrics.get("mean_dt", "?")
+    cv_dt = metrics.get("cv_dt", "?")
+    print(f"::notice title=FD Probe::n={n}, mean_dt={mean_dt}, cv_dt={cv_dt} (src={source_label})")
+    print(f"Wrote metrics → {args.json_out}")
 
 
 if __name__ == "__main__":
