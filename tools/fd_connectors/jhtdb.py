@@ -1,6 +1,6 @@
 # tools/fd_connectors/jhtdb.py
-# Minimal JHTDB connector scaffold with a thin JHTDBClient shim so callers
-# can use either function-style or class-style access.
+# Minimal JHTDB connector with safe auto-fallback.
+# Real API wiring can replace the online block below without changing callers.
 
 from dataclasses import dataclass
 from typing import List, Optional
@@ -9,20 +9,21 @@ import os
 
 @dataclass
 class Timeseries:
-    t: List[float]     # time samples (dataset-native or arbitrary units)
-    v: List[float]     # scalar value at (x,y,z), e.g., u or |u|
+    t: List[float]     # seconds (or dataset native units)
+    v: List[float]     # sampled scalar value at (x,y,z), e.g., u or |u|
 
-# --- function-style API ----------------------------------------------------
+def _synthetic_series(t0: float, t1: float, dt: float) -> Timeseries:
+    n = max(3, int((t1 - t0) / max(dt, 1e-6)))
+    ts = [t0 + i * dt for i in range(n)]
+    vs = [
+        math.sin(2 * math.pi * 0.4 * (t - t0)) + 0.15 * math.sin(2 * math.pi * 1.2 * (t - t0))
+        for t in ts
+    ]
+    return Timeseries(t=ts, v=vs)
 
 def list_datasets() -> List[str]:
-    """
-    Return available dataset slugs. In offline mode we just expose a few
-    common names so the UI looks familiar.
-    """
-    if os.getenv("JHTDB_OFFLINE", "0") == "1":
-        return ["isotropic1024coarse", "channel", "rotstrat_turb"]
-    # TODO: call the real JHTDB endpoint to enumerate datasets
-    return ["isotropic1024coarse"]
+    # Keep a stable list for UI/testing; replace with real API listing later.
+    return ["isotropic1024coarse", "channel", "rotstrat_turb"]
 
 def fetch_timeseries(
     dataset: str,
@@ -31,44 +32,53 @@ def fetch_timeseries(
     t0: float, t1: float, dt: float
 ) -> Timeseries:
     """
-    Fetch a 1-point time series. In offline mode we synthesize a clean
-    multi-tone signal. Online wiring can replace this body with real calls.
+    Returns a Timeseries. Fallback logic:
+      1) If JHTDB_OFFLINE=1 -> synthetic
+      2) Else if JHTDB_ONLINE=1 and JHTDB_TOKEN present -> try HTTP; on error -> synthetic
+      3) Else -> synthetic
     """
-    offline = os.getenv("JHTDB_OFFLINE", "0") == "1" or not os.getenv("JHTDB_TOKEN", "")
-    if offline:
-        n = max(3, int((t1 - t0) / max(dt, 1e-9)))
-        ts = [t0 + i * dt for i in range(n)]
-        base = 0.4
-        vs = [
-            math.sin(2 * math.pi * base * (t - t0))
-            + 0.15 * math.sin(2 * math.pi * 3 * base * (t - t0))
-            for t in ts
-        ]
-        return Timeseries(t=ts, v=vs)
+    # 1) explicit offline or missing token -> synthetic
+    offline = os.getenv("JHTDB_OFFLINE", "0") == "1"
+    token = os.getenv("JHTDB_TOKEN", "").strip()
+    online_requested = os.getenv("JHTDB_ONLINE", "0") == "1"
 
-    # TODO: implement real HTTP/SOAP call to JHTDB using JHTDB_TOKEN
-    raise NotImplementedError("Wire JHTDB API here (requires JHTDB_TOKEN).")
+    if offline or not token:
+        print("::notice title=JHTDB::Using synthetic (offline or no token).")
+        return _synthetic_series(t0, t1, dt)
 
-# --- class-style shim (for existing callers) -------------------------------
+    if not online_requested:
+        # Default to safe behavior unless the user explicitly opts in.
+        print("::notice title=JHTDB::JHTDB_ONLINE not set; using synthetic fallback.")
+        return _synthetic_series(t0, t1, dt)
 
-class JHTDBClient:
-    """
-    Thin wrapper so older code can use client.fetch_timeseries(...).
-    Respects JHTDB_OFFLINE and JHTDB_TOKEN via environment.
-    """
-    def __init__(self, token: Optional[str] = None):
-        # kept for compatibility; function impl reads env directly
-        self.token = token or os.getenv("JHTDB_TOKEN", "")
-        self.offline = os.getenv("JHTDB_OFFLINE", "0") == "1"
+    # 2) Try real HTTP call (safely). If it fails, fall back.
+    try:
+        import requests  # lightweight; present on GH runners
+        # NOTE: This is a placeholder shape. Replace with the actual JHTDB endpoint/params.
+        # Provide an override via JHTDB_URL if you want to experiment.
+        base_url = os.getenv("JHTDB_URL", "https://turbulence.pha.jhu.edu/api/timeseries")
+        params = {
+            "dataset": dataset,
+            "var": var,
+            "x": x, "y": y, "z": z,
+            "t0": t0, "t1": t1, "dt": dt,
+        }
+        headers = {"Authorization": f"Bearer {token}"}
+        resp = requests.get(base_url, params=params, headers=headers, timeout=30)
+        if resp.status_code != 200:
+            print(f"::warning title=JHTDB HTTP {resp.status_code}::Falling back to synthetic.")
+            return _synthetic_series(t0, t1, dt)
 
-    def list_datasets(self) -> List[str]:
-        return list_datasets()
+        data = resp.json()
+        # Expecting {"t":[...], "v":[...]} — adjust here once the real schema is known.
+        ts = data.get("t") or []
+        vs = data.get("v") or []
+        if not ts or not vs or len(ts) != len(vs):
+            print("::warning title=JHTDB schema::Bad/empty payload; falling back to synthetic.")
+            return _synthetic_series(t0, t1, dt)
 
-    def fetch_timeseries(
-        self,
-        dataset: str,
-        var: str,
-        x: float, y: float, z: float,
-        t0: float, t1: float, dt: float
-    ) -> Timeseries:
-        return fetch_timeseries(dataset=dataset, var=var, x=x, y=y, z=z, t0=t0, t1=t1, dt=dt)
+        print("::notice title=JHTDB::Fetched real timeseries.")
+        return Timeseries(t=list(map(float, ts)), v=list(map(float, vs)))
+    except Exception as e:
+        print(f"::warning title=JHTDB exception::{e} — falling back to synthetic.")
+        return _synthetic_series(t0, t1, dt)
