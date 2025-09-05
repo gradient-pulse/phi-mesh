@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -21,11 +21,15 @@ jobs:
           pip install numpy pyyaml matplotlib
 
       - name: Run synthetic smoke test
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           echo "→ Running RGP–NS agent (synthetic smoke)…"
           python agents/rgp_ns/self_test.py
 
       - name: Rebuild maps & commit results
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           python generate_graph_data.py \
             --pulse-glob "pulse/**/*.yml" \
