@@ -1,128 +1,134 @@
-name: NT Rhythm — FD Probe to Pulse
+name: FD probe (isotropic1024coarse → metrics + pulse)
 
 on:
   workflow_dispatch:
     inputs:
       source:
-        description: 'Data source (synthetic | jhtdb | nasa)'
+        description: "synthetic | jhtdb | nasa"
         required: true
-        default: 'synthetic'
+        default: "jhtdb"
       dataset:
-        description: 'Dataset name/slug (free text — will be sanitized)'
+        description: "dataset name/slug or path (free text; will be auto-sanitized)"
         required: true
-        default: 'demo'
+        default: "isotropic1024coarse"
       var:
-        description: 'Variable'
+        description: "variable name"
         required: true
-        default: 'u'
+        default: "u"
       xyz:
-        description: 'Probe point as x,y,z'
+        description: "probe point as x,y,z"
         required: true
-        default: '0.1,0.1,0.1'
+        default: "0.1,0.1,0.1"
       twin:
-        description: 'Time window as t0,t1,dt'
+        description: "time window as t0,t1,dt"
         required: true
-        default: '0.0,10.0,0.01'
+        default: "0.0,1.0,0.0005"
       title:
-        description: 'Pulse title'
+        description: "pulse title"
         required: true
-        default: 'NT Rhythm — FD Probe'
+        default: "NT Rhythm — FD Probe"
       tags:
-        description: 'Space-separated tags'
+        description: "space-separated tags"
         required: true
-        default: 'nt_rhythm turbulence navier_stokes rgp'
+        default: "nt_rhythm turbulence navier_stokes rgp"
 
 permissions:
   contents: write
 
 jobs:
-  probe:
+  fd-probe:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install deps
         run: |
-          python -m pip install --upgrade pip pyyaml numpy
+          python -m pip install --upgrade pip
+          pip install pyyaml numpy
 
-      # Sanitize dataset -> slug, pick next batchN by scanning results/fd_probe
-      - name: Resolve slug + next batch
-        id: meta
-        shell: python
-        run: |
-          import os, re, glob, json, sys, pathlib
-          WS   = os.environ["GITHUB_WORKSPACE"]
-          SRC  = os.environ["IN_SOURCE"].strip().lower()
-          DSIN = os.environ["IN_DATASET"].strip()
-          def safe_slug(s:str)->str:
-              s = re.sub(r"[^a-z0-9._-]+","_", s.strip().lower())
-              s = re.sub(r"_+","_", s).strip("_")
-              return s or "dataset"
-          slug = safe_slug(DSIN)
-          # scan existing results for this slug+source
-          res_dir = pathlib.Path(WS) / "results" / "fd_probe"
-          res_dir.mkdir(parents=True, exist_ok=True)
-          pat = str(res_dir / f"{slug}_{SRC}_batch*.metrics.json")
-          batches = []
-          for p in glob.glob(pat):
-              m = re.search(r"_batch(\d+)\.metrics\.json$", p)
-              if m: batches.append(int(m.group(1)))
-          next_batch = (max(batches) + 1) if batches else 1
-          json_out = str(res_dir / f"{slug}_{SRC}_batch{next_batch}.metrics.json")
-          # dataset slug we pass to make_pulse so pulse filename includes batchN
-          dataset_with_batch = f"{slug}_{SRC}_batch{next_batch}"
-          print(f"::notice::slug={slug} source={SRC} batch={next_batch}")
-          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-              f.write(f"slug={slug}\n")
-              f.write(f"source={SRC}\n")
-              f.write(f"batch={next_batch}\n")
-              f.write(f"json_out={json_out}\n")
-              f.write(f"dataset_with_batch={dataset_with_batch}\n")
+      - name: Normalize inputs and compute batch label
+        id: prep
+        shell: bash
         env:
-          IN_SOURCE:  ${{ github.event.inputs.source }}
-          IN_DATASET: ${{ github.event.inputs.dataset }}
+          SRC: ${{ github.event.inputs.source }}
+          DATASET: ${{ github.event.inputs.dataset }}
+        run: |
+          set -euo pipefail
+
+          # sanitize dataset to slug
+          py='import re,sys; s=sys.argv[1].strip().lower(); s=re.sub(r"[^a-z0-9._-]+","_",s); s=re.sub(r"_+","_",s).strip("_"); print(s or "dataset")'
+          DS_SLUG=$(python -c "$py" "$DATASET")
+
+          # source slug
+          SRC_SLUG=$(echo "${SRC}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/_/g')
+
+          # base name WITHOUT batch; we will add batchN below
+          BASE="${DS_SLUG}_${SRC_SLUG}"
+
+          mkdir -p results/fd_probe
+
+          # find next batchN for this BASE
+          NEXT=1
+          shopt -s nullglob
+          existing=(results/fd_probe/${BASE}_batch*.metrics.json)
+          if [[ ${#existing[@]} -gt 0 ]]; then
+            # get highest batch number
+            last=$(ls -1 results/fd_probe/${BASE}_batch*.metrics.json | sed -E 's/.*_batch([0-9]+)\.metrics\.json/\1/' | sort -n | tail -1)
+            NEXT=$(( last + 1 ))
+          fi
+
+          METRICS="results/fd_probe/${BASE}_batch${NEXT}.metrics.json"
+
+          echo "base=${BASE}" >> "$GITHUB_OUTPUT"
+          echo "batch=${NEXT}" >> "$GITHUB_OUTPUT"
+          echo "metrics_path=${METRICS}" >> "$GITHUB_OUTPUT"
+
+          echo "::notice title=Batch::Using ${BASE}_batch${NEXT}"
 
       - name: Run FD probe
         env:
-          PYTHONPATH: ${{ github.workspace }}
-          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
-          JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV:      ${{ secrets.NASA_CSV }}
+          NASA_CSV: ${{ secrets.NASA_CSV }}
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
         run: |
+          set -euo pipefail
           python tools/fd_connectors/run_fd_probe.py \
-            --source   "${{ steps.meta.outputs.source }}" \
-            --dataset  "${{ steps.meta.outputs.slug }}" \
-            --var      "${{ github.event.inputs.var }}" \
-            --xyz      "${{ github.event.inputs.xyz }}" \
-            --twin     "${{ github.event.inputs.twin }}" \
-            --json-out "${{ steps.meta.outputs.json_out }}"
+            --source "${{ github.event.inputs.source }}" \
+            --dataset "${{ github.event.inputs.dataset }}" \
+            --var "${{ github.event.inputs.var }}" \
+            --xyz "${{ github.event.inputs.xyz }}" \
+            --twin "${{ github.event.inputs.twin }}" \
+            --json-out "${{ steps.prep.outputs.metrics_path }}" \
+            --title "${{ github.event.inputs.title }}" \
+            --tags "${{ github.event.inputs.tags }}"
 
-      - name: Emit pulse YAML
+      - name: Emit pulse (always with exact batch label)
         run: |
+          set -euo pipefail
+          METRICS="${{ steps.prep.outputs.metrics_path }}"
+          # slug for pulse filename = metrics basename without extension
+          PULSE_SLUG=$(basename "$METRICS")
+          PULSE_SLUG="${PULSE_SLUG%.metrics.json}"  # drop suffix
+
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "${{ steps.meta.outputs.json_out }}" \
-            --title   "${{ github.event.inputs.title }}" \
-            --dataset "${{ steps.meta.outputs.dataset_with_batch }}" \
-            --tags    "${{ github.event.inputs.tags }}" \
-            --outdir  pulse/auto
+            --metrics "$METRICS" \
+            --title "${{ github.event.inputs.title }}" \
+            --dataset "$PULSE_SLUG" \
+            --tags "${{ github.event.inputs.tags }}" \
+            --outdir "pulse/auto"
 
-      - name: Rebuild maps
+      - name: Commit results + pulse + maps
         run: |
-          python generate_graph_data.py \
-            --pulse-glob "pulse/**/*.yml" \
-            --alias-map meta/aliases.yml \
-            --tag-descriptions meta/tag_descriptions.yml \
-            --out-js docs/data.js
-
-      - name: Commit & push
-        run: |
+          set -euo pipefail
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git commit -m "auto: FD probe ${{ steps.meta.outputs.slug }} (${{
-            steps.meta.outputs.source }}, batch${{ steps.meta.outputs.batch }}) → metrics + pulse + maps" || echo "nothing to commit"
-          git push || true
+          git add results/fd_probe/*.json pulse/auto/*.yml
+          git add maps/* || true
+          git commit -m "auto: FD probe (${{ steps.prep.outputs.base }}_batch${{ steps.prep.outputs.batch }}) pulse + updated maps" || echo "Nothing to commit"
+          git push
