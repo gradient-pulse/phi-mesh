@@ -1,0 +1,10 @@
+title: 'NT Rhythm — FD Probe'
+summary: >-
+  NT rhythm probe on “isotropic1024coarse_jhtdb_batch3” — n=?, mean_dt=?, cv_dt=?. Source: jhtdb. Probe: {'dataset': 'isotropic1024coarse', 'var': 'u', 'xyz': [0.1, 0.1, 0.1], 'window': [0.0, 1.0, 0.0005]}.
+tags:
+- nt_rhythm
+- turbulence
+- navier_stokes
+- rgp
+papers: []
+podcasts: []
