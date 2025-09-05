@@ -1,0 +1,37 @@
+# agents/rgp_ns/config_jhtdb.yml
+# Live JHTDB probe → NT rhythm → results + pulse
+# Requires a GitHub repo SECRET named JHTDB_TOKEN.
+
+run:
+  mode: "jhtdb"          # {synthetic | local_netcdf | jhtdb}
+  batch: "auto"          # "auto" → batchN naming per day; or set "batch3"
+  out_root: "results/rgp_ns"  # results/<timestamp>/batchN/
+
+dataset:
+  kind: "jhtdb"
+  dataset: "isotropic1024coarse"   # examples: channel, mixing, rs, jhtdb_wind…
+  var: "u"                         # u|v|w (scalar time series at a point)
+  xyz: [0.1, 0.1, 0.1]             # normalized domain coords (dataset-dependent)
+  window: [0.0, 10.0, 0.01]        # [t0, t1, dt] – keep this ≤4096 points for test token
+  # Notes:
+  #   • The public “testing” token allows ≤4096 samples per query.
+  #   • For production tokens you can extend the window or dt as needed.
+
+nt_detector:
+  min_prominence: 0.2              # simple peak rule (no SciPy)
+  min_separation: 3                # in samples (integer)
+
+pulse:
+  title: 'NT Rhythm — FD Probe'    # keep single quotes (Φ-Mesh rule)
+  tags: ['nt_rhythm','turbulence','navier_stokes','rgp']
+
+# Agent safety: timeouts & retries (used by run_agent.py if present)
+limits:
+  jhtdb_timeout_s: 45              # per request guard
+  jhtdb_retries: 3                 # exponential backoff inside adapter
+  max_points: 4096                 # hard gate when using testing token
+
+# Optional provenance stanza saved into meta.json
+provenance:
+  source: "jhtdb"
+  note: "live probe; uses repository secret JHTDB_TOKEN"
