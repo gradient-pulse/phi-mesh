@@ -1,19 +1,18 @@
-datasets:
-  - id: jhtdb_iso_1024
-    source: jhtdb
-    fields: [u, v, w]
-    sample_strategy: "grid:64"      # or "random:5000"
-  - id: nasa_cfd_demo
-    source: local
-    path: "data/nasa_cfd_demo.h5"
-nt_detection:
-  window: 128          # frame/window size for NT extraction
-  threshold_sigma: 2.0 # event threshold for NT tick detection
-  min_separation: 5
-rhythm_test:
-  bootstrap_iters: 2000
-  alpha: 0.01
-  effect_size_min: 0.2
-publishing:
-  make_pulse: true
-  post_to_x: false
+# Minimal config; synthetic by default. Swap to local_netcdf later.
+
+dataset:
+  kind: synthetic
+  slug: demo_rgpsynth
+  duration: 10.0
+  dt: 0.01
+  n_probes: 3
+  seed: 0
+
+# NT detector params
+proxy_window: 5     # moving-mean window for roughness proxy
+min_sep: 5          # min samples between peaks
+rel_prom: 0.2       # peak threshold as fraction of max(proxy)
+
+# Pulse metadata
+title: 'NT Rhythm — RGP-NS dry run'
+tags: [nt_rhythm, rgp, navier_stokes]
