@@ -30,3 +30,19 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: |
           python agents/rgp_ns/self_test.py
+
+            - name: Rebuild maps
+        run: |
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
+      - name: Commit & push results
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "auto: RGP–NS smoke results + pulse" || echo "nothing to commit"
+          git push || true
