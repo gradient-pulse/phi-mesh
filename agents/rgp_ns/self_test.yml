@@ -1,0 +1,20 @@
+# agents/rgp_ns/self_test.yml
+# Synthetic, tiny window, just to prove the pipe.
+dataset:
+  kind: synthetic
+  # simple test wave: base freq ~1 Hz with mild harmonics + noise
+  f0: 1.0
+  noise: 0.08
+
+# probe & time window (short!)
+xyz: [0.1, 0.1, 0.1]
+window: [0.0, 2.0, 0.002]   # t0, t1, dt  -> ~1000 samples
+
+var: 'u'
+title: 'RGP–NS Smoke Test'
+tags: ['nt_rhythm','rgp_ns','smoke']
+
+# simple acceptance thresholds for the smoke
+criteria:
+  min_events: 8
+  max_ratio_cv: 0.5
