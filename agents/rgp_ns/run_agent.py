@@ -1,237 +1,164 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-RGP-NS Agent Runner (auto-pulse generator)
-
-What it does
-------------
-- Reads agents/rgp_ns/config.yml for datasets (+ optional params).
-- For each dataset, runs a placeholder NT-rhythm test (deterministic-ish by id).
-- Writes results to: results/rgp_ns/<UTC_STAMP>/<dataset_id>/summary.json
-- Emits auto pulses to: pulse/auto/YYYY-MM-DD_<dataset_id>.yml
-
-Auto-pulse schema (matches validator)
--------------------------------------
-- REQUIRED keys in YAML: title, summary, tags, papers, podcasts
-- NO 'date' key (the date is derived from the filename by validator)
-- NO 'status' key
-- 'title' must be single-quoted in the YAML source
-- 'papers' and 'podcasts' are LISTS OF URL STRINGS (not dicts)
-- Optional 'links' (LIST of URLs or repo-relative paths) is supported
-
-Note: Dependency-light for GitHub Actions runners.
+RGP–NS agent wrapper:
+- loads dataset (synthetic now; NetCDF adapter stub provided)
+- detects NT events from a roughness proxy
+- computes inter-event ratios and summaries
+- writes results/rgp_ns/<YYYYMMDD_HHMMSS>/batch1/{nt_ratio_summary.csv, meta.json, metrics.json}
+- emits a Φ-Mesh pulse using tools/agent_rhythm/make_pulse.py
 """
 
 from __future__ import annotations
-import os, json, random, re, datetime as dt
-from pathlib import Path
-from typing import Dict, Any, Iterable, List, Optional
+import argparse, os, json, time, csv, pathlib, subprocess
+from typing import Dict, Any
+import numpy as np
 import yaml
 
-# ---------- env guard ----------
-import os
-if os.getenv("ENABLE_AUTOPULSE") != "1":
-    print("Auto-pulse disabled (ENABLE_AUTOPULSE!=1)."); raise SystemExit(0)
+from agents.rgp_ns.data_io import SyntheticAdapter, LocalNetCDFAdapter
+from agents.rgp_ns.nt_metrics import signal_proxy, detect_events, intervals_and_ratios, summarize_ratios
 
-# ---------- repo paths ----------
-ROOT = Path(__file__).resolve().parents[2]
-CFG  = ROOT / "agents" / "rgp_ns" / "config.yml"
-OUT_BASE = ROOT / "results" / "rgp_ns"
-PULSE_DIR = ROOT / "pulse" / "auto"
+def load_config(path: str) -> Dict[str, Any]:
+    with open(path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
 
-# ---------- constants: canonical refs ----------
-# (URL strings only — the validator requires list[str] for papers/podcasts)
-ZENODO_WIT_TAKES = "https://doi.org/10.5281/zenodo.15830659"  # Solving Navier–Stokes, Differently (V1.2)
-ZENODO_GUIDE     = "https://doi.org/10.5281/zenodo.16812467"  # Experimenter’s Guide – Solving Navier–Stokes, Differently (V1.7)
-PODCAST_1        = "https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c/audio"
-PODCAST_2        = "https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805/audio"
+def ensure_dir(p: str) -> None:
+    pathlib.Path(p).mkdir(parents=True, exist_ok=True)
 
-DEFAULT_TAGS = [
-    "RGP",
-    "NT (Narrative_Tick)",
-    "NT_rhythm",
-    "Rhythm",
-    "NavierStokes",
-    "turbulence",
-    "ExperimenterPulse",
-]
+def write_csv(path: str, rows, header):
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(header)
+        for r in rows:
+            w.writerow(r)
 
-# ---------- small helpers ----------
-def utc_timestamp(for_fs: bool = True) -> str:
-    now = dt.datetime.utcnow()
-    return now.strftime("%Y%m%d_%H%M%S") if for_fs else now.strftime("%Y-%m-%dT%H:%M:%SZ")
-
-def today_stamp() -> str:
-    """Return YYYY-MM-DD (for filenames)."""
-    return dt.datetime.utcnow().strftime("%Y-%m-%d")
-
-def _norm_tag(s: str) -> str:
-    # Normalize to underscore style (keeps parentheses if present)
-    s = (s or "").strip()
-    return re.sub(r"\s+", "_", s)
-
-def _dedupe_keep_order(items: Iterable[str]) -> List[str]:
-    seen = set()
-    out: List[str] = []
-    for x in items:
-        k = _norm_tag(x)
-        if k not in seen:
-            seen.add(k)
-            out.append(x)
-    return out
-
-def write_json(path: Path, obj: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as f:
-        json.dump(obj, f, indent=2)
-
-# ---------- pulse writer (validator-compliant) ----------
-_URL_RE = re.compile(r"^(https?://|https://doi.org/|doi:)", re.I)
-_REL_RE = re.compile(r"""^((\.\./|\./|/)?[A-Za-z0-9._\-/]+(\.[A-Za-z0-9]{1,8})?)$""", re.X)
-
-def write_auto_pulse(
-    dataset_id: str,
-    summary_text: str,
-    extra_tags: Optional[Iterable[str]] = None,
-    extra_links: Optional[Iterable[str]] = None,  # optional: URLs or repo-relative paths
-) -> Path:
-    """
-    Create an auto pulse in pulse/auto/.
-    Conforms to tools/validate_pulses.py rules:
-      - NO 'date' key (date comes from filename)
-      - NO 'status' key
-      - title single-quoted
-      - papers/podcasts as lists of URL strings
-      - links (optional) as list of URLs or repo-relative paths
-    """
-    ds_tag = _norm_tag(dataset_id)
-    tags = _dedupe_keep_order([*DEFAULT_TAGS, ds_tag, *(extra_tags or [])])
-
-    # Canonical refs as URL strings
-    papers = [ZENODO_WIT_TAKES, ZENODO_GUIDE]
-    podcasts = [PODCAST_1, PODCAST_2]
-
-    # Optional links (URLs or repo-relative paths)
-    links: List[str] = []
-    if extra_links:
-        for x in extra_links:
-            s = str(x).strip()
-            if s and (_URL_RE.match(s) or _REL_RE.match(s)):
-                links.append(s)
-
-    # Title (escape any single quotes to keep single-quoted YAML valid)
-    def _sq(s: str) -> str:
-        return s.replace("'", "''")
-
-    title = (
-        f"Significant NT Rhythm — {dataset_id}"
-        if "significant" in summary_text.lower()
-        else f"{dataset_id}: Experimenter auto-pulse"
-    )
-
-    # Target path (validator wants YYYY-MM-DD_ prefix). Avoid overwrite if exists.
-    PULSE_DIR.mkdir(parents=True, exist_ok=True)
-    base = f"{today_stamp()}_{ds_tag}.yml"
-    outpath = PULSE_DIR / base
-    if outpath.exists():
-        i = 2
-        while True:
-            cand = PULSE_DIR / f"{today_stamp()}_{ds_tag}__{i}.yml"
-            if not cand.exists():
-                outpath = cand
-                break
-            i += 1
-
-    # Build YAML manually to guarantee single-quoted title and simple lists.
-    def _list_block(key: str, values: Iterable[str]) -> str:
-        lines = [f"{key}:"]
-        for v in values:
-            lines.append(f"  - {v}")
-        return "\n".join(lines)
-
-    yaml_lines: List[str] = []
-    yaml_lines.append(f"title: '{_sq(title)}'")  # single-quoted
-    yaml_lines.append("summary: >")
-    for line in (summary_text.strip().splitlines() or [" "]):
-        yaml_lines.append(f"  {line}")
-    yaml_lines.append(_list_block("tags", tags))
-    yaml_lines.append(_list_block("papers", papers))
-    yaml_lines.append(_list_block("podcasts", podcasts))
-    if links:
-        yaml_lines.append(_list_block("links", links))
-    yaml_lines.append("")  # trailing newline
-
-    outpath.write_text("\n".join(yaml_lines), encoding="utf-8")
-    print(f"[auto-pulse] wrote {outpath.relative_to(ROOT)}")
-    return outpath
-
-# ---------- fake NT test (placeholder) ----------
-def run_nt_rhythm_test(seed: int = 0) -> Dict[str, Any]:
-    """
-    Minimal synthetic stats; replace with real test when ready.
-    """
-    rng = random.Random(seed)
-    p = round(max(0.0001, min(0.9999, rng.random() * rng.random())), 4)
-    eff = round(rng.uniform(0.05, 0.6), 3)
-    alpha = 0.01
-    return {"p": p, "effect_size": eff, "significant": p < alpha}
-
-# ---------- main ----------
 def main():
-    # Load config
-    if not CFG.exists():
-        raise FileNotFoundError(f"Missing config: {CFG}")
-    with CFG.open("r", encoding="utf-8") as f:
-        cfg = yaml.safe_load(f) or {}
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--config", required=True)
+    args = ap.parse_args()
 
-    datasets = cfg.get("datasets") or []
-    if not isinstance(datasets, list) or not datasets:
-        print("No datasets defined in config.yml → nothing to do.")
-        return
+    cfg = load_config(args.config)
+    dataset = cfg.get("dataset", {})
+    title   = cfg.get("title", "NT Rhythm — RGP-NS")
+    tags    = cfg.get("tags", ["nt_rhythm", "rgp", "navier_stokes"])
 
-    stamp = utc_timestamp()
-    print(f"[run] UTC stamp = {stamp}")
+    # --- dataset adapter -------------------------------------------------
+    kind = (dataset.get("kind") or "synthetic").lower()
+    if kind == "synthetic":
+        adapter = SyntheticAdapter(
+            duration=float(dataset.get("duration", 10.0)),
+            dt=float(dataset.get("dt", 0.01)),
+            n_probes=int(dataset.get("n_probes", 1)),
+            seed=int(dataset.get("seed", 0)),
+        )
+        dataset_slug = dataset.get("slug", "rgp_ns_synth")
+        source_label = "synthetic"
+    elif kind == "local_netcdf":
+        adapter = LocalNetCDFAdapter(
+            path=dataset["path"],
+            u_var=dataset.get("u_var", "u"),
+            v_var=dataset.get("v_var", "v"),
+            w_var=dataset.get("w_var", "w"),
+            t_var=dataset.get("t_var", "time"),
+        )
+        dataset_slug = pathlib.Path(dataset["path"]).name
+        source_label = "netcdf"
+    else:
+        raise ValueError(f"Unknown dataset.kind: {kind}")
 
-    for i, ds in enumerate(datasets):
-        ds_id = str(ds.get("id") or f"dataset_{i+1}")
-        variant = str(ds.get("source") or "local")
-        outdir = OUT_BASE / stamp / ds_id
-        outdir.mkdir(parents=True, exist_ok=True)
+    # --- run folder ------------------------------------------------------
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    out_root = f"results/rgp_ns/{stamp}/batch1"
+    ensure_dir(out_root)
 
-        # --- compute (placeholder) ---
-        seed = abs(hash(ds_id)) % (2**32)
-        nt = run_nt_rhythm_test(seed)
+    rows = []
+    event_counts = []
+    for probe_id, t, u in adapter.iter_probes():
+        proxy = signal_proxy(u, win=int(cfg.get("proxy_window", 5)))
+        peaks = detect_events(proxy, min_sep=int(cfg.get("min_sep", 5)), rel_prom=float(cfg.get("rel_prom", 0.2)))
+        dt, ratios = intervals_and_ratios(t, peaks)
+        met = summarize_ratios(ratios)
+        met.n_events    = len(peaks)
+        met.n_intervals = len(dt)
+        event_counts.append(len(peaks))
 
-        # Persist summary.json
-        summary_json = {
-            "dataset": ds_id,
-            "variant": variant,
-            "nt_test": nt,
-            "timestamp_utc": utc_timestamp(for_fs=False),
+        rows.append([
+            probe_id, len(peaks), len(dt), len(ratios),
+            met.mean_ratio if met.mean_ratio is not None else "",
+            met.std_ratio if met.std_ratio is not None else "",
+            met.cv_ratio if met.cv_ratio is not None else "",
+            met.median_ratio if met.median_ratio is not None else "",
+            met.q25_ratio if met.q25_ratio is not None else "",
+            met.q75_ratio if met.q75_ratio is not None else "",
+        ])
+
+    # write CSV summary
+    csv_path = f"{out_root}/nt_ratio_summary.csv"
+    write_csv(csv_path, rows, header=[
+        "probe","n_events","n_intervals","n_ratios","mean","std","cv","median","q25","q75"
+    ])
+
+    # meta for traceability
+    meta = {
+        "dataset": dataset_slug,
+        "source": source_label,
+        "kind": kind,
+        "stamp": stamp,
+        "n_probes": len(rows),
+        "params": {
+            "proxy_window": int(cfg.get("proxy_window", 5)),
+            "min_sep": int(cfg.get("min_sep", 5)),
+            "rel_prom": float(cfg.get("rel_prom", 0.2)),
         }
-        write_json(outdir / "summary.json", summary_json)
-        print(f"[summary] {str(outdir / 'summary.json')}")
+    }
+    meta_path = f"{out_root}/meta.json"
+    with open(meta_path, "w", encoding="utf-8") as f:
+        json.dump(meta, f, indent=2, ensure_ascii=False)
 
-        # Human-friendly short text
-        sig_txt = "YES" if nt["significant"] else "no"
-        run_summary_text = (
-            f"{ds_id} — NT rhythm test → p={nt['p']}, effect={nt['effect_size']}; "
-            f"significant: {sig_txt} @ α=0.01."
-        )
+    # minimal metrics.json for your make_pulse.py
+    # use aggregate across probes (median CV as a simple headline)
+    cvs = [r[6] for r in rows if isinstance(r[6], (int,float))]
+    mean_cv = float(np.nanmean(cvs)) if cvs else None
 
-        # Extra tags/links hooks (optional)
-        extra_tags: List[str] = []
-        extra_links: List[str] = []  # e.g., attach result paths or visuals if desired
+    metrics = {
+        "period": None,                     # not defined here
+        "bpm": None,                        # not defined here
+        "confidence": 0.0,
+        "main_peak_freq": None,
+        "peaks": [],
+        "divergence_ratio": None,
+        "reset_events": [],
+        "source": source_label,
+        "details": {
+            "dataset": dataset_slug,
+            "var": "u",
+            "xyz": None,
+            "window": None,
+            "notes": "RGP-NS agent summary; see results CSV for per-probe ratios."
+        },
+        # add a few fields your summary likes to show
+        "n_probes": len(rows),
+        "mean_cv_ratio": mean_cv,
+    }
+    metrics_path = f"{out_root}/metrics.json"
+    with open(metrics_path, "w", encoding="utf-8") as f:
+        json.dump(metrics, f, indent=2, ensure_ascii=False)
 
-        # Write the auto pulse
-        write_auto_pulse(
-            dataset_id=ds_id,
-            summary_text=run_summary_text,
-            extra_tags=extra_tags,
-            extra_links=extra_links,
-        )
+    # --- emit pulse via your existing emitter ----------------------------
+    # Ensures single quotes around title by passing it as-is; your make_pulse handles it.
+    ensure_dir("pulse/auto")
+    subprocess.run([
+        "python", "tools/agent_rhythm/make_pulse.py",
+        "--metrics", metrics_path,
+        "--title", title,
+        "--dataset", dataset_slug,
+        "--tags", " ".join(tags),
+        "--outdir", "pulse/auto",
+    ], check=True)
 
-    print("[done] RGP-NS agent run complete.")
+    print(f"Wrote: {csv_path}")
+    print(f"Wrote: {meta_path}")
+    print(f"Wrote: {metrics_path}")
+    print("Pulse emitted into pulse/auto/ (see latest file).")
 
 if __name__ == "__main__":
     main()
