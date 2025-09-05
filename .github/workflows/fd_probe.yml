@@ -31,10 +31,6 @@ on:
         description: "space-separated tags"
         required: true
         default: "nt_rhythm turbulence navier_stokes rgp"
-      detector_opts:
-        description: "optional: smooth_k=5,peak_mag_k=0.75,peak_prom_k=0.25,min_sep_ms=2.0"
-        required: false
-        default: ""
 
 permissions:
   contents: write
@@ -89,37 +85,19 @@ jobs:
 
           METRICS="results/fd_probe/${BASE}_batch${NEXT}.metrics.json"
 
-          echo "base=${BASE}"   >> "$GITHUB_OUTPUT"
-          echo "batch=${NEXT}"  >> "$GITHUB_OUTPUT"
+          echo "base=${BASE}" >> "$GITHUB_OUTPUT"
+          echo "batch=${NEXT}" >> "$GITHUB_OUTPUT"
           echo "metrics_path=${METRICS}" >> "$GITHUB_OUTPUT"
 
           echo "::notice title=Batch::Using ${BASE}_batch${NEXT}"
 
       - name: Run FD probe
         env:
+          PYTHONPATH: ${{ github.workspace }}
           NASA_CSV: ${{ secrets.NASA_CSV }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          DETECTOR_OPTS_RAW: ${{ github.event.inputs.detector_opts }}
         run: |
           set -euo pipefail
-
-          # Parse optional detector options (key=value[,key=value...])
-          OPTS=""
-          if [[ -n "${DETECTOR_OPTS_RAW}" ]]; then
-            # normalize separators to spaces
-            for kv in $(echo "${DETECTOR_OPTS_RAW}" | tr ',' ' '); do
-              k="${kv%%=*}"
-              v="${kv#*=}"
-              case "$k" in
-                smooth_k)     OPTS+=" --smooth-k ${v}" ;;
-                peak_mag_k)   OPTS+=" --peak-mag-k ${v}" ;;
-                peak_prom_k)  OPTS+=" --peak-prom-k ${v}" ;;
-                min_sep_ms)   OPTS+=" --min-sep-ms ${v}" ;;
-                *) echo "::warning title=Detector option ignored::Unknown key '${k}'" ;;
-              esac
-            done
-          fi
-
           python tools/fd_connectors/run_fd_probe.py \
             --source "${{ github.event.inputs.source }}" \
             --dataset "${{ github.event.inputs.dataset }}" \
@@ -128,8 +106,7 @@ jobs:
             --twin "${{ github.event.inputs.twin }}" \
             --json-out "${{ steps.prep.outputs.metrics_path }}" \
             --title "${{ github.event.inputs.title }}" \
-            --tags "${{ github.event.inputs.tags }}" \
-            ${OPTS}
+            --tags "${{ github.event.inputs.tags }}"
 
       - name: Emit pulse (always with exact batch label)
         run: |
@@ -137,7 +114,7 @@ jobs:
           METRICS="${{ steps.prep.outputs.metrics_path }}"
           # slug for pulse filename = metrics basename without extension
           PULSE_SLUG=$(basename "$METRICS")
-          PULSE_SLUG="${PULSE_SLUG%.metrics.json}"  # drop suffix
+          PULSE_SLUG="${PULSE_SLUG%.metrics.json}"
 
           python tools/agent_rhythm/make_pulse.py \
             --metrics "$METRICS" \
@@ -146,12 +123,19 @@ jobs:
             --tags "${{ github.event.inputs.tags }}" \
             --outdir "pulse/auto"
 
+      - name: Rebuild maps
+        run: |
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
       - name: Commit results + pulse + maps
         run: |
           set -euo pipefail
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add results/fd_probe/*.json pulse/auto/*.yml
-          git add maps/* || true
+          git add results/fd_probe/*.json pulse/auto/*.yml docs/data.js || true
           git commit -m "auto: FD probe (${{ steps.prep.outputs.base }}_batch${{ steps.prep.outputs.batch }}) pulse + updated maps" || echo "Nothing to commit"
-          git push
+          git push || true
