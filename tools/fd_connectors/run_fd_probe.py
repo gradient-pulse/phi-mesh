@@ -3,18 +3,22 @@
 tools/fd_connectors/run_fd_probe.py
 
 Fetch a 1-point time series from a source (synthetic | jhtdb | nasa),
-compute NT-rhythm metrics, and write a metrics JSON for make_pulse.py.
+compute NT-rhythm metrics, and write a metrics JSON that make_pulse.py
+can turn into a Φ-Mesh pulse.
 
-CLI (aligned with workflows):
-  --source   {synthetic,jhtdb,nasa}
-  --dataset  free-text dataset name/slug (workflow already sanitizes)
-  --var      variable name (e.g., "u")
-  --xyz      "x,y,z"
-  --twin     "t0,t1,dt"
-  --json-out path to write metrics JSON (typically results/fd_probe/<slug>_batchN.metrics.json)
-  --title    (unused here; carried by make_pulse)
-  --tags     (unused here; carried by make_pulse)
-  --also-latest  (optional) also write a '<slug>_latest.metrics.json' alongside the batch file
+Args (aligned with fd_probe.yml):
+  --source     {synthetic,jhtdb,nasa}
+  --dataset    dataset name/slug or path (workflow sanitizes when needed)
+  --var        variable name (e.g., "u")
+  --xyz        "x,y,z"   (probe location)
+  --twin       "t0,t1,dt" (time window)
+  --json-out   path to write metrics JSON
+  --title      (unused here; carried into pulse later)
+  --tags       (unused here; carried into pulse later)
+
+Notes
+- We intentionally write exactly ONE metrics file (no *_latest twin) to
+  keep the results namespace clear and batch-driven.
 """
 
 from __future__ import annotations
@@ -24,20 +28,20 @@ import json
 import math
 import os
 from dataclasses import asdict, is_dataclass
-from typing import Dict, Any, Tuple, List
+from typing import Any, Dict, List, Tuple
 
-# rhythm tools
+# rhythm tools (already in your tree)
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
-# source connectors
+# source connectors (already in your tree)
 from tools.fd_connectors import jhtdb as JHT
 from tools.fd_connectors import nasa as NASA
 
 
-# ------------------------- helpers -----------------------------------------
+# ---------------------------------------------------------------------------
 
 def parse_triplet(s: str) -> Tuple[float, float, float]:
     parts = [p.strip() for p in (s or "").split(",")]
@@ -47,9 +51,9 @@ def parse_triplet(s: str) -> Tuple[float, float, float]:
 
 
 def to_builtin(x: Any) -> Any:
-    """Coerce dataclasses / numpy / misc types into plain Python types."""
+    """Recursively coerce to plain Python builtins for JSON/YAML friendliness."""
     try:
-        import numpy as np
+        import numpy as np  # noqa: WPS433
         np_scalar = np.generic  # type: ignore[attr-defined]
     except Exception:  # numpy not installed
         class _S: ...
@@ -72,6 +76,7 @@ def to_builtin(x: Any) -> Any:
 
 
 def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], List[float]]:
+    """Simple multi-tone signal for dry runs."""
     n = max(3, int((t1 - t0) / max(dt, 1e-9)))
     ts = [t0 + i * dt for i in range(n)]
     base = 0.4
@@ -83,7 +88,7 @@ def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], 
     return ts, vs
 
 
-# --------------------------- main ------------------------------------------
+# ---------------------------------------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -92,15 +97,9 @@ def main() -> None:
     ap.add_argument("--var", required=True)
     ap.add_argument("--xyz", required=True, help="x,y,z")
     ap.add_argument("--twin", required=True, help="t0,t1,dt")
-    ap.add_argument("--json-out", required=True)
-    ap.add_argument("--title")
-    ap.add_argument("--tags")
-    # NEW: opt-in “latest” artifact
-    ap.add_argument(
-        "--also-latest",
-        action="store_true",
-        help="Also write '<slug>_latest.metrics.json' next to the batch file.",
-    )
+    ap.add_argument("--json-out", required=True, help="Path to write metrics JSON")
+    ap.add_argument("--title")  # unused here (make_pulse handles it)
+    ap.add_argument("--tags")   # unused here (make_pulse handles it)
     args = ap.parse_args()
 
     x, y, z = parse_triplet(args.xyz)
@@ -112,31 +111,20 @@ def main() -> None:
         source_label = "synthetic"
 
     elif args.source == "jhtdb":
-        # If JHTDB token is missing or offline flag set, fall back to internal synthetic
-        if os.getenv("JHTDB_OFFLINE", "0") == "1" or not os.getenv("JHTDB_TOKEN"):
-            try:
-                ts_obj = JHT.fetch_timeseries(
-                    dataset=args.dataset, var=args.var,
-                    x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-                )
-                ts, vs = ts_obj.t, ts_obj.v
-                source_label = "jhtdb_offline"
-            except Exception:
-                ts, vs = synthetic_timeseries(t0, t1, dt)
-                source_label = "jhtdb_offline_synth"
-        else:
-            # Expect jhtdb.py to wire the real API; if not, it may raise NotImplementedError.
-            ts_obj = JHT.fetch_timeseries(
-                dataset=args.dataset, var=args.var,
-                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-            )
-            ts, vs = ts_obj.t, ts_obj.v
-            source_label = "jhtdb"
+        # Delegate to your jhtdb connector; it can decide offline/online.
+        # (If the JHTDB module is wired to the testing token, this will
+        # produce a small time series consistent with the limits.)
+        ts_obj = JHT.fetch_timeseries(
+            dataset=args.dataset, var=args.var,
+            x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+        )
+        ts, vs = ts_obj.t, ts_obj.v
+        source_label = "jhtdb"
 
     else:  # nasa
         nasa_csv = os.getenv("NASA_CSV", "").strip()
         if nasa_csv:
-            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # CSV/URL/inline via secret
+            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # CSV / URL / inline
         else:
             ts_obj = NASA.fetch_timeseries(
                 dataset=args.dataset, var=args.var,
@@ -145,18 +133,34 @@ def main() -> None:
         ts, vs = ts_obj.t, ts_obj.v
         source_label = "nasa"
 
-    # Ensure monotonic time (some sources may return unordered)
+    # Ensure monotonic time (connectors *should* give this, but be safe)
     ts = sorted(ts)
 
     # --- compute NT rhythm metrics ---------------------------------------
     tick_times = ticks_from_message_times(ts)
     mobj = rhythm_from_events(tick_times)
+
     if is_dataclass(mobj):
         metrics: Dict[str, Any] = asdict(mobj)
     elif isinstance(mobj, dict):
-        metrics = mobj
+        metrics = dict(mobj)
     else:
         metrics = {}
+
+    # Augment: simple interval stats (n, mean_dt, cv_dt) from the time vector
+    if ts and len(ts) > 2:
+        dts = [ts[i + 1] - ts[i] for i in range(len(ts) - 1)]
+        n_events = len(dts)
+        mean_dt = sum(dts) / max(n_events, 1)
+        if n_events > 1 and mean_dt > 0:
+            var = sum((dt_ - mean_dt) ** 2 for dt_ in dts) / n_events
+            std = math.sqrt(var)
+            cv_dt = std / mean_dt
+        else:
+            cv_dt = 0.0
+        metrics["n"] = n_events
+        metrics["mean_dt"] = mean_dt
+        metrics["cv_dt"] = cv_dt
 
     metrics["source"] = source_label
     metrics["details"] = {
@@ -168,26 +172,15 @@ def main() -> None:
     metrics = to_builtin(metrics)
 
     # --- write metrics JSON ----------------------------------------------
-    os.makedirs(os.path.dirname(args.json_out), exist_ok=True)
-
+    os.makedirs(os.path.dirname(args.json_out) or ".", exist_ok=True)
     with open(args.json_out, "w", encoding="utf-8") as f:
         json.dump(metrics, f, ensure_ascii=False, indent=2)
 
-    # OPTIONAL “latest” artifact — now opt-in
-    if args.also_latest:
-        base, ext = os.path.splitext(args.json_out)
-        # strip trailing '_batchN' if present before appending _latest
-        if "_batch" in base:
-            base = base.rsplit("_batch", 1)[0]
-        latest_path = f"{base}_latest{ext}"
-        with open(latest_path, "w", encoding="utf-8") as f:
-            json.dump(metrics, f, ensure_ascii=False, indent=2)
-        print(f"Wrote latest  → {latest_path}")
-
+    # Friendly notice for workflow logs
     n = metrics.get("n", "?")
     mean_dt = metrics.get("mean_dt", "?")
     cv_dt = metrics.get("cv_dt", "?")
-    print(f"::notice title=FD Probe::n={n}, mean_dt={mean_dt}, cv_dt={cv_dt} (src={source_label})")
+    print(f"::notice title=FD Probe::{args.source} n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}")
     print(f"Wrote metrics → {args.json_out}")
 
 
