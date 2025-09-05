@@ -1,0 +1,19 @@
+{
+  "period": null,
+  "bpm": null,
+  "confidence": 0.0,
+  "main_peak_freq": null,
+  "peaks": [],
+  "divergence_ratio": null,
+  "reset_events": [],
+  "source": "synthetic",
+  "details": {
+    "dataset": "rgp_ns_synth",
+    "var": "u",
+    "xyz": null,
+    "window": null,
+    "notes": "RGP-NS agent summary; see results CSV for per-probe ratios."
+  },
+  "n_probes": 1,
+  "mean_cv_ratio": 0.29835937123107276
+}

@@ -1,0 +1,9 @@
+title: 'RGP–NS Smoke Test'
+summary: >-
+  NT rhythm probe on “rgp_ns_synth” — n=?, mean_dt=?, cv_dt=?. Source: synthetic. Probe: {'dataset': 'rgp_ns_synth', 'var': 'u', 'xyz': None, 'window': None}.
+tags:
+- nt_rhythm
+- rgp_ns
+- smoke
+papers: []
+podcasts: []

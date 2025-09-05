@@ -1,0 +1,12 @@
+{
+  "dataset": "rgp_ns_synth",
+  "source": "synthetic",
+  "kind": "synthetic",
+  "stamp": "20250905_103441",
+  "n_probes": 1,
+  "params": {
+    "proxy_window": 5,
+    "min_sep": 5,
+    "rel_prom": 0.2
+  }
+}
