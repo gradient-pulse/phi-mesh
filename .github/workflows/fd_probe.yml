@@ -8,11 +8,11 @@ on:
         required: true
         default: 'synthetic'
       dataset:
-        description: 'Dataset name or slug (free text; will be auto-sanitized)'
+        description: 'Dataset name/slug (free text — will be sanitized)'
         required: true
         default: 'demo'
       var:
-        description: 'Variable name'
+        description: 'Variable'
         required: true
         default: 'u'
       xyz:
@@ -39,86 +39,74 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install deps
         run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml numpy
+          python -m pip install --upgrade pip pyyaml numpy
 
-      # Sanitize dataset slug + compute next batchN for (today, dataset, source)
-      - name: Resolve inputs & compute batch
-        id: prep
+      # Sanitize dataset -> slug, pick next batchN by scanning results/fd_probe
+      - name: Resolve slug + next batch
+        id: meta
         shell: python
-        env:
-          SRC: ${{ github.event.inputs.source }}
-          DATASET_IN: ${{ github.event.inputs.dataset }}
         run: |
-          import os, re, datetime as dt, pathlib
+          import os, re, glob, json, sys, pathlib
+          WS   = os.environ["GITHUB_WORKSPACE"]
+          SRC  = os.environ["IN_SOURCE"].strip().lower()
+          DSIN = os.environ["IN_DATASET"].strip()
           def safe_slug(s:str)->str:
-              s = (s or "").strip().lower()
-              s = re.sub(r"[^a-z0-9._-]+","_", s)
+              s = re.sub(r"[^a-z0-9._-]+","_", s.strip().lower())
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          source_slug = safe_slug(os.environ["SRC"])
-          slug = safe_slug(os.environ["DATASET_IN"])
-          today = dt.date.today().isoformat()
-
-          outdir = pathlib.Path("results/fd_probe")
-          outdir.mkdir(parents=True, exist_ok=True)
-
-          # Find existing batches for today's (dataset, source)
-          pat = f"{today}_{slug}_{source_slug}_batch*.metrics.json"
-          existing = list(outdir.glob(pat))
-          maxb = 0
-          for p in existing:
-              m = re.search(r"_batch(\d+)\.metrics\.json$", p.name)
-              if m:
-                  maxb = max(maxb, int(m.group(1)))
-          batch = maxb + 1
-
-          json_out = outdir / f"{today}_{slug}_{source_slug}_batch{batch}.metrics.json"
-
+          slug = safe_slug(DSIN)
+          # scan existing results for this slug+source
+          res_dir = pathlib.Path(WS) / "results" / "fd_probe"
+          res_dir.mkdir(parents=True, exist_ok=True)
+          pat = str(res_dir / f"{slug}_{SRC}_batch*.metrics.json")
+          batches = []
+          for p in glob.glob(pat):
+              m = re.search(r"_batch(\d+)\.metrics\.json$", p)
+              if m: batches.append(int(m.group(1)))
+          next_batch = (max(batches) + 1) if batches else 1
+          json_out = str(res_dir / f"{slug}_{SRC}_batch{next_batch}.metrics.json")
+          # dataset slug we pass to make_pulse so pulse filename includes batchN
+          dataset_with_batch = f"{slug}_{SRC}_batch{next_batch}"
+          print(f"::notice::slug={slug} source={SRC} batch={next_batch}")
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
-              f.write(f"source_slug={source_slug}\n")
-              f.write(f"today={today}\n")
-              f.write(f"batch={batch}\n")
-              f.write(f"json_out={json_out.as_posix()}\n")
-
-          print(f"::notice::Using slug={slug}, source={source_slug}, today={today}, batch={batch}")
-          print(f"::notice::Metrics will be written to: {json_out}")
+              f.write(f"source={SRC}\n")
+              f.write(f"batch={next_batch}\n")
+              f.write(f"json_out={json_out}\n")
+              f.write(f"dataset_with_batch={dataset_with_batch}\n")
+        env:
+          IN_SOURCE:  ${{ github.event.inputs.source }}
+          IN_DATASET: ${{ github.event.inputs.dataset }}
 
       - name: Run FD probe
         env:
           PYTHONPATH: ${{ github.workspace }}
-          # Optional/offline flags/tokens (present if set in repo secrets)
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
           JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
           NASA_CSV:      ${{ secrets.NASA_CSV }}
         run: |
           python tools/fd_connectors/run_fd_probe.py \
-            --source "${{ github.event.inputs.source }}" \
-            --dataset "${{ steps.prep.outputs.slug }}" \
-            --var "${{ github.event.inputs.var }}" \
-            --xyz "${{ github.event.inputs.xyz }}" \
-            --twin "${{ github.event.inputs.twin }}" \
-            --json-out "${{ steps.prep.outputs.json_out }}" \
-            --title "${{ github.event.inputs.title }}" \
-            --tags "${{ github.event.inputs.tags }}"
+            --source   "${{ steps.meta.outputs.source }}" \
+            --dataset  "${{ steps.meta.outputs.slug }}" \
+            --var      "${{ github.event.inputs.var }}" \
+            --xyz      "${{ github.event.inputs.xyz }}" \
+            --twin     "${{ github.event.inputs.twin }}" \
+            --json-out "${{ steps.meta.outputs.json_out }}"
 
-      - name: Emit pulse YAML (includes batchN in filename)
+      - name: Emit pulse YAML
         run: |
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "${{ steps.prep.outputs.json_out }}" \
+            --metrics "${{ steps.meta.outputs.json_out }}" \
             --title   "${{ github.event.inputs.title }}" \
-            --dataset "${{ steps.prep.outputs.slug }}_${{ steps.prep.outputs.source_slug }}_batch${{ steps.prep.outputs.batch }}" \
+            --dataset "${{ steps.meta.outputs.dataset_with_batch }}" \
             --tags    "${{ github.event.inputs.tags }}" \
             --outdir  pulse/auto
 
@@ -135,5 +123,6 @@ jobs:
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "auto: FD probe (${{ steps.prep.outputs.slug }} / ${{ steps.prep.outputs.source_slug }} batch ${{ steps.prep.outputs.batch }}) pulse + updated maps" || echo "nothing to commit"
+          git commit -m "auto: FD probe ${{ steps.meta.outputs.slug }} (${{
+            steps.meta.outputs.source }}, batch${{ steps.meta.outputs.batch }}) → metrics + pulse + maps" || echo "nothing to commit"
           git push || true
