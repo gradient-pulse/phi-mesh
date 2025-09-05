@@ -1,44 +1,43 @@
 #!/usr/bin/env python3
 """
 Agent FD Job Runner
--------------------
-Consumes a single job spec from inbox/fd_jobs/*.yml, fetches a 1-point time series
-via the fd_connectors runner, computes NT-rhythm metrics, and emits:
-
-- results/fd_probe/YYYY-MM-DD_<dataset>_batchN.metrics.json
-- pulse/auto/YYYY-MM-DD_<dataset>_batchN.yml
-
-If the job does not specify `batch`, we auto-assign `batchN` by scanning existing
-metrics/pulse files for the same date+dataset.
-
-Job YAML shape (lists or comma-strings are both ok for xyz/window):
-
-source: synthetic | nasa | jhtdb
-dataset: <free text, will be slugged>
-var: u
-xyz: [0.1, 0.1, 0.1]   # or "0.1,0.1,0.1"
-window: [0.0, 10.0, 0.01]  # or "0.0,10.0,0.01"
-title: 'NT Rhythm — FD Probe'
-tags: ['nt_rhythm','turbulence','navier_stokes','rgp']
-# batch: batch3   # optional; if omitted we auto-assign batch1/batch2/...
-
+- Reads a minimal job spec from inbox/fd_jobs/*.yml
+- Fetches a single-point time series from source = {synthetic|nasa|jhtdb}
+- Computes NT rhythm metrics (via tools already in the repo)
+- Writes metrics JSON under results/fd_probe/, ALWAYS stamping `batch`
+- Emits a Φ-Mesh pulse (make_pulse.py) which will be saved as ..._batchN.yml
 """
 
 from __future__ import annotations
+
 import argparse
-import datetime as dt
-import glob
 import json
+import math
 import os
 import re
-import subprocess
 import sys
-from typing import Any, Dict, List
+from datetime import datetime
+from typing import Any, Dict, List, Tuple
 
+import numpy as np
 import yaml
 
+# Rhythm helpers already present in your repo
+from tools.agent_rhythm.rhythm import (
+    ticks_from_message_times,
+    rhythm_from_events,
+)
 
-# ----------------- utils -----------------
+
+def parse_triplet_list(x: Any, name: str) -> Tuple[float, float, float]:
+    if isinstance(x, (list, tuple)) and len(x) == 3:
+        return float(x[0]), float(x[1]), float(x[2])
+    if isinstance(x, str):
+        parts = [p.strip() for p in x.split(",")]
+        if len(parts) == 3:
+            return float(parts[0]), float(parts[1]), float(parts[2])
+    raise ValueError(f"{name} must be a 3-length list/tuple or 'a,b,c' string")
+
 
 def safe_slug(s: str) -> str:
     s = (s or "").strip().lower()
@@ -47,116 +46,138 @@ def safe_slug(s: str) -> str:
     return s or "dataset"
 
 
-def to_list3(val: Any, name: str) -> List[float]:
-    if isinstance(val, str):
-        parts = [p.strip() for p in val.split(",")]
-    elif isinstance(val, (list, tuple)):
-        parts = list(val)
-    else:
-        raise ValueError(f"{name} must be list-of-3 or 'a,b,c' string")
-    if len(parts) != 3:
-        raise ValueError(f"{name} must be 3-length list/CSV")
-    try:
-        return [float(p) for p in parts]
-    except Exception:
-        raise ValueError(f"{name} values must be numeric")
+# ---------- synthetic series used when offline / simple tests -----------------
+
+def synthetic_series(t0: float, t1: float, dt: float) -> Tuple[np.ndarray, np.ndarray]:
+    n = max(3, int(round((t1 - t0) / max(dt, 1e-9))))
+    t = t0 + np.arange(n) * dt
+    v = (
+        np.sin(2 * np.pi * 0.40 * (t - t0))
+        + 0.12 * np.sin(2 * np.pi * 1.25 * (t - t0))
+    )
+    return t, v
 
 
-def find_next_batch_label(date_str: str, dataset_slug: str) -> str:
-    """
-    Look for existing results for this date+dataset and pick the next batchN.
-    We scan both results and pulses to be robust.
-    """
-    candidates = []
-    patt_res = f"results/fd_probe/{date_str}_{dataset_slug}_batch*.metrics.json"
-    patt_pul = f"pulse/auto/{date_str}_{dataset_slug}_batch*.yml"
-
-    for path in glob.glob(patt_res) + glob.glob(patt_pul):
-        m = re.search(r"_batch(\d+)\.", os.path.basename(path))
-        if m:
-            try:
-                candidates.append(int(m.group(1)))
-            except Exception:
-                pass
-
-    n = (max(candidates) + 1) if candidates else 1
-    return f"batch{n}"
-
-
-def sh(args: List[str]) -> None:
-    subprocess.run(args, check=True)
-
-
-# ----------------- main -----------------
+# ---------- main --------------------------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--job", required=True, help="Path to inbox/fd_jobs/<job>.yml")
+    ap.add_argument("--job", required=True, help="Path to inbox/fd_jobs/<file>.yml")
     args = ap.parse_args()
 
     with open(args.job, "r", encoding="utf-8") as f:
         job = yaml.safe_load(f) or {}
 
-    # Required keys
     required = ["source", "dataset", "var", "xyz", "window", "title", "tags"]
     missing = [k for k in required if k not in job]
     if missing:
         raise ValueError(f"Missing required job keys: {missing}")
 
-    source = str(job["source"]).strip().lower()
-    dataset_slug = safe_slug(str(job["dataset"]))
-    var = str(job["var"]).strip()
-    xyz = to_list3(job["xyz"], "xyz")
-    window = to_list3(job["window"], "window")
+    source = str(job["source"]).lower().strip()
+    dataset = str(job["dataset"])
+    var = str(job["var"])
+    xyz = parse_triplet_list(job["xyz"], "xyz")
+    window = parse_triplet_list(job["window"], "window")
     title = str(job["title"])
-    tags = job.get("tags", [])
-    if isinstance(tags, str):
-        tags = [t for t in re.split(r"\s+", tags.strip()) if t]
+    tags_list = job.get("tags") or []
+    if isinstance(tags_list, str):
+        tags_list = [t for t in re.split(r"\s+", tags_list.strip()) if t]
+    batch = int(job.get("batch", 1))
 
-    # Batch: use provided, or auto-assign by scanning existing outputs
-    today = dt.date.today().isoformat()
-    batch_label = str(job.get("batch", "")).strip()
-    if not batch_label:
-        batch_label = find_next_batch_label(today, dataset_slug)
+    t0, t1, dt = window
+    x, y, z = xyz
 
-    print(f"::notice title=FD Job:: dataset={dataset_slug}, source={source}, "
-          f"xyz={xyz}, window={window}, batch={batch_label}")
+    # Results path
+    stamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    out_json = os.path.join("results", "fd_probe", f"{safe_slug(dataset)}.metrics.json")
+    os.makedirs(os.path.dirname(out_json), exist_ok=True)
 
-    # Paths
-    os.makedirs("results/fd_probe", exist_ok=True)
-    metrics_out = f"results/fd_probe/{today}_{dataset_slug}_{batch_label}.metrics.json"
+    # --- fetch series
+    if source == "synthetic":
+        ts, vs = synthetic_series(t0, t1, dt)
+        source_label = "synthetic"
+    elif source == "nasa":
+        # Hook into your CSV function if available; fallback to synthetic
+        try:
+            from tools.fd_connectors.nasa import read_csv_timeseries
+            nasa_path = os.getenv("NASA_CSV", "").strip() or dataset
+            obj = read_csv_timeseries(nasa_path)
+            ts, vs = np.asarray(obj.t, dtype=float), np.asarray(obj.v, dtype=float)
+            source_label = "nasa"
+        except Exception:
+            ts, vs = synthetic_series(t0, t1, dt)
+            source_label = "nasa_fallback_synth"
+    elif source == "jhtdb":
+        try:
+            from tools.fd_connectors.jhtdb import fetch_timeseries
+            ts_obj = fetch_timeseries(dataset=dataset, var=var, x=x, y=y, z=z, t0=t0, t1=t1, dt=dt)
+            ts, vs = np.asarray(ts_obj.t, dtype=float), np.asarray(ts_obj.v, dtype=float)
+            source_label = "jhtdb"
+        except Exception:
+            ts, vs = synthetic_series(t0, t1, dt)
+            source_label = "jhtdb_fallback_synth"
+    else:
+        ts, vs = synthetic_series(t0, t1, dt)
+        source_label = f"{source}_fallback_synth"
 
-    # Prepare connector args
-    xyz_str = ",".join(str(v) for v in xyz)
-    win_str = ",".join(str(v) for v in window)
+    # Ensure monotone time
+    order = np.argsort(ts)
+    ts, vs = ts[order], vs[order]
 
-    # 1) Run the FD probe (writes metrics JSON)
-    #    We don't depend on run_fd_probe's own --batch; the filename we pass
-    #    already encodes the batch label.
-    sh([
-        sys.executable, "tools/fd_connectors/run_fd_probe.py",
-        "--source", source,
-        "--dataset", dataset_slug,
-        "--var", var,
-        "--xyz", xyz_str,
-        "--twin", win_str,
-        "--json-out", metrics_out,
-    ])
+    # --- derive rhythm metrics using your helper
+    tick_times = ticks_from_message_times(ts)
+    m = rhythm_from_events(tick_times)  # dataclass or dict depending on your impl
 
-    # 2) Emit a pulse for this metrics file
-    #    Pass dataset with the batch suffix so the pulse filename includes it.
-    dataset_for_pulse = f"{dataset_slug}_{batch_label}"
-    sh([
-        sys.executable, "tools/agent_rhythm/make_pulse.py",
-        "--metrics", metrics_out,
+    # normalize into a dict
+    def to_dict(obj: Any) -> Dict[str, Any]:
+        try:
+            from dataclasses import asdict, is_dataclass
+            if is_dataclass(obj):
+                return asdict(obj)
+        except Exception:
+            pass
+        if isinstance(obj, dict):
+            return dict(obj)
+        return {}
+
+    metrics_core = to_dict(m)
+
+    # --- ALWAYS include batch in details & meta
+    details = {
+        "dataset": dataset,
+        "var": var,
+        "xyz": [x, y, z],
+        "window": [t0, t1, dt],
+        "batch": int(batch),
+    }
+    meta = {"batch": int(batch), "timestamp": stamp}
+
+    metrics = dict(metrics_core)
+    metrics["source"] = source_label
+    metrics["details"] = details
+    metrics["meta"] = meta
+
+    with open(out_json, "w", encoding="utf-8") as f:
+        json.dump(metrics, f, ensure_ascii=False, indent=2)
+    print(f"Wrote metrics → {out_json}")
+
+    # --- emit pulse
+    dataset_slug = safe_slug(dataset)
+    tags_str = " ".join(str(t) for t in tags_list)
+
+    cmd = [
+        sys.executable,
+        "tools/agent_rhythm/make_pulse.py",
+        "--metrics", out_json,
         "--title", title,
-        "--dataset", dataset_for_pulse,
-        "--tags", " ".join(tags),
+        "--dataset", dataset_slug,
+        "--tags", tags_str,
         "--outdir", "pulse/auto",
-    ])
-
-    print(f"::notice title=Outputs:: metrics={metrics_out} "
-          f"pulse=pulse/auto/{today}_{dataset_for_pulse}.yml")
+    ]
+    print("→ Emitting pulse:", " ".join(cmd))
+    rc = os.spawnvp(os.P_WAIT, cmd[0], cmd)  # simple & avoids buffering issues
+    if rc != 0:
+        raise SystemExit(rc)
 
 
 if __name__ == "__main__":
