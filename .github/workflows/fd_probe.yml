@@ -8,7 +8,7 @@ on:
         required: true
         default: 'synthetic'
       dataset:
-        description: 'Dataset name/slug or path (free text; will be auto-sanitized)'
+        description: 'Dataset name or slug (free text; will be auto-sanitized)'
         required: true
         default: 'demo'
       var:
@@ -49,93 +49,61 @@ jobs:
         run: |
           python -m pip install --upgrade pip pyyaml numpy
 
-      # Sanitize dataset, build base slug, and auto-assign next batchN by
-      # scanning today's pulses (fallback: results/fd_probe).
-      - name: Resolve slug & next batch
+      # Sanitize dataset slug (for filenames) and compute result_base used by the runner's latest pointer
+      - name: Resolve & validate inputs
         id: inp
         shell: python
         run: |
-          import datetime as dt, glob, os, re, sys, pathlib, json
-
+          import os, re
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
               s = re.sub(r"[^a-z0-9._-]+","_", s)
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-
-          source   = os.environ["SRC_IN"].strip().lower()
-          dataset  = os.environ["DS_IN"].strip()
-          var      = os.environ["VAR_IN"].strip()
-          xyz      = os.environ["XYZ_IN"].strip()
-          twin     = os.environ["TWIN_IN"].strip()
-
-          # base slug = sanitized dataset + source-tag (except synthetic already includes it in title nicely)
-          base = safe_slug(dataset)
-          if source in ("nasa","jhtdb"):
-              base = f"{base}-{source}"
-          elif source == "synthetic":
-              base = f"{base}_synthetic"
-
-          today = dt.date.today().isoformat()
-          pulses_pat  = f"pulse/auto/{today}_{base}_batch*.yml"
-          results_pat = f"results/fd_probe/{base}_batch*.metrics.json"
-
-          def next_batch():
-              nums = []
-              for path in glob.glob(pulses_pat):
-                  m = re.search(r"_batch(\d+)\.yml$", path)
-                  if m: nums.append(int(m.group(1)))
-              if not nums:  # look in results if pulses absent (first run today)
-                  for path in glob.glob(results_pat):
-                      m = re.search(r"_batch(\d+)\.metrics\.json$", path)
-                      if m: nums.append(int(m.group(1)))
-              return (max(nums) + 1) if nums else 1
-
-          b = next_batch()
-          combined = f"{base}_batch{b}"
-
-          # outputs
+          ds_in = os.environ["DATASET_IN"]
+          slug = safe_slug(ds_in)
+          src  = os.environ["SRC_IN"].strip().lower()
+          # echo outputs
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-              f.write(f"base={base}\n")
-              f.write(f"batch={b}\n")
-              f.write(f"slug={combined}\n")
-              f.write(f"today={today}\n")
-
-          print(f"::notice::Using slug={combined} (auto batch {b})")
-
+              f.write(f"slug={slug}\n")
+              f.write(f"source={src}\n")
+          print(f"::notice::Using dataset slug = {slug} (source={src})")
         env:
-          SRC_IN:  ${{ github.event.inputs.source }}
-          DS_IN:   ${{ github.event.inputs.dataset }}
-          VAR_IN:  ${{ github.event.inputs.var }}
-          XYZ_IN:  ${{ github.event.inputs.xyz }}
-          TWIN_IN: ${{ github.event.inputs.twin }}
+          DATASET_IN: ${{ github.event.inputs.dataset }}
+          SRC_IN:     ${{ github.event.inputs.source }}
 
-      - name: Run FD probe
+      - name: Run FD probe (auto-batch + latest pointer)
         env:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
           JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
-          NASA_CSV:      ${{ github.event.inputs.dataset }}  # for nasa, local path/URL works; ignored by others
+          NASA_CSV:      ${{ secrets.NASA_CSV }}
         run: |
-          mkdir -p results/fd_probe
           python tools/fd_connectors/run_fd_probe.py \
-            --source "${{ github.event.inputs.source }}" \
+            --source "${{ steps.inp.outputs.source }}" \
             --dataset "${{ steps.inp.outputs.slug }}" \
             --var "${{ github.event.inputs.var }}" \
             --xyz "${{ github.event.inputs.xyz }}" \
-            --twin "${{ github.event.inputs.twin }}" \
-            --json-out "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json"
+            --twin "${{ github.event.inputs.twin }}"
 
       - name: Emit pulse YAML
         run: |
+          # The runner wrote a stable pointer:
+          #   results/fd_probe/<slug>-<source>_latest.metrics.json
+          METRICS="results/fd_probe/${{ steps.inp.outputs.slug }}-${{ steps.inp.outputs.source }}_latest.metrics.json"
+          if [ ! -f "$METRICS" ]; then
+            echo "Latest metrics not found: $METRICS"
+            ls -la results/fd_probe || true
+            exit 1
+          fi
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "results/fd_probe/${{ steps.inp.outputs.slug }}.metrics.json" \
+            --metrics "$METRICS" \
             --title   "${{ github.event.inputs.title }}" \
             --dataset "${{ steps.inp.outputs.slug }}" \
             --tags    "${{ github.event.inputs.tags }}" \
             --outdir  pulse/auto
 
-      - name: Rebuild Tag/Gradient maps
+      - name: Rebuild maps
         run: |
           python generate_graph_data.py \
             --pulse-glob "pulse/**/*.yml" \
@@ -148,5 +116,5 @@ jobs:
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug }}) pulse + updated maps" || echo "nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug }}-${{ steps.inp.outputs.source }}) pulse + updated maps" || echo "nothing to commit"
           git push || true
