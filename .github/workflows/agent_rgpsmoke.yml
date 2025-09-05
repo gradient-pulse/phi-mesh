@@ -1,37 +1,31 @@
-name: Agent — RGP-NS Smoke
+name: Agent — RGP–NS Smoke Test
 
 on:
-  push:
-    paths:
-      - 'agents/rgp_ns/**'
-      - '.github/workflows/agent_rgpsmoke.yml'
-  workflow_dispatch: {}
-
-permissions:
-  contents: read
+  workflow_dispatch:
 
 jobs:
-  smoke:
+  rgp_ns_smoke:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install minimal deps
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pyyaml numpy
+          pip install numpy pyyaml matplotlib
 
       - name: Run synthetic smoke test
-        env:
-          PYTHONPATH: ${{ github.workspace }}
         run: |
+          echo "→ Running RGP–NS agent (synthetic smoke)…"
           python agents/rgp_ns/self_test.py
 
-            - name: Rebuild maps
+      - name: Rebuild maps & commit results
         run: |
           python generate_graph_data.py \
             --pulse-glob "pulse/**/*.yml" \
@@ -39,8 +33,6 @@ jobs:
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data.js
 
-      - name: Commit & push results
-        run: |
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
