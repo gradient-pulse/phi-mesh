@@ -1,81 +1,74 @@
 name: Agent — FD Jobs → Pulse
 
 on:
-  # Auto-run whenever a job YAML is pushed into inbox/fd_jobs/
   push:
     paths:
       - 'inbox/fd_jobs/*.yml'
-  # Also allow manual runs from the UI
   workflow_dispatch: {}
 
-permissions:
-  contents: write
-
 jobs:
-  agent:
+  agent_fd_jobs:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install deps
         run: |
-          python -m pip install --upgrade pip pyyaml numpy
+          python -m pip install --upgrade pip
+          pip install pyyaml numpy
 
-      # Pick exactly one pending job file from inbox/fd_jobs/ (top-level only).
-      - name: Pick one FD job
-        id: pick
-        shell: bash
+      - name: Process FD jobs
         run: |
-          set -euo pipefail
-          shopt -s nullglob
-          picked=""
-          for p in inbox/fd_jobs/*.yml; do
-            b="$(basename "$p")"
-            # skip hidden or control files (e.g., _done/_error live as dirs anyway)
-            [[ "$b" == _* ]] && continue
-            picked="$p"
-            break
+          mkdir -p results/fd_probe
+          mkdir -p pulse/auto
+
+          for jobfile in inbox/fd_jobs/*.yml; do
+            [ -f "$jobfile" ] || continue
+
+            echo "→ Running job $jobfile"
+
+            # Slugify dataset name
+            slug=$(grep '^dataset:' "$jobfile" | awk '{print $2}' | tr -dc '[:alnum:]_-' | tr '[:upper:]' '[:lower:]')
+            source=$(grep '^source:' "$jobfile" | awk '{print $2}' | tr -dc '[:alnum:]_-' | tr '[:upper:]' '[:lower:]')
+            base="${slug}-${source}"
+
+            # Count existing results for today to allocate batchN
+            today=$(date +%Y-%m-%d)
+            count=$(ls results/fd_probe/${base}_batch*.metrics.json 2>/dev/null | grep "$today" | wc -l)
+            batch=$((count + 1))
+
+            metrics="results/fd_probe/${base}_batch${batch}.metrics.json"
+            echo "  Allocated: $metrics"
+
+            # Run agent
+            python tools/agent_rhythm/agent_fd_job_runner.py --job "$jobfile" --json-out "$metrics"
+
+            # Convert metrics to pulse
+            title=$(grep '^title:' "$jobfile" | cut -d: -f2- | xargs)
+            tags=$(grep '^tags:' -A 10 "$jobfile" | grep '-' | sed 's/-//g' | xargs)
+
+            python tools/agent_rhythm/make_pulse.py \
+              --metrics "$metrics" \
+              --title "$title" \
+              --dataset "${base}_batch${batch}" \
+              --tags "$tags" \
+              --outdir pulse/auto
+
+            # Archive jobfile
+            mv "$jobfile" inbox/fd_jobs/_done/ || true
           done
-          if [[ -z "${picked}" ]]; then
-            echo "No pending jobs."
-            echo "path=" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "Picked ${picked}"
-          echo "path=${picked}" >> "$GITHUB_OUTPUT"
 
-      - name: Short-circuit if nothing to do
-        if: ${{ steps.pick.outputs.path == '' }}
-        run: echo "No jobs to run in inbox/fd_jobs/."
-
-      - name: Run one FD job
-        if: ${{ steps.pick.outputs.path != '' }}
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
-          NASA_CSV: ${{ secrets.NASA_CSV }}
-        run: |
-          python tools/agent_rhythm/agent_fd_job_runner.py --job "${{ steps.pick.outputs.path }}"
-
-      - name: Rebuild maps
-        if: ${{ steps.pick.outputs.path != '' }}
-        run: |
-          python generate_graph_data.py \
-            --pulse-glob "pulse/**/*.yml" \
-            --alias-map meta/aliases.yml \
-            --tag-descriptions meta/tag_descriptions.yml \
-            --out-js docs/data.js
-
-      - name: Commit & push
-        if: ${{ steps.pick.outputs.path != '' }}
+      - name: Commit results + pulses
         run: |
           git config user.name "phi-mesh-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "nothing to commit"
-          git push || true
+          git config user.email "bot@phi-mesh.local"
+          git add results/ pulse/auto/ inbox/fd_jobs/_done/
+          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "No changes"
+          git push
