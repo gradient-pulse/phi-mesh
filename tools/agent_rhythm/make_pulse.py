@@ -2,9 +2,15 @@
 """
 make_pulse.py — turn rhythm metrics JSON into a strict Φ-Mesh pulse YAML.
 
-- Always single-quotes the title
-- Always writes filename with _batchN, stripping any accidental double-batch
-- Summary is folded (">") and compact
+Outputs: pulse/auto/YYYY-MM-DD_<dataset>.yml
+Schema:
+  title: '...'
+  summary: >
+    ...
+  tags:
+    - ...
+  papers: []
+  podcasts: []
 """
 
 from __future__ import annotations
@@ -34,7 +40,6 @@ def to_builtin(x: Any) -> Any:
     except Exception:
         class _NP: ...
         np_generic = _NP
-
     if isinstance(x, (str, int, float, bool)) or x is None:
         return x
     if isinstance(x, np_generic):
@@ -57,11 +62,25 @@ def to_builtin(x: Any) -> Any:
     return str(x)
 
 
+def ensure_batch_in_slug(slug: str, metrics_path: str) -> str:
+    """
+    If slug does not already contain '_batchN', try to read the batch label
+    from the metrics filename like '<something>_batchN.metrics.json' and append it.
+    """
+    if re.search(r"_batch\d+$", slug):
+        return slug
+    base = os.path.basename(metrics_path)
+    m = re.search(r"_batch(\d+)\.metrics\.json$", base)
+    if m:
+        return f"{slug}_batch{m.group(1)}"
+    return slug
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--metrics", required=True, help="Path to metrics JSON")
-    ap.add_argument("--title",   required=True, help="Pulse title")
-    ap.add_argument("--dataset", required=True, help="Dataset slug (for filename)")
+    ap.add_argument("--title",   required=True, help="Pulse title (single-quoted style enforced)")
+    ap.add_argument("--dataset", required=True, help="Dataset slug for filename (batchN will be enforced)")
     ap.add_argument("--tags",    required=True, help="Space-separated tags")
     ap.add_argument("--outdir",  required=True, help="Output directory (e.g., pulse/auto)")
     args = ap.parse_args()
@@ -70,40 +89,37 @@ def main() -> None:
         metrics_raw = json.load(f)
     metrics: Dict[str, Any] = to_builtin(metrics_raw)
 
-    n       = metrics.get("n") or metrics.get("count") or "?"
-    mean_dt = metrics.get("mean_dt", "?")
-    cv_dt   = metrics.get("cv_dt", "?")
-    src     = metrics.get("source", "")
-    details = metrics.get("details") or {}
+    n        = metrics.get("n") or metrics.get("count") or "?"
+    mean_dt  = metrics.get("mean_dt", "?")
+    cv_dt    = metrics.get("cv_dt", "?")
+    src      = metrics.get("source", "")
+    details  = metrics.get("details") or metrics.get("extra") or {}
 
-    # batch guard (always produce _batchN)
-    try:
-        batch = int(metrics.get("batch"))
-    except Exception:
-        batch = 1
+    today_str = dt.date.today().isoformat()
 
-    # filename slug — strip any accidental *_batchN from dataset
     slug = safe_slug(args.dataset)
-    slug = re.sub(r"_batch\d+$", "", slug)
+    # Safety net: enforce batch suffix from metrics filename if missing
+    slug = ensure_batch_in_slug(slug, args.metrics)
 
-    today_str = dt.date.today().isoformat()  # YYYY-MM-DD
     os.makedirs(args.outdir, exist_ok=True)
-    out_path = os.path.join(args.outdir, f"{today_str}_{slug}_batch{batch}.yml")
+    out_path = os.path.join(args.outdir, f"{today_str}_{slug}.yml")
 
-    # Summary (folded)
-    parts: List[str] = [f"NT rhythm probe on “{slug}_batch{batch}” — n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}."]
+    summary_lines: List[str] = []
+    summary_lines.append(
+        f"NT rhythm probe on “{slug}” — n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}."
+    )
     if src:
-        parts.append(f"Source: {src}.")
+        summary_lines.append(f"Source: {src}.")
     if details:
         try:
-            subset = {k: details[k] for k in ["dataset", "var", "xyz", "window", "batch"] if k in details}
+            keys = ["dataset", "var", "xyz", "window"]
+            subset = {k: details[k] for k in keys if k in details}
             if subset:
-                parts.append(f"Probe: {subset}.")
+                summary_lines.append(f"Probe: {subset}.")
         except Exception:
             pass
-    summary_text = " ".join(str(s).strip() for s in parts if s)
+    summary_text = " ".join(str(s).strip() for s in summary_lines if s)
 
-    # tag list
     tags = [t for t in re.split(r"\s+", args.tags.strip()) if t]
 
     pulse = {
@@ -115,7 +131,6 @@ def main() -> None:
     }
     pulse = to_builtin(pulse)
 
-    # custom dumper: single quotes for title, folded summary
     class _D(yaml.SafeDumper):
         pass
 
@@ -138,7 +153,9 @@ def main() -> None:
     _D.add_representer(dict, _repr_mapping)
 
     with open(out_path, "w", encoding="utf-8") as f:
-        yaml.dump(pulse, stream=f, Dumper=_D, sort_keys=False, allow_unicode=True, width=1000)
+        yaml.dump(
+            pulse, stream=f, Dumper=_D, sort_keys=False, allow_unicode=True, width=1000
+        )
 
     print(f"Pulse written: {out_path}")
 
