@@ -5,7 +5,7 @@ tools/fd_connectors/run_fd_probe.py
 Fetch a 1-point time series from a source (synthetic | jhtdb | nasa),
 compute NT-rhythm metrics, and write a metrics JSON (consumed by make_pulse.py).
 
-CLI (kept intentionally small — batch naming is handled by the workflow):
+CLI:
   --source    {synthetic,jhtdb,nasa}
   --dataset   free-text dataset name/slug (workflow already sanitizes)
   --var       variable name (e.g., "u")
@@ -17,6 +17,12 @@ CLI (kept intentionally small — batch naming is handled by the workflow):
 """
 
 from __future__ import annotations
+
+# --- ensure repo-root is on sys.path so "tools.*" imports resolve ----------
+import sys, pathlib
+ROOT = pathlib.Path(__file__).resolve().parents[2]  # repo root
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 import argparse
 import json
@@ -47,7 +53,6 @@ def parse_triplet(s: str) -> Tuple[float, float, float]:
 
 def to_builtin(x: Any) -> Any:
     """Recursively coerce common scientific types into plain Python builtins."""
-    # Optional numpy handling without hard dep
     try:
         import numpy as np
         np_generic = np.generic  # type: ignore[attr-defined]
@@ -57,7 +62,6 @@ def to_builtin(x: Any) -> Any:
         np_generic = _NP  # sentinel
         np_ndarray = _NP  # sentinel
 
-    # Scalars
     if isinstance(x, (str, int, float, bool)) or x is None:
         return x
     if isinstance(x, np_generic):  # numpy scalar
@@ -65,19 +69,14 @@ def to_builtin(x: Any) -> Any:
             return x.item()
         except Exception:
             return float(x)
-    # Arrays
     if isinstance(x, np_ndarray):  # numpy array -> list
         return [to_builtin(v) for v in x.tolist()]
-    # Dataclasses
     if is_dataclass(x):
         return {k: to_builtin(v) for k, v in asdict(x).items()}
-    # Mappings
     if isinstance(x, dict):
         return {str(to_builtin(k)): to_builtin(v) for k, v in x.items()}
-    # Sequences
     if isinstance(x, (list, tuple, set)):
         return [to_builtin(v) for v in x]
-    # Fallback
     return str(x)
 
 
@@ -116,7 +115,6 @@ def main() -> None:
         source_label = "synthetic"
 
     elif args.source == "jhtdb":
-        # Simple policy: try real call; allow the connector to fall back/raise if token missing.
         ts_obj = JHT.fetch_timeseries(
             dataset=args.dataset, var=args.var,
             x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
@@ -127,7 +125,6 @@ def main() -> None:
     else:  # nasa
         nasa_csv = os.getenv("NASA_CSV", "").strip()
         if nasa_csv:
-            # Read from CSV / URL if provided
             ts_obj = NASA.read_csv_timeseries(nasa_csv)
         else:
             ts_obj = NASA.fetch_timeseries(
@@ -154,7 +151,6 @@ def main() -> None:
     else:
         metrics = {}
 
-    # annotate
     metrics.setdefault("source", source_label)
     metrics.setdefault("details", {})
     metrics["details"] = {
@@ -165,7 +161,6 @@ def main() -> None:
         **(metrics.get("details") or {}),
     }
 
-    # Convert to pure builtins before dumping
     metrics = to_builtin(metrics)
 
     # --- write metrics JSON ----------------------------------------------
