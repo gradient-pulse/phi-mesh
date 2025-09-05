@@ -2,9 +2,7 @@
 """
 make_pulse.py — turn rhythm metrics JSON into a strict Φ-Mesh pulse YAML.
 
-Outputs (always batch-stamped):
-  pulse/auto/YYYY-MM-DD_<dataset>_batchN.yml
-
+Outputs: pulse/auto/YYYY-MM-DD_<dataset-with-batchN>.yml
 Schema:
   title: '...'
   summary: >
@@ -38,9 +36,9 @@ def safe_slug(s: str) -> str:
 
 def to_builtin(x: Any) -> Any:
     """Recursively coerce to plain Python builtins so PyYAML is happy."""
-    # Late import to avoid hard dep if numpy isn't installed.
+    # Late import to avoid a hard dep if numpy isn't installed.
     try:
-        import numpy as np  # type: ignore
+        import numpy as np
         np_generic = np.generic  # type: ignore[attr-defined]
     except Exception:  # numpy not installed
         class _NP: ...
@@ -49,7 +47,7 @@ def to_builtin(x: Any) -> Any:
     # Scalars
     if isinstance(x, (str, int, float, bool)) or x is None:
         return x
-    if isinstance(x, np_generic):  # numpy scalar -> Python scalar
+    if isinstance(x, np_generic):      # numpy scalar -> Python scalar
         try:
             return x.item()
         except Exception:
@@ -81,7 +79,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--metrics", required=True, help="Path to metrics JSON")
     ap.add_argument("--title",   required=True, help="Pulse title")
-    ap.add_argument("--dataset", required=True, help="Dataset slug (for filename)")
+    ap.add_argument("--dataset", required=True, help="Dataset slug (may already include _batchN)")
     ap.add_argument("--tags",    required=True, help="Space-separated tags")
     ap.add_argument("--outdir",  required=True, help="Output directory (e.g., pulse/auto)")
     args = ap.parse_args()
@@ -91,40 +89,38 @@ def main() -> None:
         metrics_raw = json.load(f)
     metrics: Dict[str, Any] = to_builtin(metrics_raw)
 
-    # Pull commonly-used fields (fallbacks ok)
+    # Pull common fields with defaults (some sources may not fill these)
     n        = metrics.get("n") or metrics.get("count") or "?"
     mean_dt  = metrics.get("mean_dt", "?")
     cv_dt    = metrics.get("cv_dt", "?")
     src      = metrics.get("source", "")
     details  = metrics.get("details") or metrics.get("extra") or {}
-    meta     = metrics.get("meta") or {}
-
-    # Batch (ALWAYS present in filename; default to 1)
-    try:
-        batch = int(details.get("batch", meta.get("batch", 1)))
-    except Exception:
-        batch = 1
 
     # Filename bits
     today_str = dt.date.today().isoformat()  # YYYY-MM-DD
-    slug = safe_slug(args.dataset)
+    slug_in   = safe_slug(args.dataset)
+
+    # Always keep whatever batch suffix the caller provided (e.g., *_batch2).
+    # (If you ever want a default, add it upstream when constructing --dataset.)
+    slug = slug_in
 
     os.makedirs(args.outdir, exist_ok=True)
-    out_name = f"{today_str}_{slug}_batch{batch}.yml"
-    out_path = os.path.join(args.outdir, out_name)
+    out_path = os.path.join(args.outdir, f"{today_str}_{slug}.yml")
 
-    # Summary (compact, folded)
+    # --- Summary (compact, folded) -----------------------------------------
     summary_lines: List[str] = []
     summary_lines.append(
         f"NT rhythm probe on “{slug}” — n={n}, mean_dt={mean_dt}, cv_dt={cv_dt}."
     )
     if src:
         summary_lines.append(f"Source: {src}.")
-    # Include probe subset if available
-    if isinstance(details, dict) and details:
+    if details:
         try:
-            keys = ["dataset", "var", "xyz", "window", "batch"]
+            keys = ["dataset", "var", "xyz", "window"]
             subset = {k: details[k] for k in keys if k in details}
+            # 🔧 Force the dataset shown in the summary to match our slug (with _batchN),
+            # so we don't leak an earlier *_batch1 / raw dataset name into the text.
+            subset["dataset"] = slug
             if subset:
                 summary_lines.append(f"Probe: {subset}.")
         except Exception:
@@ -136,15 +132,15 @@ def main() -> None:
 
     # Construct pulse dict using ONLY builtins
     pulse = {
-        "title": str(args.title),   # single-quoted by custom dumper
-        "summary": summary_text,    # folded style by custom dumper
+        "title": str(args.title),   # quoting handled by dumper below
+        "summary": summary_text,    # folded style via dumper
         "tags": [str(t) for t in tags],
         "papers": [],
         "podcasts": [],
     }
     pulse = to_builtin(pulse)
 
-    # Custom dumper: folded summary + single-quoted title
+    # Custom dumper to force folded style for summary and SINGLE QUOTES for title
     class _D(yaml.SafeDumper):
         pass
 
@@ -156,8 +152,9 @@ def main() -> None:
                 # folded block scalar '>'
                 val_node = yaml.ScalarNode(tag="tag:yaml.org,2002:str", value=str(v), style=">")
             elif k == "title":
-                # Force single quotes per strict pulse rule
+                # force single quotes per strict pulse rule
                 sval = str(v)
+                # Strip wrapping quotes if user passed them to avoid double quoting.
                 if (sval.startswith("'") and sval.endswith("'")) or (sval.startswith('"') and sval.endswith('"')):
                     sval = sval[1:-1]
                 val_node = yaml.ScalarNode(tag="tag:yaml.org,2002:str", value=sval, style="'")
