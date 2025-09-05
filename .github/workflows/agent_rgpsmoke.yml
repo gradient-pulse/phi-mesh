@@ -23,8 +23,7 @@ jobs:
       - name: Install minimal deps
         run: |
           python -m pip install --upgrade pip
-          # Keep it light; no SciPy needed for the smoke wrapper.
-          python -m pip install pyyaml
+          python -m pip install pyyaml numpy
 
       - name: Run synthetic smoke test
         run: |
