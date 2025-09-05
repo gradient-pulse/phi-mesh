@@ -2,7 +2,7 @@
 """
 make_pulse.py — turn rhythm metrics JSON into a strict Φ-Mesh pulse YAML.
 
-Outputs: pulse/auto/YYYY-MM-DD_<dataset>.yml
+Outputs: pulse/auto/YYYY-MM-DD_<dataset>_batchN.yml
 Schema:
   title: '...'
   summary: >
@@ -91,13 +91,26 @@ def main() -> None:
     cv_dt    = metrics.get("cv_dt", "?")
     src      = metrics.get("source", "")
     details  = metrics.get("details") or metrics.get("extra") or {}
+    meta     = metrics.get("meta") or {}
+
+    # Determine batch (ALWAYS append to filename; default to 1)
+    batch = (
+        metrics.get("batch")
+        or (details.get("batch") if isinstance(details, dict) else None)
+        or (meta.get("batch") if isinstance(meta, dict) else None)
+        or 1
+    )
+    try:
+        batch = int(batch)
+    except Exception:
+        batch = 1
 
     # Filename bits
     today_str = dt.date.today().isoformat()  # YYYY-MM-DD
     slug = safe_slug(args.dataset)
 
     os.makedirs(args.outdir, exist_ok=True)
-    out_path = os.path.join(args.outdir, f"{today_str}_{slug}.yml")
+    out_path = os.path.join(args.outdir, f"{today_str}_{slug}_batch{batch}.yml")
 
     # Summary (compact, folded)
     summary_lines: List[str] = []
@@ -108,12 +121,17 @@ def main() -> None:
         summary_lines.append(f"Source: {src}.")
     if details:
         try:
-            keys = ["dataset", "var", "xyz", "window"]
+            keys = ["dataset", "var", "xyz", "window", "batch"]
             subset = {k: details[k] for k in keys if k in details}
+            # ensure batch is present in the probe subset we show
+            subset.setdefault("batch", batch)
             if subset:
                 summary_lines.append(f"Probe: {subset}.")
         except Exception:
-            pass
+            # at minimum include batch somewhere
+            summary_lines.append(f"Batch: {batch}.")
+    else:
+        summary_lines.append(f"Batch: {batch}.")
     summary_text = " ".join(str(s).strip() for s in summary_lines if s)
 
     # Tags: space-separated -> list
