@@ -1,15 +1,9 @@
-# RGP–NS Agent Loop (Autonomous)
-Goal: test if NT-distance ratios form a conserved “rhythm of least divergence” across DNS/LES datasets.
+# RGP–NS Agent (NT rhythm from probe time series)
 
-## Quickstart (Phi‑Mesh maintainers)
-1) Set repo secrets: JHTDB_TOKEN, ZENODO_DOI (optional), X_WEBHOOK_URL (optional).
-2) Edit `/agents/rgp_ns/config.yml` to choose datasets + thresholds.
-3) Run the workflow: GitHub → Actions → “RGP‑NS Agent Runner” → Run.
+**What it does**  
+Loads a velocity time series (synthetic by default), detects NT events, computes inter-event **ratios**, writes results under `results/rgp_ns/<timestamp>/batch1/`, and emits a Φ-Mesh pulse via your `make_pulse.py`.
 
-Outputs land in:
-- `/pulse/auto/` (YAML pulses)
-- `/results/rgp_ns/<dataset>/run_<timestamp>/` (CSV/plots)
-- `/logs/rgp_ns/` (agent logs)
+## Run (dry test)
 
-Pass criterion (auto-evaluated in each pulse):
-- NT-ratio conservation is statistically significant across ≥2 independent datasets at α=0.01 with consistent effect size.
+```bash
+python agents/rgp_ns/run_agent.py --config agents/rgp_ns/config.yml
