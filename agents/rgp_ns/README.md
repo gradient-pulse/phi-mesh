@@ -4,7 +4,7 @@
 Loads a velocity time series (synthetic by default), detects NT events, computes inter-event **ratios**, writes results under `results/rgp_ns/<timestamp>/batch1/`, and emits a Φ-Mesh pulse via your `make_pulse.py`.
 
 ## Run (dry test)
-Synthetic test is the acceptance gate — if this passes, you can safely proceed to NetCDF or JHTDB modes.
+Note: *Synthetic test is the acceptance gate — if this passes, you can safely proceed to NetCDF or JHTDB modes.*
 
 ```bash
 python agents/rgp_ns/run_agent.py --config agents/rgp_ns/config.yml
