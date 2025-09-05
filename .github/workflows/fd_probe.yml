@@ -31,6 +31,22 @@ on:
         description: "space-separated tags"
         required: true
         default: "nt_rhythm turbulence navier_stokes rgp"
+      smooth_k:
+        description: "moving-average window on |u| (0 disables)"
+        required: false
+        default: "5"
+      peak_mag_k:
+        description: "magnitude threshold = mu + k*sig"
+        required: false
+        default: "0.75"
+      peak_prom_k:
+        description: "prominence proxy = k*sig"
+        required: false
+        default: "0.25"
+      min_sep_ms:
+        description: "min separation between events in milliseconds"
+        required: false
+        default: "2.0"
 
 permissions:
   contents: write
@@ -79,7 +95,6 @@ jobs:
           shopt -s nullglob
           existing=(results/fd_probe/${BASE}_batch*.metrics.json)
           if [[ ${#existing[@]} -gt 0 ]]; then
-            # get highest batch number
             last=$(ls -1 results/fd_probe/${BASE}_batch*.metrics.json | sed -E 's/.*_batch([0-9]+)\.metrics\.json/\1/' | sort -n | tail -1)
             NEXT=$(( last + 1 ))
           fi
@@ -106,7 +121,11 @@ jobs:
             --twin "${{ github.event.inputs.twin }}" \
             --json-out "${{ steps.prep.outputs.metrics_path }}" \
             --title "${{ github.event.inputs.title }}" \
-            --tags "${{ github.event.inputs.tags }}"
+            --tags "${{ github.event.inputs.tags }}" \
+            --smooth-k "${{ github.event.inputs.smooth_k }}" \
+            --peak-mag-k "${{ github.event.inputs.peak_mag_k }}" \
+            --peak-prom-k "${{ github.event.inputs.peak_prom_k }}" \
+            --min-sep-ms "${{ github.event.inputs.min_sep_ms }}"
 
       - name: Emit pulse (always with exact batch label)
         run: |
