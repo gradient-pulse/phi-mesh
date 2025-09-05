@@ -7,20 +7,25 @@ DETECT EVENTS FROM THE SIGNAL (not the sample clock), compute NT-rhythm
 metrics, and write a metrics JSON that downstream make_pulse.py will read.
 
 Args (aligned with fd_probe.yml):
-  --source     {synthetic,jhtdb,nasa}
-  --dataset    free-text dataset name/slug (workflow already sanitizes)
-  --var        variable name (e.g., "u")
-  --xyz        "x,y,z"
-  --twin       "t0,t1,dt"
-  --json-out   path to write metrics JSON (results/fd_probe/<...>.metrics.json)
-  --title      (unused here; carried by make_pulse)
-  --tags       (unused here; carried by make_pulse)
-  --also-latest   (optional) write alongside <slug>_latest.metrics.json
+  --source       {synthetic,jhtdb,nasa}
+  --dataset      free-text dataset name/slug (workflow already sanitizes)
+  --var          variable name (e.g., "u")
+  --xyz          "x,y,z"
+  --twin         "t0,t1,dt"
+  --json-out     path to write metrics JSON (results/fd_probe/<...>.metrics.json)
+  --title        (unused here; carried by make_pulse)
+  --tags         (unused here; carried by make_pulse)
+  --also-latest  also write <slug>_latest.metrics.json next to main file
+
+Detector knobs (optional, sensible defaults):
+  --smooth-k       int, moving-average window on |u| (default 5; 0 disables)
+  --peak-mag-k     float, magnitude threshold = mu + k*sig  (default 0.75)
+  --peak-prom-k    float, prominence proxy  = k*sig         (default 0.25)
+  --min-sep-ms     float, min separation between peaks in milliseconds (default 2.0)
 
 Notes
-- This script USED to treat every sample time as an event via
-  ticks_from_message_times(ts). That measured the sampler’s rhythm.
-- Now we detect events from the signal |u(t)| with a tiny peak detector.
+- Previously this script measured the sampler’s rhythm (events = timestamps).
+- Now we detect events from |u(t)| with a tiny, SciPy-free peak detector.
 """
 
 from __future__ import annotations
@@ -32,7 +37,7 @@ import os
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
 
-# rhythm tools (unchanged API)
+# rhythm tools
 from tools.agent_rhythm.rhythm import rhythm_from_events
 
 # source connectors
@@ -60,7 +65,7 @@ def to_builtin(x: Any) -> Any:
 
     if is_dataclass(x):
         return {k: to_builtin(v) for k, v in asdict(x).items()}
-    if isinstance(x, (str, int, float, bool)) or x is None:
+    if isinstance(x, (str, int, float, bool))) or x is None:
         return x
     if isinstance(x, np_scalar):
         try:
@@ -90,7 +95,14 @@ def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], 
 
 # ---------- NEW: event detector from the signal ------------------------------
 
-def events_from_signal(ts: List[float], vs: List[float]) -> List[float]:
+def events_from_signal(
+    ts: List[float],
+    vs: List[float],
+    smooth_k: int = 5,
+    peak_mag_k: float = 0.75,
+    peak_prom_k: float = 0.25,
+    min_sep_ms: float = 2.0,
+) -> List[float]:
     """
     Turn a scalar probe time-series into event times.
     Simple, SciPy-free peak detector on |u| with magnitude + small prominence
@@ -99,7 +111,6 @@ def events_from_signal(ts: List[float], vs: List[float]) -> List[float]:
     try:
         import numpy as np
     except Exception:
-        # Fallback: if numpy truly isn't available, return no events.
         return []
 
     if len(ts) != len(vs) or len(ts) < 5:
@@ -109,21 +120,19 @@ def events_from_signal(ts: List[float], vs: List[float]) -> List[float]:
     u = np.asarray(vs, dtype=float)
     s = np.abs(u)
 
-    # light smoothing to reduce jitter (5-pt moving average if long enough)
-    k = 5
-    if len(s) >= k:
-        s = np.convolve(s, np.ones(k, dtype=float) / k, mode="same")
+    # smoothing
+    if smooth_k and smooth_k > 1 and len(s) >= smooth_k:
+        s = np.convolve(s, np.ones(smooth_k, dtype=float) / smooth_k, mode="same")
 
-    # baseline + scale for thresholds
     mu = float(np.mean(s))
     sig = float(np.std(s)) + 1e-12
-    mag_th = mu + 0.75 * sig           # magnitude threshold (tune)
-    prom_th = 0.25 * sig               # "prominence" proxy (tune)
+    mag_th = mu + peak_mag_k * sig
+    prom_th = peak_prom_k * sig
 
-    # min separation in samples: ~2 ms equivalent if dt available; else 5 samples
+    # min separation in samples
     if len(t) >= 2:
         dt_est = max(1e-12, float(t[1] - t[0]))
-        min_sep = max(5, int(0.002 / dt_est))
+        min_sep = max(1, int((min_sep_ms / 1000.0) / dt_est))
     else:
         min_sep = 5
 
@@ -132,9 +141,9 @@ def events_from_signal(ts: List[float], vs: List[float]) -> List[float]:
     N = len(s)
 
     for i in range(1, N - 1):
-        if s[i] <= mag_th:                   # too small
+        if s[i] <= mag_th:
             continue
-        if not (s[i - 1] < s[i] > s[i + 1]): # strict local max
+        if not (s[i - 1] < s[i] > s[i + 1]):  # strict local max
             continue
 
         # crude "prominence": height above local min in a small window
@@ -145,7 +154,7 @@ def events_from_signal(ts: List[float], vs: List[float]) -> List[float]:
         if (s[i] - local_min) < prom_th:
             continue
 
-        if (i - last_idx) < min_sep:         # enforce min separation
+        if (i - last_idx) < min_sep:
             continue
 
         peaks_idx.append(i)
@@ -164,10 +173,21 @@ def main() -> None:
     ap.add_argument("--xyz", required=True, help="x,y,z")
     ap.add_argument("--twin", required=True, help="t0,t1,dt")
     ap.add_argument("--json-out", required=True)
-    ap.add_argument("--title")                     # unused here; reserved
-    ap.add_argument("--tags")                      # unused here; reserved
+    ap.add_argument("--title")
+    ap.add_argument("--tags")
     ap.add_argument("--also-latest", action="store_true",
                     help="Also write <slug>_latest.metrics.json next to main file")
+
+    # detector knobs
+    ap.add_argument("--smooth-k", type=int, default=5,
+                    help="Moving-average window on |u| (0 disables). Default: 5")
+    ap.add_argument("--peak-mag-k", type=float, default=0.75,
+                    help="Magnitude threshold = mu + k*sig. Default: 0.75")
+    ap.add_argument("--peak-prom-k", type=float, default=0.25,
+                    help="Prominence proxy = k*sig. Default: 0.25")
+    ap.add_argument("--min-sep-ms", type=float, default=2.0,
+                    help="Min separation between peaks in milliseconds. Default: 2.0")
+
     args = ap.parse_args()
 
     x, y, z = parse_triplet(args.xyz)
@@ -181,7 +201,6 @@ def main() -> None:
     elif args.source == "jhtdb":
         token = os.environ.get("JHTDB_TOKEN", "").strip()
         if not token:
-            # still allow a "demo" by falling back to the synthetic helper in JHT, if any
             try:
                 ts_obj = JHT.fetch_timeseries(
                     dataset=args.dataset, var=args.var,
@@ -189,7 +208,6 @@ def main() -> None:
                 )
                 ts, vs = ts_obj.t, ts_obj.v
             except NotImplementedError:
-                # last resort: reuse our synthetic if connector is stubbed
                 ts, vs = synthetic_timeseries(t0, t1, dt)
                 source_label = "jhtdb_offline"
             else:
@@ -205,7 +223,7 @@ def main() -> None:
     else:  # nasa
         nasa_csv = os.getenv("NASA_CSV", "").strip()
         if nasa_csv:
-            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # <- CSV/URL/inline
+            ts_obj = NASA.read_csv_timeseries(nasa_csv)
             ts, vs = ts_obj.t, ts_obj.v
         else:
             ts_obj = NASA.fetch_timeseries(
@@ -215,13 +233,17 @@ def main() -> None:
             ts, vs = ts_obj.t, ts_obj.v
         source_label = "nasa"
 
-    # --- detect events FROM SIGNAL (key change) ---------------------------
-    event_times = events_from_signal(ts, vs)
+    # --- detect events FROM SIGNAL ---------------------------------------
+    event_times = events_from_signal(
+        ts, vs,
+        smooth_k=args.smooth_k,
+        peak_mag_k=args.peak_mag_k,
+        peak_prom_k=args.peak_prom_k,
+        min_sep_ms=args.min_sep_ms,
+    )
 
-    # If detector found too few, don’t crash; write degenerate metrics
-    # or fall back to a super-sparse “every Nth sample” to keep files flowing.
     if len(event_times) < 3:
-        # try an ultra-conservative fallback: every 200th sample
+        # fallback: every 200th sample if long enough, else none
         if len(ts) >= 600:
             event_times = [ts[i] for i in range(0, len(ts), 200)]
         else:
@@ -251,9 +273,7 @@ def main() -> None:
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(metrics, f, ensure_ascii=False, indent=2)
 
-    # Optional companion: <slug>_latest.metrics.json
     if args.also-latest:
-        # derive <slug>_latest.metrics.json from out_path
         base = os.path.basename(out_path)
         if base.endswith(".metrics.json"):
             latest_name = base.replace(".metrics.json", "_latest.metrics.json")
@@ -264,7 +284,6 @@ def main() -> None:
         with open(latest_path, "w", encoding="utf-8") as f:
             json.dump(metrics, f, ensure_ascii=False, indent=2)
 
-    # console notice for Actions summary
     n = metrics.get("n", "?")
     mean_dt = metrics.get("mean_dt", "?")
     cv_dt = metrics.get("cv_dt", "?")
