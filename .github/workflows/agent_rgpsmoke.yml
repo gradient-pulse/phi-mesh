@@ -26,5 +26,7 @@ jobs:
           python -m pip install pyyaml numpy
 
       - name: Run synthetic smoke test
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           python agents/rgp_ns/self_test.py
