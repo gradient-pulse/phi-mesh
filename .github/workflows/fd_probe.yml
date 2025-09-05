@@ -39,67 +39,86 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install deps
         run: |
-          python -m pip install --upgrade pip pyyaml numpy
+          python -m pip install --upgrade pip
+          pip install pyyaml numpy
 
-      # Sanitize dataset slug (for filenames) and compute result_base used by the runner's latest pointer
-      - name: Resolve & validate inputs
-        id: inp
+      # Sanitize dataset slug + compute next batchN for (today, dataset, source)
+      - name: Resolve inputs & compute batch
+        id: prep
         shell: python
+        env:
+          SRC: ${{ github.event.inputs.source }}
+          DATASET_IN: ${{ github.event.inputs.dataset }}
         run: |
-          import os, re
+          import os, re, datetime as dt, pathlib
           def safe_slug(s:str)->str:
               s = (s or "").strip().lower()
               s = re.sub(r"[^a-z0-9._-]+","_", s)
               s = re.sub(r"_+","_", s).strip("_")
               return s or "dataset"
-          ds_in = os.environ["DATASET_IN"]
-          slug = safe_slug(ds_in)
-          src  = os.environ["SRC_IN"].strip().lower()
-          # echo outputs
+          source_slug = safe_slug(os.environ["SRC"])
+          slug = safe_slug(os.environ["DATASET_IN"])
+          today = dt.date.today().isoformat()
+
+          outdir = pathlib.Path("results/fd_probe")
+          outdir.mkdir(parents=True, exist_ok=True)
+
+          # Find existing batches for today's (dataset, source)
+          pat = f"{today}_{slug}_{source_slug}_batch*.metrics.json"
+          existing = list(outdir.glob(pat))
+          maxb = 0
+          for p in existing:
+              m = re.search(r"_batch(\d+)\.metrics\.json$", p.name)
+              if m:
+                  maxb = max(maxb, int(m.group(1)))
+          batch = maxb + 1
+
+          json_out = outdir / f"{today}_{slug}_{source_slug}_batch{batch}.metrics.json"
+
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
               f.write(f"slug={slug}\n")
-              f.write(f"source={src}\n")
-          print(f"::notice::Using dataset slug = {slug} (source={src})")
-        env:
-          DATASET_IN: ${{ github.event.inputs.dataset }}
-          SRC_IN:     ${{ github.event.inputs.source }}
+              f.write(f"source_slug={source_slug}\n")
+              f.write(f"today={today}\n")
+              f.write(f"batch={batch}\n")
+              f.write(f"json_out={json_out.as_posix()}\n")
 
-      - name: Run FD probe (auto-batch + latest pointer)
+          print(f"::notice::Using slug={slug}, source={source_slug}, today={today}, batch={batch}")
+          print(f"::notice::Metrics will be written to: {json_out}")
+
+      - name: Run FD probe
         env:
           PYTHONPATH: ${{ github.workspace }}
+          # Optional/offline flags/tokens (present if set in repo secrets)
           JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
           JHTDB_TOKEN:   ${{ secrets.JHTDB_TOKEN }}
           NASA_CSV:      ${{ secrets.NASA_CSV }}
         run: |
           python tools/fd_connectors/run_fd_probe.py \
-            --source "${{ steps.inp.outputs.source }}" \
-            --dataset "${{ steps.inp.outputs.slug }}" \
+            --source "${{ github.event.inputs.source }}" \
+            --dataset "${{ steps.prep.outputs.slug }}" \
             --var "${{ github.event.inputs.var }}" \
             --xyz "${{ github.event.inputs.xyz }}" \
-            --twin "${{ github.event.inputs.twin }}"
+            --twin "${{ github.event.inputs.twin }}" \
+            --json-out "${{ steps.prep.outputs.json_out }}" \
+            --title "${{ github.event.inputs.title }}" \
+            --tags "${{ github.event.inputs.tags }}"
 
-      - name: Emit pulse YAML
+      - name: Emit pulse YAML (includes batchN in filename)
         run: |
-          # The runner wrote a stable pointer:
-          #   results/fd_probe/<slug>-<source>_latest.metrics.json
-          METRICS="results/fd_probe/${{ steps.inp.outputs.slug }}-${{ steps.inp.outputs.source }}_latest.metrics.json"
-          if [ ! -f "$METRICS" ]; then
-            echo "Latest metrics not found: $METRICS"
-            ls -la results/fd_probe || true
-            exit 1
-          fi
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "$METRICS" \
+            --metrics "${{ steps.prep.outputs.json_out }}" \
             --title   "${{ github.event.inputs.title }}" \
-            --dataset "${{ steps.inp.outputs.slug }}" \
+            --dataset "${{ steps.prep.outputs.slug }}_${{ steps.prep.outputs.source_slug }}_batch${{ steps.prep.outputs.batch }}" \
             --tags    "${{ github.event.inputs.tags }}" \
             --outdir  pulse/auto
 
@@ -116,5 +135,5 @@ jobs:
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "auto: FD probe (${{ steps.inp.outputs.slug }}-${{ steps.inp.outputs.source }}) pulse + updated maps" || echo "nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.prep.outputs.slug }} / ${{ steps.prep.outputs.source_slug }} batch ${{ steps.prep.outputs.batch }}) pulse + updated maps" || echo "nothing to commit"
           git push || true
