@@ -1,6 +1,6 @@
 title: 'NT Rhythm — FD Probe'
 summary: >-
-  NT rhythm probe on “isotropic1024coarse_jhtdb_batch1” — n=3999, mean_dt=0.0001, cv_dt=1.5733342578070545e-13. Source: jhtdb. Probe: {'dataset': 'isotropic1024coarse', 'var': 'u', 'xyz': [0.1, 0.1, 0.1], 'window': [0.0, 0.4, 0.0001]}.
+  NT rhythm probe on “isotropic1024coarse_jhtdb_batch1” — n=?, mean_dt=?, cv_dt=?. Source: jhtdb. Probe: {'dataset': 'isotropic1024coarse', 'var': 'u', 'xyz': [0.1, 0.1, 0.1], 'window': [0.0, 1.0, 0.0005]}.
 tags:
 - nt_rhythm
 - turbulence
