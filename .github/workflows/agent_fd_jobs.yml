@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,51 +24,113 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml numpy
 
-      - name: Process FD jobs
+      - name: Prepare folders
         run: |
           mkdir -p results/fd_probe
           mkdir -p pulse/auto
+          mkdir -p inbox/fd_jobs/_done
+          mkdir -p inbox/fd_jobs/_error
 
+      - name: Process FD jobs
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          JHTDB_OFFLINE: ${{ secrets.JHTDB_OFFLINE }}
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+          NASA_CSV: ${{ secrets.NASA_CSV }}
+        shell: bash
+        run: |
+          shopt -s nullglob
           for jobfile in inbox/fd_jobs/*.yml; do
             [ -f "$jobfile" ] || continue
+            echo "→ Running job: $jobfile"
 
-            echo "→ Running job $jobfile"
+            # --- read a few keys from YAML (simple grep for our controlled templates)
+            # dataset (required)
+            dataset_line=$(grep -E '^dataset:' "$jobfile" | head -n1 || true)
+            if [ -z "$dataset_line" ]; then
+              echo "::error ::Missing 'dataset:' in $jobfile"
+              mv "$jobfile" inbox/fd_jobs/_error/ && continue
+            fi
+            dataset=$(echo "$dataset_line" | cut -d: -f2- | xargs)
 
-            # Slugify dataset name
-            slug=$(grep '^dataset:' "$jobfile" | awk '{print $2}' | tr -dc '[:alnum:]_-' | tr '[:upper:]' '[:lower:]')
-            source=$(grep '^source:' "$jobfile" | awk '{print $2}' | tr -dc '[:alnum:]_-' | tr '[:upper:]' '[:lower:]')
-            base="${slug}-${source}"
+            # source (default synthetic if missing)
+            source=$(grep -E '^source:' "$jobfile" | head -n1 | cut -d: -f2- | xargs)
+            if [ -z "$source" ]; then source="synthetic"; fi
 
-            # Count existing results for today to allocate batchN
+            # title (fallback if missing)
+            title=$(grep -E '^title:' "$jobfile" | head -n1 | cut -d: -f2- | xargs)
+            if [ -z "$title" ]; then title="NT Rhythm — FD Probe"; fi
+
+            # tags (list under 'tags:')
+            # collect lines like "  - tag_name"
+            tags=$(awk '/^tags:/{flag=1;next}/^[^ -]/{flag=0}flag && /^ *- /{sub(/^ *- /,""); printf "%s ", $0}' "$jobfile" | xargs)
+
+            # xyz and window triplets (required)
+            xyz_line=$(grep -E '^xyz:' "$jobfile" | head -n1 | cut -d: -f2- | xargs)
+            window_line=$(grep -E '^window:' "$jobfile" | head -n1 | cut -d: -f2- | xargs)
+            if [ -z "$xyz_line" ] || [ -z "$window_line" ]; then
+              echo "::error ::Missing 'xyz:' or 'window:' in $jobfile"
+              mv "$jobfile" inbox/fd_jobs/_error/ && continue
+            fi
+
+            # sanitize dataset + compose a base slug (dataset-source)
+            base_raw="${dataset}-$(echo "$source" | tr '[:upper:]' '[:lower:]')"
+            base=$(python - <<'PY'
+import re, os, sys
+s = os.environ["BASE_RAW"].strip().lower()
+s = re.sub(r"[^a-z0-9._-]+", "_", s)
+s = re.sub(r"_+", "_", s).strip("_")
+print(s if s else "dataset")
+PY
+            )
+            export BASE_RAW="$base_raw"
+
+            # --- allocate batchN by counting existing metrics for *today*
             today=$(date +%Y-%m-%d)
-            count=$(ls results/fd_probe/${base}_batch*.metrics.json 2>/dev/null | grep "$today" | wc -l)
+            # pattern: results/fd_probe/<YYYY-MM-DD>_<base>_batchN.metrics.json
+            count=$(ls results/fd_probe/${today}_${base}_batch*.metrics.json 2>/dev/null | wc -l)
             batch=$((count + 1))
 
-            metrics="results/fd_probe/${base}_batch${batch}.metrics.json"
-            echo "  Allocated: $metrics"
+            metrics="results/fd_probe/${today}_${base}_batch${batch}.metrics.json"
+            echo "  Allocated metrics path: $metrics"
 
-            # Run agent
-            python tools/agent_rhythm/agent_fd_job_runner.py --job "$jobfile" --json-out "$metrics"
+            # --- run the job → metrics JSON (guard errors into _error/)
+            if ! python tools/agent_rhythm/agent_fd_job_runner.py \
+                  --job "$jobfile" \
+                  --json-out "$metrics"; then
+              echo "::error ::Job failed: $jobfile"
+              mv "$jobfile" inbox/fd_jobs/_error/ || true
+              continue
+            fi
 
-            # Convert metrics to pulse
-            title=$(grep '^title:' "$jobfile" | cut -d: -f2- | xargs)
-            tags=$(grep '^tags:' -A 10 "$jobfile" | grep '-' | sed 's/-//g' | xargs)
+            # --- emit pulse (dataset name carries _batchN)
+            if ! python tools/agent_rhythm/make_pulse.py \
+                  --metrics "$metrics" \
+                  --title "$title" \
+                  --dataset "${base}_batch${batch}" \
+                  --tags "$tags" \
+                  --outdir pulse/auto; then
+              echo "::error ::Pulse emission failed for: $jobfile"
+              mv "$jobfile" inbox/fd_jobs/_error/ || true
+              continue
+            fi
 
-            python tools/agent_rhythm/make_pulse.py \
-              --metrics "$metrics" \
-              --title "$title" \
-              --dataset "${base}_batch${batch}" \
-              --tags "$tags" \
-              --outdir pulse/auto
-
-            # Archive jobfile
+            # archive the processed jobfile
             mv "$jobfile" inbox/fd_jobs/_done/ || true
           done
 
-      - name: Commit results + pulses
+      - name: Rebuild Tag & Gradient maps
+        run: |
+          python generate_graph_data.py \
+            --pulse-glob "pulse/**/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data.js
+
+      - name: Commit results + pulses + inbox state
         run: |
           git config user.name "phi-mesh-bot"
           git config user.email "bot@phi-mesh.local"
-          git add results/ pulse/auto/ inbox/fd_jobs/_done/
-          git commit -m "auto: Agent FD jobs → pulses + updated maps" || echo "No changes"
-          git push
+          git add results/fd_probe/ pulse/auto/ docs/data.js inbox/fd_jobs/_done/ inbox/fd_jobs/_error/
+          git commit -m "auto: Agent FD jobs → pulses (batchN) + updated maps" || echo "No changes"
+          git push || true
