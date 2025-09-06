@@ -107,28 +107,28 @@ jobs:
           TODAY="${{ steps.prep.outputs.today }}"
           BASE="${{ steps.prep.outputs.base }}"
 
-          # Look for the most recent metrics for THIS DAY + BASE
+          # Most recent metrics for THIS DAY + BASE (if any)
           latest=$(ls -1t "results/fd_probe/${TODAY}_${BASE}_batch"*.metrics.json 2>/dev/null | head -n1 || true)
 
           if [[ -n "$latest" ]]; then
-            # Clean inputs once to avoid space issues in argv
+            # Clean inputs once to avoid spaces in argv
             XYZ_CLEAN="${XYZ// /}"
             TWIN_CLEAN="${TWIN// /}"
 
-            # Write a tiny checker script safely (no YAML can see inside)
-            cat > /tmp/dup_check.py <<'PY'
-import json, sys
-p, ix, iw = sys.argv[1:4]
-with open(p, 'r', encoding='utf-8') as f:
-    m = json.load(f)
-d = m.get('details', {})
-xyz = d.get('xyz')
-win = d.get('window')
-lxyz = ','.join(map(str, xyz)) if isinstance(xyz, (list, tuple)) else ''
-lwin = ','.join(map(str, win)) if isinstance(win, (list, tuple)) else ''
-if lxyz == ix and lwin == iw:
-    print(f"::warning title=Duplicate run?::Same xyz/window as latest today ({p}). Continuing anyway.")
-PY
+            # Write a tiny checker without heredoc (safe for YAML linters)
+            printf '%s\n' \
+              'import json,sys' \
+              'p,ix,iw=sys.argv[1:4]' \
+              'with open(p,"r",encoding="utf-8") as f:' \
+              '    m=json.load(f)' \
+              'd=m.get("details",{})' \
+              'xyz=d.get("xyz")' \
+              'win=d.get("window")' \
+              'lxyz=",".join(map(str,xyz)) if isinstance(xyz,(list,tuple)) else ""' \
+              'lwin=",".join(map(str,win)) if isinstance(win,(list,tuple)) else ""' \
+              'if lxyz==ix and lwin==iw:' \
+              '    print(f"::warning title=Duplicate run?::Same xyz/window as latest today ({p}). Continuing anyway.")' \
+              > /tmp/dup_check.py
 
             python /tmp/dup_check.py "$latest" "$XYZ_CLEAN" "$TWIN_CLEAN"
           fi
