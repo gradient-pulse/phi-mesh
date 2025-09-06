@@ -1,4 +1,4 @@
-name: FD probe (isotropic1024coarse → metrics + pulse)
+name: FD probe (→ metrics + pulse)
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ on:
       twin:
         description: "time window as t0,t1,dt"
         required: true
-        default: "0.0,0.4,0.0001"
+        default: "0.0,1.0,0.0005"
       title:
         description: "pulse title"
         required: true
@@ -53,8 +53,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml numpy
 
-      # -------- prepare today's folder + batch number (resets daily) ----------
-      - name: Normalize inputs and compute today's batch label
+      - name: Normalize inputs and compute batch label (date-prefixed results)
         id: prep
         shell: bash
         env:
@@ -63,36 +62,43 @@ jobs:
         run: |
           set -euo pipefail
 
-          TODAY=$(date +%F)                        # e.g., 2025-09-06
+          TODAY=$(date +%F)   # YYYY-MM-DD
+
           # sanitize dataset to slug
           py='import re,sys; s=sys.argv[1].strip().lower(); s=re.sub(r"[^a-z0-9._-]+","_",s); s=re.sub(r"_+","_",s).strip("_"); print(s or "dataset")'
           DS_SLUG=$(python -c "$py" "$DATASET")
+
+          # source slug
           SRC_SLUG=$(echo "${SRC}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/_/g')
-          BASE="${DS_SLUG}_${SRC_SLUG}"
 
-          OUTDIR="results/fd_probe/${TODAY}"
-          mkdir -p "${OUTDIR}"
+          # base names
+          BASE_NO_DATE="${DS_SLUG}_${SRC_SLUG}"         # used for pulse slug
+          BASE_WITH_DATE="${TODAY}_${BASE_NO_DATE}"     # used for results filenames
 
-          # Determine next batch number *within today's folder only*
+          mkdir -p results/fd_probe
+
+          # find next batchN for TODAY only
           shopt -s nullglob
           NEXT=1
-          existing=(${OUTDIR}/${BASE}_batch*.metrics.json)
+          existing=(results/fd_probe/${BASE_WITH_DATE}_batch*.metrics.json)
           if [[ ${#existing[@]} -gt 0 ]]; then
-            last=$(ls -1 ${OUTDIR}/${BASE}_batch*.metrics.json \
+            last=$(ls -1 results/fd_probe/${BASE_WITH_DATE}_batch*.metrics.json \
                    | sed -E 's/.*_batch([0-9]+)\.metrics\.json/\1/' \
                    | sort -n | tail -1)
             NEXT=$(( last + 1 ))
           fi
-          METRICS="${OUTDIR}/${BASE}_batch${NEXT}.metrics.json"
 
-          echo "today=${TODAY}"        >> "$GITHUB_OUTPUT"
-          echo "base=${BASE}"          >> "$GITHUB_OUTPUT"
-          echo "batch=${NEXT}"         >> "$GITHUB_OUTPUT"
-          echo "metrics_path=${METRICS}" >> "$GITHUB_OUTPUT"
+          METRICS="results/fd_probe/${BASE_WITH_DATE}_batch${NEXT}.metrics.json"
+          PULSE_SLUG="${BASE_NO_DATE}_batch${NEXT}"   # make_pulse.py will prefix TODAY
 
-          echo "::notice title=Batch::Using ${TODAY}/${BASE}_batch${NEXT}"
+          echo "today=${TODAY}"           >> "$GITHUB_OUTPUT"
+          echo "base_no_date=${BASE_NO_DATE}" >> "$GITHUB_OUTPUT"
+          echo "batch=${NEXT}"            >> "$GITHUB_OUTPUT"
+          echo "metrics_path=${METRICS}"  >> "$GITHUB_OUTPUT"
+          echo "pulse_slug=${PULSE_SLUG}" >> "$GITHUB_OUTPUT"
 
-      # -------------------------- run the probe -------------------------------
+          echo "::notice title=Batch::Using ${PULSE_SLUG} (results file: ${BASE_WITH_DATE}_batch${NEXT}.metrics.json)"
+
       - name: Run FD probe
         env:
           NASA_CSV: ${{ secrets.NASA_CSV }}
@@ -109,14 +115,11 @@ jobs:
             --title "${{ github.event.inputs.title }}" \
             --tags "${{ github.event.inputs.tags }}"
 
-      # -------------------------- emit the pulse ------------------------------
-      - name: Emit pulse (slug matches metrics basename with _batchN)
+      - name: Emit pulse (keeps date out of slug, batchN included)
         run: |
           set -euo pipefail
           METRICS="${{ steps.prep.outputs.metrics_path }}"
-          PULSE_SLUG=$(basename "$METRICS")         # <base>_batchN.metrics.json
-          PULSE_SLUG="${PULSE_SLUG%.metrics.json}"  # <base>_batchN
-
+          PULSE_SLUG="${{ steps.prep.outputs.pulse_slug }}"
           python tools/agent_rhythm/make_pulse.py \
             --metrics "$METRICS" \
             --title "${{ github.event.inputs.title }}" \
@@ -124,16 +127,12 @@ jobs:
             --tags "${{ github.event.inputs.tags }}" \
             --outdir "pulse/auto"
 
-      # ------------------ commit results + pulse + maps -----------------------
       - name: Commit results + pulse + maps
         run: |
           set -euo pipefail
           git config user.name "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-
-          git add "results/fd_probe/${{ steps.prep.outputs.today }}/*.json"
-          git add pulse/auto/*.yml
+          git add results/fd_probe/*.json pulse/auto/*.yml
           git add maps/* || true
-
-          git commit -m "auto: FD probe (${{ steps.prep.outputs.base }}_batch${{ steps.prep.outputs.batch }}) pulse + updated maps" || echo "Nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.prep.outputs.pulse_slug }}) pulse + updated maps" || echo "Nothing to commit"
           git push
