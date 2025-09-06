@@ -108,21 +108,21 @@ jobs:
           BASE="${{ steps.prep.outputs.base }}"
           latest=$(ls -1t results/fd_probe/${TODAY}_${BASE}_batch*.metrics.json 2>/dev/null | head -n1 || true)
           if [[ -n "$latest" ]]; then
-            py=$(cat <<'PY'
-import json,sys
-p=sys.argv[1]
-with open(p,'r',encoding='utf-8') as f: m=json.load(f)
-xyz=m.get('details',{}).get('xyz')
-win=m.get('details',{}).get('window')
-print(','.join(map(str,xyz)) if isinstance(xyz,(list,tuple)) else '')
-print(','.join(map(str,win)) if isinstance(win,(list,tuple)) else '')
+            python - "$latest" "$XYZ" "$TWIN" <<'PY'
+import json, sys
+p, inxyz, intwin = sys.argv[1], sys.argv[2].replace(" ",""), sys.argv[3].replace(" ","")
+try:
+  with open(p, "r", encoding="utf-8") as f:
+    m = json.load(f)
+  xyz = m.get("details", {}).get("xyz")
+  win = m.get("details", {}).get("window")
+  lxyz = ",".join(map(str, xyz)) if isinstance(xyz, (list, tuple)) else ""
+  lwin = ",".join(map(str, win)) if isinstance(win, (list, tuple)) else ""
+  if lxyz == inxyz and lwin == intwin:
+    print(f"::warning title=Duplicate run?::Same xyz/window as latest today ({p}). Continuing anyway.")
+except Exception as e:
+  print(f"::notice title=Guard skipped::{e}")
 PY
-)
-            IFS=$'\n' read -r LXYZ LWIN < <(python -c "$py" "$latest")
-            INXYZ="${XYZ//[[:space:]]/}"
-            INTWIN="${TWIN//[[:space:]]/}"
-            [[ "$LXYZ" == "$INXYZ" && "$LWIN" == "$INTWIN" ]] && \
-              echo "::warning title=Duplicate run?::Same xyz/window as latest today ($latest). Continuing anyway."
           fi
 
       - name: Run FD probe
