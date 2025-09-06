@@ -106,14 +106,27 @@ jobs:
           set -euo pipefail
           TODAY="${{ steps.prep.outputs.today }}"
           BASE="${{ steps.prep.outputs.base }}"
-          latest=$(ls -1t results/fd_probe/${TODAY}_${BASE}_batch*.metrics.json 2>/dev/null | head -n1 || true)
+          latest=$(ls -1t "results/fd_probe/${TODAY}_${BASE}_batch"*.metrics.json 2>/dev/null | head -n1 || true)
+
           if [[ -n "$latest" ]]; then
-            python -c "import json,sys; p,ix,iw=sys.argv[1:4]; ix=ix.replace(' ',''); iw=iw.replace(' ',''); \
-m=json.load(open(p,'r',encoding='utf-8')); d=m.get('details',{}); xyz=d.get('xyz'); win=d.get('window'); \
-lxyz=','.join(map(str,xyz)) if isinstance(xyz,(list,tuple)) else ''; \
-lwin=','.join(map(str,win)) if isinstance(win,(list,tuple)) else ''; \
-print(f'::warning title=Duplicate run?::Same xyz/window as latest today ({p}). Continuing anyway.') \
-if lxyz==ix and lwin==iw else None" "$latest" "$XYZ" "$TWIN"
+            # Clean the user inputs once in shell to avoid space issues.
+            XYZ_CLEAN="${XYZ// /}"
+            TWIN_CLEAN="${TWIN// /}"
+
+            # Run a small Python script via stdin; pass args: <latest> <xyz> <twin>
+            python - "$latest" "$XYZ_CLEAN" "$TWIN_CLEAN" <<'PY'
+import json, sys
+p, ix, iw = sys.argv[1:4]
+with open(p, "r", encoding="utf-8") as f:
+    m = json.load(f)
+d   = m.get("details", {})
+xyz = d.get("xyz")
+win = d.get("window")
+lxyz = ",".join(map(str, xyz)) if isinstance(xyz, (list, tuple)) else ""
+lwin = ",".join(map(str, win)) if isinstance(win, (list, tuple)) else ""
+if lxyz == ix and lwin == iw:
+    print(f"::warning title=Duplicate run?::Same xyz/window as latest today ({p}). Continuing anyway.")
+PY
           fi
 
       - name: Run FD probe
