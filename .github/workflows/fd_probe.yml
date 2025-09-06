@@ -109,24 +109,24 @@ jobs:
 
           latest=$(ls -1t "results/fd_probe/${TODAY}_${BASE}_batch"*.metrics.json 2>/dev/null | head -n1 || true)
           if [[ -n "$latest" ]]; then
-            # Clean user inputs to remove spaces
+            # Clean user inputs to remove spaces so the compare is robust
             XYZ_CLEAN="${XYZ// /}"
             TWIN_CLEAN="${TWIN// /}"
 
-            # Write a tiny checker script to disk to avoid heredoc parsing issues
-            cat > /tmp/dup_check.py <<'PY'
-import json, sys
-p, ix, iw = sys.argv[1:4]
-with open(p, "r", encoding="utf-8") as f:
-    m = json.load(f)
-d   = m.get("details", {})
-xyz = d.get("xyz")
-win = d.get("window")
-lxyz = ",".join(map(str, xyz)) if isinstance(xyz, (list, tuple)) else ""
-lwin = ",".join(map(str, win)) if isinstance(win, (list, tuple)) else ""
-if lxyz == ix and lwin == iw:
-    print(f"::warning title=Duplicate run?::Same xyz/window as latest today ({p}). Continuing anyway.")
-PY
+            # Write checker without heredoc (so YAML can't see stray lines)
+            printf "%s\n" \
+"import json,sys" \
+"p,ix,iw=sys.argv[1:4]" \
+"with open(p,'r',encoding='utf-8') as f:" \
+"    m=json.load(f)" \
+"d=m.get('details',{})" \
+"xyz=d.get('xyz')" \
+"win=d.get('window')" \
+"lxyz=','.join(map(str,xyz)) if isinstance(xyz,(list,tuple)) else ''" \
+"lwin=','.join(map(str,win)) if isinstance(win,(list,tuple)) else ''" \
+"if lxyz==ix and lwin==iw:" \
+"    print(f\"::warning title=Duplicate run?::Same xyz/window as latest today ({p}). Continuing anyway.\")" \
+> /tmp/dup_check.py
 
             python /tmp/dup_check.py "$latest" "$XYZ_CLEAN" "$TWIN_CLEAN"
           fi
