@@ -1,0 +1,89 @@
+name: RGP–NS Agent (grid)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: "dataset slug or path"
+        required: true
+        default: "isotropic1024coarse"
+      source:
+        description: "synthetic | jhtdb | nasa"
+        required: true
+        default: "jhtdb"
+      var:
+        description: "variable"
+        required: true
+        default: "u"
+      seed_xyz:
+        description: "seed xyz (x,y,z)"
+        required: true
+        default: "0.1,0.1,0.1"
+      offsets:
+        description: "grid offsets (dx,dy,dz; semicolon-separated)"
+        required: true
+        default: "0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02"
+      twin:
+        description: "t0,t1,dt"
+        required: true
+        default: "0.0,1.2,0.0001"
+      k:
+        description: "stop when at least k agree"
+        required: true
+        default: "5"
+      tol:
+        description: "relative tolerance (e.g. 0.05)"
+        required: true
+        default: "0.05"
+      nmax:
+        description: "max number of probes"
+        required: true
+        default: "9"
+
+permissions:
+  contents: write
+
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml numpy
+
+      - name: Run agent grid
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          NASA_CSV: ${{ secrets.NASA_CSV }}
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python agents/rgp_ns/agent_grid.py \
+            --source "${{ github.event.inputs.source }}" \
+            --dataset "${{ github.event.inputs.dataset }}" \
+            --var "${{ github.event.inputs.var }}" \
+            --seed_xyz "${{ github.event.inputs.seed_xyz }}" \
+            --offsets "${{ github.event.inputs.offsets }}" \
+            --twin "${{ github.event.inputs.twin }}" \
+            --k "${{ github.event.inputs.k }}" \
+            --tol "${{ github.event.inputs.tol }}" \
+            --nmax "${{ github.event.inputs.nmax }}"
+
+      - name: Commit outputs (metrics + pulses + fundamentals)
+        run: |
+          set -euo pipefail
+          git config user.name  "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add results/fd_probe/*.json pulse/auto/*.yml results/rgp_ns/*.jsonl || true
+          git add maps/* || true
+          git commit -m "auto: RGP–NS agent grid run → results + pulses + fundamentals + updated maps" || echo "Nothing to commit"
+          git push
