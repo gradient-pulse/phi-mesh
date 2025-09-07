@@ -57,15 +57,13 @@ jobs:
         run: |
           set -euo pipefail
 
-          # sanitize dataset to slug
-          DS_SLUG=$(python - "$DATASET" <<'PY'
-import re,sys
-s=sys.argv[1].strip().lower()
-s=re.sub(r"[^a-z0-9._-]+","_",s)
-s=re.sub(r"_+","_",s).strip("_")
-print(s or "dataset")
-PY
-)
+          # sanitize dataset to slug (no heredoc; robust quoting)
+          DS_SLUG=$(python -c 'import re,sys
+          s = sys.argv[1].strip().lower()
+          s = re.sub(r"[^a-z0-9._-]+", "_", s)
+          s = re.sub(r"_+", "_", s).strip("_")
+          print(s or "dataset")' "$DATASET")
+       
           SRC_SLUG=$(echo "${SRC}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/_/g')
           BASE="${DS_SLUG}_${SRC_SLUG}"
 
