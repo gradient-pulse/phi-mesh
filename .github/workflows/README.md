@@ -159,6 +159,7 @@ Inputs:
 - **points** — newline-separated xyz triplets, e.g.
 
 0.10,0.10,0.10
+
 0.12,0.10,0.10
 
 - **twin** — time window as `t0,t1,dt`, default `0.0,1.2,0.0001`.
