@@ -1,29 +1,30 @@
-name: RGP–NS Grid (multi-probe agent run)
+name: RGP–NS Grid (multi-probe → consolidated pulse)
 
 on:
   workflow_dispatch:
     inputs:
       source:
-        description: "Data source (jhtdb | synthetic)"
+        description: "synthetic | jhtdb | nasa"
         required: true
         default: "jhtdb"
       dataset:
-        description: "Dataset slug or path"
+        description: "dataset slug or path (free text; will be auto-sanitized)"
         required: true
         default: "isotropic1024coarse"
+      var:
+        description: "variable name"
+        required: true
+        default: "u"
       points:
-        description: |
-          Probe points (one per line) as x,y,z in [0,1], e.g.:
-          0.10,0.10,0.10
-          0.12,0.10,0.10
-          0.10,0.12,0.10
+        description: "probe points (one x,y,z per line)"
         required: true
         default: |
           0.10,0.10,0.10
           0.12,0.10,0.10
           0.10,0.12,0.10
+          0.10,0.10,0.12
       twin:
-        description: "Time window t0,t1,dt"
+        description: "time window as t0,t1,dt"
         required: true
         default: "0.0,1.2,0.0001"
       title:
@@ -43,17 +44,37 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.mk.outputs.matrix }}
+      base:   ${{ steps.mk.outputs.base }}
+      today:  ${{ steps.mk.outputs.today }}
     steps:
       - uses: actions/checkout@v4
 
       - id: mk
         shell: bash
+        env:
+          SRC: ${{ github.event.inputs.source }}
+          DATASET: ${{ github.event.inputs.dataset }}
         run: |
           set -euo pipefail
-          # Turn the multiline 'points' input into a JSON array of strings
-          printf '%s\n' "${{ github.event.inputs.points }}" \
-            | jq -R -s 'split("\n") | map(select(length>0))' > /tmp/pts.json
-          echo "matrix=$(cat /tmp/pts.json)" >> "$GITHUB_OUTPUT"
+
+          # sanitize dataset to slug
+          DS_SLUG=$(python - "$DATASET" <<'PY'
+import re,sys
+s=sys.argv[1].strip().lower()
+s=re.sub(r"[^a-z0-9._-]+","_",s)
+s=re.sub(r"_+","_",s).strip("_")
+print(s or "dataset")
+PY
+)
+          SRC_SLUG=$(echo "${SRC}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/_/g')
+          BASE="${DS_SLUG}_${SRC_SLUG}"
+
+          # matrix JSON from multi-line "points" input (one x,y,z per line)
+          MATRIX=$(jq -R -s 'split("\n") | map(select(length>0))' <<< "${{ github.event.inputs.points }}")
+
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          echo "base=$BASE"     >> "$GITHUB_OUTPUT"
+          echo "today=$(date -u +%F)" >> "$GITHUB_OUTPUT"
 
   run-grid:
     needs: plan
@@ -62,13 +83,6 @@ jobs:
       fail-fast: false
       matrix:
         xyz: ${{ fromJson(needs.plan.outputs.matrix) }}
-
-    env:
-      SRC:     ${{ github.event.inputs.source }}
-      DATASET: ${{ github.event.inputs.dataset }}
-      TWIN:    ${{ github.event.inputs.twin }}
-      TITLE:   ${{ github.event.inputs.title }}
-      TAGS:    ${{ github.event.inputs.tags }}
 
     steps:
       - uses: actions/checkout@v4
@@ -87,42 +101,42 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
           NASA_CSV:    ${{ secrets.NASA_CSV }}
+          SRC:         ${{ github.event.inputs.source }}
+          DATASET:     ${{ github.event.inputs.dataset }}
+          VAR:         ${{ github.event.inputs.var }}
+          XYZ:         ${{ matrix.xyz }}
+          TWIN:        ${{ github.event.inputs.twin }}
+          STAGE:       results/rgp_ns/grid/${{ github.run_id }}
         shell: bash
         run: |
           set -euo pipefail
-          XYZ="${{ matrix.xyz }}"
+          mkdir -p "$STAGE"
 
-          # Convert "x,y,z" -> "[x,y,z]" without a heredoc
-          XYZ_JSON=$(python -c 'import sys
-s=sys.argv[1].strip()
-parts=[p.strip() for p in s.split(",")]
-if len(parts)!=3: raise SystemExit("xyz must be x,y,z")
-print("[" + ",".join(parts) + "]")' "$XYZ")
+          # Convert "x,y,z" -> JSON "[x,y,z]" (single-line python to keep YAML happy)
+          XYZ_JSON=$(python -c "import sys; s=sys.argv[1].strip(); parts=[p.strip() for p in s.split(',')]; \
+if len(parts)!=3: raise SystemExit('xyz must be x,y,z'); print('['+','.join(parts)+']')" "$XYZ")
 
           echo "Shard xyz: $XYZ_JSON"
 
-          # Where to stash shard metrics
-          STAGE="results/rgp_ns/grid/${{ github.run_id }}"
-          mkdir -p "$STAGE"
-
-          # Run the grid wrapper (writes one metrics JSON per shard)
+          # Run the grid wrapper (writes one metrics JSON per shard into $STAGE)
           python agents/rgp_ns/agent_grid.py \
             --source "$SRC" \
             --dataset "$DATASET" \
+            --var "$VAR" \
             --xyz "$XYZ_JSON" \
             --twin "$TWIN" \
-            --stage-dir "$STAGE"
+            --stage "$STAGE"
 
-      - name: Upload shard artifacts (for safety)
+      - name: Upload shard artifacts (debug)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rgp-ns-shards-${{ strategy.job-index }}
+          name: rgp_ns_shards_${{ matrix.xyz }}
           path: results/rgp_ns/grid/${{ github.run_id }}/*.json
           if-no-files-found: ignore
 
-  merge-and-pulse:
-    needs: run-grid
+  consolidate:
+    needs: [plan, run-grid]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -136,62 +150,101 @@ print("[" + ",".join(parts) + "]")' "$XYZ")
           python -m pip install --upgrade pip
           pip install numpy pyyaml
 
-      - name: Merge shard metrics → combined.json
+      - name: Compute next daily batch + select best shard
+        id: select
         shell: bash
+        env:
+          BASE:  ${{ needs.plan.outputs.base }}
+          TODAY: ${{ needs.plan.outputs.today }}
+          STAGE: results/rgp_ns/grid/${{ github.run_id }}
         run: |
           set -euo pipefail
-          STAGE="results/rgp_ns/grid/${{ github.run_id }}"
-          OUT="results/rgp_ns/grid/${{ github.run_id }}/combined.metrics.json"
-          mkdir -p "$STAGE"
-          python - <<'PY'
-          import json,glob,statistics as st,sys,os
-          stage = os.path.join("results","rgp_ns","grid",os.environ["GITHUB_RUN_ID"])
-          files = sorted(glob.glob(os.path.join(stage,"*.metrics.json")))
-          combo = {"shards": [], "source": "", "details": {}}
-          for f in files:
-            try:
-              m = json.load(open(f))
-            except Exception:
-              continue
-            combo["shards"].append(m)
-            combo["source"] = combo.get("source") or m.get("source","")
-            combo["details"] = combo.get("details") or m.get("details",{})
-          # simple rollups for hinting (median of shard main peaks if present)
-          def pick(key):
-            vals = [s.get(key) for s in combo["shards"] if isinstance(s.get(key),(int,float))]
-            return st.median(vals) if vals else None
-          combo["period"] = pick("period")
-          combo["bpm"] = pick("bpm")
-          combo["main_peak_freq"] = pick("main_peak_freq")
-          # carry counts if present
-          nvals = [s.get("n") for s in combo["shards"] if isinstance(s.get("n"),int)]
-          if nvals: combo["n"] = sum(nvals)
-          json.dump(combo, open(os.path.join(stage,"combined.metrics.json"),"w"), indent=2)
-          PY
-          test -s "$OUT" && echo "Combined: $OUT"
+          mkdir -p results/rgp_ns pulse/auto
 
-      - name: Emit consolidated pulse
+          # Determine next daily batch index for grid results
+          shopt -s nullglob
+          existing=(results/rgp_ns/${TODAY}_${BASE}_grid_batch*.metrics.json)
+          if [[ ${#existing[@]} -gt 0 ]]; then
+            last=$(ls -1 results/rgp_ns/${TODAY}_${BASE}_grid_batch*.metrics.json | sed -E 's/.*_batch([0-9]+)\.metrics\.json/\1/' | sort -n | tail -1)
+            NEXT=$(( last + 1 ))
+          else
+            NEXT=1
+          fi
+
+          BEST_JSON=$(python - <<'PY'
+import json,glob,math
+import os,sys
+stage=os.environ.get("STAGE","")
+best=None
+best_score=-1.0
+pick=None
+for fp in glob.glob(os.path.join(stage,"*.json")):
+    try:
+        with open(fp,"r",encoding="utf-8") as f:
+            m=json.load(f)
+    except Exception:
+        continue
+    # score: prefer strong ladder (>=3 peaks) and higher main_peak power
+    peaks=m.get("peaks") or []
+    ladder=len(peaks)
+    main=peaks[0][1] if peaks else 0.0
+    # dominance: main / next (>=1)
+    dom=1.0
+    if len(peaks)>=2 and peaks[1][1]>0:
+        dom=float(peaks[0][1])/float(peaks[1][1])
+    score = (ladder>=3)*2.0 + (ladder>=2)*1.0 + dom*0.25 + (main>0)*0.01
+    if score>best_score:
+        best_score=score
+        best=m
+        pick=fp
+if not best:
+    print("::warning ::No shard metrics found; consolidation will noop.")
+    sys.exit(0)
+out=json.dumps({"file":pick,"metrics":best,"score":best_score})
+print(out)
+PY
+)
+          echo "selection=$BEST_JSON" >> "$GITHUB_OUTPUT"
+          echo "batch=$NEXT"          >> "$GITHUB_OUTPUT"
+
+      - name: Write canonical metrics + emit pulse
+        if: ${{ steps.select.outputs.selection != '' }}
         shell: bash
+        env:
+          TITLE:   ${{ github.event.inputs.title }}
+          TAGS:    ${{ github.event.inputs.tags }}
+          BASE:    ${{ needs.plan.outputs.base }}
+          TODAY:   ${{ needs.plan.outputs.today }}
+          BATCH:   ${{ steps.select.outputs.batch }}
         run: |
           set -euo pipefail
-          STAGE="results/rgp_ns/grid/${{ github.run_id }}"
-          COMB="$STAGE/combined.metrics.json"
-          # Pulse slug keeps batch label logic on fd/pulse side; here we use a grid suffix
-          SLUG="${{ github.event.inputs.dataset }}_${{ github.event.inputs.source }}_grid"
+
+          # Extract the selected shard metrics to a temp file
+          SEL_FILE=$(python -c 'import json,sys; print(json.loads(sys.argv[1])["file"])' '${{ steps.select.outputs.selection }}')
+          MET_TMP="results/rgp_ns/_tmp_best.json"
+          cp "$SEL_FILE" "$MET_TMP"
+
+          # Move to canonical, dated filename
+          CANON="results/rgp_ns/${TODAY}_${BASE}_grid_batch${BATCH}.metrics.json"
+          mv "$MET_TMP" "$CANON"
+
+          # Build a slug that preserves _batchN in the pulse filename
+          PULSE_SLUG="${BASE}_grid_batch${BATCH}"
+
+          # Emit the pulse (includes n/mean_dt/cv_dt if present; adds a hint internally)
           python tools/agent_rhythm/make_pulse.py \
-            --metrics "$COMB" \
-            --title   "${{ github.event.inputs.title }}" \
-            --dataset "$SLUG" \
-            --tags    "${{ github.event.inputs.tags }}" \
+            --metrics "$CANON" \
+            --title   "$TITLE" \
+            --dataset "$PULSE_SLUG" \
+            --tags    "$TAGS" \
             --outdir  "pulse/auto"
 
-      - name: Commit combined results + pulse
+      - name: Commit consolidated results + pulse
         run: |
           set -euo pipefail
           git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add results/rgp_ns/grid/${{ github.run_id }}/*.json || true
-          git add pulse/auto/*.yml
+          git add results/rgp_ns/*.json pulse/auto/*.yml
           git add maps/* || true
-          git commit -m "auto: RGP–NS grid run → consolidated results + pulse" || echo "Nothing to commit"
+          git commit -m "auto: RGP–NS grid (${ { needs.plan.outputs.today } } ${ { needs.plan.outputs.base } }) consolidated results + pulse" || echo "Nothing to commit"
           git push
