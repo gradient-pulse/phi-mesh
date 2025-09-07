@@ -135,7 +135,8 @@ jobs:
 
       - name: Run FD probe
         env:
-          NASA_CSV:    ${{ secrets.NASA_CSV }}
+          PYTHONPATH: ${{ github.workspace }}
+          NASA_CSV: ${{ secrets.NASA_CSV }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
         run: |
           set -euo pipefail
@@ -148,7 +149,7 @@ jobs:
             --json-out "${{ steps.prep.outputs.metrics_path }}" \
             --title "${{ github.event.inputs.title }}" \
             --tags "${{ github.event.inputs.tags }}"
-
+            
       - name: Emit pulse (date in filename; slug keeps _batchN)
         run: |
           set -euo pipefail
