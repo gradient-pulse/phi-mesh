@@ -1,0 +1,146 @@
+name: RGP–NS grid (JHTDB → agent runs → consolidated pulse)
+
+on:
+  workflow_dispatch:
+    inputs:
+      points:
+        description: "Probe points (one per line) like: 0.10,0.10,0.10"
+        required: true
+        default: |
+          0.10,0.10,0.10
+          0.12,0.10,0.10
+          0.10,0.12,0.10
+          0.10,0.10,0.12
+      twin:
+        description: "Time window t0,t1,dt (e.g., 0.0,1.2,0.0001)"
+        required: true
+        default: "0.0,1.2,0.0001"
+      title:
+        description: "Pulse title"
+        required: true
+        default: "NT Rhythm — RGP–NS Grid"
+      tags:
+        description: "Space-separated tags"
+        required: true
+        default: "nt_rhythm turbulence navier_stokes rgp"
+
+permissions:
+  contents: write
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.mk.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: mk
+        shell: bash
+        run: |
+          jq -R -s 'split("\n") | map(select(length>0))' <<'PTS' > /tmp/pts.json
+          ${{ github.event.inputs.points }}
+PTS
+          echo "matrix=$(cat /tmp/pts.json)" >> "$GITHUB_OUTPUT"
+
+  run-grid:
+    needs: plan
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        xyz: ${{ fromJson(needs.plan.outputs.matrix) }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install numpy pyyaml
+
+      - name: Run agent at ${{ matrix.xyz }}
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p results/rgp_ns/shards
+          shard=$(echo "${{ matrix.xyz }}" | tr -d ' ,')
+          cfg="/tmp/config_${shard}.yml"
+          cp agents/rgp_ns/config_jhtdb.yml "$cfg"
+
+          python - <<'PY'
+          import sys,yaml,os
+          xyz  = "${{ matrix.xyz }}".strip()
+          t0,t1,dt = "${{ github.event.inputs.twin }}".split(',')
+          cfg = yaml.safe_load(open(sys.argv[1]))
+          cfg['dataset']['kind'] = 'jhtdb'
+          cfg['dataset']['name'] = 'isotropic1024coarse'
+          cfg['probe'] = {'xyz':[float(s) for s in xyz.split(',')],'window':[float(t0),float(t1),float(dt)]}
+          yaml.safe_dump(cfg, open(sys.argv[1],'w'), sort_keys=False)
+          PY "$cfg"
+
+          # run agent → metrics.json
+          python agents/rgp_ns/run_agent.py --config "$cfg"
+          mv results/rgp_ns/latest/*.json results/rgp_ns/shards/shard_${shard}.json || true
+
+      - name: Upload shard result
+        uses: actions/upload-artifact@v4
+        with:
+          name: rgp-ns-shards
+          path: results/rgp_ns/shards/*.json
+          if-no-files-found: ignore
+
+  reduce:
+    needs: run-grid
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: rgp-ns-shards
+          path: results/rgp_ns/shards
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m pip install pyyaml numpy
+
+      - name: Consolidate shards → pulse
+        run: |
+          set -euo pipefail
+          mkdir -p pulse/auto
+          OUT="pulse/auto/$(date -u +%F)_rgpns_grid.yml"
+
+          python - <<'PY'
+          import os,glob,json,datetime,yaml
+          files=glob.glob("results/rgp_ns/shards/*.json")
+          all_peaks=[]
+          meta=[]
+          for f in files:
+              m=json.load(open(f))
+              all_peaks.append(m.get("main_peak_freq"))
+              meta.append(m.get("details",{}))
+          hint="grid"
+          if len(set(all_peaks))==1:
+              hint=f"coherent — freq={list(set(all_peaks))[0]}"
+          elif len(set(all_peaks))<len(all_peaks):
+              hint="partial coherence"
+          pulse={
+              "title":"${{ github.event.inputs.title }}",
+              "summary":f"Grid probe across {len(files)} points. Hint: {hint}. twin=${{ github.event.inputs.twin }}. Details: {meta[:2]}...",
+              "tags":"${{ github.event.inputs.tags }}".split(),
+              "papers":[],
+              "podcasts":[],
+          }
+          yaml.safe_dump(pulse,open("pulse/auto/$(date -u +%F)_rgpns_grid.yml","w"),sort_keys=False,allow_unicode=True)
+          PY
+
+      - name: Commit consolidated pulse + results
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add results/rgp_ns/shards/*.json pulse/auto/*yml maps/* || true
+          git commit -m "auto: RGP–NS grid consolidated pulse + results + maps" || echo "Nothing to commit"
+          git push
