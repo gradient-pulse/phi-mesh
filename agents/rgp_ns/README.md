@@ -1,58 +1,67 @@
-# RGP–NS Agent (NT rhythm from probe time series)
+## Agent grid (auto-probe & early stop)
 
-**What it does**  
-Loads a velocity time series (synthetic by default), detects NT events, computes inter-event **ratios**, writes results under `results/rgp_ns/<timestamp>/batch1/`, and emits a Φ-Mesh pulse via your `make_pulse.py`.
+What it does
+- Samples a small spatial grid around a seed Eulerian point.
+- For each location, runs the standard FD probe → metrics, emits a Φ-Mesh pulse, and appends the detected fundamental (Hz) to `results/rgp_ns/<date>_fundamentals.jsonl`.
+- Stops early when at least **k** fundamentals agree within a relative tolerance **tol**.
 
-## Run (dry test)
-*Synthetic test is the acceptance gate — if this passes, you can safely proceed to NetCDF or JHTDB modes.*
+### Run via GitHub Actions (recommended)
+
+1. Open **Actions → “RGP–NS Agent (grid)” → Run workflow**.
+2. Inputs (defaults are sensible):
+   - `dataset`: `isotropic1024coarse`
+   - `source`: `jhtdb`
+   - `var`: `u`
+   - `seed_xyz`: `0.1,0.1,0.1`
+   - `offsets`: `0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02`
+   - `twin`: `0.0,1.2,0.0001`
+   - `k`: `5`
+   - `tol`: `0.05`
+   - `nmax`: `9`
+3. Watch the run logs:
+   - Each probe prints `fundamental_hz=…` (from `make_pulse.py`).
+   - The agent prints “**decisive**” once `k` inliers are reached.
+
+Artifacts written
+- `results/fd_probe/YYYY-MM-DD_<base>_batchN.metrics.json`
+- `pulse/auto/YYYY-MM-DD_<base>_batchN.yml` (with `hint:` line)
+- `results/rgp_ns/YYYY-MM-DD_fundamentals.jsonl` (one float per probe)
+
+### Run locally (optional)
 
 ```bash
-python agents/rgp_ns/run_agent.py --config agents/rgp_ns/config.yml
-
-Outputs:
-	•	results/rgp_ns/<stamp>/batch1/nt_ratio_summary.csv
-	•	results/rgp_ns/<stamp>/batch1/meta.json
-	•	results/rgp_ns/<stamp>/batch1/metrics.json (fed to make_pulse.py)
-	•	a new pulse in pulse/auto/…yml
-
-Switch to NetCDF later
-
-Once you have a JHTDB (or other CFD) export in NetCDF/HDF5, edit agents/rgp_ns/config.yml:
-dataset:
-  kind: local_netcdf
-  path: data/isotropic.nc
-  u_var: u
-  v_var: v
-  w_var: w
-  t_var: time
-
-Then extend LocalNetCDFAdapter in data_io.py so that it yields
-(probe_id, t, |u|) tuples. That’s the only place that needs touching.
+export PYTHONPATH=$(pwd)
+python agents/rgp_ns/agent_grid.py \
+  --source jhtdb --dataset isotropic1024coarse --var u \
+  --seed_xyz 0.1,0.1,0.1 \
+  --offsets "0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0" \
+  --twin 0.0,1.2,0.0001 --k 5 --tol 0.05 --nmax 9
 
 Notes
-	•	No SciPy dependency; peak detector is a simple prominence + min-separation rule.
-	•	Keep your strict pulse style; titles are single-quoted in config.yml.
-	•	Synthetic mode stays available forever as a dry-run baseline.
+	•	Daily batchN numbering resets each UTC day (both results and pulses).
+	•	The hint: in pulses reflects agreement strength; the JSONL is the agent’s simple “memory” for the day.
+	•	Expand offsets to sample more broadly; tighten tol for stricter consensus.
 
-## JHTDB Live Mode (placeholder)
+---
 
-You can also run directly against the Johns Hopkins Turbulence Database (JHTDB).  
-This requires a valid API token saved as a GitHub secret (`JHTDB_TOKEN`).
+# 4) Mouse steps (what to click/do)
 
-### Config
-Set the dataset kind in `agents/rgp_ns/config.yml`:
+1) **Add the files**
+- Create `agents/rgp_ns/agent_grid.py` with the code above.
+- Create `.github/workflows/rgp_ns_agent.yml` with the code above.
+- Append the README section above to `agents/rgp_ns/README.md`.
 
-```yaml
-dataset:
-  kind: jhtdb
-  dataset: isotropic1024coarse   # or 'channel', 'mixing', etc.
-  var: u
-  xyz: [0.1, 0.1, 0.1]          # probe location
-  window: [0.0, 10.0, 0.01]     # [t0, t1, dt]
+2) **Commit**
+- Commit and push to `main`.
 
-Notes
-	•	Current implementation uses the test token (≤4096 points per query).
-	•	Replace with a personal token once approved by JHTDB.
-	•	Agent wrapper (run_agent.py) will automatically fetch the token from secrets.
-	•	Results + pulses appear under results/rgp_ns/<timestamp>/batchN/ as usual.
-	•	This path is experimental — use NetCDF mode if you need bulk probes.
+3) **Run the agent**
+- GitHub → **Actions → “RGP–NS Agent (grid)” → Run workflow**.
+- Keep defaults for a first pass; click **Run**.
+
+4) **Verify outputs**
+- `results/fd_probe/` shows today’s **dated** `…_batchN.metrics.json` files.
+- `pulse/auto/` shows today’s `…_batchN.yml` pulses (with `hint:`).
+- `results/rgp_ns/YYYY-MM-DD_fundamentals.jsonl` contains one `f0` per probe.
+- The run log will print when consensus is **decisive** (k inliers).
+
+If you want me to tune defaults (e.g., a denser ring or different `tol`/`k`) or add a tiny **summary pulse** of the agent’s final decision, say the word and I’ll drop it in.
