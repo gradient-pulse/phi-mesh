@@ -12,7 +12,7 @@ on:
           0.10,0.12,0.10
           0.10,0.10,0.12
       twin:
-        description: "Time window t0,t1,dt (e.g., 0.0,1.2,0.0001)"
+        description: "Time window t0,t1,dt"
         required: true
         default: "0.0,1.2,0.0001"
       title:
@@ -34,12 +34,15 @@ jobs:
       matrix: ${{ steps.mk.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+
       - id: mk
         shell: bash
         run: |
-          jq -R -s 'split("\n") | map(select(length>0))' <<'PTS' > /tmp/pts.json
-          ${{ github.event.inputs.points }}
-PTS
+          set -euo pipefail
+          # Turn multi-line input into JSON array safely (no heredoc)
+          printf '%s\n' "${{ github.event.inputs.points }}" \
+            | jq -R -s 'split("\n") | map(select(length>0))' > /tmp/pts.json
+
           echo "matrix=$(cat /tmp/pts.json)" >> "$GITHUB_OUTPUT"
 
   run-grid:
@@ -52,10 +55,13 @@ PTS
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: |
+
+      - name: Install deps
+        run: |
           python -m pip install --upgrade pip
           pip install numpy pyyaml
 
@@ -63,27 +69,38 @@ PTS
         env:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+          XYZ: ${{ matrix.xyz }}
+          TWIN: ${{ github.event.inputs.twin }}
+        shell: bash
         run: |
           set -euo pipefail
           mkdir -p results/rgp_ns/shards
-          shard=$(echo "${{ matrix.xyz }}" | tr -d ' ,')
+          shard="$(echo "$XYZ" | tr -d ' ,')"   # e.g. 0.10,0.12,0.10 -> 0.10 0.12 0.10 -> 0.100.120.10
+
           cfg="/tmp/config_${shard}.yml"
           cp agents/rgp_ns/config_jhtdb.yml "$cfg"
 
-          python - <<'PY'
-          import sys,yaml,os
-          xyz  = "${{ matrix.xyz }}".strip()
-          t0,t1,dt = "${{ github.event.inputs.twin }}".split(',')
-          cfg = yaml.safe_load(open(sys.argv[1]))
+          python - "$cfg" "$XYZ" "$TWIN" <<'PY'
+          import sys, yaml
+          cfg_path, xyz, twin = sys.argv[1], sys.argv[2].strip(), sys.argv[3].strip()
+          t0, t1, dt = [float(x) for x in twin.split(',')]
+          xs = [float(s) for s in xyz.split(',')]
+          cfg = yaml.safe_load(open(cfg_path))
           cfg['dataset']['kind'] = 'jhtdb'
           cfg['dataset']['name'] = 'isotropic1024coarse'
-          cfg['probe'] = {'xyz':[float(s) for s in xyz.split(',')],'window':[float(t0),float(t1),float(dt)]}
-          yaml.safe_dump(cfg, open(sys.argv[1],'w'), sort_keys=False)
-          PY "$cfg"
+          cfg['probe'] = {'xyz': xs, 'window': [t0, t1, dt]}
+          yaml.safe_dump(cfg, open(cfg_path, 'w'), sort_keys=False)
+          PY
 
-          # run agent → metrics.json
+          # Run agent -> writes JSON into results/rgp_ns/<timestamp>/batch1/
           python agents/rgp_ns/run_agent.py --config "$cfg"
-          mv results/rgp_ns/latest/*.json results/rgp_ns/shards/shard_${shard}.json || true
+
+          # Move shard metrics to shards folder
+          # Keep only the last metrics.json written by the run
+          last_json="$(ls -1t results/rgp_ns/*/batch1/*.json 2>/dev/null | head -n1 || true)"
+          if [[ -n "$last_json" ]]; then
+            cp "$last_json" "results/rgp_ns/shards/shard_${shard}.json"
+          fi
 
       - name: Upload shard result
         uses: actions/upload-artifact@v4
@@ -97,50 +114,75 @@ PTS
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           name: rgp-ns-shards
           path: results/rgp_ns/shards
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: |
-          python -m pip install pyyaml numpy
 
-      - name: Consolidate shards → pulse
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pyyaml
+
+      - name: Consolidate shards → one pulse
+        env:
+          PULSE_TITLE: ${{ github.event.inputs.title }}
+          PULSE_TAGS:  ${{ github.event.inputs.tags }}
+          TWIN:        ${{ github.event.inputs.twin }}
+        shell: bash
         run: |
           set -euo pipefail
           mkdir -p pulse/auto
           OUT="pulse/auto/$(date -u +%F)_rgpns_grid.yml"
-
-          python - <<'PY'
-          import os,glob,json,datetime,yaml
-          files=glob.glob("results/rgp_ns/shards/*.json")
-          all_peaks=[]
-          meta=[]
+          python - "$OUT" <<'PY'
+          import sys,glob,json,yaml,statistics
+          out_path = sys.argv[1]
+          files = sorted(glob.glob("results/rgp_ns/shards/*.json"))
+          peaks, details = [], []
           for f in files:
-              m=json.load(open(f))
-              all_peaks.append(m.get("main_peak_freq"))
-              meta.append(m.get("details",{}))
-          hint="grid"
-          if len(set(all_peaks))==1:
-              hint=f"coherent — freq={list(set(all_peaks))[0]}"
-          elif len(set(all_peaks))<len(all_peaks):
-              hint="partial coherence"
-          pulse={
-              "title":"${{ github.event.inputs.title }}",
-              "summary":f"Grid probe across {len(files)} points. Hint: {hint}. twin=${{ github.event.inputs.twin }}. Details: {meta[:2]}...",
-              "tags":"${{ github.event.inputs.tags }}".split(),
-              "papers":[],
-              "podcasts":[],
+              try:
+                  m = json.load(open(f))
+                  peaks.append(m.get("main_peak_freq"))
+                  details.append(m.get("details", {}))
+              except Exception:
+                  pass
+
+          hint = "grid"
+          uniq = [p for p in set(peaks) if p is not None]
+          if len(files) == 0:
+              hint = "no data"
+          elif len(uniq) == 1:
+              hint = f"coherent — freq={uniq[0]}"
+          elif 1 < len(uniq) < len(peaks):
+              hint = "partial coherence"
+
+          pulse = {
+              "title":       sys.argv[0],  # placeholder, replaced below
+              "summary":     f"RGP–NS grid across {len(files)} points, twin=${{ env.TWIN }}. Hint: {hint}.",
+              "tags":        ${{ toJson(github.event.inputs.tags) }}.split() if False else [],  # will replace below
+              "papers":      [],
+              "podcasts":    [],
           }
-          yaml.safe_dump(pulse,open("pulse/auto/$(date -u +%F)_rgpns_grid.yml","w"),sort_keys=False,allow_unicode=True)
+
+          # Replace fields that need env-provided values (keep YAML dumper simple)
+          pulse["title"] = "${{ env.PULSE_TITLE }}"
+          pulse["tags"]  = "${{ env.PULSE_TAGS }}".split()
+
+          yaml.safe_dump(pulse, open(out_path, "w"), sort_keys=False, allow_unicode=True)
           PY
+
+          echo "Wrote $OUT"
 
       - name: Commit consolidated pulse + results
         run: |
-          git config user.name "phi-mesh-bot"
+          set -euo pipefail
+          git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add results/rgp_ns/shards/*.json pulse/auto/*yml maps/* || true
+          git add results/rgp_ns/shards/*.json pulse/auto/*.yml maps/* || true
           git commit -m "auto: RGP–NS grid consolidated pulse + results + maps" || echo "Nothing to commit"
           git push
