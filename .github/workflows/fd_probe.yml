@@ -22,7 +22,7 @@ on:
       twin:
         description: "time window as t0,t1,dt"
         required: true
-        default: "0.0,1.0,0.0005"
+        default: "0.0,1.2,0.0001"
       title:
         description: "pulse title"
         required: true
@@ -115,7 +115,7 @@ jobs:
             XYZ_CLEAN="${XYZ// /}"
             TWIN_CLEAN="${TWIN// /}"
 
-            # Write a tiny checker without heredoc (safe for YAML linters)
+            # Tiny checker without heredoc (keeps YAML linters happy)
             printf '%s\n' \
               'import json,sys' \
               'p,ix,iw=sys.argv[1:4]' \
@@ -149,23 +149,39 @@ jobs:
             --json-out "${{ steps.prep.outputs.metrics_path }}" \
             --title "${{ github.event.inputs.title }}" \
             --tags "${{ github.event.inputs.tags }}"
-            
-      - name: Emit pulse (date in filename; slug keeps _batchN)
+
+      - name: Emit pulse (date in filename; slug keeps _batchN) and append fundamental for agent voting
+        id: pulse
+        shell: bash
         run: |
           set -euo pipefail
-          python tools/agent_rhythm/make_pulse.py \
+          REC="results/rgp_ns/$(date -u +%F)_fundamentals.jsonl"
+          mkdir -p results/rgp_ns
+
+          # Run make_pulse and capture its stdout (for fundamental_hz=… line)
+          OUT=$(python tools/agent_rhythm/make_pulse.py \
             --metrics "${{ steps.prep.outputs.metrics_path }}" \
             --title   "${{ github.event.inputs.title }}" \
             --dataset "${{ steps.prep.outputs.pulse_slug }}" \
             --tags    "${{ github.event.inputs.tags }}" \
-            --outdir  "pulse/auto"
+            --outdir  "pulse/auto" \
+            --recent  "$REC" | tee /dev/fd/2)
 
-      - name: Commit results + pulse + maps
+          # Extract and append the fundamental (one float per line)
+          F0=$(printf '%s\n' "$OUT" | sed -n 's/^fundamental_hz=\([0-9.][0-9.]*\).*/\1/p' | head -n1 || true)
+          if [ -n "$F0" ]; then
+            echo "$F0" >> "$REC"
+          fi
+
+          echo "recent_file=$REC" >> "$GITHUB_OUTPUT"
+
+      - name: Commit results + pulse + maps (+ fundamentals JSONL)
         run: |
           set -euo pipefail
           git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
           git add results/fd_probe/*.json pulse/auto/*.yml
+          git add results/rgp_ns/*.jsonl || true
           git add maps/* || true
-          git commit -m "auto: FD probe (${{ steps.prep.outputs.today }} ${{ steps.prep.outputs.base }} batch ${{ steps.prep.outputs.batch }}) results + pulse + updated maps" || echo "Nothing to commit"
+          git commit -m "auto: FD probe (${{ steps.prep.outputs.today }} ${{ steps.prep.outputs.base }} batch ${{ steps.prep.outputs.batch }}) results + pulse + fundamentals + updated maps" || echo "Nothing to commit"
           git push
