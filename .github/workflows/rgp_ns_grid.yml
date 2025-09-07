@@ -91,22 +91,21 @@ jobs:
         run: |
           set -euo pipefail
           XYZ="${{ matrix.xyz }}"
-          # Normalize xyz "a,b,c" → JSON-like list string
-          XYZ_JSON=$(python - <<'PY'
-          import sys,re
-          s = sys.argv[1].strip()
-          parts = [p.strip() for p in s.split(",")]
-          if len(parts)!=3: raise SystemExit("xyz must be 'x,y,z'")
-          print("[" + ",".join(parts) + "]")
-PY
-          "${XYZ}")
-          echo "Shard xyz: ${XYZ_JSON}"
+
+          # Convert "x,y,z" -> "[x,y,z]" without a heredoc
+          XYZ_JSON=$(python -c 'import sys
+s=sys.argv[1].strip()
+parts=[p.strip() for p in s.split(",")]
+if len(parts)!=3: raise SystemExit("xyz must be x,y,z")
+print("[" + ",".join(parts) + "]")' "$XYZ")
+
+          echo "Shard xyz: $XYZ_JSON"
 
           # Where to stash shard metrics
           STAGE="results/rgp_ns/grid/${{ github.run_id }}"
           mkdir -p "$STAGE"
 
-          # Run the grid wrapper (reads env + writes one metrics JSON per shard)
+          # Run the grid wrapper (writes one metrics JSON per shard)
           python agents/rgp_ns/agent_grid.py \
             --source "$SRC" \
             --dataset "$DATASET" \
