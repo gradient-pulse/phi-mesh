@@ -1,16 +1,27 @@
-name: RGP–NS grid (JHTDB → agent runs → consolidated pulse)
+name: RGP–NS Grid (multi-probe agent run)
 
 on:
   workflow_dispatch:
     inputs:
+      source:
+        description: "Data source (jhtdb | synthetic)"
+        required: true
+        default: "jhtdb"
+      dataset:
+        description: "Dataset slug or path"
+        required: true
+        default: "isotropic1024coarse"
       points:
-        description: "Probe points (one per line) like: 0.10,0.10,0.10"
+        description: |
+          Probe points (one per line) as x,y,z in [0,1], e.g.:
+          0.10,0.10,0.10
+          0.12,0.10,0.10
+          0.10,0.12,0.10
         required: true
         default: |
           0.10,0.10,0.10
           0.12,0.10,0.10
           0.10,0.12,0.10
-          0.10,0.10,0.12
       twin:
         description: "Time window t0,t1,dt"
         required: true
@@ -39,10 +50,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Turn multi-line input into JSON array safely (no heredoc)
+          # Turn the multiline 'points' input into a JSON array of strings
           printf '%s\n' "${{ github.event.inputs.points }}" \
             | jq -R -s 'split("\n") | map(select(length>0))' > /tmp/pts.json
-
           echo "matrix=$(cat /tmp/pts.json)" >> "$GITHUB_OUTPUT"
 
   run-grid:
@@ -53,6 +63,13 @@ jobs:
       matrix:
         xyz: ${{ fromJson(needs.plan.outputs.matrix) }}
 
+    env:
+      SRC:     ${{ github.event.inputs.source }}
+      DATASET: ${{ github.event.inputs.dataset }}
+      TWIN:    ${{ github.event.inputs.twin }}
+      TITLE:   ${{ github.event.inputs.title }}
+      TAGS:    ${{ github.event.inputs.tags }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -65,61 +82,52 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pyyaml
 
-      - name: Run agent at ${{ matrix.xyz }}
+      - name: Run agent shard
         env:
           PYTHONPATH: ${{ github.workspace }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
-          XYZ: ${{ matrix.xyz }}
-          TWIN: ${{ github.event.inputs.twin }}
+          NASA_CSV:    ${{ secrets.NASA_CSV }}
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p results/rgp_ns/shards
-          shard="$(echo "$XYZ" | tr -d ' ,')"   # e.g. 0.10,0.12,0.10 -> 0.10 0.12 0.10 -> 0.100.120.10
+          XYZ="${{ matrix.xyz }}"
+          # Normalize xyz "a,b,c" → JSON-like list string
+          XYZ_JSON=$(python - <<'PY'
+          import sys,re
+          s = sys.argv[1].strip()
+          parts = [p.strip() for p in s.split(",")]
+          if len(parts)!=3: raise SystemExit("xyz must be 'x,y,z'")
+          print("[" + ",".join(parts) + "]")
+PY
+          "${XYZ}")
+          echo "Shard xyz: ${XYZ_JSON}"
 
-          cfg="/tmp/config_${shard}.yml"
-          cp agents/rgp_ns/config_jhtdb.yml "$cfg"
+          # Where to stash shard metrics
+          STAGE="results/rgp_ns/grid/${{ github.run_id }}"
+          mkdir -p "$STAGE"
 
-          python - "$cfg" "$XYZ" "$TWIN" <<'PY'
-          import sys, yaml
-          cfg_path, xyz, twin = sys.argv[1], sys.argv[2].strip(), sys.argv[3].strip()
-          t0, t1, dt = [float(x) for x in twin.split(',')]
-          xs = [float(s) for s in xyz.split(',')]
-          cfg = yaml.safe_load(open(cfg_path))
-          cfg['dataset']['kind'] = 'jhtdb'
-          cfg['dataset']['name'] = 'isotropic1024coarse'
-          cfg['probe'] = {'xyz': xs, 'window': [t0, t1, dt]}
-          yaml.safe_dump(cfg, open(cfg_path, 'w'), sort_keys=False)
-          PY
+          # Run the grid wrapper (reads env + writes one metrics JSON per shard)
+          python agents/rgp_ns/agent_grid.py \
+            --source "$SRC" \
+            --dataset "$DATASET" \
+            --xyz "$XYZ_JSON" \
+            --twin "$TWIN" \
+            --stage-dir "$STAGE"
 
-          # Run agent -> writes JSON into results/rgp_ns/<timestamp>/batch1/
-          python agents/rgp_ns/run_agent.py --config "$cfg"
-
-          # Move shard metrics to shards folder
-          # Keep only the last metrics.json written by the run
-          last_json="$(ls -1t results/rgp_ns/*/batch1/*.json 2>/dev/null | head -n1 || true)"
-          if [[ -n "$last_json" ]]; then
-            cp "$last_json" "results/rgp_ns/shards/shard_${shard}.json"
-          fi
-
-      - name: Upload shard result
+      - name: Upload shard artifacts (for safety)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rgp-ns-shards
-          path: results/rgp_ns/shards/*.json
+          name: rgp-ns-shards-${{ strategy.job-index }}
+          path: results/rgp_ns/grid/${{ github.run_id }}/*.json
           if-no-files-found: ignore
 
-  reduce:
+  merge-and-pulse:
     needs: run-grid
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: rgp-ns-shards
-          path: results/rgp_ns/shards
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -129,60 +137,62 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pyyaml
 
-      - name: Consolidate shards → one pulse
-        env:
-          PULSE_TITLE: ${{ github.event.inputs.title }}
-          PULSE_TAGS:  ${{ github.event.inputs.tags }}
-          TWIN:        ${{ github.event.inputs.twin }}
+      - name: Merge shard metrics → combined.json
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p pulse/auto
-          OUT="pulse/auto/$(date -u +%F)_rgpns_grid.yml"
-          python - "$OUT" <<'PY'
-          import sys,glob,json,yaml,statistics
-          out_path = sys.argv[1]
-          files = sorted(glob.glob("results/rgp_ns/shards/*.json"))
-          peaks, details = [], []
+          STAGE="results/rgp_ns/grid/${{ github.run_id }}"
+          OUT="results/rgp_ns/grid/${{ github.run_id }}/combined.metrics.json"
+          mkdir -p "$STAGE"
+          python - <<'PY'
+          import json,glob,statistics as st,sys,os
+          stage = os.path.join("results","rgp_ns","grid",os.environ["GITHUB_RUN_ID"])
+          files = sorted(glob.glob(os.path.join(stage,"*.metrics.json")))
+          combo = {"shards": [], "source": "", "details": {}}
           for f in files:
-              try:
-                  m = json.load(open(f))
-                  peaks.append(m.get("main_peak_freq"))
-                  details.append(m.get("details", {}))
-              except Exception:
-                  pass
-
-          hint = "grid"
-          uniq = [p for p in set(peaks) if p is not None]
-          if len(files) == 0:
-              hint = "no data"
-          elif len(uniq) == 1:
-              hint = f"coherent — freq={uniq[0]}"
-          elif 1 < len(uniq) < len(peaks):
-              hint = "partial coherence"
-
-          pulse = {
-              "title":       sys.argv[0],  # placeholder, replaced below
-              "summary":     f"RGP–NS grid across {len(files)} points, twin=${{ env.TWIN }}. Hint: {hint}.",
-              "tags":        ${{ toJson(github.event.inputs.tags) }}.split() if False else [],  # will replace below
-              "papers":      [],
-              "podcasts":    [],
-          }
-
-          # Replace fields that need env-provided values (keep YAML dumper simple)
-          pulse["title"] = "${{ env.PULSE_TITLE }}"
-          pulse["tags"]  = "${{ env.PULSE_TAGS }}".split()
-
-          yaml.safe_dump(pulse, open(out_path, "w"), sort_keys=False, allow_unicode=True)
+            try:
+              m = json.load(open(f))
+            except Exception:
+              continue
+            combo["shards"].append(m)
+            combo["source"] = combo.get("source") or m.get("source","")
+            combo["details"] = combo.get("details") or m.get("details",{})
+          # simple rollups for hinting (median of shard main peaks if present)
+          def pick(key):
+            vals = [s.get(key) for s in combo["shards"] if isinstance(s.get(key),(int,float))]
+            return st.median(vals) if vals else None
+          combo["period"] = pick("period")
+          combo["bpm"] = pick("bpm")
+          combo["main_peak_freq"] = pick("main_peak_freq")
+          # carry counts if present
+          nvals = [s.get("n") for s in combo["shards"] if isinstance(s.get("n"),int)]
+          if nvals: combo["n"] = sum(nvals)
+          json.dump(combo, open(os.path.join(stage,"combined.metrics.json"),"w"), indent=2)
           PY
+          test -s "$OUT" && echo "Combined: $OUT"
 
-          echo "Wrote $OUT"
+      - name: Emit consolidated pulse
+        shell: bash
+        run: |
+          set -euo pipefail
+          STAGE="results/rgp_ns/grid/${{ github.run_id }}"
+          COMB="$STAGE/combined.metrics.json"
+          # Pulse slug keeps batch label logic on fd/pulse side; here we use a grid suffix
+          SLUG="${{ github.event.inputs.dataset }}_${{ github.event.inputs.source }}_grid"
+          python tools/agent_rhythm/make_pulse.py \
+            --metrics "$COMB" \
+            --title   "${{ github.event.inputs.title }}" \
+            --dataset "$SLUG" \
+            --tags    "${{ github.event.inputs.tags }}" \
+            --outdir  "pulse/auto"
 
-      - name: Commit consolidated pulse + results
+      - name: Commit combined results + pulse
         run: |
           set -euo pipefail
           git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add results/rgp_ns/shards/*.json pulse/auto/*.yml maps/* || true
-          git commit -m "auto: RGP–NS grid consolidated pulse + results + maps" || echo "Nothing to commit"
+          git add results/rgp_ns/grid/${{ github.run_id }}/*.json || true
+          git add pulse/auto/*.yml
+          git add maps/* || true
+          git commit -m "auto: RGP–NS grid run → consolidated results + pulse" || echo "Nothing to commit"
           git push
