@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """
-make_pulse.py — turn rhythm metrics JSON into a strict Φ-Mesh pulse YAML,
-with a compact “closing-in” rhythm hint appended to the summary.
+make_pulse.py — turn rhythm metrics JSON into a strict Φ-Mesh pulse YAML.
 
-Inputs:
-  --metrics  path/to/*.metrics.json  (raw metrics JSON produced by fd_probe)
-  --title    pulse title (single quotes will be enforced in output)
-  --dataset  dataset slug for pulse (e.g., "isotropic1024coarse_jhtdb_batch3")
-  --tags     space-separated tags (e.g., "nt_rhythm turbulence navier_stokes rgp")
-  --outdir   output directory (e.g., "pulse/auto")
+Inputs
+------
+--metrics  path/to/*.metrics.json   (raw metrics JSON produced by fd_probe)
+--title    pulse title              (single quotes will be enforced in output)
+--dataset  dataset slug             (e.g., "isotropic1024coarse_jhtdb_batch4")
+--tags     space-separated tags     (e.g., "nt_rhythm turbulence navier_stokes rgp")
+--outdir   output directory         (e.g., "pulse/auto")
+--recent   OPTIONAL: path to JSONL file with recent fundamentals (Hz), one per line
 
-Output:
-  pulse/auto/YYYY-MM-DD_<dataset>.yml   (YAML only; no metrics duplication)
+Output
+------
+pulse/auto/YYYY-MM-DD_<dataset>.yml  (YAML only; no metrics duplication)
 """
 
 from __future__ import annotations
@@ -19,9 +21,10 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import math
 import os
 import re
-from typing import Any, Dict, List, Sequence, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 import yaml
 
@@ -70,101 +73,127 @@ def to_builtin(x: Any) -> Any:
     return str(x)
 
 
-def _as_float(x: Any, default: float | None = None) -> float | None:
+def read_recent_fundamentals(path: Optional[str]) -> List[float]:
+    if not path:
+        return []
+    out: List[float] = []
     try:
-        return float(x)
-    except Exception:
-        return default
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    # allow either raw float or JSON number
+                    if line[0] in "[{\"":
+                        val = json.loads(line)
+                        if isinstance(val, (int, float)):
+                            out.append(float(val))
+                    else:
+                        out.append(float(line))
+                except Exception:
+                    continue
+    except FileNotFoundError:
+        pass
+    return out
 
 
-def _compute_hint(peaks: Sequence[Sequence[float]] | None,
-                  f0: float | None,
-                  divergence_ratio: float | None) -> Tuple[str, Dict[str, Any]]:
-    """
-    Return (hint_text, debug_dict).
-    - dominance = power(f0) / max other power
-    - ladder = count of harmonics within ±5% around 2*f0, 3*f0, ...
-    Gates (tweakable):
-      decisive: dominance ≥ 2.0 and ladder ≥ 3 and divergence_ratio ≤ 1e-10
-      strong:   dominance ≥ 1.6 and ladder ≥ 2
-      weak:     dominance ≥ 1.3 or  ladder ≥ 2
-    """
-    debug: Dict[str, Any] = {"dominance": None, "ladder": 0, "f0": f0, "divergence_ratio": divergence_ratio}
-    if not peaks or f0 is None:
-        return "hint: inconclusive", debug
+# ---------- spectrum interpretation ------------------------------------------
 
-    # sanitize peaks as [(freq, power), ...] with numeric values
-    clean: List[Tuple[float, float]] = []
+def _sorted_peaks(metrics: Dict[str, Any]) -> List[Tuple[float, float]]:
+    """Return peaks sorted by *power* desc, then by freq asc."""
+    peaks = metrics.get("peaks") or []
+    # peaks may be [[f,p], [f,p], ...] or {"freq":f,"power":p} items; normalize
+    norm: List[Tuple[float, float]] = []
     for p in peaks:
-        if not isinstance(p, (list, tuple)) or len(p) < 2:
+        try:
+            if isinstance(p, (list, tuple)) and len(p) >= 2:
+                freq = float(p[0]); power = float(p[1])
+            elif isinstance(p, dict):
+                freq = float(p.get("freq", 0.0)); power = float(p.get("power", 0.0))
+            else:
+                continue
+            if freq > 0 and power >= 0:
+                norm.append((freq, power))
+        except Exception:
             continue
-        f = _as_float(p[0])
-        a = _as_float(p[1])
-        if f is None or a is None:
-            continue
-        clean.append((f, a))
-    if not clean:
-        return "hint: inconclusive", debug
+    # sort by power desc, freq asc
+    norm.sort(key=lambda t: (-t[1], t[0]))
+    return norm
 
-    # locate f0 power and best "other" power
-    # allow slight mismatch in f0 by nearest frequency within 2%
-    tol_f0 = 0.02
-    target_low, target_high = f0 * (1 - tol_f0), f0 * (1 + tol_f0)
-    p0 = 0.0
-    others: List[float] = []
-    for f, a in clean:
-        if target_low <= f <= target_high:
-            p0 = max(p0, a)
-        else:
-            others.append(a)
-    if p0 <= 0.0 or not others:
-        debug["dominance"] = None
-        return "hint: inconclusive", debug
 
-    dom = p0 / max(others)
-    debug["dominance"] = dom
-
-    # count harmonics within ±5%
-    tol = 0.05
-    def _exists_near(freq: float) -> bool:
-        low, high = freq * (1 - tol), freq * (1 + tol)
-        return any((low <= f <= high) for f, _ in clean)
-
+def infer_fundamental_and_ladder(peaks: List[Tuple[float, float]],
+                                 tol: float = 0.06) -> Tuple[Optional[float], int]:
+    """
+    Choose dominant peak as fundamental f0, then count harmonics near n*f0 (n=2,3,...).
+    tol = fractional tolerance for matching (±tol).
+    Returns (f0, ladder_count) where ladder_count = number of *harmonics beyond f0*
+    that match (i.e., fund+2 harmonics -> ladder=2).
+    """
+    if not peaks:
+        return None, 0
+    f0 = peaks[0][0]
     ladder = 0
-    # check up to k=5 harmonics (lightweight)
-    for k in (2, 3, 4, 5):
-        if _exists_near(k * f0):
+    # Build a set of available freqs for quick matching
+    freqs = [fp[0] for fp in sorted(peaks, key=lambda t: t[0])]  # ascending by freq
+    for n in (2, 3, 4, 5):
+        target = n * f0
+        lo = target * (1 - tol)
+        hi = target * (1 + tol)
+        hit = any(lo <= f <= hi for f in freqs)
+        if hit:
             ladder += 1
-    debug["ladder"] = ladder
+        else:
+            # stop early if a harmonic is missing; conservative ladder
+            break
+    return f0, ladder
 
-    # gates
-    dr = divergence_ratio if divergence_ratio is not None else float("inf")
-    if dom >= 2.0 and ladder >= 3 and dr <= 1e-10:
-        level = "decisive"
-    elif dom >= 1.6 and ladder >= 2:
-        level = "strong"
-    elif dom >= 1.3 or ladder >= 2:
-        level = "weak"
-    else:
-        level = "inconclusive"
 
-    # brief text; include small numbers for debugging intuition
-    if debug["dominance"] is None:
-        return "hint: inconclusive", debug
+def dominance_ratio(peaks: List[Tuple[float, float]]) -> float:
+    if not peaks:
+        return 0.0
+    if len(peaks) == 1:
+        return float("inf") if peaks[0][1] > 0 else 0.0
+    p1 = peaks[0][1]
+    # find the strongest *other* component not equal in freq (defensive)
+    p2 = None
+    for _, pw in peaks[1:]:
+        if pw > 0:
+            p2 = pw
+            break
+    if p2 is None or p2 == 0:
+        return float("inf") if p1 > 0 else 0.0
+    return p1 / p2
 
-    # round for readability
-    dom_txt = f"{dom:.2f}"
-    hint_core = {
-        "decisive": f"decisive — stable ladder {ladder}+ and low divergence",
-        "strong":   f"strong — clean peak + {ladder} harmonics (ladder={ladder})",
-        "weak":     f"weak — single dominant peak (ladder={ladder})",
-        "inconclusive": "inconclusive",
-    }[level]
 
-    if divergence_ratio is not None and divergence_ratio == divergence_ratio:  # not NaN
-        return f"hint: {hint_core}, dominance={dom_txt}", debug
-    else:
-        return f"hint: {hint_core}, dominance={dom_txt}", debug
+def decisive_with_recent(f0: Optional[float], ladder: int, dom: float,
+                         recent: Iterable[float], agree_tol: float = 0.10) -> bool:
+    """
+    'decisive' requires: ladder≥2 and dominance≥2 and ≥3 recent fundamentals
+    agree within ±10% of f0.
+    """
+    if f0 is None:
+        return False
+    if ladder < 2 or dom < 2.0:
+        return False
+    # agreement check
+    votes = 0
+    lo = f0 * (1 - agree_tol)
+    hi = f0 * (1 + agree_tol)
+    for r in recent:
+        if lo <= r <= hi:
+            votes += 1
+    return votes >= 3
+
+
+def hint_text(ladder: int, dom: float, decisive: bool) -> str:
+    if decisive:
+        return f"decisive — spatially coherent fundamental + harmonics (ladder={ladder}), dominance={dom:.2f}"
+    if ladder >= 2 and dom >= 2.0:
+        return f"strong — clean peak + {ladder} harmonics (ladder={ladder}), dominance={dom:.2f}"
+    if ladder >= 1 or dom >= 1.2:
+        return f"weak — single dominant peak (ladder={ladder}), dominance={dom:.2f}"
+    return "inconclusive"
 
 
 # ---------- main --------------------------------------------------------------
@@ -176,6 +205,7 @@ def main() -> None:
     ap.add_argument("--dataset", required=True, help="Pulse slug (e.g. iso_jhtdb_batch3)")
     ap.add_argument("--tags",    required=True, help="Space-separated tags")
     ap.add_argument("--outdir",  required=True, help="Output directory (e.g., pulse/auto)")
+    ap.add_argument("--recent",  required=False, help="Optional JSONL file with recent fundamentals (Hz)")
     args = ap.parse_args()
 
     # Load metrics JSON (builtins only)
@@ -190,12 +220,12 @@ def main() -> None:
     src     = metrics.get("source", "")
     details = metrics.get("details") or {}
 
-    # Rhythm-hint inputs
-    peaks = metrics.get("peaks")  # expected [[freq, power], ...]
-    f0    = _as_float(metrics.get("main_peak_freq"))
-    dr    = _as_float(metrics.get("divergence_ratio"))
-
-    hint_text, _hint_dbg = _compute_hint(peaks, f0, dr)
+    # Spectrum interpretation → ladder / dominance / f0
+    peaks = _sorted_peaks(metrics)
+    f0, ladder = infer_fundamental_and_ladder(peaks)
+    dom = dominance_ratio(peaks)
+    recent_f = read_recent_fundamentals(args.recent)
+    decisive = decisive_with_recent(f0, ladder, dom, recent_f)
 
     # Build filename parts
     today_str = dt.date.today().isoformat()  # YYYY-MM-DD
@@ -218,9 +248,6 @@ def main() -> None:
         summary_bits.append(f"Source: {src}.")
     if probe_subset:
         summary_bits.append(f"Probe: {probe_subset}.")
-    # append the compact hint
-    summary_bits.append(hint_text)
-
     summary_text = " ".join(str(b).strip() for b in summary_bits if b)
 
     # Tags -> list
@@ -230,6 +257,8 @@ def main() -> None:
     pulse = {
         "title": str(args.title),
         "summary": summary_text,
+        # explicit hint key (short, scannable in diffs)
+        "hint": hint_text(ladder, dom, decisive),
         "tags": tag_list,
         "papers": [],
         "podcasts": [],
@@ -272,6 +301,9 @@ def main() -> None:
             width=1000,
         )
 
+    # optional: echo a compact line for the agent to append to recent fundamentals file
+    if f0 is not None:
+        print(f"fundamental_hz={f0:.6f} ladder={ladder} dominance={dom:.2f}")
     print(f"Pulse written: {out_path}")
 
 
