@@ -57,9 +57,7 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ## Goal: Completing the Reality Syntax Equation
 
-<p align="center">
-  <img src="docs/reality_syntax.svg" alt="Reality Syntax Equation" width="760">
-</p>
+![Reality Syntax](https://latex.codecogs.com/svg.latex?\Large\;\text{Reality%20Syntax}=\bigotimes_{i=1}^n%20N_i%20\times%20\text{Distinctive%20Pattern%20of%20Ratios})
 
 <details>
 <summary>the LaTeX source (for reference)</summary>
