@@ -42,7 +42,14 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 - 📈 **Tag Map** (interactive): [`docs/tag_map.html`](docs/tag_map.html)  
 - 🧪 **NS Prototype (90-day benchmark):** [`RGP_NS_prototype/`](RGP_NS_prototype/)  
 - 🏁 **Results schema & leaderboard stub:** [`results/`](results/)  
-- 📚 **Foundational PDFs:** [`foundational_rgp-papers/`](foundational_rgp-papers/)
+- 📚 **Foundational PDFs:** [`foundational_rgp-papers/`](foundational_rgp-papers/)  
+- 📜 **Ongoing findings:** [NT Rhythm Log](docs/nt_rhythm_log.md)
+
+---
+
+## Current NT Rhythm Status
+
+[![NT Rhythm Status](https://img.shields.io/badge/NT_Rhythm-strong-success?style=flat-square)](docs/nt_rhythm_log.md)
 
 ---
 
