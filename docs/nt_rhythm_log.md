@@ -74,12 +74,3 @@ METRICS: results/.json
 PULSE:   pulse/auto/.yml
 
 ---
-
-### Where to put this
-- Save the long file as **`docs/nt_rhythm_log.md`** in the repo.
-- (Optional) Add a link from your main README:  
-  `- See ongoing findings: [NT Rhythm Log](docs/nt_rhythm_log.md)`
-
----
-
-If you want, I can also add a one-line **status badge** snippet you can paste into README that automatically shows the latest classification you set at the top of the log (totally optional).
