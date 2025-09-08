@@ -58,7 +58,7 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 ## Goal: Completing the Reality Syntax Equation
 
 <p align="center">
-  <img src="docs/reality_syntax.svg" alt="Reality Syntax Equation" width="720">
+  <img src="docs/reality_syntax.svg" alt="Reality Syntax Equation" width="760">
 </p>
 
 Reality is not built from isolated patterns but from their interplay across multiple contexts.
