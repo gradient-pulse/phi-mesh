@@ -23,6 +23,32 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 Paste this block for each new run. Keep the order chronological (newest at top).
 
 ```md
+
+## 2025-09-08 — First 3-Probe Confirmation (JHTDB isotropic1024coarse)
+
+**Setup**  
+- Source: `jhtdb`  
+- Dataset: `isotropic1024coarse`  
+- Variable: `u`  
+- Seed point: (0.10, 0.10, 0.10)  
+- Offsets: (+0.02,0,0), (0,+0.02,0), (0,0,+0.02)  
+- Time window: (0.0 → 1.2, step 0.0001)
+
+**Findings**  
+- Fundamental period: **1.25**  
+- Main frequency: **0.8**  
+- Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
+- Ratio structure: **1 : 2 : 3**  
+- Dominance: **2.22** (fundamental more than twice as strong as next)  
+- Divergence ratio: ~**3e-13** (numerical zero → strong coherence)
+
+**Classification**  
+- Status: **Strong**  
+- Comment: All 3 probes independently returned the same laddered rhythm (fundamental + harmonics).  
+- Implication: This is the first reproducible confirmation of NT Rhythm in turbulence, across small xyz offsets.
+
+---
+
 ### YYYY-MM-DD — <dataset> (<source>) — batch <N> — <status>
 
 - **Probe**: xyz=`<x,y,z>`; window=`[t0, t1, dt]`  
@@ -32,7 +58,6 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 - **Hint**: `<inconclusive | weak | strong — clean peak + ... | confirmed>`
 - **Artifacts**: [metrics JSON](results/<path-to-json>) · [pulse](pulse/auto/<filename>.yml)
 - **Notes**: `<free text — e.g., consistent with batch N-1; grid shard (0.10,0.10,0.12) best; try longer window>`
-
 
 ⸻
 
