@@ -51,6 +51,8 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 [![NT Rhythm Status](https://img.shields.io/badge/NT_Rhythm-strong-success?style=flat-square)](docs/nt_rhythm_log.md)
 
+See ongoing findings: [NT Rhythm Log](docs/nt_rhythm_log.md)
+
 ---
 
 ## Goal: Completing the Reality Syntax Equation
