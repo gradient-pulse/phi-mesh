@@ -1,40 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="980" height="140" viewBox="0 0 980 140"
-     role="img" aria-label="Reality Syntax equals tensor product from i equals 1 to n of N sub i times Distinctive Pattern of Ratios">
-  <title>Reality Syntax Equation</title>
-  <desc>Reality Syntax = (tensor product from i=1 to n) N_i × Distinctive Pattern of Ratios</desc>
+     width="1200" height="140"
+     viewBox="0 0 1200 140"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Reality Syntax Equation</title>
+  <desc id="desc">Reality Syntax equals tensor product over i of N sub i times Distinctive Pattern of Ratios</desc>
 
-  <!-- Use high contrast + common fonts -->
-  <g font-family="Georgia, 'Times New Roman', serif" fill="#000">
-    <!-- Left label -->
-    <text x="24" y="88" font-size="38">Reality Syntax =</text>
+  <style>
+    text { font-family: "Times New Roman", "DejaVu Serif", serif; fill: #111; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #eee; }
+    }
+  </style>
 
-    <!-- Draw a robust tensor product symbol (⨂) by hand so it always renders -->
-    <g transform="translate(375,0)">
-      <!-- Circle -->
-      <circle cx="40" cy="72" r="28" fill="none" stroke="#000" stroke-width="4"/>
-      <!-- Crossed lines (×) -->
-      <line x1="24" y1="56" x2="56" y2="88" stroke="#000" stroke-width="4" stroke-linecap="round"/>
-      <line x1="24" y1="88" x2="56" y2="56" stroke="#000" stroke-width="4" stroke-linecap="round"/>
+  <!-- Layout helpers -->
+  <!-- left margin -->
+  <g transform="translate(20,20)">
+    <!-- "Reality Syntax =" -->
+    <text x="0" y="70" font-size="44">Reality Syntax =</text>
 
-      <!-- superscript n -->
-      <text x="70" y="40" font-size="22">n</text>
-      <!-- subscript i=1 -->
-      <text x="66" y="118" font-size="22">i=1</text>
-    </g>
+    <!-- Tensor product with limits -->
+    <!-- big circled times -->
+    <text x="360" y="78" font-size="60">⊗</text>
+    <!-- upper limit n -->
+    <text x="352" y="18" font-size="22">n</text>
+    <!-- lower limit i=1 -->
+    <text x="350" y="118" font-size="22">i=1</text>
 
     <!-- N_i -->
-    <g transform="translate(470,0)">
-      <text x="0" y="88" font-size="44">N</text>
-      <!-- subscript i -->
-      <text x="35" y="102" font-size="26">i</text>
-    </g>
+    <text x="420" y="70" font-size="48">
+      N<tspan font-size="28" dy="12">i</tspan>
+    </text>
 
     <!-- multiplication sign -->
-    <text x="535" y="88" font-size="40">×</text>
+    <text x="490" y="70" font-size="44">×</text>
 
-    <!-- Right phrase -->
-    <text x="575" y="88" font-size="36">Distinctive Pattern of Ratios</text>
+    <!-- trailing phrase -->
+    <text x="540" y="70" font-size="44">Distinctive Pattern of Ratios</text>
   </g>
 </svg>
