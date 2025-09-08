@@ -60,7 +60,8 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 Paste this block for each new run. Keep the order chronological (newest at top).
 
-```markdown
+---
+
 ### YYYY-MM-DD — <dataset> (<source>) — batch <N> — <status>
 
 - **Probe**: xyz=`<x,y,z>`; window=`[t0, t1, dt]`  
@@ -69,17 +70,21 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 - **Divergence ratio**: `<dr>`  | **Resets**: `<count or []>`  
 - **Hint**: `<inconclusive | weak | strong — clean peak + ... | confirmed>`  
 - **Artifacts**: [metrics JSON](results/<path-to-json>) · [pulse](pulse/auto/<filename>.yml)  
-- **Notes**: `<free text — e.g., consistent with batch N-1; grid shard (0.10,0.10,0.12) best; try longer window>`
+- **Notes**: `<free text — e.g., consistent with batch N-1; grid shard (0.10,0.10,0.12) best; try longer window>`  
 
-Ultra-light “paste to chat” mini-template
+---
+
+## Ultra-light “paste to chat” mini-template
 
 When a run finishes, paste these 8 lines here and I’ll classify it instantly:
 
-DATASET:    SOURCE: <synthetic|jhtdb|nasa>   BATCH: 
+DATASET:    SOURCE: <synthetic|jhtdb|nasa>   BATCH:
 XYZ: <x,y,z>      WINDOW: [t0, t1, dt]
-PERIOD:        BPM:       F0: 
+PERIOD:        BPM:       F0:
 PEAKS (first 3): [[f0,p0],[f1,p1],[f2,p2]]
 LADDER:        DOMINANCE: <p0/p1 or 1 if no p1>
 DIVERGENCE:  RESETS: <count or []>
 METRICS: results/.json
 PULSE:   pulse/auto/.yml
+
+
