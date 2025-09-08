@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="1200" height="140"
-     viewBox="0 0 1200 140"
-     role="img" aria-labelledby="title desc">
-  <title id="title">Reality Syntax Equation</title>
-  <desc id="desc">Reality Syntax equals tensor product over i of N sub i times Distinctive Pattern of Ratios</desc>
+     viewBox="0 0 1100 100" width="1100" height="100"
+     role="img" aria-label="Reality Syntax equation">
+  <title>Reality Syntax = ⨂ from i=1 to n of N_i × Distinctive Pattern of Ratios</title>
 
+  <!-- Styles: solid dark text, no background; scale-friendly -->
   <style>
-    text { font-family: "Times New Roman", "DejaVu Serif", serif; fill: #111; }
-    @media (prefers-color-scheme: dark) {
-      text { fill: #eee; }
-    }
+    text { font-family: "Times New Roman", Times, serif; fill: #111; }
+    .eq   { font-size: 44px; }
+    .sup  { font-size: 26px; dominant-baseline: alphabetic; }
+    .sub  { font-size: 26px; dominant-baseline: hanging; }
+    .sym  { font-size: 48px; }
   </style>
 
-  <!-- Layout helpers -->
-  <!-- left margin -->
-  <g transform="translate(20,20)">
-    <!-- "Reality Syntax =" -->
-    <text x="0" y="70" font-size="44">Reality Syntax =</text>
+  <!-- Baseline y ~60 for nice vertical centering -->
+  <text class="eq" x="10" y="64">
+    Reality Syntax =
+  </text>
 
-    <!-- Tensor product with limits -->
-    <!-- big circled times -->
-    <text x="360" y="78" font-size="60">⊗</text>
-    <!-- upper limit n -->
-    <text x="352" y="18" font-size="22">n</text>
-    <!-- lower limit i=1 -->
-    <text x="350" y="118" font-size="22">i=1</text>
+  <!-- Tensor product ⨂ with limits n (sup) and i=1 (sub) -->
+  <text class="sym" x="355" y="66">⨂</text>
+  <text class="sup" x="382" y="32">n</text>
+  <text class="sub" x="382" y="88">i=1</text>
 
-    <!-- N_i -->
-    <text x="420" y="70" font-size="48">
-      N<tspan font-size="28" dy="12">i</tspan>
-    </text>
-
-    <!-- multiplication sign -->
-    <text x="490" y="70" font-size="44">×</text>
-
-    <!-- trailing phrase -->
-    <text x="540" y="70" font-size="44">Distinctive Pattern of Ratios</text>
-  </g>
+  <!-- N_i -->
+  <text class="eq" x="425" y="64">
+    N<tspan class="sub" dy="10">i</tspan><tspan dy="-10"> </tspan>
+    × Distinctive Pattern of Ratios
+  </text>
 </svg>
