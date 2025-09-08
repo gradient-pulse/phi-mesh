@@ -46,6 +46,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 - Implication: This is the first reproducible confirmation of NT Rhythm in turbulence, across small xyz offsets.
 
 ---
+```
 ##Copy/paste entry template
 Paste this block for each new run. Keep the order chronological (newest at top).
 
