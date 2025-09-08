@@ -1,23 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-     width="1600" height="280"
-     viewBox="0 0 1600 280">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 280">
   <style>
-    .serif {
-      font-family: "Times New Roman", "STIX Two Text", "Cambria Math", serif;
-      fill: currentColor;
+    /* Default (light) */
+    .eq { font-family: "Times New Roman","STIX Two Text","Cambria Math",serif; fill:#111; }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      .eq { fill:#eaeef2; } /* GitHub-dark friendly */
     }
   </style>
 
-  <text class="serif" x="20"  y="170" font-size="54">Reality Syntax =</text>
+  <!-- Equation -->
+  <text class="eq" x="20"  y="170" font-size="54">Reality Syntax =</text>
 
-  <text class="serif" x="445" y="170" font-size="70">⊗</text>
-  <text class="serif" x="485" y="100" font-size="30">n</text>
-  <text class="serif" x="480" y="230" font-size="28">i=1</text>
+  <!-- Tensor product with limits -->
+  <text class="eq" x="445" y="170" font-size="70">⊗</text>
+  <text class="eq" x="485" y="100" font-size="30">n</text>
+  <text class="eq" x="480" y="230" font-size="28">i=1</text>
 
-  <text class="serif" x="535" y="170" font-size="60">N</text>
-  <text class="serif" x="585" y="200" font-size="32">i</text>
+  <!-- Ni -->
+  <text class="eq" x="535" y="170" font-size="60">N</text>
+  <text class="eq" x="585" y="200" font-size="32">i</text>
 
-  <text class="serif" x="635" y="170" font-size="54">×</text>
+  <!-- Multiply -->
+  <text class="eq" x="635" y="170" font-size="54">×</text>
 
-  <text class="serif" x="700" y="170" font-size="54">Distinctive Pattern of Ratios</text>
+  <!-- Distinctive Pattern of Ratios -->
+  <text class="eq" x="700" y="170" font-size="54">Distinctive Pattern of Ratios</text>
 </svg>
