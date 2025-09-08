@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 1100 100" width="1100" height="100"
-     role="img" aria-label="Reality Syntax equation">
-  <title>Reality Syntax = ⨂ from i=1 to n of N_i × Distinctive Pattern of Ratios</title>
+     width="1200" height="280"
+     viewBox="0 0 1200 280">
+  <!-- white background so it renders clearly in dark theme -->
+  <rect x="0" y="0" width="1200" height="280" fill="white"/>
 
-  <!-- Styles: solid dark text, no background; scale-friendly -->
+  <!-- global font stack (math-friendly) -->
   <style>
-    text { font-family: "Times New Roman", Times, serif; fill: #111; }
-    .eq   { font-size: 44px; }
-    .sup  { font-size: 26px; dominant-baseline: alphabetic; }
-    .sub  { font-size: 26px; dominant-baseline: hanging; }
-    .sym  { font-size: 48px; }
+    .serif { font-family: "Times New Roman", "STIX Two Text", "Cambria Math", serif; }
   </style>
 
-  <!-- Baseline y ~60 for nice vertical centering -->
-  <text class="eq" x="10" y="64">
-    Reality Syntax =
-  </text>
+  <!-- Baseline y=170; keep ample top/bottom margins -->
+  <!-- "Reality Syntax =" -->
+  <text class="serif" x="20"  y="170" font-size="54">Reality Syntax =</text>
 
-  <!-- Tensor product ⨂ with limits n (sup) and i=1 (sub) -->
-  <text class="sym" x="355" y="66">⨂</text>
-  <text class="sup" x="382" y="32">n</text>
-  <text class="sub" x="382" y="88">i=1</text>
+  <!-- Tensor product symbol ⊗ (large) -->
+  <text class="serif" x="445" y="170" font-size="70">⊗</text>
+  <!-- superscript n -->
+  <text class="serif" x="485" y="100" font-size="30">n</text>
+  <!-- subscript i=1 -->
+  <text class="serif" x="480" y="230" font-size="28">i=1</text>
 
   <!-- N_i -->
-  <text class="eq" x="425" y="64">
-    N<tspan class="sub" dy="10">i</tspan><tspan dy="-10"> </tspan>
-    × Distinctive Pattern of Ratios
-  </text>
+  <text class="serif" x="535" y="170" font-size="60">N</text>
+  <text class="serif" x="585" y="200" font-size="32">i</text>
+
+  <!--  ×  -->
+  <text class="serif" x="620" y="170" font-size="54">×</text>
+
+  <!-- Distinctive Pattern of Ratios -->
+  <text class="serif" x="675" y="170" font-size="54">Distinctive Pattern of Ratios</text>
 </svg>
