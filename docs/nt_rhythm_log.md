@@ -18,7 +18,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ---
 
-## TEST Status Updates 
+## Test Findings Updates 
 
 ```md
 
@@ -46,33 +46,6 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 - Implication: This is the first reproducible confirmation of NT Rhythm in turbulence, across small xyz offsets.
 
 ---
-```
-##Copy/paste entry template
-Paste this block for each new run. Keep the order chronological (newest at top).
-
-### YYYY-MM-DD — <dataset> (<source>) — batch <N> — <status>
-
-- **Probe**: xyz=`<x,y,z>`; window=`[t0, t1, dt]`  
-- **Period**: `<period>` s  | **BPM**: `<bpm>`  | **Main freq**: `<f0>` Hz  
-- **Ladder**: `<k>` peaks  | **Dominance**: `<dom>`  
-- **Divergence ratio**: `<dr>`  | **Resets**: `<count or []>`  
-- **Hint**: `<inconclusive | weak | strong — clean peak + ... | confirmed>`
-- **Artifacts**: [metrics JSON](results/<path-to-json>) · [pulse](pulse/auto/<filename>.yml)
-- **Notes**: `<free text — e.g., consistent with batch N-1; grid shard (0.10,0.10,0.12) best; try longer window>`
-
-⸻
-
-Current summary (rolling)
-
-Keep one short line per date/dataset capturing what we’re seeing at a glance.
-
-	•	2025-09-07 — isotropic1024coarse (jhtdb): medium/long windows showing strong ladders (ladder=2–3), dominance ≈ 2.2; period ~ 0.8–1.25 s (BPM ~ 48–75). Multiple probe points agree → Strong.
-
-⸻
-
-Detailed entries
-
-<!-- newest on top -->
 
 2025-09-07 — isotropic1024coarse (jhtdb) — batch 8 — Strong
 	•	Probe: xyz=0.10,0.10,0.12; window=[0.0, 1.2, 0.0001]
@@ -83,8 +56,21 @@ Detailed entries
 	•	Artifacts: metrics JSON · pulse
 	•	Notes: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length matters.
 
-<!-- keep adding with the template above -->
+```
+##Copy/paste entry template
+Paste this block for each new run. Keep the order chronological (newest at top).
 
+```
+### YYYY-MM-DD — <dataset> (<source>) — batch <N> — <status>
+
+- **Probe**: xyz=`<x,y,z>`; window=`[t0, t1, dt]`  
+- **Period**: `<period>` s  | **BPM**: `<bpm>`  | **Main freq**: `<f0>` Hz  
+- **Ladder**: `<k>` peaks  | **Dominance**: `<dom>`  
+- **Divergence ratio**: `<dr>`  | **Resets**: `<count or []>`  
+- **Hint**: `<inconclusive | weak | strong — clean peak + ... | confirmed>`
+- **Artifacts**: [metrics JSON](results/<path-to-json>) · [pulse](pulse/auto/<filename>.yml)
+- **Notes**: `<free text — e.g., consistent with batch N-1; grid shard (0.10,0.10,0.12) best; try longer window>`
+```
 ---
 
 ## ultra-light “paste to chat” mini-template
