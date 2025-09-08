@@ -18,9 +18,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ---
 
-## Copy/paste entry template
-
-Paste this block for each new run. Keep the order chronological (newest at top).
+## TEST Status Updates 
 
 ```md
 
@@ -48,6 +46,8 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 - Implication: This is the first reproducible confirmation of NT Rhythm in turbulence, across small xyz offsets.
 
 ---
+##Copy/paste entry template
+Paste this block for each new run. Keep the order chronological (newest at top).
 
 ### YYYY-MM-DD — <dataset> (<source>) — batch <N> — <status>
 
