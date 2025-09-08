@@ -18,7 +18,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ---
 
-## Test Findings Updates 
+## Test Findings
 
 ### 2025-09-08 — First 3-Probe Confirmation (JHTDB isotropic1024coarse)
 
