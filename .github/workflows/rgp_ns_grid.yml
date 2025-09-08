@@ -114,20 +114,26 @@ jobs:
           set -euo pipefail
           mkdir -p "$STAGE"
 
-          # Convert "x,y,z" -> JSON "[x,y,z]" without heredoc
-          XYZ_JSON=$(python -c "import sys; s=sys.argv[1].strip(); parts=[p.strip() for p in s.split(',')]; \
-if len(parts)!=3: raise SystemExit('xyz must be x,y,z'); print('['+','.join(parts)+']')" "$XYZ")
+          # Write a micro helper to convert "x,y,z" -> JSON "[x,y,z]"
+          printf '%s\n' \
+            'import json,sys' \
+            's=sys.argv[1].strip()' \
+            'parts=[p.strip() for p in s.split(",")]' \
+            'if len(parts)!=3: raise SystemExit("xyz must be x,y,z")' \
+            'print("[" + ",".join(parts) + "]")' \
+            > /tmp/mk_xyz.py
 
+          XYZ_JSON=$(python /tmp/mk_xyz.py "$XYZ")
           echo "Shard xyz: $XYZ_JSON"
 
           # Run wrapper (writes one metrics JSON per shard into $STAGE)
           python agents/rgp_ns/agent_grid.py \
-            --source "$SRC" \
+            --source  "$SRC" \
             --dataset "$DATASET" \
-            --var "$VAR" \
-            --xyz "$XYZ_JSON" \
-            --twin "$TWIN" \
-            --stage "$STAGE"
+            --var     "$VAR" \
+            --xyz     "$XYZ_JSON" \
+            --twin    "$TWIN" \
+            --stage   "$STAGE"
 
       - name: Upload shard artifacts (debug)
         if: always()
