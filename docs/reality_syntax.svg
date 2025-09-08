@@ -1,8 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="1600" height="280"
      viewBox="0 0 1600 280">
-  <rect x="0" y="0" width="1600" height="280" fill="white"/>
-
   <style>
     .serif { font-family: "Times New Roman", "STIX Two Text", "Cambria Math", serif; }
   </style>
