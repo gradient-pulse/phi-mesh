@@ -47,24 +47,14 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ---
 
-## Current NT Rhythm Status
+## Goal: Completing the Reality Syntax Equation
 
-[![NT Rhythm Status](https://img.shields.io/badge/NT_Rhythm-strong-success?style=flat-square)](docs/nt_rhythm_log.md)
+![Reality Syntax](docs/reality_syntax.png)
 
 *See ongoing findings: [NT Rhythm Log](docs/nt_rhythm_log.md)*
 
----
-
-## Goal: Completing the Reality Syntax Equation
-
-![Reality Syntax](https://latex.codecogs.com/svg.latex?\Large\;\text{Reality%20Syntax}=\bigotimes_{i=1}^n%20N_i%20\times%20\text{Distinctive%20Pattern%20of%20Ratios})
-
-<details>
-<summary>the LaTeX source (for reference)</summary>
- \text{Reality Syntax} \;=\; \bigotimes_{i=1}^{n} N_i \times \text{Distinctive Pattern of Ratios}
-</details>
-
 Reality is not built from isolated patterns but from their interplay across multiple contexts.
+
 We formalize this as the **tensor product** of:
 
 - **Context-specific scalings** \(N_i\)
