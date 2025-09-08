@@ -61,6 +61,11 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
   <img src="docs/reality_syntax.svg" alt="Reality Syntax Equation" width="760">
 </p>
 
+<details>
+<summary>LaTeX source (for reference)</summary>
+ \text{Reality Syntax} \;=\; \bigotimes_{i=1}^{n} N_i \times \text{Distinctive Pattern of Ratios}
+</details>
+
 Reality is not built from isolated patterns but from their interplay across multiple contexts.
 We formalize this as the **tensor product** of:
 
