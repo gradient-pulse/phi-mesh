@@ -52,26 +52,30 @@ jobs:
       - id: mk
         shell: bash
         env:
-          SRC: ${{ github.event.inputs.source }}
+          SRC:     ${{ github.event.inputs.source }}
           DATASET: ${{ github.event.inputs.dataset }}
         run: |
           set -euo pipefail
 
-          # Sanitize dataset to slug (one-line Python; YAML-safe)
-          DS_SLUG=$(python -c 'import re,sys; s=sys.argv[1].strip().lower(); s=re.sub(r"[^a-z0-9._-]+","_",s); s=re.sub(r"_+","_",s).strip("_"); print(s or "dataset")' "$DATASET")
+          # Write a tiny "slugify" script safely (no heredoc parsing issues)
+          printf '%s\n' \
+            'import re,sys' \
+            's=sys.argv[1].strip().lower()' \
+            "s=re.sub(r'[^a-z0-9._-]+','_',s)" \
+            "s=re.sub(r'_+','_',s).strip('_')" \
+            "print(s or 'dataset')" \
+            > /tmp/slug.py
 
-          # Source slug
-          SRC_SLUG=$(echo "${SRC}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/_/g')
-
-          # Base slug (no date, no batch)
+          DS_SLUG=$(python /tmp/slug.py "$DATASET")
+          SRC_SLUG=$(printf '%s' "${SRC}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/_/g')
           BASE="${DS_SLUG}_${SRC_SLUG}"
 
-          # Matrix JSON from multi-line "points" input (one x,y,z per line)
+          # Build matrix JSON from multi-line points input
           MATRIX=$(jq -R -s 'split("\n") | map(select(length>0))' <<< "${{ github.event.inputs.points }}")
 
-          echo "matrix=${MATRIX}"       >> "$GITHUB_OUTPUT"
-          echo "base=${BASE}"           >> "$GITHUB_OUTPUT"
-          echo "today=$(date -u +%F)"   >> "$GITHUB_OUTPUT"
+          echo "matrix=$MATRIX"        >> "$GITHUB_OUTPUT"
+          echo "base=$BASE"            >> "$GITHUB_OUTPUT"
+          echo "today=$(date -u +%F)"  >> "$GITHUB_OUTPUT"
 
   run-grid:
     needs: plan
@@ -90,6 +94,7 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           pip install numpy pyyaml
 
@@ -109,11 +114,13 @@ jobs:
           set -euo pipefail
           mkdir -p "$STAGE"
 
-          # Convert "x,y,z" → JSON "[x,y,z]" (single-line Python; YAML-safe)
-          XYZ_JSON=$(python -c 'import sys,json; s=sys.argv[1].strip(); p=[t.strip() for t in s.split(",")]; assert len(p)==3, "xyz must be x,y,z"; print(json.dumps(p))' "$XYZ")
+          # Convert "x,y,z" -> JSON "[x,y,z]" without heredoc
+          XYZ_JSON=$(python -c "import sys; s=sys.argv[1].strip(); parts=[p.strip() for p in s.split(',')]; \
+if len(parts)!=3: raise SystemExit('xyz must be x,y,z'); print('['+','.join(parts)+']')" "$XYZ")
+
           echo "Shard xyz: $XYZ_JSON"
 
-          # Run the grid wrapper (writes one metrics JSON per shard into $STAGE)
+          # Run wrapper (writes one metrics JSON per shard into $STAGE)
           python agents/rgp_ns/agent_grid.py \
             --source "$SRC" \
             --dataset "$DATASET" \
@@ -142,6 +149,7 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           pip install numpy pyyaml
 
@@ -156,7 +164,7 @@ jobs:
           set -euo pipefail
           mkdir -p results/rgp_ns pulse/auto
 
-          # Determine next daily batch index for grid results
+          # Next daily batch index for grid results (dated filenames)
           shopt -s nullglob
           existing=(results/rgp_ns/${TODAY}_${BASE}_grid_batch*.metrics.json)
           if [[ ${#existing[@]} -gt 0 ]]; then
@@ -166,34 +174,35 @@ jobs:
             NEXT=1
           fi
 
-          # Pick the best shard (simple ladder+dominance heuristic)
-          SEL=$(python - <<'PY'
-import json,glob,os,sys
-stage=os.environ.get("STAGE","")
-best=None; best_score=-1.0; pick=None
-for fp in glob.glob(os.path.join(stage,"*.json")):
-    try:
-        with open(fp,"r",encoding="utf-8") as f:
-            m=json.load(f)
-    except Exception:
-        continue
-    peaks=m.get("peaks") or []
-    ladder=len(peaks)
-    main=peaks[0][1] if peaks else 0.0
-    dom=1.0
-    if len(peaks)>=2 and peaks[1][1]>0:
-        dom=float(peaks[0][1])/float(peaks[1][1])
-    score=(2.0 if ladder>=3 else 0.0) + (1.0 if ladder>=2 else 0.0) + 0.25*dom + (0.01 if main>0 else 0.0)
-    if score>best_score:
-        best_score=score; best=m; pick=fp
-if not best:
-    print("")
-    sys.exit(0)
-print(json.dumps({"file":pick,"metrics":best,"score":best_score}))
-PY
-)
-          echo "selection=${SEL}" >> "$GITHUB_OUTPUT"
-          echo "batch=${NEXT}"    >> "$GITHUB_OUTPUT"
+          # Write selector script with printf (no heredoc)
+          printf '%s\n' \
+            'import json,glob,os,sys' \
+            'stage=os.environ.get("STAGE","")' \
+            'best=None; best_score=-1.0; pick=None' \
+            'for fp in glob.glob(os.path.join(stage,"*.json")):' \
+            '    try:' \
+            '        with open(fp,"r",encoding="utf-8") as f:' \
+            '            m=json.load(f)' \
+            '    except Exception:' \
+            '        continue' \
+            '    peaks=m.get("peaks") or []' \
+            '    ladder=len(peaks)' \
+            '    main=peaks[0][1] if peaks else 0.0' \
+            '    dom=1.0' \
+            '    if len(peaks)>=2 and peaks[1][1]>0:' \
+            '        dom=float(peaks[0][1])/float(peaks[1][1])' \
+            '    score = (2.0 if ladder>=3 else 0.0) + (1.0 if ladder>=2 else 0.0) + dom*0.25 + (0.01 if main>0 else 0.0)' \
+            '    if score>best_score:' \
+            '        best_score=score; best=m; pick=fp' \
+            'if not best:' \
+            '    sys.stdout.write("")' \
+            'else:' \
+            '    sys.stdout.write(json.dumps({"file":pick,"metrics":best,"score":best_score}))' \
+            > /tmp/select_best.py
+
+          SEL_JSON=$(python /tmp/select_best.py)
+          echo "selection=$SEL_JSON" >> "$GITHUB_OUTPUT"
+          echo "batch=$NEXT"         >> "$GITHUB_OUTPUT"
 
       - name: Write canonical metrics + emit pulse
         if: ${{ steps.select.outputs.selection != '' }}
@@ -206,17 +215,11 @@ PY
           BATCH:   ${{ steps.select.outputs.batch }}
         run: |
           set -euo pipefail
-          # Extract the selected shard metrics filepath
           SEL_FILE=$(python -c 'import json,sys; print(json.loads(sys.argv[1])["file"])' '${{ steps.select.outputs.selection }}')
-
-          # Move to canonical, dated filename
           CANON="results/rgp_ns/${TODAY}_${BASE}_grid_batch${BATCH}.metrics.json"
           cp "$SEL_FILE" "$CANON"
 
-          # Pulse slug keeps _batchN
           PULSE_SLUG="${BASE}_grid_batch${BATCH}"
-
-          # Emit pulse (make_pulse reads metrics & adds hint)
           python tools/agent_rhythm/make_pulse.py \
             --metrics "$CANON" \
             --title   "$TITLE" \
