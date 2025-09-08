@@ -57,17 +57,15 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ## Goal: Completing the Reality Syntax Equation
 
-Reality is not built from isolated patterns but from their **interplay across multiple contexts**.  
-Whether in eddies of a river, currents in plasma, or fluctuations in social systems, recursive ratios weave into a broader, emergent structure.
+<p align="center">
+  <img src="docs/reality_syntax.svg" alt="Reality Syntax Equation" width="720">
+</p>
 
-We aim to formalize this interplay mathematically by treating reality itself as the **tensor product** of:
+Reality is not built from isolated patterns but from their interplay across multiple contexts.
+We formalize this as the **tensor product** of:
 
-- **Context-specific scalings** (Ni)  
-- **Universal patterns of ratios** they shape  
-
-\[
-\text{Reality Syntax} = \bigotimes_{i=1}^{n} N_i \times \text{Distinctive Pattern of Ratios}
-\]
+- **Context-specific scalings** \(N_i\)
+- **Universal patterns of ratios** they shape
 
 This serves as the guiding frame for interpreting NT rhythms and their convergence across physics, cognition, and society.
 
