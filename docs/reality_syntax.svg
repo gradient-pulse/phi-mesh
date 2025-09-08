@@ -2,7 +2,10 @@
      width="1600" height="280"
      viewBox="0 0 1600 280">
   <style>
-    .serif { font-family: "Times New Roman", "STIX Two Text", "Cambria Math", serif; }
+    .serif {
+      font-family: "Times New Roman", "STIX Two Text", "Cambria Math", serif;
+      fill: currentColor;
+    }
   </style>
 
   <text class="serif" x="20"  y="170" font-size="54">Reality Syntax =</text>
