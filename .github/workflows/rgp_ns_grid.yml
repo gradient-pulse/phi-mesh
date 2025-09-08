@@ -57,22 +57,21 @@ jobs:
         run: |
           set -euo pipefail
 
-          # sanitize dataset to slug (no heredoc; robust quoting)
-          DS_SLUG=$(python -c 'import re,sys
-          s = sys.argv[1].strip().lower()
-          s = re.sub(r"[^a-z0-9._-]+", "_", s)
-          s = re.sub(r"_+", "_", s).strip("_")
-          print(s or "dataset")' "$DATASET")
-       
+          # Sanitize dataset to slug (one-line Python; YAML-safe)
+          DS_SLUG=$(python -c 'import re,sys; s=sys.argv[1].strip().lower(); s=re.sub(r"[^a-z0-9._-]+","_",s); s=re.sub(r"_+","_",s).strip("_"); print(s or "dataset")' "$DATASET")
+
+          # Source slug
           SRC_SLUG=$(echo "${SRC}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/_/g')
+
+          # Base slug (no date, no batch)
           BASE="${DS_SLUG}_${SRC_SLUG}"
 
-          # matrix JSON from multi-line "points" input (one x,y,z per line)
+          # Matrix JSON from multi-line "points" input (one x,y,z per line)
           MATRIX=$(jq -R -s 'split("\n") | map(select(length>0))' <<< "${{ github.event.inputs.points }}")
 
-          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
-          echo "base=$BASE"     >> "$GITHUB_OUTPUT"
-          echo "today=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+          echo "matrix=${MATRIX}"       >> "$GITHUB_OUTPUT"
+          echo "base=${BASE}"           >> "$GITHUB_OUTPUT"
+          echo "today=$(date -u +%F)"   >> "$GITHUB_OUTPUT"
 
   run-grid:
     needs: plan
@@ -110,10 +109,8 @@ jobs:
           set -euo pipefail
           mkdir -p "$STAGE"
 
-          # Convert "x,y,z" -> JSON "[x,y,z]" (single-line python to keep YAML happy)
-          XYZ_JSON=$(python -c "import sys; s=sys.argv[1].strip(); parts=[p.strip() for p in s.split(',')]; \
-if len(parts)!=3: raise SystemExit('xyz must be x,y,z'); print('['+','.join(parts)+']')" "$XYZ")
-
+          # Convert "x,y,z" → JSON "[x,y,z]" (single-line Python; YAML-safe)
+          XYZ_JSON=$(python -c 'import sys,json; s=sys.argv[1].strip(); p=[t.strip() for t in s.split(",")]; assert len(p)==3, "xyz must be x,y,z"; print(json.dumps(p))' "$XYZ")
           echo "Shard xyz: $XYZ_JSON"
 
           # Run the grid wrapper (writes one metrics JSON per shard into $STAGE)
@@ -169,41 +166,34 @@ if len(parts)!=3: raise SystemExit('xyz must be x,y,z'); print('['+','.join(part
             NEXT=1
           fi
 
-          BEST_JSON=$(python - <<'PY'
-import json,glob,math
-import os,sys
+          # Pick the best shard (simple ladder+dominance heuristic)
+          SEL=$(python - <<'PY'
+import json,glob,os,sys
 stage=os.environ.get("STAGE","")
-best=None
-best_score=-1.0
-pick=None
+best=None; best_score=-1.0; pick=None
 for fp in glob.glob(os.path.join(stage,"*.json")):
     try:
         with open(fp,"r",encoding="utf-8") as f:
             m=json.load(f)
     except Exception:
         continue
-    # score: prefer strong ladder (>=3 peaks) and higher main_peak power
     peaks=m.get("peaks") or []
     ladder=len(peaks)
     main=peaks[0][1] if peaks else 0.0
-    # dominance: main / next (>=1)
     dom=1.0
     if len(peaks)>=2 and peaks[1][1]>0:
         dom=float(peaks[0][1])/float(peaks[1][1])
-    score = (ladder>=3)*2.0 + (ladder>=2)*1.0 + dom*0.25 + (main>0)*0.01
+    score=(2.0 if ladder>=3 else 0.0) + (1.0 if ladder>=2 else 0.0) + 0.25*dom + (0.01 if main>0 else 0.0)
     if score>best_score:
-        best_score=score
-        best=m
-        pick=fp
+        best_score=score; best=m; pick=fp
 if not best:
-    print("::warning ::No shard metrics found; consolidation will noop.")
+    print("")
     sys.exit(0)
-out=json.dumps({"file":pick,"metrics":best,"score":best_score})
-print(out)
+print(json.dumps({"file":pick,"metrics":best,"score":best_score}))
 PY
 )
-          echo "selection=$BEST_JSON" >> "$GITHUB_OUTPUT"
-          echo "batch=$NEXT"          >> "$GITHUB_OUTPUT"
+          echo "selection=${SEL}" >> "$GITHUB_OUTPUT"
+          echo "batch=${NEXT}"    >> "$GITHUB_OUTPUT"
 
       - name: Write canonical metrics + emit pulse
         if: ${{ steps.select.outputs.selection != '' }}
@@ -216,20 +206,17 @@ PY
           BATCH:   ${{ steps.select.outputs.batch }}
         run: |
           set -euo pipefail
-
-          # Extract the selected shard metrics to a temp file
+          # Extract the selected shard metrics filepath
           SEL_FILE=$(python -c 'import json,sys; print(json.loads(sys.argv[1])["file"])' '${{ steps.select.outputs.selection }}')
-          MET_TMP="results/rgp_ns/_tmp_best.json"
-          cp "$SEL_FILE" "$MET_TMP"
 
           # Move to canonical, dated filename
           CANON="results/rgp_ns/${TODAY}_${BASE}_grid_batch${BATCH}.metrics.json"
-          mv "$MET_TMP" "$CANON"
+          cp "$SEL_FILE" "$CANON"
 
-          # Build a slug that preserves _batchN in the pulse filename
+          # Pulse slug keeps _batchN
           PULSE_SLUG="${BASE}_grid_batch${BATCH}"
 
-          # Emit the pulse (includes n/mean_dt/cv_dt if present; adds a hint internally)
+          # Emit pulse (make_pulse reads metrics & adds hint)
           python tools/agent_rhythm/make_pulse.py \
             --metrics "$CANON" \
             --title   "$TITLE" \
@@ -244,5 +231,5 @@ PY
           git config user.email "actions@users.noreply.github.com"
           git add results/rgp_ns/*.json pulse/auto/*.yml
           git add maps/* || true
-          git commit -m "auto: RGP–NS grid (${ { needs.plan.outputs.today } } ${ { needs.plan.outputs.base } }) consolidated results + pulse" || echo "Nothing to commit"
+          git commit -m "auto: RGP–NS grid (${{ needs.plan.outputs.today }} ${{ needs.plan.outputs.base }}) consolidated results + pulse" || echo "Nothing to commit"
           git push
