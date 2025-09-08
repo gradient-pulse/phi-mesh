@@ -49,7 +49,7 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ## Goal: Completing the Reality Syntax Equation
 
-![Reality Syntax](docs/reality_syntax.png)
+![Reality Syntax](docs/reality_syntax.svg)
 
 *See ongoing findings: [NT Rhythm Log](docs/nt_rhythm_log.md)*
 
