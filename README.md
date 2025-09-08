@@ -62,7 +62,7 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 </p>
 
 <details>
-<summary>*LaTeX source (for reference)*</summary>
+<summary>the LaTeX source (for reference)</summary>
  \text{Reality Syntax} \;=\; \bigotimes_{i=1}^{n} N_i \times \text{Distinctive Pattern of Ratios}
 </details>
 
