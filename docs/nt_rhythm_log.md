@@ -50,7 +50,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 - **Period**: 1.25 s | **BPM**: 48.0 | **Main freq**: 0.8 Hz  
 - **Ladder**: 3 | **Dominance**: ~2.22  
 - **Divergence ratio**: 3.11e-13 | **Resets**: []  
-- **Hint**: strong — clean peak + 2 harmonics  
+- **Hint**: STRONG — clean peak + 2 harmonics  
 - **Artifacts**: metrics JSON · pulse  
 - **Notes**: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length matters.
 
