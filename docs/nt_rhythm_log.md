@@ -20,7 +20,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ## Test Findings
 
-### 2025-09-08 — First 3-Probe Confirmation (JHTDB isotropic1024coarse)
+### 2025-09-08 — First 3-Probe Confirmation - STRONG
 
 **Setup**  
 - Source: `jhtdb`  
@@ -45,7 +45,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ---
 
-### 2025-09-07 — isotropic1024coarse (jhtdb) — batch 8 — Strong
+### 2025-09-07 — isotropic1024coarse (jhtdb) — batch 8 — STRONG
 - **Probe**: xyz=`0.10,0.10,0.12`; window=`[0.0, 1.2, 0.0001]`  
 - **Period**: 1.25 s | **BPM**: 48.0 | **Main freq**: 0.8 Hz  
 - **Ladder**: 3 | **Dominance**: ~2.22  
