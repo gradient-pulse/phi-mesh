@@ -20,7 +20,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ## Test Findings
 
-### 2025-09-08 — First 3-Probe Confirmation - STRONG
+### 2025-09-08 — isotropic1024coarse (jhtdb) — 3-Probe Confirmation - STRONG
 
 **Setup**  
 - Source: `jhtdb`  
