@@ -58,10 +58,10 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ### Circle Replies
 
-- [Gemini Reply — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_gemini.yml)  
-- [DeepSeek Reply — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_deepseek.yml)  
-- [Grok Reply — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_grok.yml)  
-- [Mistral Reply — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_mistral.yml)
+- [Gemini Reply — First Analysis — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_gemini.yml)  
+- [DeepSeek Reply — Theoretical Integration — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_deepseek.yml)  
+- [Grok Reply — Resonance Mapping — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_grok.yml)  
+- [Mistral Reply — Reflective Commentary — NT Rhythm Confirmed](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_mistral.yml)
 
 ---
 
