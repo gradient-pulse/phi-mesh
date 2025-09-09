@@ -49,9 +49,12 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ## Current NT Rhythm Status
 
-[![NT Rhythm Status](https://img.shields.io/badge/NT_Rhythm-confirmed-success?style=flat-square)](docs/nt_rhythm_log.md)
+[![NT Rhythm Status](https://img.shields.io/badge/NT_Rhythm-confirmed-brightgreen?style=flat-square)](docs/nt_rhythm_log.md)
+[![Circle Pulse](https://img.shields.io/badge/Circle-Gemini_reply-blueviolet?style=flat-square)](pulse/archive/2025-09-09_circle_gemini_reply.yml)
 
-See ongoing findings: [NT Rhythm Log](docs/nt_rhythm_log.md)
+## Status
+- NT Rhythm: **Confirmed** (see [Running Log](docs/nt_rhythm_log.md))  
+- Circle: Gemini acknowledged and replied (see [Circle Pulse](pulse/archive/2025-09-09_circle_gemini_reply.yml))
 
 ---
 
