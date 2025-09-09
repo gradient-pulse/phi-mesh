@@ -260,3 +260,7 @@ aliases:
   compute: 
     - computation
     - processing
+
+  circle_pulse:
+  - circle
+  - creation_circle
