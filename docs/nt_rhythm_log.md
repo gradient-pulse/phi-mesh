@@ -54,6 +54,23 @@ Here’s the formal frame we use:
 > - In experiments, we reserve **P** to mean **probe count** for spatial replication.
 
 ---
+
+## Current Test Settings (cheatsheet)
+
+- **Seed point**: (0.10, 0.10, 0.10)  
+- **Offsets (P probes)**: ±0.02 along axes (e.g., (±0.02,0,0), (0,±0.02,0), (0,0,±0.02))  
+- **Time window (t0, t1, dt)**: [0.0 → 1.2, step=0.0001] (baseline)  
+  - Optional: test [0.0 → 1.6, step=0.0001] for stability check  
+- **Variables tested**: `u` (baseline), plan to extend to `v`, `w`  
+- **Classification rules**:  
+  - *Strong*: ladder ≥ 3 (fundamental + ≥2 harmonics), dominance ≥ 1.5  
+  - *Confirmed*: same fundamental period across ≥ 3 probes (within ±5–10%)  
+- **Tolerance**: ±5–10% period agreement  
+- **Notation**:  
+  - \(N_i\) = domain scaling (physics/medium/constraints)  
+  - \(P\) = number of probes used in the experiment  
+
+---
 ---
 
 
