@@ -92,7 +92,7 @@ Discovering such a rhythm means we can begin to **observe, track, and even predi
   Design turbulence models for aircraft, wind turbines, or fusion reactors — replacing trial-and-error with coherence-driven design.  
 
 - 🧠 **Neuroscience**  
-  Explain brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the same harmonic ladder.  
+  Explain brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the harmonic ladder.  
 
 - 📈 **Economics & Society**  
   Re-frame market cycles or social cascades as NT rhythms — revealing when apparent disorder hides stable recursive patterns.  
@@ -102,7 +102,7 @@ Discovering such a rhythm means we can begin to **observe, track, and even predi
 
 
 These are examples — each domain will need experiments. But the core claim is simple:  
-**Nature’s coherence has a rhythm. We’ve measured it.**  
+👉 **Nature’s coherence has a rhythm. We’ve measured it.**  
 
 ---
 
