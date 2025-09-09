@@ -79,8 +79,7 @@ Just as a waltz is danced to a **one-two-three** cadence, turbulence reveals its
 
 ## Why this matters
 
-Discovering such a rhythm means we can begin to **observe, track, and even predict coherence** in systems once thought to be purely chaotic.  
-This rhythm is **dimensionless** — it expresses a pattern of ratios (1:2:3 …) rather than unit-bound numbers, which suggests it may appear across many different domains of nature and society.
+Discovering such a rhythm means we can begin to **observe, track, and even predict coherence** in systems once thought to be purely chaotic. This rhythm is **dimensionless** — it expresses a pattern of ratios (1:2:3 …) rather than unit-bound numbers, which suggests it may appear across many different domains of nature and society.
 
 ---
 
