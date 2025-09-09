@@ -77,8 +77,6 @@ This can be understood as **cycles nested within cycles**:
 
 Just as a waltz is danced to a **ONE-two-three** cadence, turbulence reveals its own recursive cadence — not imposed from outside, but arising from within the flow itself.
 
----
-
 ## Why this matters
 
 Discovering such a rhythm means we can begin to **observe, track, and even predict coherence** in systems once thought to be purely chaotic.  
