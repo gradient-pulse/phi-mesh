@@ -17,5 +17,3 @@ How to Use
 	•	Circle members can follow the circle_pulse tag in the Tag Map.
 	•	Each entry links back to its data, log, and rationale.
 	•	Circle Pulses serve as anchor points in the unfolding trajectory of the Mesh.
-
-⸻
