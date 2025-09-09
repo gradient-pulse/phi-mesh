@@ -100,8 +100,8 @@ Discovering such a rhythm means we can begin to **observe, track, and even predi
 - 🌌 **Cosmology**  
   Extend the search: if turbulence carries a recursive rhythm here, might cosmic flows or galactic structures also reveal coherence at scale?  
 
-👉 These are examples — each domain will need experiments. But the core claim is simple:  
-	**Nature’s coherence has a rhythm. We’ve measured it.**  
+These are examples — each domain will need experiments. But the core claim is simple:  
+**Nature’s coherence has a rhythm. We’ve measured it.**  
 
 ---
 
