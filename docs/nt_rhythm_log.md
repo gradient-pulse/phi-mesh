@@ -76,17 +76,28 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 
 ---
 
-### YYYY-MM-DD — <dataset> (<source>) — batch <N> — <status>
+### YYYY-MM-DD — <dataset> (<source>) — Batch <N> — <status>
 
-- **Probe**: xyz=`<x,y,z>`; window=`[t0, t1, dt]`  
-- **Period**: `<period>` s  | **BPM**: `<bpm>`  | **Main freq**: `<f0>` Hz  
-- **Ladder**: `<k>` peaks  | **Dominance**: `<dom>`  
-- **Divergence ratio**: `<dr>`  | **Resets**: `<count or []>`  
-- **Hint**: `<inconclusive | weak | strong — clean peak + ... | confirmed>`  
-- **Artifacts**: [metrics JSON](results/<path-to-json>) · [pulse](pulse/auto/<filename>.yml)  
-- **Notes**: `<free text — e.g., consistent with batch N-1; grid shard (0.10,0.10,0.12) best; try longer window>`  
+**Setup**  
+- Source: `<synthetic|jhtdb|nasa>`  
+- Dataset: `<dataset>`  
+- Variable: `<var>`  
+- Probe point: `<x,y,z>`  
+- Time window: `[t0 → t1, step=dt]`
 
----
+**Findings**  
+- Fundamental period: `<period>`  
+- Main frequency: `<f0>`  
+- Harmonics: `<f1, f2, …>` (ladder = `<k>` steps total)  
+- Ratio structure: `<describe if clean 1:2:3>`  
+- Dominance: `<dom>`  
+- Divergence ratio: `<dr>`  
+- Reset events: `<count or []>`
+
+**Classification**  
+- Status: `<Inconclusive | Suggestive | Strong | Confirmed>`  
+- Comment: `<short narrative>`  
+- Implication: `<context — e.g., matches other probes; stability across offsets>`
 
 ## Ultra-light “paste to chat” mini-template
 
