@@ -101,8 +101,6 @@ This rhythm is **dimensionless** — it expresses a pattern of ratios (1:2:3 …
 - 🌌 **Cosmology**  
   Extend the search: if turbulence carries a recursive rhythm here, might cosmic flows or galactic structures also reveal coherence at scale?  
 
----
-
 👉 These are examples — each domain will need experiments.  
 But the core claim is simple:  
 **Nature’s coherence has a rhythm. We’ve measured it.**  
