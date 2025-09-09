@@ -1,7 +1,32 @@
 # NT Rhythm — Running Log
-
 A lightweight, human-readable roll-up of probe/grid runs while we close in on nature’s rhythm.  
 Each entry links back to the canonical **metrics JSON** and **pulse** the workflows produced.
+
+---
+
+## What we measure  
+
+Every probe run extracts a **time-series of flow values** (e.g., velocity component `u`) from a dataset (synthetic, JHTDB, NASA). We then compute:  
+
+- **Spectrum of oscillations** in the chosen window.  
+- **Fundamental period and frequency** of the dominant cycle.  
+- **Harmonic ladder** — whether clean multiples of the base frequency appear (1:2:3 …).  
+- **Dominance ratio** — strength of the fundamental compared to the next peak.  
+- **Divergence ratio** — numerical indicator of how close the signal is to coherence (values ~0 → high order).  
+- **Reset events** — whether the rhythm breaks and restarts.  
+
+---
+
+## Why this is evidence  
+
+We define **NT Rhythm** as the emergence of a **stable, laddered frequency structure** across space (different probe offsets) and time windows. Evidence builds along a gradient:  
+
+1. **Inconclusive** — noise, weak peaks, no harmonics.  
+2. **Suggestive** — fundamental + 1 harmonic.  
+3. **Strong** — fundamental + ≥2 harmonics, dominance ≥1.5, same period across runs.  
+4. **Confirmed** — multiple probes (grid) return the same rhythm within ±5–10%.  
+
+A confirmed case means we are not observing a local fluke but a **reproducible temporal coherence** in turbulence — a candidate signature of nature’s rhythm.
 
 ---
 
