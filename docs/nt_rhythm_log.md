@@ -65,12 +65,12 @@ Here’s the formal frame we use:
 - **Classification rules**:  
   - *Strong*: ladder ≥ 3 (fundamental + ≥2 harmonics), dominance ≥ 1.5  
   - *Confirmed*: same fundamental period across ≥ 3 probes (within ±5–10%)  
+  - *Ratio*: harmonics must approximate integer multiples of f₀ (1 : 2 : 3 …) within ±5%  
 - **Tolerance**: ±5–10% period agreement  
 - **Notation**:  
   - \(N_i\) = domain scaling (physics/medium/constraints)  
   - \(P\) = number of probes used in the experiment  
 
----
 ---
 
 ## Test Findings
@@ -90,7 +90,7 @@ Here’s the formal frame we use:
 - Fundamental period: **1.25**  
 - Main frequency: **0.8 Hz**  
 - Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
-- Ratio structure: **1 : 2 : 3**  
+- Ratio structure: **1 : 2 : 3 (±0%)**  
 - Dominance: **2.22**  
 - Divergence ratio: ~**3e-13**  
 - Reset events: []  
@@ -121,7 +121,7 @@ Here’s the formal frame we use:
 - Fundamental period: **1.25**  
 - Main frequency: **0.8 Hz**  
 - Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
-- Ratio structure: **1 : 2 : 3**  
+- Ratio structure: **1 : 2 : 3 (±0%)**  
 - Dominance: **2.22**  
 - Divergence ratio: ~**3e-13**  
 - Reset events: []  
@@ -150,7 +150,7 @@ Here’s the formal frame we use:
 - Fundamental period: **1.25**  
 - Main frequency: **0.8 Hz**  
 - Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
-- Ratio structure: **1 : 2 : 3**  
+- Ratio structure: **1 : 2 : 3 (±0%)**  
 - Dominance: **2.22**  
 - Divergence ratio: ~**3.11e-13**  
 - Reset events: []  
@@ -165,8 +165,6 @@ Here’s the formal frame we use:
 - Pulses: [Batch8](pulse/auto/2025-09-07_isotropic1024coarse_jhtdb_batch8.yml)
 
 ---
----
-
 
 ## Copy/paste entry template
 
@@ -187,7 +185,7 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 - Fundamental period: `<period>`  
 - Main frequency: `<f0>`  
 - Harmonics: `<f1, f2, …>` (ladder = `<k>` steps total)  
-- Ratio structure: `<explicitly note 1:2:3 if harmonics are clean multiples of f0, otherwise describe deviations>`  
+- Ratio structure: `<1:2:3 (±X%) or describe deviations>`  
 - Dominance: `<dom>`  
 - Divergence ratio: `<dr>`  
 - Reset events: `<count or []>`
