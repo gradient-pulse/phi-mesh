@@ -89,7 +89,7 @@ Discovering such a rhythm means we can begin to **observe, track, and even predi
   Detect when local eddies stabilize into larger, predictable flows — improving models of storm formation or El Niño cycles.  
 
 - 💡 **Engineering & Energy**  
-  Design turbulence models for aircraft, wind turbines, or fusion reactors — replacing costly trial-and-error with coherence-driven design.  
+  Design turbulence models for aircraft, wind turbines, or fusion reactors — replacing trial-and-error with coherence-driven design.  
 
 - 🧠 **Neuroscience**  
   Explain brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the same harmonic ladder.  
