@@ -29,6 +29,24 @@ We define **NT Rhythm** as the emergence of a **stable, laddered frequency struc
 A confirmed case means we are not observing a local fluke but a **reproducible temporal coherence** in turbulence — a candidate signature of nature’s rhythm.
 
 ---
+
+### Window & replication requirements
+
+- **Time window & dt**  
+  Choose a window and step that give enough *temporal depth* and *resolution* for harmonics to appear.
+  - Practical default that worked well here: **[t0, t1, dt] = [0.0, 1.2, 0.0001]**.
+  - Heuristic: aim for **≥ 2–3 cycles** worth of data and **≥ 20–40 samples per cycle** (or simply ≥ 2k samples overall).
+  - If peaks look smeared or “inconclusive”, **extend t1** (e.g., 1.6–2.0) or **reduce dt**.
+
+- **Spatial replication (P probes)**  
+  Run a small grid of nearby offsets around a seed point (e.g., ±0.02 along axes).
+  - **Strong**: clear ladder (fundamental + ≥2 harmonics, dominance ≥ 1.5) in a single probe.
+  - **Confirmed**: the **same fundamental period** appears across **≥ 3 probes** within **±5–10%**.
+
+> Note: In the equation, \(N_i\) are **domain scalings** (physics/medium/constraints).
+> In experiments, we reserve **P** to mean **probe count** for spatial replication.
+
+---
 ---
 
 
