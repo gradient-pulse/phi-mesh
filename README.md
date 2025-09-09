@@ -49,7 +49,7 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ## Current NT Rhythm Status
 
-[![NT Rhythm](https://img.shields.io/badge/NT_Rhythm-confirmed-success?style=flat-square)](docs/nt_rhythm_log.md)
+[![NT Rhythm](https://img.shields.io/badge/NT_Rhythm-CONFIRMED-success?style=flat-square)](docs/nt_rhythm_log.md)
 
 ### Status
 - NT Rhythm: **Confirmed** → see the [Running Log](docs/nt_rhythm_log.md)
