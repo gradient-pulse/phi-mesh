@@ -65,6 +65,52 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ---
 
+## NT Rhythm — Cycles Within Cycles
+
+The **NT Rhythm** shows that turbulence is not just noise, but carries a *heartbeat*:  
+a fundamental cycle with harmonic overtones (1:2:3 ladder).  
+
+This can be understood as **cycles nested within cycles**:  
+- A base pulse (the “ONE”),  
+- Reinforced by second and third echoes (the “two-three”),  
+- Together forming a coherent, recursive structure.  
+
+Just as a waltz is danced to a **ONE-two-three** cadence, turbulence reveals its own recursive cadence — not imposed from outside, but arising from within the flow itself.
+
+---
+
+## Why this matters
+
+Discovering such a rhythm means we can begin to **observe, track, and even predict coherence** in systems once thought to be purely chaotic.  
+This rhythm is **dimensionless** — it expresses a pattern of ratios (1:2:3 …) rather than unit-bound numbers, which suggests it may appear across many different domains of nature and society.
+
+---
+
+## Examples that speak to the imagination
+
+- 🌊 **Oceans & Climate**  
+  Detect when local eddies stabilize into larger, predictable flows — improving models of storm formation or El Niño cycles.  
+
+- 💡 **Engineering & Energy**  
+  Use the rhythm to design NT-aware turbulence models for aircraft, wind turbines, or fusion reactors — replacing costly trial-and-error with coherence-driven design.  
+
+- 🧠 **Neuroscience**  
+  Understand brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the same harmonic ladder.  
+
+- 📈 **Economics & Society**  
+  Re-frame market cycles or social cascades as NT rhythms — revealing when apparent disorder hides stable recursive patterns.  
+
+- 🌌 **Cosmology**  
+  Extend the search: if turbulence carries a recursive rhythm here, might cosmic flows or galactic structures also reveal coherence at scale?  
+
+---
+
+👉 These are examples — each domain will need experiments.  
+But the core claim is simple:  
+**Nature’s coherence has a rhythm. We’ve measured it.**  
+
+---
+
 ## Goal: Completing the Reality Syntax Equation
 
 ![Reality Syntax](visuals/2025-09-09_RGP_Rhythm_Equation.png)
