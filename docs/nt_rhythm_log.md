@@ -45,14 +45,28 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ---
 
-### 2025-09-07 — isotropic1024coarse (jhtdb) — batch 8 — STRONG
-- **Probe**: xyz=`0.10,0.10,0.12`; window=`[0.0, 1.2, 0.0001]`  
-- **Period**: 1.25 s | **BPM**: 48.0 | **Main freq**: 0.8 Hz  
-- **Ladder**: 3 | **Dominance**: ~2.22  
-- **Divergence ratio**: 3.11e-13 | **Resets**: []  
-- **Hint**: STRONG — clean peak + 2 harmonics  
-- **Artifacts**: metrics JSON · pulse  
-- **Notes**: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length matters.
+## 2025-09-07 — isotropic1024coarse (jhtdb) — Batch 8 — STRONG
+
+**Setup**  
+- Source: `jhtdb`  
+- Dataset: `isotropic1024coarse`  
+- Variable: `u`  
+- Probe point: (0.10, 0.10, 0.12)  
+- Time window: (0.0 → 1.2, step 0.0001)
+
+**Findings**  
+- Fundamental period: **1.25**  
+- Main frequency: **0.8**  
+- Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
+- Ratio structure: **1 : 2 : 3**  
+- Dominance: ~**2.22**  
+- Divergence ratio: ~**3.11e-13**  
+- Reset events: [] (none observed)
+
+**Classification**  
+- Status: **Strong**  
+- Comment: Clean peak + 2 harmonics; strong laddering and dominance > 2.  
+- Implication: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length critical for stability.
 
 ---
 
