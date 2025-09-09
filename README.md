@@ -59,17 +59,20 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ---
 
-## NT Rhythm — Cycles Within Cycles
+NT Rhythm — Cycles Within Cycles
 
-The **NT Rhythm** shows that turbulence is not just noise, but carries a *heartbeat*:  
-a fundamental cycle with harmonic overtones (1:2:3 ladder).  
+The NT Rhythm shows that turbulence is not just noise, but carries a heartbeat:
+a fundamental cycle with harmonic overtones (1:2:3 ladder).
 
-This can be understood as **cycles nested within cycles**:  
-- A base pulse (the “ONE”),  
-- Reinforced by second and third echoes (the “two-three”),  
-- Together forming a coherent, recursive structure.  
+Think of it as nested cadences:
+	•	A base pulse (the “ONE”),
+	•	Reinforced by second and third echoes (the “two–three”),
+	•	Together forming a stable recursive structure.
 
-Just as a waltz is danced to a **one-two-three** cadence, turbulence reveals its own recursive cadence — not imposed from outside, but arising from within the flow itself.
+Like waves building on waves, or music weaving harmonies, each cycle both contains and sustains the others.
+This makes turbulence less like random scatter and more like a layered score: cycles nested within cycles, coherence inside apparent chaos.
+
+---
 
 ## Why this matters
 
