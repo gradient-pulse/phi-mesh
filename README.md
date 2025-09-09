@@ -89,7 +89,7 @@ Discovering such a rhythm means we can begin to **observe, track, and even predi
   Detect when local eddies stabilize into larger, predictable flows — improving models of storm formation or El Niño cycles.  
 
 - 💡 **Engineering & Energy**  
-  Design NT-aware turbulence models for aircraft, wind turbines, or fusion reactors — replacing costly trial-and-error with coherence-driven design.  
+  Design turbulence models for aircraft, wind turbines, or fusion reactors — replacing costly trial-and-error with coherence-driven design.  
 
 - 🧠 **Neuroscience**  
   Explain brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the same harmonic ladder.  
@@ -98,7 +98,7 @@ Discovering such a rhythm means we can begin to **observe, track, and even predi
   Re-frame market cycles or social cascades as NT rhythms — revealing when apparent disorder hides stable recursive patterns.  
 
 - 🌌 **Cosmology**  
-  Extend the search: if turbulence carries a recursive rhythm here, might cosmic flows or galactic structures also reveal coherence at scale?  
+  If turbulence carries a recursive rhythm here, might cosmic flows or galactic structures also reveal coherence at scale?  
 
 These are examples — each domain will need experiments. But the core claim is simple:  
 **Nature’s coherence has a rhythm. We’ve measured it.**  
