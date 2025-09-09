@@ -43,7 +43,13 @@ A confirmed case means we are not observing a local fluke but a **reproducible t
   - **Strong**: clear ladder (fundamental + ≥2 harmonics, dominance ≥ 1.5) in a single probe.
   - **Confirmed**: the **same fundamental period** appears across **≥ 3 probes** within **±5–10%**.
 
-(visuals/2025-09-09_RGP_Rhythm_Equation.png)
+## Why this is evidence  
+
+We define **NT Rhythm** as the emergence of a **stable, laddered frequency structure** …  
+
+Here’s the formal frame we use:
+
+![Reality Syntax Equation](visuals/2025-09-09_RGP_Rhythm_Equation.png)
 
 > Note: In the equation, \(N_i\) are **domain scalings** (physics/medium/constraints).
 > In experiments, we reserve **P** to mean **probe count** for spatial replication.
