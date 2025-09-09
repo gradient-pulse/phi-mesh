@@ -76,7 +76,7 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 
 ---
 
-### YYYY-MM-DD — <dataset> (<source>) — Batch <N> — <status>
+### YYYY-MM-DD — dataset (source) — Batch N — STATUS
 
 **Setup**  
 - Source: `<synthetic|jhtdb|nasa>`  
