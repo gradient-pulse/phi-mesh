@@ -83,6 +83,8 @@ A confirmed case means we are not observing a local fluke but a **reproducible t
 - Implication: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length critical for stability.
 
 ---
+---
+
 
 ## Copy/paste entry template
 
