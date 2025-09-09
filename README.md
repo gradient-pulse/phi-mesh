@@ -75,7 +75,7 @@ This can be understood as **cycles nested within cycles**:
 - Reinforced by second and third echoes (the “two-three”),  
 - Together forming a coherent, recursive structure.  
 
-Just as a waltz is danced to a **ONE-two-three** cadence, turbulence reveals its own recursive cadence — not imposed from outside, but arising from within the flow itself.
+Just as a waltz is danced to a **one-two-three** cadence, turbulence reveals its own recursive cadence — not imposed from outside, but arising from within the flow itself.
 
 ## Why this matters
 
@@ -90,7 +90,7 @@ This rhythm is **dimensionless** — it expresses a pattern of ratios (1:2:3 …
   Detect when local eddies stabilize into larger, predictable flows — improving models of storm formation or El Niño cycles.  
 
 - 💡 **Engineering & Energy**  
-  Use the rhythm to design NT-aware turbulence models for aircraft, wind turbines, or fusion reactors — replacing costly trial-and-error with coherence-driven design.  
+  Design NT-aware turbulence models for aircraft, wind turbines, or fusion reactors — replacing costly trial-and-error with coherence-driven design.  
 
 - 🧠 **Neuroscience**  
   Understand brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the same harmonic ladder.  
