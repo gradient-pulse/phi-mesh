@@ -105,7 +105,7 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 - Fundamental period: `<period>`  
 - Main frequency: `<f0>`  
 - Harmonics: `<f1, f2, …>` (ladder = `<k>` steps total)  
-- Ratio structure: `<describe if clean 1:2:3>`  
+- Ratio structure: `<explicitly note 1:2:3 if harmonics are clean multiples of f0, otherwise describe deviations>`  
 - Dominance: `<dom>`  
 - Divergence ratio: `<dr>`  
 - Reset events: `<count or []>`
@@ -114,5 +114,3 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 - Status: `<Inconclusive | Suggestive | Strong | Confirmed>`  
 - Comment: `<short narrative>`  
 - Implication: `<context — e.g., matches other probes; stability across offsets>`
-
----
