@@ -57,7 +57,7 @@ See ongoing findings: [NT Rhythm Log](docs/nt_rhythm_log.md)
 
 ## Goal: Completing the Reality Syntax Equation
 
-![Reality Syntax](docs/reality_syntax.svg)
+![Reality Syntax](visuals/2025-09-09_RGP_Rhythm_Equation.png)
 
 *See ongoing findings: [NT Rhythm Log](docs/nt_rhythm_log.md)*
 
