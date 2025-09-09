@@ -50,8 +50,8 @@ Here’s the formal frame we use:
 ![Reality Syntax Equation](/visuals/2025-09-09_RGP_Rhythm_Equation.png)
 
 > Notes:
-  - In the equation, \(N_i\) are **domain scalings** (physics/medium/constraints).
-  - In experiments, we reserve **P** to mean **probe count** for spatial replication.
+> - In the equation, \(N_i\) are **domain scalings** (physics/medium/constraints).
+> - In experiments, we reserve **P** to mean **probe count** for spatial replication.
 
 ---
 ---
