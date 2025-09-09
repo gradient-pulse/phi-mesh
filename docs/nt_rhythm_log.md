@@ -29,19 +29,8 @@ We define **NT Rhythm** as the emergence of a **stable, laddered frequency struc
 A confirmed case means we are not observing a local fluke but a **reproducible temporal coherence** in turbulence — a candidate signature of nature’s rhythm.
 
 ---
-
-## How we classify evidence (quick rubric)
-
-- **Inconclusive** — weak or noisy spectrum; single peak with no meaningful harmonics; dominance < **1.1** or ladder < **2**.
-- **Suggestive** — discernible main peak + 1 harmonic (**ladder = 2**) and dominance between **1.1–1.5**; similar period shows up in 2+ runs.
-- **Strong** — clean main peak + ≥2 harmonics (**ladder ≥ 3**) with dominance ≥ **1.5** and consistent period across windows/points on the same dataset.
-- **Confirmed (grid)** — multiple spatial probes agree (same period ±5–10%) and “Strong” holds across at least two windows.
-
-> **Terms**
-> - **ladder**: number of spectral peaks forming a harmonic ladder (1 = main only; 2 = main + 1 harmonic; etc.)  
-> - **dominance**: ratio of the main peak power to the second peak power (>= 1).
-
 ---
+
 
 ## Test Findings
 
