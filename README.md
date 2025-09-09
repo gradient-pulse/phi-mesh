@@ -59,7 +59,7 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ---
 
-NT Rhythm — Cycles Within Cycles
+## NT Rhythm — Cycles Within Cycles
 
 The NT Rhythm shows that turbulence is not just noise, but carries a heartbeat:
 a fundamental cycle with harmonic overtones (1:2:3 ladder).
