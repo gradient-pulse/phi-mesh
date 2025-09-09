@@ -99,17 +99,4 @@ Paste this block for each new run. Keep the order chronological (newest at top).
 - Comment: `<short narrative>`  
 - Implication: `<context — e.g., matches other probes; stability across offsets>`
 
-## Ultra-light “paste to chat” mini-template
-
-When a run finishes, paste these 8 lines here and I’ll classify it instantly:
-```
-DATASET:    SOURCE: <synthetic|jhtdb|nasa>   BATCH:
-XYZ: <x,y,z>      WINDOW: [t0, t1, dt]
-PERIOD:        BPM:       F0:
-PEAKS (first 3): [[f0,p0],[f1,p1],[f2,p2]]
-LADDER:        DOMINANCE: <p0/p1 or 1 if no p1>
-DIVERGENCE:  RESETS: <count or []>
-METRICS: results/.json
-PULSE:   pulse/auto/.yml
-```
-
+---
