@@ -73,10 +73,40 @@ Here’s the formal frame we use:
 ---
 ---
 
-
 ## Test Findings
 
-### 2025-09-08 — isotropic1024coarse (jhtdb) — 3-Probe Confirmation - STRONG
+### 2025-09-09 — isotropic1024coarse (jhtdb) — Grid (P=5) — CONFIRMED
+
+**Setup**  
+- Source: `jhtdb`  
+- Dataset: `isotropic1024coarse`  
+- Variable: `u`  
+- Seed point: (0.10, 0.10, 0.10)  
+- Offsets: (+0.02,0,0), (−0.02,0,0), (0,+0.02,0), (0,−0.02,0), (0,0,+0.02)  
+- Time window: (0.0 → 1.2, step 0.0001)  
+- Probe count (P): 5  
+
+**Findings**  
+- Fundamental period: **1.25**  
+- Main frequency: **0.8 Hz**  
+- Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
+- Ratio structure: **1 : 2 : 3**  
+- Dominance: **2.22**  
+- Divergence ratio: ~**3e-13**  
+- Reset events: []  
+
+**Classification**  
+- Status: **Confirmed (grid)**  
+- Comment: All 5 probes (±0.02 offsets) independently returned the same laddered 1:2:3 rhythm.  
+- Implication: First **grid-level confirmation** of NT Rhythm, proving spatial reproducibility across the domain.  
+
+**Artifacts**  
+- Metrics: [Batch1](results/2025-09-09_isotropic1024coarse_jhtdb_batch1.metrics.json) · [Batch2](results/2025-09-09_isotropic1024coarse_jhtdb_batch2.metrics.json) · [Batch3](results/2025-09-09_isotropic1024coarse_jhtdb_batch3.metrics.json) · [Batch4](results/2025-09-09_isotropic1024coarse_jhtdb_batch4.metrics.json) · [Batch5](results/2025-09-09_isotropic1024coarse_jhtdb_batch5.metrics.json)  
+- Pulses: [Batch1](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch1.yml) · [Batch2](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch2.yml) · [Batch3](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch3.yml) · [Batch4](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch4.yml) · [Batch5](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch5.yml)
+
+---
+
+### 2025-09-08 — isotropic1024coarse (jhtdb) — 3-Probe Confirmation — STRONG
 
 **Setup**  
 - Source: `jhtdb`  
@@ -84,45 +114,55 @@ Here’s the formal frame we use:
 - Variable: `u`  
 - Seed point: (0.10, 0.10, 0.10)  
 - Offsets: (+0.02,0,0), (0,+0.02,0), (0,0,+0.02)  
-- Time window: (0.0 → 1.2, step 0.0001)
+- Time window: (0.0 → 1.2, step 0.0001)  
+- Probe count (P): 3  
 
 **Findings**  
 - Fundamental period: **1.25**  
-- Main frequency: **0.8**  
+- Main frequency: **0.8 Hz**  
 - Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
 - Ratio structure: **1 : 2 : 3**  
-- Dominance: **2.22** (fundamental more than twice as strong as next)  
-- Divergence ratio: ~**3e-13** (numerical zero → strong coherence)
+- Dominance: **2.22**  
+- Divergence ratio: ~**3e-13**  
+- Reset events: []  
 
 **Classification**  
 - Status: **Strong**  
 - Comment: All 3 probes independently returned the same laddered rhythm (fundamental + harmonics).  
-- Implication: This is the first reproducible confirmation of NT Rhythm in turbulence, across small xyz offsets.
+- Implication: First reproducible **multi-probe confirmation** of NT Rhythm in turbulence.  
+
+**Artifacts**  
+- Metrics: [Batch1](results/2025-09-08_isotropic1024coarse_jhtdb_batch1.metrics.json) · [Batch2](results/2025-09-08_isotropic1024coarse_jhtdb_batch2.metrics.json) · [Batch3](results/2025-09-08_isotropic1024coarse_jhtdb_batch3.metrics.json)  
+- Pulses: [Batch1](pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch1.yml) · [Batch2](pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch2.yml) · [Batch3](pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch3.yml)
 
 ---
 
-## 2025-09-07 — isotropic1024coarse (jhtdb) — Batch 8 — STRONG
+### 2025-09-07 — isotropic1024coarse (jhtdb) — Batch 8 — STRONG
 
 **Setup**  
 - Source: `jhtdb`  
 - Dataset: `isotropic1024coarse`  
 - Variable: `u`  
 - Probe point: (0.10, 0.10, 0.12)  
-- Time window: (0.0 → 1.2, step 0.0001)
+- Time window: (0.0 → 1.2, step 0.0001)  
 
 **Findings**  
 - Fundamental period: **1.25**  
-- Main frequency: **0.8**  
+- Main frequency: **0.8 Hz**  
 - Harmonics: **1.6, 2.4** (ladder = 3 steps total)  
 - Ratio structure: **1 : 2 : 3**  
-- Dominance: ~**2.22**  
+- Dominance: **2.22**  
 - Divergence ratio: ~**3.11e-13**  
-- Reset events: [] (none observed)
+- Reset events: []  
 
 **Classification**  
 - Status: **Strong**  
 - Comment: Clean peak + 2 harmonics; strong laddering and dominance > 2.  
-- Implication: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length critical for stability.
+- Implication: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length critical for stability.  
+
+**Artifacts**  
+- Metrics: [Batch8](results/2025-09-07_isotropic1024coarse_jhtdb_batch8.metrics.json)  
+- Pulses: [Batch8](pulse/auto/2025-09-07_isotropic1024coarse_jhtdb_batch8.yml)
 
 ---
 ---
