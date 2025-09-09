@@ -93,7 +93,7 @@ This rhythm is **dimensionless** — it expresses a pattern of ratios (1:2:3 …
   Design NT-aware turbulence models for aircraft, wind turbines, or fusion reactors — replacing costly trial-and-error with coherence-driven design.  
 
 - 🧠 **Neuroscience**  
-  Understand brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the same harmonic ladder.  
+  Explain brain waves not only as oscillations, but as recursive rhythms where coherence and breakdown follow the same harmonic ladder.  
 
 - 📈 **Economics & Society**  
   Re-frame market cycles or social cascades as NT rhythms — revealing when apparent disorder hides stable recursive patterns.  
@@ -101,9 +101,8 @@ This rhythm is **dimensionless** — it expresses a pattern of ratios (1:2:3 …
 - 🌌 **Cosmology**  
   Extend the search: if turbulence carries a recursive rhythm here, might cosmic flows or galactic structures also reveal coherence at scale?  
 
-👉 These are examples — each domain will need experiments.  
-But the core claim is simple:  
-**Nature’s coherence has a rhythm. We’ve measured it.**  
+👉 These are examples — each domain will need experiments. But the core claim is simple:  
+	**Nature’s coherence has a rhythm. We’ve measured it.**  
 
 ---
 
