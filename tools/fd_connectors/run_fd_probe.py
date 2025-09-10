@@ -44,9 +44,10 @@ def parse_triplet(s: str) -> Tuple[float, float, float]:
 
 
 def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], List[float]]:
+    """Compact synthetic signal with a fundamental + 3x harmonic."""
     n = max(3, int((t1 - t0) / max(dt, 1e-12)))
     ts = [t0 + i * dt for i in range(n)]
-    base = 0.4
+    base = 0.4  # Hz
     vs = [
         math.sin(2 * math.pi * base * (t - t0))
         + 0.15 * math.sin(2 * math.pi * 3 * base * (t - t0))
@@ -118,6 +119,7 @@ def main() -> None:
                     x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
                 )
                 ts, vs = ts_obj.t, ts_obj.v
+                src_label = "jhtdb"
             else:
                 try:
                     ts_obj = JHT.fetch_timeseries(
@@ -134,16 +136,21 @@ def main() -> None:
             src_label = "jhtdb_offline"
 
     else:  # nasa
-        # Prefer explicit CLI dataset; allow override via env only if you set it.
+        # Use CLI dataset unless NASA_CSV environment is explicitly set.
         nasa_spec = (os.getenv("NASA_CSV") or args.dataset).strip()
-        print(f"[run_fd_probe] NASA: dataset spec from CLI/env = {nasa_spec}")
-
-        # Transparently handle short-name / repo-path / URL inside the connector.
-        ts_obj = NASA.fetch_timeseries(
-            dataset=nasa_spec, var=args.var,
-            x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-        )
-        ts, vs = ts_obj.t, ts_obj.v
+        try:
+            # Let the connector resolve short-name / repo-path / URL.
+            ts_obj = NASA.fetch_timeseries(
+                dataset=nasa_spec, var=args.var,
+                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+            )
+            ts, vs = ts_obj.t, ts_obj.v
+            src_label = "nasa"
+        except Exception as e:
+            # Keep pipeline green & record provenance of fallback
+            print(f"::warning title=NASA read failed::{e}")
+            ts, vs = synthetic_timeseries(t0, t1, dt)
+            src_label = "nasa_offline"
 
     # Ensure monotonic time
     ts = sorted(ts)
@@ -167,5 +174,28 @@ def main() -> None:
         "xyz": [x, y, z],
         "window": [t0, t1, dt],
     }
+    if src_label == "nasa_offline":
+        env_csv = os.getenv("NASA_CSV", "").strip()
+        if env_csv:
+            metrics["details"]["nasa_csv_env"] = env_csv
+        metrics["details"]["fallback"] = "synthetic_due_to_nasa_read_failure"
 
-    # coerce
+    # coerce to JSON-safe builtins
+    metrics = to_builtin(metrics)
+
+    # --- write metrics JSON ONLY -----------------------------------------
+    out_dir = os.path.dirname(os.path.abspath(args.json_out)) or "."
+    os.makedirs(out_dir, exist_ok=True)
+    with open(args.json_out, "w", encoding="utf-8") as f:
+        json.dump(metrics, f, ensure_ascii=False, indent=2)
+
+    # small notice for GH actions log
+    n = metrics.get("n", "?")
+    mean_dt = metrics.get("mean_dt", "?")
+    cv_dt = metrics.get("cv_dt", "?")
+    print(f"::notice title=FD Probe Metrics::n={n}, mean_dt={mean_dt}, cv_dt={cv_dt} (src={src_label})")
+    print(f"Wrote metrics → {args.json_out}")
+
+
+if __name__ == "__main__":
+    main()
