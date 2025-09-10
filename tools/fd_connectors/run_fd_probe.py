@@ -5,7 +5,7 @@ compute NT-rhythm metrics, and write *metrics JSON only*.
 
 Args:
   --source   {synthetic,jhtdb,nasa}
-  --dataset  free-text dataset name/slug (workflow sanitizes for filenames)
+  --dataset  free-text dataset name/slug/path/URL (workflow sanitizes filenames)
   --var      variable name (e.g., "u")
   --xyz      "x,y,z"
   --twin     "t0,t1,dt"
@@ -20,7 +20,6 @@ import argparse
 import json
 import math
 import os
-import re
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
 
@@ -120,7 +119,6 @@ def main() -> None:
                 )
                 ts, vs = ts_obj.t, ts_obj.v
             else:
-                # Prefer any offline helper in jhtdb module; else synthetic
                 try:
                     ts_obj = JHT.fetch_timeseries(
                         dataset=args.dataset, var=args.var,
@@ -136,14 +134,15 @@ def main() -> None:
             src_label = "jhtdb_offline"
 
     else:  # nasa
-        nasa_csv = os.getenv("NASA_CSV", "").strip()
-        if nasa_csv:
-            ts_obj = NASA.read_csv_timeseries(nasa_csv)  # CSV/URL/inline
-        else:
-            ts_obj = NASA.fetch_timeseries(
-                dataset=args.dataset, var=args.var,
-                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-            )
+        # Prefer explicit CLI dataset; allow override via env only if you set it.
+        nasa_spec = (os.getenv("NASA_CSV") or args.dataset).strip()
+        print(f"[run_fd_probe] NASA: dataset spec from CLI/env = {nasa_spec}")
+
+        # Transparently handle short-name / repo-path / URL inside the connector.
+        ts_obj = NASA.fetch_timeseries(
+            dataset=nasa_spec, var=args.var,
+            x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+        )
         ts, vs = ts_obj.t, ts_obj.v
 
     # Ensure monotonic time
@@ -169,22 +168,4 @@ def main() -> None:
         "window": [t0, t1, dt],
     }
 
-    # coerce to JSON-safe builtins
-    metrics = to_builtin(metrics)
-
-    # --- write metrics JSON ONLY -----------------------------------------
-    out_dir = os.path.dirname(os.path.abspath(args.json_out)) or "."
-    os.makedirs(out_dir, exist_ok=True)
-    with open(args.json_out, "w", encoding="utf-8") as f:
-        json.dump(metrics, f, ensure_ascii=False, indent=2)
-
-    # small notice for GH actions log
-    n = metrics.get("n", "?")
-    mean_dt = metrics.get("mean_dt", "?")
-    cv_dt = metrics.get("cv_dt", "?")
-    print(f"::notice title=FD Probe Metrics::n={n}, mean_dt={mean_dt}, cv_dt={cv_dt} (src={src_label})")
-    print(f"Wrote metrics → {args.json_out}")
-
-
-if __name__ == "__main__":
-    main()
+    # coerce
