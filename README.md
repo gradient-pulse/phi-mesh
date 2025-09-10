@@ -72,7 +72,7 @@ Think of it as nested cadences:
 Like waves building on waves, or music weaving harmonies, each cycle both contains and sustains the others.
 This makes turbulence less like random scatter and more like a layered score: cycles nested within cycles, coherence inside apparent chaos.
 
-🔗 See also: [Frequency as a Dimension of N(i)](phi-mesh/pulse/2025-09-10_frequency_dimension_Ni.yml)
+🔗 See also: [Frequency as a Dimension of N(i)](pulse/2025-09-10_frequency_as_dimension_of_Ni.yml)
 
 ---
 
