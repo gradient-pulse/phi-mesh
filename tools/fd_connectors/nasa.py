@@ -4,12 +4,14 @@ from __future__ import annotations
 import os
 import urllib.request
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List
+
 
 @dataclass
 class Timeseries:
     t: List[float]
     v: List[float]
+
 
 # ---------- internals ----------
 
@@ -26,6 +28,7 @@ def _read_text(path_or_url: str) -> str:
     with open(path_or_url, "r", encoding="utf-8") as f:
         return f.read()
 
+
 def _resolve_path_or_url(spec: str) -> str:
     """
     Resolve a user spec into a concrete path/URL.
@@ -35,8 +38,10 @@ def _resolve_path_or_url(spec: str) -> str:
       3) short filename -> 'data/nasa/<filename>' if exists
     """
     spec = (spec or "").strip()
-    if not spec:
-        raise FileNotFoundError("Empty NASA spec")
+
+    # NEW: tolerate surrounding quotes from shells/launchers/CI
+    if (len(spec) >= 2) and ((spec[0] == spec[-1]) and spec[0] in ("'", '"')):
+        spec = spec[1:-1]
 
     # URL or absolute path
     if spec.startswith(("http://", "https://")) or os.path.isabs(spec):
@@ -53,6 +58,7 @@ def _resolve_path_or_url(spec: str) -> str:
 
     # Last resort: report the original (will be raised by _read_text)
     return spec
+
 
 def _parse_csv(text: str) -> Timeseries:
     """
@@ -85,6 +91,7 @@ def _parse_csv(text: str) -> Timeseries:
             continue
     return Timeseries(t=T, v=V)
 
+
 # ---------- public API ----------
 
 def read_csv_timeseries(path_or_url: str) -> Timeseries:
@@ -103,6 +110,7 @@ def read_csv_timeseries(path_or_url: str) -> Timeseries:
     if not ts.t or not ts.v:
         raise ValueError(f"Parsed empty time series from: {target!r}")
     return ts
+
 
 def fetch_timeseries(dataset: str, var: str, x: float, y: float, z: float,
                      t0: float, t1: float, dt: float) -> Timeseries:
