@@ -1,7 +1,10 @@
 # tools/fd_connectors/nasa.py
 from __future__ import annotations
 
+import csv
+import io
 import os
+import zipfile
 import urllib.request
 from dataclasses import dataclass
 from typing import List, Tuple, Optional
@@ -15,30 +18,8 @@ class Timeseries:
 
 # ---------- internals ----------
 
-def _read_text(path_or_url: str) -> str:
-    """Read text from local path or HTTP(S) URL, with debug + rich errors."""
-    print(f"[NASA] Attempting to read: {path_or_url}")
-    try:
-        # URL?
-        if path_or_url.startswith(("http://", "https://")):
-            with urllib.request.urlopen(path_or_url) as resp:  # nosec
-                text = resp.read().decode("utf-8", errors="replace")
-                print(f"[NASA] OK: fetched {len(text)} chars from URL")
-                return text
-
-        # Local file (absolute or relative)
-        if not os.path.exists(path_or_url):
-            msg = f"[NASA] ERROR: file not found: {path_or_url}"
-            print(msg)
-            raise FileNotFoundError(msg)
-        with open(path_or_url, "r", encoding="utf-8") as f:
-            text = f.read()
-            print(f"[NASA] OK: read {len(text)} chars from local file")
-            return text
-
-    except Exception as e:
-        print(f"[NASA] READ FAILURE for {path_or_url}: {type(e).__name__}: {e}")
-        raise
+def _is_url(spec: str) -> bool:
+    return spec.startswith(("http://", "https://"))
 
 
 def _resolve_path_or_url(spec: str) -> str:
@@ -48,106 +29,186 @@ def _resolve_path_or_url(spec: str) -> str:
       1) absolute path or URL → use as-is
       2) repo-relative path that exists → use
       3) short filename -> 'data/nasa/<filename>' if exists
-      4) otherwise return original (will fail in _read_text)
+      4) otherwise return original (which will error in the reader)
     """
-    raw = (spec or "").strip()
-    # Strip accidental quotes
-    if len(raw) >= 2 and (raw[0] == raw[-1]) and raw[0] in ("'", '"'):
-        raw = raw[1:-1]
-    print(f"[NASA] Resolving spec: {raw}")
+    spec = (spec or "").strip()
+    if not spec:
+        raise FileNotFoundError("Empty NASA dataset spec")
 
-    # URL or absolute
-    if raw.startswith(("http://", "https://")) or os.path.isabs(raw):
-        print(f"[NASA] Using as direct path/URL: {raw}")
-        return raw
+    # URL or absolute path
+    if _is_url(spec) or os.path.isabs(spec):
+        return spec
 
-    # Repo-relative?
-    if os.path.exists(raw):
-        print(f"[NASA] Found repo-relative file: {raw}")
-        return raw
+    # Try as given (repo-relative)
+    if os.path.exists(spec):
+        return spec
 
-    # data/nasa/<raw> ?
-    candidate = os.path.join("data", "nasa", raw)
+    # Try under data/nasa/
+    candidate = os.path.join("data", "nasa", spec)
     if os.path.exists(candidate):
-        print(f"[NASA] Found under data/nasa/: {candidate}")
         return candidate
 
-    print(f"[NASA] No local match; will try as-is: {raw}")
-    return raw
+    # Last resort: return original (will be handled by reader)
+    return spec
+
+
+def _read_bytes(path_or_url: str) -> bytes:
+    """Read bytes from local path or HTTP(S) URL."""
+    if _is_url(path_or_url):
+        with urllib.request.urlopen(path_or_url) as resp:  # nosec - trusted by maintainer input
+            return resp.read()
+
+    if not os.path.exists(path_or_url):
+        raise FileNotFoundError(path_or_url)
+
+    with open(path_or_url, "rb") as f:
+        return f.read()
+
+
+def _maybe_unzip_csv(payload: bytes) -> Optional[str]:
+    """
+    If 'payload' is a ZIP archive, extract and return text of the FIRST .csv found.
+    Otherwise return None.
+    """
+    # ZIP magic: PK\x03\x04
+    if len(payload) >= 4 and payload[:4] == b"PK\x03\x04":
+        with zipfile.ZipFile(io.BytesIO(payload)) as zf:
+            # prefer first *.csv; if none, fall back to first file
+            names = zf.namelist()
+            csv_names = [n for n in names if n.lower().endswith(".csv")]
+            pick = (csv_names[0] if csv_names else (names[0] if names else None))
+            if not pick:
+                raise ValueError("ZIP file appears empty.")
+            with zf.open(pick, "r") as f:
+                data = f.read()
+            # decode as utf-8 with fallback
+            try:
+                return data.decode("utf-8")
+            except UnicodeDecodeError:
+                return data.decode("latin-1")
+    return None
+
+
+def _bytes_to_text(payload: bytes) -> str:
+    """Decode bytes to text with sensible fallback."""
+    try:
+        return payload.decode("utf-8")
+    except UnicodeDecodeError:
+        return payload.decode("latin-1")
 
 
 def _parse_csv(text: str) -> Timeseries:
-    """Parse minimal CSV (headers 't','v' or first two columns)."""
-    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
-    print(f"[NASA] Parsing CSV: {len(lines)} non-empty lines")
-    if not lines:
+    """
+    Parse a minimal CSV.
+    Accepts:
+      - header row containing 't' and 'v' (any case)
+      - OR plain two-column numeric rows.
+    Ignores blank/invalid lines.
+    """
+    if not text.strip():
         return Timeseries(t=[], v=[])
 
-    header = [h.strip().lower() for h in lines[0].split(",")]
-    try:
-        i_t = header.index("t")
-        i_v = header.index("v")
-        print(f"[NASA] Header detected: t at col {i_t}, v at col {i_v}")
-        data_rows = lines[1:]
-    except ValueError:
-        print("[NASA] No 't','v' headers; assuming columns 0 and 1")
-        i_t, i_v = 0, 1
-        data_rows = lines  # treat first row as data
-
+    # Use csv module for robustness (commas; simple files).
     T: List[float] = []
     V: List[float] = []
-    bad = 0
-    for row in data_rows:
-        parts = [p.strip() for p in row.split(",")]
+
+    # Normalize newlines; allow stray BOM
+    text_norm = text.replace("\r\n", "\n").replace("\r", "\n").lstrip("\ufeff")
+    reader = csv.reader(io.StringIO(text_norm))
+
+    rows = list(reader)
+    if not rows:
+        return Timeseries(t=[], v=[])
+
+    # Detect header
+    header = [h.strip().lower() for h in rows[0]] if rows else []
+    has_header = ("t" in header and "v" in header)
+
+    # Column indices
+    if has_header:
+        i_t = header.index("t")
+        i_v = header.index("v")
+        data_rows = rows[1:]
+    else:
+        # Assume two columns t,v
+        i_t, i_v = 0, 1
+        data_rows = rows
+
+    for parts in data_rows:
         if len(parts) <= max(i_t, i_v):
-            bad += 1
             continue
         try:
-            T.append(float(parts[i_t]))
-            V.append(float(parts[i_v]))
+            t_val = float(parts[i_t].strip())
+            v_val = float(parts[i_v].strip())
         except Exception:
-            bad += 1
+            # skip non-numeric rows
             continue
+        T.append(t_val)
+        V.append(v_val)
 
-    print(f"[NASA] Parsed {len(T)} rows; skipped {bad} rows")
     return Timeseries(t=T, v=V)
+
+
+def _filter_window(ts: Timeseries, t0: float, t1: float) -> Timeseries:
+    """Return subset where t0 <= t <= t1 (if t0 < t1 and times look compatible)."""
+    if not ts.t or t1 <= t0:
+        return ts
+    T: List[float] = []
+    V: List[float] = []
+    for tt, vv in zip(ts.t, ts.v):
+        if t0 <= tt <= t1:
+            T.append(tt)
+            V.append(vv)
+    # If the filter removed everything (e.g., units mismatch), return original
+    return Timeseries(t=T, v=V) if T else ts
 
 
 # ---------- public API ----------
 
 def read_csv_timeseries(path_or_url: str) -> Timeseries:
     """
-    Read a CSV/URL (or short name) and return a Timeseries.
+    Read a CSV/URL/ZIP (or short name) and return a Timeseries.
     Accepts:
       - '/abs/path/file.csv'
       - 'https://.../file.csv'
+      - 'https://.../archive.zip' (first CSV inside is parsed)
       - 'data/nasa/file.csv'
       - 'file.csv'   (resolved to 'data/nasa/file.csv' if present)
     """
-    try:
-        target = _resolve_path_or_url(path_or_url)
-        text = _read_text(target)
-        ts = _parse_csv(text)
+    target = _resolve_path_or_url(path_or_url)
+    payload = _read_bytes(target)
 
-        if not ts.t or not ts.v:
-            msg = f"[NASA] ERROR: parsed empty time series from {target!r}"
-            print(msg)
-            raise ValueError(msg)
+    # ZIP?
+    as_csv_text = _maybe_unzip_csv(payload)
+    if as_csv_text is None:
+        as_csv_text = _bytes_to_text(payload)
 
-        print(f"[NASA] OK: timeseries length = {len(ts.t)}")
-        return ts
-
-    except Exception as e:
-        print(f"[NASA] read_csv_timeseries FAILED for {path_or_url!r}: {type(e).__name__}: {e}")
-        raise
+    ts = _parse_csv(as_csv_text)
+    if not ts.t or not ts.v:
+        raise ValueError(f"Parsed empty time series from: {target!r}")
+    return ts
 
 
 def fetch_timeseries(dataset: str, var: str, x: float, y: float, z: float,
                      t0: float, t1: float, dt: float) -> Timeseries:
     """
-    For now, 'dataset' is a CSV path/URL/short-name.
-    Shape mirrors the JHTDB connector for symmetry.
+    For now, 'dataset' may be:
+      - path or URL to a CSV
+      - path or URL to a ZIP containing at least one CSV
+      - short name resolved under data/nasa/
+
+    The xyz/var args are accepted for interface symmetry; not used yet.
+    We lightly window to [t0, t1] if time units align.
     """
-    print(f"[NASA] Fetching: dataset={dataset!r}, var={var}, "
-          f"xyz=({x},{y},{z}), twin=({t0},{t1},{dt})")
-    return read_csv_timeseries(dataset)
+    ts = read_csv_timeseries(dataset)
+    # Light, best-effort windowing — if units are comparable, this reduces noise.
+    ts_w = _filter_window(ts, t0, t1)
+    # Do not resample to dt here; rhythm code only needs timestamps.
+    # Return as-is (sorted helps downstream monotonic checks).
+    if ts_w.t and ts_w.t != sorted(ts_w.t):
+        # keep stable order but prepare downstream; do not reorder v against t incorrectly
+        # because most CSVs are already ordered; if out of order, sort by t with paired v.
+        pairs = sorted(zip(ts_w.t, ts_w.v), key=lambda p: p[0])
+        t_sorted, v_sorted = zip(*pairs)
+        return Timeseries(t=list(t_sorted), v=list(v_sorted))
+    return ts_w
