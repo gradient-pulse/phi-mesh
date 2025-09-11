@@ -1,151 +1,156 @@
 #!/usr/bin/env python3
 """
-tools/agent_runner/run_jobs.py
+run_jobs.py — batch FD jobs runner over CSV or JSONL.
+- Uses short, human slugs for filenames.
+- Reads f0 from metrics JSON.
+- Emits a Pulse for each job and appends to the daily fundamentals JSONL.
 
-Scan a folder for FD probe jobs (YAML), run each via tools/fd_connectors/run_fd_probe.py,
-then emit a strict Φ-Mesh pulse via tools/agent_rhythm/make_pulse.py.
-
-- Auto-sanitizes dataset to a safe slug.
-- Auto-assigns batch numbers per (date, slug): _batch1, _batch2, ...
-- Moves processed jobs to inbox/fd_jobs/_done/ (or _error/ on failure).
-
-Job YAML shape (minimal):
-  source: synthetic | jhtdb | nasa
-  dataset: isotropic1024 | demo | ...
-  var: u
-  xyz: 0.1,0.1,0.1
-  twin: 0,10,0.01
-  title: "NT Rhythm — FD Probe"
-  tags: "nt_rhythm turbulence navier_stokes rgp"
-  nasa_csv: "https://..."   # optional (for NASA mode only)
+CSV header:  source,dataset,var,xyz,twin,title,tags
+JSONL keys:  source,dataset,var,xyz,twin,title,tags
 """
 
 from __future__ import annotations
-import argparse, datetime as dt, glob, json, os, re, shutil, subprocess, sys
-from pathlib import Path
+import argparse, csv, json, os, subprocess, sys, datetime as dt
+from typing import Dict, Iterable, Tuple, List
 
-import yaml
-
-ROOT = Path(__file__).resolve().parents[2]   # repo root
-
-def safe_slug(s: str) -> str:
+# Reuse the same short-slug logic via a tiny internal helper import
+# (duplicate small functions to keep file self-contained)
+def _slug(s: str) -> str:
+    import re
     s = (s or "").strip().lower()
     s = re.sub(r"[^a-z0-9._-]+", "_", s)
     s = re.sub(r"_+", "_", s).strip("_")
     return s or "dataset"
 
-def next_batch_id(pulse_dir: Path, today: str, base_slug: str) -> int:
-    """
-    Look for pulse files: pulse/auto/YYYY-MM-DD_<slug>_batchN.yml
-    Return the next N (starting at 1).
-    """
-    pattern = str(pulse_dir / f"{today}_{base_slug}_batch*.yml")
-    existing = list(glob.glob(pattern))
-    if not existing:
-        # also consider pre-existing file without batch suffix (legacy):
-        legacy = pulse_dir / f"{today}_{base_slug}.yml"
-        if legacy.exists():
-            return 2
+def _basename_no_ext(path_or_url: str) -> str:
+    import os, re
+    s = (path_or_url or "").split("#", 1)[0].split("?", 1)[0]
+    base = os.path.basename(s.rstrip("/"))
+    base = re.sub(r"\.(csv|json|txt|zip|xz|gz|bz2|tar)$", "", base, flags=re.I)
+    return base
+
+def _tidy_stem(stem: str) -> str:
+    import re
+    s = (stem or "").strip()
+    s = re.sub(r"_(rows|timeseries|dataset|data)$", "", s, flags=re.I)
+    return s
+
+def short_slug_from_dataset(dataset: str) -> str:
+    return _slug(_tidy_stem(_basename_no_ext(dataset)))
+
+def today_str() -> str:
+    return dt.date.today().isoformat()
+
+def next_batch_for(today: str, base: str) -> int:
+    from pathlib import Path
+    import re as _re
+    root = Path("results/fd_probe")
+    root.mkdir(parents=True, exist_ok=True)
+    paths = sorted(root.glob(f"{today}_{base}_batch*.metrics.json"))
+    if not paths:
         return 1
-    # extract highest N
-    mx = 0
-    for p in existing:
-        m = re.search(r"_batch(\d+)\.yml$", p)
+    nums = []
+    rx = _re.compile(r"_batch(\d+)\.metrics\.json$")
+    for p in paths:
+        m = rx.search(p.name)
         if m:
-            mx = max(mx, int(m.group(1)))
-    return mx + 1 if mx > 0 else 1
+            nums.append(int(m.group(1)))
+    return (max(nums) + 1) if nums else 1
 
-def run(cmd: list[str], extra_env: dict[str,str] | None = None) -> None:
-    env = os.environ.copy()
-    if extra_env:
-        env.update(extra_env)
-    proc = subprocess.run(cmd, cwd=ROOT, env=env, text=True, capture_output=True)
-    if proc.returncode != 0:
-        sys.stderr.write(proc.stdout)
-        sys.stderr.write(proc.stderr)
-        raise SystemExit(f"Command failed: {' '.join(cmd)}")
+def parse_xyz(s: str) -> Tuple[float, float, float]:
+    xs = [float(v) for v in s.split(",")]
+    if len(xs) != 3:
+        raise ValueError("xyz must be 'x,y,z'")
+    return (xs[0], xs[1], xs[2])
 
-def process_job(job_path: Path, metrics_dir: Path, pulse_dir: Path) -> None:
-    data = yaml.safe_load(job_path.read_text(encoding="utf-8")) or {}
-    source  = str(data.get("source", "")).strip()
-    dataset = str(data.get("dataset", "")).strip()
-    var     = str(data.get("var", "")).strip()
-    xyz     = str(data.get("xyz", "")).strip()
-    twin    = str(data.get("twin", "")).strip()
-    title   = str(data.get("title", "NT Rhythm — FD Probe")).strip()
-    tags    = str(data.get("tags", "nt_rhythm turbulence navier_stokes rgp")).strip()
-    nasa_csv = str(data.get("nasa_csv", "")).strip()
+# ---------- core single job --------------------------------------------------
 
-    if source not in {"synthetic", "jhtdb", "nasa"}:
-        raise SystemExit(f"Invalid source in {job_path}: {source!r}")
+def run_job(job: Dict[str, str]) -> float | None:
+    source = job["source"]
+    dataset = job["dataset"]
+    var = job["var"]
+    xyz = parse_xyz(job["xyz"])
+    twin = job["twin"]
+    title = job.get("title", "NT Rhythm — FD Probe")
+    tags = job.get("tags", "nt_rhythm turbulence navier_stokes rgp")
 
-    base_slug = safe_slug(dataset)
-    today = dt.date.today().isoformat()
-    batch = next_batch_id(pulse_dir, today, base_slug)
-    final_slug = f"{base_slug}_batch{batch}"
+    ds_slug = short_slug_from_dataset(dataset)
+    base = f"{ds_slug}_{source.lower()}"
+    today = today_str()
+    batch = next_batch_for(today, base)
 
-    metrics_dir.mkdir(parents=True, exist_ok=True)
-    pulse_dir.mkdir(parents=True, exist_ok=True)
+    metrics = f"results/fd_probe/{today}_{base}_batch{batch}.metrics.json"
+    pulse_slug = f"{base}_batch{batch}"
+    xyz_str = ",".join(map(str, xyz))
 
-    # Build metrics path
-    metrics_out = metrics_dir / f"{today}_{final_slug}.metrics.json"
+    # 1) probe
+    cmd1 = [
+        "python", "tools/fd_connectors/run_fd_probe.py",
+        "--source", source, "--dataset", dataset, "--var", var,
+        "--xyz", xyz_str, "--twin", twin, "--json-out", metrics,
+        "--title", title, "--tags", tags,
+    ]
+    subprocess.run(cmd1, check=True)
 
-    # Env for NASA CSV (if provided)
-    extra_env = {}
-    if source == "nasa" and nasa_csv:
-        extra_env["NASA_CSV"] = nasa_csv
+    # 2) pulse
+    recent = f"results/rgp_ns/{today}_fundamentals.jsonl"
+    os.makedirs("results/rgp_ns", exist_ok=True)
+    cmd2 = [
+        "python", "tools/agent_rhythm/make_pulse.py",
+        "--metrics", metrics, "--title", title,
+        "--dataset", pulse_slug, "--tags", tags,
+        "--outdir", "pulse/auto", "--recent", recent,
+    ]
+    subprocess.run(cmd2, check=True)
 
-    # 1) FD probe → metrics
-    run([
-        sys.executable, "tools/fd_connectors/run_fd_probe.py",
-        "--source", source,
-        "--dataset", base_slug,          # probe uses base slug (batch applied at pulse)
-        "--var", var,
-        "--xyz", xyz,
-        "--twin", twin,
-        "--json-out", str(metrics_out),
-    ], extra_env=extra_env)
+    # 3) read f0
+    try:
+        with open(metrics, "r", encoding="utf-8") as fh:
+            m = json.load(fh)
+        f0 = m.get("main_peak_freq")
+        if f0 is None and isinstance(m.get("peaks"), list) and m["peaks"]:
+            f0 = float(m["peaks"][0][0])
+        return f0
+    except Exception:
+        return None
 
-    # 2) metrics → pulse (apply batch in dataset for filename)
-    run([
-        sys.executable, "tools/agent_rhythm/make_pulse.py",
-        "--metrics", str(metrics_out),
-        "--title", title,
-        "--dataset", final_slug,         # <- ensures _batchN in pulse filename
-        "--tags", tags,
-        "--outdir", str(pulse_dir),
-    ])
+# ---------- IO loaders -------------------------------------------------------
+
+def iter_csv(path: str) -> Iterable[Dict[str, str]]:
+    with open(path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            yield row
+
+def iter_jsonl(path: str) -> Iterable[Dict[str, str]]:
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            yield json.loads(line)
+
+# ---------- main -------------------------------------------------------------
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--glob", default="inbox/fd_jobs/*.yml", help="Job glob")
-    ap.add_argument("--metrics-dir", default="results/fd_probe", help="Where to write metrics JSON")
-    ap.add_argument("--pulse-dir", default="pulse/auto", help="Where to write pulses")
+    ap.add_argument("--csv", help="CSV file with jobs")
+    ap.add_argument("--jsonl", help="JSONL file with jobs")
     args = ap.parse_args()
 
-    job_paths = sorted(Path(".").glob(args.glob))
-    if not job_paths:
-        print("No jobs found; nothing to do.")
-        return
+    if not args.csv and not args.jsonl:
+        print("Provide --csv or --jsonl", file=sys.stderr)
+        raise SystemExit(2)
 
-    metrics_dir = Path(args.metrics_dir)
-    pulse_dir = Path(args.pulse_dir)
+    it = iter_csv(args.csv) if args.csv else iter_jsonl(args.jsonl)
 
-    done_dir = Path("inbox/fd_jobs/_done")
-    err_dir  = Path("inbox/fd_jobs/_error")
-    done_dir.mkdir(parents=True, exist_ok=True)
-    err_dir.mkdir(parents=True, exist_ok=True)
-
-    for jp in job_paths:
+    for i, job in enumerate(it, 1):
         try:
-            print(f"Processing job: {jp}")
-            process_job(jp, metrics_dir, pulse_dir)
-            stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
-            shutil.move(str(jp), str(done_dir / f"{stamp}__{jp.name}"))
-        except SystemExit as e:
-            sys.stderr.write(f"[ERROR] {jp}: {e}\n")
-            stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
-            shutil.move(str(jp), str(err_dir / f"{stamp}__{jp.name}"))
+            f0 = run_job(job)
+            print(f"[run_jobs] {i}: f0={f0}")
+        except subprocess.CalledProcessError as e:
+            print(f"[run_jobs] WARN: job {i} failed: {e}")
 
 if __name__ == "__main__":
+    import sys
     main()
