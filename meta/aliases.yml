@@ -264,3 +264,10 @@ aliases:
   circle_pulse:
   - circle
   - creation_circle
+
+  ni:
+    - N(i)
+    - N_i
+    - n(i)
+    - Ni
+
