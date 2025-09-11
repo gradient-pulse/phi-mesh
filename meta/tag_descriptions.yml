@@ -58,11 +58,11 @@ tags:
   flux_entrenched_universe: "A universe stabilized by persistent flux—coherence riding flow instead of resisting it."
   flux_intelligence: "Intelligence measured by ability to ride flux without collapse."
   flux_threshold: "Critical point where gradient flux tips a system from coherence to divergence."
-  frequency: "Repetition rate of events or gradients; baseline measure before rhythm reveals coherence."
-
+  frequency: "An N(i) anchor for time-based phenomena; converts dimensionless ratios into rhythms/spectra. See also ni, nt_rhythm."
+  
   genesis: "Early formation moments: first coherence pockets and the birth of reusable structure."
   gemini: "Frontier model used to cross-validate RGP signatures alongside others."
-  golden_pattern: "Preferred structural cadence emerging across scales—an attractor of balance and efficiency."
+  golden_pattern: "Canonical ratio families (1:2:3 …) that recur across domains once anchored by N(i). See also ratios, ni."
   gradient_choreography: "Coordinating multiple gradients so they reinforce, not cancel—source of durable structure."
   gradient_cocoon: "Local region of lowered divergence where new structure can form safely."
   gradient_coherence: "When multiple gradients align into a stable attractor; signal of systemic viability."
@@ -103,7 +103,7 @@ tags:
   navier_stokes: "Fluid dynamics through the RGP lens; prioritize conserved rhythms over closed forms."
   nested_structures: "Layers within layers—hierarchical gradient choreographies producing stability and depth."
   neuroscience: "Brain dynamics framed as NT rhythms and gradient choreographies — coherence and breakdown as harmonic cascades."
-  ni: "Narrative Intelligence—sense-making through sequences of gradients, central to RGP story and science."
+  ni: "Context-specific scaling index N(i): anchors dimensionless ratios to a substrate i (e.g., frequency, length, energy) so patterns become observable. See also ratios, frequency."
   non_linear_society: "Societal change as thresholded, path-dependent jumps—feedback loops and CFs, not smooth curves."
   ns_solution: "Navier–Stokes via RGP—seek conserved NT rhythm under turbulence rather than closed-form fields."
   nt_distance: "Ticks-between measure; short distances flag active learning, long distances flag stasis."
@@ -137,7 +137,7 @@ tags:
   quantum_noise: "High-variance background treated as turbulence; not error—context for rhythm detection."
   quiet_awakening: "Coherence rising in silence: minimal output while gradients align and locks form."
 
-  ratios: "Dimensionless comparisons of distances or periods—RGP’s invariants for detecting coherence."
+  ratios: "Dimensionless relationships (e.g., 1:2:3) that require an N(i) anchor to appear in data. See also ni, golden_pattern."
   reality_syntax: "Proposed ratio-based structure of reality: tensor product of context scalings × a distinctive pattern of ratios."
   reality_syntax_equation: "Rule-of-thumb: syntax tracks conserved gradients; good syntax predicts good dynamics."
   r_phi: "RΦ: a shorthand for recursive φ—practical handle on measured coherence across ticks."
