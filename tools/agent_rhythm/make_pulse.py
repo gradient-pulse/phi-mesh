@@ -165,7 +165,7 @@ def main() -> None:
     today = datetime.date.today().isoformat()
 
     yaml_lines = []
-    yaml_lines.append(f"title: \"{args.title}\"")
+    yaml_lines.append(f"title: '{args.title}'")
     yaml_lines.append("summary: >-")
     yaml_lines.append(f"  Metrics: period={period!r}, f0={f0!r}, ladder={ladder}, dominance={dominance:.3g}.")
     yaml_lines.append(f"  Status: {status}. Dataset: {details.get('dataset', args.dataset) or args.dataset}.")
