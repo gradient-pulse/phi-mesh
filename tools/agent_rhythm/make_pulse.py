@@ -222,4 +222,4 @@ def main() -> None:
             print(f"[make_pulse] WARN: could not append to recent: {e}", file=sys.stderr)
 
 if __name__ == "__main__":
-    main()x@
+    main()
