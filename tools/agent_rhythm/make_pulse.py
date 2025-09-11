@@ -5,15 +5,15 @@ make_pulse.py — turn a metrics JSON into a single Pulse YAML + update “recen
 Usage:
   --metrics  path/to/*.metrics.json   (required)
   --title    "NT Rhythm — FD Probe"   (required)
-  --dataset  short dataset id/slug    (optional; used only as a fallback)
+  --dataset  short dataset id/slug    (optional; fallback label)
   --tags     "a b c" or "a, b, c"     (optional)
   --outdir   pulse/auto               (default)
   --recent   results/rgp_ns/YYYY-MM-DD_fundamentals.jsonl  (optional)
 
 Notes
-- Filenames now use a SHORT slug that is derived primarily from
-  metrics.details.dataset (URL or path) instead of whatever was passed as --dataset.
-- The full URL/path is still written inside the pulse under `details:`.
+- Pulse YAML is strict/minimal: title, summary, tags, papers, podcasts (no artifacts/details).
+- The output filename uses a SHORT slug primarily derived from metrics.details.dataset (URL/path).
+- The full dataset string is still mentioned in `summary:` for provenance.
 """
 
 from __future__ import annotations
@@ -35,28 +35,21 @@ def _basename_no_ext(path_or_url: str) -> str:
     """Best-effort filename stem from a URL or path (drops query/fragment)."""
     s = (path_or_url or "").split("#", 1)[0].split("?", 1)[0]
     base = os.path.basename(s.rstrip("/"))
-    # drop extension(s)
     base = re.sub(r"\.(csv|json|txt|zip|xz|gz|bz2|tar)$", "", base, flags=re.I)
     return base
 
 def _tidy_stem(stem: str) -> str:
     """
-    Clean noisy NASA/test stems, e.g.:
+    Clean noisy stems, e.g.:
       'Testing_Now_rows'      -> 'testing_now'
       'sine_0p8hz_timeseries' -> 'sine_0p8hz'
-    Also trims trailing noise tokens like 'rows', 'timeseries', 'dataset', 'data'.
+    Removes trailing tokens like 'rows', 'timeseries', 'dataset', 'data'.
     """
     s = stem.strip()
-    # remove very common trailing tokens
     s = re.sub(r"_(rows|timeseries|dataset|data)$", "", s, flags=re.I)
-    # collapse leftover punctuation to underscores in the slug function
     return s
 
 def _short_slug_from_details_dataset(details: Dict[str, Any]) -> str:
-    """
-    Prefer metrics.details.dataset when present (URL/path).
-    Derive a short, human slug from its basename.
-    """
     ds = (details or {}).get("dataset", "")
     if not ds:
         return ""
@@ -104,11 +97,6 @@ def classify(ladder: int, dominance: float) -> str:
     return "Inconclusive"
 
 def _infer_batch_label(metrics_path: str) -> str:
-    """
-    Try to pull 'batchN' from the metrics filename.
-    e.g., '..._batch7.metrics.json' -> 'batch7'
-    Fallback: 'batch1'
-    """
     m = re.search(r"_batch(\d+)\.metrics\.json$", metrics_path)
     return f"batch{m.group(1)}" if m else "batch1"
 
@@ -118,16 +106,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--metrics", required=True)
     ap.add_argument("--title", required=True)
-    ap.add_argument("--dataset", default="")          # fallback only
+    ap.add_argument("--dataset", default="")  # fallback label
     ap.add_argument("--tags", default="")
     ap.add_argument("--outdir", default="pulse/auto")
     ap.add_argument("--recent", default="")
     args = ap.parse_args()
 
-    # Read metrics JSON
     m = _read_json(args.metrics)
 
-    # Defensive pulls
     period = m.get("period")
     f0 = m.get("main_peak_freq")
     if f0 is None and isinstance(m.get("peaks"), list) and m["peaks"]:
@@ -139,33 +125,23 @@ def main() -> None:
     ladder, dominance = compute_ladder_and_dominance(m)
     status = classify(ladder, dominance)
 
-    # Determine a SHORT dataset slug for filenames:
-    # 1) derive from metrics.details.dataset URL/path
-    # 2) else fallback to provided --dataset
-    # 3) ensure short & stable; disambiguate with a tiny hash if still huge/empty
     details = m.get("details") or {}
     ds_slug = _short_slug_from_details_dataset(details)
     if not ds_slug:
-        ds_slug = _slug(args.dataset)
-    if not ds_slug:
-        ds_slug = "dataset"
-    # add tiny disambiguation when the metrics path contains unique info
-    batch_label = _infer_batch_label(args.metrics)
-    # keep slug short; if already very short, append batch; else rely on batch in filename separately
-    if len(ds_slug) <= 30:
-        ds_slug = f"{ds_slug}"
+        ds_slug = _slug(args.dataset) or "dataset"
 
-    # Assemble tags (ensure core set)
+    batch_label = _infer_batch_label(args.metrics)
+
     tags = _as_list(args.tags)
     for core in ["nt_rhythm", "turbulence", "navier_stokes", "rgp"]:
         if core not in tags:
             tags.append(core)
 
-    # Build pulse YAML text (minimal, robust)
     today = datetime.date.today().isoformat()
+    safe_title = (args.title or "").replace("'", "’")
 
-    yaml_lines = []
-    yaml_lines.append(f"title: '{args.title}'")
+    yaml_lines: List[str] = []
+    yaml_lines.append(f"title: '{safe_title}'")
     yaml_lines.append("summary: >-")
     yaml_lines.append(f"  Metrics: period={period!r}, f0={f0!r}, ladder={ladder}, dominance={dominance:.3g}.")
     yaml_lines.append(f"  Status: {status}. Dataset: {details.get('dataset', args.dataset) or args.dataset}.")
@@ -174,24 +150,7 @@ def main() -> None:
         yaml_lines.append(f"  - {t}")
     yaml_lines.append("papers: []")
     yaml_lines.append("podcasts: []")
-    yaml_lines.append("artifacts:")
-    yaml_lines.append(f"  metrics_json: {args.metrics}")
-    yaml_lines.append(f"  source: {m.get('source','unknown')}")
 
-    if details:
-        yaml_lines.append("details:")
-        # Write deterministic order for common keys, then the rest
-        ordered_keys = ["dataset", "var", "xyz", "window", "nasa_csv_env", "fallback"]
-        written = set()
-        for k in ordered_keys:
-            if k in details:
-                yaml_lines.append(f"  {k}: {details[k]}")
-                written.add(k)
-        for k, v in sorted(details.items()):
-            if k not in written:
-                yaml_lines.append(f"  {k}: {v}")
-
-    # Write pulse YAML (short filename!)
     _ensure_dir(args.outdir)
     out_name = f"{today}_{ds_slug}_{batch_label}.yml"
     out_path = os.path.join(args.outdir, out_name)
@@ -199,7 +158,6 @@ def main() -> None:
         f.write("\n".join(yaml_lines) + "\n")
     print(f"Wrote Pulse → {out_path}")
 
-    # Append a fundamentals line (non-fatal)
     if args.recent:
         try:
             _ensure_dir(os.path.dirname(args.recent) or ".")
