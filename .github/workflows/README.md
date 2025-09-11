@@ -7,6 +7,7 @@ This repo uses a small set of GitHub Actions to keep the Tag Map clean and make 
 ## Ground rules
 
 - **Pulse filename:** `YYYY-MM-DD_<slug>.yml`
+- **Result filename:** `YYYY-MM-DD_<slug>_batch#.json`
 - **Minimal pulse keys:** `title`, `summary`, `tags`, `papers`, `podcasts`
   *(No `date:` key; the date is derived from the filename.)*
 - **Tags:** `underscore_case`. New tags should always have a tooltip in `meta/tag_descriptions.yml`.
@@ -23,15 +24,25 @@ This repo uses a small set of GitHub Actions to keep the Tag Map clean and make 
 
 ---
 
-### 2) RGP-NS Agent Runner
-**File:** `.github/workflows/rgp-ns-agent-runner.yml`  
+### 2) RGP-NS Grid
+**File:** `.github/workflows/rgp-ns-grid.yml`  
 **When:** manual (`workflow_dispatch`)  
-**Input:** `autopulse: yes|no` (gated by `ENABLE_AUTOPULSE=1` when `yes`)
+**What:** runs the RGP-NS agent across multiple JHTDB/NASA probe points. Each shard writes results under `results/rgp_ns/.../batch#/` and emits an auto-pulse to `pulse/auto/`.
 
-- `autopulse: no` → compute results only (writes `results/rgp_ns/.../summary.json`)
-- `autopulse: yes` → emits pulses to `pulse/auto/YYYY-MM-DD_<dataset>.yml`, rebuilds maps (`docs/data.js`), commits
+Inputs:
+- **points** — newline-separated xyz triplets, e.g.
 
-**Who:** you (publisher) after reviewing Results Watch.
+0.10,0.10,0.10
+
+0.12,0.10,0.10
+
+- **twin** — time window as `t0,t1,dt`, default `0.0,1.2,0.0001`.
+- **title / tags** — forwarded to pulses.
+
+Outputs:
+- `results/rgp_ns/<timestamp>/batch#/*`
+- `pulse/auto/YYYY-MM-DD_<slug>_batch#.yml`
+- Map updates via normal build.
 
 ---
 
@@ -53,9 +64,9 @@ This repo uses a small set of GitHub Actions to keep the Tag Map clean and make 
 ### 5) Build Tags & Graph
 **File:** `.github/workflows/build_tags_and_graph.yml`  
 **When:** manual (ad-hoc)  
-**What:** runs `generate_graph_data.py` to rebuild `docs/data.js` only.  
+**What:** runs `generate_graph_data.py` to rebuild `docs/data.js`.  
 
-*This replaces the older “Rebuild Maps” workflow, which is now archived.*
+*This replaces the older “Rebuild Maps” workflow (archived).*
 
 ---
 
@@ -106,12 +117,11 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 1. **Agent/Experimenter**
    - Pushes results or CSVs.
    - Results Watch confirms arrivals.
-   - Inbox/FD workflows can fossilize into pulses and update the map.
+   - Inbox/FD/Grid workflows fossilize into pulses and update the map.
 
 2. **Publisher (you)**
    - Review Results Watch.
-   - If publishing RGP-NS runs: **Agent Runner** → `autopulse: yes`.
-   - For CSV/FD probes: run their workflows directly.
+   - If publishing: run **RGP-NS Grid** (preferred), or **Inbox → Pulse**, or **FD Probe → Pulse**.
    - For tooltip/tag edits only: run **Build Tags & Graph**.
 
 ---
@@ -121,7 +131,6 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 - 🚫 No cron jobs; everything is explicit (push or manual).  
 - ✅ Only dedicated workflows emit pulses; validation enforces schema.  
 - 🗂 Archives live under `pulse/archive/**`.  
-- 🔒 Autopulse gated via `ENABLE_AUTOPULSE=1` in the Agent Runner.  
 - 📜 The site rebuilds when `docs/data.js` changes (committed by workflows).
 
 ---
@@ -141,38 +150,7 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 
 ## Publishing checklist (fast)
 
-1. Review Results Watch (if RGP-NS).  
-2. Run **Agent Runner** (`autopulse: yes`) or **Inbox → Pulse** or **FD Probe → Pulse**.  
+1. Review Results Watch.  
+2. Run **RGP-NS Grid** (preferred) or **Inbox → Pulse** or **FD Probe → Pulse**.  
 3. Confirm **Validate Pulses** is green.  
 4. Verify the Tag Map updated.
-
-## RGP–NS grid
-
-Trigger **RGP–NS grid (JHTDB → agent runs → results + pulse)** to fan out agent runs across multiple probe points.
-
-Inputs:
-- **points** — newline-separated xyz triplets, e.g.
-
-0.10,0.10,0.10
-
-0.12,0.10,0.10
-
-- **twin** — time window as `t0,t1,dt`, default `0.0,1.2,0.0001`.
-- **title / tags** — forwarded to pulses.
-
-Outputs:
-- `results/rgp_ns/<timestamp>/batch1/*`
-- `pulse/auto/YYYY-MM-DD_rgpnsgird_…yml` (from the agent)
-- Tag map updates via normal map build.
-
-agents/rgp_ns/README.md (add under “Run (dry test)”)
-
-## Run via GitHub Actions (grid)
-
-Use **RGP–NS grid** to run the agent across multiple JHTDB probe points.
-
-1. Open *Actions → RGP–NS grid* → *Run workflow*.
-2. Paste probe points (one per line), set `twin` if needed, run.
-3. Results will appear under `results/rgp_ns/<timestamp>/batch1/`.
-4. Each shard emits its own pulse in `pulse/auto/` (shows on the Tag Map).
-
