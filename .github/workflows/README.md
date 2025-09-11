@@ -154,3 +154,16 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 2. Run **RGP-NS Grid** (preferred) or **Inbox → Pulse** or **FD Probe → Pulse**.  
 3. Confirm **Validate Pulses** is green.  
 4. Verify the Tag Map updated.
+
+---
+
+Where Things Live
+
+Pulses → pulse/**
+Aliases → meta/aliases.yml
+Tag tooltips → meta/tag_descriptions.yml
+Agent rhythm tools → tools/agent_rhythm/
+FD connectors → tools/fd_connectors/
+Results → results/**
+Pages site → docs/
+
