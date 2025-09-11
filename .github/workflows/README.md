@@ -16,15 +16,7 @@ This repo uses a small set of GitHub Actions to keep the Tag Map clean and make 
 
 ## Workflow catalog
 
-### 1) Results Watch (RGP-NS)
-**File:** `.github/workflows/results-watch.yml`  
-**When:** automatic on push to `results/rgp_ns/**/summary.json`  
-**What:** posts a compact summary (dataset, p, effect size, significant) to the run page so you know results landed.  
-**Who:** agents/experimenters via result pushes.
-
----
-
-### 2) RGP-NS Grid
+### 1) RGP-NS Grid
 **File:** `.github/workflows/rgp-ns-grid.yml`  
 **When:** manual (`workflow_dispatch`)  
 **What:** runs the RGP-NS agent across multiple JHTDB/NASA probe points. Each shard writes results under `results/rgp_ns/.../batch#/` and emits an auto-pulse to `pulse/auto/`.
@@ -46,7 +38,7 @@ Outputs:
 
 ---
 
-### 3) Validate Pulses
+### 2) Validate Pulses
 **File:** `.github/workflows/validate-pulses.yml`  
 **When:** on PRs/pushes touching `pulse/**`  
 **What:** enforces filename format, minimal schema, and tooltips.  
@@ -54,14 +46,14 @@ Outputs:
 
 ---
 
-### 4) Audit Missing Tooltips
+### 3) Audit Missing Tooltips
 **File:** `.github/workflows/audit-tooltips.yml` (if present)  
 **When:** manual  
 **What:** lists any tags in pulses without an entry in `meta/tag_descriptions.yml`.
 
 ---
 
-### 5) Build Tags & Graph
+### 4) Build Tags & Graph
 **File:** `.github/workflows/build_tags_and_graph.yml`  
 **When:** manual (ad-hoc)  
 **What:** runs `generate_graph_data.py` to rebuild `docs/data.js`.  
@@ -70,7 +62,7 @@ Outputs:
 
 ---
 
-### 6) Clean Pulses (schema normalizer)
+### 5) Clean Pulses (schema normalizer)
 **File:** `.github/workflows/clean-pulses.yml`  
 **When:** manual, rarely  
 **What:** normalizes legacy pulses to the minimal schema.  
@@ -78,37 +70,17 @@ Outputs:
 
 ---
 
-### 7) One-time Mesh Maintenance
+### 6) One-time Mesh Maintenance
 **File:** `.github/workflows/mesh-maintenance.yml`  
 **When:** manual, exceptional changes only  
 **What:** repo-wide hygiene tasks (aliases migrations, bulk renames).
 
 ---
 
-### 8) Pages Build
+### 7) Pages Build
 **File:** GitHub’s `pages-build-deployment`  
 **When:** automatic on pushes that update `docs/`  
 **What:** publishes the Tag Map site. Any workflow that commits `docs/data.js` will trigger this.
-
----
-
-### 9) NT Rhythm — Inbox → Pulse
-**File:** `.github/workflows/nt_rhythm_inbox.yml`  
-**When:** push to `inbox/nt_events/**.csv` or manual dispatch  
-**What:** CSV → metrics → `pulse/auto/YYYY-MM-DD_<dataset>.yml` → rebuild maps.
-
-Inputs (dispatch): CSV path, time column (default `t`), title, dataset slug, tags.  
-On push mode the dataset slug derives from the file stem.
-
----
-
-### 10) NT Rhythm — FD Probe → Pulse (JHTDB/NASA)
-**File:** `.github/workflows/fd_probe.yml`  
-**When:** manual  
-**What:** calls `tools/fd_connectors/run_fd_probe.py` (JHTDB/NASA stub), computes NT metrics, emits a pulse, rebuilds maps.
-
-Inputs: source (`jhtdb|nasa`), dataset, var, point `(x,y,z)`, `t0,t1,dt`, title, tags.  
-Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth is wired.
 
 ---
 
@@ -117,11 +89,11 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 1. **Agent/Experimenter**
    - Pushes results or CSVs.
    - Results Watch confirms arrivals.
-   - Inbox/FD/Grid workflows fossilize into pulses and update the map.
+   - Grid workflows fossilize into pulses and update the map.
 
 2. **Publisher (you)**
    - Review Results Watch.
-   - If publishing: run **RGP-NS Grid** (preferred), or **Inbox → Pulse**, or **FD Probe → Pulse**.
+   - If publishing: run **RGP-NS Grid** (preferred).
    - For tooltip/tag edits only: run **Build Tags & Graph**.
 
 ---
@@ -151,7 +123,7 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 ## Publishing checklist (fast)
 
 1. Review Results Watch.  
-2. Run **RGP-NS Grid** (preferred) or **Inbox → Pulse** or **FD Probe → Pulse**.  
+2. Run **RGP-NS Grid** (preferred).
 3. Confirm **Validate Pulses** is green.  
 4. Verify the Tag Map updated.
 
