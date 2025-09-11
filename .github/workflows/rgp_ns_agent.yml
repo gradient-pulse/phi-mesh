@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       dataset:
-        description: "dataset slug or path"
+        description: "Dataset slug / repo path / full URL (e.g. JHTDB name or https://raw.githubusercontent.com/.../file.csv)"
         required: true
         default: "isotropic1024coarse"
       source:
@@ -12,36 +12,40 @@ on:
         required: true
         default: "jhtdb"
       var:
-        description: "variable"
+        description: "Variable (e.g., u|v|w)"
         required: true
         default: "u"
       seed_xyz:
-        description: "seed xyz (x,y,z)"
+        description: "Seed xyz (x,y,z) — e.g., 0.1,0.1,0.1"
         required: true
         default: "0.1,0.1,0.1"
       offsets:
-        description: "grid offsets (dx,dy,dz; semicolon-separated)"
+        description: "Grid offsets: dx,dy,dz; semicolon-separated (e.g., 0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02)"
         required: true
         default: "0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02"
       twin:
-        description: "t0,t1,dt"
+        description: "Time window t0,t1,dt (e.g., 0.0,1.2,0.0001)"
         required: true
         default: "0.0,1.2,0.0001"
       k:
-        description: "stop when at least k agree"
+        description: "Stop when at least k probes agree (e.g., 5)"
         required: true
         default: "5"
       tol:
-        description: "relative tolerance (e.g. 0.05)"
+        description: "Relative tolerance for agreement (e.g., 0.05)"
         required: true
         default: "0.05"
       nmax:
-        description: "max number of probes"
+        description: "Max number of probes to run"
         required: true
         default: "9"
 
 permissions:
   contents: write
+
+concurrency:
+  group: rgp-ns-agent-grid-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   agent:
@@ -57,12 +61,26 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           pip install pyyaml numpy
+
+      - name: Show selected inputs (sanity)
+        run: |
+          echo "source   = ${{ github.event.inputs.source }}"
+          echo "dataset  = ${{ github.event.inputs.dataset }}"
+          echo "var      = ${{ github.event.inputs.var }}"
+          echo "seed_xyz = ${{ github.event.inputs.seed_xyz }}"
+          echo "offsets  = ${{ github.event.inputs.offsets }}"
+          echo "twin     = ${{ github.event.inputs.twin }}"
+          echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
+          echo "nmax     = ${{ github.event.inputs.nmax }}"
 
       - name: Run agent grid
         env:
           PYTHONPATH: ${{ github.workspace }}
+          # If these are NOT set in repo/organization secrets, they are empty strings.
+          # Your connectors already treat empty as "not provided".
           NASA_CSV: ${{ secrets.NASA_CSV }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
         run: |
@@ -79,11 +97,17 @@ jobs:
             --nmax "${{ github.event.inputs.nmax }}"
 
       - name: Commit outputs (metrics + pulses + fundamentals)
+        if: always()
         run: |
           set -euo pipefail
           git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add results/fd_probe/*.json pulse/auto/*.yml results/rgp_ns/*.jsonl || true
-          git add maps/* || true
+
+          # Only add paths that exist; ignore if none
+          git add results/fd_probe/*.json 2>/dev/null || true
+          git add pulse/auto/*.yml        2>/dev/null || true
+          git add results/rgp_ns/*.jsonl  2>/dev/null || true
+          git add maps/*                  2>/dev/null || true
+
           git commit -m "auto: RGP–NS agent grid run → results + pulses + fundamentals + updated maps" || echo "Nothing to commit"
-          git push
+          git push || echo "Nothing to push"
