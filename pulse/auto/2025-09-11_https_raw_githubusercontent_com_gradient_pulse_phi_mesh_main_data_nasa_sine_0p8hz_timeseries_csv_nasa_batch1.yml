@@ -1,0 +1,21 @@
+title: "NT Rhythm — FD Probe"
+summary: >-
+  Metrics: period=4.05, f0=0.2469135802469136, ladder=5, dominance=2.58.
+  Status: Strong. Dataset: https_raw.githubusercontent.com_gradient-pulse_phi-mesh_main_data_nasa_sine_0p8hz_timeseries.csv_nasa_batch1.
+tags:
+  - nt_rhythm
+  - turbulence
+  - navier_stokes
+  - rgp
+papers: []
+podcasts: []
+artifacts:
+  metrics_json: results/fd_probe/2025-09-11_https_raw.githubusercontent.com_gradient-pulse_phi-mesh_main_data_nasa_sine_0p8hz_timeseries.csv_nasa_batch1.metrics.json
+  source: nasa_offline
+details:
+  dataset: https://raw.githubusercontent.com/gradient-pulse/phi-mesh/main/data/nasa/sine_0p8hz_timeseries.csv
+  var: v
+  xyz: [0.02, 0.0, 0.0]
+  window: [0.0, 4.0, 0.002]
+  nasa_csv_env: data/nasa_demo.csv
+  fallback: synthetic_due_to_nasa_read_failure
