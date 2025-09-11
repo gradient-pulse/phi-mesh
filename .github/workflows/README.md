@@ -19,7 +19,12 @@ This repo uses a small set of GitHub Actions to keep the Tag Map clean and make 
 ### 1) RGP-NS Grid
 **File:** `.github/workflows/rgp-ns-grid.yml`  
 **When:** manual (`workflow_dispatch`)  
-**What:** runs the RGP-NS agent across multiple JHTDB/NASA probe points. Each shard writes results under `results/rgp_ns/.../batch#/` and emits an auto-pulse to `pulse/auto/`.
+**What:** runs the RGP-NS agent across multiple JHTDB/NASA probe points.  
+
+Each shard:
+- Writes results under `results/rgp_ns/.../batch#/summary.json`
+- Emits an auto-pulse under `pulse/auto/YYYY-MM-DD_<slug>_batch#.yml`
+- Triggers map updates.
 
 Inputs:
 - **points** — newline-separated xyz triplets, e.g.
@@ -30,11 +35,6 @@ Inputs:
 
 - **twin** — time window as `t0,t1,dt`, default `0.0,1.2,0.0001`.
 - **title / tags** — forwarded to pulses.
-
-Outputs:
-- `results/rgp_ns/<timestamp>/batch#/*`
-- `pulse/auto/YYYY-MM-DD_<slug>_batch#.yml`
-- Map updates via normal build.
 
 ---
 
@@ -87,13 +87,12 @@ Outputs:
 ## Roles & flow
 
 1. **Agent/Experimenter**
-   - Pushes results or CSVs.
-   - Results Watch confirms arrivals.
-   - Grid workflows fossilize into pulses and update the map.
+   - Pushes results via Grid workflow.
+   - Each batch produces results + pulse.
+   - Map updates automatically.
 
 2. **Publisher (you)**
-   - Review Results Watch.
-   - If publishing: run **RGP-NS Grid** (preferred).
+   - If publishing: run **RGP-NS Grid**.
    - For tooltip/tag edits only: run **Build Tags & Graph**.
 
 ---
@@ -122,21 +121,18 @@ Outputs:
 
 ## Publishing checklist (fast)
 
-1. Review Results Watch.  
-2. Run **RGP-NS Grid** (preferred).
-3. Confirm **Validate Pulses** is green.  
-4. Verify the Tag Map updated.
+1. Run **RGP-NS Grid**.  
+2. Confirm **Validate Pulses** is green.  
+3. Verify the Tag Map updated.
 
 ---
 
 ## Where Things Live
 
-- Pulses → pulse/**
-- Aliases → meta/aliases.yml
-- Tag tooltips → meta/tag_descriptions.yml
-- Agent rhythm tools → tools/agent_rhythm/
-- FD connectors → tools/fd_connectors/
-- Results → results/**
-- Pages site → docs/
-
----
+- Pulses → `pulse/**`  
+- Aliases → `meta/aliases.yml`  
+- Tag tooltips → `meta/tag_descriptions.yml`  
+- Agent rhythm tools → `tools/agent_rhythm/`  
+- FD connectors → `tools/fd_connectors/`  
+- Results → `results/**`  
+- Pages site → `docs/`
