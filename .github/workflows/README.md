@@ -129,7 +129,7 @@ Outputs:
 
 ---
 
-##Where Things Live
+## Where Things Live
 
 - Pulses → pulse/**
 - Aliases → meta/aliases.yml
@@ -139,3 +139,4 @@ Outputs:
 - Results → results/**
 - Pages site → docs/
 
+---
