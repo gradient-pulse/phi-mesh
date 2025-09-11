@@ -6,7 +6,7 @@ This repo uses a small set of GitHub Actions to keep the Tag Map clean and make 
 
 ## Ground rules
 
-- **Pulse filename:** `YYYY-MM-DD_<slug>.yml`
+- **Pulse filename:** `YYYY-MM-DD_<slug>_batch#.yml`
 - **Result filename:** `YYYY-MM-DD_<slug>_batch#.json`
 - **Minimal pulse keys:** `title`, `summary`, `tags`, `papers`, `podcasts`
   *(No `date:` key; the date is derived from the filename.)*
