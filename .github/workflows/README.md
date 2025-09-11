@@ -53,7 +53,9 @@ This repo uses a small set of GitHub Actions to keep the Tag Map clean and make 
 ### 5) Build Tags & Graph
 **File:** `.github/workflows/build_tags_and_graph.yml`  
 **When:** manual (ad-hoc)  
-**What:** runs `generate_graph_data.py` to rebuild `docs/data.js` only.
+**What:** runs `generate_graph_data.py` to rebuild `docs/data.js` only.  
+
+*This replaces the older “Rebuild Maps” workflow, which is now archived.*
 
 ---
 
@@ -99,13 +101,6 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 
 ---
 
-### 11) Rebuild Maps (docs/data.js)
-**File:** `.github/workflows/rebuild_maps.yml`  
-**When:** manual  
-**What:** just rebuilds `docs/data.js` from pulses and commits.
-
----
-
 ## Roles & flow
 
 1. **Agent/Experimenter**
@@ -117,7 +112,7 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
    - Review Results Watch.
    - If publishing RGP-NS runs: **Agent Runner** → `autopulse: yes`.
    - For CSV/FD probes: run their workflows directly.
-   - For tooltip/tag edits only: run **Rebuild Maps**.
+   - For tooltip/tag edits only: run **Build Tags & Graph**.
 
 ---
 
@@ -134,10 +129,10 @@ Dev tip: set secret `JHTDB_OFFLINE=1` to use synthetic data until real API auth 
 ## Troubleshooting quickies
 
 - **Pulse appears on GitHub but not on the site?**  
-  Ensure a workflow rebuilt `docs/data.js` (or run **Rebuild Maps**). Check **Validate Pulses**.
+  Ensure a workflow rebuilt `docs/data.js` (or run **Build Tags & Graph**). Check **Validate Pulses**.
 
 - **“Tags missing tooltips” warning?**  
-  Add one-liners in `meta/tag_descriptions.yml`, then run **Rebuild Maps**.
+  Add one-liners in `meta/tag_descriptions.yml`, then run **Build Tags & Graph**.
 
 - **Unexpected/duplicate tags?**  
   Check `meta/aliases.yml` and browser console logs from `normalize_data.js`.
