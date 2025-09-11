@@ -1,0 +1,47 @@
+{
+  "period": 4.05,
+  "bpm": 14.814814814814815,
+  "confidence": 0.0,
+  "main_peak_freq": 0.2469135802469136,
+  "peaks": [
+    [
+      0.2469135802469136,
+      5.311143751712384e-29
+    ],
+    [
+      0.4938271604938272,
+      2.0612289791570658e-29
+    ],
+    [
+      0.7407407407407408,
+      9.46506208148962e-30
+    ],
+    [
+      0.9876543209876544,
+      5.59566269902494e-30
+    ],
+    [
+      1.7283950617283952,
+      3.559960665824368e-30
+    ]
+  ],
+  "divergence_ratio": 7.868977314537648e-14,
+  "reset_events": [],
+  "source": "nasa_offline",
+  "details": {
+    "dataset": "https://raw.githubusercontent.com/gradient-pulse/phi-mesh/main/data/nasa/sine_0p8hz_timeseries.csv",
+    "var": "v",
+    "xyz": [
+      0.08,
+      0.08,
+      0.1
+    ],
+    "window": [
+      0.0,
+      4.0,
+      0.002
+    ],
+    "nasa_csv_env": "data/nasa_demo.csv",
+    "fallback": "synthetic_due_to_nasa_read_failure"
+  }
+}
