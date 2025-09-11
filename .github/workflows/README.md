@@ -129,13 +129,13 @@ Outputs:
 
 ---
 
-Where Things Live
+##Where Things Live
 
-Pulses → pulse/**
-Aliases → meta/aliases.yml
-Tag tooltips → meta/tag_descriptions.yml
-Agent rhythm tools → tools/agent_rhythm/
-FD connectors → tools/fd_connectors/
-Results → results/**
-Pages site → docs/
+- Pulses → pulse/**
+- Aliases → meta/aliases.yml
+- Tag tooltips → meta/tag_descriptions.yml
+- Agent rhythm tools → tools/agent_rhythm/
+- FD connectors → tools/fd_connectors/
+- Results → results/**
+- Pages site → docs/
 
