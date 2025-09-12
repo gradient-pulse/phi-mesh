@@ -5,7 +5,7 @@ compute NT-rhythm metrics, and write *metrics JSON only*.
 
 Args:
   --source   {synthetic,jhtdb,nasa}
-  --dataset  free-text dataset name/slug/path/URL (workflow sanitizes filenames)
+  --dataset  dataset name/slug/path/URL (e.g., NetCDF path for NASA)
   --var      variable name (e.g., "u")
   --xyz      "x,y,z"
   --twin     "t0,t1,dt"
@@ -23,13 +23,13 @@ import os
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
 
-# rhythm tools (provided in repo)
+# rhythm tools
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
-# connectors (repo modules)
+# connectors
 from tools.fd_connectors import jhtdb as JHT
 from tools.fd_connectors import nasa as NASA
 
@@ -58,7 +58,6 @@ def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], 
 
 def to_builtin(x: Any) -> Any:
     """Coerce dataclasses / numpy / misc types into plain Python types."""
-    # Try to recognize numpy scalars without importing if unavailable
     try:
         import numpy as np  # type: ignore
         np_scalar = np.generic  # type: ignore[attr-defined]
@@ -68,22 +67,17 @@ def to_builtin(x: Any) -> Any:
 
     if is_dataclass(x):
         return {k: to_builtin(v) for k, v in asdict(x).items()}
-
     if isinstance(x, (str, int, float, bool)) or x is None:
         return x
-
     if isinstance(x, np_scalar):
         try:
             return x.item()
         except Exception:
             return float(x)
-
     if isinstance(x, dict):
         return {str(k): to_builtin(v) for k, v in x.items()}
-
     if isinstance(x, (list, tuple, set)):
         return [to_builtin(v) for v in x]
-
     return str(x)
 
 
@@ -108,59 +102,37 @@ def main() -> None:
     src_label = args.source
     if args.source == "synthetic":
         ts, vs = synthetic_timeseries(t0, t1, dt)
+        src_label = "synthetic"
 
     elif args.source == "jhtdb":
-        # If a real token and fetcher exist, use it; else fall back to an
-        # offline helper or synthetic series so the pipeline stays green.
-        try:
-            if os.getenv("JHTDB_TOKEN"):
-                ts_obj = JHT.fetch_timeseries(
-                    dataset=args.dataset, var=args.var,
-                    x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-                )
-                ts, vs = ts_obj.t, ts_obj.v
-                src_label = "jhtdb"
-            else:
-                try:
-                    ts_obj = JHT.fetch_timeseries(
-                        dataset=args.dataset, var=args.var,
-                        x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-                    )
-                    ts, vs = ts_obj.t, ts_obj.v
-                    src_label = "jhtdb_offline"
-                except Exception:
-                    ts, vs = synthetic_timeseries(t0, t1, dt)
-                    src_label = "jhtdb_offline"
-        except NotImplementedError:
-            ts, vs = synthetic_timeseries(t0, t1, dt)
-            src_label = "jhtdb_offline"
+        # Use JHTDB connector; if unavailable, raise (or swap to synthetic if you want soft behavior)
+        ts_obj = JHT.fetch_timeseries(
+            dataset=args.dataset, var=args.var,
+            x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+        )
+        ts, vs = ts_obj.t, ts_obj.v
+        src_label = "jhtdb"
 
-    else:  # nasa
-        # Use CLI dataset unless NASA_CSV environment is explicitly set.
-        nasa_spec = (os.getenv("NASA_CSV") or args.dataset).strip()
-        try:
-            # Let the connector resolve short-name / repo-path / URL.
-            ts_obj = NASA.fetch_timeseries(
-                dataset=nasa_spec, var=args.var,
-                x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-            )
-            ts, vs = ts_obj.t, ts_obj.v
-            src_label = "nasa"
-        except Exception as e:
-            # Keep pipeline green & record provenance of fallback
-            print(f"::warning title=NASA read failed::{e}")
-            ts, vs = synthetic_timeseries(t0, t1, dt)
-            src_label = "nasa_offline"
+    else:  # nasa — strict: NetCDF/real only (no offline fallback)
+        ts_obj = NASA.fetch_timeseries(
+            dataset=args.dataset, var=args.var,
+            x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+        )
+        ts, vs = ts_obj.t, ts_obj.v
+        src_label = "nasa_netcdf"
 
-    # Ensure monotonic time
-    ts = sorted(ts)
+    # Ensure monotonic time, preserving (t,v) pairing
+    if ts and any(ts[i] > ts[i+1] for i in range(len(ts)-1)):
+        pairs = sorted(zip(ts, vs), key=lambda p: p[0])
+        ts, vs = [p[0] for p in pairs], [p[1] for p in pairs]
 
     # --- compute NT-rhythm metrics ---------------------------------------
     tick_times = ticks_from_message_times(ts)
     mobj = rhythm_from_events(tick_times)
 
+    metrics: Dict[str, Any]
     if is_dataclass(mobj):
-        metrics: Dict[str, Any] = asdict(mobj)
+        metrics = asdict(mobj)
     elif isinstance(mobj, dict):
         metrics = mobj
     else:
@@ -174,11 +146,6 @@ def main() -> None:
         "xyz": [x, y, z],
         "window": [t0, t1, dt],
     }
-    if src_label == "nasa_offline":
-        env_csv = os.getenv("NASA_CSV", "").strip()
-        if env_csv:
-            metrics["details"]["nasa_csv_env"] = env_csv
-        metrics["details"]["fallback"] = "synthetic_due_to_nasa_read_failure"
 
     # coerce to JSON-safe builtins
     metrics = to_builtin(metrics)
@@ -189,7 +156,7 @@ def main() -> None:
     with open(args.json_out, "w", encoding="utf-8") as f:
         json.dump(metrics, f, ensure_ascii=False, indent=2)
 
-    # small notice for GH actions log
+    # concise notice for GH Actions
     n = metrics.get("n", "?")
     mean_dt = metrics.get("mean_dt", "?")
     cv_dt = metrics.get("cv_dt", "?")
