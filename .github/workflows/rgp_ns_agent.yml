@@ -1,4 +1,4 @@
-name: RGP–NS Agent (grid)
+name: RGP-NS Agent (grid)
 
 on:
   workflow_dispatch:
@@ -65,7 +65,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pyyaml xarray netcdf4
 
-       - name: Show selected inputs (sanity)
+      - name: Show selected inputs (sanity)
         run: |
           echo "source   = ${{ github.event.inputs.source }}"
           echo "dataset  = ${{ github.event.inputs.dataset }}"
@@ -76,15 +76,14 @@ jobs:
           echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
           echo "nmax     = ${{ github.event.inputs.nmax }}"
           python - <<'PY'
-import sys, numpy, xarray
+import numpy, xarray
 print("numpy :", numpy.__version__)
 print("xarray:", xarray.__version__)
 PY
+
       - name: Run agent grid
         env:
           PYTHONPATH: ${{ github.workspace }}
-          # Keep these empty unless explicitly set as repo/org secrets.
-          # Empty NASA_CSV ensures we do NOT trigger any offline CSV fallback.
           NASA_CSV: ${{ secrets.NASA_CSV }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
         run: |
@@ -112,5 +111,5 @@ PY
           git add results/rgp_ns/*.jsonl  2>/dev/null || true
           git add maps/*                  2>/dev/null || true
 
-          git commit -m "auto: RGP–NS agent grid run → results + pulses + fundamentals + updated maps" || echo "Nothing to commit"
+          git commit -m "auto: RGP-NS agent grid run → results + pulses + fundamentals + updated maps" || echo "Nothing to commit"
           git push || echo "Nothing to push"
