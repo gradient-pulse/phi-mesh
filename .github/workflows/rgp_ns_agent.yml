@@ -59,11 +59,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install deps (incl. NetCDF for NASA)
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install pyyaml numpy
+          pip install numpy pyyaml xarray netcdf4
 
       - name: Show selected inputs (sanity)
         run: |
@@ -75,12 +75,17 @@ jobs:
           echo "twin     = ${{ github.event.inputs.twin }}"
           echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
           echo "nmax     = ${{ github.event.inputs.nmax }}"
+          python - << 'PY'
+import sys, numpy, xarray
+print("numpy :", numpy.__version__)
+print("xarray:", xarray.__version__)
+PY
 
       - name: Run agent grid
         env:
           PYTHONPATH: ${{ github.workspace }}
-          # If these are NOT set in repo/organization secrets, they are empty strings.
-          # Your connectors already treat empty as "not provided".
+          # Keep these empty unless explicitly set as repo/org secrets.
+          # Empty NASA_CSV ensures we do NOT trigger any offline CSV fallback.
           NASA_CSV: ${{ secrets.NASA_CSV }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
         run: |
@@ -103,7 +108,6 @@ jobs:
           git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          # Only add paths that exist; ignore if none
           git add results/fd_probe/*.json 2>/dev/null || true
           git add pulse/auto/*.yml        2>/dev/null || true
           git add results/rgp_ns/*.jsonl  2>/dev/null || true
