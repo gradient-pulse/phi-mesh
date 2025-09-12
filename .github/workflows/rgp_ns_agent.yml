@@ -65,7 +65,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pyyaml xarray netcdf4
 
-      - name: Show selected inputs (sanity)
+       - name: Show selected inputs (sanity)
         run: |
           echo "source   = ${{ github.event.inputs.source }}"
           echo "dataset  = ${{ github.event.inputs.dataset }}"
@@ -75,12 +75,11 @@ jobs:
           echo "twin     = ${{ github.event.inputs.twin }}"
           echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
           echo "nmax     = ${{ github.event.inputs.nmax }}"
-          python - << 'PY'
+          python - <<'PY'
 import sys, numpy, xarray
 print("numpy :", numpy.__version__)
 print("xarray:", xarray.__version__)
 PY
-
       - name: Run agent grid
         env:
           PYTHONPATH: ${{ github.workspace }}
