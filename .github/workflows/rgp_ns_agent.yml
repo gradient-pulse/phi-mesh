@@ -65,22 +65,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pyyaml xarray netcdf4
 
-      - name: Show selected inputs (sanity)
-        run: |
-          echo "source   = ${{ github.event.inputs.source }}"
-          echo "dataset  = ${{ github.event.inputs.dataset }}"
-          echo "var      = ${{ github.event.inputs.var }}"
-          echo "seed_xyz = ${{ github.event.inputs.seed_xyz }}"
-          echo "offsets  = ${{ github.event.inputs.offsets }}"
-          echo "twin     = ${{ github.event.inputs.twin }}"
-          echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
-          echo "nmax     = ${{ github.event.inputs.nmax }}"
-          python - <<'PY'
-import numpy, xarray
-print("numpy :", numpy.__version__)
-print("xarray:", xarray.__version__)
-PY
-
+    - name: Show selected inputs (sanity)
+      run: |
+        echo "source   = ${{ github.event.inputs.source }}"
+        echo "dataset  = ${{ github.event.inputs.dataset }}"
+        echo "var      = ${{ github.event.inputs.var }}"
+        echo "seed_xyz = ${{ github.event.inputs.seed_xyz }}"
+        echo "offsets  = ${{ github.event.inputs.offsets }}"
+        echo "twin     = ${{ github.event.inputs.twin }}"
+        echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
+        echo "nmax     = ${{ github.event.inputs.nmax }}"
+        python -c "import numpy as np, xarray as xr; print('numpy :', np.__version__); print('xarray:', xr.__version__)"
+      
       - name: Run agent grid
         env:
           PYTHONPATH: ${{ github.workspace }}
