@@ -1,52 +1,3 @@
-name: RGP-NS Agent (grid)
-
-on:
-  workflow_dispatch:
-    inputs:
-      dataset:
-        description: "Dataset slug / repo path / full URL (e.g. JHTDB name or https://raw.githubusercontent.com/.../file.csv)"
-        required: true
-        default: "isotropic1024coarse"
-      source:
-        description: "synthetic | jhtdb | nasa"
-        required: true
-        default: "jhtdb"
-      var:
-        description: "Variable (e.g., u|v|w)"
-        required: true
-        default: "u"
-      seed_xyz:
-        description: "Seed xyz (x,y,z) — e.g., 0.1,0.1,0.1"
-        required: true
-        default: "0.1,0.1,0.1"
-      offsets:
-        description: "Grid offsets: dx,dy,dz; semicolon-separated (e.g., 0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02)"
-        required: true
-        default: "0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02"
-      twin:
-        description: "Time window t0,t1,dt (e.g., 0.0,1.2,0.0001)"
-        required: true
-        default: "0.0,1.2,0.0001"
-      k:
-        description: "Stop when at least k probes agree (e.g., 5)"
-        required: true
-        default: "5"
-      tol:
-        description: "Relative tolerance for agreement (e.g., 0.05)"
-        required: true
-        default: "0.05"
-      nmax:
-        description: "Max number of probes to run"
-        required: true
-        default: "9"
-
-permissions:
-  contents: write
-
-concurrency:
-  group: rgp-ns-agent-grid-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   agent:
     runs-on: ubuntu-latest
@@ -65,18 +16,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pyyaml xarray netcdf4
 
-    - name: Show selected inputs (sanity)
-      run: |
-        echo "source   = ${{ github.event.inputs.source }}"
-        echo "dataset  = ${{ github.event.inputs.dataset }}"
-        echo "var      = ${{ github.event.inputs.var }}"
-        echo "seed_xyz = ${{ github.event.inputs.seed_xyz }}"
-        echo "offsets  = ${{ github.event.inputs.offsets }}"
-        echo "twin     = ${{ github.event.inputs.twin }}"
-        echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
-        echo "nmax     = ${{ github.event.inputs.nmax }}"
-        python -c "import numpy as np, xarray as xr; print('numpy :', np.__version__); print('xarray:', xr.__version__)"
-      
+      - name: Show selected inputs (sanity)
+        run: |
+          echo "source   = ${{ github.event.inputs.source }}"
+          echo "dataset  = ${{ github.event.inputs.dataset }}"
+          echo "var      = ${{ github.event.inputs.var }}"
+          echo "seed_xyz = ${{ github.event.inputs.seed_xyz }}"
+          echo "offsets  = ${{ github.event.inputs.offsets }}"
+          echo "twin     = ${{ github.event.inputs.twin }}"
+          echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
+          echo "nmax     = ${{ github.event.inputs.nmax }}"
+          python -c "import numpy as np, xarray as xr; print('numpy :', np.__version__); print('xarray:', xr.__version__)"
+
       - name: Run agent grid
         env:
           PYTHONPATH: ${{ github.workspace }}
@@ -101,11 +52,9 @@ jobs:
           set -euo pipefail
           git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-
           git add results/fd_probe/*.json 2>/dev/null || true
           git add pulse/auto/*.yml        2>/dev/null || true
           git add results/rgp_ns/*.jsonl  2>/dev/null || true
           git add maps/*                  2>/dev/null || true
-
           git commit -m "auto: RGP-NS agent grid run → results + pulses + fundamentals + updated maps" || echo "Nothing to commit"
           git push || echo "Nothing to push"
