@@ -1,0 +1,39 @@
+{
+  "period": 1.25,
+  "bpm": 48.0,
+  "confidence": 0.0,
+  "main_peak_freq": 0.8,
+  "peaks": [
+    [
+      0.8,
+      4.4971789917273414e-30
+    ],
+    [
+      1.6,
+      2.0277726275505684e-30
+    ],
+    [
+      2.4000000000000004,
+      7.792657459941835e-31
+    ]
+  ],
+  "divergence_ratio": 3.112806650348908e-13,
+  "reset_events": [],
+  "source": "nasa_offline",
+  "details": {
+    "dataset": "data/nasa/cdchannel12600.nc",
+    "var": "u",
+    "xyz": [
+      0.1,
+      0.52,
+      0.0
+    ],
+    "window": [
+      0.0,
+      1.2,
+      0.0001
+    ],
+    "nasa_csv_env": "data/nasa_demo.csv",
+    "fallback": "synthetic_due_to_nasa_read_failure"
+  }
+}

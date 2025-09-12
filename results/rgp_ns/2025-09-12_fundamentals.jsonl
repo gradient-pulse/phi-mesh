@@ -1,0 +1,6 @@
+{"ts": "2025-09-12T08:25:33.347134Z", "dataset": "data/nasa/cdchannel12600.nc", "dataset_slug": "cdchannel12600_nc", "status": "Strong", "ladder": 3, "dominance": 2.2177925328638413, "period": 1.25, "f0": 0.8, "metrics": "results/fd_probe/2025-09-12_cdchannel12600.nc_nasa_batch1.metrics.json", "pulse": "pulse/auto/2025-09-12_cdchannel12600_nc_batch1.yml"}
+0.8
+{"ts": "2025-09-12T08:25:33.584134Z", "dataset": "data/nasa/cdchannel12600.nc", "dataset_slug": "cdchannel12600_nc", "status": "Strong", "ladder": 3, "dominance": 2.2177925328638413, "period": 1.25, "f0": 0.8, "metrics": "results/fd_probe/2025-09-12_cdchannel12600.nc_nasa_batch2.metrics.json", "pulse": "pulse/auto/2025-09-12_cdchannel12600_nc_batch2.yml"}
+0.8
+{"ts": "2025-09-12T08:25:33.799744Z", "dataset": "data/nasa/cdchannel12600.nc", "dataset_slug": "cdchannel12600_nc", "status": "Strong", "ladder": 3, "dominance": 2.2177925328638413, "period": 1.25, "f0": 0.8, "metrics": "results/fd_probe/2025-09-12_cdchannel12600.nc_nasa_batch3.metrics.json", "pulse": "pulse/auto/2025-09-12_cdchannel12600_nc_batch3.yml"}
+0.8
