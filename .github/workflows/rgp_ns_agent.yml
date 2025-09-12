@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       dataset:
-        description: "Dataset slug / repo path / full URL (e.g. JHTDB name or https://raw.githubusercontent.com/.../file.csv)"
+        description: "Dataset slug / local path / full URL (e.g. data/nasa/case.nc or https://.../case.nc)"
         required: true
         default: "isotropic1024coarse"
       source:
@@ -51,8 +51,10 @@ jobs:
   agent:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout (with LFS for .nc files)
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -65,10 +67,40 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pyyaml xarray netcdf4
 
+      - name: Resolve dataset (local path vs URL)
+        id: resolve
+        run: |
+          set -euo pipefail
+          DS="${{ github.event.inputs.dataset }}"
+          if [[ "$DS" =~ ^https?:// ]]; then
+            mkdir -p data/nasa
+            FN="$(basename "$DS")"
+            echo "Downloading $DS → data/nasa/$FN"
+            curl -L "$DS" -o "data/nasa/$FN"
+            echo "DATASET_RESOLVED=data/nasa/$FN" >> "$GITHUB_ENV"
+          else
+            echo "DATASET_RESOLVED=$DS" >> "$GITHUB_ENV"
+          fi
+
+      - name: Verify dataset presence (local mode)
+        run: |
+          set -euo pipefail
+          DS="$DATASET_RESOLVED"
+          if [[ "$DS" =~ ^https?:// ]]; then
+            echo "Dataset is a URL; already handled in resolve step."
+          else
+            if [ ! -f "$DS" ]; then
+              echo "::error ::Dataset not found at $DS"
+              echo "Tip: commit via Git LFS and enable lfs: true, or provide a URL as the dataset input."
+              exit 1
+            fi
+          fi
+
       - name: Show selected inputs (sanity)
         run: |
           echo "source   = ${{ github.event.inputs.source }}"
           echo "dataset  = ${{ github.event.inputs.dataset }}"
+          echo "resolved = $DATASET_RESOLVED"
           echo "var      = ${{ github.event.inputs.var }}"
           echo "seed_xyz = ${{ github.event.inputs.seed_xyz }}"
           echo "offsets  = ${{ github.event.inputs.offsets }}"
@@ -86,7 +118,7 @@ jobs:
           set -euo pipefail
           python agents/rgp_ns/agent_grid.py \
             --source "${{ github.event.inputs.source }}" \
-            --dataset "${{ github.event.inputs.dataset }}" \
+            --dataset "${DATASET_RESOLVED}" \
             --var "${{ github.event.inputs.var }}" \
             --seed_xyz "${{ github.event.inputs.seed_xyz }}" \
             --offsets "${{ github.event.inputs.offsets }}" \
@@ -101,11 +133,9 @@ jobs:
           set -euo pipefail
           git config user.name  "phi-mesh-bot"
           git config user.email "actions@users.noreply.github.com"
-
           git add results/fd_probe/*.json 2>/dev/null || true
           git add pulse/auto/*.yml        2>/dev/null || true
           git add results/rgp_ns/*.jsonl  2>/dev/null || true
           git add maps/*                  2>/dev/null || true
-
           git commit -m "auto: RGP-NS agent grid run → results + pulses + fundamentals + updated maps" || echo "Nothing to commit"
           git push || echo "Nothing to push"
