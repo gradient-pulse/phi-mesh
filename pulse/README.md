@@ -63,6 +63,9 @@ Notes
 # Example Pulse
 # Filename: 2025-09-13_example-pulse.yml
 
+# Circle Pulse Example
+# Filename: 2025-09-13_example-circle-pulse.yml
+
 title: 'Example Pulse'
 summary: >
   This is a minimal working example of a pulse file.
