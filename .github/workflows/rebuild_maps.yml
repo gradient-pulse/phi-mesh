@@ -1,4 +1,4 @@
-name: Rebuild Map Dynamics (docs/data.js)
+name: Rebuild Map (docs/data.js)
 
 on:
   workflow_dispatch:
