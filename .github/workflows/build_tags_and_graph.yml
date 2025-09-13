@@ -1,5 +1,5 @@
 name: Build Tags & Graph
-# excludes archived + auto pulses
+# excludes archived + auto pulses; date is inferred from filename prefix
 on:
   push:
     branches: [ main ]
@@ -48,7 +48,7 @@ jobs:
           mkdir -p pulse/_buildview
           shopt -s nullglob
           for f in pulse/*.yml; do
-            ln -s "../$(basename "$f")" "pulse/_buildview/$(basename "$f")" || true
+            cp "$f" "pulse/_buildview/$(basename "$f")"
           done
           echo "---- buildview contents ----"
           ls -la pulse/_buildview || true
@@ -69,41 +69,45 @@ jobs:
           fi
           rm -f docs/data.js
 
-      # Lint YAML + dates before generation (prevents timeline stalls)
-      - name: Lint pulses (YAML + required fields)
+      # Lint YAML + filename date (prevents timeline stalls)
+      - name: Lint pulses (YAML + filename date + required fields)
         shell: bash
         run: |
           set -euo pipefail
           script=.lint_pulses.py
           : > "$script"
           {
-            echo "import sys, re, glob, yaml"
+            echo "import sys, re, glob, yaml, os"
             echo "bad = 0"
-            echo "iso = re.compile(r'^\\d{4}-\\d{2}-\\d{2}$')"
+            echo "fname_re = re.compile(r'^\\d{4}-\\d{2}-\\d{2}_')"
+            echo "date_re  = re.compile(r'^\\d{4}-\\d{2}-\\d{2}$')"
             echo "for path in sorted(glob.glob('pulse/_buildview/*.yml')):"
+            echo "    base = os.path.basename(path)"
+            echo "    if not fname_re.match(base):"
+            echo "        print(f\"Bad filename '{base}' (must start YYYY-MM-DD_)\")"
+            echo "        bad += 1"
+            echo "        continue"
             echo "    try:"
             echo "        with open(path, 'r', encoding='utf-8') as f:"
-            echo "            data = yaml.safe_load(f)"
+            echo "            data = yaml.safe_load(f) or {}"
             echo "    except Exception as e:"
-            echo "        print(f'YAML parse error in {path}: {e}')"
+            echo "        print(f'YAML parse error in {base}: {e}')"
             echo "        bad += 1"
             echo "        continue"
-            echo "    if not data:"
-            echo "        print(f'Empty YAML in {path}')"
-            echo "        bad += 1"
-            echo "        continue"
-            echo "    for k in ('title','date','tags'):"
+            echo "    # required minimal fields"
+            echo "    for k in ('title','tags'):"
             echo "        if k not in data:"
-            echo "            print(f\"Missing '{k}' in {path}\")"
+            echo "            print(f\"Missing '{k}' in {base}\")"
             echo "            bad += 1"
-            echo "    d = str(data.get('date',''))"
-            echo "    if not iso.match(d):"
-            echo "        print(f\"Bad date '{d}' in {path} (YYYY-MM-DD expected)\")"
+            echo "    # if a YAML 'date' exists, it must be valid, but it's optional"
+            echo "    d = str(data.get('date','')).strip()"
+            echo "    if d and not date_re.match(d):"
+            echo "        print(f\"Bad YAML date '{d}' in {base} (YYYY-MM-DD expected)\")"
             echo "        bad += 1"
             echo "if bad:"
             echo "    print(f'FAILED: {bad} problems.')"
             echo "    sys.exit(2)"
-            echo "print('Pulses validated.')"
+            echo "print('Pulses validated (filename date strategy).')"
           } >> "$script"
           python "$script"
 
@@ -154,6 +158,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data.js
           git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "auto: rebuild data.js (exclude auto, validated)"
+          git commit -m "auto: rebuild data.js (exclude auto, filename-date lint)"
           git pull --rebase origin main || true
           git push
