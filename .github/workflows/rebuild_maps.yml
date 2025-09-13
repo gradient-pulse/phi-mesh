@@ -1,4 +1,4 @@
-name: Rebuild Map (docs/data.js)
+name: Dynamic Map
 
 on:
   workflow_dispatch:
