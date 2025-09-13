@@ -1,4 +1,4 @@
-name: Build Tags & Graph
+name: Build Tags & Graphs
 # excludes archived pulses
 on:
   push:
