@@ -1,5 +1,5 @@
-name: Build Tags & Graphs
-# excludes archived pulses
+name: Build Tags & Graph
+# excludes archived + auto pulses
 on:
   push:
     branches: [ main ]
@@ -39,7 +39,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
 
-      - name: Prepare pulse build view (exclude archive)
+      # Build view = ONLY top-level pulses (no archive dir, no auto dir)
+      - name: Prepare pulse build view (exclude archive & auto)
         shell: bash
         run: |
           set -euo pipefail
@@ -49,15 +50,10 @@ jobs:
           for f in pulse/*.yml; do
             ln -s "../$(basename "$f")" "pulse/_buildview/$(basename "$f")" || true
           done
-          if compgen -G "pulse/auto/*.yml" > /dev/null; then
-            for f in pulse/auto/*.yml; do
-              base="$(basename "$f")"
-              ln -s "../auto/$base" "pulse/_buildview/auto_$base" || true
-            done
-          fi
           echo "---- buildview contents ----"
           ls -la pulse/_buildview || true
 
+      # Quick canary to ensure expected generator symbol exists
       - name: Generator canary (canon_tag present)
         shell: bash
         run: |
@@ -73,6 +69,41 @@ jobs:
             printf "import subprocess, sys\nsys.exit(subprocess.call([sys.executable, 'generate_graph_data.py', *sys.argv[1:]]))\n" > tools/generate_graph_data.py
           fi
           rm -f docs/data.js
+
+      # Lint YAML + dates before generation (prevents timeline stalls)
+      - name: Lint pulses (YAML + required fields)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - << 'PY'
+import sys, re, glob, yaml
+bad = 0
+iso = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+for path in sorted(glob.glob('pulse/_buildview/*.yml')):
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+    except Exception as e:
+        print(f"❌ YAML parse error in {path}: {e}")
+        bad += 1
+        continue
+    if not data:
+        print(f"❌ Empty YAML in {path}")
+        bad += 1
+        continue
+    for k in ('title','date','tags'):
+        if k not in data:
+            print(f"❌ Missing '{k}' in {path}")
+            bad += 1
+    d = str(data.get('date',''))
+    if not iso.match(d):
+        print(f"❌ Bad date '{d}' in {path} (YYYY-MM-DD expected)")
+        bad += 1
+if bad:
+    print(f"FAILED: {bad} problems.")
+    sys.exit(2)
+print('✅ Pulses validated.')
+PY
 
       - name: Generate docs/data.js
         shell: bash
@@ -121,6 +152,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data.js
           git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "auto: rebuild data.js (exclude archive, canonicalized)"
+          git commit -m "auto: rebuild data.js (exclude auto, validated)"
           git pull --rebase origin main || true
           git push
