@@ -53,7 +53,6 @@ jobs:
           echo "---- buildview contents ----"
           ls -la pulse/_buildview || true
 
-      # Quick canary to ensure expected generator symbol exists
       - name: Generator canary (canon_tag present)
         shell: bash
         run: |
@@ -75,7 +74,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat << 'PY' > .lint_pulses.py
+          python - <<'PY'
 import sys, re, glob, yaml
 bad = 0
 iso = re.compile(r'^\d{4}-\d{2}-\d{2}$')
@@ -104,7 +103,6 @@ if bad:
     sys.exit(2)
 print('✅ Pulses validated.')
 PY
-          python .lint_pulses.py
 
       - name: Generate docs/data.js
         shell: bash
