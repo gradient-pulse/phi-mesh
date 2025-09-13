@@ -11,8 +11,9 @@ We intentionally **do not use a `date:` field inside the YAML** to avoid duplica
 A minimal pulse must contain:
 
 ```yaml
-title: "Short descriptive title"
-summary: "One- or two-line summary of the signal"
+title: 'Short descriptive title'
+summary: >
+	One- or two-line summary of the signal
 tags:
   - tag_one
   - tag_two
