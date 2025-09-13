@@ -60,12 +60,8 @@ Notes
 
 ⸻
 
-Example Pulse
-
-Filename:
-2025-09-13_example-pulse.yml
-
-Content:
+# Example Pulse
+# Filename: 2025-09-13_example-pulse.yml
 
 title: 'Example Pulse'
 summary: >
