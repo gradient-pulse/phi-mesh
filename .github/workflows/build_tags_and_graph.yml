@@ -74,35 +74,38 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-import sys, re, glob, yaml
-bad = 0
-iso = re.compile(r'^\d{4}-\d{2}-\d{2}$')
-for path in sorted(glob.glob('pulse/_buildview/*.yml')):
-    try:
-        with open(path, 'r', encoding='utf-8') as f:
-            data = yaml.safe_load(f)
-    except Exception as e:
-        print(f"❌ YAML parse error in {path}: {e}")
-        bad += 1
-        continue
-    if not data:
-        print(f"❌ Empty YAML in {path}")
-        bad += 1
-        continue
-    for k in ('title','date','tags'):
-        if k not in data:
-            print(f"❌ Missing '{k}' in {path}")
-            bad += 1
-    d = str(data.get('date',''))
-    if not iso.match(d):
-        print(f"❌ Bad date '{d}' in {path} (YYYY-MM-DD expected)")
-        bad += 1
-if bad:
-    print(f"FAILED: {bad} problems.")
-    sys.exit(2)
-print('✅ Pulses validated.')
-PY
+          script=.lint_pulses.py
+          : > "$script"
+          {
+            echo "import sys, re, glob, yaml"
+            echo "bad = 0"
+            echo "iso = re.compile(r'^\\d{4}-\\d{2}-\\d{2}$')"
+            echo "for path in sorted(glob.glob('pulse/_buildview/*.yml')):"
+            echo "    try:"
+            echo "        with open(path, 'r', encoding='utf-8') as f:"
+            echo "            data = yaml.safe_load(f)"
+            echo "    except Exception as e:"
+            echo "        print(f'YAML parse error in {path}: {e}')"
+            echo "        bad += 1"
+            echo "        continue"
+            echo "    if not data:"
+            echo "        print(f'Empty YAML in {path}')"
+            echo "        bad += 1"
+            echo "        continue"
+            echo "    for k in ('title','date','tags'):"
+            echo "        if k not in data:"
+            echo "            print(f\"Missing '{k}' in {path}\")"
+            echo "            bad += 1"
+            echo "    d = str(data.get('date',''))"
+            echo "    if not iso.match(d):"
+            echo "        print(f\"Bad date '{d}' in {path} (YYYY-MM-DD expected)\")"
+            echo "        bad += 1"
+            echo "if bad:"
+            echo "    print(f'FAILED: {bad} problems.')"
+            echo "    sys.exit(2)"
+            echo "print('Pulses validated.')"
+          } >> "$script"
+          python "$script"
 
       - name: Generate docs/data.js
         shell: bash
@@ -137,10 +140,10 @@ PY
                  "dupes={k:v for k,v in by.items() if len(v)>1}\n" \
                  "import pprint\n" \
                  "if dupes:\n" \
-                 "  print('❌ case-insensitive duplicates detected:')\n" \
+                 "  print('case-insensitive duplicates detected:')\n" \
                  "  [print(' ',k,'=>',v) for k,v in sorted(dupes.items())]\n" \
                  "  sys.exit(5)\n" \
-                 "print('✅ no case-insensitive duplicates')\n" > .audit.py
+                 "print('no case-insensitive duplicates')\n" > .audit.py
           python .audit.py
 
       - name: Commit generated artifacts
