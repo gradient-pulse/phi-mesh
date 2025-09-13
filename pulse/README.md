@@ -75,3 +75,17 @@ tags:
   - demo
 papers: []
 podcasts: []
+
+⸻
+
+# Circle Pulse Example
+# Filename: 2025-09-13_example-circle-pulse.yml
+
+title: 'Circle Example Pulse'
+summary: >
+  This is a minimal working example of a Circle Pulse file.
+tags:
+  - circle_pulse
+  - example
+papers: []
+podcasts: []
