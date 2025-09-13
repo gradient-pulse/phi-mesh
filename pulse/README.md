@@ -66,8 +66,9 @@ Filename:
 
 Content:
 
-title: "Example Pulse"
-summary: "This is a minimal working example of a pulse file."
+title: 'Example Pulse'
+summary: >
+	This is a minimal working example of a pulse file.
 tags:
   - example
   - demo
