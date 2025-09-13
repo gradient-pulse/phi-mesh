@@ -27,7 +27,7 @@ Rules
 	•	Summary: Brief description of the fossilized signal.
 	•	Tags: Keywords used to connect the pulse into the Tag Map.
 	•	Papers/Podcasts: Optional links to related resources.
-```
+
 ⸻
 
 Circle Pulses
@@ -56,3 +56,23 @@ Notes
 	•	Validation: The build workflow enforces that filenames start with YYYY-MM-DD_, and checks YAML syntax.
 	•	Timeline: The dynamic map sorts strictly by filename date.
 	•	Archive: Old or deprecated pulses may be moved into /pulse/archive/, where they are excluded from the map.
+
+⸻
+
+Example Pulse
+
+Filename:
+2025-09-13_example-pulse.yml
+
+Content:
+
+title: "Example Pulse"
+summary: "This is a minimal working example of a pulse file."
+tags:
+  - example
+  - demo
+papers: []
+podcasts: []
+
+---
+side?
