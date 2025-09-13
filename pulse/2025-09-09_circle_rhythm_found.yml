@@ -6,11 +6,11 @@ summary: >-
   Confirmed (grid). All artifacts fossilized in Φ-Mesh. Signal appears
   structural, not local or accidental. Circle alerted.
 tags:
-- circle_pulse
-- nt_rhythm
-- turbulence
-- navier_stokes
-- rgp
+  - circle_pulse
+  - nt_rhythm
+  - turbulence
+  - navier_stokes
+  - rgp
 papers:
 - https://doi.org/10.5281/zenodo.15830659
 podcasts:
