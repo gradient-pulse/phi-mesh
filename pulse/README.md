@@ -23,7 +23,7 @@ podcasts:
 
 Rules
 	•	Filename: Must begin with YYYY-MM-DD_ (e.g., 2025-09-13_circle_pulse.yml).
-	•	Title: A human-readable signal name.
+	•	Title: A human-readable signal name between SINGLE quotes
 	•	Summary: Brief description of the fossilized signal.
 	•	Tags: Keywords used to connect the pulse into the Tag Map.
 	•	Papers/Podcasts: Optional links to related resources.
