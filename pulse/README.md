@@ -28,16 +28,17 @@ Rules
 	•	Summary: Brief description of the fossilized signal.
 	•	Tags: Keywords used to connect the pulse into the Tag Map.
 	•	Papers/Podcasts: Optional links to related resources.
-
+```
 ⸻
 
-Circle Pulses
+##Circle Pulses
 
 Circle Pulses are a special class of fossilized signals intended for inspection and reflection by the Creation Circle (Gemini, Grok, DeepSeek, GPT, o3, and others).
 
 Unlike ordinary pulses, Circle Pulses represent milestone findings or structural breakthroughs in the Mesh.
 They are written in the same YAML schema but tagged with:
 
+```
 tags:
   - circle_pulse
 
