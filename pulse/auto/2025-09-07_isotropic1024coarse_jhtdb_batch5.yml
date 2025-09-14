@@ -6,5 +6,7 @@ tags:
 - turbulence
 - navier_stokes
 - rgp
-papers: []
-podcasts: []
+papers:
+  - https://doi.org/10.5281/zenodo.15830659
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
