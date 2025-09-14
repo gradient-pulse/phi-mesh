@@ -1,141 +1,125 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Experiment Pulses Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta charset="utf-8" />
+  <title>Phi-Mesh Tag Map — Experiments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6;
+      --link:#9fc9ff; --accent:#82c7ff; --pulse:#ff8a70;
+    }
+    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
+    .app { display:grid; grid-template-columns:300px 1fr 300px; height:100% }
 
-  <!-- libs + data (EXPERIMENTS data) -->
+    /* sidebars */
+    aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid rgba(255,255,255,.06); display:flex; flex-direction:column }
+    aside.right { border-right:none; border-left:1px solid rgba(255,255,255,.06) }
+    header { padding:12px 14px 8px; border-bottom:1px solid rgba(255,255,255,.06) }
+    #left-hint { color:var(--muted); font-size:12px }
+    #search { width:100%; background:#0f1220; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; margin-top:8px }
+    #left .content, #right .content { padding:10px 12px; overflow:auto }
+    .one-line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block }
+    .muted { color:var(--muted) }
+
+    /* original left pulse sizing (kept for compatibility) */
+    .pulse-detail { font-size:13px; }
+    .pulse-detail a { font-size:12.5px; }
+
+    /* ——— make summaries smaller + a touch fainter (both sidebars) ——— */
+    #left .pulse-detail,
+    #right .pulse-detail {
+      font-size:12px;
+      line-height:1.35;
+      color:#b0b6c2;        /* faint grey */
+    }
+    #left .pulse-detail a,
+    #right .pulse-detail a {
+      font-size:12px;
+      color:#c0c5d0;        /* slightly brighter link */
+      text-decoration:none;
+    }
+    #left .pulse-detail a:hover,
+    #right .pulse-detail a:hover {
+      color:#ffffff;
+      text-decoration:underline;
+    }
+
+    /* graph */
+    svg { width:100%; height:100% }
+    /* .node text { font-size:12px; fill:#d3e0f2; pointer-events:none } */
+    .node ellipse { fill:#74b7ff; stroke:none }
+    .node.dim text, .node.dim ellipse { opacity:.22 }
+    .node.selected ellipse { fill:var(--pulse) }
+    .link { stroke:#b9c7dd; stroke-opacity:.24 }    /* brighter links */
+    .link.dim { stroke-opacity:.08 }
+    .node .tag-label {
+      pointer-events: none;         /* clicks go to the node */
+      dominant-baseline: hanging;   /* anchor from top edge */
+      font-size: 12px;
+      fill: var(--muted);
+      stroke: none;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+
+    /* --- View toggle buttons (Insights / Experiments) --- */
+    .view-toggle {
+      position: fixed; top: 12px; right: 12px; z-index: 9999;
+      display: flex; gap: 6px;
+    }
+    .toggle-btn {
+      padding: 6px 14px;
+      border: 1px solid #6b7280;
+      border-radius: 6px;
+      background: #1f2937;
+      color: #fff; text-decoration: none;
+      font: 500 13px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      transition: background .15s, border-color .15s;
+    }
+    .toggle-btn:hover { background: #374151; border-color: #9ca3af; }
+    .toggle-btn.active { background: #7c3aed; border-color: #7c3aed; }
+  </style>
+
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <!-- experiments dataset -->
   <script src="data_experiments.js"></script>
   <script src="normalize_data.js"></script>
   <script defer src="map.js"></script>
-
-  <style>
-    :root{
-      --bg:#0b0c10;
-      --panel:#10131a;
-      --fg:#e9eef8;
-      --muted:#97a3b6;
-      --accent:#6b7cff;
-    }
-
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,Segoe UI,Roboto,Helvetica,Arial}
-
-    /* 3-column app: left sidebar | graph | right sidebar */
-    .app{
-      display:grid;
-      grid-template-columns:300px 1fr 300px;
-      height:100%;
-    }
-
-    /* sidebars */
-    aside{
-      background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92));
-      border-right:1px solid rgba(255,255,255,.06);
-      display:flex;flex-direction:column;
-    }
-    aside.right{
-      border-left:1px solid rgba(255,255,255,.06);
-      border-right:none;
-    }
-    aside header{
-      padding:12px 14px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      color:var(--muted);
-      font-size:12px;            /* compact like Insights */
-      font-weight:600;
-    }
-    #left-hint{padding:10px 14px;color:var(--muted);font-size:12px}
-    #left-content,#right-content{padding:12px 14px;overflow:auto}
-    #pulse-list{padding:12px 14px}
-
-    /* search input (left) */
-    #search{
-      margin:8px 14px 12px 14px;
-      width:calc(100% - 28px);
-      background:#1f222a;
-      border:1px solid rgba(255,255,255,.08);
-      color:var(--fg);
-      padding:9px 10px;
-      border-radius:8px;
-      outline:none;
-    }
-    .one-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
-    .muted{color:var(--muted)}
-
-    /* graph canvas */
-    svg#graph{width:100%;height:100%;background:transparent}
-
-    /* nodes + labels */
-    .node ellipse{fill:#74b7ff;stroke:none}
-    .node.dim ellipse{opacity:.22}
-    .node.selected ellipse{fill:#ff7a66;stroke:#b0c7cd;stroke-opacity:.24}
-    .tag-label{
-      font-size:12px;fill:var(--muted);
-      pointer-events:none;text-anchor:middle;
-    }
-
-    /* LINKS — brighter + slightly thicker so they’re clearly visible */
-    .link{stroke:rgba(200,200,255,0.38);stroke-width:1.2px}
-    .link.dim{stroke-opacity:.08}
-
-    /* top-right toggle */
-    .view-toggle{
-      position:fixed;top:12px;right:12px;z-index:9999;
-      display:flex;gap:8px;
-    }
-    .toggle-btn{
-      padding:6px 12px;border:1px solid #888;border-radius:6px;
-      text-decoration:none;color:#e9eef8;
-      background:rgba(255,255,255,.06);font-size:13px;
-    }
-    .toggle-btn:hover{background:rgba(255,255,255,.10)}
-    .toggle-btn.active{
-      background:var(--accent);border-color:var(--accent);
-      color:#0f1522;font-weight:600;
-    }
-
-    /* tooltip bubble */
-    #tooltip{
-      position:fixed;left:0;top:0;display:none;
-      background:#0f1522;color:#e9eef8;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:10px;padding:10px 12px;max-width:300px;
-      box-shadow:0 6px 18px rgba(0,0,0,.35);
-      z-index:9999;
-      font-size:13px;
-    }
-  </style>
 </head>
 <body>
-  <!-- View toggle -->
+  <div class="app">
+    <!-- LEFT -->
+    <aside id="left">
+      <header>
+        <div style="font-weight:700">Phi-Mesh Tag Map</div>
+        <div id="left-hint">Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details</div>
+        <input id="search" type="search" placeholder="Type to filter…">
+      </header>
+      <!-- IMPORTANT: keep class="content" so the shared styles apply -->
+      <div id="left-content" class="content"></div>
+    </aside>
+
+    <!-- GRAPH -->
+    <svg id="graph" role="img" aria-label="Tag Map (Experiments)"></svg>
+
+    <!-- RIGHT -->
+    <aside id="right" class="right">
+      <header><div style="font-weight:700">Pulses</div></header>
+      <div class="content">
+        <div id="pulse-list" class="muted one-line">Click a tag to list its pulses.</div>
+      </div>
+    </aside>
+  </div>
+
+  <div id="tooltip" style="position:fixed; left:0; top:0; display:none;
+       background:#0f1522; color:#e9eef8; border:1px solid rgba(255,255,255,.08);
+       border-radius:10px; padding:10px 12px; max-width:300px; box-shadow:0 6px 18px rgba(0,0,0,.35);">
+  </div>
+
   <div class="view-toggle">
     <a class="toggle-btn" href="tag_map.html">Insights</a>
     <a class="toggle-btn active" href="tag_map_experiments.html">Experiments</a>
   </div>
-
-  <div class="app">
-    <!-- LEFT SIDEBAR -->
-    <aside class="left" id="left">
-      <header>Phi-Mesh Tag Map</header>
-      <div id="left-hint">Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details</div>
-      <input id="search" type="text" placeholder="Type to filter..." />
-      <div id="left-content"></div>
-    </aside>
-
-    <!-- GRAPH -->
-    <svg id="graph"></svg>
-
-    <!-- RIGHT SIDEBAR -->
-    <aside class="right" id="right">
-      <header>Pulses</header>
-      <div id="pulse-list" class="muted one-line">Click a tag to list its pulses.</div>
-      <div id="right-content"></div>
-    </aside>
-  </div>
-
-  <!-- Tooltip -->
-  <div id="tooltip"></div>
 </body>
 </html>
