@@ -1,4 +1,4 @@
-name: Build Tags & Graph
+  name: Build Tags & Graph
 # excludes archived + auto pulses; date is inferred from filename prefix
 on:
   push:
@@ -111,7 +111,7 @@ jobs:
           } >> "$script"
           python "$script"
 
-      - name: Generate docs/data.js (insights: curated pulses)
+      - name: "Generate docs/data.js (insights — curated pulses)"
         shell: bash
         run: |
           set -euo pipefail
