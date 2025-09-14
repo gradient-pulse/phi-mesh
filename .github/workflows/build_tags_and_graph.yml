@@ -122,6 +122,18 @@ jobs:
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data.js
 
+      - name: Generate docs/data_experiments.js (auto pulses)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p docs
+          # build directly from pulse/auto/*.yml (we’ll keep source files untouched)
+          python generate_graph_data.py \
+            --pulse-glob "pulse/auto/*.yml" \
+            --alias-map meta/aliases.yml \
+            --tag-descriptions meta/tag_descriptions.yml \
+            --out-js docs/data_experiments.js
+
       - name: Validate data.js
         shell: bash
         run: |
