@@ -67,7 +67,7 @@ jobs:
           if [ -f tools/generate_graph_data.py ]; then
             printf "import subprocess, sys\nsys.exit(subprocess.call([sys.executable, 'generate_graph_data.py', *sys.argv[1:]]))\n" > tools/generate_graph_data.py
           fi
-          rm -f docs/data.js
+          rm -f docs/data.js docs/data_experiments.js
 
       # Lint YAML + filename date (prevents timeline stalls)
       - name: Lint pulses (YAML + filename date + required fields)
@@ -122,14 +122,46 @@ jobs:
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data.js
 
-      - name: Generate docs/data_experiments.js (auto pulses)
+      - name: Generate docs/data_experiments.js (auto pulses with default links)
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p docs
-          # build directly from pulse/auto/*.yml (we’ll keep source files untouched)
+          mkdir -p docs pulse/_autobuild
+          rm -rf pulse/_autobuild/*
+
+          # Copy auto pulses to a temp build area
+          shopt -s nullglob
+          for f in pulse/auto/*.yml; do
+            cp "$f" "pulse/_autobuild/$(basename "$f")"
+          done
+
+          # Inject default links if missing (CI-only)
+          python - << 'PY'
+import glob, yaml, os, sys
+defaults = {
+  "papers": ["https://doi.org/10.5281/zenodo.15830659"],
+  "podcasts": ["https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a"]
+}
+for path in sorted(glob.glob("pulse/_autobuild/*.yml")):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    except Exception as e:
+        print(f"[auto] skip (YAML error) {os.path.basename(path)}: {e}", file=sys.stderr)
+        continue
+    changed = False
+    for k, v in defaults.items():
+        if k not in data or not data[k]:
+            data[k] = list(v)
+            changed = True
+    if changed:
+        with open(path, "w", encoding="utf-8") as f:
+            yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False)
+PY
+
+          # Build experiments dataset from normalized copies
           python generate_graph_data.py \
-            --pulse-glob "pulse/auto/*.yml" \
+            --pulse-glob "pulse/_autobuild/*.yml" \
             --alias-map meta/aliases.yml \
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data_experiments.js
@@ -141,6 +173,14 @@ jobs:
           test -s docs/data.js || (echo "ERROR: docs/data.js is empty" && exit 2)
           head -n 1 docs/data.js | grep -q "window.PHI_DATA" || (echo "ERROR: data.js missing window.PHI_DATA" && exit 3)
           echo "OK: docs/data.js looks good."
+
+      - name: Validate data_experiments.js
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s docs/data_experiments.js || (echo "ERROR: docs/data_experiments.js is empty" && exit 2)
+          head -n 1 docs/data_experiments.js | grep -q "window.PHI_DATA" || (echo "ERROR: data_experiments.js missing window.PHI_DATA" && exit 3)
+          echo "OK: docs/data_experiments.js looks good."
 
       - name: Audit for case-insensitive duplicate tags
         shell: bash
@@ -168,8 +208,8 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data.js
+          git add docs/data.js docs/data_experiments.js
           git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "auto: rebuild data.js (exclude auto, filename-date lint)"
+          git commit -m "auto: rebuild datasets (insights+experiments; filename-date lint; CI default links for auto)"
           git pull --rebase origin main || true
           git push
