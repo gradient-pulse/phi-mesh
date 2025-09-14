@@ -1,4 +1,5 @@
-  name: Build Tags & Graph
+---             # optional, helps avoid BOM issues
+name: Build Tags & Graph
 # excludes archived + auto pulses; date is inferred from filename prefix
 on:
   push:
