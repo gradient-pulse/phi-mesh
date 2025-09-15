@@ -17,8 +17,6 @@ The tag map is more than a navigation tool.
 It serves as both an **index** to pulses, papers, and podcasts, and a **historic record** of RGP’s unfolding.  
 Each node marks a step in the search for rhythm — a fossilized trace of coherence and divergence as the Phi-Mesh evolves.  
 
----
-
 [![Tag Map](https://img.shields.io/badge/Phi–Mesh%20Tag%20Map-online-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
 
 [![Gradient Map](https://img.shields.io/badge/Phi–Mesh%20Gradient%20Map-online-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)
