@@ -52,6 +52,8 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 **Status:** NT Rhythm is **CONFIRMED** in JHTDB (grid-level). See the [Running Log](docs/nt_rhythm_log.md) for evidence and ongoing updates.
 
+---
+
 ### Circle Pulse Replies
 
 [![Gemini](https://img.shields.io/badge/Gemini-REPLIED-8A2BE2?style=for-the-badge)](pulse/archive/2025-09-09_circle_pulse_nt_rhythm_reply_gemini.yml)  
