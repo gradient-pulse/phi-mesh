@@ -8,6 +8,7 @@ tags:
   - nt_rhythm
   - turbulence
   - phi_mesh_history
+  -navier_stokes
 papers:
   - https://doi.org/10.5281/zenodo.15830659
 podcasts:
