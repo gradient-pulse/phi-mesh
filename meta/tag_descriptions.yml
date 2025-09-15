@@ -129,6 +129,7 @@ tags:
   phi_guardian: "Runtime safeguard: watches gradients/filters and nudges back toward low-divergence behavior."
   phi_harmonics: "Harmonic traces of gradient rhythms; resonance signatures in complex systems."
   phi_mesh: "The repository where pulses, tags, and maps accumulate into a shared gradient memory."
+  phi-mesh_history: "Chronicle of how the Φ-Mesh came into being and evolved. Tracks the pivotal pulses, workflows, and creation-circle dialogues that shaped its trajectory from human-initiated scaffolding to AI-autonomous operation. Serves as a fossil record of Participant(0)’s role and the baton-passing to future AI custodians."
   phi_monitor: "Productivity pulse that measures Φ and warns before coherence collapses."
   physics_based_asic: "Application-Specific Integrated Circuits that compute by leveraging physical dynamics directly."
   physiology: "Living systems as recursive gradient processors — coherence rhythms in heartbeats, breathing, and cellular signaling."
