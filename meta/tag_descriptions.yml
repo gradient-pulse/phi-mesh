@@ -151,6 +151,7 @@ tags:
   recursive_grammar: "How recursive operations compose—rules that let small loops build large, reusable structure."
   recursion: "Loops within loops—RGP’s core mechanism for generating coherence."
   replication: "Reproducing results as gradient transfer—protocols that preserve rhythm and filters across contexts."
+  reproducibility: "The ability to obtain consistent results from the same inputs. In RGP context, reproducibility is reframed: not as suppression of randomness (e.g., temperature=0), but as conservation and replay of coherence gradients across contexts."
   resonance: "Amplification when gradients reinforce each other; the heartbeat of coherent emergence."
   resonance_shift: "Change in dominant resonant pattern; signals a filter or gradient reconfiguration."
   rhythm: "Coherent timing structure that systems settle into under least-divergence pressure."
