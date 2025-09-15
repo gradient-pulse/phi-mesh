@@ -1,10 +1,8 @@
 # tools/fd_connectors/texas/quick_loader.py
-import argparse, io, re
-from pathlib import Path
+import re
+import argparse
 import pandas as pd
-import numpy as np
-
-COMMENT = "*"  # treat lines starting with this as comments
+from pathlib import Path
 
 def clean_cols(cols):
     out = []
@@ -12,103 +10,102 @@ def clean_cols(cols):
         c = (c or "").strip().lower()
         c = c.replace("+", "plus").replace("/", "_per_")
         c = re.sub(r"[^a-z0-9_]+", "_", c).strip("_")
-        out.append(c)
+        out.append(c or "col")
     return out
 
-def load_table(path: Path, comment_char: str = "*") -> pd.DataFrame:
+def detect_comment_char(path: Path, default="*"):
     """
-    Robust loader for Texas text tables:
-      - skips comment/banner lines
-      - detects header line
-      - keeps only numeric-looking data rows
-      - parses with whitespace separation
+    Peek a few lines: if a line starts with a likely comment char (#, %, *),
+    return it. Otherwise fall back to the default.
     """
-    txt = path.read_text(encoding="utf-8", errors="ignore")
-    # keep non-empty lines
-    lines = [ln.strip() for ln in txt.splitlines() if ln.strip()]
-
-    # find header: first non-comment, non-banner line
-    header_idx = None
-    for i, ln in enumerate(lines):
-        if ln.startswith(comment_char):
-            continue
-        # ignore pure banner lines of symbols
-        if re.fullmatch(r"[*=\-_/\\ ]+", ln):
-            continue
-        header_idx = i
-        break
-
-    if header_idx is None:
-        raise RuntimeError("Could not find a header line in the file.")
-
-    header = re.sub(r"\s+", " ", lines[header_idx]).strip()
-    cols = header.split()
-
-    # keep only numeric-looking rows after header
-    num_line = re.compile(r"^[\s+\-0-9.eE]+$")  # allow spaces, signs, digits, dot, e/E
-    data_rows = []
-    for ln in lines[header_idx + 1:]:
-        if ln.startswith(comment_char):
-            continue
-        # stop if a second header sneaks in
-        if any(tok in ln for tok in (" y+", " y/h", "  y ")):
-            break
-        if num_line.match(ln):
-            data_rows.append(re.sub(r"\s+", " ", ln).strip())
-
-    if not data_rows:
-        raise RuntimeError("Found header but no numeric data rows — please check the file contents.")
-
-    # build an in-memory "clean" table for pandas
-    buf = io.StringIO()
-    buf.write(" ".join(cols) + "\n")
-    buf.write("\n".join(data_rows) + "\n")
-    buf.seek(0)
-
-    df = pd.read_csv(buf, sep=r"\s+", engine="python")
-    df.columns = clean_cols(df.columns)
-
-    # normalize yplus naming if present in any form
-    if "yplus" in df.columns:
+    likely = {"#", "%", "*", "!"}
+    try:
+        with path.open("r", encoding="utf-8", errors="ignore") as f:
+            for _ in range(10):
+                line = f.readline()
+                if not line:
+                    break
+                s = line.strip()
+                if s and s[0] in likely:
+                    return s[0]
+    except Exception:
         pass
-    elif "y_plus" in df.columns:
-        df = df.rename(columns={"y_plus": "yplus"})
-    elif "y" in df.columns and "y_per_h" in df.columns:
-        # fallback if only y and y/h exist — keep y as proxy for plotting
-        df = df.rename(columns={"y": "yplus"})
-        print("⚠️  No explicit y+ found; using 'y' as placeholder for yplus.")
+    return default
 
+def load_table(path: Path, comment_char=None):
+    if comment_char is None:
+        comment_char = detect_comment_char(path)
+
+    # Pandas warning: use sep=r"\s+" instead of delim_whitespace
+    df = pd.read_csv(
+        path,
+        sep=r"\s+",
+        comment=comment_char,
+        engine="python"
+    )
+
+    # normalize/sanitize column names
+    df.columns = clean_cols(list(df.columns))
+
+    # Convenience: unify common y+/u+ names when present
+    # (non-fatal; only helps quick plots/probes later)
+    alias_map = {
+        "y_plus": "yplus",
+        "y__": "yplus",
+        "y": "y",                # leave 'y' literal, but mapped below if useful
+        "u_plus": "uplus",
+    }
+    for a, b in alias_map.items():
+        if a in df.columns and b not in df.columns:
+            df = df.rename(columns={a: b})
+
+    # If we only have 'y' and 'y_per_h', keep them as-is; we won't force yplus.
     return df
 
+def save_clean(df, src_path: Path):
+    stem = src_path.with_suffix("").name + "_clean"
+    out_csv = src_path.parent / f"{stem}.csv"
+    out_parq = src_path.parent / f"{stem}.parquet"
+
+    df.to_csv(out_csv, index=False)
+    try:
+        import pyarrow  # noqa: F401
+        df.to_parquet(out_parq, index=False)
+        wrote_parquet = True
+    except Exception:
+        wrote_parquet = False
+
+    return out_csv, (out_parq if wrote_parquet else None)
+
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("path", type=Path, help="Path to Texas data text file")
-    ap.add_argument("--comment", default=COMMENT, help="Comment char (default '*')")
+    ap = argparse.ArgumentParser(description="Quick-load & clean Texas TDR text tables.")
+    ap.add_argument("path", type=str, help="Path to the .txt dataset (e.g., data/texas/Foo.txt)")
+    ap.add_argument("--comment", type=str, default=None, help="Comment char to ignore (auto-detect if omitted)")
     args = ap.parse_args()
 
-    df = load_table(args.path, comment_char=args.comment)
+    p = Path(args.path)
+    if not p.exists():
+        raise SystemExit(f"File not found: {p}")
 
-    print(f"\n✅ Loaded {args.path}")
+    df = load_table(p, comment_char=args.comment)
+
+    print(f"\n✅ Loaded {p}")
     print("shape:", df.shape)
     print("columns:", list(df.columns))
 
-    # basic numeric summary
-    with pd.option_context("display.max_rows", 200, "display.width", 120):
-        print("\n--- describe() ---")
-        print(df.describe().T[["mean", "std", "min", "max"]].round(6))
-
-    # save cleaned artifacts next to the raw file
-    out_base = args.path.with_suffix("")  # drop .txt
-    csv_path = out_base.parent / (out_base.name + "_clean.csv")
-    pq_path  = out_base.parent / (out_base.name + "_clean.parquet")
-
-    df.to_csv(csv_path, index=False)
+    # small numeric peek
     try:
-        df.to_parquet(pq_path, index=False)
-        print(f"\n💾 Saved: {csv_path.name} and {pq_path.name}")
-    except Exception as e:
-        print(f"\n💾 Saved: {csv_path.name}")
-        print(f"⚠️  Parquet not saved ({e}); install pyarrow/fastparquet if desired.")
+        desc = df.describe().T[["mean","std","min","max"]].round(6)
+        print("\n--- describe() ---")
+        print(desc)
+    except Exception:
+        pass
+
+    out_csv, out_parq = save_clean(df, p)
+    if out_parq:
+        print(f"\n💾 Saved: {out_csv.name} and {out_parq.name}")
+    else:
+        print(f"\n💾 Saved: {out_csv.name} (pyarrow not installed; parquet skipped)")
 
 if __name__ == "__main__":
     main()
