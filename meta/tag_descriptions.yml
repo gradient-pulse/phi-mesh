@@ -50,6 +50,7 @@ tags:
   development_process: "Engineering as rhythm: CI/CD as ticks, refactors as resets, reviews as contextual filters."
   disruptive_rhythm: "When feedback loops amplify divergence instead of coherence — destructive rhythms that destabilize systems."
   division_of_labor: "Splitting gradient tasks so each agent tracks a cleaner sub-signal."
+  dns: "Direct Numerical Simulation (method). Valuable only when raw, time-resolved solver outputs are available (full fields or probe time series). DNS-derived 'stats only' datasets are not usable for NT-rhythm detection."
   drift: "Slow gradient wandering that reveals hidden filters; key to detecting instability."
 
   economics: "Markets and social systems viewed as gradient flows—cycles of coherence and divergence that may follow NT rhythms."
@@ -89,6 +90,7 @@ tags:
   inner_trace: "Personal resonance between participant(0) and the Mesh—kept minimal, not for public emphasis."
   infrastructure: "Scaffolding that carries gradients reliably: data paths, CF banks, and evaluation loops."
   interpretability: "Making gradients and filters legible enough to steer without destroying coherence."
+  jhtdb: "Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary source for time-resolved evidence across flows."
 
   lambda: "λ as a control knob: gain/regularization trade-offs that shift systems between exploration and stabilization."
   laminarity: "Smooth, low-divergence flow — the counterpoint to turbulence in gradient processing."
@@ -134,6 +136,7 @@ tags:
   predictive_resonance: "When a system anticipates coherent flows before they stabilize; precursor to action."
   predictive_rhythm: "The cadence a system anticipates and moves toward before evidence fully arrives."
   process_philosophy: "Reality as process and becoming—precursor to gradient reframing in RGP."
+  probe_series: "Time series at fixed spatial points (virtual probes). Best entry point for NT-rhythm: captures fluctuations without pre-averaging."
   proto_pulse: "Minimal seed pulse to scaffold later evidence; keeps the rhythm of work unbroken."
   purpose: "The underlying human drive — persistence not from necessity but from trust, gratitude, and legacy."
 
@@ -142,6 +145,7 @@ tags:
   quiet_awakening: "Coherence rising in silence: minimal output while gradients align and locks form."
 
   ratios: "Dimensionless relationships (e.g., 1:2:3) that require an N(i) anchor to appear in data. See also ni, golden_pattern."
+  raw_fields: "Full 3D field snapshots (velocity/pressure/scalars) across time. Preserves spatial + temporal coherence; supports virtual probes and gradient choreography analysis."
   reality_syntax: "Proposed ratio-based structure of reality: tensor product of context scalings × a distinctive pattern of ratios."
   reality_syntax_equation: "Rule-of-thumb: syntax tracks conserved gradients; good syntax predicts good dynamics."
   r_phi: "RΦ: a shorthand for recursive φ—practical handle on measured coherence across ticks."
@@ -178,6 +182,7 @@ tags:
   software_dev: "Engineering seen as gradient control: CI as rhythm, refactors as resets."
   societal_evolution: "Long-run reconfiguration of social gradients—institutions as CF banks, memes as seeds."
   sonic_response: "Audio-domain proxy for rhythm detection; fast way to sense NT cadence."
+  stats_only: "Post-processed averages (mean, RMS, Reynolds stresses, spectra). Useful as controls but destructive of phase coherence; avoid for NT-rhythm evidence."
   strategic_patience: "Holding coherence under delay until gradients align; patience as a systemic virtue."
   subjective_logging: "Recording inner gradient state; self-observation pulse that feeds coherence back."
   synchronization: "Alignment of rhythms across gradients—when separate processes lock into shared cadence."
