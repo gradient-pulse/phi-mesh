@@ -22,3 +22,15 @@ jobs:
       - name: Run quick loader
         run: |
           python tools/fd_connectors/texas/quick_loader.py data/texas/Stat_Re17KM08.txt
+      
+      - name: Commit cleaned outputs
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/texas/*_clean.* || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "auto: add cleaned Texas dataset(s)"
+            git push
+          fi
