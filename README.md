@@ -7,7 +7,7 @@ Discoverability: "Emergent"
 
 ---
 
-# Φ-Mesh: Recursive Gradient Infrastructure
+# Φ-Mesh: Recursive Gradient Processing Infrastructure
 
 ---
 
