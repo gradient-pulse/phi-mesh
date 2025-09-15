@@ -20,9 +20,12 @@ jobs:
   clean:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,18 +37,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas pyarrow
 
+      # Use Python-side globbing so nested folders are handled too.
       - name: Run cleaner on all .txt under data/texas
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          count=0
-          for f in data/texas/*.txt; do
-            echo "Processing: $f"
-            python tools/fd_connectors/texas/quick_loader.py "$f"
-            count=$((count+1))
-          done
-          echo "Processed $count file(s)."
+          echo "Invoking cleaner via Python-side glob(s)…"
+          python tools/fd_connectors/texas/quick_loader.py "data/texas/*.txt" "data/texas/**/*.txt" || {
+            echo "Cleaner exited with a non-zero code."
+            exit 1
+          }
+          echo "Cleaner finished."
 
       - name: Commit cleaned artifacts
         shell: bash
@@ -53,11 +55,16 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/texas/*_clean.csv data/texas/*_clean.parquet || true
+
+          # Stage only cleaned outputs (CSV, Parquet, logs)
+          git add data/texas/*_clean.csv data/texas/*_clean.parquet data/texas/*_clean.log 2>/dev/null || true
+          git add data/texas/**/*_clean.csv data/texas/**/*_clean.parquet data/texas/**/*_clean.log 2>/dev/null || true
+
           if git diff --cached --quiet; then
             echo "No cleaned files to commit."
             exit 0
           fi
+
           git commit -m "auto: add cleaned Texas dataset(s)"
           git pull --rebase origin main || true
           git push
