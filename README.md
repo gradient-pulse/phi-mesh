@@ -19,9 +19,9 @@ Each node marks a step in the search for rhythm — a fossilized trace of cohere
 
 ---
 
-[![Tag Map](https://img.shields.io/badge/Phi–Mesh%20Tag%20Map-online-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
+[![Tag_Map](https://img.shields.io/badge/RGP%20Tag%20Map-online-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
 
-[![Gradient Map](https://img.shields.io/badge/Phi–Mesh%20Gradient%20Map-online-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)
+[![Gradient_Map](https://img.shields.io/badge/RGP%20Gradient%20Map-online-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)
 
 **Main paper**  
 *Solving Navier–Stokes, Differently: What It Takes*  
