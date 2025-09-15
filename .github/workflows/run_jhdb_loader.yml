@@ -1,0 +1,87 @@
+name: Run JHTDB Loader
+
+on:
+  workflow_dispatch:
+    inputs:
+      flow:
+        description: "JHTDB dataset (e.g., isotropic1024coarse, channel)"
+        required: true
+        default: "isotropic1024coarse"
+      x:
+        description: "Probe x"
+        required: true
+        default: "0.1"
+      y:
+        description: "Probe y"
+        required: true
+        default: "0.2"
+      z:
+        description: "Probe z"
+        required: true
+        default: "0.3"
+      t0:
+        description: "Start time"
+        required: true
+        default: "0.0"
+      dt:
+        description: "Δt between samples"
+        required: true
+        default: "0.002"
+      nsteps:
+        description: "Number of samples"
+        required: true
+        default: "1000"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: jhtdb-run
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyJHTDB suds-community pandas pyarrow
+
+      - name: Run JHTDB loader
+        env:
+          FLOW: ${{ github.event.inputs.flow }}
+          X: ${{ github.event.inputs.x }}
+          Y: ${{ github.event.inputs.y }}
+          Z: ${{ github.event.inputs.z }}
+          T0: ${{ github.event.inputs.t0 }}
+          DT: ${{ github.event.inputs.dt }}
+          NSTEPS: ${{ github.event.inputs.nsteps }}
+        run: |
+          set -euo pipefail
+          python tools/fd_connectors/jhtdb/jhtdb_loader.py \
+            --flow "$FLOW" --x "$X" --y "$Y" --z "$Z" \
+            --t0 "$T0" --dt "$DT" --nsteps "$NSTEPS"
+
+      - name: Commit outputs
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/jhtdb/* 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No new files to commit."
+            exit 0
+          fi
+          git commit -m "data(jhtdb): add probe series from ${{ github.event.inputs.flow }}"
+          git pull --rebase origin main || true
+          git push
