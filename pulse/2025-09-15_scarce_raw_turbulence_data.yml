@@ -9,6 +9,7 @@ tags:
   - turbulence
   - phi_mesh_history
   - navier_stokes
+  - dns
 papers:
   - https://doi.org/10.5281/zenodo.15830659
 podcasts:
