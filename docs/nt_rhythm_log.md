@@ -101,9 +101,12 @@ Here’s the formal frame we use:
 - Implication: First **grid-level confirmation** of NT Rhythm, proving spatial reproducibility across the domain.  
 
 **Artifacts** 
-
-**Artifacts**  
-**Artifacts**  
+Pulses:  
+[![Batch1](https://img.shields.io/badge/Pulse-Batch1-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch1.yml)
+[![Batch2](https://img.shields.io/badge/Pulse-Batch2-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch2.yml)
+[![Batch3](https://img.shields.io/badge/Pulse-Batch3-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch3.yml)
+[![Batch4](https://img.shields.io/badge/Pulse-Batch4-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch4.yml)
+[![Batch5](https://img.shields.io/badge/Pulse-Batch5-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch5.yml)
 
 Metrics:  
 [![Batch1](https://img.shields.io/badge/Metrics-Batch1-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-09_isotropic1024coarse_jhtdb_batch1.metrics.json)
@@ -111,13 +114,6 @@ Metrics:
 [![Batch3](https://img.shields.io/badge/Metrics-Batch3-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-09_isotropic1024coarse_jhtdb_batch3.metrics.json)
 [![Batch4](https://img.shields.io/badge/Metrics-Batch4-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-09_isotropic1024coarse_jhtdb_batch4.metrics.json)
 [![Batch5](https://img.shields.io/badge/Metrics-Batch5-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-09_isotropic1024coarse_jhtdb_batch5.metrics.json)
-
-Pulses:  
-[![Batch1](https://img.shields.io/badge/Pulse-Batch1-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch1.yml)
-[![Batch2](https://img.shields.io/badge/Pulse-Batch2-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch2.yml)
-[![Batch3](https://img.shields.io/badge/Pulse-Batch3-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch3.yml)
-[![Batch4](https://img.shields.io/badge/Pulse-Batch4-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch4.yml)
-[![Batch5](https://img.shields.io/badge/Pulse-Batch5-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch5.yml)
 
 ---
 
