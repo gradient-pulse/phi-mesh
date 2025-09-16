@@ -182,11 +182,11 @@ Metrics:
 
 **Artifacts**  
 
-Metrics:  
-[![Batch8](https://img.shields.io/badge/Metrics-Batch8-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-07_isotropic1024coarse_jhtdb_batch8.metrics.json)
-
 Pulses:  
 [![Batch8](https://img.shields.io/badge/Pulse-Batch8-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-07_isotropic1024coarse_jhtdb_batch8.yml)
+
+Metrics:  
+[![Batch8](https://img.shields.io/badge/Metrics-Batch8-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-07_isotropic1024coarse_jhtdb_batch8.metrics.json)
 
 ---
 
