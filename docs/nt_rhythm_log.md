@@ -100,7 +100,12 @@ Here’s the formal frame we use:
 - Comment: All 5 probes (±0.02 offsets) independently returned the same laddered 1:2:3 rhythm.  
 - Implication: First **grid-level confirmation** of NT Rhythm, proving spatial reproducibility across the domain.  
 
+**Artifacts** 
+
 **Artifacts**  
+- Metrics: [Batch1](https://gradient-pulse.github.io/phi-mesh/results/2025-09-09_isotropic1024coarse_jhtdb_batch1.metrics.json) · [Batch2](https://gradient-pulse.github.io/phi-mesh/results/2025-09-09_isotropic1024coarse_jhtdb_batch2.metrics.json) · [Batch3](https://gradient-pulse.github.io/phi-mesh/results/2025-09-09_isotropic1024coarse_jhtdb_batch3.metrics.json) · [Batch4](https://gradient-pulse.github.io/phi-mesh/results/2025-09-09_isotropic1024coarse_jhtdb_batch4.metrics.json) · [Batch5](https://gradient-pulse.github.io/phi-mesh/results/2025-09-09_isotropic1024coarse_jhtdb_batch5.metrics.json)  
+- Pulses: [Batch1](https://gradient-pulse.github.io/phi-mesh/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch1.yml) · [Batch2](https://gradient-pulse.github.io/phi-mesh/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch2.yml) · [Batch3](https://gradient-pulse.github.io/phi-mesh/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch3.yml) · [Batch4](https://gradient-pulse.github.io/phi-mesh/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch4.yml) · [Batch5](https://gradient-pulse.github.io/phi-mesh/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch5.yml)
+  
 - Metrics: [Batch1](results/2025-09-09_isotropic1024coarse_jhtdb_batch1.metrics.json) · [Batch2](results/2025-09-09_isotropic1024coarse_jhtdb_batch2.metrics.json) · [Batch3](results/2025-09-09_isotropic1024coarse_jhtdb_batch3.metrics.json) · [Batch4](results/2025-09-09_isotropic1024coarse_jhtdb_batch4.metrics.json) · [Batch5](results/2025-09-09_isotropic1024coarse_jhtdb_batch5.metrics.json)  
 - Pulses: [Batch1](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch1.yml) · [Batch2](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch2.yml) · [Batch3](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch3.yml) · [Batch4](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch4.yml) · [Batch5](pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch5.yml)
 
