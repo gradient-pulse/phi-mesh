@@ -6,7 +6,7 @@ Each entry links back to the canonical **metrics JSON** and **pulse** the workfl
 
 ## What we measure  
 
-Every probe run extracts a **time-series of flow values** (e.g., velocity component `u`) from a dataset (synthetic, JHTDB, NASA). We then compute:  
+Every probe run extracts a **time-series of flow values** (e.g., velocity component `u`) from a dataset (JHTDB, Princeton). We then compute:  
 
 - **Spectrum of oscillations** in the chosen window.  
 - **Fundamental period and frequency** of the dominant cycle.  
