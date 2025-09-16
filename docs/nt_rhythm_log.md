@@ -101,6 +101,7 @@ Here’s the formal frame we use:
 - Implication: First **grid-level confirmation** of NT Rhythm, proving spatial reproducibility across the domain.  
 
 **Artifacts** 
+
 Pulses:  
 [![Batch1](https://img.shields.io/badge/Pulse-Batch1-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch1.yml)
 [![Batch2](https://img.shields.io/badge/Pulse-Batch2-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-09_isotropic1024coarse_jhtdb_batch2.yml)
