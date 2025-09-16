@@ -1,7 +1,7 @@
 
 # Φ-Mesh: Recursive Gradient Process — Infrastructure  
 
-*“A human–AI collaboration mapping turbulence through Recursive Gradient Processing.”*  
+*A human–AI collaboration mapping turbulence through Recursive Gradient Processing.*  
 
 ---
 
