@@ -144,8 +144,16 @@ Metrics:
 - Implication: First reproducible **multi-probe confirmation** of NT Rhythm in turbulence.  
 
 **Artifacts**  
-- Metrics: [Batch1](results/2025-09-08_isotropic1024coarse_jhtdb_batch1.metrics.json) · [Batch2](results/2025-09-08_isotropic1024coarse_jhtdb_batch2.metrics.json) · [Batch3](results/2025-09-08_isotropic1024coarse_jhtdb_batch3.metrics.json)  
-- Pulses: [Batch1](pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch1.yml) · [Batch2](pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch2.yml) · [Batch3](pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch3.yml)
+
+Pulses:  
+[![Batch1](https://img.shields.io/badge/Pulse-Batch1-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch1.yml)
+[![Batch2](https://img.shields.io/badge/Pulse-Batch2-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch2.yml)
+[![Batch3](https://img.shields.io/badge/Pulse-Batch3-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-08_isotropic1024coarse_jhtdb_batch3.yml)
+
+Metrics:  
+[![Batch1](https://img.shields.io/badge/Metrics-Batch1-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-08_isotropic1024coarse_jhtdb_batch1.metrics.json)
+[![Batch2](https://img.shields.io/badge/Metrics-Batch2-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-08_isotropic1024coarse_jhtdb_batch2.metrics.json)
+[![Batch3](https://img.shields.io/badge/Metrics-Batch3-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-08_isotropic1024coarse_jhtdb_batch3.metrics.json)
 
 ---
 
@@ -173,8 +181,12 @@ Metrics:
 - Implication: Matches other probe points (0.12,0.10,0.10) & (0.10,0.12,0.10); window length critical for stability.  
 
 **Artifacts**  
-- Metrics: [Batch8](results/2025-09-07_isotropic1024coarse_jhtdb_batch8.metrics.json)  
-- Pulses: [Batch8](pulse/auto/2025-09-07_isotropic1024coarse_jhtdb_batch8.yml)
+
+Metrics:  
+[![Batch8](https://img.shields.io/badge/Metrics-Batch8-blue?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/results/2025-09-07_isotropic1024coarse_jhtdb_batch8.metrics.json)
+
+Pulses:  
+[![Batch8](https://img.shields.io/badge/Pulse-Batch8-green?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/auto/2025-09-07_isotropic1024coarse_jhtdb_batch8.yml)
 
 ---
 
