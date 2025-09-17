@@ -144,6 +144,11 @@ jobs:
             pulse/experiments/*.yml
             docs/data.js
 
+      - name: Archive orphan JHTDB evidence (auto-clean)
+        run: |
+          set -euo pipefail
+          python tools/fd_connectors/jhtdb/archive_orphan_jhtdb.py
+
       - name: Commit outputs
         shell: bash
         run: |
