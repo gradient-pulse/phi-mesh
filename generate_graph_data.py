@@ -262,11 +262,20 @@ def main():
     nodes, links = build_graph_from_pulses(tag_to_pulses)
     tagResources, tagFirstSeen = build_resources_and_first_seen(tag_to_pulses, tag_desc)
 
+    # Sort pulses per tag: newest (date) first = "last batch first"
+def _ds(p):  # date-safe
+    return p["date"] or ""
+
+pulses_by_tag_desc = {
+    tag: sorted(plist, key=_ds, reverse=True)
+    for tag, plist in tag_to_pulses.items()
+}
+
     payload = OrderedDict()
     payload["nodes"] = nodes
     payload["links"] = links
     payload["tagDescriptions"] = tag_desc
-    payload["pulsesByTag"] = {k: v for k, v in sorted(tag_to_pulses.items())}
+    payload["pulsesByTag"] = pulses_by_tag_desc    
     payload["tagResources"] = tagResources
     payload["tagFirstSeen"] = tagFirstSeen
 
