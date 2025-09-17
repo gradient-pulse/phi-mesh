@@ -1,96 +1,78 @@
 #!/usr/bin/env python3
-"""
-Make a *strict* pulse YAML (minimal fields only) from JHTDB probe meta+analysis.
-
-Outputs to pulse/YYYY-MM-DD_jhtdb-probe_x_y_z[__batchN].yml
-Fields included ONLY:
-  - title
-  - summary
-  - tags
-  - papers
-  - podcasts
-"""
-
-import argparse, json
+import argparse, json, re
 from pathlib import Path
-from datetime import date
 import yaml
 
+FILENAME_MAX = 64  # hard cap for the whole filename
 
-def roundish(x, nd=4):
-    try:
-        return round(float(x), nd)
-    except Exception:
-        return None
+def slugify(raw: str) -> str:
+    s = (raw or "fdprobe").lower()
+    s = re.sub(r"[^a-z0-9_-]+", "_", s)   # keep only safe chars
+    s = re.sub(r"_+", "_", s).strip("_-") # collapse repeats / trim
+    return s or "fdprobe"
 
+def read_json(p: Path) -> dict:
+    return json.loads(Path(p).read_text(encoding="utf-8"))
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--meta", required=True)
     ap.add_argument("--analysis", required=True)
     ap.add_argument("--outdir", default="pulse")
-    ap.add_argument("--date", default=str(date.today()))
-    ap.add_argument("--batch", type=int, default=None)  # only for human-readable title/filename
+    ap.add_argument("--date", required=True)   # YYYY-MM-DD
+    ap.add_argument("--batch", type=int, required=True)
+    ap.add_argument("--slug", default="fdprobe")
     args = ap.parse_args()
 
-    meta = json.loads(Path(args.meta).read_text())
-    ana  = json.loads(Path(args.analysis).read_text())
+    meta = read_json(args.meta)
+    ana  = read_json(args.analysis)
 
-    flow = meta.get("flow") or meta.get("dataset") or "unknown_flow"
-    pt   = meta.get("point") or {}
-    x, y, z = pt.get("x"), pt.get("y"), pt.get("z")
-    dt      = meta.get("dt") or ana.get("dt")
-    nsteps  = meta.get("nsteps") or ana.get("nsteps")
-    fdom    = roundish(ana.get("dominant_freq_hz"))
-    period  = roundish(ana.get("approx_period_s"))
-    hint    = (ana.get("hint") or "").strip()
+    # ---- dynamic slug cap so whole filename <= FILENAME_MAX ----
+    safe_slug = slugify(args.slug)
+    prefix = f"{args.date}_"
+    suffix = f"_batch{args.batch}.yml"
+    remaining = max(1, FILENAME_MAX - len(prefix) - len(suffix))
+    safe_slug = safe_slug[:remaining]
 
-    # ---- title (batch number only in human-facing title) ----
-    if args.batch is not None:
-        title = f"NT Rhythm — FD Probe (batch {args.batch})"
-        batch_suffix = f"__batch{args.batch}"
-    else:
-        title = "NT Rhythm — FD Probe"
-        batch_suffix = ""
+    outdir = Path(args.outdir); outdir.mkdir(parents=True, exist_ok=True)
+    fname = f"{prefix}{safe_slug}{suffix}"
+    out_path = outdir / fname
+    # ------------------------------------------------------------
 
-    # ---- summary (concise, no quotes required) ----
-    bits = [
-        f'probe on "{flow}"',
-        f"n={nsteps}",
-        f"dt={dt}",
-        f"xyz=({x}, {y}, {z})",
-    ]
-    if fdom and fdom > 0:
-        b2 = f"dominant_freq_hz≈{fdom}"
-        if period:
-            b2 += f" (~{period}s)"
-        bits.append(b2)
-    else:
-        bits.append("dominant_freq_hz≈0")
-    if hint:
-        bits.append(f"hint: {hint}")
-    summary = " — ".join(bits)
+    # links
+    meta_rel = str(Path(args.meta).as_posix())
+    ana_rel  = str(Path(args.analysis).as_posix())
+    base = Path(args.meta).with_suffix("").with_suffix("")  # drop .meta.json
+    cand = []
+    for ext in (".csv.gz", ".parquet", ".csv"):
+        p = Path("data/jhtdb") / (base.name + ext)
+        if p.exists():
+            cand.append(p.as_posix())
 
-    # ---- strict pulse object ----
-    pulse = {
+    title = f"NT Rhythm — FD Probe ({args.date})"
+    point = meta.get("point") or {}
+    flow  = meta.get("flow", "")
+    n     = meta.get("nsteps", meta.get("n"))
+    dt    = meta.get("dt")
+
+    data = {
         "title": title,
-        "summary": summary,
+        "date": args.date,
         "tags": ["navier_stokes", "turbulence", "nt_rhythm", "rgp", "experiments"],
+        "summary": (
+            f'NT rhythm probe on "{flow}" — n={n}, dt={dt}. '
+            f'Probe: xyz=({point.get("x")}, {point.get("y")}, {point.get("z")}). '
+            f'dominant_freq_hz≈{ana.get("dominant_freq_hz", 0)}.'
+        ),
         "papers": [],
         "podcasts": [],
+        "links": [meta_rel, ana_rel, *cand],
     }
 
-    # ---- write ----
-    outdir = Path(args.outdir)
-    outdir.mkdir(parents=True, exist_ok=True)
-    fname = f"{args.date}_jhtdb-probe_{x}_{y}_{z}{batch_suffix}.yml"
-    path = outdir / fname
+    with open(out_path, "w", encoding="utf-8", newline="\n") as f:
+        yaml.safe_dump(data, f, sort_keys=False, allow_unicode=True)
 
-    with open(path, "w", encoding="utf-8", newline="\n") as f:
-        yaml.safe_dump(pulse, f, sort_keys=False, allow_unicode=True)
-
-    print(f"Wrote strict pulse: {path}")
-
+    print(f"wrote {out_path}")
 
 if __name__ == "__main__":
     main()
