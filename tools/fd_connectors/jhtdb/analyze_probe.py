@@ -1,135 +1,206 @@
 #!/usr/bin/env python3
 """
-Analyze a JHTDB probe and emit compact metrics JSON.
+Analyze a single JHTDB probe time series.
 
-Preferred:
-  python analyze_probe.py --meta path/to/....meta.json --out results/fd_probe/....analysis.json
+Inputs
+------
+--meta : path to the .meta.json written by the loader (contains flow, point, dt, nsteps)
+--out  : path to write analysis JSON
 
-Overrides:
-  --csv path/to/....csv.gz  (use explicit CSV)
-  --dt 0.002                (override dt)
+What it does
+------------
+- Finds the matching data file next to the meta (prefers CSV.GZ, then CSV, then Parquet)
+- Loads columns t, u, v, w (if t is present we can infer dt if missing)
+- For each component (u, v, w):
+    * compute mean, std, rms
+    * estimate dominant frequency via FFT (Hann window, rfft, ignore DC bin)
+- Returns both per-component metrics and the overall dominant (max power) component/frequency
+
+Output JSON (example)
+---------------------
+{
+  "n": 4000,
+  "dt": 0.002,
+  "duration_s": 8.0,
+  "csv_path": "data/jhtdb/....csv.gz",
+  "dominant": {"component": "u", "freq_hz": 0.125, "power": 123.4},
+  "components": {
+    "u": {"mean": 0.0, "std": 1.01, "rms": 1.01, "dom_freq_hz": 0.125, "dom_power": 123.4},
+    "v": {...},
+    "w": {...}
+  }
+}
 """
 
-import argparse, gzip, io, json
+import argparse
+import json
 from pathlib import Path
-from datetime import date
+from typing import Dict, Tuple, Optional
+
 import numpy as np
-import pandas as pd
+
+# pandas is handy for CSV/Parquet; it's already in your workflow
+try:
+    import pandas as pd
+except Exception as e:
+    raise SystemExit("pandas is required for analyze_probe.py") from e
 
 
-def _read_csv_maybe_gz(p: Path) -> pd.DataFrame:
-    if str(p).endswith(".gz"):
-        with gzip.open(p, "rb") as f:
-            return pd.read_csv(io.BytesIO(f.read()))
-    return pd.read_csv(p)
+def _load_meta(meta_path: Path) -> Dict:
+    return json.loads(meta_path.read_text(encoding="utf-8"))
 
 
-def _series_stats(x: np.ndarray):
-    x = x[np.isfinite(x)]
-    if x.size == 0:
-        return None
-    mu  = float(np.mean(x))
-    sd  = float(np.std(x))
-    cv  = float(sd / (abs(mu) + 1e-12))
-    return {"mean": mu, "std": sd, "min": float(np.min(x)), "max": float(np.max(x)), "cv": cv}
+def _find_data_file(stem: str) -> Optional[Path]:
+    """
+    Given a base stem (no extension), return the first existing data file:
+    .csv.gz > .csv > .parquet
+    """
+    root = Path("data/jhtdb")
+    for ext in (".csv.gz", ".csv", ".parquet"):
+        p = root / f"{stem}{ext}"
+        if p.exists():
+            return p
+    return None
 
 
-def _dominant_freq(x: np.ndarray, dt: float):
-    """Detrend, Hann window, rFFT; ignore DC; return (f_dom, p_dom, hint)."""
-    x = x[np.isfinite(x)]
-    n = x.size
-    if n < 32 or not (dt and dt > 0):
-        return 0.0, 0.0, "too_short"
-    x = x - np.mean(x)
-    if not np.any(np.abs(x) > 0):
-        return 0.0, 0.0, "flat"
+def _load_timeseries(path: Path) -> pd.DataFrame:
+    """
+    Load t,u,v,w from CSV/Parquet. If 't' is missing we can still analyze using dt from meta.
+    """
+    if path.suffix == ".gz" or path.suffixes[-2:] == [".csv", ".gz"]:
+        df = pd.read_csv(path)
+    elif path.suffix == ".csv":
+        df = pd.read_csv(path)
+    elif path.suffix == ".parquet":
+        df = pd.read_parquet(path)
+    else:
+        raise ValueError(f"Unsupported file type: {path}")
 
+    # Normalize columns
+    # accepted variants like uppercase or spaces are normalized to lower
+    df.columns = [str(c).strip().lower() for c in df.columns]
+
+    # keep only expected numeric columns if present
+    cols = [c for c in ("t", "u", "v", "w") if c in df.columns]
+    if not cols:
+        raise ValueError(f"No usable columns found in {path}. Expect one of t,u,v,w.")
+
+    return df[cols].copy()
+
+
+def _dominant_freq(x: np.ndarray, dt: float) -> Tuple[float, float]:
+    """
+    Estimate dominant frequency (Hz) and its power for a real signal x sampled at dt seconds.
+    Steps: demean -> Hann window -> rfft -> power spectrum -> peak (ignore DC bin).
+    Returns (freq_hz, power). If ambiguous or too short, returns (0.0, 0.0).
+    """
+    n = int(x.shape[0])
+    if n < 8 or dt <= 0:
+        return 0.0, 0.0
+
+    x = np.asarray(x, dtype=float)
+    x = x - np.mean(x)  # remove DC
+
+    # Hann window to reduce spectral leakage
     w = np.hanning(n)
-    y = x * w
-    Y = np.fft.rfft(y)
-    P = np.abs(Y) ** 2
-    f = np.fft.rfftfreq(n, d=float(dt))
-    if P.size <= 1:
-        return 0.0, 0.0, "no_bins"
+    xw = x * w
 
-    k = int(np.argmax(P[1:])) + 1  # skip DC
-    fpk = float(f[k]); ppk = float(P[k])
-    med = float(np.median(P[1:])) if P.size > 2 else 0.0
-    if fpk <= 0 or ppk <= 1e-14 or (med > 0 and ppk / med < 2.5):
-        return 0.0, ppk, "weak_peak"
-    return fpk, ppk, ""
+    # Real FFT and power spectrum
+    X = np.fft.rfft(xw)
+    power = (np.abs(X) ** 2)
+
+    # Frequencies
+    freqs = np.fft.rfftfreq(n, d=dt)
+
+    # Ignore DC bin (index 0). If all zeros or only DC, return 0.
+    if power.size <= 1:
+        return 0.0, 0.0
+
+    idx = int(np.argmax(power[1:])) + 1
+    return float(freqs[idx]), float(power[idx])
+
+
+def _stats_and_peak(x: np.ndarray, dt: float) -> Dict[str, float]:
+    x = np.asarray(x, dtype=float)
+    mean = float(np.mean(x))
+    std = float(np.std(x, ddof=0))
+    rms = float(np.sqrt(np.mean(x * x)))
+    f, p = _dominant_freq(x, dt)
+    return {"mean": mean, "std": std, "rms": rms, "dom_freq_hz": f, "dom_power": p}
+
+
+def analyze(meta_path: Path, out_path: Path) -> None:
+    meta = _load_meta(meta_path)
+    # figure base stem from meta filename
+    stem = meta_path.name
+    if stem.endswith(".meta.json"):
+        stem = stem[: -len(".meta.json")]
+
+    data_file = _find_data_file(stem)
+    if data_file is None:
+        # still write a minimal JSON so the pipeline progresses
+        result = {
+            "n": int(meta.get("nsteps") or meta.get("n") or 0),
+            "dt": float(meta.get("dt") or 0.0),
+            "duration_s": float((meta.get("nsteps") or 0) * (meta.get("dt") or 0.0)),
+            "csv_path": None,
+            "dominant": {"component": None, "freq_hz": 0.0, "power": 0.0},
+            "components": {},
+        }
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        return
+
+    df = _load_timeseries(data_file)
+
+    # dt from meta if provided; else infer from t column if present
+    dt = float(meta.get("dt") or 0.0)
+    if (dt <= 0.0) and ("t" in df.columns):
+        t = df["t"].to_numpy()
+        if t.size >= 2:
+            # median delta is robust to outliers
+            dt_est = np.median(np.diff(t.astype(float)))
+            if dt_est > 0:
+                dt = float(dt_est)
+
+    n = int(meta.get("nsteps") or df.shape[0])
+    duration_s = float(n * dt) if dt > 0 else float(df.shape[0])
+
+    comps = {}
+    best = ("", 0.0, 0.0)  # (comp, freq, power)
+
+    for comp in ("u", "v", "w"):
+        if comp in df.columns:
+            stats = _stats_and_peak(df[comp].to_numpy(), dt if dt > 0 else 1.0)
+            comps[comp] = stats
+            # track overall dominant by power
+            if stats["dom_power"] > best[2]:
+                best = (comp, stats["dom_freq_hz"], stats["dom_power"])
+
+    result = {
+        "n": n,
+        "dt": dt,
+        "duration_s": duration_s,
+        "csv_path": data_file.as_posix(),
+        "dominant": {
+            "component": best[0] or None,
+            "freq_hz": float(best[1]) if best[0] else 0.0,
+            "power": float(best[2]) if best[0] else 0.0,
+        },
+        "components": comps,
+    }
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    print(f"wrote {out_path}  (dominant: {result['dominant']})")
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--meta")
-    ap.add_argument("--csv")
-    ap.add_argument("--dt", type=float)
-    ap.add_argument("--out", required=True)
+    ap.add_argument("--meta", required=True, help="Path to .meta.json")
+    ap.add_argument("--out", required=True, help="Where to write analysis JSON")
     args = ap.parse_args()
-
-    meta = {}
-    if args.meta:
-        mp = Path(args.meta)
-        if not mp.exists():
-            raise FileNotFoundError(f"meta not found: {mp}")
-        meta = json.loads(mp.read_text(encoding="utf-8"))
-
-    # Resolve CSV
-    csv_path = Path(args.csv) if args.csv else None
-    if not csv_path and args.meta:
-        stem = Path(args.meta).with_suffix("").name  # drop .json
-        p1 = Path(args.meta).parent / f"{stem}.csv.gz"
-        p2 = Path(args.meta).parent / f"{stem}.csv"
-        csv_path = p1 if p1.exists() else (p2 if p2.exists() else None)
-    if not csv_path or not csv_path.exists():
-        raise FileNotFoundError("CSV not found. Pass --csv or provide valid --meta.")
-
-    # Resolve params
-    dt = args.dt if args.dt is not None else float(meta.get("dt", 0.0))
-    nsteps = int(meta.get("nsteps", 0)) if meta else 0
-    flow   = meta.get("flow") or meta.get("dataset") or "unknown_flow"
-    point  = meta.get("point") or {}
-    px, py, pz = point.get("x"), point.get("y"), point.get("z")
-
-    # Load CSV
-    df = _read_csv_maybe_gz(csv_path)
-    cols = {c.lower(): c for c in df.columns}
-    def col(name): return df[cols[name]] if name in cols else None
-    u, v, w = col("u"), col("v"), col("w")
-
-    U = u.to_numpy(float) if u is not None else None
-    V = v.to_numpy(float) if v is not None else None
-    W = w.to_numpy(float) if w is not None else None
-    speed = np.sqrt(U*U + V*V + W*W) if (U is not None and V is not None and W is not None) else None
-
-    # FFT target
-    target = speed if speed is not None else (U if U is not None else None)
-    fdom, pdom, hint = (0.0, 0.0, "no_signal")
-    if target is not None and (dt and dt > 0):
-        fdom, pdom, hint = _dominant_freq(target, dt)
-
-    out = {
-        "date": str(date.today()),
-        "flow": flow,
-        "point": {"x": px, "y": py, "z": pz},
-        "dt": float(dt) if dt else None,
-        "nsteps": int(nsteps) if nsteps else int(len(df)),
-        "duration_s": float((int(nsteps) if nsteps else len(df)) * (float(dt) if dt else 0.0)),
-        "dominant_freq_hz": float(fdom),
-        "approx_period_s": (float(1.0/fdom) if fdom > 0 else None),
-        "peak_power": float(pdom),
-        "hint": hint or "",
-        "channels": {}
-    }
-    if U is not None:     out["channels"]["u"] = _series_stats(U)
-    if V is not None:     out["channels"]["v"] = _series_stats(V)
-    if W is not None:     out["channels"]["w"] = _series_stats(W)
-    if speed is not None: out["channels"]["speed"] = _series_stats(speed)
-
-    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
-    Path(args.out).write_text(json.dumps(out, indent=2), encoding="utf-8")
-    print(json.dumps(out, indent=2))
+    analyze(Path(args.meta), Path(args.out))
 
 
 if __name__ == "__main__":
