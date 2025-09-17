@@ -122,6 +122,16 @@ jobs:
             echo "generate_graph_data.py not found — skipping data.js refresh."
           fi
 
+      - name: Archive orphan JHTDB evidence (auto-clean)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f "tools/fd_connectors/jhtdb/archive_orphan_jhtdb.py" ]]; then
+            python tools/fd_connectors/jhtdb/archive_orphan_jhtdb.py
+          else
+            echo "Archiver script not found — skipping."
+          fi
+
       - name: Upload artifacts (evidence)
         uses: actions/upload-artifact@v4
         with:
