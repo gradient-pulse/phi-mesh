@@ -1,69 +1,41 @@
-#!/usr/bin/env python3
-"""
-Archive orphan JHTDB evidence:
-- For each meta in data/jhtdb/*.meta.json, extract x,y,z
-- If no pulse filename in pulse/ matches "jhtdb-probe_{x}_{y}_{z}",
-  move the evidence group to data/jhtdb/archive/.
-"""
+name: Archive Orphan JHTDB Evidence
 
-import json, shutil
-from pathlib import Path
+on:
+  workflow_dispatch:
 
-ROOT     = Path("data/jhtdb")
-ARCHIVE  = ROOT / "archive"
-PULSEDIR = Path("pulse")
+permissions:
+  contents: write
 
-ARCHIVE.mkdir(parents=True, exist_ok=True)
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-def pulse_exists_for_xyz(x, y, z) -> bool:
-    token = f"jhtdb-probe_{x}_{y}_{z}"
-    for yml in PULSEDIR.rglob("*.yml"):
-        if yml.parent.name == "archive":
-            continue
-        if token in yml.name:
-            return True
-    return False
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-def evidence_group(meta_path: Path):
-    """Return all sibling evidence files sharing the stem of meta."""
-    stem = meta_path.with_suffix("").name  # drop .json
-    parent = meta_path.parent
-    candidates = [
-        parent / f"{stem}.meta.json",
-        parent / f"{stem}.csv.gz",
-        parent / f"{stem}.csv",
-        parent / f"{stem}.parquet",
-        Path("results/fd_probe") / f"{stem}.analysis.json",
-    ]
-    return [p for p in candidates if p.exists()]
+      - name: Sweep orphan evidence into archive/
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/fd_connectors/jhtdb/archive_orphan_jhtdb.py
 
-def main():
-    moved = 0
-    for meta in sorted(ROOT.glob("*.meta.json")):
-        try:
-            data = json.loads(meta.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        pt = data.get("point") or {}
-        x, y, z = pt.get("x"), pt.get("y"), pt.get("z")
-        if x is None or y is None or z is None:
-            continue
-
-        if pulse_exists_for_xyz(x, y, z):
-            # referenced by a pulse → keep
-            continue
-
-        # orphan → archive the group
-        for f in evidence_group(meta):
-            dest = ARCHIVE / f.name
-            # if a namesake exists, keep the newest (overwrite)
-            if dest.exists():
-                dest.unlink()
-            shutil.move(str(f), str(dest))
-            moved += 1
-            print(f"[moved] {f} → {dest}")
-
-    print(f"Done. Files moved: {moved}")
-
-if __name__ == "__main__":
-    main()
+      - name: Commit archive moves
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # capture renames/moves within data/jhtdb and results/fd_probe
+          git add -A data/jhtdb results/fd_probe
+          if git diff --cached --quiet; then
+            echo "Nothing to archive."
+            exit 0
+          fi
+          git commit -m "chore(jhtdb): archive orphan evidence files"
+          git pull --rebase origin main || true
+          git push
