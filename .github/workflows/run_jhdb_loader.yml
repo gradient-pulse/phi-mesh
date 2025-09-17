@@ -75,7 +75,6 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # SOAP client + IO + YAML; numpy for analyzer FFT
           pip install suds-community pandas pyarrow pyyaml numpy
 
       - name: Run JHTDB loader
@@ -88,44 +87,56 @@ jobs:
             --flow "${{ matrix.flow }}" \
             --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
             --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
-          echo "Listing JHTDB directory after load:"
+          echo "After load, data/jhtdb contains:"
           ls -lh data/jhtdb || true
 
-      - name: Analyze probe(s) and generate pulses
+      - name: Analyze probe(s) → metrics + pulses
         shell: bash
         run: |
           set -euo pipefail
           ANALYZER="tools/fd_connectors/jhtdb/analyze_probe.py"
           PULSEGEN="tools/fd_connectors/jhtdb/make_pulse_from_probe.py"
-          OUTDIR="pulse/auto"
-          mkdir -p "$OUTDIR"
+          OUT_PULSES="pulse/auto"
+          OUT_RESULTS="results/fd_probe"
+          mkdir -p "$OUT_PULSES" "$OUT_RESULTS"
 
           if [[ ! -f "$ANALYZER" ]]; then
-            echo "Analyzer not found ($ANALYZER) — skipping analysis."
-            exit 0
+            echo "Analyzer not found ($ANALYZER) — cannot proceed."
+            exit 1
           fi
 
-          shopt -s nullglob
-          echo "Discovering probe CSVs…"
-          FILES=( data/jhtdb/*__x*_y*_z*__t0*__dt*__n*.csv.gz )
-          printf 'Found %d file(s)\n' "${#FILES[@]}"
+          echo "Discovering probe CSVs (excluding archive/)…"
+          mapfile -t FILES < <(find data/jhtdb -maxdepth 1 -type f -name '*.csv.gz' ! -path '*/archive/*' | sort)
+          echo "Found ${#FILES[@]} file(s)."
+          if [[ ${#FILES[@]} -eq 0 ]]; then
+            echo "ERROR: No probe CSVs found to analyze."
+            exit 1
+          fi
 
           for f in "${FILES[@]}"; do
             echo "Analyzing: $f"
             meta="${f%.csv.gz}.meta.json"
-            out="${f%.csv.gz}.analysis.json"
-            python "$ANALYZER" --in "$f" --dt "${{ matrix.dt }}" --out "$out"
+            out_local="${f%.csv.gz}.analysis.json"
+            python "$ANALYZER" --in "$f" --dt "${{ matrix.dt }}" --out "$out_local"
+
+            # copy to results/fd_probe as well
+            base="$(basename "$out_local")"
+            cp -f "$out_local" "$OUT_RESULTS/$base"
+
             if [[ -f "$PULSEGEN" ]]; then
               echo "Making pulse for: $f"
-              python "$PULSEGEN" --meta "$meta" --analysis "$out" --outdir "$OUTDIR" --date "$(date -u +%F)"
+              python "$PULSEGEN" --meta "$meta" --analysis "$out_local" --outdir "$OUT_PULSES" --date "$(date -u +%F)"
             else
-              echo "Pulse generator not found ($PULSEGEN) — skipping pulse creation."
+              echo "Pulse generator not found ($PULSEGEN) — skipping pulse."
             fi
           done
 
-          echo "Listing analysis + pulses:"
+          echo "Analysis files:"
           ls -lh data/jhtdb/*.analysis.json 2>/dev/null || true
-          ls -lh "$OUTDIR" 2>/dev/null || true
+          echo "Results staged:"
+          ls -lh "$OUT_RESULTS" 2>/dev/null || true
+          echo "Pulses written:"
+          ls -lh "$OUT_PULSES" 2>/dev/null || true
 
       - name: Regenerate tag map data
         shell: bash
@@ -138,7 +149,7 @@ jobs:
             echo "generate_graph_data.py not found — skipping data.js refresh."
           fi
 
-      # Temporarily disabled while verifying pulse creation. Re-enable later.
+      # Keep archive disabled until pulses are confirmed; then flip to `if: true`.
       - name: Archive orphan JHTDB evidence (auto-clean)
         if: ${{ false }}
         shell: bash
@@ -155,6 +166,7 @@ jobs:
             data/jhtdb/*.parquet
             data/jhtdb/*.meta.*
             data/jhtdb/*.analysis.json
+            results/fd_probe/*.analysis.json
             pulse/auto/*.yml
             docs/data.js
 
@@ -164,9 +176,8 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Evidence + analyses
           git add -A data/jhtdb
-          # Pulses + refreshed map
+          git add -A results/fd_probe
           git add pulse/auto/*.yml docs/data.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new files to commit."
