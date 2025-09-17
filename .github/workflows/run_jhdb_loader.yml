@@ -18,9 +18,9 @@ on:
       dt:     { description: "Δt", required: true, default: "0.002" }
       nsteps: { description: "Samples", required: true, default: "1000" }
       slug:
-        description: "Optional pulse slug (e.g., fdprobe, nt_rhythm)"
+        description: "Short slug for pulse file naming (e.g., nt_rhythm)"
         required: false
-        default: ""
+        default: "fdprobe"
 
 permissions:
   contents: write
@@ -46,7 +46,8 @@ jobs:
 
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            python - <<'PY' > matrix.json
+            # Build a matrix from the batch file (newest first)
+            python <<'PY' > matrix.json
 import json, yaml, sys
 p = "${{ github.event.inputs.batch_file }}"
 d = yaml.safe_load(open(p)) or {}
@@ -56,18 +57,24 @@ PY
             echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           else
             echo "Single run parameters"
-            cat > matrix.json <<JSON
-{"include":[{"flow":"${{ github.event.inputs.flow }}",
-             "x":${{ github.event.inputs.x }},
-             "y":${{ github.event.inputs.y }},
-             "z":${{ github.event.inputs.z }},
-             "t0":${{ github.event.inputs.t0 }},
-             "dt":${{ github.event.inputs.dt }},
-             "nsteps":${{ github.event.inputs.nsteps }},
-             "slug":"${{ github.event.inputs.slug }}" }]}
-JSON
+            # Build a single-include matrix
+            python <<'PY' > matrix.json
+import json
+print(json.dumps({"include":[{
+  "flow":"${{ github.event.inputs.flow }}",
+  "x":${{ github.event.inputs.x }},
+  "y":${{ github.event.inputs.y }},
+  "z":${{ github.event.inputs.z }},
+  "t0":${{ github.event.inputs.t0 }},
+  "dt":${{ github.event.inputs.dt }},
+  "nsteps":${{ github.event.inputs.nsteps }},
+  "slug":"${{ github.event.inputs.slug }}"
+}]}, separators=(",",":")))
+PY
             echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           fi
+          echo "Planned matrix:"
+          cat matrix.json
 
   run:
     needs: plan
@@ -75,7 +82,6 @@ JSON
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -88,8 +94,8 @@ JSON
       - name: Install deps
         run: |
           set -euo pipefail
-          python -m pip install --upgrade pip
-          pip install suds-community pandas pyarrow pyyaml numpy==1.23.5 scipy<1.11 matplotlib<3.8 h5py<4 cython<3
+          python -m pip install --upgrade pip wheel
+          pip install pandas pyarrow pyyaml suds-community numpy
 
       - name: Run JHTDB loader
         env:
@@ -101,31 +107,28 @@ JSON
             --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
             --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
 
-      - name: Analyze probe(s) → metrics + strict pulses
-        shell: bash
+      - name: Analyze probe
         run: |
           set -euo pipefail
-          today=$(date +%F)
-          # batch number: 1-based, per strategy job index
-          batch_n=$(( ${{ strategy.job-index }} + 1 ))
+          # meta path pattern built from the same naming as loader
+          META=$(ls -1 data/jhtdb/*__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json | head -n 1)
+          echo "META: $META"
+          OUT="results/fd_probe/$(basename "${META%.meta.json}").analysis.json"
+          python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$META" --out "$OUT"
 
-          # slug resolution: matrix.slug > workflow input slug > fdprobe
-          slug="${{ matrix.slug }}"
-          if [ -z "$slug" ]; then slug="${{ github.event.inputs.slug }}"; fi
-          slug="${slug:-fdprobe}"
-
-          shopt -s nullglob
-          for meta in data/jhtdb/*.meta.json; do
-            base=$(basename "$meta" .meta.json)
-            ana="results/fd_probe/${base}.analysis.json"
-
-            python tools/fd_connectors/jhtdb/analyze_probe.py \
-              --meta "$meta" --out "$ana"
-
-            python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
-              --meta "$meta" --analysis "$ana" \
-              --outdir pulse --date "$today" --batch "$batch_n" --slug "$slug"
-          done
+      - name: Make pulse (slug length is auto-truncated inside the script)
+        run: |
+          set -euo pipefail
+          META=$(ls -1 data/jhtdb/*__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json | head -n 1)
+          ANA="results/fd_probe/$(basename "${META%.meta.json}").analysis.json"
+          DATE=$(date -u +"%Y-%m-%d")
+          python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
+            --meta "$META" \
+            --analysis "$ANA" \
+            --outdir "pulse" \
+            --date "$DATE" \
+            --batch 1 \
+            --slug "${{ matrix.slug }}"
 
       - name: Upload artifacts (evidence)
         uses: actions/upload-artifact@v4
@@ -146,12 +149,12 @@ JSON
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
-            data/jhtdb/*.csv.gz data/jhtdb/*.meta.json results/fd_probe/*.analysis.json \
-            pulse/*.yml docs/data.js 2>/dev/null || true
+            data/jhtdb/*.csv.gz data/jhtdb/*.parquet data/jhtdb/*.meta.json \
+            results/fd_probe/*.analysis.json pulse/*.yml docs/data.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
           fi
-          git commit -m "data(jhtdb): probe evidence + analysis + pulses + map refresh (${{ matrix.flow }})"
+          git commit -m "data(jhtdb): probe evidence + analysis + pulses + map refresh (${{ matrix.flow }} @ ${{ matrix.x }},${{ matrix.y }},${{ matrix.z }})"
           git pull --rebase origin main || true
           git push
