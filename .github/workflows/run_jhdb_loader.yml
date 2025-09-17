@@ -71,93 +71,43 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps
-        shell: bash
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install suds-community pandas pyarrow pyyaml numpy
+          pip install suds-community pandas pyarrow pyyaml matplotlib numpy scipy h5py cython sympy
 
       - name: Run JHTDB loader
         env:
           JHTDB_EMAIL: ${{ secrets.JHTDB_EMAIL }}
-        shell: bash
         run: |
           set -euo pipefail
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
             --flow "${{ matrix.flow }}" \
             --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
             --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
-          echo "After load, data/jhtdb contains:"
-          ls -lh data/jhtdb || true
 
       - name: Analyze probe(s) → metrics + pulses
-        shell: bash
         run: |
           set -euo pipefail
-          ANALYZER="tools/fd_connectors/jhtdb/analyze_probe.py"
-          PULSEGEN="tools/fd_connectors/jhtdb/make_pulse_from_probe.py"
-          OUT_PULSES="pulse/auto"
-          OUT_RESULTS="results/fd_probe"
-          mkdir -p "$OUT_PULSES" "$OUT_RESULTS"
+          mkdir -p results/fd_probe pulse
+          batch_n="${{ strategy.job-index }}"
+          today=$(date +%F)
 
-          if [[ ! -f "$ANALYZER" ]]; then
-            echo "Analyzer not found ($ANALYZER) — cannot proceed."
-            exit 1
-          fi
+          for meta in data/jhtdb/*.meta.json; do
+            base=$(basename "$meta" .meta.json)
+            ana="results/fd_probe/${base}.analysis.json"
 
-          echo "Discovering probe CSVs (excluding archive/)…"
-          mapfile -t FILES < <(find data/jhtdb -maxdepth 1 -type f -name '*.csv.gz' ! -path '*/archive/*' | sort)
-          echo "Found ${#FILES[@]} file(s)."
-          if [[ ${#FILES[@]} -eq 0 ]]; then
-            echo "ERROR: No probe CSVs found to analyze."
-            exit 1
-          fi
+            # run analysis
+            python tools/fd_connectors/jhtdb/analyze_probe.py \
+              --meta "$meta" --out "$ana"
 
-          for f in "${FILES[@]}"; do
-            echo "Analyzing: $f"
-            meta="${f%.csv.gz}.meta.json"
-            out_local="${f%.csv.gz}.analysis.json"
-            python "$ANALYZER" --in "$f" --dt "${{ matrix.dt }}" --out "$out_local"
-
-            # copy to results/fd_probe as well
-            base="$(basename "$out_local")"
-            cp -f "$out_local" "$OUT_RESULTS/$base"
-
-            if [[ -f "$PULSEGEN" ]]; then
-              echo "Making pulse for: $f"
-              python "$PULSEGEN" --meta "$meta" --analysis "$out_local" --outdir "$OUT_PULSES" --date "$(date -u +%F)"
-            else
-              echo "Pulse generator not found ($PULSEGEN) — skipping pulse."
-            fi
+            # make strict pulse
+            python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
+              --meta "$meta" --analysis "$ana" \
+              --outdir pulse --date "$today" --batch "$batch_n"
           done
 
-          echo "Analysis files:"
-          ls -lh data/jhtdb/*.analysis.json 2>/dev/null || true
-          echo "Results staged:"
-          ls -lh "$OUT_RESULTS" 2>/dev/null || true
-          echo "Pulses written:"
-          ls -lh "$OUT_PULSES" 2>/dev/null || true
-
-      - name: Regenerate tag map data
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [[ -f "generate_graph_data.py" ]]; then
-            python generate_graph_data.py --pulse-glob "pulse/**/*.yml" --out-js docs/data.js
-            echo "docs/data.js regenerated."
-          else
-            echo "generate_graph_data.py not found — skipping data.js refresh."
-          fi
-
-      # Keep archive disabled until pulses are confirmed; then flip to `if: true`.
-      - name: Archive orphan JHTDB evidence (auto-clean)
-        if: ${{ false }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          python tools/fd_connectors/jhtdb/archive_orphan_jhtdb.py
-
-      - name: Upload artifacts (evidence + results)
+      - name: Upload artifacts (evidence)
         uses: actions/upload-artifact@v4
         with:
           name: jhtdb-${{ matrix.flow }}-${{ matrix.x }}-${{ matrix.y }}-${{ matrix.z }}
@@ -165,9 +115,8 @@ jobs:
             data/jhtdb/*.csv.gz
             data/jhtdb/*.parquet
             data/jhtdb/*.meta.*
-            data/jhtdb/*.analysis.json
             results/fd_probe/*.analysis.json
-            pulse/auto/*.yml
+            pulse/*.yml
             docs/data.js
 
       - name: Commit outputs
@@ -176,13 +125,12 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/jhtdb
-          git add -A results/fd_probe
-          git add pulse/auto/*.yml docs/data.js 2>/dev/null || true
+          git add data/jhtdb/*.csv.gz data/jhtdb/*.meta.* \
+                 results/fd_probe/*.analysis.json pulse/*.yml docs/data.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
           fi
-          git commit -m "data(jhtdb): probe evidence + analysis + pulses + map refresh (${{ matrix.flow }} @ ${{ matrix.x }},${{ matrix.y }},${{ matrix.z }})"
+          git commit -m "data(jhtdb): probe evidence + analysis + strict pulses + map refresh"
           git pull --rebase origin main || true
           git push
