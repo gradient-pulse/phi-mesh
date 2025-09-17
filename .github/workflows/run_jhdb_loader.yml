@@ -75,13 +75,15 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip wheel
-          # IMPORTANT: pin numpy to <1.24 because pyJHTDB uses np.int
-          pip install "numpy==1.23.5" "cython<3" "h5py<4" "scipy<1.11" "matplotlib<3.8"
+          # Pin numpy to a version compatible with pyJHTDB's np.int usage
+          pip install "numpy==1.23.5"
+          # Preinstall libs pyJHTDB imports at metadata/build time
+          pip install "cython<3" "h5py<4" "scipy<1.11" "matplotlib<3.8" "sympy<1.13"
           # Build without isolation so setup.py can import the above
           pip install --no-build-isolation pyJHTDB==20200909.0
           # SOAP + IO stack
           pip install suds-community pandas pyarrow pyyaml
-
+          
       - name: Run JHTDB loader
         env:
           JHTDB_EMAIL: ${{ secrets.JHTDB_EMAIL }}
