@@ -86,7 +86,7 @@ jobs:
             --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
             --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
 
-      - name: Analyze probe(s) → metrics + pulses
+      - name: Analyze probe(s) → metrics + strict pulses
         run: |
           set -euo pipefail
           mkdir -p results/fd_probe pulse
@@ -97,11 +97,11 @@ jobs:
             base=$(basename "$meta" .meta.json)
             ana="results/fd_probe/${base}.analysis.json"
 
-            # run analysis
+            # analysis (updated script)
             python tools/fd_connectors/jhtdb/analyze_probe.py \
               --meta "$meta" --out "$ana"
 
-            # make strict pulse
+            # strict pulse (minimal fields only)
             python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
               --meta "$meta" --analysis "$ana" \
               --outdir pulse --date "$today" --batch "$batch_n"
