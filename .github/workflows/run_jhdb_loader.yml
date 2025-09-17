@@ -3,15 +3,42 @@ name: Run JHTDB Loader
 on:
   workflow_dispatch:
     inputs:
-      flow:      { description: "Flow dataset name (e.g. isotropic1024coarse)", required: false, default: isotropic1024coarse }
-      x:         { description: "Probe X coordinate", required: false, default: 0.1 }
-      y:         { description: "Probe Y coordinate", required: false, default: 0.2 }
-      z:         { description: "Probe Z coordinate", required: false, default: 0.3 }
-      t0:        { description: "Start time", required: false, default: 0.0 }
-      dt:        { description: "Time step", required: false, default: 0.002 }
-      nsteps:    { description: "Number of steps", required: false, default: 2000 }
-      slug:      { description: "Slug for filenames", required: false, default: isotropic }
-      batch_file:{ description: "Optional batch.yml file (overrides inputs)", required: false, default: "" }
+      flow:
+        description: "Flow dataset name (e.g. isotropic1024coarse)"
+        required: false
+        default: "isotropic1024coarse"
+      x:
+        description: "Probe X coordinate"
+        required: false
+        default: "0.1"
+      y:
+        description: "Probe Y coordinate"
+        required: false
+        default: "0.2"
+      z:
+        description: "Probe Z coordinate"
+        required: false
+        default: "0.3"
+      t0:
+        description: "Start time"
+        required: false
+        default: "0.0"
+      dt:
+        description: "Time step"
+        required: false
+        default: "0.002"
+      nsteps:
+        description: "Number of steps"
+        required: false
+        default: "2000"
+      slug:
+        description: "Slug for filenames"
+        required: false
+        default: "isotropic"
+      batch_file:
+        description: "Optional batch.yml file (overrides inputs)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -27,7 +54,8 @@ jobs:
       matrix: ${{ steps.set_matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
 
       - id: set_matrix
         shell: bash
@@ -35,12 +63,13 @@ jobs:
           set -euo pipefail
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            python -c "import json, yaml, io, sys; d=yaml.safe_load(io.open('${{ github.event.inputs.batch_file }}','r',encoding='utf-8')) or {}; runs=list(reversed(d.get('runs', []))); print(json.dumps({'include':runs},separators=(',',':')))" > matrix.json
+            python -c "import json,yaml,io; d=yaml.safe_load(io.open('${{ github.event.inputs.batch_file }}','r',encoding='utf-8')) or {}; runs=list(reversed(d.get('runs',[]))); print(json.dumps({'include':runs},separators=(',',':')))" > matrix.json
           else
             echo "Single run parameters"
             python -c "import json; print(json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':${{ github.event.inputs.x }},'y':${{ github.event.inputs.y }},'z':${{ github.event.inputs.z }},'t0':${{ github.event.inputs.t0 }},'dt':${{ github.event.inputs.dt }},'nsteps':${{ github.event.inputs.nsteps }},'slug':'${{ github.event.inputs.slug }}'}]},separators=(',',':')))" > matrix.json
           fi
-          echo 'Planned matrix:'; cat matrix.json
+          echo 'Planned matrix:'
+          cat matrix.json
           echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
 
   run:
@@ -51,10 +80,12 @@ jobs:
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
+        with:
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
