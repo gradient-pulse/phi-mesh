@@ -4,10 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       batch_file:
-        description: "Optional YAML of runs (latest first). If set, matrix runs override single inputs."
+        description: "Optional YAML of runs (latest first). If set, matrix overrides single inputs."
         required: false
         default: ""
-      flow:   { description: "Dataset", required: true,  default: "isotropic1024coarse" }
+      flow:
+        description: "Dataset"
+        required: true
+        default: "isotropic1024coarse"
       x:      { description: "Probe x", required: true,  default: "0.1" }
       y:      { description: "Probe y", required: true,  default: "0.2" }
       z:      { description: "Probe z", required: true,  default: "0.3" }
@@ -26,26 +29,30 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set_matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
 
-      - id: set-matrix
+      - id: set_matrix
+        shell: bash
         run: |
-          if [ -n "${{ github.event.inputs.batch_file }}" ] && [ -f "${{ github.event.inputs.batch_file }}" ]; then
-            echo "Using batch file"
-            python - <<'PY'
-import sys, yaml, json
-d = yaml.safe_load(open("${{ github.event.inputs.batch_file }}"))
-# Expect list of dicts with keys: flow,x,y,z,t0,dt,nsteps
-# Process "last batch first": reverse input
-runs = list(reversed(d.get("runs", [])))
-print("::set-output name=matrix::" + json.dumps({"include": runs}))
+          set -euo pipefail
+          if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
+            echo "Using batch file: ${{ github.event.inputs.batch_file }}"
+            python - <<'PY' > matrix.json
+import json, yaml
+with open("${{ github.event.inputs.batch_file }}","r") as f:
+    d = yaml.safe_load(f) or {}
+runs = list(reversed(d.get("runs", [])))  # last batch first
+# Ensure JSON object with "include"
+print(json.dumps({"include": runs}))
 PY
+            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           else
-            echo "Single run"
-            echo '::set-output name=matrix::{"include":[{"flow":"${{ github.event.inputs.flow }}","x":${{ github.event.inputs.x }},"y":${{ github.event.inputs.y }},"z":${{ github.event.inputs.z }},"t0":${{ github.event.inputs.t0 }},"dt":${{ github.event.inputs.dt }},"nsteps":${{ github.event.inputs.nsteps }}}]}'
+            echo "Single run parameters"
+            echo 'matrix={"include":[{"flow":"'"${{ github.event.inputs.flow }}"'","x":'"${{ github.event.inputs.x }}"',"y":'"${{ github.event.inputs.y }}"',"z":'"${{ github.event.inputs.z }}"',"t0":'"${{ github.event.inputs.t0 }}"',"dt":'"${{ github.event.inputs.dt }}"',"nsteps":'"${{ github.event.inputs.nsteps }}"'}]}' >> "$GITHUB_OUTPUT"
           fi
 
   run:
@@ -56,10 +63,12 @@ PY
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
+        with:
+          python-version: "3.11"
 
       - name: Install deps
         run: |
@@ -95,8 +104,6 @@ PY
             echo "No new files to commit."
             exit 0
           fi
-          git commit -m "data(jhtdb): evidence batch ${{
-            matrix.flow }} @ (${{
-            matrix.x }},${{ matrix.y }},${{ matrix.z }}) t0=${{ matrix.t0 }} dt=${{ matrix.dt }} n=${{ matrix.nsteps }}"
+          git commit -m "data(jhtdb): evidence batch ${{ matrix.flow }} @ (${{ matrix.x }},${{ matrix.y }},${{ matrix.z }}) t0=${{ matrix.t0 }} dt=${{ matrix.dt }} n=${{ matrix.nsteps }}"
           git pull --rebase origin main || true
           git push
