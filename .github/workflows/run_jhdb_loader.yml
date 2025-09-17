@@ -71,11 +71,13 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps
+        shell: bash
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install suds-community pandas pyarrow pyyaml
-          
+          # SOAP client + IO + YAML; numpy for analyzer FFT if present
+          pip install suds-community pandas pyarrow pyyaml numpy
+
       - name: Run JHTDB loader
         env:
           JHTDB_EMAIL: ${{ secrets.JHTDB_EMAIL }}
@@ -86,6 +88,40 @@ jobs:
             --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
             --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
 
+      # Optional analysis & pulse generation (auto-skip if scripts not present)
+      - name: Analyze outputs (optional)
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          ANALYZER="tools/fd_connectors/jhtdb/analyze_probe.py"
+          PULSEGEN="tools/fd_connectors/jhtdb/make_pulse_from_probe.py"
+          if [[ -f "$ANALYZER" ]]; then
+            for f in data/jhtdb/*__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}*.csv.gz; do
+              [[ -e "$f" ]] || continue
+              meta="${f%.csv.gz}.meta.json"
+              out="${f%.csv.gz}.analysis.json"
+              python "$ANALYZER" --in "$f" --dt "${{ matrix.dt }}" --out "$out"
+              if [[ -f "$PULSEGEN" ]]; then
+                python "$PULSEGEN" --meta "$meta" --analysis "$out" --date "$(date -u +%F)"
+              else
+                echo "Pulse generator not found ($PULSEGEN) — skipping pulse creation."
+              fi
+            done
+          else
+            echo "Analyzer not found ($ANALYZER) — skipping analysis."
+          fi
+
+      - name: Regenerate tag map data (optional)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f "generate_graph_data.py" ]]; then
+            python generate_graph_data.py --pulse-glob "pulse/**/*.yml" --out-js docs/data.js
+          else
+            echo "generate_graph_data.py not found — skipping data.js refresh."
+          fi
+
       - name: Upload artifacts (evidence)
         uses: actions/upload-artifact@v4
         with:
@@ -94,18 +130,24 @@ jobs:
             data/jhtdb/*.csv.gz
             data/jhtdb/*.parquet
             data/jhtdb/*.meta.*
+            data/jhtdb/*.analysis.json
+            pulse/experiments/*.yml
+            docs/data.js
 
-      - name: Commit small outputs
+      - name: Commit outputs
         shell: bash
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/jhtdb/*.csv.gz data/jhtdb/*.meta.* 2>/dev/null || true
+          git add \
+            data/jhtdb/*.csv.gz data/jhtdb/*.meta.* data/jhtdb/*.analysis.json \
+            pulse/experiments/*.yml docs/data.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
           fi
-          git commit -m "data(jhtdb): evidence batch ${{ matrix.flow }} @ (${{ matrix.x }},${{ matrix.y }},${{ matrix.z }}) t0=${{ matrix.t0 }} dt=${{ matrix.dt }} n=${{ matrix.nsteps }}"
+          git commit -m "data(jhtdb): probe evidence + analysis + pulses + map refresh (${{
+            matrix.flow }} @ ${{ matrix.x }},${{ matrix.y }},${{ matrix.z }})"
           git pull --rebase origin main || true
           git push
