@@ -91,14 +91,11 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # scientific stack
-          pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0"
-          # SOAP client for JHTDB (imports as 'suds')
-          pip install "suds-community>=1.1.2" "lxml>=4.9"
+          pip install \
+            "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0" \
+            "suds-community>=1.1.2" "lxml>=4.9"
 
       - name: Run JHTDB loader
-        env:
-          JHTDB_EMAIL: ${{ secrets.JHTDB_EMAIL }}
         run: |
           set -euo pipefail
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
@@ -108,8 +105,7 @@ jobs:
             --z "${{ matrix.z }}" \
             --t0 "${{ matrix.t0 }}" \
             --dt "${{ matrix.dt }}" \
-            --nsteps "${{ matrix.nsteps }}" \
-            --slug "${{ matrix.slug }}"
+            --nsteps "${{ matrix.nsteps }}"
 
       - name: Analyze probe (auto-find meta)
         shell: bash
