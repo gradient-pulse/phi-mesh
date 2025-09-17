@@ -6,35 +6,35 @@ on:
       flow:
         description: "Flow dataset name (e.g. isotropic1024coarse)"
         required: false
-        default: isotropic1024coarse
+        default: "isotropic1024coarse"
       x:
         description: "Probe X coordinate"
         required: false
-        default: 0.1
+        default: "0.1"
       y:
         description: "Probe Y coordinate"
         required: false
-        default: 0.2
+        default: "0.2"
       z:
         description: "Probe Z coordinate"
         required: false
-        default: 0.3
+        default: "0.3"
       t0:
         description: "Start time"
         required: false
-        default: 0.0
+        default: "0.0"
       dt:
         description: "Time step"
         required: false
-        default: 0.002
+        default: "0.002"
       nsteps:
         description: "Number of steps"
         required: false
-        default: 2000
+        default: "2000"
       slug:
         description: "Slug for filenames"
         required: false
-        default: isotropic
+        default: "isotropic"
       batch_file:
         description: "Optional batch.yml file (overrides inputs)"
         required: false
@@ -64,34 +64,51 @@ jobs:
 
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            # Build a matrix from the batch file (newest first)
-            python <<'PY' > matrix.json
-import json, yaml
-p = "${{ github.event.inputs.batch_file }}"
+            matrix_json="$(
+              python - <<'PY'
+import json, yaml, os
+p = os.environ.get("BATCH")
 d = yaml.safe_load(open(p, "r", encoding="utf-8")) or {}
 runs = list(reversed(d.get("runs", [])))  # newest first
 print(json.dumps({"include": runs}, separators=(",",":")))
 PY
-            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
+            )"
           else
-            echo "Single run parameters"
-            python <<'PY' > matrix.json
-import json
+            echo "Using single-run inputs"
+            matrix_json="$(
+              python - <<'PY'
+import json, os
+flow   = os.environ["FLOW"]
+x      = float(os.environ["X"])
+y      = float(os.environ["Y"])
+z      = float(os.environ["Z"])
+t0     = float(os.environ["T0"])
+dt     = float(os.environ["DT"])
+nsteps = int(os.environ["NSTEPS"])
+slug   = os.environ["SLUG"]
 print(json.dumps({"include":[{
-  "flow":"${{ github.event.inputs.flow }}",
-  "x":${{ github.event.inputs.x }},
-  "y":${{ github.event.inputs.y }},
-  "z":${{ github.event.inputs.z }},
-  "t0":${{ github.event.inputs.t0 }},
-  "dt":${{ github.event.inputs.dt }},
-  "nsteps":${{ github.event.inputs.nsteps }},
-  "slug":"${{ github.event.inputs.slug }}"
+  "flow": flow, "x": x, "y": y, "z": z,
+  "t0": t0, "dt": dt, "nsteps": nsteps, "slug": slug
 }]}, separators=(",",":")))
 PY
-            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
+            )"
           fi
 
-          echo "Planned matrix:"; cat matrix.json
+          echo "Planned matrix:"
+          echo "$matrix_json" | jq . || echo "$matrix_json"
+
+          # surface to next job
+          echo "matrix=$matrix_json" >> "$GITHUB_OUTPUT"
+        env:
+          BATCH:   ${{ github.event.inputs.batch_file }}
+          FLOW:    ${{ github.event.inputs.flow }}
+          X:       ${{ github.event.inputs.x }}
+          Y:       ${{ github.event.inputs.y }}
+          Z:       ${{ github.event.inputs.z }}
+          T0:      ${{ github.event.inputs.t0 }}
+          DT:      ${{ github.event.inputs.dt }}
+          NSTEPS:  ${{ github.event.inputs.nsteps }}
+          SLUG:    ${{ github.event.inputs.slug }}
 
   run:
     needs: plan
@@ -158,7 +175,7 @@ PY
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/jhtdb/*.csv.gz data/jhtdb/*.meta.json data/jhtdb/*.analysis.json \
-                 results/fd_probe/*.json pulse/auto/*.yml
+                 results/fd_probe/*.json pulse/auto/*.yml 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
