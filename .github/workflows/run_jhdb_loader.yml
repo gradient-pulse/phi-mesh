@@ -71,17 +71,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps
-        shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --upgrade pip wheel
-          # Pin numpy to a version compatible with pyJHTDB's np.int usage
-          pip install "numpy==1.23.5"
-          # Preinstall libs pyJHTDB imports at metadata/build time
-          pip install "cython<3" "h5py<4" "scipy<1.11" "matplotlib<3.8" "sympy<1.13"
-          # Build without isolation so setup.py can import the above
-          pip install --no-build-isolation pyJHTDB==20200909.0
-          # SOAP + IO stack
+          python -m pip install --upgrade pip
           pip install suds-community pandas pyarrow pyyaml
           
       - name: Run JHTDB loader
