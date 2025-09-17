@@ -61,19 +61,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            matrix_json="$(
-              python <<'PY'
-import json, yaml, os
-p = os.environ.get("BATCH") or "${{ github.event.inputs.batch_file }}"
+            # Build matrix JSON from the batch file (newest first) -> matrix.json
+            python <<'PY' > matrix.json
+import json, yaml
+p = "${{ github.event.inputs.batch_file }}"
 d = yaml.safe_load(open(p, "r", encoding="utf-8")) or {}
 runs = list(reversed(d.get("runs", [])))  # newest first
 print(json.dumps({"include": runs}, separators=(",",":")))
 PY
-            )"
-            echo "matrix=${matrix_json}" >> "$GITHUB_OUTPUT"
+            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           else
             echo "Single run parameters"
             python <<'PY' > matrix.json
@@ -92,7 +90,8 @@ PY
             echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           fi
 
-          echo "Planned matrix:"; jq . <<<"${{ steps.set_matrix.outputs.matrix || '""' }}" 2>/dev/null || cat matrix.json || true
+          echo "Planned matrix:"
+          cat matrix.json
 
   run:
     needs: plan
@@ -113,8 +112,8 @@ PY
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # Pin moderately old, compatible wheels for speed/stability on Actions
-          pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0" 
+          # Pin stable wheels for Actions runners
+          pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0"
 
       - name: Run JHTDB loader
         run: |
@@ -129,13 +128,24 @@ PY
             --nsteps "${{ matrix.nsteps }}" \
             --slug "${{ matrix.slug }}"
 
-      - name: Analyze probe
+      - name: Analyze probe (auto-find meta)
+        shell: bash
         run: |
           set -euo pipefail
-          # analyze_probe infers file paths from the meta that the loader wrote
-          python tools/fd_connectors/jhtdb/analyze_probe.py \
-            --meta "data/jhtdb/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json" \
-            --out  "results/fd_probe/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.analysis.json"
+          pattern=$(printf 'data/jhtdb/%s__x%s_y%s_z%s__t*_dt%s_n%s.meta.json' \
+            "${{ matrix.flow }}" "${{ matrix.x }}" "${{ matrix.y }}" "${{ matrix.z }}" \
+            "${{ matrix.dt }}" "${{ matrix.nsteps }}")
+          meta_file=$(ls $pattern 2>/dev/null | head -n1 || true)
+          if [[ -z "${meta_file}" ]]; then
+            echo "ERROR: meta file not found with pattern: $pattern"
+            exit 1
+          fi
+          out_file=$(printf 'results/fd_probe/%s__x%s_y%s_z%s__t%s_dt%s_n%s.analysis.json' \
+            "${{ matrix.flow }}" "${{ matrix.x }}" "${{ matrix.y }}" "${{ matrix.z }}" \
+            "${{ matrix.t0 }}" "${{ matrix.dt }}" "${{ matrix.nsteps }}")
+          echo "Meta: $meta_file"
+          echo "Out : $out_file"
+          python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$meta_file" --out "$out_file"
 
       - name: Generate pulse
         run: |
