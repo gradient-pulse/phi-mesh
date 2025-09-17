@@ -41,18 +41,18 @@ jobs:
           set -euo pipefail
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            python - <<'PY' > matrix.json
-import json, yaml
-with open("${{ github.event.inputs.batch_file }}","r") as f:
-    d = yaml.safe_load(f) or {}
-runs = list(reversed(d.get("runs", [])))  # last batch first
-# Ensure JSON object with "include"
-print(json.dumps({"include": runs}))
-PY
-            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
+            matrix_json="$(python -c 'import json, yaml, sys; d=yaml.safe_load(open("'"${{ github.event.inputs.batch_file }}"'")) or {}; runs=list(reversed(d.get("runs", []))); print(json.dumps({"include": runs}))')"
+            printf "matrix=%s\n" "$matrix_json" >> "$GITHUB_OUTPUT"
           else
             echo "Single run parameters"
-            echo 'matrix={"include":[{"flow":"'"${{ github.event.inputs.flow }}"'","x":'"${{ github.event.inputs.x }}"',"y":'"${{ github.event.inputs.y }}"',"z":'"${{ github.event.inputs.z }}"',"t0":'"${{ github.event.inputs.t0 }}"',"dt":'"${{ github.event.inputs.dt }}"',"nsteps":'"${{ github.event.inputs.nsteps }}"'}]}' >> "$GITHUB_OUTPUT"
+            printf 'matrix={"include":[{"flow":"%s","x":%s,"y":%s,"z":%s,"t0":%s,"dt":%s,"nsteps":%s}]}\n' \
+              "${{ github.event.inputs.flow }}" \
+              "${{ github.event.inputs.x }}" \
+              "${{ github.event.inputs.y }}" \
+              "${{ github.event.inputs.z }}" \
+              "${{ github.event.inputs.t0 }}" \
+              "${{ github.event.inputs.dt }}" \
+              "${{ github.event.inputs.nsteps }}" >> "$GITHUB_OUTPUT"
           fi
 
   run:
