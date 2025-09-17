@@ -3,34 +3,17 @@ name: Run JHTDB Loader
 on:
   workflow_dispatch:
     inputs:
-      flow:
-        description: "JHTDB dataset (e.g., isotropic1024coarse, channel)"
-        required: true
-        default: "isotropic1024coarse"
-      x:
-        description: "Probe x"
-        required: true
-        default: "0.1"
-      y:
-        description: "Probe y"
-        required: true
-        default: "0.2"
-      z:
-        description: "Probe z"
-        required: true
-        default: "0.3"
-      t0:
-        description: "Start time"
-        required: true
-        default: "0.0"
-      dt:
-        description: "Δt between samples"
-        required: true
-        default: "0.002"
-      nsteps:
-        description: "Number of samples"
-        required: true
-        default: "1000"
+      batch_file:
+        description: "Optional YAML of runs (latest first). If set, matrix runs override single inputs."
+        required: false
+        default: ""
+      flow:   { description: "Dataset", required: true,  default: "isotropic1024coarse" }
+      x:      { description: "Probe x", required: true,  default: "0.1" }
+      y:      { description: "Probe y", required: true,  default: "0.2" }
+      z:      { description: "Probe z", required: true,  default: "0.3" }
+      t0:     { description: "Start time", required: true, default: "0.0" }
+      dt:     { description: "Δt", required: true, default: "0.002" }
+      nsteps: { description: "Samples", required: true, default: "1000" }
 
 permissions:
   contents: write
@@ -40,48 +23,80 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  run:
+  plan:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        with: { fetch-depth: 0 }
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+      - id: set-matrix
+        run: |
+          if [ -n "${{ github.event.inputs.batch_file }}" ] && [ -f "${{ github.event.inputs.batch_file }}" ]; then
+            echo "Using batch file"
+            python - <<'PY'
+import sys, yaml, json
+d = yaml.safe_load(open("${{ github.event.inputs.batch_file }}"))
+# Expect list of dicts with keys: flow,x,y,z,t0,dt,nsteps
+# Process "last batch first": reverse input
+runs = list(reversed(d.get("runs", [])))
+print("::set-output name=matrix::" + json.dumps({"include": runs}))
+PY
+          else
+            echo "Single run"
+            echo '::set-output name=matrix::{"include":[{"flow":"${{ github.event.inputs.flow }}","x":${{ github.event.inputs.x }},"y":${{ github.event.inputs.y }},"z":${{ github.event.inputs.z }},"t0":${{ github.event.inputs.t0 }},"dt":${{ github.event.inputs.dt }},"nsteps":${{ github.event.inputs.nsteps }}}]}'
+          fi
+
+  run:
+    needs: plan
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
 
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install pyJHTDB suds-community pandas pyarrow
+          pip install pyJHTDB suds-community pandas pyarrow pyyaml
 
       - name: Run JHTDB loader
         env:
-          FLOW: ${{ github.event.inputs.flow }}
-          X: ${{ github.event.inputs.x }}
-          Y: ${{ github.event.inputs.y }}
-          Z: ${{ github.event.inputs.z }}
-          T0: ${{ github.event.inputs.t0 }}
-          DT: ${{ github.event.inputs.dt }}
-          NSTEPS: ${{ github.event.inputs.nsteps }}
+          JHTDB_EMAIL: ${{ secrets.JHTDB_EMAIL }}
         run: |
           set -euo pipefail
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
-            --flow "$FLOW" --x "$X" --y "$Y" --z "$Z" \
-            --t0 "$T0" --dt "$DT" --nsteps "$NSTEPS"
+            --flow "${{ matrix.flow }}" \
+            --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
+            --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
 
-      - name: Commit outputs
+      - name: Upload artifacts (evidence)
+        uses: actions/upload-artifact@v4
+        with:
+          name: jhtdb-${{ matrix.flow }}-${{ matrix.x }}-${{ matrix.y }}-${{ matrix.z }}
+          path: |
+            data/jhtdb/*.csv.gz
+            data/jhtdb/*.parquet
+            data/jhtdb/*.meta.*
+
+      - name: Commit small outputs
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/jhtdb/* 2>/dev/null || true
+          git add data/jhtdb/*.csv.gz data/jhtdb/*.meta.* 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
           fi
-          git commit -m "data(jhtdb): add probe series from ${{ github.event.inputs.flow }}"
+          git commit -m "data(jhtdb): evidence batch ${{
+            matrix.flow }} @ (${{
+            matrix.x }},${{ matrix.y }},${{ matrix.z }}) t0=${{ matrix.t0 }} dt=${{ matrix.dt }} n=${{ matrix.nsteps }}"
           git pull --rebase origin main || true
           git push
