@@ -17,6 +17,10 @@ on:
       t0:     { description: "Start time", required: true, default: "0.0" }
       dt:     { description: "Δt", required: true, default: "0.002" }
       nsteps: { description: "Samples", required: true, default: "1000" }
+      slug:
+        description: "Optional pulse slug (e.g., fdprobe, nt_rhythm)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -39,20 +43,30 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            matrix_json="$(python -c 'import json, yaml; d=yaml.safe_load(open("'"${{ github.event.inputs.batch_file }}"'")) or {}; runs=list(reversed(d.get("runs", []))); print(json.dumps({"include": runs}))')"
-            printf "matrix=%s\n" "$matrix_json" >> "$GITHUB_OUTPUT"
+            python - <<'PY' > matrix.json
+import json, yaml, sys
+p = "${{ github.event.inputs.batch_file }}"
+d = yaml.safe_load(open(p)) or {}
+runs = list(reversed(d.get("runs", [])))  # newest first
+print(json.dumps({"include": runs}))
+PY
+            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           else
             echo "Single run parameters"
-            printf 'matrix={"include":[{"flow":"%s","x":%s,"y":%s,"z":%s,"t0":%s,"dt":%s,"nsteps":%s}]}\n' \
-              "${{ github.event.inputs.flow }}" \
-              "${{ github.event.inputs.x }}" \
-              "${{ github.event.inputs.y }}" \
-              "${{ github.event.inputs.z }}" \
-              "${{ github.event.inputs.t0 }}" \
-              "${{ github.event.inputs.dt }}" \
-              "${{ github.event.inputs.nsteps }}" >> "$GITHUB_OUTPUT"
+            cat > matrix.json <<JSON
+{"include":[{"flow":"${{ github.event.inputs.flow }}",
+             "x":${{ github.event.inputs.x }},
+             "y":${{ github.event.inputs.y }},
+             "z":${{ github.event.inputs.z }},
+             "t0":${{ github.event.inputs.t0 }},
+             "dt":${{ github.event.inputs.dt }},
+             "nsteps":${{ github.event.inputs.nsteps }},
+             "slug":"${{ github.event.inputs.slug }}" }]}
+JSON
+            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           fi
 
   run:
@@ -61,6 +75,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -74,7 +89,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install suds-community pandas pyarrow pyyaml matplotlib numpy scipy h5py cython sympy
+          pip install suds-community pandas pyarrow pyyaml numpy==1.23.5 scipy<1.11 matplotlib<3.8 h5py<4 cython<3
 
       - name: Run JHTDB loader
         env:
@@ -87,24 +102,29 @@ jobs:
             --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
 
       - name: Analyze probe(s) → metrics + strict pulses
+        shell: bash
         run: |
           set -euo pipefail
-          mkdir -p results/fd_probe pulse
-          batch_n="${{ strategy.job-index }}"
           today=$(date +%F)
+          # batch number: 1-based, per strategy job index
+          batch_n=$(( ${{ strategy.job-index }} + 1 ))
 
+          # slug resolution: matrix.slug > workflow input slug > fdprobe
+          slug="${{ matrix.slug }}"
+          if [ -z "$slug" ]; then slug="${{ github.event.inputs.slug }}"; fi
+          slug="${slug:-fdprobe}"
+
+          shopt -s nullglob
           for meta in data/jhtdb/*.meta.json; do
             base=$(basename "$meta" .meta.json)
             ana="results/fd_probe/${base}.analysis.json"
 
-            # analysis (updated script)
             python tools/fd_connectors/jhtdb/analyze_probe.py \
               --meta "$meta" --out "$ana"
 
-            # strict pulse (minimal fields only)
             python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
               --meta "$meta" --analysis "$ana" \
-              --outdir pulse --date "$today" --batch "$batch_n"
+              --outdir pulse --date "$today" --batch "$batch_n" --slug "$slug"
           done
 
       - name: Upload artifacts (evidence)
@@ -114,7 +134,7 @@ jobs:
           path: |
             data/jhtdb/*.csv.gz
             data/jhtdb/*.parquet
-            data/jhtdb/*.meta.*
+            data/jhtdb/*.meta.json
             results/fd_probe/*.analysis.json
             pulse/*.yml
             docs/data.js
@@ -125,12 +145,13 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/jhtdb/*.csv.gz data/jhtdb/*.meta.* \
-                 results/fd_probe/*.analysis.json pulse/*.yml docs/data.js 2>/dev/null || true
+          git add \
+            data/jhtdb/*.csv.gz data/jhtdb/*.meta.json results/fd_probe/*.analysis.json \
+            pulse/*.yml docs/data.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
           fi
-          git commit -m "data(jhtdb): probe evidence + analysis + strict pulses + map refresh"
+          git commit -m "data(jhtdb): probe evidence + analysis + pulses + map refresh (${{ matrix.flow }})"
           git pull --rebase origin main || true
           git push
