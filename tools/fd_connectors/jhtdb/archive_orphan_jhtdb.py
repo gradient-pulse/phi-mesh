@@ -56,7 +56,6 @@ def main():
         # orphan → archive the group
         for f in evidence_group(meta):
             dest = ARCHIVE / f.name
-            # if a namesake exists, keep the newest (overwrite)
             if dest.exists():
                 dest.unlink()
             shutil.move(str(f), str(dest))
