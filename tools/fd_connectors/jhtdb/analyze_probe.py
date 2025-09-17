@@ -147,10 +147,15 @@ def analyze(meta_path: Path, out_path: Path) -> None:
             "dominant": {"component": None, "freq_hz": 0.0, "power": 0.0},
             "components": {},
         }
+
+        # Convenience mirror: quick access to dominant frequency
+        result["dominant_freq_hz"] = result["dominant"]["freq_hz"]
+
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        print(f"wrote {out_path}  (dominant: {result['dominant']})")
         return
-
+       
     df = _load_timeseries(data_file)
 
     # dt from meta if provided; else infer from t column if present
