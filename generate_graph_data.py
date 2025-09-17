@@ -263,19 +263,19 @@ def main():
     tagResources, tagFirstSeen = build_resources_and_first_seen(tag_to_pulses, tag_desc)
 
     # Sort pulses per tag: newest (date) first = "last batch first"
-def _ds(p):  # date-safe
-    return p["date"] or ""
+    def _ds(p):  # date-safe
+        return p["date"] or ""
 
-pulses_by_tag_desc = {
-    tag: sorted(plist, key=_ds, reverse=True)
-    for tag, plist in tag_to_pulses.items()
-}
+    pulses_by_tag_desc = {
+        tag: sorted(plist, key=_ds, reverse=True)
+        for tag, plist in tag_to_pulses.items()
+    }
 
     payload = OrderedDict()
     payload["nodes"] = nodes
     payload["links"] = links
     payload["tagDescriptions"] = tag_desc
-    payload["pulsesByTag"] = pulses_by_tag_desc    
+    payload["pulsesByTag"] = pulses_by_tag_desc
     payload["tagResources"] = tagResources
     payload["tagFirstSeen"] = tagFirstSeen
 
@@ -283,6 +283,7 @@ pulses_by_tag_desc = {
     write_text(args.out_js, js)
     info(f"Wrote {args.out_js}")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
