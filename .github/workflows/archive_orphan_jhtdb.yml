@@ -2,6 +2,15 @@ name: Archive Orphan JHTDB Evidence
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "List only (no moves)"
+        required: false
+        default: "true"
+      force_all:
+        description: "Archive all evidence regardless of pulses"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -9,6 +18,7 @@ permissions:
 jobs:
   archive:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,24 +28,36 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Sweep orphan evidence into archive/
+      - name: Install deps for sweeper
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Sweep evidence into archive/
         shell: bash
         run: |
           set -euo pipefail
-          python tools/fd_connectors/jhtdb/archive_orphan_jhtdb.py
+          args=()
+          if [[ "${{ github.event.inputs.dry_run }}" == "true" ]]; then
+            args+=(--dry-run)
+          fi
+          if [[ "${{ github.event.inputs.force_all }}" == "true" ]]; then
+            args+=(--force-all)
+          fi
+          python tools/fd_connectors/jhtdb/archive_orphan_jhtdb.py "${args[@]}"
 
       - name: Commit archive moves
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         shell: bash
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # capture renames/moves within data/jhtdb and results/fd_probe
           git add -A data/jhtdb results/fd_probe
           if git diff --cached --quiet; then
             echo "Nothing to archive."
             exit 0
           fi
-          git commit -m "chore(jhtdb): archive orphan evidence files"
+          git commit -m "chore(jhtdb): archive evidence (force_all=${{ github.event.inputs.force_all }})"
           git pull --rebase origin main || true
           git push
