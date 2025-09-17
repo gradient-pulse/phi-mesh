@@ -3,24 +3,42 @@ name: Run JHTDB Loader
 on:
   workflow_dispatch:
     inputs:
+      flow:
+        description: "Flow dataset name (e.g. isotropic1024coarse)"
+        required: false
+        default: isotropic1024coarse
+      x:
+        description: "Probe X coordinate"
+        required: false
+        default: 0.1
+      y:
+        description: "Probe Y coordinate"
+        required: false
+        default: 0.2
+      z:
+        description: "Probe Z coordinate"
+        required: false
+        default: 0.3
+      t0:
+        description: "Start time"
+        required: false
+        default: 0.0
+      dt:
+        description: "Time step"
+        required: false
+        default: 0.002
+      nsteps:
+        description: "Number of steps"
+        required: false
+        default: 2000
+      slug:
+        description: "Slug for filenames"
+        required: false
+        default: isotropic
       batch_file:
-        description: "Optional YAML of runs (latest first). If set, matrix overrides single inputs."
+        description: "Optional batch.yml file (overrides inputs)"
         required: false
         default: ""
-      flow:
-        description: "Dataset"
-        required: true
-        default: "isotropic1024coarse"
-      x:      { description: "Probe x", required: true,  default: "0.1" }
-      y:      { description: "Probe y", required: true,  default: "0.2" }
-      z:      { description: "Probe z", required: true,  default: "0.3" }
-      t0:     { description: "Start time", required: true, default: "0.0" }
-      dt:     { description: "Δt", required: true, default: "0.002" }
-      nsteps: { description: "Samples", required: true, default: "1000" }
-      slug:
-        description: "Short slug for pulse file naming (e.g., nt_rhythm)"
-        required: false
-        default: "fdprobe"
 
 permissions:
   contents: write
@@ -48,16 +66,15 @@ jobs:
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
             # Build a matrix from the batch file (newest first)
             python <<'PY' > matrix.json
-import json, yaml, sys
+import json, yaml
 p = "${{ github.event.inputs.batch_file }}"
-d = yaml.safe_load(open(p)) or {}
+d = yaml.safe_load(open(p, "r", encoding="utf-8")) or {}
 runs = list(reversed(d.get("runs", [])))  # newest first
-print(json.dumps({"include": runs}))
+print(json.dumps({"include": runs}, separators=(",",":")))
 PY
             echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           else
             echo "Single run parameters"
-            # Build a single-include matrix
             python <<'PY' > matrix.json
 import json
 print(json.dumps({"include":[{
@@ -73,14 +90,13 @@ print(json.dumps({"include":[{
 PY
             echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           fi
-          echo "Planned matrix:"
-          cat matrix.json
+
+          echo "Planned matrix:"; cat matrix.json
 
   run:
     needs: plan
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
@@ -91,56 +107,49 @@ PY
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
-          set -euo pipefail
-          python -m pip install --upgrade pip wheel
-          pip install pandas pyarrow pyyaml suds-community numpy
+          pip install --upgrade pip
+          pip install numpy scipy pyyaml
 
-      - name: Run JHTDB loader
-        env:
-          JHTDB_EMAIL: ${{ secrets.JHTDB_EMAIL }}
+      - name: Run JHTDB Loader
         run: |
           set -euo pipefail
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
             --flow "${{ matrix.flow }}" \
-            --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
-            --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}"
+            --x "${{ matrix.x }}" \
+            --y "${{ matrix.y }}" \
+            --z "${{ matrix.z }}" \
+            --t0 "${{ matrix.t0 }}" \
+            --dt "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}" \
+            --slug "${{ matrix.slug }}"
 
       - name: Analyze probe
         run: |
           set -euo pipefail
-          # meta path pattern built from the same naming as loader
-          META=$(ls -1 data/jhtdb/*__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json | head -n 1)
-          echo "META: $META"
-          OUT="results/fd_probe/$(basename "${META%.meta.json}").analysis.json"
-          python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$META" --out "$OUT"
-
-      - name: Make pulse (slug length is auto-truncated inside the script)
-        run: |
-          set -euo pipefail
-          META=$(ls -1 data/jhtdb/*__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json | head -n 1)
-          ANA="results/fd_probe/$(basename "${META%.meta.json}").analysis.json"
-          DATE=$(date -u +"%Y-%m-%d")
-          python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
-            --meta "$META" \
-            --analysis "$ANA" \
-            --outdir "pulse" \
-            --date "$DATE" \
-            --batch 1 \
+          python tools/fd_connectors/jhtdb/analyze_probe.py \
+            --flow "${{ matrix.flow }}" \
+            --x "${{ matrix.x }}" \
+            --y "${{ matrix.y }}" \
+            --z "${{ matrix.z }}" \
+            --t0 "${{ matrix.t0 }}" \
+            --dt "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}" \
             --slug "${{ matrix.slug }}"
 
-      - name: Upload artifacts (evidence)
-        uses: actions/upload-artifact@v4
-        with:
-          name: jhtdb-${{ matrix.flow }}-${{ matrix.x }}-${{ matrix.y }}-${{ matrix.z }}
-          path: |
-            data/jhtdb/*.csv.gz
-            data/jhtdb/*.parquet
-            data/jhtdb/*.meta.json
-            results/fd_probe/*.analysis.json
-            pulse/*.yml
-            docs/data.js
+      - name: Generate pulse
+        run: |
+          set -euo pipefail
+          python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
+            --flow "${{ matrix.flow }}" \
+            --x "${{ matrix.x }}" \
+            --y "${{ matrix.y }}" \
+            --z "${{ matrix.z }}" \
+            --t0 "${{ matrix.t0 }}" \
+            --dt "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}" \
+            --slug "${{ matrix.slug }}"
 
       - name: Commit outputs
         shell: bash
@@ -148,13 +157,12 @@ PY
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add \
-            data/jhtdb/*.csv.gz data/jhtdb/*.parquet data/jhtdb/*.meta.json \
-            results/fd_probe/*.analysis.json pulse/*.yml docs/data.js 2>/dev/null || true
+          git add data/jhtdb/*.csv.gz data/jhtdb/*.meta.json data/jhtdb/*.analysis.json \
+                 results/fd_probe/*.json pulse/auto/*.yml
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
           fi
-          git commit -m "data(jhtdb): probe evidence + analysis + pulses + map refresh (${{ matrix.flow }} @ ${{ matrix.x }},${{ matrix.y }},${{ matrix.z }})"
+          git commit -m "data(jhtdb): probe evidence + analysis + pulse(s)"
           git pull --rebase origin main || true
           git push
