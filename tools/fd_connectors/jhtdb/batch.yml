@@ -1,0 +1,4 @@
+# tools/fd_connectors/jhtdb/batch.yml
+runs:
+  - { flow: isotropic1024coarse, x: 0.10, y: 0.20, z: 0.30, t0: 0.0, dt: 0.002, nsteps: 2000 }
+  - { flow: isotropic1024coarse, x: 0.42, y: 0.58, z: 0.77, t0: 0.0, dt: 0.001, nsteps: 4000 }
