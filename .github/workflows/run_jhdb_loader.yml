@@ -41,7 +41,7 @@ jobs:
           set -euo pipefail
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            matrix_json="$(python -c 'import json, yaml, sys; d=yaml.safe_load(open("'"${{ github.event.inputs.batch_file }}"'")) or {}; runs=list(reversed(d.get("runs", []))); print(json.dumps({"include": runs}))')"
+            matrix_json="$(python -c 'import json, yaml; d=yaml.safe_load(open("'"${{ github.event.inputs.batch_file }}"'")) or {}; runs=list(reversed(d.get("runs", []))); print(json.dumps({"include": runs}))')"
             printf "matrix=%s\n" "$matrix_json" >> "$GITHUB_OUTPUT"
           else
             echo "Single run parameters"
@@ -75,13 +75,10 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip wheel
-
-          # Core numeric stack first (versions that play nicely together on Ubuntu runners)
-          pip install "numpy<2" "cython<3" "h5py<4" "scipy<1.11" "matplotlib<3.8"
-
-          # pyJHTDB needs to import numpy/h5py/scipy at metadata/build time
+          # IMPORTANT: pin numpy to <1.24 because pyJHTDB uses np.int
+          pip install "numpy==1.23.5" "cython<3" "h5py<4" "scipy<1.11" "matplotlib<3.8"
+          # Build without isolation so setup.py can import the above
           pip install --no-build-isolation pyJHTDB==20200909.0
-
           # SOAP + IO stack
           pip install suds-community pandas pyarrow pyyaml
 
