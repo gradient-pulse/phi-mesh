@@ -80,7 +80,7 @@ def canon_tag(s: str) -> str:
 
 def apply_aliases(tag, alias_map):
     """Return canonical tag after alias mapping."""
-    # alias_map: { canon_id: [alias1, alias2, ...] }  (keys already lower/underscore in your file)
+    # alias_map: { canon_id: [alias1, alias2, ...] }
     if tag in alias_map:  # already a canonical key
         return tag
     for canon, aliases in alias_map.items():
@@ -116,7 +116,6 @@ def load_tag_descriptions(path, alias_map):
 
     out = {}
     for k, v in pool.items():
-        # Canonicalize key then alias-map it
         ck = apply_aliases(canon_tag(str(k)), alias_map)
         out[ck] = str(v or "")
     return out
@@ -164,10 +163,20 @@ def normalize_pulse(path, data, alias_map):
         if re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
             d = datetime.strptime(date_str, "%Y-%m-%d").date()
             age_days = (datetime.utcnow().date() - d).days
+        else:
+            warn(f"Pulse has no valid date (will sort last): {path}")
     except Exception:
         pass
 
     pid = os.path.relpath(path).replace("\\", "/")
+    # Optional batch field (preferred if present)
+    batch = None
+    try:
+        if "batch" in data and data["batch"] is not None:
+            batch = int(str(data["batch"]).strip())
+    except Exception:
+        batch = None
+
     return {
         "id": pid,
         "title": title,
@@ -177,6 +186,7 @@ def normalize_pulse(path, data, alias_map):
         "papers": papers,
         "podcasts": podcasts,
         "ageDays": age_days,
+        "batch": batch,
     }
 
 def collect_pulses(pulse_glob, alias_map):
@@ -262,12 +272,25 @@ def main():
     nodes, links = build_graph_from_pulses(tag_to_pulses)
     tagResources, tagFirstSeen = build_resources_and_first_seen(tag_to_pulses, tag_desc)
 
-    # Sort pulses per tag: newest (date) first = "last batch first"
-    def _ds(p):  # date-safe
-        return p["date"] or ""
+    # ---- Sorting for the sidebar: date DESC, then batch DESC ----
+    def _date(p):  # safe date key
+        return p.get("date") or ""
+
+    def _batch(p):
+        # Prefer explicit YAML field if present
+        if p.get("batch") is not None:
+            try: return int(p["batch"])
+            except Exception: pass
+        # Fallback: infer from title/id/summary like "batch5" or "batch_5"
+        s = f"{p.get('title','')} {p.get('id','')} {p.get('summary','')}"
+        m = re.search(r"batch[_-]?(\d+)", s, re.I)
+        return int(m.group(1)) if m else -1  # undetected batches sort last within date
+
+    def _key(p):
+        return (_date(p), _batch(p))
 
     pulses_by_tag_desc = {
-        tag: sorted(plist, key=_ds, reverse=True)
+        tag: sorted(plist, key=_key, reverse=True)
         for tag, plist in tag_to_pulses.items()
     }
 
