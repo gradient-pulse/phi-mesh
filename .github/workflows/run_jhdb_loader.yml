@@ -75,11 +75,14 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip wheel
-          # numpy must be importable during pyJHTDB build; pin <2 for compatibility
-          pip install "numpy<2"
-          # disable build isolation so setup.py can import numpy
+
+          # Core numeric stack first (versions that play nicely together on Ubuntu runners)
+          pip install "numpy<2" "cython<3" "h5py<4" "scipy<1.11" "matplotlib<3.8"
+
+          # pyJHTDB needs to import numpy/h5py/scipy at metadata/build time
           pip install --no-build-isolation pyJHTDB==20200909.0
-          # remaining runtime deps
+
+          # SOAP + IO stack
           pip install suds-community pandas pyarrow pyyaml
 
       - name: Run JHTDB loader
