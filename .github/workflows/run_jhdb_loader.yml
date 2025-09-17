@@ -6,19 +6,37 @@ on:
       flow:
         description: "Flow dataset name (e.g. isotropic1024coarse)"
         required: false
-        default: "isotropic1024coarse"
-      x:        { description: "Probe X", required: false, default: "0.1" }
-      y:        { description: "Probe Y", required: false, default: "0.2" }
-      z:        { description: "Probe Z", required: false, default: "0.3" }
-      t0:       { description: "Start time", required: false, default: "0.0" }
-      dt:       { description: "Time step", required: false, default: "0.002" }
-      nsteps:   { description: "Samples", required: false, default: "2000" }
+        default: isotropic1024coarse
+      x:
+        description: "Probe X coordinate"
+        required: false
+        default: 0.1
+      y:
+        description: "Probe Y coordinate"
+        required: false
+        default: 0.2
+      z:
+        description: "Probe Z coordinate"
+        required: false
+        default: 0.3
+      t0:
+        description: "Start time"
+        required: false
+        default: 0.0
+      dt:
+        description: "Time step"
+        required: false
+        default: 0.002
+      nsteps:
+        description: "Number of steps"
+        required: false
+        default: 2000
       slug:
         description: "Slug for filenames"
         required: false
-        default: "isotropic"
+        default: isotropic
       batch_file:
-        description: "Optional batch.yml (overrides inputs)"
+        description: "Optional batch.yml file (overrides inputs)"
         required: false
         default: ""
 
@@ -46,22 +64,41 @@ jobs:
 
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            matrix_json="$(BATCH='${{ github.event.inputs.batch_file }}' python -c 'import json,yaml,os; p=os.environ.get("BATCH"); d=yaml.safe_load(open(p,"r",encoding="utf-8")) or {}; runs=list(reversed(d.get("runs",[]))); print(json.dumps({"include":runs},separators=(",",":")))' )"
+            matrix_json="$(
+              python <<'PY'
+import json, yaml, os
+p = os.environ.get("BATCH") or "${{ github.event.inputs.batch_file }}"
+d = yaml.safe_load(open(p, "r", encoding="utf-8")) or {}
+runs = list(reversed(d.get("runs", [])))  # newest first
+print(json.dumps({"include": runs}, separators=(",",":")))
+PY
+            )"
+            echo "matrix=${matrix_json}" >> "$GITHUB_OUTPUT"
           else
-            echo "Using single-run inputs"
-            matrix_json="$(python -c 'import json; print(json.dumps({"include":[{"flow":"${{ github.event.inputs.flow }}","x":float("${{ github.event.inputs.x }}"),"y":float("${{ github.event.inputs.y }}"),"z":float("${{ github.event.inputs.z }}"),"t0":float("${{ github.event.inputs.t0 }}"),"dt":float("${{ github.event.inputs.dt }}"),"nsteps":int("${{ github.event.inputs.nsteps }}"),"slug":"${{ github.event.inputs.slug }}","batch":1}]},separators=(",",":")))' )"
+            echo "Single run parameters"
+            python <<'PY' > matrix.json
+import json
+print(json.dumps({"include":[{
+  "flow":"${{ github.event.inputs.flow }}",
+  "x":${{ github.event.inputs.x }},
+  "y":${{ github.event.inputs.y }},
+  "z":${{ github.event.inputs.z }},
+  "t0":${{ github.event.inputs.t0 }},
+  "dt":${{ github.event.inputs.dt }},
+  "nsteps":${{ github.event.inputs.nsteps }},
+  "slug":"${{ github.event.inputs.slug }}"
+}]}, separators=(",",":")))
+PY
+            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           fi
 
-          echo "Planned matrix JSON:"
-          echo "$matrix_json"
-
-          # hand to next job
-          echo "matrix=$matrix_json" >> "$GITHUB_OUTPUT"
+          echo "Planned matrix:"; jq . <<<"${{ steps.set_matrix.outputs.matrix || '""' }}" 2>/dev/null || cat matrix.json || true
 
   run:
     needs: plan
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
@@ -72,38 +109,46 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install numpy scipy pyyaml
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          # Pin moderately old, compatible wheels for speed/stability on Actions
+          pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0" 
 
       - name: Run JHTDB loader
         run: |
           set -euo pipefail
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
             --flow "${{ matrix.flow }}" \
-            --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
-            --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}" \
+            --x "${{ matrix.x }}" \
+            --y "${{ matrix.y }}" \
+            --z "${{ matrix.z }}" \
+            --t0 "${{ matrix.t0 }}" \
+            --dt "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}" \
             --slug "${{ matrix.slug }}"
 
       - name: Analyze probe
         run: |
           set -euo pipefail
+          # analyze_probe infers file paths from the meta that the loader wrote
           python tools/fd_connectors/jhtdb/analyze_probe.py \
-            --flow "${{ matrix.flow }}" \
-            --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
-            --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}" \
-            --slug "${{ matrix.slug }}"
+            --meta "data/jhtdb/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json" \
+            --out  "results/fd_probe/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.analysis.json"
 
-      - name: Generate pulse (strict naming)
+      - name: Generate pulse
         run: |
           set -euo pipefail
           python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
             --flow "${{ matrix.flow }}" \
-            --x "${{ matrix.x }}" --y "${{ matrix.y }}" --z "${{ matrix.z }}" \
-            --t0 "${{ matrix.t0 }}" --dt "${{ matrix.dt }}" --nsteps "${{ matrix.nsteps }}" \
-            --slug "${{ matrix.slug }}" \
-            --batch "${{ matrix.batch || 1 }}"
+            --x "${{ matrix.x }}" \
+            --y "${{ matrix.y }}" \
+            --z "${{ matrix.z }}" \
+            --t0 "${{ matrix.t0 }}" \
+            --dt "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}" \
+            --slug "${{ matrix.slug }}"
 
       - name: Commit outputs
         shell: bash
