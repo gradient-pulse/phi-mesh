@@ -63,35 +63,19 @@ jobs:
           set -euo pipefail
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            # Build matrix JSON from the batch file (newest first) -> matrix.json
-            python <<'PY' > matrix.json
+            python - <<PY > matrix.json
 import json, yaml
 p = "${{ github.event.inputs.batch_file }}"
 d = yaml.safe_load(open(p, "r", encoding="utf-8")) or {}
-runs = list(reversed(d.get("runs", [])))  # newest first
+runs = list(reversed(d.get("runs", [])))
 print(json.dumps({"include": runs}, separators=(",",":")))
 PY
-            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
           else
             echo "Single run parameters"
-            python <<'PY' > matrix.json
-import json
-print(json.dumps({"include":[{
-  "flow":"${{ github.event.inputs.flow }}",
-  "x":${{ github.event.inputs.x }},
-  "y":${{ github.event.inputs.y }},
-  "z":${{ github.event.inputs.z }},
-  "t0":${{ github.event.inputs.t0 }},
-  "dt":${{ github.event.inputs.dt }},
-  "nsteps":${{ github.event.inputs.nsteps }},
-  "slug":"${{ github.event.inputs.slug }}"
-}]}, separators=(",",":")))
-PY
-            echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
+            python -c "import json;print(json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':${{ github.event.inputs.x }},'y':${{ github.event.inputs.y }},'z':${{ github.event.inputs.z }},'t0':${{ github.event.inputs.t0 }},'dt':${{ github.event.inputs.dt }},'nsteps':${{ github.event.inputs.nsteps }},'slug':'${{ github.event.inputs.slug }}'}]},separators=(',',':')))" > matrix.json
           fi
-
-          echo "Planned matrix:"
-          cat matrix.json
+          echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
+          echo "Planned matrix:"; cat matrix.json
 
   run:
     needs: plan
@@ -112,7 +96,6 @@ PY
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # Pin stable wheels for Actions runners
           pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0"
 
       - name: Run JHTDB loader
