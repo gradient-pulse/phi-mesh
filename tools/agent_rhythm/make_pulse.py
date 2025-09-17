@@ -4,16 +4,16 @@ make_pulse.py — turn a metrics JSON into a single Pulse YAML + update “recen
 
 Usage:
   --metrics  path/to/*.metrics.json   (required)
-  --title    "NT Rhythm — FD Probe"   (required)
-  --dataset  short dataset id/slug    (optional; fallback label)
-  --tags     "a b c" or "a, b, c"     (optional)
+  --title    "NT Rhythm — FD Probe"   (required; source tag is auto-appended)
+  --dataset  short dataset id/slug    (optional; fallback label for slug + summary)
+  --tags     "a b c" or "a, b, c"     (optional; merged with core tags)
   --outdir   pulse/auto               (default)
   --recent   results/rgp_ns/YYYY-MM-DD_fundamentals.jsonl  (optional)
 
 Notes
-- Pulse YAML is strict/minimal: title, summary, tags, papers, podcasts (no artifacts/details).
-- The output filename uses a SHORT slug primarily derived from metrics.details.dataset (URL/path).
-- The full dataset string is still mentioned in `summary:` for provenance.
+- Pulse YAML is strict/minimal: title, summary, tags, papers, podcasts.
+- Filename: YYYY-MM-DD_<slug>_batch#.yml (slug comes from metrics.details.dataset or --dataset).
+- Summary order: title, THEN summary (with Hint first), THEN tags/papers/podcasts.
 """
 
 from __future__ import annotations
@@ -76,6 +76,10 @@ def _as_list(s: str) -> List[str]:
     return [x.strip() for x in s.split() if x.strip()]
 
 def compute_ladder_and_dominance(metrics: Dict[str, Any]) -> Tuple[int, float]:
+    """
+    ladder = number of peaks considered (len(peaks))
+    dominance = ratio of top two peak powers (p0/p1), robustly computed
+    """
     peaks = metrics.get("peaks") or []
     ladder = 0
     dom = 1.0
@@ -84,21 +88,41 @@ def compute_ladder_and_dominance(metrics: Dict[str, Any]) -> Tuple[int, float]:
         try:
             p0 = float(peaks[0][1])
             p1 = float(peaks[1][1]) if len(peaks) > 1 else 0.0
-            dom = (p0 / p1) if p1 > 0 else float("inf") if p0 > 0 else 1.0
+            dom = (p0 / p1) if p1 > 0 else (float("inf") if p0 > 0 else 1.0)
         except Exception:
             dom = 1.0
     return ladder, dom
 
-def classify(ladder: int, dominance: float) -> str:
-    if ladder >= 3 and dominance >= 1.5:
+def classify_hint(ladder: int, dominance: float) -> str:
+    """
+    Map ladder & dominance to 4-level human hint:
+      - Decisive   (very strong, clear leading peak among ≥3 peaks)
+      - Strong     (strong evidence)
+      - Weak       (some evidence)
+      - Undetermined (no reliable evidence)
+    Thresholds are simple and can be tuned later.
+    """
+    if ladder >= 3 and dominance >= 2.0:
+        return "Decisive"
+    if (ladder >= 3 and dominance >= 1.5) or (ladder >= 2 and dominance >= 1.8):
         return "Strong"
     if ladder >= 2 and dominance >= 1.1:
-        return "Suggestive"
-    return "Inconclusive"
+        return "Weak"
+    return "Undetermined"
 
 def _infer_batch_label(metrics_path: str) -> str:
     m = re.search(r"_batch(\d+)\.metrics\.json$", metrics_path)
     return f"batch{m.group(1)}" if m else "batch1"
+
+def _broad_source_label(metrics: Dict[str, Any]) -> str:
+    s = (metrics.get("source") or "").strip().lower()
+    if s.startswith("jhtdb"):
+        return "JHTDB"
+    if s.startswith("nasa"):
+        return "NASA"
+    if s.startswith("synthetic"):
+        return "Synthetic"
+    return s.upper() or "Unknown"
 
 # -------------------------- main --------------------------
 
@@ -110,10 +134,14 @@ def main() -> None:
     ap.add_argument("--tags", default="")
     ap.add_argument("--outdir", default="pulse/auto")
     ap.add_argument("--recent", default="")
+    # allow overriding default links if desired
+    ap.add_argument("--papers", default="")
+    ap.add_argument("--podcasts", default="")
     args = ap.parse_args()
 
     m = _read_json(args.metrics)
 
+    # Pull basic metrics we reference in the summary
     period = m.get("period")
     f0 = m.get("main_peak_freq")
     if f0 is None and isinstance(m.get("peaks"), list) and m["peaks"]:
@@ -123,33 +151,56 @@ def main() -> None:
             f0 = None
 
     ladder, dominance = compute_ladder_and_dominance(m)
-    status = classify(ladder, dominance)
+    hint = classify_hint(ladder, dominance)
 
     details = m.get("details") or {}
-    ds_slug = _short_slug_from_details_dataset(details)
-    if not ds_slug:
-        ds_slug = _slug(args.dataset) or "dataset"
+    ds_for_summary = details.get("dataset", args.dataset) or args.dataset
 
+    # Slug for filename
+    ds_slug = _short_slug_from_details_dataset(details) or _slug(args.dataset) or "dataset"
     batch_label = _infer_batch_label(args.metrics)
 
+    # Title + source suffix
+    source_label = _broad_source_label(m)
+    base_title = (args.title or "").replace("'", "’")
+    # Append source if not already included (case-insensitive containment)
+    title_final = base_title
+    if source_label and source_label.lower() not in base_title.lower():
+        title_final = f"{base_title} ({source_label})"
+
+    # Tags (merge user with core set, preserve order)
     tags = _as_list(args.tags)
     for core in ["nt_rhythm", "turbulence", "navier_stokes", "rgp"]:
         if core not in tags:
             tags.append(core)
 
-    today = datetime.date.today().isoformat()
-    safe_title = (args.title or "").replace("'", "’")
+    # Default links (can be overridden via flags)
+    default_papers = [
+        "https://doi.org/10.5281/zenodo.15830659",
+    ]
+    default_podcasts = [
+        "https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a",
+    ]
+    papers = _as_list(args.papers) or default_papers
+    podcasts = _as_list(args.podcasts) or default_podcasts
 
+    # Emit YAML
+    today = datetime.date.today().isoformat()
     yaml_lines: List[str] = []
-    yaml_lines.append(f"title: '{safe_title}'")
+    yaml_lines.append(f"title: '{title_final}'")
     yaml_lines.append("summary: >-")
+    yaml_lines.append(f"  Hint: {hint}.")
     yaml_lines.append(f"  Metrics: period={period!r}, f0={f0!r}, ladder={ladder}, dominance={dominance:.3g}.")
-    yaml_lines.append(f"  Status: {status}. Dataset: {details.get('dataset', args.dataset) or args.dataset}.")
+    yaml_lines.append(f"  Dataset: {ds_for_summary}.")
     yaml_lines.append("tags:")
     for t in tags:
         yaml_lines.append(f"  - {t}")
-    yaml_lines.append("papers: []")
-    yaml_lines.append("podcasts: []")
+    yaml_lines.append("papers:")
+    for p in papers:
+        yaml_lines.append(f"  - {p}")
+    yaml_lines.append("podcasts:")
+    for p in podcasts:
+        yaml_lines.append(f"  - {p}")
 
     _ensure_dir(args.outdir)
     out_name = f"{today}_{ds_slug}_{batch_label}.yml"
@@ -158,20 +209,22 @@ def main() -> None:
         f.write("\n".join(yaml_lines) + "\n")
     print(f"Wrote Pulse → {out_path}")
 
+    # Optional fundamentals JSONL line
     if args.recent:
         try:
             _ensure_dir(os.path.dirname(args.recent) or ".")
             line = {
                 "ts": datetime.datetime.utcnow().isoformat() + "Z",
-                "dataset": details.get("dataset", args.dataset) or args.dataset,
+                "dataset": ds_for_summary,
                 "dataset_slug": ds_slug,
-                "status": status,
+                "hint": hint,
                 "ladder": ladder,
                 "dominance": dominance,
                 "period": period,
                 "f0": f0,
                 "metrics": args.metrics,
                 "pulse": out_path,
+                "source": source_label,
             }
             with open(args.recent, "a", encoding="utf-8") as f:
                 f.write(json.dumps(line, ensure_ascii=False) + "\n")
