@@ -71,13 +71,16 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps
+        shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --upgrade pip
-          # 1) numpy must exist before building pyJHTDB; pin to <2 for compatibility
+          python -m pip install --upgrade pip wheel
+          # numpy must be importable during pyJHTDB build; pin <2 for compatibility
           pip install "numpy<2"
-          # 2) now install the rest
-          pip install pyJHTDB==20200909.0 suds-community pandas pyarrow pyyaml
+          # disable build isolation so setup.py can import numpy
+          pip install --no-build-isolation pyJHTDB==20200909.0
+          # remaining runtime deps
+          pip install suds-community pandas pyarrow pyyaml
 
       - name: Run JHTDB loader
         env:
@@ -99,6 +102,7 @@ jobs:
             data/jhtdb/*.meta.*
 
       - name: Commit small outputs
+        shell: bash
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
