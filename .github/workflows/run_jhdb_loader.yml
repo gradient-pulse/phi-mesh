@@ -76,8 +76,7 @@ jobs:
             --t0   "${{ matrix.t0 }}" \
             --dt   "${{ matrix.dt }}" \
             --nsteps "${{ matrix.nsteps }}" \
-            --slug "${{ matrix.slug }}"
-
+ 
       - name: Analyze probe (auto-find meta)
         shell: bash
         run: |
