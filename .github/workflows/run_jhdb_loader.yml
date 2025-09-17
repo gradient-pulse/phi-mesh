@@ -72,8 +72,12 @@ jobs:
 
       - name: Install deps
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          pip install pyJHTDB suds-community pandas pyarrow pyyaml
+          # 1) numpy must exist before building pyJHTDB; pin to <2 for compatibility
+          pip install "numpy<2"
+          # 2) now install the rest
+          pip install pyJHTDB==20200909.0 suds-community pandas pyarrow pyyaml
 
       - name: Run JHTDB loader
         env:
