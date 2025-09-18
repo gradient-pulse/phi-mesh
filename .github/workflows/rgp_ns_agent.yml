@@ -47,6 +47,12 @@ concurrency:
 jobs:
   agent:
     runs-on: ubuntu-latest
+    env:
+      # Make repo imports like "tools.*" work in all subprocesses.
+      PYTHONPATH: ${{ github.workspace }}
+      # JHTDB connector auth (if your connector uses the token).
+      JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -57,12 +63,15 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps (JHTDB-only)
+        shell: bash
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install numpy pyyaml
+          # numpy/pyyaml for your code paths; suds-py3 for JHTDB SOAP client
+          pip install numpy pyyaml suds-py3
 
       - name: Show selected inputs
+        shell: bash
         run: |
           echo "source   = jhtdb"
           echo "dataset  = ${{ github.event.inputs.dataset }}"
@@ -74,9 +83,7 @@ jobs:
           echo "nmax     = ${{ github.event.inputs.nmax }}"
 
       - name: Run agent grid (JHTDB)
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
+        shell: bash
         run: |
           set -euo pipefail
           python agents/rgp_ns/agent_grid.py \
@@ -92,6 +99,7 @@ jobs:
 
       - name: Commit outputs (metrics + pulses + fundamentals)
         if: always()
+        shell: bash
         run: |
           set -euo pipefail
           git config user.name  "phi-mesh-bot"
