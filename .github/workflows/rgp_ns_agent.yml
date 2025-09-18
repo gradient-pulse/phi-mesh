@@ -1,18 +1,15 @@
-name: RGP-NS Agent (grid)
+# .github/workflows/rgp_ns_agent_grid_jhtdb.yml
+name: RGP-NS Agent (grid) — JHTDB only
 
 on:
   workflow_dispatch:
     inputs:
       dataset:
-        description: "Dataset slug / local path / full URL (e.g. data/nasa/case.nc or https://.../case.nc)"
+        description: "JHTDB dataset slug (e.g., isotropic1024coarse)"
         required: true
         default: "isotropic1024coarse"
-      source:
-        description: "synthetic | jhtdb | nasa"
-        required: true
-        default: "jhtdb"
       var:
-        description: "Variable (e.g., u|v|w)"
+        description: "Velocity component (u|v|w)"
         required: true
         default: "u"
       seed_xyz:
@@ -20,19 +17,19 @@ on:
         required: true
         default: "0.1,0.1,0.1"
       offsets:
-        description: "Grid offsets: dx,dy,dz; semicolon-separated (e.g., 0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02)"
+        description: "Grid offsets: dx,dy,dz; semicolon-separated"
         required: true
         default: "0,0,0; 0.02,0,0; 0,0.02,0; 0,0,0.02; -0.02,0,0; 0,-0.02,0; 0,0,-0.02"
       twin:
-        description: "Time window t0,t1,dt (e.g., 0.0,1.2,0.0001)"
+        description: "Time window t0,t1,dt (e.g., 0.0,1.2,0.0005)"
         required: true
-        default: "0.0,1.2,0.0001"
+        default: "0.0,1.2,0.0005"
       k:
-        description: "Stop when at least k probes agree (e.g., 5)"
+        description: "Stop when at least k probes agree"
         required: true
         default: "5"
       tol:
-        description: "Relative tolerance for agreement (e.g., 0.05)"
+        description: "Relative tolerance for agreement"
         required: true
         default: "0.05"
       nmax:
@@ -44,81 +41,47 @@ permissions:
   contents: write
 
 concurrency:
-  group: rgp-ns-agent-grid-${{ github.ref }}
+  group: rgp-ns-agent-grid-jhtdb-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   agent:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout (with LFS for .nc files)
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install deps (incl. NetCDF for NASA)
+      - name: Install deps (JHTDB-only)
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install numpy pyyaml xarray netcdf4
+          pip install numpy pyyaml
 
-      - name: Resolve dataset (local path vs URL)
-        id: resolve
+      - name: Show selected inputs
         run: |
-          set -euo pipefail
-          DS="${{ github.event.inputs.dataset }}"
-          if [[ "$DS" =~ ^https?:// ]]; then
-            mkdir -p data/nasa
-            FN="$(basename "$DS")"
-            echo "Downloading $DS → data/nasa/$FN"
-            curl -L "$DS" -o "data/nasa/$FN"
-            echo "DATASET_RESOLVED=data/nasa/$FN" >> "$GITHUB_ENV"
-          else
-            echo "DATASET_RESOLVED=$DS" >> "$GITHUB_ENV"
-          fi
-
-      - name: Verify dataset presence (local mode)
-        run: |
-          set -euo pipefail
-          DS="$DATASET_RESOLVED"
-          if [[ "$DS" =~ ^https?:// ]]; then
-            echo "Dataset is a URL; already handled in resolve step."
-          else
-            if [ ! -f "$DS" ]; then
-              echo "::error ::Dataset not found at $DS"
-              echo "Tip: commit via Git LFS and enable lfs: true, or provide a URL as the dataset input."
-              exit 1
-            fi
-          fi
-
-      - name: Show selected inputs (sanity)
-        run: |
-          echo "source   = ${{ github.event.inputs.source }}"
+          echo "source   = jhtdb"
           echo "dataset  = ${{ github.event.inputs.dataset }}"
-          echo "resolved = $DATASET_RESOLVED"
           echo "var      = ${{ github.event.inputs.var }}"
           echo "seed_xyz = ${{ github.event.inputs.seed_xyz }}"
           echo "offsets  = ${{ github.event.inputs.offsets }}"
           echo "twin     = ${{ github.event.inputs.twin }}"
           echo "k/tol    = ${{ github.event.inputs.k }} / ${{ github.event.inputs.tol }}"
           echo "nmax     = ${{ github.event.inputs.nmax }}"
-          python -c "import numpy as np, xarray as xr; print('numpy :', np.__version__); print('xarray:', xr.__version__)"
 
-      - name: Run agent grid
+      - name: Run agent grid (JHTDB)
         env:
           PYTHONPATH: ${{ github.workspace }}
-          NASA_CSV: ${{ secrets.NASA_CSV }}
           JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
         run: |
           set -euo pipefail
           python agents/rgp_ns/agent_grid.py \
-            --source "${{ github.event.inputs.source }}" \
-            --dataset "${DATASET_RESOLVED}" \
+            --source "jhtdb" \
+            --dataset "${{ github.event.inputs.dataset }}" \
             --var "${{ github.event.inputs.var }}" \
             --seed_xyz "${{ github.event.inputs.seed_xyz }}" \
             --offsets "${{ github.event.inputs.offsets }}" \
@@ -136,6 +99,5 @@ jobs:
           git add results/fd_probe/*.json 2>/dev/null || true
           git add pulse/auto/*.yml        2>/dev/null || true
           git add results/rgp_ns/*.jsonl  2>/dev/null || true
-          git add maps/*                  2>/dev/null || true
-          git commit -m "auto: RGP-NS agent grid run → results + pulses + fundamentals + updated maps" || echo "Nothing to commit"
+          git commit -m "auto: RGP-NS JHTDB grid run → results + pulses + fundamentals" || echo "Nothing to commit"
           git push || echo "Nothing to push"
