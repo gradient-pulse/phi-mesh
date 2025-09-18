@@ -1,65 +1,38 @@
 #!/usr/bin/env python3
 """
 JHTDB probe loader (SOAP-only)
-------------------------------
-Pull a velocity time series at a single probe point from the Johns Hopkins
-Turbulence Database and save to data/jhtdb/ as CSV + Parquet.
-
-Usage (defaults shown):
-  python tools/fd_connectors/jhtdb/jhtdb_loader.py \
-      --flow isotropic1024coarse --x 0.1 --y 0.2 --z 0.3 \
-      --t0 0.0 --dt 0.002 --nsteps 1000 --slug isotropic
-
-Notes
-- Uses suds-community (or suds-py3) to talk to the JHTDB SOAP service.
-- Requires outbound internet.
+Pull a velocity time series at one probe and save to data/jhtdb/ as CSV (+optional Parquet).
 """
 
-from __future__ import annotations
-
-import argparse, gzip, json, sys
+import argparse, gzip, json, sys, time
 from pathlib import Path
-from typing import Tuple
 import pandas as pd
 from suds.client import Client
+from suds.transport.http import HttpTransport, Reply
 
 OUTDIR = Path("data/jhtdb")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
-# Public JHTDB WSDL
-WSDL_URL = "http://turbulence.pha.jhu.edu/service/turbulence.asmx?WSDL"
+# JHTDB has moved to HTTPS; some runners see a 308 from the HTTP endpoint.
+WSDL_HTTP  = "http://turbulence.pha.jhu.edu/service/turbulence.asmx?WSDL"
+WSDL_HTTPS = "https://turbulence.pha.jhu.edu/service/turbulence.asmx?WSDL"
 
-def _stem(flow: str, x: float, y: float, z: float, t0: float, dt: float, nsteps: int) -> str:
-    """
-    Match the reader/agent convention exactly:
-    {dataset}__x{round(x,3)}_y{round(y,3)}_z{round(z,3)}__t{round(t0,3)}_dt{dt}_n{nsteps}
-    """
-    return (
-        f"{flow}"
-        f"__x{round(x,3)}_y{round(y,3)}_z{round(z,3)}"
-        f"__t{round(t0,3)}_dt{dt}_n{nsteps}"
-    )
+def _mk_client(wsdl_url: str) -> Client:
+    # Suds sometimes needs a slightly longer timeout on GH runners
+    return Client(wsdl_url, timeout=180)
 
-def fetch_timeseries(flow: str, point: Tuple[float,float,float],
-                     t0: float, dt: float, nsteps: int, email=None) -> pd.DataFrame:
-    """Fetch velocity (u,v,w) at a probe for nsteps starting t0 with step dt."""
-    client = Client(WSDL_URL, timeout=120)
+def _try_fetch(flow: str, point, t0: float, dt: float, nsteps: int, wsdl: str) -> pd.DataFrame:
+    client = _mk_client(wsdl)
     lib = client.service
-
     x, y, z = point
     rows = []
     for i in range(nsteps):
         t = t0 + i * dt
-        try:
-            vec = lib.GetVelocity(flow, t, x, y, z)
-            u, v, w = float(vec[0]), float(vec[1]), float(vec[2])
-            rows.append((t, u, v, w))
-        except Exception as e:
-            print(f"[ERROR] SOAP call failed at step {i}, t={t}: {e}", file=sys.stderr)
-            break
-
-    df = pd.DataFrame(rows, columns=["t","u","v","w"])
-    # Derived features
+        vec = lib.GetVelocity(flow, t, x, y, z)  # raises on failure
+        u, v, w = float(vec[0]), float(vec[1]), float(vec[2])
+        rows.append((t, u, v, w))
+    df = pd.DataFrame(rows, columns=["t", "u", "v", "w"])
+    # derived
     df["speed"] = (df["u"]**2 + df["v"]**2 + df["w"]**2).pow(0.5)
     if len(df) > 1:
         df["du_dt"] = df["u"].diff() / dt
@@ -71,38 +44,55 @@ def fetch_timeseries(flow: str, point: Tuple[float,float,float],
             df[c] = float("nan")
     return df
 
+def safe_name(s: str) -> str:
+    return "".join(c if c.isalnum() or c in ("-", "_", ".") else "_" for c in s)
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--flow", default="isotropic1024coarse",
-                    help="JHTDB dataset (e.g., isotropic1024coarse, channel, mhd1024, etc.)")
+    ap.add_argument("--flow", default="isotropic1024coarse")
     ap.add_argument("--x", type=float, default=0.1)
     ap.add_argument("--y", type=float, default=0.2)
     ap.add_argument("--z", type=float, default=0.3)
-    ap.add_argument("--t0", type=float, default=0.0, help="start time")
-    ap.add_argument("--dt", type=float, default=0.002, help="time step between samples")
-    ap.add_argument("--nsteps", type=int, default=1000, help="number of samples")
-    ap.add_argument("--slug", default=None, help="Optional short identifier saved into meta")
+    ap.add_argument("--t0", type=float, default=0.0)
+    ap.add_argument("--dt", type=float, default=0.0005)
+    ap.add_argument("--nsteps", type=int, default=2400)
     args = ap.parse_args()
 
     point = (args.x, args.y, args.z)
     print(f"Fetching flow='{args.flow}' point={point} t0={args.t0} dt={args.dt} nsteps={args.nsteps}")
 
-    df = fetch_timeseries(args.flow, point, args.t0, args.dt, args.nsteps)
+    # Try HTTPS first; if it ever fails with a redirect-ish error, try the other.
+    tried = []
+    for wsdl in (WSDL_HTTPS, WSDL_HTTP):
+        try:
+            df = _try_fetch(args.flow, point, args.t0, args.dt, args.nsteps, wsdl)
+            break
+        except Exception as e:
+            tried.append((wsdl, repr(e)))
+            df = None
+    if df is None or df.shape[0] == 0:
+        print("[ERROR] SOAP fetch failed or returned no rows.")
+        for wsdl, err in tried:
+            print(f"  - tried {wsdl} -> {err}")
+        # still write empty artifacts so downstream steps remain deterministic
+        df = pd.DataFrame(columns=["t","u","v","w","speed","du_dt","dv_dt","dw_dt","dspeed_dt"])
 
-    base = _stem(args.flow, args.x, args.y, args.z, args.t0, args.dt, args.nsteps)
+    base = f"{safe_name(args.flow)}__x{args.x}_y{args.y}_z{args.z}__t0_{args.t0}_dt{args.dt}_n{args.nsteps}"
     csv_path = OUTDIR / f"{base}.csv.gz"
     pq_path  = OUTDIR / f"{base}.parquet"
     meta_path = OUTDIR / f"{base}.meta.json"
 
+    # write CSV (always)
     df.to_csv(csv_path, index=False, compression="gzip")
+
+    # parquet is optional (avoid failure if pyarrow/fastparquet missing)
     try:
         df.to_parquet(pq_path, index=False)
     except Exception as e:
-        print(f"[WARN] parquet save failed ({e}); CSV.gz is written.", file=sys.stderr)
+        print(f"[WARN] parquet save failed ({e}); CSV.gz is written.")
 
     meta = {
         "flow": args.flow,
-        "slug": args.slug,  # provenance only; does not affect filenames
         "point": {"x": args.x, "y": args.y, "z": args.z},
         "t0": args.t0, "dt": args.dt, "nsteps": args.nsteps,
         "rows": int(df.shape[0]),
