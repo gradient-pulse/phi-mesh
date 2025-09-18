@@ -11,7 +11,7 @@ on:
       dt:         { description: "Time step", required: false, default: "0.0005" }
       nsteps:     { description: "Number of steps", required: false, default: "2400" }
       slug:       { description: "Slug for filenames", required: false, default: "isotropic" }
-      batch_file: { description: "Optional tools/fd_connectors/jhtdb/batch.yml", required: false, default: "" }
+      batch_file: { description: "Optional tools/fd_connectors/jhtdb/batch.yml (overrides inputs)", required: false, default: "" }
 
 permissions:
   contents: write
@@ -35,18 +35,28 @@ jobs:
         run: |
           set -euo pipefail
           BF="${{ github.event.inputs.batch_file }}"
-
           if [[ -n "$BF" && -f "$BF" ]]; then
-            echo "Using batch file: $BF"
-            python -m pip install -q --user pyyaml
-            python -c "import os,json,yaml,io; p=os.environ.get('BF'); d=yaml.safe_load(io.open(p,'r',encoding='utf-8')) or {}; runs=list(d.get('runs',[])); print(json.dumps({'include':runs},separators=(',',':')))" > matrix.json
+            # Build matrix from batch.yml (expects top-level key 'runs: [...]')
+            python -c "import json, yaml, io, os; d=yaml.safe_load(io.open(os.environ['BF'],'r',encoding='utf-8')) or {}; runs=list(d.get('runs',[])); print(json.dumps({'include':runs},separators=(',',':')))" > matrix.json
           else
-            echo 'Single run parameters'
-            python -c "import json; print(json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':${{ github.event.inputs.x }},'y':${{ github.event.inputs.y }},'z':${{ github.event.inputs.z }},'t0':${{ github.event.inputs.t0 }},'dt':${{ github.event.inputs.dt }},'nsteps':${{ github.event.inputs.nsteps }},'slug':'${{ github.event.inputs.slug }}'}]},separators=(',',':')))" > matrix.json
+            # Single-run matrix from dispatch inputs
+            python - <<'PY' > matrix.json
+import json, os
+env=os.environ.get
+flow   = env('FLOW')   or '${{ github.event.inputs.flow }}'
+x      = float(env('X') or '${{ github.event.inputs.x }}')
+y      = float(env('Y') or '${{ github.event.inputs.y }}')
+z      = float(env('Z') or '${{ github.event.inputs.z }}')
+t0     = float(env('T0') or '${{ github.event.inputs.t0 }}')
+dt     = float(env('DT') or '${{ github.event.inputs.dt }}')
+nsteps = int  (env('NSTEPS') or '${{ github.event.inputs.nsteps }}')
+slug   = env('SLUG')   or '${{ github.event.inputs.slug }}'
+print(json.dumps({'include':[{
+  'flow':flow,'x':x,'y':y,'z':z,'t0':t0,'dt':dt,'nsteps':nsteps,'slug':slug
+}]},separators=(',',':')))
+PY
           fi
-
-          echo 'Planned matrix:'
-          cat matrix.json
+          echo "Planned matrix:"; cat matrix.json
           echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
 
   run:
@@ -62,41 +72,82 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies (SOAP + helpers)
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          pip install pandas numpy suds-community
+          pip install "numpy==1.23.5" "pandas==2.2.2" "pyyaml>=6.0" "suds-community>=1.1.2" "pyarrow>=14"
 
       - name: Run JHTDB loader (fetch CSV cache)
         run: |
+          set -euo pipefail
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
-            --flow ${{ matrix.flow }} \
-            --x ${{ matrix.x }} \
-            --y ${{ matrix.y }} \
-            --z ${{ matrix.z }} \
-            --t0 ${{ matrix.t0 }} \
-            --dt ${{ matrix.dt }} \
-            --nsteps ${{ matrix.nsteps }}
+            --flow   "${{ matrix.flow }}" \
+            --x      "${{ matrix.x }}" \
+            --y      "${{ matrix.y }}" \
+            --z      "${{ matrix.z }}" \
+            --t0     "${{ matrix.t0 }}" \
+            --dt     "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}"
 
       - name: Analyze probe (auto-find meta)
+        shell: bash
         run: |
-          meta_file=$(ls data/jhtdb/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json)
-          out_file=results/fd_probe/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.analysis.json
+          set -euo pipefail
+          # Wildcard the t0 to avoid float-format drift (e.g., 0.0 vs 0)
+          pattern=$(printf 'data/jhtdb/%s__x%s_y%s_z%s__t*_dt%s_n%s.meta.json' \
+            "${{ matrix.flow }}" "${{ matrix.x }}" "${{ matrix.y }}" "${{ matrix.z }}" \
+            "${{ matrix.dt }}" "${{ matrix.nsteps }}")
+          meta_file=$(ls $pattern 2>/dev/null | head -n1 || true)
+          if [[ -z "$meta_file" ]]; then
+            echo "ERROR: meta file not found with pattern: $pattern"
+            exit 1
+          fi
+          out_file=$(printf 'results/fd_probe/%s__x%s_y%s_z%s__t%s_dt%s_n%s.analysis.json' \
+            "${{ matrix.flow }}" "${{ matrix.x }}" "${{ matrix.y }}" "${{ matrix.z }}" \
+            "${{ matrix.t0 }}" "${{ matrix.dt }}" "${{ matrix.nsteps }}")
+          echo "Meta: $meta_file"
+          echo "Out : $out_file"
           python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$meta_file" --out "$out_file"
 
       - name: Generate pulse
         run: |
+          set -euo pipefail
           python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
-            --meta "$meta_file" \
-            --analysis "$out_file" \
-            --out pulse/auto/${{ github.run_id }}_${{ matrix.slug }}.yml
+            --flow   "${{ matrix.flow }}" \
+            --x      "${{ matrix.x }}" \
+            --y      "${{ matrix.y }}" \
+            --z      "${{ matrix.z }}" \
+            --t0     "${{ matrix.t0 }}" \
+            --dt     "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}" \
+            --slug   "${{ matrix.slug }}"
+
+      - name: Show outputs before commit
+        shell: bash
+        run: |
+          echo "== data/jhtdb =="
+          ls -l data/jhtdb || true
+          echo
+          echo "== results/fd_probe =="
+          ls -l results/fd_probe || true
+          echo
+          echo "== pulse/auto =="
+          ls -l pulse/auto || true
 
       - name: Commit outputs
+        shell: bash
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-          git add results/ pulse/auto/
-          git commit -m "auto: FD probe run → results + pulses"
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/jhtdb results/fd_probe pulse/auto
+          if git diff --cached --quiet; then
+            echo "No new files to commit."
+            exit 0
+          fi
+          git commit -m "data(jhtdb): probe evidence + analysis + pulse(s)"
+          git pull --rebase origin main || true
           git push
