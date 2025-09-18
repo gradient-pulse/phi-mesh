@@ -18,8 +18,15 @@ import argparse
 import json
 import math
 import os
+import sys
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
+from pathlib import Path
+
+# --- ensure repo root on sys.path so local imports always work --------------
+REPO_ROOT = Path(__file__).resolve().parents[2]  # .../phi-mesh
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 # rhythm tools (repo-local)
 from tools.agent_rhythm.rhythm import (
