@@ -15,19 +15,28 @@ Args:
 
 from __future__ import annotations
 
+# --- make the repo importable even if PYTHONPATH is not set -------------------
+import os, sys
+from pathlib import Path
+
+# this file: tools/fd_connectors/run_fd_probe.py  → repo root is parents[2]
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+# ------------------------------------------------------------------------------
+
 import argparse
 import json
-import os
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
 
-# rhythm tools
+# rhythm tools (now importable regardless of PYTHONPATH)
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
-# connectors
+# JHTDB connector only
 from tools.fd_connectors import jhtdb as JHT
 
 
@@ -81,7 +90,7 @@ def main() -> None:
     x, y, z = parse_triplet(args.xyz)
     t0, t1, dt = parse_triplet(args.twin)
 
-    # --- fetch time series ------------------------------------------------
+    # --- fetch time series from JHTDB -------------------------------------
     ts_obj = JHT.fetch_timeseries(
         dataset=args.dataset, var=args.var,
         x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
