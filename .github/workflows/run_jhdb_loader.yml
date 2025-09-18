@@ -5,10 +5,10 @@ on:
     inputs:
       flow:       { description: "Flow dataset name (e.g. isotropic1024coarse)", required: false, default: "isotropic1024coarse" }
       x:          { description: "Probe X coordinate", required: false, default: "0.1" }
-      y:          { description: "Probe Y coordinate", required: false, default: "0.1" }
-      z:          { description: "Probe Z coordinate", required: false, default: "0.1" }
+      y:          { description: "Probe Y coordinate", required: false, default: "0.2" }
+      z:          { description: "Probe Z coordinate", required: false, default: "0.3" }
       t0:         { description: "Start time", required: false, default: "0.0" }
-      dt:         { description: "Time step (seconds)", required: false, default: "0.0005" }
+      dt:         { description: "Time step", required: false, default: "0.0005" }
       nsteps:     { description: "Number of steps", required: false, default: "2400" }
       slug:       { description: "Slug for filenames", required: false, default: "isotropic" }
       batch_file: { description: "Optional tools/fd_connectors/jhtdb/batch.yml", required: false, default: "" }
@@ -27,60 +27,48 @@ jobs:
       matrix: ${{ steps.set_matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      # Robust matrix builder (no YAML heredoc issues)
       - id: set_matrix
         shell: bash
         run: |
           set -euo pipefail
-
           BF="${{ github.event.inputs.batch_file }}"
-
           if [[ -n "$BF" && -f "$BF" ]]; then
             echo "Using batch file: $BF"
-            cat > gen_matrix.py <<'PY'
-import json, yaml, io, os
-p = os.environ["BF"]
-with io.open(p, "r", encoding="utf-8") as f:
+            BF="$BF" python - <<'PY' > matrix.json
+import os, json, yaml, io, sys
+p = os.environ['BF']
+with io.open(p,'r',encoding='utf-8') as f:
     d = yaml.safe_load(f) or {}
-runs = list(d.get("runs", []))
-print(json.dumps({"include": runs}, separators=(",", ":")))
+runs = list(d.get('runs', []))
+sys.stdout.write(json.dumps({'include': runs}, separators=(',',':')))
 PY
-            BF="$BF" python gen_matrix.py > matrix.json
           else
             echo "Single run parameters"
-            cat > gen_matrix.py <<'PY'
-import json, os
-print(json.dumps({
-  "include": [{
-    "flow":   os.environ["FLOW"],
-    "x":      float(os.environ["X"]),
-    "y":      float(os.environ["Y"]),
-    "z":      float(os.environ["Z"]),
-    "t0":     float(os.environ["T0"]),
-    "dt":     float(os.environ["DT"]),
-    "nsteps": int(os.environ["NSTEPS"]),
-    "slug":   os.environ["SLUG"]
-  }]
-}, separators=(",", ":")))
+            FLOW="${{ github.event.inputs.flow }}" \
+            X="${{ github.event.inputs.x }}" \
+            Y="${{ github.event.inputs.y }}" \
+            Z="${{ github.event.inputs.z }}" \
+            T0="${{ github.event.inputs.t0 }}" \
+            DT="${{ github.event.inputs.dt }}" \
+            NSTEPS="${{ github.event.inputs.nsteps }}" \
+            SLUG="${{ github.event.inputs.slug }}" \
+            python - <<'PY' > matrix.json
+import json, os, sys
+sys.stdout.write(json.dumps({'include':[{
+  'flow':   os.environ['FLOW'],
+  'x':      float(os.environ['X']),
+  'y':      float(os.environ['Y']),
+  'z':      float(os.environ['Z']),
+  't0':     float(os.environ['T0']),
+  'dt':     float(os.environ['DT']),
+  'nsteps': int(os.environ['NSTEPS']),
+  'slug':   os.environ['SLUG'],
+}]}, separators=(',',':')))
 PY
-            python gen_matrix.py > matrix.json
           fi
-
           echo "Planned matrix:"; cat matrix.json
           echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
-        env:
-          BF:     ${{ github.event.inputs.batch_file }}
-          FLOW:   ${{ github.event.inputs.flow }}
-          X:      ${{ github.event.inputs.x }}
-          Y:      ${{ github.event.inputs.y }}
-          Z:      ${{ github.event.inputs.z }}
-          T0:     ${{ github.event.inputs.t0 }}
-          DT:     ${{ github.event.inputs.dt }}
-          NSTEPS: ${{ github.event.inputs.nsteps }}
-          SLUG:   ${{ github.event.inputs.slug }}
 
   run:
     needs: plan
@@ -90,8 +78,6 @@ PY
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -101,8 +87,7 @@ PY
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" \
-                     "pyyaml>=6.0" "suds-community>=1.1.2"
+          pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0" "suds-community>=1.1.2"
 
       - name: Run JHTDB loader (fetch CSV cache)
         run: |
@@ -120,44 +105,41 @@ PY
         shell: bash
         run: |
           set -euo pipefail
-          pattern=$(printf 'data/jhtdb/%s__x%s_y%s_z%s__t0%s_dt%s_n%s.meta.json' \
+          stem="$(printf '%s__x%s_y%s_z%s__t0%s_dt%s_n%s' \
             "${{ matrix.flow }}" "${{ matrix.x }}" "${{ matrix.y }}" "${{ matrix.z }}" \
-            "${{ matrix.t0 }}" "${{ matrix.dt }}" "${{ matrix.nsteps }}")
-          meta_file=$(ls $pattern 2>/dev/null | head -n1 || true)
-          if [[ -z "$meta_file" ]]; then
-            echo "ERROR: meta file not found with pattern: $pattern"
-            exit 1
-          fi
-          out_file=$(printf 'results/fd_probe/%s__x%s_y%s_z%s__t%s_dt%s_n%s.analysis.json' \
-            "${{ matrix.flow }}" "${{ matrix.x }}" "${{ matrix.y }}" "${{ matrix.z }}" \
-            "${{ matrix.t0 }}" "${{ matrix.dt }}" "${{ matrix.nsteps }}")
-          echo "Meta: $meta_file"
-          echo "Out : $out_file"
-          python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$meta_file" --out "$out_file"
+            "${{ matrix.t0 }}" "${{ matrix.dt }}" "${{ matrix.nsteps }}")"
+          meta="data/jhtdb/${stem}.meta.json"
+          out="results/fd_probe/${stem}.analysis.json"
+          echo "Meta: $meta"
+          python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$meta" --out "$out"
+
+      - name: Generate pulse
+        run: |
+          set -euo pipefail
+          python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
+            --flow   "${{ matrix.flow }}" \
+            --x      "${{ matrix.x }}" \
+            --y      "${{ matrix.y }}" \
+            --z      "${{ matrix.z }}" \
+            --t0     "${{ matrix.t0 }}" \
+            --dt     "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}" \
+            --slug   "${{ matrix.slug }}"
 
       - name: Show outputs before commit
-        shell: bash
         run: |
-          echo "== data/jhtdb =="
-          ls -l data/jhtdb || true
-          echo
-          echo "== results/fd_probe =="
-          ls -l results/fd_probe || true
-          echo
-          echo "== pulse/auto =="
-          ls -l pulse/auto || true
+          echo "== data/jhtdb ==";      ls -l data/jhtdb || true
+          echo "== results/fd_probe =="; ls -l results/fd_probe || true
+          echo "== pulse/auto ==";      ls -l pulse/auto || true
 
       - name: Commit outputs
-        shell: bash
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/jhtdb results/fd_probe pulse/auto 2>/dev/null || true
+          git add -A data/jhtdb results/fd_probe pulse/auto
           if git diff --cached --quiet; then
-            echo "No new files to commit."
-            exit 0
-          fi
-          git commit -m "data(jhtdb): probe evidence + analysis (+ pulses if present)"
+            echo "No new files to commit."; exit 0; fi
+          git commit -m "data(jhtdb): probe evidence + analysis + pulse(s)"
           git pull --rebase origin main || true
           git push
