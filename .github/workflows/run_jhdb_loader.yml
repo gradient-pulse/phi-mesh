@@ -35,39 +35,18 @@ jobs:
           BF="${{ github.event.inputs.batch_file }}"
           if [[ -n "$BF" && -f "$BF" ]]; then
             echo "Using batch file: $BF"
-            BF="$BF" python - <<'PY' > matrix.json
-import os, json, yaml, io, sys
-p = os.environ['BF']
-with io.open(p,'r',encoding='utf-8') as f:
-    d = yaml.safe_load(f) or {}
-runs = list(d.get('runs', []))
-sys.stdout.write(json.dumps({'include': runs}, separators=(',',':')))
+            python - <<'PY' >/dev/null 2>&1 || true
+try:
+  import yaml  # ensure present in this step for the -c call below (some runners are picky)
+except Exception:
+  pass
 PY
+            python -c "import os, json, yaml, io; p='$BF'; d=yaml.safe_load(io.open(p,'r',encoding='utf-8')) or {}; runs=list(d.get('runs',[])); print(json.dumps({'include':runs},separators=(',',':')))" > matrix.json
           else
-            echo "Single run parameters"
-            FLOW="${{ github.event.inputs.flow }}" \
-            X="${{ github.event.inputs.x }}" \
-            Y="${{ github.event.inputs.y }}" \
-            Z="${{ github.event.inputs.z }}" \
-            T0="${{ github.event.inputs.t0 }}" \
-            DT="${{ github.event.inputs.dt }}" \
-            NSTEPS="${{ github.event.inputs.nsteps }}" \
-            SLUG="${{ github.event.inputs.slug }}" \
-            python - <<'PY' > matrix.json
-import json, os, sys
-sys.stdout.write(json.dumps({'include':[{
-  'flow':   os.environ['FLOW'],
-  'x':      float(os.environ['X']),
-  'y':      float(os.environ['Y']),
-  'z':      float(os.environ['Z']),
-  't0':     float(os.environ['T0']),
-  'dt':     float(os.environ['DT']),
-  'nsteps': int(os.environ['NSTEPS']),
-  'slug':   os.environ['SLUG'],
-}]}, separators=(',',':')))
-PY
+            echo 'Single run parameters'
+            python -c "import json; print(json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':${{ github.event.inputs.x }},'y':${{ github.event.inputs.y }},'z':${{ github.event.inputs.z }},'t0':${{ github.event.inputs.t0 }},'dt':${{ github.event.inputs.dt }},'nsteps':${{ github.event.inputs.nsteps }},'slug':'${{ github.event.inputs.slug }}'}]},separators=(',',':')))" > matrix.json
           fi
-          echo "Planned matrix:"; cat matrix.json
+          echo 'Planned matrix:'; cat matrix.json
           echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
 
   run:
