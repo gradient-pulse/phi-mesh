@@ -5,31 +5,29 @@ analyze_probe.py — analyze a single JHTDB probe time series.
 Inputs
 ------
 --meta : path to the .meta.json written by the loader (contains flow, point, dt, nsteps)
---out  : path to write analysis JSON
+--out  : path to write analysis JSON (this path is authoritative; we do not re-slug it)
+--slug : optional short identifier (saved in the JSON for provenance; does not affect filenames)
 
 What it does
 ------------
 - Finds the matching data file next to the meta (prefers .csv.gz, then .csv, then .parquet)
 - Loads columns t, u, v, w (if t is present we can infer dt if missing)
 - For each component (u, v, w):
-    * compute mean, std, rms
-    * estimate dominant frequency via FFT (Hann window, rfft, ignore DC)
-- Returns both per-component metrics and an overall dominant (max power) summary
+    * mean, std, rms
+    * dominant frequency via FFT (hann + rfft; ignore DC)
+- Writes metrics JSON exactly to --out (no internal renaming)
 
-Output JSON (example)
----------------------
+Output JSON (keys of interest)
+------------------------------
 {
-  "n": 4000,
-  "dt": 0.002,
-  "duration_s": 8.0,
+  "slug": "your-slug-if-given",
+  "n": 2400,
+  "dt": 0.0005,
+  "duration_s": 1.2,
   "csv_path": "data/jhtdb/....csv.gz",
   "dominant": {"component": "u", "freq_hz": 0.125, "power": 123.4},
   "dominant_freq_hz": 0.125,
-  "components": {
-    "u": {"mean": 0.0, "std": 1.01, "rms": 1.01, "dom_freq_hz": 0.125, "dom_power": 123.4},
-    "v": {...},
-    "w": {...}
-  }
+  "components": { "u": {...}, "v": {...}, "w": {...} }
 }
 """
 
@@ -43,7 +41,7 @@ from typing import Dict, Optional, Tuple
 import numpy as np
 
 try:
-    import pandas as pd
+    import pandas as pd  # type: ignore
 except Exception as e:
     raise SystemExit("pandas is required for analyze_probe.py") from e
 
@@ -68,10 +66,7 @@ def _find_data_file(stem: str) -> Optional[Path]:
 
 
 def _load_timeseries(path: Path) -> pd.DataFrame:
-    """
-    Load t,u,v,w from CSV/Parquet. If 't' is missing we can still analyze using dt from meta.
-    """
-    # read
+    """Load t,u,v,w from CSV/Parquet. If 't' is missing we can still analyze using dt from meta."""
     if path.suffix == ".gz" or path.suffixes[-2:] == [".csv", ".gz"]:
         df = pd.read_csv(path)
     elif path.suffix == ".csv":
@@ -81,13 +76,10 @@ def _load_timeseries(path: Path) -> pd.DataFrame:
     else:
         raise ValueError(f"Unsupported file type: {path}")
 
-    # normalize column names
     df.columns = [str(c).strip().lower() for c in df.columns]
-
     cols = [c for c in ("t", "u", "v", "w") if c in df.columns]
     if not cols:
         raise ValueError(f"No usable columns found in {path}. Expect one of t,u,v,w.")
-
     return df[cols].copy()
 
 
@@ -97,26 +89,20 @@ def _dominant_freq(x: np.ndarray, dt: float) -> Tuple[float, float]:
     """
     Estimate dominant frequency (Hz) and its power for a real signal x sampled at dt seconds.
     Steps: demean -> Hann window -> rfft -> power spectrum -> peak (ignore DC bin).
-    Returns (freq_hz, power). If ambiguous or too short, returns (0.0, 0.0).
     """
     x = np.asarray(x, dtype=float)
     n = int(x.shape[0])
     if n < 8 or dt <= 0:
         return 0.0, 0.0
 
-    # remove DC
     x = x - np.mean(x)
-
-    # Hann window to reduce leakage
     w = np.hanning(n)
     xw = x * w
 
-    # real FFT and power
     X = np.fft.rfft(xw)
     power = np.abs(X) ** 2
     freqs = np.fft.rfftfreq(n, d=dt)
 
-    # ignore DC (bin 0)
     if power.size <= 1:
         return 0.0, 0.0
     idx = int(np.argmax(power[1:])) + 1
@@ -134,28 +120,29 @@ def _stats_and_peak(x: np.ndarray, dt: float) -> Dict[str, float]:
 
 # --------------------------- main work ---------------------------
 
-def analyze(meta_path: Path, out_path: Path) -> None:
+def analyze(meta_path: Path, out_path: Path, slug: Optional[str]) -> None:
     meta = _load_meta(meta_path)
 
-    # figure base stem from meta filename
+    # figure base stem from meta filename (loader writes *... .meta.json)
     stem = meta_path.name
     if stem.endswith(".meta.json"):
         stem = stem[: -len(".meta.json")]
 
     data_file = _find_data_file(stem)
     if data_file is None:
-        # still write a minimal JSON so the pipeline progresses
+        # Write minimal JSON so the pipeline can proceed (no crash)
+        nsteps = int(meta.get("nsteps") or meta.get("n") or 0)
+        dt = float(meta.get("dt") or 0.0)
         result = {
-            "n": int(meta.get("nsteps") or meta.get("n") or 0),
-            "dt": float(meta.get("dt") or 0.0),
-            "duration_s": float((meta.get("nsteps") or 0) * (meta.get("dt") or 0.0)),
+            "slug": slug,
+            "n": nsteps,
+            "dt": dt,
+            "duration_s": float(nsteps * dt),
             "csv_path": None,
             "dominant": {"component": None, "freq_hz": 0.0, "power": 0.0},
             "components": {},
         }
-        # convenience mirror for quick access
         result["dominant_freq_hz"] = result["dominant"]["freq_hz"]
-
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
         print(f"wrote {out_path}  (dominant: {result['dominant']})")
@@ -186,6 +173,7 @@ def analyze(meta_path: Path, out_path: Path) -> None:
                 best = (comp, stats["dom_freq_hz"], stats["dom_power"])
 
     result = {
+        "slug": slug,
         "n": n,
         "dt": dt,
         "duration_s": duration_s,
@@ -197,7 +185,6 @@ def analyze(meta_path: Path, out_path: Path) -> None:
         },
         "components": comps,
     }
-    # convenience mirror for quick access in downstream code
     result["dominant_freq_hz"] = result["dominant"]["freq_hz"]
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -209,8 +196,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--meta", required=True, help="Path to .meta.json")
     ap.add_argument("--out", required=True, help="Where to write analysis JSON")
+    ap.add_argument("--slug", default=None, help="Optional identifier to store in the JSON")
     args = ap.parse_args()
-    analyze(Path(args.meta), Path(args.out))
+    analyze(Path(args.meta), Path(args.out), args.slug)
 
 
 if __name__ == "__main__":
