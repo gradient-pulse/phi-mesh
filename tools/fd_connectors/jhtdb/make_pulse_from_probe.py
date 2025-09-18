@@ -1,133 +1,60 @@
 #!/usr/bin/env python3
-"""
-make_pulse_from_probe.py — emit a short Φ-Mesh pulse for a JHTDB probe run.
+import argparse, json, os, datetime as dt, pathlib, yaml
 
-Inputs (same knobs you used to fetch/analyze), plus a *slug* that becomes the
-human-stable stem for today’s pulse filename:
-
-  pulse/auto/YYYY-MM-DD_<slug>_batchN.yml
-
-This script:
-  1) Locates the matching analysis JSON in results/fd_probe/ (pattern-based).
-  2) Reads the dominant frequency + a few stats.
-  3) Writes a compact pulse with a 'hint:' that surfaces the f0 clearly.
-"""
-
-from __future__ import annotations
-import argparse, datetime as dt, json, pathlib, re
-from typing import Optional
-
-ROOT = pathlib.Path(".").resolve()
-FD_RESULTS = ROOT / "results" / "fd_probe"
-PULSE_DIR  = ROOT / "pulse" / "auto"
-PULSE_DIR.mkdir(parents=True, exist_ok=True)
-
-def slugify(s: str) -> str:
-    s = (s or "").strip().lower()
-    s = re.sub(r"[^a-z0-9._-]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s or "isotropic"
-
-def _today() -> str:
-    return dt.date.today().isoformat()  # GH runners are UTC
-
-def _next_batch(today: str, slug: str) -> int:
-    patt = f"{today}_{slug}_batch"
-    nums = []
-    for p in sorted(PULSE_DIR.glob(f"{today}_{slug}_batch*.yml")):
-        m = re.search(r"_batch(\d+)\.yml$", p.name)
-        if m: nums.append(int(m.group(1)))
-    return (max(nums) + 1) if nums else 1
-
-def _find_analysis(flow: str, x: float, y: float, z: float,
-                   t0: float, dt: float, nsteps: int) -> Optional[pathlib.Path]:
-    """
-    We try the exact stem first (the analyze step used these literal values),
-    then fall back to a wildcard on t0 to be tolerant to tiny formatting drifts.
-    """
-    # Exact stem first
-    exact = FD_RESULTS / f"{flow}__x{x}_y{y}_z{z}__t{t0}_dt{dt}_n{nsteps}.analysis.json"
-    if exact.exists():
-        return exact
-
-    # t0 can be formatted slightly differently depending on caller; try a wildcard
-    patt = FD_RESULTS / f"{flow}__x{x}_y{y}_z{z}__t*_dt{dt}_n{nsteps}.analysis.json"
-    matches = sorted(patt.parent.glob(patt.name))
-    return matches[0] if matches else None
-
-def main() -> None:
+def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--flow",   required=True)
-    ap.add_argument("--x",      required=True, type=float)
-    ap.add_argument("--y",      required=True, type=float)
-    ap.add_argument("--z",      required=True, type=float)
-    ap.add_argument("--t0",     required=True, type=float)
-    ap.add_argument("--dt",     required=True, type=float)
-    ap.add_argument("--nsteps", required=True, type=int)
-    ap.add_argument("--slug",   required=False, default="isotropic")
+    ap.add_argument("--flow", required=True)
+    ap.add_argument("--x", type=float, required=True)
+    ap.add_argument("--y", type=float, required=True)
+    ap.add_argument("--z", type=float, required=True)
+    ap.add_argument("--t0", type=float, required=True)
+    ap.add_argument("--dt", type=float, required=True)
+    ap.add_argument("--nsteps", type=int, required=True)
+    ap.add_argument("--slug", default="isotropic")
     args = ap.parse_args()
 
-    slug = slugify(args.slug)
-    analysis = _find_analysis(args.flow, args.x, args.y, args.z, args.t0, args.dt, args.nsteps)
-    if not analysis:
-        raise SystemExit(f"[make_pulse] analysis JSON not found for "
-                         f"{args.flow} @ ({args.x},{args.y},{args.z}) t0={args.t0} dt={args.dt} n={args.nsteps}")
-
-    try:
-        m = json.loads(analysis.read_text(encoding="utf-8"))
-    except Exception as e:
-        raise SystemExit(f"[make_pulse] failed to read analysis JSON {analysis}: {e}")
-
-    # Pull a dominant frequency if present (we support both keys we’ve used)
+    # detect analysis JSON
+    stem = f"{args.flow}__x{args.x}_y{args.y}_z{args.z}__t0_{args.t0}_dt{args.dt}_n{args.nsteps}"
+    analysis = f"results/fd_probe/{stem}.analysis.json"
+    analysis_abs = os.path.abspath(analysis)
     f0 = None
-    if isinstance(m, dict):
-        f0 = m.get("dominant_freq_hz")
-        if f0 is None and isinstance(m.get("dominant"), dict):
-            f0 = m["dominant"].get("freq_hz")
-        try:
-            if f0 is not None:
-                f0 = float(f0)
-        except Exception:
-            f0 = None
+    try:
+        with open(analysis, "r", encoding="utf-8") as fh:
+            a = json.load(fh)
+        # try dominant, else 0
+        f0 = float(a.get("dominant_freq_hz") or 0.0)
+    except Exception:
+        pass
 
-    # Compose a tiny, readable pulse
-    today = _today()
-    batch = _next_batch(today, slug)
-    pulse_path = PULSE_DIR / f"{today}_{slug}_batch{batch}.yml"
+    today = dt.date.today().isoformat()
+    # filename = date + slug + batchN is handled by workflow commit cadence; we keep it simple:
+    outdir = pathlib.Path("pulse/auto"); outdir.mkdir(parents=True, exist_ok=True)
+    # monotonically increasing batch number per day
+    existing = sorted(outdir.glob(f"{today}_{args.slug}_batch*.yml"))
+    batch = (max([int(p.stem.rsplit("batch",1)[-1]) for p in existing], default=0) + 1)
 
-    hint = "no fundamental detected"
-    if (f0 is not None) and (f0 > 0):
-        hint = f"dominant≈{f0:.6g} Hz"
+    pulse_path = outdir / f"{today}_{args.slug}_batch{batch}.yml"
 
-    pulse = {
-        "title": "NT Rhythm — JHTDB Probe",
-        "dataset": slug,
+    hint = "no fundamental detected" if not f0 or f0 <= 0 else f"fundamental ≈ {f0:.4g} Hz"
+    payload = {
+        "title": f"'{args.slug.upper()} — JHTDB Probe'",
+        "summary": f"Probe at (x={args.x}, y={args.y}, z={args.z}) over n={args.nsteps} samples; {hint}.",
         "tags": ["nt_rhythm", "turbulence", "navier_stokes", "jhtdb"],
+        "papers": [],
+        "podcasts": [],
         "meta": {
             "flow": args.flow,
             "point": {"x": args.x, "y": args.y, "z": args.z},
             "t0": args.t0, "dt": args.dt, "nsteps": args.nsteps,
-            "analysis_json": analysis.as_posix(),
+            "analysis_json": analysis_abs,
         },
         "hint": hint,
     }
 
-    pulse_yaml = (
-        "title: " + pulse["title"] + "\n" +
-        "dataset: " + pulse["dataset"] + "\n" +
-        "tags:\n  - " + "\n  - ".join(pulse["tags"]) + "\n" +
-        "meta:\n"
-        f"  flow: {pulse['meta']['flow']}\n"
-        f"  point: {{x: {args.x}, y: {args.y}, z: {args.z}}}\n"
-        f"  t0: {args.t0}\n"
-        f"  dt: {args.dt}\n"
-        f"  nsteps: {args.nsteps}\n"
-        f"  analysis_json: {analysis.as_posix()}\n"
-        f"hint: {hint}\n"
-    )
+    with open(pulse_path, "w", encoding="utf-8") as fh:
+        yaml.safe_dump(payload, fh, sort_keys=False)
 
-    pulse_path.write_text(pulse_yaml, encoding="utf-8")
-    print(f"[make_pulse] wrote {pulse_path}  ← {analysis.name}  ({hint})")
+    print(f"wrote pulse: {pulse_path}")
 
 if __name__ == "__main__":
     main()
