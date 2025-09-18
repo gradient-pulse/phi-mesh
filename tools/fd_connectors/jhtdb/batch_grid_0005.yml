@@ -1,0 +1,8 @@
+runs:
+  - { flow: isotropic1024coarse, x: 0.10, y: 0.10, z: 0.10, t0: 0.0, dt: 0.0005, nsteps: 2400, slug: isotropic }
+  - { flow: isotropic1024coarse, x: 0.12, y: 0.10, z: 0.10, t0: 0.0, dt: 0.0005, nsteps: 2400, slug: isotropic }
+  - { flow: isotropic1024coarse, x: 0.10, y: 0.12, z: 0.10, t0: 0.0, dt: 0.0005, nsteps: 2400, slug: isotropic }
+  - { flow: isotropic1024coarse, x: 0.10, y: 0.10, z: 0.12, t0: 0.0, dt: 0.0005, nsteps: 2400, slug: isotropic }
+  - { flow: isotropic1024coarse, x: 0.08, y: 0.10, z: 0.10, t0: 0.0, dt: 0.0005, nsteps: 2400, slug: isotropic }
+  - { flow: isotropic1024coarse, x: 0.10, y: 0.08, z: 0.10, t0: 0.0, dt: 0.0005, nsteps: 2400, slug: isotropic }
+  - { flow: isotropic1024coarse, x: 0.10, y: 0.10, z: 0.08, t0: 0.0, dt: 0.0005, nsteps: 2400, slug: isotropic }
