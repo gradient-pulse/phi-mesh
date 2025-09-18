@@ -39,33 +39,14 @@ jobs:
           if [[ -n "$BF" && -f "$BF" ]]; then
             echo "Using batch file: $BF"
             python -m pip install -q --user pyyaml
-            python - <<'PY' > matrix.json
-import os, json, yaml, io
-p = os.environ.get("BF")
-d = yaml.safe_load(io.open(p, "r", encoding="utf-8")) or {}
-runs = list(d.get("runs", []))
-print(json.dumps({"include": runs}, separators=(",",":")))
-PY
+            python -c "import os,json,yaml,io; p=os.environ.get('BF'); d=yaml.safe_load(io.open(p,'r',encoding='utf-8')) or {}; runs=list(d.get('runs',[])); print(json.dumps({'include':runs},separators=(',',':')))" > matrix.json
           else
             echo 'Single run parameters'
-            python - <<'PY' > matrix.json
-import json
-print(json.dumps({
-  "include": [{
-    "flow":   "${{ github.event.inputs.flow }}",
-    "x":      ${{ github.event.inputs.x }},
-    "y":      ${{ github.event.inputs.y }},
-    "z":      ${{ github.event.inputs.z }},
-    "t0":     ${{ github.event.inputs.t0 }},
-    "dt":     ${{ github.event.inputs.dt }},
-    "nsteps": ${{ github.event.inputs.nsteps }},
-    "slug":  "${{ github.event.inputs.slug }}"
-  }]
-}, separators=(",",":")))
-PY
+            python -c "import json; print(json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':${{ github.event.inputs.x }},'y':${{ github.event.inputs.y }},'z':${{ github.event.inputs.z }},'t0':${{ github.event.inputs.t0 }},'dt':${{ github.event.inputs.dt }},'nsteps':${{ github.event.inputs.nsteps }},'slug':'${{ github.event.inputs.slug }}'}]},separators=(',',':')))" > matrix.json
           fi
 
-          echo 'Planned matrix:'; cat matrix.json
+          echo 'Planned matrix:'
+          cat matrix.json
           echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
 
   run:
@@ -81,96 +62,41 @@ PY
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
 
       - name: Install dependencies (SOAP + helpers)
         run: |
-          set -euo pipefail
           python -m pip install --upgrade pip
-          pip install "numpy" "pandas" "pyyaml" "suds-community"
-
-      - name: Show selected inputs
-        run: |
-          echo "flow   = ${{ matrix.flow }}"
-          echo "x,y,z  = ${{ matrix.x }}, ${{ matrix.y }}, ${{ matrix.z }}"
-          echo "t0,dt  = ${{ matrix.t0 }}, ${{ matrix.dt }}"
-          echo "nsteps = ${{ matrix.nsteps }}"
-          echo "slug   = ${{ matrix.slug }}"
+          pip install pandas numpy suds-community
 
       - name: Run JHTDB loader (fetch CSV cache)
         run: |
-          set -euo pipefail
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
-            --flow   "${{ matrix.flow }}" \
-            --x      "${{ matrix.x }}" \
-            --y      "${{ matrix.y }}" \
-            --z      "${{ matrix.z }}" \
-            --t0     "${{ matrix.t0 }}" \
-            --dt     "${{ matrix.dt }}" \
-            --nsteps "${{ matrix.nsteps }}"
+            --flow ${{ matrix.flow }} \
+            --x ${{ matrix.x }} \
+            --y ${{ matrix.y }} \
+            --z ${{ matrix.z }} \
+            --t0 ${{ matrix.t0 }} \
+            --dt ${{ matrix.dt }} \
+            --nsteps ${{ matrix.nsteps }}
 
-      - name: Analyze probe (auto-find meta; stable stem)
-        id: analyze
-        shell: bash
+      - name: Analyze probe (auto-find meta)
         run: |
-          set -euo pipefail
-          STEM="${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}"
-          META="data/jhtdb/${STEM}.meta.json"
-          if [[ ! -f "$META" ]]; then
-            echo "Meta not found at $META"
-            echo "Trying glob fallback…"
-            META=$(ls -1 data/jhtdb/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0*_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json | head -n1 || true)
-          fi
-          if [[ -z "$META" || ! -f "$META" ]]; then
-            echo "ERROR: meta file not found."
-            exit 1
-          fi
+          meta_file=$(ls data/jhtdb/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.meta.json)
+          out_file=results/fd_probe/${{ matrix.flow }}__x${{ matrix.x }}_y${{ matrix.y }}_z${{ matrix.z }}__t0${{ matrix.t0 }}_dt${{ matrix.dt }}_n${{ matrix.nsteps }}.analysis.json
+          python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$meta_file" --out "$out_file"
 
-          OUT="results/fd_probe/${STEM}.analysis.json"
-          mkdir -p results/fd_probe
-          echo "Meta: $META"
-          echo "Out : $OUT"
-          python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$META" --out "$OUT"
-
-          # Pass paths to later steps
-          echo "meta_file=$META" >> "$GITHUB_OUTPUT"
-          echo "out_file=$OUT"  >> "$GITHUB_OUTPUT"
-
-      - name: Generate pulse (consistent filenames)
+      - name: Generate pulse
         run: |
-          set -euo pipefail
-          # Use the original interface that worked last week
           python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
-            --flow   "${{ matrix.flow }}" \
-            --x      "${{ matrix.x }}" \
-            --y      "${{ matrix.y }}" \
-            --z      "${{ matrix.z }}" \
-            --t0     "${{ matrix.t0 }}" \
-            --dt     "${{ matrix.dt }}" \
-            --nsteps "${{ matrix.nsteps }}" \
-            --slug   "${{ matrix.slug }}"
+            --meta "$meta_file" \
+            --analysis "$out_file" \
+            --out pulse/auto/${{ github.run_id }}_${{ matrix.slug }}.yml
 
-      - name: Show outputs before commit
+      - name: Commit outputs
         run: |
-          echo "== data/jhtdb =="
-          ls -l data/jhtdb || true
-          echo
-          echo "== results/fd_probe =="
-          ls -l results/fd_probe || true
-          echo
-          echo "== pulse/auto =="
-          ls -l pulse/auto || true
-
-      - name: Commit outputs (only if changed)
-        run: |
-          set -euo pipefail
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/jhtdb results/fd_probe pulse/auto
-          if git diff --cached --quiet; then
-            echo "No new files to commit."
-            exit 0
-          fi
-          git commit -m "data(jhtdb): probe evidence + analysis + pulse(s)"
-          git pull --rebase origin main || true
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add results/ pulse/auto/
+          git commit -m "auto: FD probe run → results + pulses"
           git push
