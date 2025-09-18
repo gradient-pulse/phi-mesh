@@ -8,16 +8,18 @@ Turbulence Database and save to data/jhtdb/ as CSV + Parquet.
 Usage (defaults shown):
   python tools/fd_connectors/jhtdb/jhtdb_loader.py \
       --flow isotropic1024coarse --x 0.1 --y 0.2 --z 0.3 \
-      --t0 0.0 --dt 0.002 --nsteps 1000
+      --t0 0.0 --dt 0.002 --nsteps 1000 --slug isotropic
 
 Notes
-- Uses suds-community to talk to the JHTDB SOAP service.
-- Requires outbound internet (Actions runners allow this).
-- If JHTDB is down, the script fails with a clear error.
+- Uses suds-community (or suds-py3) to talk to the JHTDB SOAP service.
+- Requires outbound internet.
 """
+
+from __future__ import annotations
 
 import argparse, gzip, json, sys
 from pathlib import Path
+from typing import Tuple
 import pandas as pd
 from suds.client import Client
 
@@ -27,19 +29,29 @@ OUTDIR.mkdir(parents=True, exist_ok=True)
 # Public JHTDB WSDL
 WSDL_URL = "http://turbulence.pha.jhu.edu/service/turbulence.asmx?WSDL"
 
-def fetch_timeseries(flow: str, point, t0: float, dt: float, nsteps: int, email=None) -> pd.DataFrame:
+def _stem(flow: str, x: float, y: float, z: float, t0: float, dt: float, nsteps: int) -> str:
+    """
+    Match the reader/agent convention exactly:
+    {dataset}__x{round(x,3)}_y{round(y,3)}_z{round(z,3)}__t{round(t0,3)}_dt{dt}_n{nsteps}
+    """
+    return (
+        f"{flow}"
+        f"__x{round(x,3)}_y{round(y,3)}_z{round(z,3)}"
+        f"__t{round(t0,3)}_dt{dt}_n{nsteps}"
+    )
+
+def fetch_timeseries(flow: str, point: Tuple[float,float,float],
+                     t0: float, dt: float, nsteps: int, email=None) -> pd.DataFrame:
     """Fetch velocity (u,v,w) at a probe for nsteps starting t0 with step dt."""
     client = Client(WSDL_URL, timeout=120)
     lib = client.service
 
-    # Collect rows: [t,u,v,w]
     x, y, z = point
     rows = []
     for i in range(nsteps):
         t = t0 + i * dt
         try:
             vec = lib.GetVelocity(flow, t, x, y, z)
-            # vec is a SOAP object, convert to floats
             u, v, w = float(vec[0]), float(vec[1]), float(vec[2])
             rows.append((t, u, v, w))
         except Exception as e:
@@ -59,9 +71,6 @@ def fetch_timeseries(flow: str, point, t0: float, dt: float, nsteps: int, email=
             df[c] = float("nan")
     return df
 
-def safe_name(s: str) -> str:
-    return "".join(c if c.isalnum() or c in ("-", "_", ".") else "_" for c in s)
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--flow", default="isotropic1024coarse",
@@ -72,6 +81,7 @@ def main():
     ap.add_argument("--t0", type=float, default=0.0, help="start time")
     ap.add_argument("--dt", type=float, default=0.002, help="time step between samples")
     ap.add_argument("--nsteps", type=int, default=1000, help="number of samples")
+    ap.add_argument("--slug", default=None, help="Optional short identifier saved into meta")
     args = ap.parse_args()
 
     point = (args.x, args.y, args.z)
@@ -79,7 +89,7 @@ def main():
 
     df = fetch_timeseries(args.flow, point, args.t0, args.dt, args.nsteps)
 
-    base = f"{safe_name(args.flow)}__x{args.x}_y{args.y}_z{args.z}__t0{args.t0}_dt{args.dt}_n{args.nsteps}"
+    base = _stem(args.flow, args.x, args.y, args.z, args.t0, args.dt, args.nsteps)
     csv_path = OUTDIR / f"{base}.csv.gz"
     pq_path  = OUTDIR / f"{base}.parquet"
     meta_path = OUTDIR / f"{base}.meta.json"
@@ -92,6 +102,7 @@ def main():
 
     meta = {
         "flow": args.flow,
+        "slug": args.slug,  # provenance only; does not affect filenames
         "point": {"x": args.x, "y": args.y, "z": args.z},
         "t0": args.t0, "dt": args.dt, "nsteps": args.nsteps,
         "rows": int(df.shape[0]),
