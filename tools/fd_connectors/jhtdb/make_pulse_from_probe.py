@@ -1,59 +1,41 @@
 #!/usr/bin/env python3
 """
 make_pulse_from_probe.py
-Create a Φ-Mesh pulse from a single JHTDB probe analysis JSON.
+------------------------
+Build a standardized Φ-Mesh pulse from a probe analysis JSON. Also writes a
+mirrored "metrics" file name so results and pulses align:
 
-Inputs (match loader/analyzer):
-  --flow     JHTDB dataset slug (e.g., isotropic1024coarse)
-  --x --y --z  probe coordinates
-  --t0 --dt --nsteps  time window / sampling
-  --slug     short dataset label to appear in filename (default: 'isotropic')
-
-Outputs:
   pulse/auto/YYYY-MM-DD_<slug>_batchN.yml
-Schema (strict):
-  title: '...'
-  summary: >-
-    ...
-  tags:
-    - nt_rhythm
-    - turbulence
-    - navier_stokes
-    - rgp
-  papers:
-    - https://doi.org/10.5281/zenodo.15830659
-  podcasts:
-    - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
+  results/fd_probe/YYYY-MM-DD_<slug>_batchN.metrics.json
 """
 
 from __future__ import annotations
-import argparse, json, os
+
+import argparse
+import datetime as dt
+import json
+import os
+import re
+import shutil
 from pathlib import Path
-from datetime import date
 
 
-def _stem(flow: str, x: float, y: float, z: float, t0: float, dt: float, n: int) -> str:
-    # Mirrors analyzer/loader naming (round xyz for tidy filenames; keep dt exact text)
-    def r3(v: float) -> str:
-        s = f"{v:.3f}"
-        s = s.rstrip("0").rstrip(".") if "." in s else s
-        return s
-    return f"{flow}__x{r3(x)}_y{r3(y)}_z{r3(z)}__t{r3(t0)}_dt{dt}_n{n}"
-
-
-def _next_batch(outdir: Path, slug: str) -> int:
-    today = date.today().isoformat()
-    prefix = f"{today}_{slug}_batch"
+def next_batch_for(today: str, slug: str) -> int:
+    """Scan pulse/auto for today's pulses for this slug and return next batch number."""
+    root = Path("pulse/auto")
+    root.mkdir(parents=True, exist_ok=True)
+    rx = re.compile(rf"^{re.escape(today)}_{re.escape(slug)}_batch(\d+)\.yml$")
     nums = []
-    if outdir.exists():
-        for p in outdir.glob(f"{today}_{slug}_batch*.yml"):
-            name = p.stem
-            try:
-                n = int(name.split("batch", 1)[1])
-                nums.append(n)
-            except Exception:
-                pass
+    for p in root.glob(f"{today}_{slug}_batch*.yml"):
+        m = rx.match(p.name)
+        if m:
+            nums.append(int(m.group(1)))
     return (max(nums) + 1) if nums else 1
+
+
+def yaml_quote_single(s: str) -> str:
+    """Wrap in single quotes and escape internal single quotes."""
+    return "'" + str(s).replace("'", "''") + "'"
 
 
 def main() -> None:
@@ -68,68 +50,74 @@ def main() -> None:
     ap.add_argument("--slug", default="isotropic")
     args = ap.parse_args()
 
-    # Locate analysis JSON produced by analyze_probe.py
-    stem = _stem(args.flow, args.x, args.y, args.z, args.t0, args.dt, args.nsteps)
-    analysis_rel = f"results/fd_probe/{stem}.analysis.json"
-    analysis_abs = Path(analysis_rel).resolve()
+    # detect analysis JSON (named by the loader/analyzer stem)
+    stem = f"{args.flow}__x{args.x}_y{args.y}_z{args.z}__t{args.t0}_dt{args.dt}_n{args.nsteps}"
+    analysis = f"results/fd_probe/{stem}.analysis.json"
+    analysis_abs = Path(analysis).absolute().as_posix()
 
-    dominant = {"component": None, "freq_hz": 0.0, "power": 0.0}
+    # read analysis
     try:
-        with open(analysis_rel, "r", encoding="utf-8") as fh:
+        with open(analysis, "r", encoding="utf-8") as fh:
             a = json.load(fh)
-        # tolerate missing keys
-        dom = a.get("dominant") or {}
-        dominant["component"] = dom.get("component")
-        dominant["freq_hz"] = float(dom.get("freq_hz") or 0.0)
-        dominant["power"] = float(dom.get("power") or 0.0)
     except Exception:
-        # keep defaults; pulse will say no fundamental detected
-        pass
+        a = {}
 
-    # Compose title (YAML single-quoted; escape internal single quotes by doubling)
-    title = "NT Rhythm — FD Probe"
-    safe_title = title.replace("'", "''")
+    # meta for summary
+    comp = a.get("dominant", {}).get("component")
+    f0 = float(a.get("dominant", {}).get("freq_hz") or 0.0)
+    power = float(a.get("dominant", {}).get("power") or 0.0)
+    nrows = int(a.get("n") or 0)
+    dt_s = float(a.get("dt") or args.dt or 0.0)
+    duration = float(a.get("duration_s") or (args.nsteps * args.dt))
+    note = a.get("note") or ("no fundamental detected" if f0 <= 0 else "")
 
-    # Human hint
-    if dominant["freq_hz"] > 0.0:
-        hint = f"fundamental detected — f0≈{dominant['freq_hz']:.4g} Hz (comp={dominant['component'] or 'n/a'})"
-    else:
-        hint = "no fundamental detected"
+    today = dt.date.today().isoformat()
+    batch = next_batch_for(today, args.slug)
 
-    # Meta line for summary (include probe & window like your canonical pulses)
-    meta = {
-        "dataset": args.flow,
-        "var": "u",  # loader/analyzer use u/v/w; if you prefer 'v' here, tweak.
-        "xyz": [args.x, args.y, args.z],
-        "window": [args.t0, args.t0 + args.dt * max(args.nsteps - 1, 0), args.dt],
+    # pulse path
+    pulse_dir = Path("pulse/auto")
+    pulse_dir.mkdir(parents=True, exist_ok=True)
+    pulse_name = f"{today}_{args.slug}_batch{batch}.yml"
+    pulse_path = pulse_dir / pulse_name
+
+    # also copy the analysis JSON to a friendly "metrics" filename
+    metrics_dir = Path("results/fd_probe")
+    metrics_dir.mkdir(parents=True, exist_ok=True)
+    metrics_name = f"{today}_{args.slug}_batch{batch}.metrics.json"
+    metrics_path = metrics_dir / metrics_name
+    try:
+        shutil.copyfile(analysis_abs, metrics_path.as_posix())
+        print(f"copied analysis -> {metrics_path}")
+    except Exception as e:
+        print(f"[WARN] could not copy analysis to metrics name: {e}")
+
+    # Build pulse YAML
+    title = yaml_quote_single("NT Rhythm — FD Probe")
+
+    probe_meta = {
+        "flow": args.flow,
+        "point": {"x": args.x, "y": args.y, "z": args.z},
+        "t0": args.t0,
+        "dt": args.dt,
+        "nsteps": args.nsteps,
     }
+    hint_bits = []
+    if comp:
+        hint_bits.append(f"dominant={comp}@{f0:.4f}Hz")
+    if note:
+        hint_bits.append(note)
 
-    # Summary (folded style >- ; single line for each sentence)
-    # Escape any single quotes in embedded strings by doubling (YAML single-quoted)
-    ds_label = f"{args.slug}"
-    safe_hint = hint.replace("'", "''")
-    # Put meta compactly
-    meta_str = (
-        f"{{'dataset': '{args.flow}', 'var': 'u', "
-        f"'xyz': [{args.x}, {args.y}, {args.z}], "
-        f"'window': [{args.t0}, {args.t0 + args.dt * max(args.nsteps - 1, 0)}, {args.dt}]}}"
-    ).replace("'", "''")
-
-    # Build YAML
-    outdir = Path("pulse/auto")
-    outdir.mkdir(parents=True, exist_ok=True)
-    batch = _next_batch(outdir, args.slug)
-    outfile = outdir / f"{date.today().isoformat()}_{args.slug}_batch{batch}.yml"
+    summary = (
+        f"NT rhythm probe on '{args.slug}' — analysis: '{analysis_abs}'. "
+        f"n={nrows}, dt={dt_s}, duration_s={duration:.4f}. "
+        f"Probe: {probe_meta}. "
+        f"hint: {'; '.join(hint_bits) if hint_bits else 'none'}"
+    )
 
     yaml_lines = []
-    yaml_lines.append(f"title: '{safe_title}'")
+    yaml_lines.append(f"title: {title}")
     yaml_lines.append("summary: >-")
-    yaml_lines.append(
-        f"  NT rhythm probe on '{ds_label}' — "
-        f"analysis: '{analysis_abs}'. "
-        f"Source: jhtdb. Probe: {meta_str}. "
-        f"hint: {safe_hint}"
-    )
+    yaml_lines.append(f"  {summary}")
     yaml_lines.append("tags:")
     yaml_lines.append("  - nt_rhythm")
     yaml_lines.append("  - turbulence")
@@ -139,12 +127,9 @@ def main() -> None:
     yaml_lines.append("  - https://doi.org/10.5281/zenodo.15830659")
     yaml_lines.append("podcasts:")
     yaml_lines.append("  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a")
-    yaml = "\n".join(yaml_lines) + "\n"
 
-    with open(outfile, "w", encoding="utf-8") as fh:
-        fh.write(yaml)
-
-    print(f"wrote pulse: {outfile}")
+    pulse_path.write_text("\n".join(yaml_lines) + "\n", encoding="utf-8")
+    print(f"wrote pulse: {pulse_path}")
 
 
 if __name__ == "__main__":
