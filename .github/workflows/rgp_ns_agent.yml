@@ -11,7 +11,7 @@ on:
       var:
         description: "Velocity component (u|v|w)"
         required: true
-        default: "u"
+        default: "v"  # last week's default; switch to 'u' manually if needed
       seed_xyz:
         description: "Seed xyz (x,y,z) — e.g., 0.1,0.1,0.1"
         required: true
@@ -48,9 +48,9 @@ jobs:
   agent:
     runs-on: ubuntu-latest
     env:
-      # Make repo imports like "tools.*" work in all subprocesses.
+      # Ensure repo-local imports (tools.*) work for all subprocesses.
       PYTHONPATH: ${{ github.workspace }}
-      # JHTDB connector auth (if your connector uses the token).
+      # JHTDB auth/token (set this in repo Settings → Secrets → Actions).
       JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
 
     steps:
@@ -67,7 +67,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # numpy/pyyaml for your code paths; suds-py3 for JHTDB SOAP client
+          # numpy/pyyaml for your code; suds-py3 for the JHTDB SOAP client.
           pip install numpy pyyaml suds-py3
 
       - name: Show selected inputs
