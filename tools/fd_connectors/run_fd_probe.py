@@ -5,7 +5,7 @@ compute NT-rhythm metrics, and write *metrics JSON only*.
 
 Args:
   --source   {synthetic,jhtdb}
-  --dataset  dataset name/slug (e.g., isotropic1024coarse)
+  --dataset  dataset slug/name (e.g., isotropic1024coarse)
   --var      variable name (e.g., "u" or "v")
   --xyz      "x,y,z"
   --twin     "t0,t1,dt"
@@ -28,14 +28,79 @@ REPO_ROOT = Path(__file__).resolve().parents[2]  # .../phi-mesh
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-# rhythm tools (repo-local)
-from tools.agent_rhythm.rhythm import (
-    ticks_from_message_times,
-    rhythm_from_events,
-)
+# connectors (JHTDB only per your scope)
+from tools.fd_connectors import jhtdb as JHT  # noqa: E402
 
-# connectors (JHTDB-only per your scope)
-from tools.fd_connectors import jhtdb as JHT
+
+# ===================== minimal rhythm inlined =====================
+
+def ticks_from_message_times(ts: List[float]) -> List[float]:
+    """Identity passthrough for already time-ordered message times."""
+    return list(ts or [])
+
+def rhythm_from_events(ticks: List[float]) -> Dict[str, Any]:
+    """
+    Minimal, dependency-free rhythm summary:
+      - intervals Δt between successive ticks
+      - n, mean_dt, std_dt, cv_dt
+      - main_peak_freq ~ 1/mean_dt
+      - peaks: one synthetic peak [f0, power] where power ~ 1/cv_dt (robust-ish)
+    This is intentionally simple to unblock the pipeline and mirrors the fields
+    make_pulse.py expects.
+    """
+    import statistics as stats
+
+    ticks = [float(t) for t in ticks if t is not None]
+    if len(ticks) < 2:
+        return {
+            "n": len(ticks),
+            "mean_dt": None,
+            "std_dt": None,
+            "cv_dt": None,
+            "period": None,
+            "main_peak_freq": None,
+            "peaks": [],
+        }
+
+    # ensure monotonic
+    ticks.sort()
+    dts = [ticks[i+1] - ticks[i] for i in range(len(ticks) - 1)]
+    dts = [dt for dt in dts if dt > 0]
+
+    if not dts:
+        return {
+            "n": len(ticks),
+            "mean_dt": None,
+            "std_dt": None,
+            "cv_dt": None,
+            "period": None,
+            "main_peak_freq": None,
+            "peaks": [],
+        }
+
+    mean_dt = sum(dts) / len(dts)
+    try:
+        std_dt = stats.pstdev(dts)  # population stddev
+    except Exception:
+        std_dt = 0.0
+    cv_dt = (std_dt / mean_dt) if mean_dt > 0 else None
+
+    f0 = (1.0 / mean_dt) if mean_dt and mean_dt > 0 else None
+    # A simple, monotone power proxy: higher coherence → higher power
+    power = float("inf") if (cv_dt is not None and cv_dt == 0) else (1.0 / (cv_dt + 1e-9) if cv_dt is not None else 0.0)
+    peaks = [[f0, power]] if f0 else []
+
+    return {
+        "n": len(ticks),
+        "mean_dt": mean_dt,
+        "std_dt": std_dt,
+        "cv_dt": cv_dt,
+        "period": mean_dt,
+        "main_peak_freq": f0,
+        "peaks": peaks,
+    }
+
+# =================== end minimal rhythm inlined ===================
 
 
 # ---------- helpers -----------------------------------------------------------
