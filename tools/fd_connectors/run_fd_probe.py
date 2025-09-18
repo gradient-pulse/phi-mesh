@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# --- repo-root import bootstrap (so "tools.*" works even in subprocesses) ---
+import os, sys
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+# ---------------------------------------------------------------------------
+
 """
 run_fd_probe.py — fetch a 1-point time series (synthetic|jhtdb|nasa),
 compute NT-rhythm metrics, and write *metrics JSON only*.
@@ -19,7 +26,6 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import os
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
 
@@ -31,7 +37,11 @@ from tools.agent_rhythm.rhythm import (
 
 # connectors
 from tools.fd_connectors import jhtdb as JHT
-from tools.fd_connectors import nasa as NASA
+# Make NASA optional so imports don’t break if you’ve pruned it.
+try:
+    from tools.fd_connectors import nasa as NASA
+except Exception:  # pragma: no cover
+    NASA = None  # type: ignore
 
 
 # ---------- helpers -----------------------------------------------------------
@@ -105,7 +115,7 @@ def main() -> None:
         src_label = "synthetic"
 
     elif args.source == "jhtdb":
-        # Use JHTDB connector; if unavailable, raise (or swap to synthetic if you want soft behavior)
+        # Use JHTDB connector.
         ts_obj = JHT.fetch_timeseries(
             dataset=args.dataset, var=args.var,
             x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
@@ -114,6 +124,8 @@ def main() -> None:
         src_label = "jhtdb"
 
     else:  # nasa — strict: NetCDF/real only (no offline fallback)
+        if NASA is None:
+            raise RuntimeError("NASA connector not available but --source nasa was requested.")
         ts_obj = NASA.fetch_timeseries(
             dataset=args.dataset, var=args.var,
             x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
