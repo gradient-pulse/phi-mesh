@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
-# --- repo-root import bootstrap (so "tools.*" works even in subprocesses) ---
-import os, sys
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-if ROOT not in sys.path:
-    sys.path.insert(0, ROOT)
-# ---------------------------------------------------------------------------
-
 """
-run_fd_probe.py — fetch a 1-point time series (synthetic|jhtdb|nasa),
+run_fd_probe.py — fetch a 1-point time series (synthetic|jhtdb),
 compute NT-rhythm metrics, and write *metrics JSON only*.
 
 Args:
-  --source   {synthetic,jhtdb,nasa}
-  --dataset  dataset name/slug/path/URL (e.g., NetCDF path for NASA)
-  --var      variable name (e.g., "u")
+  --source   {synthetic,jhtdb}
+  --dataset  dataset name/slug (e.g., isotropic1024coarse)
+  --var      variable name (e.g., "u" or "v")
   --xyz      "x,y,z"
   --twin     "t0,t1,dt"
   --json-out path to write metrics JSON
@@ -21,27 +14,21 @@ Args:
   --tags     (unused here; carried by make_pulse)
 """
 
-from __future__ import annotations
-
 import argparse
 import json
 import math
+import os
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
 
-# rhythm tools
+# rhythm tools (repo-local)
 from tools.agent_rhythm.rhythm import (
     ticks_from_message_times,
     rhythm_from_events,
 )
 
-# connectors
+# connectors (JHTDB-only per your scope)
 from tools.fd_connectors import jhtdb as JHT
-# Make NASA optional so imports don’t break if you’ve pruned it.
-try:
-    from tools.fd_connectors import nasa as NASA
-except Exception:  # pragma: no cover
-    NASA = None  # type: ignore
 
 
 # ---------- helpers -----------------------------------------------------------
@@ -95,7 +82,7 @@ def to_builtin(x: Any) -> Any:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True, choices=["synthetic", "jhtdb", "nasa"])
+    ap.add_argument("--source", required=True, choices=["synthetic", "jhtdb"])
     ap.add_argument("--dataset", required=True)
     ap.add_argument("--var", required=True)
     ap.add_argument("--xyz", required=True, help="x,y,z")
@@ -113,25 +100,13 @@ def main() -> None:
     if args.source == "synthetic":
         ts, vs = synthetic_timeseries(t0, t1, dt)
         src_label = "synthetic"
-
-    elif args.source == "jhtdb":
-        # Use JHTDB connector.
+    else:  # jhtdb
         ts_obj = JHT.fetch_timeseries(
             dataset=args.dataset, var=args.var,
             x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
         )
         ts, vs = ts_obj.t, ts_obj.v
         src_label = "jhtdb"
-
-    else:  # nasa — strict: NetCDF/real only (no offline fallback)
-        if NASA is None:
-            raise RuntimeError("NASA connector not available but --source nasa was requested.")
-        ts_obj = NASA.fetch_timeseries(
-            dataset=args.dataset, var=args.var,
-            x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-        )
-        ts, vs = ts_obj.t, ts_obj.v
-        src_label = "nasa_netcdf"
 
     # Ensure monotonic time, preserving (t,v) pairing
     if ts and any(ts[i] > ts[i+1] for i in range(len(ts)-1)):
