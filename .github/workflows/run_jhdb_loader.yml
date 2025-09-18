@@ -9,9 +9,9 @@ on:
       z:          { description: "Probe Z coordinate", required: false, default: "0.3" }
       t0:         { description: "Start time", required: false, default: "0.0" }
       dt:         { description: "Time step", required: false, default: "0.002" }
-      nsteps:     { description: "Number of steps", required: false, default: "2000" }
+      nsteps:     { description: "Number of steps", required: false, default: "2400" }
       slug:       { description: "Slug for filenames", required: false, default: "isotropic" }
-      batch_file: { description: "Optional batch.yml file (overrides inputs)", required: false, default: "" }
+      batch_file: { description: "Optional tools/fd_connectors/jhtdb/batch.yml", required: false, default: "" }
 
 permissions:
   contents: write
@@ -35,20 +35,29 @@ jobs:
         run: |
           set -euo pipefail
           BF="${{ github.event.inputs.batch_file }}"
+
           if [[ -n "$BF" && -f "$BF" ]]; then
             echo "Using batch file: $BF"
-            python - <<'PY'
-import json,yaml,io,os
-p = os.environ["BF"]
-with io.open(p,"r",encoding="utf-8") as f:
+            BF_PATH="$BF" python - <<'PY' > matrix.json
+import json, yaml, io, os
+p = os.environ["BF_PATH"]
+with io.open(p, "r", encoding="utf-8") as f:
     d = yaml.safe_load(f) or {}
-runs = list(d.get("runs",[]))
+runs = list(d.get("runs", []))
 print(json.dumps({"include": runs}, separators=(",",":")))
 PY
           else
             echo "Single run parameters"
-            python - <<'PY'
-import json,os
+            FLOW="${{ github.event.inputs.flow }}" \
+            X="${{ github.event.inputs.x }}" \
+            Y="${{ github.event.inputs.y }}" \
+            Z="${{ github.event.inputs.z }}" \
+            T0="${{ github.event.inputs.t0 }}" \
+            DT="${{ github.event.inputs.dt }}" \
+            NSTEPS="${{ github.event.inputs.nsteps }}" \
+            SLUG="${{ github.event.inputs.slug }}" \
+            python - <<'PY' > matrix.json
+import json, os
 print(json.dumps({"include":[{
   "flow": os.environ["FLOW"],
   "x": float(os.environ["X"]),
@@ -60,19 +69,11 @@ print(json.dumps({"include":[{
   "slug": os.environ["SLUG"]
 }]}, separators=(",",":")))
 PY
-          fi > matrix.json
-          echo 'Planned matrix:'; cat matrix.json
+          fi
+
+          echo 'Planned matrix:'
+          cat matrix.json
           echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
-        env:
-          FLOW: ${{ github.event.inputs.flow }}
-          X: ${{ github.event.inputs.x }}
-          Y: ${{ github.event.inputs.y }}
-          Z: ${{ github.event.inputs.z }}
-          T0: ${{ github.event.inputs.t0 }}
-          DT: ${{ github.event.inputs.dt }}
-          NSTEPS: ${{ github.event.inputs.nsteps }}
-          SLUG: ${{ github.event.inputs.slug }}
-          BF: ${{ github.event.inputs.batch_file }}
 
   run:
     needs: plan
@@ -80,6 +81,7 @@ PY
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -89,13 +91,13 @@ PY
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dependencies (SOAP + helpers)
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
           pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0" "suds-community>=1.1.2"
 
-      - name: Debug check for jhtdb scripts
+      - name: Debug — jhtdb scripts present?
         run: |
           echo "== tools/fd_connectors/jhtdb =="
           ls -l tools/fd_connectors/jhtdb || true
@@ -112,12 +114,13 @@ PY
             --dt   "${{ matrix.dt }}" \
             --nsteps "${{ matrix.nsteps }}"
 
-      - name: Debug check data/jhtdb after loader
+      - name: Debug — show data/jhtdb after loader
         run: |
-          echo "== data/jhtdb contents after loader =="
+          echo "== data/jhtdb =="
           ls -lh data/jhtdb || true
 
       - name: Analyze probe (auto-find meta)
+        shell: bash
         run: |
           set -euo pipefail
           pattern=$(printf 'data/jhtdb/%s__x%s_y%s_z%s__t*_dt%s_n%s.meta.json' \
@@ -134,6 +137,11 @@ PY
           echo "Meta: $meta_file"
           echo "Out : $out_file"
           python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$meta_file" --out "$out_file"
+
+      - name: Debug — show results/fd_probe after analysis
+        run: |
+          echo "== results/fd_probe =="
+          ls -lh results/fd_probe || true
 
       - name: Generate pulse
         run: |
