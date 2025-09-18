@@ -3,15 +3,42 @@ name: Run JHTDB Loader
 on:
   workflow_dispatch:
     inputs:
-      flow:       { description: "Flow dataset name (e.g. isotropic1024coarse)", required: false, default: "isotropic1024coarse" }
-      x:          { description: "Probe X coordinate", required: false, default: "0.1" }
-      y:          { description: "Probe Y coordinate", required: false, default: "0.2" }
-      z:          { description: "Probe Z coordinate", required: false, default: "0.3" }
-      t0:         { description: "Start time", required: false, default: "0.0" }
-      dt:         { description: "Time step", required: false, default: "0.002" }
-      nsteps:     { description: "Number of steps", required: false, default: "2000" }
-      slug:       { description: "Slug for filenames", required: false, default: "isotropic" }
-      batch_file: { description: "Optional batch.yml file (overrides inputs)", required: false, default: "" }
+      flow:
+        description: "Flow dataset (e.g., isotropic1024coarse)"
+        required: false
+        default: "isotropic1024coarse"
+      x:
+        description: "Probe X coordinate"
+        required: false
+        default: "0.1"
+      y:
+        description: "Probe Y coordinate"
+        required: false
+        default: "0.1"
+      z:
+        description: "Probe Z coordinate"
+        required: false
+        default: "0.1"
+      t0:
+        description: "Start time"
+        required: false
+        default: "0.0"
+      dt:
+        description: "Time step"
+        required: false
+        default: "0.0005"
+      nsteps:
+        description: "Number of steps"
+        required: false
+        default: "2400"
+      slug:
+        description: "Slug for filenames (only used by pulse step)"
+        required: false
+        default: "isotropic"
+      batch_file:
+        description: "Optional batch.yml (overrides all single-run inputs)"
+        required: false
+        default: "tools/fd_connectors/jhtdb/batch_grid_0005.yml"
 
 permissions:
   contents: write
@@ -36,11 +63,32 @@ jobs:
           set -euo pipefail
           if [[ -n "${{ github.event.inputs.batch_file }}" && -f "${{ github.event.inputs.batch_file }}" ]]; then
             echo "Using batch file: ${{ github.event.inputs.batch_file }}"
-            python -c "import json,yaml,io; d=yaml.safe_load(io.open('${{ github.event.inputs.batch_file }}','r',encoding='utf-8')) or {}; runs=list(reversed(d.get('runs',[]))); print(json.dumps({'include':runs},separators=(',',':')))" > matrix.json
+            python - <<'PY'
+import json, yaml, io, sys
+p = "${{ github.event.inputs.batch_file }}"
+d = yaml.safe_load(io.open(p, 'r', encoding='utf-8')) or {}
+runs = list(d.get('runs', []))
+# Default to 'include' matrix
+print(json.dumps({"include": runs}, separators=(",",":")))
+PY
           else
             echo "Single run parameters"
-            python -c "import json; print(json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':${{ github.event.inputs.x }},'y':${{ github.event.inputs.y }},'z':${{ github.event.inputs.z }},'t0':${{ github.event.inputs.t0 }},'dt':${{ github.event.inputs.dt }},'nsteps':${{ github.event.inputs.nsteps }},'slug':'${{ github.event.inputs.slug }}'}]},separators=(',',':')))" > matrix.json
-          fi
+            python - <<'PY'
+import json
+print(json.dumps({
+  "include":[{
+    "flow":"${{ github.event.inputs.flow }}",
+    "x":    float("${{ github.event.inputs.x }}"),
+    "y":    float("${{ github.event.inputs.y }}"),
+    "z":    float("${{ github.event.inputs.z }}"),
+    "t0":   float("${{ github.event.inputs.t0 }}"),
+    "dt":   float("${{ github.event.inputs.dt }}"),
+    "nsteps": int("${{ github.event.inputs.nsteps }}"),
+    "slug":"${{ github.event.inputs.slug }}"
+  }]
+}, separators=(",",":")))
+PY
+          fi > matrix.json
           echo 'Planned matrix:'; cat matrix.json
           echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
 
@@ -59,26 +107,32 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dependencies (SOAP + helpers)
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install "numpy==1.23.5" "scipy==1.10.1" "pandas==2.2.2" "pyarrow>=14" "pyyaml>=6.0" "suds-community>=1.1.2"
+          pip install numpy pyyaml pandas pyarrow suds-py3
 
-      - name: Run JHTDB loader
+      - name: Fetch time-series from JHTDB (CSV cache)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
         run: |
           set -euo pipefail
+          mkdir -p data/jhtdb results/fd_probe pulse/auto
           python tools/fd_connectors/jhtdb/jhtdb_loader.py \
-            --flow "${{ matrix.flow }}" \
-            --x    "${{ matrix.x }}" \
-            --y    "${{ matrix.y }}" \
-            --z    "${{ matrix.z }}" \
-            --t0   "${{ matrix.t0 }}" \
-            --dt   "${{ matrix.dt }}" \
-            --nsteps "${{ matrix.nsteps }}" \
- 
+            --flow   "${{ matrix.flow }}" \
+            --x      "${{ matrix.x }}" \
+            --y      "${{ matrix.y }}" \
+            --z      "${{ matrix.z }}" \
+            --t0     "${{ matrix.t0 }}" \
+            --dt     "${{ matrix.dt }}" \
+            --nsteps "${{ matrix.nsteps }}"
+
       - name: Analyze probe (auto-find meta)
         shell: bash
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
           pattern=$(printf 'data/jhtdb/%s__x%s_y%s_z%s__t*_dt%s_n%s.meta.json' \
@@ -97,17 +151,19 @@ jobs:
           python tools/fd_connectors/jhtdb/analyze_probe.py --meta "$meta_file" --out "$out_file"
 
       - name: Generate pulse
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
           python tools/fd_connectors/jhtdb/make_pulse_from_probe.py \
-            --flow "${{ matrix.flow }}" \
-            --x    "${{ matrix.x }}" \
-            --y    "${{ matrix.y }}" \
-            --z    "${{ matrix.z }}" \
-            --t0   "${{ matrix.t0 }}" \
-            --dt   "${{ matrix.dt }}" \
+            --flow   "${{ matrix.flow }}" \
+            --x      "${{ matrix.x }}" \
+            --y      "${{ matrix.y }}" \
+            --z      "${{ matrix.z }}" \
+            --t0     "${{ matrix.t0 }}" \
+            --dt     "${{ matrix.dt }}" \
             --nsteps "${{ matrix.nsteps }}" \
-            --slug "${{ matrix.slug }}"
+            --slug   "${{ matrix.slug }}"
 
       - name: Show outputs before commit
         shell: bash
@@ -127,12 +183,11 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Add anything new/changed under these trees
           git add -A data/jhtdb results/fd_probe pulse/auto
           if git diff --cached --quiet; then
             echo "No new files to commit."
             exit 0
           fi
           git commit -m "data(jhtdb): probe evidence + analysis + pulse(s)"
-          git pull --rebase origin main || true
-          git push
+          git pull --rebase --autostash origin main || true
+          git push || true
