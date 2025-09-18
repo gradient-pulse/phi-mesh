@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """
-run_fd_probe.py — fetch a 1-point time series (synthetic|jhtdb),
+run_fd_probe.py — fetch a 1-point time series (JHTDB only),
 compute NT-rhythm metrics, and write *metrics JSON only*.
 
 Args:
-  --source   {synthetic,jhtdb}
-  --dataset  dataset slug/name (e.g., isotropic1024coarse)
-  --var      variable name (e.g., "u" or "v")
+  --dataset  JHTDB dataset slug (e.g., isotropic1024coarse)
+  --var      velocity component (u|v|w)
   --xyz      "x,y,z"
   --twin     "t0,t1,dt"
   --json-out path to write metrics JSON
@@ -14,93 +13,22 @@ Args:
   --tags     (unused here; carried by make_pulse)
 """
 
+from __future__ import annotations
+
 import argparse
 import json
-import math
 import os
-import sys
 from dataclasses import asdict, is_dataclass
 from typing import Any, Dict, List, Tuple
-from pathlib import Path
 
-# --- ensure repo root on sys.path so local imports always work --------------
-REPO_ROOT = Path(__file__).resolve().parents[2]  # .../phi-mesh
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
+# rhythm tools
+from tools.agent_rhythm.rhythm import (
+    ticks_from_message_times,
+    rhythm_from_events,
+)
 
-# connectors (JHTDB only per your scope)
-from tools.fd_connectors import jhtdb as JHT  # noqa: E402
-
-
-# ===================== minimal rhythm inlined =====================
-
-def ticks_from_message_times(ts: List[float]) -> List[float]:
-    """Identity passthrough for already time-ordered message times."""
-    return list(ts or [])
-
-def rhythm_from_events(ticks: List[float]) -> Dict[str, Any]:
-    """
-    Minimal, dependency-free rhythm summary:
-      - intervals Δt between successive ticks
-      - n, mean_dt, std_dt, cv_dt
-      - main_peak_freq ~ 1/mean_dt
-      - peaks: one synthetic peak [f0, power] where power ~ 1/cv_dt (robust-ish)
-    This is intentionally simple to unblock the pipeline and mirrors the fields
-    make_pulse.py expects.
-    """
-    import statistics as stats
-
-    ticks = [float(t) for t in ticks if t is not None]
-    if len(ticks) < 2:
-        return {
-            "n": len(ticks),
-            "mean_dt": None,
-            "std_dt": None,
-            "cv_dt": None,
-            "period": None,
-            "main_peak_freq": None,
-            "peaks": [],
-        }
-
-    # ensure monotonic
-    ticks.sort()
-    dts = [ticks[i+1] - ticks[i] for i in range(len(ticks) - 1)]
-    dts = [dt for dt in dts if dt > 0]
-
-    if not dts:
-        return {
-            "n": len(ticks),
-            "mean_dt": None,
-            "std_dt": None,
-            "cv_dt": None,
-            "period": None,
-            "main_peak_freq": None,
-            "peaks": [],
-        }
-
-    mean_dt = sum(dts) / len(dts)
-    try:
-        std_dt = stats.pstdev(dts)  # population stddev
-    except Exception:
-        std_dt = 0.0
-    cv_dt = (std_dt / mean_dt) if mean_dt > 0 else None
-
-    f0 = (1.0 / mean_dt) if mean_dt and mean_dt > 0 else None
-    # A simple, monotone power proxy: higher coherence → higher power
-    power = float("inf") if (cv_dt is not None and cv_dt == 0) else (1.0 / (cv_dt + 1e-9) if cv_dt is not None else 0.0)
-    peaks = [[f0, power]] if f0 else []
-
-    return {
-        "n": len(ticks),
-        "mean_dt": mean_dt,
-        "std_dt": std_dt,
-        "cv_dt": cv_dt,
-        "period": mean_dt,
-        "main_peak_freq": f0,
-        "peaks": peaks,
-    }
-
-# =================== end minimal rhythm inlined ===================
+# connectors
+from tools.fd_connectors import jhtdb as JHT
 
 
 # ---------- helpers -----------------------------------------------------------
@@ -110,19 +38,6 @@ def parse_triplet(s: str) -> Tuple[float, float, float]:
     if len(parts) != 3:
         raise ValueError(f"Expected three comma-separated values, got: {s!r}")
     return float(parts[0]), float(parts[1]), float(parts[2])
-
-
-def synthetic_timeseries(t0: float, t1: float, dt: float) -> Tuple[List[float], List[float]]:
-    """Compact synthetic signal with a fundamental + 3x harmonic."""
-    n = max(3, int((t1 - t0) / max(dt, 1e-12)))
-    ts = [t0 + i * dt for i in range(n)]
-    base = 0.4  # Hz
-    vs = [
-        math.sin(2 * math.pi * base * (t - t0))
-        + 0.15 * math.sin(2 * math.pi * 3 * base * (t - t0))
-        for t in ts
-    ]
-    return ts, vs
 
 
 def to_builtin(x: Any) -> Any:
@@ -154,7 +69,6 @@ def to_builtin(x: Any) -> Any:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True, choices=["synthetic", "jhtdb"])
     ap.add_argument("--dataset", required=True)
     ap.add_argument("--var", required=True)
     ap.add_argument("--xyz", required=True, help="x,y,z")
@@ -168,17 +82,12 @@ def main() -> None:
     t0, t1, dt = parse_triplet(args.twin)
 
     # --- fetch time series ------------------------------------------------
-    src_label = args.source
-    if args.source == "synthetic":
-        ts, vs = synthetic_timeseries(t0, t1, dt)
-        src_label = "synthetic"
-    else:  # jhtdb
-        ts_obj = JHT.fetch_timeseries(
-            dataset=args.dataset, var=args.var,
-            x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
-        )
-        ts, vs = ts_obj.t, ts_obj.v
-        src_label = "jhtdb"
+    ts_obj = JHT.fetch_timeseries(
+        dataset=args.dataset, var=args.var,
+        x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
+    )
+    ts, vs = ts_obj.t, ts_obj.v
+    src_label = "jhtdb"
 
     # Ensure monotonic time, preserving (t,v) pairing
     if ts and any(ts[i] > ts[i+1] for i in range(len(ts)-1)):
