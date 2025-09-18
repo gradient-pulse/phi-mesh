@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-run_fd_probe.py — fetch a 1-point time series (JHTDB only),
-compute NT-rhythm metrics, and write *metrics JSON only*.
+run_fd_probe.py — fetch a 1-point time series from JHTDB,
+compute minimal NT-rhythm metrics, and write *metrics JSON only*.
 
 Args:
   --dataset  JHTDB dataset slug (e.g., isotropic1024coarse)
@@ -15,29 +15,73 @@ Args:
 
 from __future__ import annotations
 
-# --- make the repo importable even if PYTHONPATH is not set -------------------
+# --- ensure the repo root is importable even if PYTHONPATH is unset ----------
 import os, sys
 from pathlib import Path
-
-# this file: tools/fd_connectors/run_fd_probe.py  → repo root is parents[2]
-_REPO_ROOT = Path(__file__).resolve().parents[2]
+_REPO_ROOT = Path(__file__).resolve().parents[2]  # .../phi-mesh/phi-mesh
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 # ------------------------------------------------------------------------------
 
 import argparse
 import json
-from dataclasses import asdict, is_dataclass
+import math
+from statistics import pstdev
 from typing import Any, Dict, List, Tuple
 
-# rhythm tools (now importable regardless of PYTHONPATH)
-from tools.agent_rhythm.rhythm import (
-    ticks_from_message_times,
-    rhythm_from_events,
-)
-
-# JHTDB connector only
+# JHTDB connector (lives in the repo)
 from tools.fd_connectors import jhtdb as JHT
+
+
+# --------- tiny, inlined NT-metrics (no external import needed) --------------
+
+def ticks_from_message_times(ts: List[float]) -> List[float]:
+    """Return the same list (monotonic pairs are handled upstream)."""
+    return list(ts or [])
+
+def rhythm_from_events(ticks: List[float]) -> Dict[str, Any]:
+    """
+    Minimal metrics:
+      - n, duration
+      - mean_dt, cv_dt
+      - period (=mean_dt), main_peak_freq (=1/period)
+      - peaks: [[f0, 1.0]] if f0 is defined (a lightweight hint for downstream)
+    """
+    ticks = list(ticks or [])
+    n = len(ticks)
+    m: Dict[str, Any] = {"n": n}
+
+    if n >= 2:
+        dts = [ticks[i+1] - ticks[i] for i in range(n - 1)]
+        dts = [dt for dt in dts if math.isfinite(dt) and dt > 0]
+        if dts:
+            duration = ticks[-1] - ticks[0]
+            mean_dt = sum(dts) / len(dts)
+            std_dt = pstdev(dts) if len(dts) > 1 else 0.0
+            cv_dt = (std_dt / mean_dt) if mean_dt > 0 else None
+            period = mean_dt if mean_dt > 0 else None
+            f0 = (1.0 / period) if period and period > 0 else None
+
+            m.update({
+                "duration": duration,
+                "mean_dt": mean_dt,
+                "cv_dt": cv_dt,
+                "period": period,
+                "main_peak_freq": f0,
+                "peaks": [[f0, 1.0]] if f0 else [],
+            })
+            return m
+
+    # Fallback when we don't have enough points
+    m.update({
+        "duration": 0.0,
+        "mean_dt": None,
+        "cv_dt": None,
+        "period": None,
+        "main_peak_freq": None,
+        "peaks": [],
+    })
+    return m
 
 
 # ---------- helpers -----------------------------------------------------------
@@ -48,7 +92,6 @@ def parse_triplet(s: str) -> Tuple[float, float, float]:
         raise ValueError(f"Expected three comma-separated values, got: {s!r}")
     return float(parts[0]), float(parts[1]), float(parts[2])
 
-
 def to_builtin(x: Any) -> Any:
     """Coerce dataclasses / numpy / misc types into plain Python types."""
     try:
@@ -58,6 +101,7 @@ def to_builtin(x: Any) -> Any:
         class _NP: ...
         np_scalar = _NP  # type: ignore
 
+    from dataclasses import asdict, is_dataclass
     if is_dataclass(x):
         return {k: to_builtin(v) for k, v in asdict(x).items()}
     if isinstance(x, (str, int, float, bool)) or x is None:
@@ -95,7 +139,7 @@ def main() -> None:
         dataset=args.dataset, var=args.var,
         x=x, y=y, z=z, t0=t0, t1=t1, dt=dt
     )
-    ts, vs = ts_obj.t, ts_obj.v
+    ts, vs = ts_obj.t, ts_obj.v  # vs is unused by current NT metrics
     src_label = "jhtdb"
 
     # Ensure monotonic time, preserving (t,v) pairing
@@ -105,15 +149,7 @@ def main() -> None:
 
     # --- compute NT-rhythm metrics ---------------------------------------
     tick_times = ticks_from_message_times(ts)
-    mobj = rhythm_from_events(tick_times)
-
-    metrics: Dict[str, Any]
-    if is_dataclass(mobj):
-        metrics = asdict(mobj)
-    elif isinstance(mobj, dict):
-        metrics = mobj
-    else:
-        metrics = {}
+    metrics = rhythm_from_events(tick_times)
 
     # attach provenance
     metrics["source"] = src_label
