@@ -112,6 +112,11 @@ PY
             --dt   "${{ matrix.dt }}" \
             --nsteps "${{ matrix.nsteps }}"
 
+      - name: Debug check data/jhtdb after loader
+        run: |
+          echo "== data/jhtdb contents after loader =="
+          ls -lh data/jhtdb || true
+
       - name: Analyze probe (auto-find meta)
         run: |
           set -euo pipefail
