@@ -54,6 +54,30 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ---
 
+## 📚 Documentation Index
+
+Each major part of the Φ-Mesh has its own README for context, usage, and purpose:  
+
+- [Foundational Papers](foundational_rgp-papers/README.md)  
+  Core Zenodo publications that anchor the RGP fossil trail.  
+
+- [Pulses](pulse/README.md)  
+  YAML fossilization entries, syntax rules, and how they feed the Tag Map.  
+
+- [Mesh Academy](mesh_academy/README.md)  
+  Recursive learning modules, podcasts, and course catalog.  
+
+- [Experiments](experiments/rgp_ns/README.md)  
+  Navier–Stokes benchmark runs, probe workflows, and reproducibility notes.  
+
+- [Tools](tools/README.md)  
+  Utilities for database interrogation, pulse writing, and analysis.  
+
+- [Meta](meta/README.md)  
+  Tag index, link index, and the interactive Tag Map browser.
+  
+---
+
 ## Current NT Rhythm Status
 
 **Status:** NT Rhythm is **CONFIRMED** in JHTDB (grid-level). See the [Running Log](docs/nt_rhythm_log.md) for evidence and ongoing updates.
