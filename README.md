@@ -56,11 +56,9 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ## 📚 Preliminary README Links
 
-- [Foundational Papers](foundational_rgp-papers/README.md)  
-  Core Zenodo publications that anchor the RGP fossil trail.  
+- [Foundational Papers](foundational_rgp-papers/README.md) Core Zenodo publications that anchor the RGP fossil trail.  
 
-- [Pulses](pulse/README.md)  
-  YAML fossilization entries, syntax rules, and how they feed the Tag Map.  
+- [Pulses](pulse/README.md)  YAML fossilization entries, syntax rules, and how they feed the Tag Map.  
 
 ---
 
