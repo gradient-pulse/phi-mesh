@@ -1,5 +1,9 @@
 ## RPG Publications ##
 
+- title: "Re-Explaining the Internal Functioning of LLMs: An RGP-Based Perspective."
+  repo: "phi-mesh/foundational_rgp-papers/2025-09-23_Explaining_LLMs.pdf"
+  zenodo. "https://doi.org/10.5281/zenodo.17185350"
+
 - title "From Doom to Destiny & Departure: Recursive Gradient Processing and the Limping Lift-Off of Homo sapiens (v1.1)" 
   repo: "phi-mesh/foundational_rgp-papers/2025-09-23_From_Doom_To_Destiny.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17183439"
