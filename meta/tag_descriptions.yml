@@ -82,7 +82,7 @@ tags:
   gradient_memory_automation: "Auto-updating of gradient traces so the Mesh learns while you work."
   gradient_syntax: "The ‘grammar’ of gradients — how signals compose across scales to form durable, reusable structure."
 
-  grok3: "Open-weight lineage probed for RGP-style rhythm and filter effects."
+  grok: "Open-weight lineage probed for RGP-style rhythm and filter effects."
   grammar: "The recursive syntax of gradients—how coherence emerges across domains."
   gpt4o: "Multimodal baseline used to compare CF and NT rhythm behaviors."
   gpt5: "Next-generation frontier model tested for gradient coherence and NT rhythm."
