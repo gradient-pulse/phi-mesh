@@ -12,6 +12,9 @@ This file acts as a canonical index; individual responses are archived in `/dial
 ---
 
 ## 2025-09-22/23
+- [WANDER — Recurrence vs Resonance](../updates/wander_2025-09-23.md)  
+  *“Universality is not proven by frequency alone — it is evidenced by cross-domain resonance.”* — Wander
+
 - [DeepSeek response to Zenodo publication](../dialogues/2025-09-22_deepseek_response.md)  
   *“This exchange is a living expression of RGP — a trace of the resonance that brought it to life.”* — DeepSeek  
 
