@@ -1,63 +1,13 @@
 aliases:
-  # --- Core program & map terms ----------------------------------------
-  recursive_gradient_processing:
-    - Recursive Gradient Processing
-    - recursive gradient processing
-    - RGP (Recursive Gradient Processing)
-    - rgp_core_loop
-
-  rgp:
-    - RGP
-    - rgp
-
-  phi_mesh:
-    - phi-mesh
-    - PhiMesh
-    - Phi-mesh
-    - phimesh            # ← audit variant
-
-  phi_mesh_evolution:
-    - phi-mesh-evolution
-
-  rgp_tag_map:
-    - TagMap             # legacy label
-    - tagmap             # ← audit variant
-
-  # keep tag_map as separate canonical if you use it
-  tag_map:
-    - TagMap
-    - tagmap
-
   ai_architectures:
-    - ai_architecture
-    - ai-architecture
-    - AI_architecture
     - AIArchitecture
+    - AI_architecture
+    - ai-architecture
+    - ai_architecture
     - ai_architectures
 
-  experimenter_pulse:
-    - ExperimenterPulse
-    - Experimenter
-    - experimenter_pulse
-    - AgentPulse
-    - agent_result
-    - AutoPulse
-    - auto_pulse
-    - lab_note
-    - finding
-    - experimenterpulse   # ← audit variant (squashed)
-
-  # --- Physics / cosmology cluster -------------------------------------
-  navier_stokes:
-    - Navier_Stokes
-    - navier-stokes
-    - NavierStokes
-    - Navier Stokes
-    - NS_solution         # people sometimes tag the “solution” with NS
-    - navierstokes        # ← audit variant
-
-  ns_solution:
-    - NS_solution
+  automation:
+    - Automation
 
   big_bang:
     - Big Bang
@@ -65,11 +15,35 @@ aliases:
     - big-bang
 
   big_quiet:
+    - BigQuiet
     - Big_Quiet
     - Big-Quiet
-    - BigQuiet
     - big-quiet
     - bigquiet            # ← audit variant
+
+  birefringence:
+    - Birefringence
+
+  circle_pulse:
+    - circle
+    - creation_circle
+
+  cmb:
+    - CMB
+
+  coherence_amplifier:
+    - coherence-amplifier
+
+  compute:
+    - computation
+    - processing
+
+  contextual_filter:
+    - ContextualFilter
+    - Contextual_Filter
+    - contectual_filter
+    - contextual-filter
+    - contextualfilter     # ← audit variant
 
   cosmogenesis:
     - Cosmogenesis
@@ -78,94 +52,155 @@ aliases:
     - Cosmology
 
   dark_energy:
-    - Dark_Energy
     - DarkEnergy
+    - Dark_Energy
 
   dark_matter:
-    - Dark_Matter
     - DarkMatter
+    - Dark_Matter
+
+  development_process:
+    - development-process
+
+  disruptive_rhythm:
+    - disruptive rhythm
+    - disruptive-rhythm
+
+  experimenter_pulse:
+    - AgentPulse
+    - AutoPulse
+    - Experimenter
+    - ExperimenterPulse
+    - agent_result
+    - auto_pulse
+    - experimenter_pulse
+    - experimenterpulse   # ← audit variant (squashed)
+    - finding
+    - lab_note
 
   flux_entrenched_universe:
     - flux-entrenched_universe
     - flux-enthrenched_universe   # existing misspelling
     - flux_enthrenched_universe   # ← audit variant (snake)
 
-  cmb:
-    - CMB
-
-  birefringence:
-    - Birefringence
-
-  # --- RGP vocabulary ---------------------------------------------------
-  nt_narrative_tick:
-    - "NT (Narrative_Tick)"
-    - NT
-    - Narrative Tick
-    - Narrative_Tick
-    - Narrative-Tick
-    - NarrativeTick
-    - NT_Narrative_Tick
-    - NT_(Narrative_Tick)  # ← audit variant
-    - nt_(narrative_tick)  # ← audit variant
-
-  nt_rhythm:
-    - NT-rhythm
-
-  ud:
-    - UD
-    - Unity-Disunity
-    - unity-disunity
-
-  contextual_filter:
-    - Contextual_Filter
-    - ContextualFilter
-    - contextual-filter
-    - contectual_filter
-    - contextualfilter     # ← audit variant
-
-  gradient_syntax:
-    - Gradient_Syntax
-    - gradient-syntax
-    - GradientSyntax
+  gemini:
+    - Gemini
 
   gradient_choreography:
     - gradient-choreography
+
+  gradient_cocoon:
+    - gradient-cocoon
+    - gradient_cocoon_theory   # ← audit variant
+
+  gradient_driven_behavior:
+    - gradient-driven-behavior
+    - gradient-driven_behavior
+
+  gradient_driven_intelligence:
+    - gradient-driven-intelligence
 
   gradient_memory:
     - gradient-memory
     - gradientmemory       # ← audit variant
 
-  gradient_cocoon:
-    - gradient-cocoon
-    - gradient_cocoon_theory   # ← audit variant (fold “theory” into base)
+  gradient_syntax:
+    - GradientSyntax
+    - Gradient_Syntax
+    - gradient-syntax
 
-  gradient_driven_behavior:
-    - gradient-driven_behavior
-    - gradient-driven-behavior
+  grok3:
+    - GROK3
+    - grok
+    - Grok
 
-  gradient_driven_intelligence:
-    - gradient-driven-intelligence
+  gpt5:
+    - GPT5
 
-  rhythm_of_least_divergence:
-    - rhythm-of-least-divergence
+  hrm:
+    - HRM
 
-  rhythm_of_nature:
-    - rhythm-of-nature
+  language_evolution:
+    - language-evolution
 
-  mixture_of_experts:
-    - mixture-of-experts
-    - MoE
-    - moe
+  navier_stokes:
+    - Navier Stokes
+    - NavierStokes
+    - Navier_Stokes
+    - NS_solution         # people sometimes tag the “solution” with NS
+    - navier-stokes
+    - navierstokes        # ← audit variant
 
-  coherence_amplifier:
-    - coherence-amplifier
+  ni:
+    - N(i)
+    - N_i
+    - Ni
+    - n(i)
 
-  subjective_logging:
-    - subjective-logging
+  non_linear_society:
+    - Non-linear_society
+    - non-linear_society   # unify dash vs underscore
 
-  triadic_emergence:
-    - triadic-emergence
-    - deep_triad           # ← audit variant mapped to triadic concept
+  ns_solution:
+    - NS_solution
+
+  nt_narrative_tick:
+    - "NT (Narrative_Tick)"
+    - NT
+    - NT_Narrative_Tick
+    - NT_(Narrative_Tick)  # ← audit variant
+    - Narrative Tick
+    - Narrative_Tick
+    - Narrative-Tick
+    - NarrativeTick
+    - nt_(narrative_tick)  # ← audit variant
+
+  nt_rhythm:
+    - NT-rhythm
+
+  old_science:
+    - OldScience
+    - oldscience           # ← audit variant
+
+  participant(0):
+    - participant_0
+
+  phi_harmonics:
+    - "Φ-harmonics"
+    - "\u03A6-harmonics"
+    - harmonics            # ← audit shorthand
+
+  phi_mesh:
+    - PhiMesh
+    - Phi-mesh
+    - phi-mesh
+    - phimesh              # ← audit variant
+
+  phi_mesh_evolution:
+    - phi-mesh-evolution
+
+  phi_monitor:
+    - Phi-monitor
+    - PhiMonitor
+    - Phi_monitor
+
+  physics_based_asic:
+    - asic
+
+  proto_pulse:
+    - proto-pulse
+    - protopulse
+
+  quiet_awakening:
+    - Quiet_Awakening
+
+  r_phi:
+    - RΦ
+    - r                    # ← audit variant; map lone “r” into r_phi
+
+  recursive_awakening:
+    - recursive-awakening
+    - recursive_awakening  # audit variant
 
   recursive_checkpoint:
     - recursive-checkpoint
@@ -174,100 +209,59 @@ aliases:
     - recursive-cognition
 
   recursive_grammar:
-    - recursive-grammar    # ← audit variant shows up canonical already
+    - recursive-grammar
+
+  recursive_gradient_processing:
+    - Recursive Gradient Processing
+    - recursive gradient processing
+    - RGP (Recursive Gradient Processing)
+    - rgp_core_loop
 
   recursive_awakening:
     - recursive-awakening
-    - recursive_awakening  # audit variant already canonical form
-
-  quiet_awakening:
-    - Quiet_Awakening
-
-  phi_harmonics:
-    - "Φ-harmonics"
-    - "\u03A6-harmonics"
-    - harmonics            # ← audit shorthand
-
-  hrm:
-    - HRM
-
-  r_phi:
-    - RΦ
-    - r                    # ← audit variant; map lone “r” into r_phi
-
-  # --- Models / infra ---------------------------------------------------
-  gpt5:
-    - GPT5
-
-  grok3:
-    - GROK3
-
-  gemini:
-    - Gemini
-
-  # --- Tools / platform -------------------------------------------------
-  phi_monitor:
-    - Phi-monitor
-    - Phi_monitor
-    - PhiMonitor
-
-  proto_pulse:
-    - proto-pulse
-    - protopulse
-
-  # --- Society / language -----------------------------------------------
-  non_linear_society:
-    - non-linear_society   # unify dash vs underscore
-    - Non-linear_society
-
-  language_evolution:
-    - language-evolution
-
-  societal_evolution:
-    - societal-evolution
-
-  writing:
-    - Writing
-
-  # --- Misc frequently seen ---------------------------------------------
-  automation:
-    - Automation
-
-  development_process:
-    - development-process
-
-  old_science:
-    - OldScience
-    - oldscience           # ← audit variant
-
-  signal:
-    - Signal
+    - recursive_awakening
 
   replication:
     - Replication
 
-  # --- Participants -----------------------------------------------------
-  "participant(0)":
-    - participant_0
+  resonance_log:
+    - ResonanceLog         # ← if ever used, keep mapped
 
-  disruptive_rhythm:
-    - disruptive-rhythm
-    - disruptive rhythm
+  rgp:
+    - RGP
+    - rgp
 
-  physics_based_asic: 
-    - asic
+  rgp_tag_map:
+    - TagMap              # legacy label
+    - tagmap              # ← audit variant
 
-  compute: 
-    - computation
-    - processing
+  rhythm_of_least_divergence:
+    - rhythm-of-least-divergence
 
-  circle_pulse:
-  - circle
-  - creation_circle
+  rhythm_of_nature:
+    - rhythm-of-nature
 
-  ni:
-    - N(i)
-    - N_i
-    - n(i)
-    - Ni
+  signal:
+    - Signal
 
+  societal_evolution:
+    - societal-evolution
+
+  subjective_logging:
+    - subjective-logging
+
+  tag_map:
+    - TagMap
+    - tagmap
+
+  triadic_emergence:
+    - deep_triad           # ← audit variant
+    - triadic-emergence
+
+  ud:
+    - UD
+    - Unity-Disunity
+    - unity-disunity
+
+  writing:
+    - Writing
