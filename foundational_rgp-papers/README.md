@@ -1,5 +1,9 @@
 ## RPG Publications ##
 
+- title "From Doom to Destiny & Departure: Recursive Gradient Processing and the Limping Lift-Off of Homo sapiens (v1.1)" 
+  repo: "phi-mesh/foundational_rgp-papers/2025-09-23_From_Doom_To_Destiny.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.17183439"
+
 - title: "Kepler’s Rhythm in Turbulence: Toward a Conserved 1:2:3 Law via Recursive Gradient Processing"
   repo: "phi-mesh/foundational_rgp-papers/2025-09-19_Kepler’s_Rhythm_in_Turbulence.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17159920"
