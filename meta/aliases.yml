@@ -123,6 +123,16 @@ aliases:
   language_evolution:
     - language-evolution
 
+  meta_ai:
+    - Meta
+    - META
+    - meta
+    - MetaAI
+    - meta-ai
+    - facebook_ai
+    - FacebookAI
+    - FAIR          # Meta’s AI research lab (Facebook AI Research)
+
   navier_stokes:
     - Navier Stokes
     - NavierStokes
