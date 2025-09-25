@@ -32,10 +32,9 @@ Located in `pipeline/`:
 
 ---
 
-### Flow (Mermaid diagram)
+### Flow (ASCII diagram)
 
-mermaid
-flowchart LR
-    A[JHTDB Loader] --> B[Analyzer (pipeline)]
-    B --> C[Pulse Builder]
-    B --> D[Figures & Tables]
+JHTDB Loader  --->  Analyzer (pipeline)  --->  Pulse Builder
+                         |
+                         v
+                   Figures & Tables
