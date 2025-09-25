@@ -34,7 +34,7 @@ Located in `pipeline/`:
 
 ### Flow (Mermaid diagram)
 
-```mermaid
+mermaid
 flowchart LR
     A[JHTDB Loader] --> B[Analyzer (pipeline)]
     B --> C[Pulse Builder]
