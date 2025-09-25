@@ -39,3 +39,4 @@ flowchart LR
     A[JHTDB Loader] --> B[Analyzer (pipeline)]
     B --> C[Pulse Builder]
     B --> D[Figures & Tables]
+```
