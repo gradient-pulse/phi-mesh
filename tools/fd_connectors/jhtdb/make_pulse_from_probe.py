@@ -1,3 +1,9 @@
+# ==============================================================
+#  Φ-Mesh GOLD PATH FILE  |  Canonical: Probe → Spectrum → Pulse
+#  This script is part of the primary production pipeline.
+#  Reusable analysis lives in: pipeline/
+#  Docs: docs/GOLD_PATH.md
+# ==============================================================
 #!/usr/bin/env python3
 """
 make_pulse_from_probe.py
