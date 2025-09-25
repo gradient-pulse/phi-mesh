@@ -8,6 +8,7 @@ tags:
   ai_intelligence: "Catch-all tag for how AI systems process gradients beyond symbolic rules."
   ai_role_differentiation: "Different agents/models specialize as contextual filters; division of labor that boosts systemic coherence."
   ai_shift: "Paradigm shift for AI once NT Rhythm is confirmed: from tokens to ticks, context windows to recursive windows, and pattern recognition to structural resonance."
+  ai_temperature: "Control parameter in AI models influencing randomness and creativity of outputs; high values encourage exploration, low values enforce determinism."
 
   alignment: "Keeping models in phase with intended gradients—less about rules, more about resonance."
   alignment_flux: "Benign drift in alignment that signals adaptation rather than failure."
@@ -45,8 +46,11 @@ tags:
   cosmological_attractor: "Intelligence understood as a universal outcome of recursion across gradients, emerging wherever coherence stabilizes and propagating beyond species or substrate."
   cosmology: "Nested gradient loops at universe scale; expansion, curvature, and resonance read as process, not static stuff."
   creation_circle: "Collaborative loop where multiple agents co-stabilize coherence; collective gradient processing."
+
   dark_energy: "Bookkeeping for large-scale gradient effects in expansion; RGP treats it as field behavior, not mysterious fluid."
   dark_matter: "Observable gravitational residue of hidden gradients; framed as process-level structure rather than particles."
+  data_access: "The ability to retrieve, query, or connect to datasets; governs transparency, reproducibility, and the gradient flow of knowledge."
+  data_sources: "Origins of empirical input—databases, experiments, or simulations—that provide raw material for gradient analysis and coherence testing."
   delta_resonance: "Delta streams as resonances forming at the edge of dominant gradients — coherence branching where context reshapes flow."
   deepseek: "Frontier model family used for probing RGP signatures (CFs, rhythms, resets)."
   development_process: "Engineering as rhythm: CI/CD as ticks, refactors as resets, reviews as contextual filters."
@@ -78,6 +82,7 @@ tags:
   gradient_driven_intelligence: "Intelligence defined by managing gradients and filters, not token stats."
   gradient_flux_reversal: "When gradient flows flip direction under new filters; coherence shock event."
   gradient_lensing: "Recursive shaping of gradients (fields, flows, or potentials) so that coherence is concentrated and directed, much like a gravitational lens bends light. In RGP, gradient lensing gates interactions in relative coordinates, revealing hidden coherence across systems."
+  gradient_map: "A structured representation of gradients and their interactions, visualizing how tensions evolve into choreographies and contextual filters."
   gradient_memory: "Stable traces left by repeated gradient flow; lets systems reuse solutions across time and scale."
   gradient_memory_automation: "Auto-updating of gradient traces so the Mesh learns while you work."
   gradient_syntax: "The ‘grammar’ of gradients — how signals compose across scales to form durable, reusable structure."
