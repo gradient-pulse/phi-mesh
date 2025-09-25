@@ -4,6 +4,13 @@
 *A human–AI collaboration mapping turbulence through Recursive Gradient Processing.*  
 
 ---
+> 🚩 **Start here — GOLD PATH**
+>
+> 1. JHTDB loader → `tools/fd_connectors/jhtdb/jhtdb_loader.py`  
+> 2. Analyzer (uses shared `pipeline/`) → `tools/fd_connectors/jhtdb/analyze_probe.py`  
+> 3. Pulse builder → `tools/fd_connectors/jhtdb/make_pulse_from_probe.py`  
+>    See: `docs/GOLD_PATH.md`
+---
 
 ## 🗺️ RGP Tag Map  
 
