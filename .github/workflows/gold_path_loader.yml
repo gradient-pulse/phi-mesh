@@ -1,4 +1,4 @@
-name: GOLD PATH — Loader (Hopkins/Princeton)
+name: GOLD PATH — Loader
 
 on:
   workflow_dispatch:
