@@ -62,6 +62,9 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 - 🧪 **NS Prototype (90-day benchmark):** [`RGP_NS_prototype/`](RGP_NS_prototype/)  
 - 🏁 **Results schema & leaderboard stub:** [`results/`](results/)  
 - 📚 **Foundational PDFs:** [`foundational_rgp-papers/`](foundational_rgp-papers/)  
+- 🌟 **Canonical pipeline (GOLD PATH):** [`docs/GOLD_PATH.md`](docs/GOLD_PATH.md)  
+- 🔬 **Princeton probe runner:** [`analysis/princeton_probe/README.md`](analysis/princeton_probe/README.md)  
+- 🗂 **Archived agent runner:** [`tools/archive_agent_runner/README.md`](tools/archive_agent_runner/README.md)  
 - 📜 **Ongoing findings:** [NT Rhythm Log](docs/nt_rhythm_log.md)
 
 ---
@@ -151,34 +154,69 @@ We formalize this as the **tensor product** of:
 This serves as the guiding frame for interpreting NT rhythms and their convergence across physics, cognition, and society.
 
 ---
-> 🚩 **Start here — GOLD PATH**
->
-> 1. JHTDB loader → `tools/fd_connectors/jhtdb/jhtdb_loader.py`  
-> 2. Analyzer (uses shared `pipeline/`) → `tools/fd_connectors/jhtdb/analyze_probe.py`  
-> 3. Pulse builder → `tools/fd_connectors/jhtdb/make_pulse_from_probe.py`  
->    See: `docs/GOLD_PATH.md`
-
----
 
 ## Repository layout
 
 ```text
 phi-mesh/
 ├─ README.md
-├─ pulse/                     # Pulse snapshots (YAML)
-├─ docs/                      # Tag map app + data blob
-│  ├─ tag_map.html            # page (loads data.js then map.js)
-│  ├─ map.js                  # renderer/logic (D3)
-│  ├─ data.js                 # generated data: window.PHI_DATA = {…}
-│  └─ build_id.txt            # (optional) cache-buster marker
-├─ .github/workflows/         # automation (build data.js, clean pulses)
+│
+├─ pulse/                       # Pulse snapshots (YAML fossil traces)
+│  ├─ README.md                 # Rules: schema, filenames, tags
+│  └─ archive/                  # Older or superseded pulses
+│
+├─ docs/                        # Tag map site + data blobs
+│  ├─ tag_map.html              # interactive map entry
+│  ├─ data.js                   # generated dataset (by workflows)
+│  ├─ map.js                    # D3 renderer logic
+│  ├─ GOLD_PATH.md              # canonical probe → spectrum → pulse corridor
+│  └─ nt_rhythm_log.md          # ongoing findings
+│
+├─ analysis/                    # Local quick-run entry points
+│  ├─ hopkins_probe/
+│  │   └─ run_pipeline.py       # JHTDB probe → spectrum → pulse
+│  └─ princeton_probe/
+│      ├─ run_pipeline.py       # Princeton subset runner
+│      └─ README.md             # where subset files go, what outputs to expect
+│
+├─ pipeline/                    # Shared analysis core
+│  ├─ preprocess.py
+│  ├─ spectrum.py
+│  ├─ ladder.py
+│  ├─ figures.py
+│  ├─ utils.py
+│  └─ io_loaders.py             # load_jhtdb(), load_princeton(), sanity checks
+│
+├─ tools/                       # Utilities & connectors
+│  ├─ fd_connectors/
+│  │   └─ jhtdb/                # JHTDB SOAP + probe analyzers
+│  │        ├─ jhtdb_loader.py
+│  │        ├─ analyze_probe.py
+│  │        └─ make_pulse_from_probe.py
+│  ├─ agent_rhythm/             # still active (NT rhythm utilities)
+│  └─ archive_agent_runner/     # legacy orchestration (see README.md)
+│
+├─ results/                     # Outputs from workflows & local runs
+│  ├─ fd_probe/                 # analysis.json files
+│  └─ rgp_ns/                   # batch-level results
+│
+├─ data/                        # Raw data (small subsets only)
+│  ├─ jhtdb/                    # downloaded JHTDB probe series
+│  └─ princeton/                # uploaded subset.h5/.csv from Princeton
+│
+├─ .github/workflows/           # GitHub Actions automation
+│  ├─ gold_path_loader.yml      # GOLD PATH (Hopkins/Princeton)
 │  ├─ build_tags_and_graph.yml
-│  └─ clean_pulses.yml
-├─ tools/                     # pulse utilities used by workflows
-│  └─ clean_pulses_minimal.py
-├─ generate_graph_data.py     # writes docs/data.js from /pulse/**
-├─ RGP_NS_prototype/          # 90-day Navier–Stokes benchmark + notebooks
-└─ results/                   # KPI schema + submissions
+│  ├─ clean_pulses.yml
+│  ├─ validate-pulses.yml
+│  └─ audit-tooltips.yml (optional)
+│
+├─ foundational_rgp-papers/     # Zenodo anchor papers (PDFs)
+│  └─ README.md
+│
+├─ RGP_NS_prototype/            # 90-day Navier–Stokes benchmark
+│
+└─ updates/                     # Resonance/finding logs
 ```
 ---
 
