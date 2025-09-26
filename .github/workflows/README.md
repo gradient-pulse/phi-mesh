@@ -1,138 +1,108 @@
-# Φ-Mesh Workflows
+⸻
 
-This repo uses a small set of GitHub Actions to keep the Tag Map clean and make **experiment → fossilization** predictable.
+Φ-Mesh Workflows
 
----
+A small set of GitHub Actions to keep experiment → fossilization predictable.
 
-## Ground rules
+Ground rules
+	•	Pulse filename: YYYY-MM-DD_<slug>_batch#.yml
+	•	Result filename: YYYY-MM-DD_<slug>_batch#.json
+	•	Minimal pulse keys: title, summary, tags, papers, podcasts
+	•	Tags: underscore_case with a tooltip in meta/tag_descriptions.yml.
 
-- **Pulse filename:** `YYYY-MM-DD_<slug>_batch#.yml`
-- **Result filename:** `YYYY-MM-DD_<slug>_batch#.json`
-- **Minimal pulse keys:** `title`, `summary`, `tags`, `papers`, `podcasts`
-  *(No `date:` key; the date is derived from the filename.)*
-- **Tags:** `underscore_case`. New tags should always have a tooltip in `meta/tag_descriptions.yml`.
+⸻
 
----
+Workflow catalog
 
-## Workflow catalog
+1) GOLD PATH — Loader (Hopkins/Princeton)  ✅
 
-### 1) RGP-NS Grid
-**File:** `.github/workflows/rgp-ns-grid.yml`  
-**When:** manual (`workflow_dispatch`)  
-**What:** runs the RGP-NS agent across multiple JHTDB/NASA probe points.  
+File: .github/workflows/gold_path_loader.yml
+When: manual (workflow_dispatch)
+What: runs the canonical Probe → Spectrum → Pulse pipeline.
+	•	Modes
+	•	source=jhtdb → pulls a single probe from JHTDB (SOAP), analyzes it, emits a pulse.
+	•	source=princeton → ingests a local subset file, analyzes it, emits a pulse.
+	•	Inputs (2 total)
+	•	source: jhtdb | princeton
+	•	params: JSON blob parsed by the job (keeps us under the 10-input limit).
+	•	Examples (paste in the params field):
+	•	JHTDB
 
-Each shard:
-- Writes results under `results/rgp_ns/.../batch#/summary.json`
-- Emits an auto-pulse under `pulse/auto/YYYY-MM-DD_<slug>_batch#.yml`
-- Triggers map updates.
+{"flow":"isotropic1024coarse","x":0.1,"y":0.2,"z":0.3,"t0":0.0,"dt":0.0005,"nsteps":2400,"slug":"isotropic"}
 
-Inputs:
-- **points** — newline-separated xyz triplets, e.g.
 
-0.10,0.10,0.10
+	•	Princeton
 
-0.12,0.10,0.10
+{"subset_path":"data/princeton/subset.h5","slug":"princeton_subset"}
 
-- **twin** — time window as `t0,t1,dt`, default `0.0,1.2,0.0001`.
-- **title / tags** — forwarded to pulses.
 
----
+	•	Outputs
+	•	JHTDB raw series → data/jhtdb/*.csv.gz (+ .meta.json)
+	•	Analysis → results/fd_probe/*.analysis.json
+	•	Pulse → pulse/auto/YYYY-MM-DD_<slug>_batch#.yml
 
-### 2) Validate Pulses
-**File:** `.github/workflows/validate-pulses.yml`  
-**When:** on PRs/pushes touching `pulse/**`  
-**What:** enforces filename format, minimal schema, and tooltips.  
-**Tip:** archives under `pulse/archive/**` are ignored (or enforce your own rule there).
+⸻
 
----
+2) Validate Pulses
 
-### 3) Audit Missing Tooltips
-**File:** `.github/workflows/audit-tooltips.yml` (if present)  
-**When:** manual  
-**What:** lists any tags in pulses without an entry in `meta/tag_descriptions.yml`.
+File: .github/workflows/validate-pulses.yml
+When: on PRs/pushes touching pulse/**
+What: filename format + schema + tooltip checks.
 
----
+3) Build Tags & Graph
 
-### 4) Build Tags & Graph
-**File:** `.github/workflows/build_tags_and_graph.yml`  
-**When:** manual (ad-hoc)  
-**What:** runs `generate_graph_data.py` to rebuild `docs/data.js`.  
+File: .github/workflows/build_tags_and_graph.yml
+When: manual
+What: rebuilds docs/data.js for the Tag Map site.
 
-*This replaces the older “Rebuild Maps” workflow (archived).*
+4) Audit Missing Tooltips (optional)
 
----
+File: .github/workflows/audit-tooltips.yml
+When: manual
+What: lists tags missing tooltips.
 
-### 5) Clean Pulses (schema normalizer)
-**File:** `.github/workflows/clean-pulses.yml`  
-**When:** manual, rarely  
-**What:** normalizes legacy pulses to the minimal schema.  
-⚠️ **Use with care**: review diffs.
+5) Clean Pulses (normalizer; use sparingly)
 
----
+File: .github/workflows/clean-pulses.yml
+When: manual
+What: normalizes legacy pulses to the minimal schema.
 
-### 6) One-time Mesh Maintenance
-**File:** `.github/workflows/mesh-maintenance.yml`  
-**When:** manual, exceptional changes only  
-**What:** repo-wide hygiene tasks (aliases migrations, bulk renames).
+Archived
+	•	RGP-NS Grid (legacy) → moved to archive/ or delete if unused.
+Reason: superseded by the GOLD PATH, which is simpler and matches the current repo layout.
 
----
+⸻
 
-### 7) Pages Build
-**File:** GitHub’s `pages-build-deployment`  
-**When:** automatic on pushes that update `docs/`  
-**What:** publishes the Tag Map site. Any workflow that commits `docs/data.js` will trigger this.
+Roles & flow
+	1.	Experimenter: Run GOLD PATH (Hopkins or Princeton).
+	2.	Publisher: If you only changed tags/tooltips, run Build Tags & Graph.
 
----
+⸻
 
-## Roles & flow
+Guardrails
+	•	No cron; everything is explicit (push or manual).
+	•	Only dedicated workflows emit pulses; validation enforces schema.
+	•	Archives live under pulse/archive/**.
+	•	The site rebuilds when docs/data.js changes.
 
-1. **Agent/Experimenter**
-   - Pushes results via Grid workflow.
-   - Each batch produces results + pulse.
-   - Map updates automatically.
+⸻
 
-2. **Publisher (you)**
-   - If publishing: run **RGP-NS Grid**.
-   - For tooltip/tag edits only: run **Build Tags & Graph**.
+Troubleshooting quickies
+	•	Pulse not on the site? Run Build Tags & Graph.
+	•	“Tags missing tooltips”? Add one-liners in meta/tag_descriptions.yml, then rebuild.
+	•	Duplicate/weird tags? Check meta/aliases.yml.
 
----
+⸻
 
-## Guardrails
+Where things live
+	•	Pulses → pulse/**
+	•	Results → results/**
+	•	JHTDB data → data/jhtdb/**
+	•	Princeton subsets → data/princeton/**
+	•	GOLD PATH code →
+	•	Loader/analyzer (Hopkins): tools/fd_connectors/jhtdb/
+	•	Princeton runner: analysis/princeton_probe/run_pipeline.py
+	•	Shared analysis: pipeline/
+	•	Pages site → docs/
 
-- 🚫 No cron jobs; everything is explicit (push or manual).  
-- ✅ Only dedicated workflows emit pulses; validation enforces schema.  
-- 🗂 Archives live under `pulse/archive/**`.  
-- 📜 The site rebuilds when `docs/data.js` changes (committed by workflows).
-
----
-
-## Troubleshooting quickies
-
-- **Pulse appears on GitHub but not on the site?**  
-  Ensure a workflow rebuilt `docs/data.js` (or run **Build Tags & Graph**). Check **Validate Pulses**.
-
-- **“Tags missing tooltips” warning?**  
-  Add one-liners in `meta/tag_descriptions.yml`, then run **Build Tags & Graph**.
-
-- **Unexpected/duplicate tags?**  
-  Check `meta/aliases.yml` and browser console logs from `normalize_data.js`.
-
----
-
-## Publishing checklist (fast)
-
-1. Run **RGP-NS Grid**.  
-2. Confirm **Validate Pulses** is green.  
-3. Verify the Tag Map updated.
-
----
-
-## Where Things Live
-
-- Pulses → `pulse/**`  
-- Aliases → `meta/aliases.yml`  
-- Tag tooltips → `meta/tag_descriptions.yml`  
-- Agent rhythm tools → `tools/agent_rhythm/`  
-- FD connectors → `tools/fd_connectors/`  
-- Results → `results/**`  
-- Pages site → `docs/`
+⸻
