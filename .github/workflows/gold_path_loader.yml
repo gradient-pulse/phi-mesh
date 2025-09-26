@@ -8,47 +8,18 @@ on:
         required: true
         default: "jhtdb"
 
-      # --- JHTDB inputs (used only when source=jhtdb) ---
-      flow:
-        description: "JHTDB dataset (e.g. isotropic1024coarse)"
-        required: false
-        default: "isotropic1024coarse"
-      x:
-        description: "Probe X coordinate"
-        required: false
-        default: "0.1"
-      y:
-        description: "Probe Y coordinate"
-        required: false
-        default: "0.2"
-      z:
-        description: "Probe Z coordinate"
-        required: false
-        default: "0.3"
-      t0:
-        description: "Start time"
-        required: false
-        default: "0.0"
-      dt:
-        description: "Time step"
-        required: false
-        default: "0.0005"
-      nsteps:
-        description: "Number of steps"
-        required: false
-        default: "2400"
-      slug:
-        description: "Slug for filenames"
-        required: false
-        default: "isotropic"
-      batch_file:
-        description: "Optional path (in repo) to tools/fd_connectors/jhtdb/batch.yml"
-        required: false
-        default: ""
+      flow:       { description: "JHTDB dataset", required: false, default: "isotropic1024coarse" }
+      x:          { description: "Probe X coordinate", required: false, default: "0.1" }
+      y:          { description: "Probe Y coordinate", required: false, default: "0.2" }
+      z:          { description: "Probe Z coordinate", required: false, default: "0.3" }
+      t0:         { description: "Start time", required: false, default: "0.0" }
+      dt:         { description: "Time step", required: false, default: "0.0005" }
+      nsteps:     { description: "Number of steps", required: false, default: "2400" }
+      slug:       { description: "Slug for filenames", required: false, default: "isotropic" }
+      batch_file: { description: "Optional JHTDB batch.yml", required: false, default: "" }
 
-      # --- Princeton inputs (used only when source=princeton) ---
       subset_path:
-        description: "Path to subset file in repo (e.g. data/princeton/subset.h5 or .csv)"
+        description: "Princeton subset file (CSV/HDF5)"
         required: false
         default: "data/princeton/subset.h5"
 
@@ -63,139 +34,61 @@ jobs:
   run:
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: ${{ github.workspace }}   # allow repo-local imports
-      JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}  # set only if using JHTDB
+      PYTHONPATH: ${{ github.workspace }}
+      JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Show selected inputs
-        run: |
-          echo "source       = ${{ github.event.inputs.source }}"
-          echo "flow         = ${{ github.event.inputs.flow }}"
-          echo "point (x,y,z)= ${{ github.event.inputs.x }},${{ github.event.inputs.y }},${{ github.event.inputs.z }}"
-          echo "t0,dt,nsteps = ${{ github.event.inputs.t0 }},${{ github.event.inputs.dt }},${{ github.event.inputs.nsteps }}"
-          echo "slug         = ${{ github.event.inputs.slug }}"
-          echo "batch_file   = ${{ github.event.inputs.batch_file }}"
-          echo "subset_path  = ${{ github.event.inputs.subset_path }}"
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: |
+      - run: |
           python -m pip install --upgrade pip
-          # shared
-          pip install "numpy==1.23.5" "pandas==2.2.2" "pyyaml>=6.0" "pyarrow>=14"
-          # JHTDB SOAP client (safe even if not used)
-          pip install "suds-community>=1.1.2"
+          pip install numpy pandas pyyaml pyarrow suds-community
 
-      # ------------------------
-      # Hopkins path (JHTDB)
-      # ------------------------
-      - name: Plan matrix (JHTDB batch)
+      - name: Plan JHTDB matrix
         id: plan
         if: ${{ github.event.inputs.source == 'jhtdb' }}
-        shell: bash
         run: |
-          set -euo pipefail
           BF="${{ github.event.inputs.batch_file }}"
-          if [[ -n "$BF" && -f "$BF" ]]; then
-            python - <<'PY'
-import json, yaml, io, os, sys
-d = yaml.safe_load(io.open(os.environ['BF'],'r',encoding='utf-8')) or {}
-runs = list(d.get('runs',[]))
-print(json.dumps({'include':runs},separators=(',',':')))
-PY
+          if [ -n "$BF" ] && [ -f "$BF" ]; then
+            python -c "import json,yaml,io; d=yaml.safe_load(io.open('$BF')) or {}; runs=list(d.get('runs',[])); print('matrix='+json.dumps({'include':runs}), end='')" >> $GITHUB_OUTPUT
           else
-            python - <<'PY'
-import json, os
-print(json.dumps({'include':[{
-  'flow':    os.environ['FLOW'],
-  'x':       float(os.environ['X']),
-  'y':       float(os.environ['Y']),
-  'z':       float(os.environ['Z']),
-  't0':      float(os.environ['T0']),
-  'dt':      float(os.environ['DT']),
-  'nsteps':  int(os.environ['NSTEPS']),
-  'slug':    os.environ['SLUG'],
-}]},separators=(',',':')))
-PY
-          fi > matrix.json
-          echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
-        env:
-          BF:      ${{ github.event.inputs.batch_file }}
-          FLOW:    ${{ github.event.inputs.flow }}
-          X:       ${{ github.event.inputs.x }}
-          Y:       ${{ github.event.inputs.y }}
-          Z:       ${{ github.event.inputs.z }}
-          T0:      ${{ github.event.inputs.t0 }}
-          DT:      ${{ github.event.inputs.dt }}
-          NSTEPS:  ${{ github.event.inputs.nsteps }}
-          SLUG:    ${{ github.event.inputs.slug }}
+            python -c "import json; print('matrix='+json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':float('${{ github.event.inputs.x }}'),'y':float('${{ github.event.inputs.y }}'),'z':float('${{ github.event.inputs.z }}'),'t0':float('${{ github.event.inputs.t0 }}'),'dt':float('${{ github.event.inputs.dt }}'),'nsteps':int('${{ github.event.inputs.nsteps }}'),'slug':'${{ github.event.inputs.slug }}'}]}), end='')" >> $GITHUB_OUTPUT
 
-      - name: Run JHTDB loader (fetch → analyze → pulse)
+      - name: Run JHTDB pipeline
         if: ${{ github.event.inputs.source == 'jhtdb' }}
-        shell: bash
         run: |
-          set -euo pipefail
-          matrix='${{ steps.plan.outputs.matrix }}'
-          python - <<'PY'
-import json, subprocess, shlex, sys, os
-m = json.loads(os.environ['MATRIX'])
-for run in m.get('include', []):
-  flow=run['flow']; x=run['x']; y=run['y']; z=run['z']; t0=run['t0']; dt=run['dt']; nsteps=run['nsteps']; slug=run.get('slug','isotropic')
-  # 1) fetch
-  cmd=f"python tools/fd_connectors/jhtdb/jhtdb_loader.py --flow {flow} --x {x} --y {y} --z {z} --t0 {t0} --dt {dt} --nsteps {nsteps} --slug {slug}"
-  subprocess.check_call(shlex.split(cmd))
-  # 2) analyze
-  stem=f"{flow}__x{x}_y{y}_z{z}__t{t0}_dt{dt}_n{nsteps}"
-  meta=f"data/jhtdb/{stem}.meta.json"
-  out=f"results/fd_probe/{stem}.analysis.json"
-  subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
-  # 3) pulse
-  subprocess.check_call(["python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
-                         "--flow",flow,"--x",str(x),"--y",str(y),"--z",str(z),
-                         "--t0",str(t0),"--dt",str(dt),"--nsteps",str(nsteps),
-                         "--slug",slug])
-PY
-        env:
-          MATRIX: ${{ steps.plan.outputs.matrix }}
+          import json,subprocess,shlex,os
+          m=json.loads('${{ steps.plan.outputs.matrix }}')
+          for r in m['include']:
+              cmd=f"python tools/fd_connectors/jhtdb/jhtdb_loader.py --flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} --t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
+              subprocess.check_call(shlex.split(cmd))
+              stem=f\"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}\"
+              meta=f"data/jhtdb/{stem}.meta.json"
+              out=f"results/fd_probe/{stem}.analysis.json"
+              subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
+              subprocess.check_call(["python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
+                                    "--flow",r['flow'],"--x",str(r['x']),"--y",str(r['y']),"--z",str(r['z']),
+                                    "--t0",str(r['t0']),"--dt",str(r['dt']),"--nsteps",str(r['nsteps']),
+                                    "--slug",r['slug']])
+        shell: python
 
-      # ------------------------
-      # Princeton path (subset)
-      # ------------------------
-      - name: Run Princeton subset pipeline
+      - name: Run Princeton pipeline
         if: ${{ github.event.inputs.source == 'princeton' }}
-        shell: bash
         run: |
-          set -euo pipefail
-          if [[ ! -f "${{ github.event.inputs.subset_path }}" ]]; then
-            echo "ERROR: subset file not found: ${{ github.event.inputs.subset_path }}"
-            exit 1
-          fi
-          # Your runner should consume the subset and write results + pulses
-          python analysis/princeton_probe/run_pipeline.py \
-            --subset "${{ github.event.inputs.subset_path }}"
+          python analysis/princeton_probe/run_pipeline.py --subset "${{ github.event.inputs.subset_path }}"
 
-      # ------------------------
-      # Commit any outputs
-      # ------------------------
       - name: Commit outputs
         if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/jhtdb results/fd_probe pulse/auto results/princeton 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No new files to commit."
-            exit 0
-          fi
-          git commit -m "gold-path: results + pulses"
+          git add -A data/jhtdb results/fd_probe results/princeton pulse/auto
+          git commit -m "gold-path: results + pulses" || echo "No changes"
           git pull --rebase origin main || true
           git push || true
