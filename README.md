@@ -4,13 +4,6 @@
 *A human–AI collaboration mapping turbulence through Recursive Gradient Processing.*  
 
 ---
-> 🚩 **Start here — GOLD PATH**
->
-> 1. JHTDB loader → `tools/fd_connectors/jhtdb/jhtdb_loader.py`  
-> 2. Analyzer (uses shared `pipeline/`) → `tools/fd_connectors/jhtdb/analyze_probe.py`  
-> 3. Pulse builder → `tools/fd_connectors/jhtdb/make_pulse_from_probe.py`  
->    See: `docs/GOLD_PATH.md`
----
 
 ## 🗺️ RGP Tag Map  
 
@@ -156,6 +149,14 @@ We formalize this as the **tensor product** of:
 - **Universal patterns of ratios** they shape
 
 This serves as the guiding frame for interpreting NT rhythms and their convergence across physics, cognition, and society.
+
+---
+> 🚩 **Start here — GOLD PATH**
+>
+> 1. JHTDB loader → `tools/fd_connectors/jhtdb/jhtdb_loader.py`  
+> 2. Analyzer (uses shared `pipeline/`) → `tools/fd_connectors/jhtdb/analyze_probe.py`  
+> 3. Pulse builder → `tools/fd_connectors/jhtdb/make_pulse_from_probe.py`  
+>    See: `docs/GOLD_PATH.md`
 
 ---
 
