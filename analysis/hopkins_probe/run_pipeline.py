@@ -1,35 +1,45 @@
+from __future__ import annotations
+import argparse
 from pathlib import Path
-import yaml
-import numpy as np
+from pipeline.io_loaders import load_series
+from pipeline.preprocess import prep_1d
+from pipeline.spectrum import rfft_spectrum, dominant_peak
+from pipeline.ladder import ladder_1_2_3
+from pipeline.figures import plot_time_and_spectrum
+from pipeline.utils import save_json, ensure_dir
 
-from pipeline import preprocess, spectrum, ladder, figures, utils
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--meta", required=True, help="path to JHTDB .meta.json")
+    ap.add_argument("--out",  required=True, help="output folder (results/fd_probe/...)")
+    ap.add_argument("--component", default="u", help="which series (u|v|w|speed)")
+    args = ap.parse_args()
 
-# replace with your own loader when ready
-def load_hopkins(cfg):
-    # Expect CSV in cfg['path'] with columns: t,u,v,w,Z (or adapt to your reader)
-    import pandas as pd
-    df = pd.read_csv(cfg["path"])
-    t = df["t"].to_numpy()
-    out = {cfg.get("probe_id", "hopkins:demo"): {}}
-    for var in cfg.get("variables", ["u","v","w","Z"]):
-        if var in df.columns:
-            out[cfg.get("probe_id","hopkins:demo")][var] = (t, df[var].to_numpy())
-    return out
+    D = load_series("jhtdb", {"meta_path": args.meta})
+    x = D["series"].get(args.component)
+    if x is None:
+        raise SystemExit(f"component '{args.component}' not found; have {list(D['series'].keys())}")
 
-cfg = yaml.safe_load(Path("config.yml").read_text())
-tsmap = load_hopkins(cfg)
+    P = prep_1d(D["t"], x)
+    SP = rfft_spectrum(P["t"], P["x"], P["w"])
+    dom = dominant_peak(SP["freq"], SP["power"], fmin=0.0)
+    f0 = dom["freq"] if dom else None
+    L = ladder_1_2_3(SP["freq"], SP["power"], f0) if f0 else None
 
-rows = []
-for pid, series in tsmap.items():
-    for var, (t, x) in series.items():
-        xw = preprocess.apply(x, cfg.get("preprocess", {"detrend":"mean","window":"hann"}))
-        dt = float(np.median(np.diff(t)))
-        Pxx, f = spectrum.psd(xw, dt, cfg.get("fft", {"welch_segments": 4}))
-        det = ladder.detect(f, Pxx, cfg.get("fft", {}))
-        figures.plot_ts(t, x, pid, var, "results/fig")
-        figures.plot_psd(f, Pxx, det, pid, var, "results/fig")
-        rows.append(utils.pack_row(pid, var, det, cfg))
+    outdir = ensure_dir(args.out)
+    figs = plot_time_and_spectrum(outdir, P["t"], {args.component: P["x"]}, SP["freq"], SP["power"], f0=f0)
 
-utils.write_table(rows, "results/tables/ratios.csv")
-utils.write_log(cfg, "results/logs/run.log")
-print("Done.")
+    summary = {
+        "label": D["label"],
+        "component": args.component,
+        "n": len(P["t"]),
+        "dt": D["dt"],
+        "dominant": dom,
+        "ladder": L,
+        "figures": figs,
+    }
+    save_json(Path(outdir) / "analysis.json", summary)
+    print("✅ wrote:", (Path(outdir)/"analysis.json").as_posix())
+
+if __name__ == "__main__":
+    main()
