@@ -218,3 +218,31 @@ __all__ = [
     "load_jhtdb_from_meta",
     "load_princeton_subset",
 ]
+# -----------------------------------------------------------------------------
+# Self-test (manual sanity checks)
+# -----------------------------------------------------------------------------
+if __name__ == "__main__":
+    import sys
+
+    print("Φ-Mesh GOLD PATH loader self-test")
+
+    if len(sys.argv) < 3:
+        print("Usage:")
+        print("  python pipeline/io_loaders.py jhtdb <meta.json>")
+        print("  python pipeline/io_loaders.py princeton <subset.csv> [probe_id]")
+        sys.exit(0)
+
+    source = sys.argv[1].lower()
+    path = sys.argv[2]
+    extra = sys.argv[3] if len(sys.argv) > 3 else None
+
+    if source == "jhtdb":
+        d = load_series("jhtdb", {"meta_path": path})
+    elif source == "princeton":
+        d = load_series("princeton", {"subset_path": path, "probe": extra})
+    else:
+        raise ValueError(f"Unknown source '{source}' (use jhtdb|princeton)")
+
+    print(f"Loaded {d['label']}")
+    print(f"  timesteps: {len(d['t'])}, dt ≈ {d['dt']:.4g}")
+    print(f"  components: {list(d['series'].keys())}")
