@@ -1,31 +1,48 @@
 # Princeton Probe Analysis
 
-This folder holds the **local runner** for analyzing turbulence subsets provided by Prof. Mueller (Princeton).
+This folder handles **local analysis** of probe-level subsets shared by Prof. Mueller’s group at Princeton.  
+It is the parallel path to the JHTDB loaders — but instead of fetching live from SOAP, we start from **subset files** (likely HDF5/CSV).
+
+---
 
 ## Workflow
-1. **Subset file** (HDF5/CSV) placed under:
 
-data/princeton/.h5
+1. **Drop data subset**  
+   - Place raw Princeton subset files in `data/princeton/`.  
+   - Supported formats (to be confirmed): CSV, HDF5.  
+   - Each file should carry time-series for velocity components (`u, v, w`) and scalar fractions (`Z`).
 
-or
+2. **Run pipeline**  
+   - Entry point: `run_pipeline.py`.  
+   - This script loads the subset, performs analysis (FFT, dominant cycle detection, ratios), and writes results.  
 
-data/princeton/.csv
+   Output:
+   - `results/princeton_probe/*.analysis.json` — numeric results (dominant frequency, ratios, notes).  
+   - `results/princeton_probe/*.metrics.json` — harmonized copy for cross-experiment comparison.  
+   - `pulse/auto/YYYY-MM-DD_princeton_batchN.yml` — pulse fossilization (summary, tags, references).  
 
-2. **Run pipeline:**
+3. **Inspect results**  
+   - See metrics in `results/princeton_probe/`.  
+   - Pulses will surface automatically in the Tag Map after the **Build Tags & Graph** workflow.
 
-analysis/princeton_probe/run_pipeline.py
+---
 
-- Calls into `pipeline/io_loaders.py` via `load_princeton(...)`.
-- Applies shared FFT/PSD + ladder analysis from `pipeline/`.
-- Emits a Φ-Mesh pulse (`pulse/auto/...yml`).
+## Key Code
 
-3. **Outputs:**
-- Raw → `data/princeton/*.h5` or `.csv`
-- Analysis → `results/fd_probe/*.analysis.json`
-- Pulse → `pulse/auto/YYYY-MM-DD_<slug>.yml`
+- `tools/fd_connectors/princeton/load_subset.py` — loader for HDF5/CSV subsets.  
+- `tools/fd_connectors/princeton/analyze_probe.py` — shared analyzer (FFT, harmonics, ratios).  
+- `tools/fd_connectors/princeton/make_pulse_from_probe.py` — builds fossilization pulses.  
+
+---
 
 ## Status
-- **Subset format pending** (awaiting Princeton sample files).
-- Once format is confirmed, `io_loaders.load_princeton(...)` will be updated to parse time series consistently.
 
-👉 For reference: the pipeline here mirrors `analysis/hopkins_probe/`, but skips SOAP fetching and works directly from subset files.
+- [x] JHTDB path established.  
+- [ ] Princeton connectors scaffolded.  
+- [ ] Awaiting first subset from Princeton to finalize loader.  
+
+---
+
+📌 **Note:**  
+The Princeton path reuses the same *analysis logic* as JHTDB; only the loader differs.  
+This keeps coherence across datasets and ensures comparability of NT Rhythm evidence.
