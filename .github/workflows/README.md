@@ -1,6 +1,4 @@
-⸻
-
-Φ-Mesh Workflows
+## Φ-Mesh Workflows
 
 A small set of GitHub Actions to keep experiment → fossilization predictable.
 
