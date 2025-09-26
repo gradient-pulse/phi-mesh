@@ -1,72 +1,44 @@
-# pipeline/ladder.py
 from __future__ import annotations
-from typing import Dict, NamedTuple, Optional
 import numpy as np
+from .utils import nearest_band
 
-class LadderDetection(NamedTuple):
-    f_base: Optional[float]
-    f2_over_f1: Optional[float]
-    f3_over_f1: Optional[float]
-    snr_base_db: Optional[float]
-    snr_2f_db: Optional[float]
-    snr_3f_db: Optional[float]
-    passed: bool
-    notes: str
+__all__ = ["ladder_1_2_3"]
 
-def detect(f: np.ndarray, Pxx: np.ndarray, cfg_fft: Dict) -> LadderDetection:
-    if f.size == 0 or Pxx.size == 0:
-        return LadderDetection(None, None, None, None, None, None, False, "empty spectrum")
+def _band_energy(freq: np.ndarray, power: np.ndarray, f_center: float, rel_bw: float) -> float:
+    if f_center <= 0:
+        return 0.0
+    fmin, fmax = nearest_band(f_center, rel_bw)
+    m = (freq >= fmin) & (freq <= fmax)
+    return float(np.trapz(power[m], freq[m])) if np.any(m) else 0.0
 
-    tol = float(cfg_fft.get("ladder_tolerance", 0.03))
-    min_snr = float(cfg_fft.get("min_snr_db", 6.0))
-    prom = float(cfg_fft.get("peak_prominence", 0.05))
+def ladder_1_2_3(freq: np.ndarray, power: np.ndarray, f0: float, rel_bw: float = 0.05) -> dict:
+    """
+    Test for the 1:2:3 harmonic ladder around f0.
+    rel_bw is relative bandwidth for integration windows (default ±5%).
+    """
+    e1 = _band_energy(freq, power, f0*1.0, rel_bw)
+    e2 = _band_energy(freq, power, f0*2.0, rel_bw)
+    e3 = _band_energy(freq, power, f0*3.0, rel_bw)
+    total = e1 + e2 + e3
+    ratios = [r for r, e in zip((1,2,3), (e1,e2,e3)) if e > 0]
+    present = {"1x": e1 > 0, "2x": e2 > 0, "3x": e3 > 0}
+    return {
+        "f0": float(f0),
+        "rel_bw": float(rel_bw),
+        "energy": {"1x": e1, "2x": e2, "3x": e3, "sum": total},
+        "present": present,
+        "ratios_present": ratios,
+    }
 
-    # exclude DC
-    mask = f > 0
-    f1 = f[mask]
-    P1 = Pxx[mask]
-    if f1.size == 0:
-        return LadderDetection(None, None, None, None, None, None, False, "no positive frequencies")
+# ------------------------------ self-test ------------------------------ #
 
-    # noise floor & SNR
-    from .spectrum import local_noise_floor, snr_db
-    floor = local_noise_floor(P1, span=7)
-    S = snr_db(P1, floor)
-
-    # base peak by prominence over local floor
-    rel = (P1 - floor) / (np.max(P1) + 1e-16)
-    candidates = np.where(rel > prom)[0]
-    if candidates.size == 0:
-        # fallback: global max
-        base_idx = int(np.argmax(P1))
-    else:
-        base_idx = int(candidates[np.argmax(P1[candidates])])
-
-    f0 = float(f1[base_idx])
-    snr0 = float(S[base_idx])
-
-    # locate ~2f0 and ~3f0 (nearest bins)
-    def nearest(target):
-        idx = int(np.argmin(np.abs(f1 - target)))
-        return idx, float(f1[idx]), float(S[idx])
-
-    i2, f2, snr2 = nearest(2.0 * f0)
-    i3, f3, snr3 = nearest(3.0 * f0)
-
-    r2 = f2 / f0 if f0 > 0 else None
-    r3 = f3 / f0 if f0 > 0 else None
-
-    ok = (
-        f0 > 0
-        and abs(r2 - 2.0) <= tol
-        and abs(r3 - 3.0) <= tol
-        and snr0 >= min_snr
-        and snr2 >= min_snr
-        and snr3 >= min_snr
-    )
-
-    note = ""
-    if not ok:
-        note = f"criteria: tol={tol}, min_snr_db={min_snr}, prom={prom}"
-
-    return LadderDetection(f0, r2, r3, snr0, snr2, snr3, bool(ok), note)
+if __name__ == "__main__":
+    import numpy as np
+    # synthetic ladder 0.8, 1.6, 2.4 Hz
+    t = np.linspace(0, 6, 6001)
+    x = 1.0*np.sin(2*np.pi*0.8*t) + 0.7*np.sin(2*np.pi*1.6*t) + 0.4*np.sin(2*np.pi*2.4*t)
+    from .spectrum import rfft_spectrum, dominant_peak
+    sp = rfft_spectrum(t, x)
+    f0 = dominant_peak(sp["freq"], sp["power"], fmin=0.1)["freq"]
+    lad = ladder_1_2_3(sp["freq"], sp["power"], f0)
+    print("ladder OK:", lad["present"], "f0≈", round(f0,2))
