@@ -7,28 +7,13 @@ on:
         description: "Data source: jhtdb | princeton"
         required: true
         default: "jhtdb"
-
-      flow:       { description: "JHTDB dataset", required: false, default: "isotropic1024coarse" }
-      x:          { description: "Probe X coordinate", required: false, default: "0.1" }
-      y:          { description: "Probe Y coordinate", required: false, default: "0.2" }
-      z:          { description: "Probe Z coordinate", required: false, default: "0.3" }
-      t0:         { description: "Start time", required: false, default: "0.0" }
-      dt:         { description: "Time step", required: false, default: "0.0005" }
-      nsteps:     { description: "Number of steps", required: false, default: "2400" }
-      slug:       { description: "Slug for filenames", required: false, default: "isotropic" }
-      batch_file: { description: "Optional JHTDB batch.yml", required: false, default: "" }
-
-      subset_path:
-        description: "Princeton subset file (CSV/HDF5)"
+      params:
+        description: "JSON of parameters (JHTDB: flow,x,y,z,t0,dt,nsteps,slug | Princeton: subset_path)"
         required: false
-        default: "data/princeton/subset.h5"
+        default: '{"flow":"isotropic1024coarse","x":0.1,"y":0.2,"z":0.3,"t0":0.0,"dt":0.0005,"nsteps":2400,"slug":"isotropic"}'
 
 permissions:
   contents: write
-
-concurrency:
-  group: gold-path-loader-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   run:
@@ -50,38 +35,37 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pandas pyyaml pyarrow suds-community
 
-      - name: Plan JHTDB matrix
-        id: plan
-        if: ${{ github.event.inputs.source == 'jhtdb' }}
+      - name: Parse params
+        id: parse
         run: |
-          BF="${{ github.event.inputs.batch_file }}"
-          if [ -n "$BF" ] && [ -f "$BF" ]; then
-            python -c "import json,yaml,io; d=yaml.safe_load(io.open('$BF')) or {}; runs=list(d.get('runs',[])); print('matrix='+json.dumps({'include':runs}), end='')" >> $GITHUB_OUTPUT
-          else
-            python -c "import json; print('matrix='+json.dumps({'include':[{'flow':'${{ github.event.inputs.flow }}','x':float('${{ github.event.inputs.x }}'),'y':float('${{ github.event.inputs.y }}'),'z':float('${{ github.event.inputs.z }}'),'t0':float('${{ github.event.inputs.t0 }}'),'dt':float('${{ github.event.inputs.dt }}'),'nsteps':int('${{ github.event.inputs.nsteps }}'),'slug':'${{ github.event.inputs.slug }}'}]}), end='')" >> $GITHUB_OUTPUT
+          echo "params<<EOF" >> $GITHUB_OUTPUT
+          echo '${{ github.event.inputs.params }}' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Run JHTDB pipeline
         if: ${{ github.event.inputs.source == 'jhtdb' }}
         run: |
-          import json,subprocess,shlex,os
-          m=json.loads('${{ steps.plan.outputs.matrix }}')
-          for r in m['include']:
-              cmd=f"python tools/fd_connectors/jhtdb/jhtdb_loader.py --flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} --t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
-              subprocess.check_call(shlex.split(cmd))
-              stem=f\"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}\"
-              meta=f"data/jhtdb/{stem}.meta.json"
-              out=f"results/fd_probe/{stem}.analysis.json"
-              subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
-              subprocess.check_call(["python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
-                                    "--flow",r['flow'],"--x",str(r['x']),"--y",str(r['y']),"--z",str(r['z']),
-                                    "--t0",str(r['t0']),"--dt",str(r['dt']),"--nsteps",str(r['nsteps']),
-                                    "--slug",r['slug']])
+          import json,subprocess,shlex
+          r=json.loads('${{ steps.parse.outputs.params }}')
+          cmd=f"python tools/fd_connectors/jhtdb/jhtdb_loader.py --flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} --t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
+          subprocess.check_call(shlex.split(cmd))
+          stem=f\"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}\"
+          meta=f"data/jhtdb/{stem}.meta.json"
+          out=f"results/fd_probe/{stem}.analysis.json"
+          subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
+          subprocess.check_call(["python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
+                                "--flow",r['flow'],"--x",str(r['x']),"--y",str(r['y']),"--z",str(r['z']),
+                                "--t0",str(r['t0']),"--dt",str(r['dt']),"--nsteps",str(r['nsteps']),
+                                "--slug",r['slug']])
         shell: python
 
       - name: Run Princeton pipeline
         if: ${{ github.event.inputs.source == 'princeton' }}
         run: |
-          python analysis/princeton_probe/run_pipeline.py --subset "${{ github.event.inputs.subset_path }}"
+          import json,subprocess
+          r=json.loads('${{ steps.parse.outputs.params }}')
+          subprocess.check_call(["python","analysis/princeton_probe/run_pipeline.py","--subset",r["subset_path"]])
+        shell: python
 
       - name: Commit outputs
         if: always()
