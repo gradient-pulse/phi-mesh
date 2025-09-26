@@ -177,7 +177,7 @@ phi-mesh/
 │  │   └─ run_pipeline.py       # JHTDB probe → spectrum → pulse
 │  └─ princeton_probe/
 │      ├─ run_pipeline.py       # Princeton subset runner
-│      └─ README.md             # where subset files go, what outputs to expect
+│      └─ README.md             # where subset files go, outputs to expect
 │
 ├─ pipeline/                    # Shared analysis core
 │  ├─ preprocess.py
@@ -189,10 +189,14 @@ phi-mesh/
 │
 ├─ tools/                       # Utilities & connectors
 │  ├─ fd_connectors/
-│  │   └─ jhtdb/                # JHTDB SOAP + probe analyzers
-│  │        ├─ jhtdb_loader.py
-│  │        ├─ analyze_probe.py
-│  │        └─ make_pulse_from_probe.py
+│  │   ├─ jhtdb/                # JHTDB SOAP + probe analyzers
+│  │   │   ├─ jhtdb_loader.py
+│  │   │   ├─ analyze_probe.py
+│  │   │   └─ make_pulse_from_probe.py
+│  │   └─ princeton/            # Princeton subset analyzers
+│  │       ├─ load_subset.py
+│  │       ├─ analyze_probe.py
+│  │       └─ make_pulse_from_probe.py
 │  ├─ agent_rhythm/             # still active (NT rhythm utilities)
 │  └─ archive_agent_runner/     # legacy orchestration (see README.md)
 │
@@ -217,7 +221,12 @@ phi-mesh/
 ├─ RGP_NS_prototype/            # 90-day Navier–Stokes benchmark
 │
 └─ updates/                     # Resonance/finding logs
+
 ```
+**Notes on data sources**  
+- 🟦 Hopkins (JHTDB) → live SOAP queries; fetches directly from Johns Hopkins turbulence database.  
+- 🟧 Princeton → local subset files (.csv / .h5); analysis runs fully offline.  
+
 ---
 
 ## Add pulses → *grow the map*
