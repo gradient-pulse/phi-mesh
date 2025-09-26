@@ -1,63 +1,44 @@
-# pipeline/spectrum.py
 from __future__ import annotations
-from typing import Dict, Tuple, Union
 import numpy as np
+from .utils import find_peak, nearest_band
 
-def psd(x: np.ndarray, t_or_dt: Union[float, np.ndarray], cfg_fft: Dict) -> Tuple[np.ndarray, np.ndarray]:
+__all__ = ["rfft_spectrum", "dominant_peak"]
+
+def rfft_spectrum(t: np.ndarray, x: np.ndarray, w: np.ndarray | None = None) -> dict:
     """
-    Simple periodogram or Welch PSD depending on cfg.
-    Returns (Pxx, f) with f in Hz.
+    Real FFT amplitude/power spectrum.
+    Returns: {freq, amp, power, df}
     """
-    x = np.asarray(x, float)
     n = x.size
-    if n < 8:
-        return np.array([]), np.array([])
+    dt = float(np.median(np.diff(t)))
+    fs = 1.0 / dt
 
-    if np.isscalar(t_or_dt):
-        dt = float(t_or_dt)
-    else:
-        t = np.asarray(t_or_dt, float)
-        dt = np.nanmedian(np.diff(t))
+    xx = x.copy()
+    if w is not None:
+        xx = xx * w
 
-    # Welch segments if requested
-    segs = int(cfg_fft.get("welch_segments", 1))
-    if segs <= 1:
-        X = np.fft.rfft(x)
-        Pxx = (np.abs(X) ** 2) / (n ** 2)
-        f = np.fft.rfftfreq(n, d=dt)
-    else:
-        step = n // segs
-        acc = None
-        for i in range(segs):
-            sli = slice(i*step, (i+1)*step)
-            xi = x[sli]
-            if xi.size < 8:
-                continue
-            Xi = np.fft.rfft(xi)
-            Pi = (np.abs(Xi) ** 2) / (xi.size ** 2)
-            if acc is None:
-                acc = Pi
-            else:
-                acc = acc + Pi
-        if acc is None:
-            return np.array([]), np.array([])
-        Pxx = acc / segs
-        f = np.fft.rfftfreq(step, d=dt)
+    yf = np.fft.rfft(xx)
+    freq = np.fft.rfftfreq(n, dt)
+    amp = (2.0 / n) * np.abs(yf)            # two-sided -> single sided amplitude
+    power = (amp ** 2) / 2.0                # proportional; fine for relative detection
+    df = freq[1] - freq[0] if freq.size > 1 else 0.0
+    return {"freq": freq, "amp": amp, "power": power, "df": df, "fs": fs}
 
-    return Pxx, f
+def dominant_peak(freq: np.ndarray, power: np.ndarray, fmin: float = 0.0, fmax: float | None = None) -> dict | None:
+    """Return {'freq': f0, 'power': p0} or None."""
+    if fmax is None:
+        fmax = np.max(freq) if freq.size else 0.0
+    fp = find_peak(freq, power, fmin, fmax)
+    if fp is None:
+        return None
+    return {"freq": fp[0], "power": fp[1]}
 
-def local_noise_floor(Pxx: np.ndarray, span: int = 5) -> np.ndarray:
-    if Pxx.size == 0:
-        return Pxx
-    span = max(1, int(span))
-    pad = span // 2
-    ext = np.pad(Pxx, (pad, pad), mode="edge")
-    out = np.empty_like(Pxx)
-    for i in range(Pxx.size):
-        win = ext[i:i+span]
-        out[i] = np.median(win)
-    return out
+# ------------------------------ self-test ------------------------------ #
 
-def snr_db(Pxx: np.ndarray, floor: np.ndarray) -> np.ndarray:
-    eps = 1e-16
-    return 10.0 * np.log10((Pxx + eps) / (floor + eps))
+if __name__ == "__main__":
+    import numpy as np
+    t = np.linspace(0, 6, 6001)
+    x = 1.0*np.sin(2*np.pi*0.8*t) + 0.7*np.sin(2*np.pi*1.6*t) + 0.4*np.sin(2*np.pi*2.4*t)
+    sp = rfft_spectrum(t, x)
+    dp = dominant_peak(sp["freq"], sp["power"], fmin=0.1)
+    print("spectrum OK: f0≈", round(dp["freq"], 2))
