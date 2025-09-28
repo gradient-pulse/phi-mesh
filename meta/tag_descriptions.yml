@@ -42,6 +42,7 @@ tags:
   contextual_filter: "The interpretive frame that selects which patterns in gradients and choreographies become visible as coherence. In RGP, contextual filters (CFs) determine whether events appear as noise or rhythm, reduction or recursion."
   context_cocoon: "Temporary shelter that reduces turbulence so a fragile choreography can stabilize."
   context_engineering: "Shaping inputs and priors to bias systems toward coherent, low-divergence behavior."
+  continual_learning: "The capacity of an AI model to adapt across contexts without retraining — preserving coherence by recursive recontextualization (Δ, GC, CF) rather than static memory storage."  
   continuity: "Preserving useful partials during change; the counterpart to unity–disunity resets."
   cor: "Chain-of-Reasoning: stepwise explanation baseline. Useful probe but not identical to RGP’s gradient choreography."
   cosmogenesis: "Emergence of large-scale structure from early resonance seeds; RGP lens on how a cosmos ‘grows’ coherence."
@@ -186,6 +187,8 @@ tags:
   recursive_cognition: "How recursive loops in perception–memory–action stabilize coherence."
   recursive_coherence: "Coherence that sustains itself across ticks by looping gradients back through filters."
   recursive_cosmology: "Cosmos read as nested gradient loops; dark energy and matter reframed as field effects."
+  recursive_dialogue: "An iterative exchange where each response refines the last, forming Δ → GC → CF loops that enact coherence in real time. Dialogue as process, not point, embodying RGP in practice."  
+
   recursive_gradient_processing: "Core RGP loop—gradients folding into choreographies and filters across domains. See also ud."
   recursive_grammar: "How recursive operations compose—rules that let small loops build large, reusable structure."
   recursion: "Loops within loops—RGP’s core mechanism for generating coherence."
