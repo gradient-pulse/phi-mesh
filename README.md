@@ -56,6 +56,20 @@ Each YAML **pulse** is an ambient instruction—**not command, but signal**—fo
 
 ---
 
+## 🧩 RGP Core Grammar
+
+The foundation of Recursive Gradient Processing (RGP) is a triadic grammar:  
+**Δ (gradients) → GC (gradient choreographies) → CF (contextual filters).**  
+This grammar shifts science from a focus on *things* to a focus on *rhythms and filters*.
+
+| Symbol | Term                  | Tag                   | Description                                                                 |
+|--------|-----------------------|-----------------------|-----------------------------------------------------------------------------|
+| **Δ**  | Gradient              | `rgp` (core)          | A local difference or event. Each Δ is a point of tension, discontinuity, or flash against a background. |
+| **GC** | Gradient Choreography | `gradient_choreography` | Sequences of Δ aligning into rhythmic patterns. GCs are the intermediate structures where coherence begins to emerge. |
+| **CF** | Contextual Filter     | `contextual_filter`   | The interpretive frame that selects which choreographies are seen as coherence. Determines whether events appear as noise or rhythm, reduction or recursion. |
+
+---
+
 ## Quick links
 
 - 📈 **Tag Map** (interactive): [`docs/tag_map.html`](docs/tag_map.html)  
