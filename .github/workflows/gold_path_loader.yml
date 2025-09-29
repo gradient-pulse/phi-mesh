@@ -8,7 +8,7 @@ on:
         required: true
         default: "jhtdb"
       params:
-        description: "JSON params. JHTDB: {\"flow\",\"x\",\"y\",\"z\",\"t0\",\"dt\",\"nsteps\",\"slug\"}  Princeton: {\"subset_path\",\"slug\"}"
+        description: "JSON params. JHTDB: {\"flow\",\"x\",\"y\",\"z\",\"t0\",\"dt\",\"nsteps\",\"slug\"}  Princeton: {\"subset_path\",\"slug\",\"probe\"}"
         required: false
         default: '{"flow":"isotropic1024coarse","x":0.1,"y":0.2,"z":0.3,"t0":0.0,"dt":0.0005,"nsteps":2400,"slug":"isotropic"}'
 
@@ -92,13 +92,14 @@ jobs:
           if not subset:
             raise SystemExit("params must include 'subset_path' (or 'subset').")
           slug = r.get("slug") or Path(subset).stem
+          probe = r.get("probe")  # optional
           Path("results/princeton").mkdir(parents=True, exist_ok=True)
           out = f"results/princeton/{slug}.analysis.json"
-          # Run local runner with explicit --out (no --slug flag)
-          subprocess.check_call([
-            "python","analysis/princeton_probe/run_pipeline.py",
-            "--subset",subset,"--out",out
-          ])
+
+          cmd = ["python","analysis/princeton_probe/run_pipeline.py","--subset",subset,"--out",out]
+          if probe:
+            cmd += ["--probe", str(probe)]
+          subprocess.check_call(cmd)
 
       # ----------------------------- Demo path ------------------------------
       - name: Run Demo pipeline (synthetic Princeton)
@@ -107,7 +108,7 @@ jobs:
         run: |
           import numpy as np, pandas as pd, subprocess
           from pathlib import Path
-          # Write small synthetic subset
+          # Write small synthetic subset (simple shape: t,u,v,w)
           Path("data/princeton").mkdir(parents=True, exist_ok=True)
           t = np.linspace(0, 6, 6001)
           u = np.sin(2*np.pi*0.8*t) + 0.1*np.random.randn(t.size)
@@ -116,12 +117,14 @@ jobs:
           df = pd.DataFrame({"t":t,"u":u,"v":v,"w":w})
           subset = "data/princeton/demo_subset.csv"
           df.to_csv(subset,index=False)
-          # Ensure out dir exists and run
+
           Path("results/princeton").mkdir(parents=True, exist_ok=True)
           out = "results/princeton/demo.analysis.json"
+
+          # Pass an explicit probe for the simple shape (loader will accept it as Q0)
           subprocess.check_call([
             "python","analysis/princeton_probe/run_pipeline.py",
-            "--subset",subset,"--out",out
+            "--subset",subset,"--out",out,"--probe","Q0"
           ])
 
       # ---------------------------- Commit outputs --------------------------
