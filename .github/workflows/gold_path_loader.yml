@@ -71,7 +71,7 @@ jobs:
           stem = f"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}"
           meta = f"data/jhtdb/{stem}.meta.json"
           out  = f"results/fd_probe/{stem}.analysis.json"
-          Path("results/fd_probe").mkdir(parents=True, exist_ok=True)
+          Path('results/fd_probe').mkdir(parents=True, exist_ok=True)
           subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
           subprocess.check_call([
             "python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
@@ -88,14 +88,13 @@ jobs:
           import json, subprocess
           from pathlib import Path
           r = json.loads('${{ steps.parse.outputs.params }}')
-          subset = r.get("subset_path") or r.get("subset")  # allow either key
+          subset = r.get("subset_path") or r.get("subset")
           if not subset:
             raise SystemExit("params must include 'subset_path' (or 'subset').")
           slug = r.get("slug") or Path(subset).stem
           probe = r.get("probe")  # optional
           Path("results/princeton").mkdir(parents=True, exist_ok=True)
           out = f"results/princeton/{slug}.analysis.json"
-
           cmd = ["python","analysis/princeton_probe/run_pipeline.py","--subset",subset,"--out",out]
           if probe:
             cmd += ["--probe", str(probe)]
@@ -108,20 +107,19 @@ jobs:
         run: |
           import numpy as np, pandas as pd, subprocess
           from pathlib import Path
-          # Write small synthetic subset (simple shape: t,u,v,w)
+          # Write small synthetic subset (simple single-probe: t,u,v,w)
           Path("data/princeton").mkdir(parents=True, exist_ok=True)
           t = np.linspace(0, 6, 6001)
-          u = np.sin(2*np.pi*0.8*t) + 0.1*np.random.randn(t.size)
-          v = np.sin(2*np.pi*1.6*t + 0.3) + 0.1*np.random.randn(t.size)
-          w = np.sin(2*np.pi*2.4*t + 1.1) + 0.1*np.random.randn(t.size)
+          rng = np.random.default_rng(42)
+          u = np.sin(2*np.pi*0.8*t) + 0.05*rng.standard_normal(t.size)
+          v = np.sin(2*np.pi*1.6*t + 0.3) + 0.05*rng.standard_normal(t.size)
+          w = np.sin(2*np.pi*2.4*t + 1.1) + 0.05*rng.standard_normal(t.size)
           df = pd.DataFrame({"t":t,"u":u,"v":v,"w":w})
           subset = "data/princeton/demo_subset.csv"
           df.to_csv(subset,index=False)
-
+          # Ensure out dir exists and run (explicit probe to be unambiguous)
           Path("results/princeton").mkdir(parents=True, exist_ok=True)
           out = "results/princeton/demo.analysis.json"
-
-          # Pass an explicit probe for the simple shape (loader will accept it as Q0)
           subprocess.check_call([
             "python","analysis/princeton_probe/run_pipeline.py",
             "--subset",subset,"--out",out,"--probe","Q0"
@@ -133,7 +131,6 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Don't fail if a glob matches nothing
           git add -A data/jhtdb || true
           git add -A data/princeton || true
           git add -A results/fd_probe || true
