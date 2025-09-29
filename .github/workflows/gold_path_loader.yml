@@ -1,4 +1,4 @@
-name: GOLD PATH — Loader
+name: GOLD PATH — Loader (Hopkins/Princeton)
 
 on:
   workflow_dispatch:
@@ -8,7 +8,10 @@ on:
         required: true
         default: "jhtdb"
       params:
-        description: "JSON of parameters (JHTDB: flow,x,y,z,t0,dt,nsteps,slug | Princeton: subset_path)"
+        description: >
+          JSON parameters.
+          JHTDB: {"flow","x","y","z","t0","dt","nsteps","slug"}
+          Princeton: {"subset_path","slug"}
         required: false
         default: '{"flow":"isotropic1024coarse","x":0.1,"y":0.2,"z":0.3,"t0":0.0,"dt":0.0005,"nsteps":2400,"slug":"isotropic"}'
 
@@ -20,52 +23,94 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PYTHONPATH: ${{ github.workspace }}
+      # Optional, only needed if your JHTDB token is required by the SOAP service:
       JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - run: |
+      - name: Install dependencies (SOAP + HDF5 + helpers)
+        run: |
           python -m pip install --upgrade pip
-          pip install numpy pandas pyyaml pyarrow suds-community
+          pip install "numpy==1.23.5" "pandas==2.2.2" "pyyaml>=6.0" "pyarrow>=14"
+          pip install "suds-community>=1.1.2"
+          # Princeton subset readers + plotting used by the analysis pipeline:
+          pip install "tables>=3.8" "h5py>=3.10" "matplotlib>=3.8"
 
       - name: Parse params
         id: parse
+        shell: python
         run: |
-          echo "params<<EOF" >> $GITHUB_OUTPUT
-          echo '${{ github.event.inputs.params }}' >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          import json, os
+          raw = os.environ.get("RAW_PARAMS", "")
+          try:
+            obj = json.loads(raw) if raw else {}
+          except Exception as e:
+            raise SystemExit(f"Invalid JSON in 'params': {e}\nGot: {raw!r}")
+          # Emit the normalized JSON back out (single-line) so it’s safe to re-use.
+          print(f"params={json.dumps(obj, separators=(',',':'))}")
+        env:
+          RAW_PARAMS: ${{ github.event.inputs.params }}
 
+      # ---------- JHTDB PATH ----------
       - name: Run JHTDB pipeline
         if: ${{ github.event.inputs.source == 'jhtdb' }}
-        run: |
-          import json,subprocess,shlex
-          r=json.loads('${{ steps.parse.outputs.params }}')
-          cmd=f"python tools/fd_connectors/jhtdb/jhtdb_loader.py --flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} --t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
-          subprocess.check_call(shlex.split(cmd))
-          stem=f\"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}\"
-          meta=f"data/jhtdb/{stem}.meta.json"
-          out=f"results/fd_probe/{stem}.analysis.json"
-          subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
-          subprocess.check_call(["python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
-                                "--flow",r['flow'],"--x",str(r['x']),"--y",str(r['y']),"--z",str(r['z']),
-                                "--t0",str(r['t0']),"--dt",str(r['dt']),"--nsteps",str(r['nsteps']),
-                                "--slug",r['slug']])
         shell: python
+        run: |
+          import json, subprocess, shlex
+          r = json.loads("${{ steps.parse.outputs.params || '{}' }}")  # GitHub sets outputs as env; guarded
+          # Fill reasonable defaults if fields are missing
+          r.setdefault("flow", "isotropic1024coarse")
+          r.setdefault("x", 0.1); r.setdefault("y", 0.2); r.setdefault("z", 0.3)
+          r.setdefault("t0", 0.0); r.setdefault("dt", 0.0005); r.setdefault("nsteps", 2400)
+          r.setdefault("slug", "isotropic")
 
+          cmd = (
+            f"python tools/fd_connectors/jhtdb/jhtdb_loader.py "
+            f"--flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} "
+            f"--t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
+          )
+          subprocess.check_call(shlex.split(cmd))
+
+          stem = f"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}"
+          meta = f"data/jhtdb/{stem}.meta.json"
+          out  = f"results/fd_probe/{stem}.analysis.json"
+
+          subprocess.check_call([
+            "python","tools/fd_connectors/jhtdb/analyze_probe.py",
+            "--meta", meta, "--out", out
+          ])
+
+          subprocess.check_call([
+            "python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
+            "--flow", r["flow"], "--x", str(r["x"]), "--y", str(r["y"]), "--z", str(r["z"]),
+            "--t0", str(r["t0"]), "--dt", str(r["dt"]), "--nsteps", str(r["nsteps"]),
+            "--slug", r["slug"]
+          ])
+
+      # ---------- PRINCETON PATH ----------
       - name: Run Princeton pipeline
         if: ${{ github.event.inputs.source == 'princeton' }}
-        run: |
-          import json,subprocess
-          r=json.loads('${{ steps.parse.outputs.params }}')
-          subprocess.check_call(["python","analysis/princeton_probe/run_pipeline.py","--subset",r["subset_path"]])
         shell: python
+        run: |
+          import json, subprocess, os
+          r = json.loads("${{ steps.parse.outputs.params || '{}' }}")
+          if "subset_path" not in r:
+            raise SystemExit("params JSON must include 'subset_path' for source=princeton")
+          slug = r.get("slug", "princeton_subset")
+          subprocess.check_call([
+            "python","analysis/princeton_probe/run_pipeline.py",
+            "--subset", r["subset_path"],
+            "--slug", slug
+          ])
 
       - name: Commit outputs
         if: always()
