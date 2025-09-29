@@ -1,0 +1,18 @@
+{
+  "label": "Princeton:demo_subset.csv:fallback",
+  "meta": {
+    "subset_path": "data/princeton/demo_subset.csv",
+    "probe": "Q0"
+  },
+  "n": 6001,
+  "dt": 0.0010000000000000009,
+  "component": "u",
+  "dominant": {
+    "freq_hz": 0.0,
+    "power": 0.0
+  },
+  "figures": {
+    "time_png": "results/princeton/demo.analysis/time.png",
+    "spectrum_png": "results/princeton/demo.analysis/spectrum.png"
+  }
+}
