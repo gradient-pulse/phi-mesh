@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse, json
 from pathlib import Path
 import numpy as np
+import pandas as pd
 
 from pipeline.io_loaders import load_series
 from pipeline.spectrum import rfft_spectrum
@@ -10,40 +11,63 @@ from pipeline.figures import plot_time_and_spectrum
 
 
 def simple_detrend_and_window(t: np.ndarray, x: np.ndarray) -> np.ndarray:
-    """
-    Minimal, robust pre-processing:
-      1) subtract linear trend (least squares fit a + b*t)
-      2) apply Hann window to reduce spectral leakage
-    """
     t = np.asarray(t, dtype=float)
     x = np.asarray(x, dtype=float)
     if t.size != x.size or t.size < 3:
         return x.copy()
-
-    # linear fit
     A = np.vstack([np.ones_like(t), t]).T
     coef, *_ = np.linalg.lstsq(A, x, rcond=None)
     trend = A @ coef
     y = x - trend
-
-    # Hann window
     w = np.hanning(t.size)
-    # preserve overall energy scale
-    w = w / (w.mean() if w.mean() != 0 else 1.0)
+    w = w / (w.mean() if w.mean() else 1.0)
     return y * w
 
 
 def pick_component(series: dict[str, np.ndarray], want: str | None) -> tuple[str, np.ndarray]:
-    """
-    Choose a component from `series`. Prefer `want` if present;
-    otherwise fall back to the first available channel.
-    """
     keys = [k for k, v in series.items() if isinstance(v, np.ndarray) and v.size > 1]
     if not keys:
         raise ValueError("No usable channels found in series (empty data).")
-    if want and want in series and series[want] is not None and series[want].size > 1:
+    if want and want in series and getattr(series[want], "size", 0) > 1:
         return want, series[want]
     return keys[0], series[keys[0]]
+
+
+def fallback_load_plain(subset_path: str | Path) -> dict:
+    """
+    Fallback reader for simple CSV/HDF with columns t,u,v,w[,Z].
+    Returns dict with keys: label, t, dt, series, meta.
+    """
+    p = Path(subset_path)
+    ext = p.suffix.lower()
+    if ext in {".csv", ".gz"}:
+        df = pd.read_csv(p)
+    elif ext in {".h5", ".hdf5"}:
+        df = pd.read_hdf(p)
+    else:
+        raise ValueError(f"Unsupported subset format for fallback: {ext}")
+
+    cols_lower = {c.lower() for c in df.columns}
+    if "t" not in cols_lower:
+        raise ValueError("Fallback: no 't' column present.")
+    tcol = next(c for c in df.columns if c.lower() == "t")
+    df = df.sort_values(tcol)
+
+    series: dict[str, np.ndarray] = {}
+    for k in ("u", "v", "w", "z", "Z"):
+        if any(c.lower() == k for c in df.columns):
+            col = next(c for c in df.columns if c.lower() == k)
+            series[k.lower()] = df[col].to_numpy(float)
+
+    t = df[tcol].to_numpy(float)
+    dt = float(np.median(np.diff(t))) if t.size > 1 else float("nan")
+    return {
+        "label": f"Princeton:{p.name}:fallback",
+        "t": t,
+        "dt": dt,
+        "series": series,
+        "meta": {"subset_path": p.as_posix(), "probe": "Q0"},
+    }
 
 
 def main():
@@ -54,8 +78,18 @@ def main():
     ap.add_argument("--component", default="u", help="Channel (u|v|w|speed|Z|z); falls back if missing")
     args = ap.parse_args()
 
-    # Load standardized dict: {label, t, dt, series{...}, meta{...}}
-    D = load_series("princeton", {"subset_path": args.subset, "probe": args.probe})
+    # First try the canonical loader
+    try:
+        D = load_series("princeton", {"subset_path": args.subset, "probe": args.probe})
+    except Exception as e:
+        print(f"[WARN] load_series failed ({e}). Falling back to plain reader.")
+        D = fallback_load_plain(args.subset)
+
+    # If loader succeeded but series is empty, fall back
+    if not D.get("series") or all((getattr(v, "size", 0) <= 1) for v in D["series"].values()):
+        print("[WARN] series empty or unusable; using fallback reader.")
+        D = fallback_load_plain(args.subset)
+
     t = np.asarray(D["t"], dtype=float)
     comp, x = pick_component(D["series"], args.component)
 
@@ -65,12 +99,12 @@ def main():
     # Spectrum
     sp = rfft_spectrum(t, xw)  # -> {"freq","power","f0","p0",...}
 
-    # Figures (saved under a folder named after output stem)
+    # Figures
     out_path = Path(args.out)
-    fig_dir = out_path.with_suffix("").as_posix()  # e.g., results/princeton/demo.analysis -> folder
+    fig_dir = out_path.with_suffix("").as_posix()
     figs = plot_time_and_spectrum(fig_dir, t, {comp: x}, sp["freq"], sp["power"], f0=sp.get("f0"))
 
-    # Write minimal analysis JSON
+    # Write JSON
     out = {
         "label": D.get("label"),
         "meta":  D.get("meta", {}),
