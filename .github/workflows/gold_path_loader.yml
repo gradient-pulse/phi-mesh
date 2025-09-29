@@ -58,7 +58,8 @@ jobs:
           import json, subprocess, shlex
           from pathlib import Path
           r = json.loads('${{ steps.parse.outputs.params }}')
-          # call loader
+
+          # Loader
           cmd = (
             f"python tools/fd_connectors/jhtdb/jhtdb_loader.py"
             f" --flow {r['flow']}"
@@ -67,7 +68,8 @@ jobs:
             f" --slug {r['slug']}"
           )
           subprocess.check_call(shlex.split(cmd))
-          # analyze + pulse
+
+          # Analyze + Pulse (JHTDB analyzer expects a fixed <stem>.analysis.json)
           stem = f"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}"
           meta = f"data/jhtdb/{stem}.meta.json"
           out  = f"results/fd_probe/{stem}.analysis.json"
@@ -81,48 +83,71 @@ jobs:
           ])
 
       # --------------------------- Princeton path ---------------------------
-      - name: Run Princeton pipeline
+      - name: Run Princeton pipeline (date+batch result filename)
         if: ${{ github.event.inputs.source == 'princeton' }}
         shell: python
         run: |
-          import json, subprocess
+          import json, subprocess, re, os
           from pathlib import Path
+          from datetime import date
+
           r = json.loads('${{ steps.parse.outputs.params }}')
           subset = r.get("subset_path") or r.get("subset")
           if not subset:
             raise SystemExit("params must include 'subset_path' (or 'subset').")
+
+          # Resolve slug
           slug = r.get("slug") or Path(subset).stem
           probe = r.get("probe")  # optional
           Path("results/princeton").mkdir(parents=True, exist_ok=True)
-          out = f"results/princeton/{slug}.analysis.json"
+
+          # Compute batch number by scanning existing pulses for today/slug
+          today = date.today().isoformat()
+          auto = Path("pulse/auto")
+          batch = 1
+          if auto.exists():
+            rx = re.compile(rf"^{re.escape(today)}_{re.escape(slug)}_batch(\d+)\.yml$")
+            nums = [int(m.group(1)) for p in auto.glob(f"{today}_{slug}_batch*.yml") if (m := rx.match(p.name))]
+            if nums:
+              batch = max(nums) + 1
+
+          out = f"results/princeton/{today}_{slug}_batch{batch}.analysis.json"
+
+          # Run local runner
           cmd = ["python","analysis/princeton_probe/run_pipeline.py","--subset",subset,"--out",out]
           if probe:
             cmd += ["--probe", str(probe)]
           subprocess.check_call(cmd)
 
-      - name: Generate Princeton pulse
+          # Expose out path and batch for the next step
+          print(f"::set-output name=out::{out}")
+          print(f"::set-output name=slug::{slug}")
+          print(f"::set-output name=batch::batch{batch}")
+
+        id: princeton_run
+
+      - name: Generate Princeton pulse (with matching analysis path)
         if: ${{ github.event.inputs.source == 'princeton' }}
         shell: python
         run: |
-          import json, subprocess
-          from pathlib import Path
-          r = json.loads('${{ steps.parse.outputs.params }}')
-          subset = r.get("subset_path") or r.get("subset")
-          slug = (r.get("slug") or Path(subset).stem) if subset else (r.get("slug") or "princeton")
-          analysis = f"results/princeton/{slug}.analysis.json"
+          import subprocess, os
+          analysis = "${{ steps.princeton_run.outputs.out }}"
+          slug     = "${{ steps.princeton_run.outputs.slug }}"
           subprocess.check_call([
             "python","tools/fd_connectors/princeton/make_pulse_from_probe.py",
             "--analysis", analysis, "--slug", slug
           ])
 
       # ----------------------------- Demo path ------------------------------
-      - name: Run Demo pipeline (synthetic Princeton)
+      - name: Run Demo pipeline (date+batch result filename)
         if: ${{ github.event.inputs.source == 'demo' }}
         shell: python
         run: |
-          import numpy as np, pandas as pd, subprocess
+          import numpy as np, pandas as pd, subprocess, re
           from pathlib import Path
-          # Write small synthetic subset (simple single-probe: t,u,v,w)
+          from datetime import date
+
+          # Synthetic single-probe subset (t,u,v,w)
           Path("data/princeton").mkdir(parents=True, exist_ok=True)
           t = np.linspace(0, 6, 6001)
           rng = np.random.default_rng(42)
@@ -131,21 +156,41 @@ jobs:
           w = np.sin(2*np.pi*2.4*t + 1.1) + 0.05*rng.standard_normal(t.size)
           df = pd.DataFrame({"t":t,"u":u,"v":v,"w":w})
           subset = "data/princeton/demo_subset.csv"
-          df.to_csv(subset,index=False)
-          # Ensure out dir exists and run (explicit probe to be unambiguous)
+          df.to_csv(subset, index=False)
+
           Path("results/princeton").mkdir(parents=True, exist_ok=True)
-          out = "results/princeton/demo.analysis.json"
+          slug = "demo"
+
+          # Compute batch from existing pulses (today/slug)
+          today = date.today().isoformat()
+          auto = Path("pulse/auto")
+          batch = 1
+          if auto.exists():
+            import re
+            rx = re.compile(rf"^{re.escape(today)}_{re.escape(slug)}_batch(\d+)\.yml$")
+            nums = [int(m.group(1)) for p in auto.glob(f"{today}_{slug}_batch*.yml") if (m := rx.match(p.name))]
+            if nums:
+              batch = max(nums) + 1
+
+          out = f"results/princeton/{today}_{slug}_batch{batch}.analysis.json"
+
           subprocess.check_call([
             "python","analysis/princeton_probe/run_pipeline.py",
             "--subset",subset,"--out",out,"--probe","Q0"
           ])
 
-      - name: Generate Demo pulse
+          print(f"::set-output name=out::{out}")
+          print(f"::set-output name=slug::{slug}")
+          print(f"::set-output name=batch::batch{batch}")
+
+        id: demo_run
+
+      - name: Generate Demo pulse (with matching analysis path)
         if: ${{ github.event.inputs.source == 'demo' }}
         run: |
           python tools/fd_connectors/princeton/make_pulse_from_probe.py \
-            --analysis "results/princeton/demo.analysis.json" \
-            --slug     "demo"
+            --analysis "${{ steps.demo_run.outputs.out }}" \
+            --slug     "${{ steps.demo_run.outputs.slug }}"
 
       # ---------------------------- Commit outputs --------------------------
       - name: Commit outputs
