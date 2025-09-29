@@ -100,6 +100,21 @@ jobs:
             cmd += ["--probe", str(probe)]
           subprocess.check_call(cmd)
 
+      - name: Generate Princeton pulse
+        if: ${{ github.event.inputs.source == 'princeton' }}
+        shell: python
+        run: |
+          import json, subprocess
+          from pathlib import Path
+          r = json.loads('${{ steps.parse.outputs.params }}')
+          subset = r.get("subset_path") or r.get("subset")
+          slug = (r.get("slug") or Path(subset).stem) if subset else (r.get("slug") or "princeton")
+          analysis = f"results/princeton/{slug}.analysis.json"
+          subprocess.check_call([
+            "python","tools/fd_connectors/princeton/make_pulse_from_probe.py",
+            "--analysis", analysis, "--slug", slug
+          ])
+
       # ----------------------------- Demo path ------------------------------
       - name: Run Demo pipeline (synthetic Princeton)
         if: ${{ github.event.inputs.source == 'demo' }}
@@ -124,6 +139,13 @@ jobs:
             "python","analysis/princeton_probe/run_pipeline.py",
             "--subset",subset,"--out",out,"--probe","Q0"
           ])
+
+      - name: Generate Demo pulse
+        if: ${{ github.event.inputs.source == 'demo' }}
+        run: |
+          python tools/fd_connectors/princeton/make_pulse_from_probe.py \
+            --analysis "results/princeton/demo.analysis.json" \
+            --slug     "demo"
 
       # ---------------------------- Commit outputs --------------------------
       - name: Commit outputs
