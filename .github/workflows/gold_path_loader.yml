@@ -1,17 +1,18 @@
-name: GOLD PATH — Loader (Hopkins/Princeton)
+name: GOLD PATH — Loader (Hopkins / Princeton / Demo)
 
 on:
   workflow_dispatch:
     inputs:
       source:
-        description: "Data source: jhtdb | princeton"
+        description: "Data source: jhtdb | princeton | demo"
         required: true
         default: "jhtdb"
       params:
-        description: >
+        description: >-
           JSON parameters.
           JHTDB: {"flow","x","y","z","t0","dt","nsteps","slug"}
           Princeton: {"subset_path","slug"}
+          Demo: {"slug"}
         required: false
         default: '{"flow":"isotropic1024coarse","x":0.1,"y":0.2,"z":0.3,"t0":0.0,"dt":0.0005,"nsteps":2400,"slug":"isotropic"}'
 
@@ -23,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PYTHONPATH: ${{ github.workspace }}
-      # Optional, only needed if your JHTDB token is required by the SOAP service:
+      # Set in repo Settings → Secrets and variables → Actions if needed
       JHTDB_TOKEN: ${{ secrets.JHTDB_TOKEN }}
 
     steps:
@@ -40,84 +41,111 @@ jobs:
       - name: Install dependencies (SOAP + HDF5 + helpers)
         run: |
           python -m pip install --upgrade pip
-          pip install "numpy==1.23.5" "pandas==2.2.2" "pyyaml>=6.0" "pyarrow>=14"
-          pip install "suds-community>=1.1.2"
-          # Princeton subset readers + plotting used by the analysis pipeline:
-          pip install "tables>=3.8" "h5py>=3.10" "matplotlib>=3.8"
+          pip install numpy pandas pyyaml pyarrow suds-community lxml
 
       - name: Parse params
         id: parse
-        shell: python
         run: |
-          import json, os
-          raw = os.environ.get("RAW_PARAMS", "")
-          try:
-            obj = json.loads(raw) if raw else {}
-          except Exception as e:
-            raise SystemExit(f"Invalid JSON in 'params': {e}\nGot: {raw!r}")
-          # Emit the normalized JSON back out (single-line) so it’s safe to re-use.
-          print(f"params={json.dumps(obj, separators=(',',':'))}")
-        env:
-          RAW_PARAMS: ${{ github.event.inputs.params }}
+          echo "params<<EOF" >> $GITHUB_OUTPUT
+          echo '${{ github.event.inputs.params }}' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
-      # ---------- JHTDB PATH ----------
+      - name: Show plan
+        run: |
+          echo "SOURCE: ${{ github.event.inputs.source }}"
+          echo "PARAMS: ${{ steps.parse.outputs.params }}"
+
+      # ---------------------------
+      # JHTDB (Hopkins) pipeline
+      # ---------------------------
       - name: Run JHTDB pipeline
         if: ${{ github.event.inputs.source == 'jhtdb' }}
         shell: python
         run: |
-          import json, subprocess, shlex
-          r = json.loads("${{ steps.parse.outputs.params || '{}' }}")  # GitHub sets outputs as env; guarded
-          # Fill reasonable defaults if fields are missing
-          r.setdefault("flow", "isotropic1024coarse")
-          r.setdefault("x", 0.1); r.setdefault("y", 0.2); r.setdefault("z", 0.3)
-          r.setdefault("t0", 0.0); r.setdefault("dt", 0.0005); r.setdefault("nsteps", 2400)
-          r.setdefault("slug", "isotropic")
+          import json,subprocess,shlex
+          r=json.loads('${{ steps.parse.outputs.params }}')
 
-          cmd = (
-            f"python tools/fd_connectors/jhtdb/jhtdb_loader.py "
-            f"--flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} "
-            f"--t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
-          )
+          # Loader → CSV/meta
+          cmd=f"python tools/fd_connectors/jhtdb/jhtdb_loader.py --flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} --t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
+          print(cmd)
           subprocess.check_call(shlex.split(cmd))
 
-          stem = f"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}"
-          meta = f"data/jhtdb/{stem}.meta.json"
-          out  = f"results/fd_probe/{stem}.analysis.json"
+          # Analyzer → analysis.json
+          stem=f"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}"
+          meta=f"data/jhtdb/{stem}.meta.json"
+          out=f"results/fd_probe/{stem}.analysis.json"
+          subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
 
-          subprocess.check_call([
-            "python","tools/fd_connectors/jhtdb/analyze_probe.py",
-            "--meta", meta, "--out", out
-          ])
-
+          # Pulse builder → pulse/auto/YYYY-MM-DD_*.yml (+ copy analysis to batch metrics)
           subprocess.check_call([
             "python","tools/fd_connectors/jhtdb/make_pulse_from_probe.py",
-            "--flow", r["flow"], "--x", str(r["x"]), "--y", str(r["y"]), "--z", str(r["z"]),
-            "--t0", str(r["t0"]), "--dt", str(r["dt"]), "--nsteps", str(r["nsteps"]),
-            "--slug", r["slug"]
+            "--flow",r['flow'],
+            "--x",str(r['x']),
+            "--y",str(r['y']),
+            "--z",str(r['z']),
+            "--t0",str(r['t0']),
+            "--dt",str(r['dt']),
+            "--nsteps",str(r['nsteps']),
+            "--slug",r['slug']
           ])
 
-      # ---------- PRINCETON PATH ----------
+      # ---------------------------
+      # Princeton pipeline
+      # ---------------------------
       - name: Run Princeton pipeline
         if: ${{ github.event.inputs.source == 'princeton' }}
         shell: python
         run: |
-          import json, subprocess, os
-          r = json.loads("${{ steps.parse.outputs.params || '{}' }}")
-          if "subset_path" not in r:
-            raise SystemExit("params JSON must include 'subset_path' for source=princeton")
-          slug = r.get("slug", "princeton_subset")
+          import json,subprocess
+          r=json.loads('${{ steps.parse.outputs.params }}')
+          subset=r["subset_path"]
+          slug=r.get("slug","princeton_subset")
+          subprocess.check_call(["python","analysis/princeton_probe/run_pipeline.py","--subset",subset,"--slug",slug])
+
+      # ---------------------------
+      # Demo pipeline (synthetic subset)
+      # ---------------------------
+      - name: Run Demo pipeline (synthetic Princeton)
+        if: ${{ github.event.inputs.source == 'demo' }}
+        shell: python
+        run: |
+          import numpy as np, pandas as pd, pathlib, subprocess
+          out = pathlib.Path("data/princeton"); out.mkdir(parents=True, exist_ok=True)
+          t = np.linspace(0, 10, 256)
+          df = pd.DataFrame({
+              "t": t,
+              "u": np.sin(2*np.pi*0.8*t),
+              "v": np.sin(2*np.pi*1.6*t),
+              "w": np.sin(2*np.pi*2.4*t),
+              "Z": 0.0
+          })
+          subset = out/"demo_subset.csv"
+          df.to_csv(subset, index=False)
+          print(f"wrote {subset}")
+
+          # Keep interface identical to real Princeton path
           subprocess.check_call([
             "python","analysis/princeton_probe/run_pipeline.py",
-            "--subset", r["subset_path"],
-            "--slug", slug
+            "--subset", str(subset),
+            "--slug", "demo"
           ])
 
+      # ---------------------------
+      # Commit outputs (robust)
+      # ---------------------------
       - name: Commit outputs
         if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/jhtdb results/fd_probe results/princeton pulse/auto
+
+          # Add only if paths exist; ignore if empty to avoid pathspec errors
+          git add -A data/jhtdb          2>/dev/null || true
+          git add -A data/princeton      2>/dev/null || true
+          git add -A results/fd_probe    2>/dev/null || true
+          git add -A results/princeton   2>/dev/null || true
+          git add -A pulse/auto          2>/dev/null || true
+
           git commit -m "gold-path: results + pulses" || echo "No changes"
           git pull --rebase origin main || true
           git push || true
