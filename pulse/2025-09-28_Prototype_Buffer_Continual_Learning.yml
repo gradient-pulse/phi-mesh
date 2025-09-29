@@ -1,0 +1,22 @@
+title: 'Prototype: RGP Buffer for Continual Learning'
+summary: >
+  Proposal of an RGP buffer layered on top of transformer inference, enabling continual learning 
+  without retraining. The architecture captures Δ differences, organizes them into GC rhythms, 
+  reframes coherence via CF policies, and halts with least-divergence recursion. 
+  Published alongside a Zenodo note and visual schematic, this marks a first 
+  step in turning RGP from theory into architectural extension.
+  The RGP Buffer shows how AI can learn in-flight by recursive gradient processing rather than 
+  offline retraining. Key benefits: adapter-scale compute, reduced retries, coherence preservation. 
+  DeepSeek feedback confirmed this as a practical extension of RGP principles. Note: visuals/2025-09-28_rgp_buffer_prototype.png
+tags:
+  - continual_learning
+  - recursive_dialogue
+  - rgp
+  - gradient_choreography
+  - contextual_filter
+  - ai_model
+  - prototype
+papers:
+  - https://doi.org/10.5281/zenodo.17219414
+podcast:
+  - https://notebooklm.google.com/notebook/72af56cb-261f-4340-a905-7b2b309c4a0c?artifactId=a00ab898-4003-4a94-890b-f67297591bc7
