@@ -55,16 +55,22 @@ jobs:
         if: ${{ github.event.inputs.source == 'jhtdb' }}
         shell: python
         run: |
-          import json,subprocess,shlex,os,sys,Pathlib
+          import json, subprocess, shlex
           from pathlib import Path
-          r=json.loads('${{ steps.parse.outputs.params }}')
+          r = json.loads('${{ steps.parse.outputs.params }}')
           # call loader
-          cmd=f"python tools/fd_connectors/jhtdb/jhtdb_loader.py --flow {r['flow']} --x {r['x']} --y {r['y']} --z {r['z']} --t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']} --slug {r['slug']}"
+          cmd = (
+            f"python tools/fd_connectors/jhtdb/jhtdb_loader.py"
+            f" --flow {r['flow']}"
+            f" --x {r['x']} --y {r['y']} --z {r['z']}"
+            f" --t0 {r['t0']} --dt {r['dt']} --nsteps {r['nsteps']}"
+            f" --slug {r['slug']}"
+          )
           subprocess.check_call(shlex.split(cmd))
           # analyze + pulse
-          stem=f"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}"
-          meta=f"data/jhtdb/{stem}.meta.json"
-          out=f"results/fd_probe/{stem}.analysis.json"
+          stem = f"{r['flow']}__x{r['x']}_y{r['y']}_z{r['z']}__t{r['t0']}_dt{r['dt']}_n{r['nsteps']}"
+          meta = f"data/jhtdb/{stem}.meta.json"
+          out  = f"results/fd_probe/{stem}.analysis.json"
           Path("results/fd_probe").mkdir(parents=True, exist_ok=True)
           subprocess.check_call(["python","tools/fd_connectors/jhtdb/analyze_probe.py","--meta",meta,"--out",out])
           subprocess.check_call([
@@ -79,19 +85,19 @@ jobs:
         if: ${{ github.event.inputs.source == 'princeton' }}
         shell: python
         run: |
-          import json,subprocess,os
+          import json, subprocess
           from pathlib import Path
-          r=json.loads('${{ steps.parse.outputs.params }}')
+          r = json.loads('${{ steps.parse.outputs.params }}')
           subset = r.get("subset_path") or r.get("subset")  # allow either key
           if not subset:
             raise SystemExit("params must include 'subset_path' (or 'subset').")
           slug = r.get("slug") or Path(subset).stem
           Path("results/princeton").mkdir(parents=True, exist_ok=True)
           out = f"results/princeton/{slug}.analysis.json"
-          # Run local runner with explicit --out
+          # Run local runner with explicit --out (no --slug flag)
           subprocess.check_call([
             "python","analysis/princeton_probe/run_pipeline.py",
-            "--subset",subset,"--out",out,"--slug",slug
+            "--subset",subset,"--out",out
           ])
 
       # ----------------------------- Demo path ------------------------------
@@ -115,7 +121,7 @@ jobs:
           out = "results/princeton/demo.analysis.json"
           subprocess.check_call([
             "python","analysis/princeton_probe/run_pipeline.py",
-            "--subset",subset,"--out",out,"--slug","demo"
+            "--subset",subset,"--out",out
           ])
 
       # ---------------------------- Commit outputs --------------------------
