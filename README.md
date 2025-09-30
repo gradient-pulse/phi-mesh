@@ -92,6 +92,8 @@ This grammar shifts science from a focus on *things* to a focus on *rhythms and 
 
 - [Pulses](pulse/README.md)  YAML fossilization entries, syntax rules, and how they feed the Tag Map.  
 
+- [Auto Pulses](pulse/auto/README.md)  Machine-generated fossil record from workflows (date + batch numbered).
+
 ---
 
 ## Current NT Rhythm Status
