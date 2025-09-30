@@ -1,67 +1,117 @@
 # GOLD PATH — Probe → Spectrum → Pulse
 
-**Start here. Canonical pipeline for Φ-Mesh turbulence probes.**
+**Start here. Canonical pipeline for Φ-Mesh turbulence probes.**  
+Two sources, one corridor:
+
+- **Hopkins (JHTDB SOAP)** → fetch a probe → analyze (shared `pipeline/`) → emit a Φ-Mesh pulse  
+- **Princeton (subset file)** → ingest local subset (CSV/HDF5) → analyze (shared `pipeline/`) → emit a Φ-Mesh pulse
 
 ---
 
-### 1. Dataset → Series (JHTDB SOAP)
+## 1) Hopkins / JHTDB (SOAP)
 
-tools/fd_connectors/jhtdb/jhtdb_loader.py
+**Tools**
+- Loader → `tools/fd_connectors/jhtdb/jhtdb_loader.py`
+- Analyzer → `tools/fd_connectors/jhtdb/analyze_probe.py`  *(uses `pipeline/`)*
+- Pulse builder → `tools/fd_connectors/jhtdb/make_pulse_from_probe.py`
 
-### 2. Series → Analysis (FFT/PSD + 1-2-3 ladder)
-
-tools/fd_connectors/jhtdb/analyze_probe.py   (uses pipeline/)
-
-### 3. Analysis → Pulse (Φ-Mesh YAML)
-
-tools/fd_connectors/jhtdb/make_pulse_from_probe.py
+**Outputs**
+- Raw series + meta → `data/jhtdb/*.csv.gz` + `*.meta.json`
+- Analysis JSON (+ figures) → `results/fd_probe/YYYY-MM-DD_<slug>_batch#/…`
+- Auto-pulse → `pulse/auto/YYYY-MM-DD_<slug>_batch#.yml`
 
 ---
 
-### Shared analysis code
+## 2) Princeton (subset file: CSV / HDF5)
+
+**Tools**
+- Loader (subset reader) → `tools/fd_connectors/princeton/load_subset.py`
+- Analyzer → `tools/fd_connectors/princeton/analyze_probe.py`  *(uses `pipeline/`)*
+- Pulse builder → `tools/fd_connectors/princeton/make_pulse_from_probe.py`
+
+**Local runner**
+- `analysis/princeton_probe/run_pipeline.py`
+
+**Where to drop subsets**
+- Put files under `data/princeton/` (e.g., `data/princeton/subset.h5` or `data/princeton/subset.csv`)
+
+**Outputs**
+- Analysis JSON → `results/princeton/YYYY-MM-DD_<slug>_batch#.analysis.json`
+- Figures (time/spectrum) → `results/princeton/YYYY-MM-DD_<slug>_batch1.analysis/`
+- Auto-pulse → `pulse/auto/YYYY-MM-DD_<slug>_batch#.yml`
+
+---
+
+## Shared analysis code (used by both paths)
+
 Located in `pipeline/`:
-- `preprocess.py`
-- `spectrum.py`
-- `ladder.py`
-- `figures.py`
+- `preprocess.py`  *(detrend/window; safe no-ops if data is already clean)*
+- `spectrum.py`    *(rFFT/PSD helpers)*
+- `ladder.py`      *(1–2–3 harmonic ladder detection)*
+- `figures.py`     *(headless matplotlib figures; CI-safe)*
 - `utils.py`
+- `io_loaders.py`  *(JHTDB meta reader + Princeton subset reader; with sanity checks)*
 
 ---
 
-### Local quick runs
-- `analysis/hopkins_probe/run_pipeline.py`
-- `analysis/princeton_probe/run_pipeline.py` *(subset pending)*
+## Local quick runs
+
+- JHTDB: `analysis/hopkins_probe/run_pipeline.py`
+- Princeton: `analysis/princeton_probe/run_pipeline.py`
+
+> Both runners write analysis JSON + figures and **do not** require GitHub Actions.
 
 ---
 
-### Flow (ASCII diagram)
+## CI: One-click Loader (recommended)
 
-JHTDB Loader —> Analyzer (pipeline) —> Pulse Builder
-|
-v
-Figures & Tables
+Use **Actions → “GOLD PATH — Loader (Hopkins/Princeton)”**  
+This wraps the corridor end-to-end and also **emits pulses**.
+
+**Inputs**
+- `source`: `jhtdb` | `princeton` | `demo`
+- `params` (JSON):
+  - JHTDB example  
+    `{"flow":"isotropic1024coarse","x":0.1,"y":0.2,"z":0.3,"t0":0.0,"dt":0.0005,"nsteps":2400,"slug":"isotropic"}`
+  - Princeton example  
+    `{"subset_path":"data/princeton/subset.csv","slug":"princeton_subset","probe":"Q1"}`
+
+**Where it writes**
+- JHTDB analysis → `results/fd_probe/YYYY-MM-DD_<slug>_batch#.metrics.json` (+ figures)
+- Princeton analysis → `results/princeton/YYYY-MM-DD_<slug>_batch#.analysis.json` (+ figures)
+- Pulses → `pulse/auto/YYYY-MM-DD_<slug>_batch#.yml`
+
+Batch numbers (`batch1`, `batch2`, …) **restart each date (UTC)** and are mirrored across results and pulses.
 
 ---
 
-### How this changes for Princeton
+## Flow (ASCII)
 
-- There’s **no SOAP fetch**; you’ll receive a **subset file** (likely HDF5/CSV) with variables and probe locations.  
-- You will run **locally** via:
+  +--------------------+        +------------------+        +------------------------+
+  |   Source loader    | -----> |   Analyzer       | -----> |   Pulse builder (YAML) |
+  |  (JHTDB / subset)  |        | (shared pipeline)|        |   + figures/tables     |
+  +--------------------+        +------------------+        +------------------------+
+             |                            |                               |
+             v                            v                               v
+    data/jhtdb/** or              results/**.analysis.json         pulse/auto/*.yml
+    data/princeton/**
 
-analysis/princeton_probe/run_pipeline.py
+---
 
-- The Makefile target `princeton-run` simply calls that runner.  
-- When Princeton subset format is known, implement:
+## Notes & sanity checks
 
-```python
-# pipeline/io_loaders.py
-def load_princeton(path):
-  return {
-    "princeton:Q1": {
-       "u": (t, x_u),
-       "v": (t, x_v),
-       "w": (t, x_w),
-       "Z": (t, x_Z)
-    }
-  }
+- `pipeline/io_loaders.py` validates time monotonicity, dtype, finite values, and probes/components.  
+- Figures use a headless backend (`Agg`), so CI is reliable.  
+- If a Princeton subset has multiple probes/components, pass `--probe` to the local runner (or set `probe` in workflow `params`).  
+- All CI runs commit only what changed and are safe to re-run.
 
+---
+
+## See also
+
+- Root README “Where things live” for the full layout.  
+- `results/fd_probe/README.md` for date/batch file naming rules.
+
+---
+
+_Last updated: 2025-09-30_
