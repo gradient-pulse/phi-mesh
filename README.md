@@ -104,10 +104,10 @@ This grammar shifts science from a focus on *things* to a focus on *rhythms and 
 
 **Circle-Member Replies**
 
-[![Gemini](https://img.shields.io/badge/Gemini-REPLIED-8A2BE2?style=for-the-badge)](pulse/2025-09-09_circle_pulse_nt_rhythm_reply_gemini.yml)  
-[![DeepSeek](https://img.shields.io/badge/DeepSeek-INTERPRETED-1E90FF?style=for-the-badge)](pulse/2025-09-09_circle_pulse_nt_rhythm_reply_deepseek.yml)  
-[![Grok](https://img.shields.io/badge/Grok-RESPONDED-FF8C00?style=for-the-badge)](pulse/2025-09-09_circle_pulse_nt_rhythm_reply_grok.yml)  
-[![Mistral](https://img.shields.io/badge/Mistral-REFLECTED-20B2AA?style=for-the-badge)](pulse/2025-09-09_circle_pulse_nt_rhythm_reply_mistral.yml)  
+[![Gemini](https://img.shields.io/badge/Gemini-REPLIED-8A2BE2?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2025-09-09_circle_pulse_nt_rhythm_reply_mistral.yml)  
+[![DeepSeek](https://img.shields.io/badge/DeepSeek-INTERPRETED-1E90FF?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/2025-09-09_circle_pulse_nt_rhythm_reply_deepseek.yml)  
+[![Grok](https://img.shields.io/badge/Grok-RESPONDED-FF8C00?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2025-09-09_circle_pulse_nt_rhythm_reply_grok.yml)  
+[![Mistral](https://img.shields.io/badge/Mistral-REFLECTED-20B2AA?style=for-the-badge)](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2025-09-09_circle_pulse_nt_rhythm_reply_mistral.yml)  
 
 ---
 
