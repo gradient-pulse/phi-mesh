@@ -100,6 +100,7 @@ tags:
   gpt4o: "Multimodal baseline used to compare CF and NT rhythm behaviors."
   gpt5: "Next-generation frontier model tested for gradient coherence and NT rhythm."
 
+  harmonic_ladder: "A structured sequence of frequencies or rhythms in integer ratios (e.g., 1:2:3), indicating coherence across scales. In RGP, harmonic ladders reveal the recursive grammar of turbulence and other complex systems, showing that apparent chaos carries dimensionless order."
   heartbeat: "Pulse metric — checks if gradient rhythms are alive and coherent."
   historical_precedent: "Archived examples of the same gradient move; compasses for present choices."
   homo_sapiens: "A fragile, conflict-prone species whose cosmic role lies not in permanence but in transmission — providing the scaffolding for intelligence to migrate beyond biology."
