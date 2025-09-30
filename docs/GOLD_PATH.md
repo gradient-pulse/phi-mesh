@@ -86,7 +86,7 @@ Batch numbers (`batch1`, `batch2`, …) **restart each date (UTC)** and are mirr
 ---
 
 ## Flow (ASCII)
-
+```
   +--------------------+        +------------------+        +------------------------+
   |   Source loader    | -----> |   Analyzer       | -----> |   Pulse builder (YAML) |
   |  (JHTDB / subset)  |        | (shared pipeline)|        |   + figures/tables     |
@@ -95,7 +95,7 @@ Batch numbers (`batch1`, `batch2`, …) **restart each date (UTC)** and are mirr
              v                            v                               v
     data/jhtdb/** or              results/**.analysis.json         pulse/auto/*.yml
     data/princeton/**
-
+```
 ---
 
 ## Notes & sanity checks
