@@ -1,3 +1,6 @@
+# TODO: Normalize search on canonical tags
+# Current state: tag map search hits alias entries (e.g. icl) but not the canonical form (in_context_learning).
+# Fix needed in generate_graph_data.py + frontend search: always canonicalize tags and queries.
 aliases:
   ai_architectures:
     - AIArchitecture
