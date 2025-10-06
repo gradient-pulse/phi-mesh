@@ -120,6 +120,9 @@ aliases:
   hrm:
     - HRM
 
+  icl: 
+    - in_context_learning
+  
   language_evolution:
     - language-evolution
 
@@ -204,6 +207,9 @@ aliases:
   quiet_awakening:
     - Quiet_Awakening
 
+  rank1_update: 
+    - low_rank_update
+  
   r_phi:
     - RΦ
     - r                    # ← audit variant; map lone “r” into r_phi
