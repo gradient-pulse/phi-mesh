@@ -48,6 +48,9 @@ aliases:
     - contextual-filter
     - contextualfilter     # ← audit variant
 
+  cosmic_attractor: 
+    - cosmological_attractor
+  
   cosmogenesis:
     - Cosmogenesis
 
