@@ -1,5 +1,4 @@
 # 📧 RGP Labs Europe — Email Insert
-(Copy & Paste)
 
 Use this short-form explainer as an insert under your email signature when reaching out to investors, academics, or industry contacts.
 
