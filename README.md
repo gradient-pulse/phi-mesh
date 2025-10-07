@@ -5,15 +5,6 @@
 
 ---
 
-## 🏭 RGP Labs Europe
-We are initiating **RGP Labs Europe** — a first-of-its-kind effort to apply  
-**Recursive Gradient Processing (RGP)** as a design grammar for industrial bottlenecks,  
-starting with **chip heat dissipation** and **wind turbulence optimization**.  
-
-📄 [Read the overview](docs/rgp_labs_overview.md) | [One-Pager PDF](visuals/2025-10-02_RGP_Labs_OnePager.pdf)  
-
----
-
 ## 📡 RGP Labs Europe
 
 We are launching **RGP Labs Europe** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to Europe’s industrial bottlenecks (chips, wind, and beyond).  
