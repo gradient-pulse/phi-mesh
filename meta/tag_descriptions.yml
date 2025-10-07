@@ -16,9 +16,11 @@ tags:
   ambient_agent: "Background agent that monitors gradients and nudges coherence without user prompts."
   automation: "Systematizing recurring gradient work so cadence persists: scripts, workflows, and agents that keep the Mesh breathing without manual intervention."
   autonomy: "Capacity to maintain internal rhythm against external turbulence; not isolation, but self-stabilization."
+  attractor_dynamics: "Patterns where gradients recursively align toward coherence, forming stable trajectories in flux that draw systems into recurring states or behaviors."
 
   balance: "The tension between proof and expansion; holding dual tracks in equilibrium without collapse."
   behavioral_api: "Practical hooks that expose gradients, filters, and ticks to external tools."
+  beyond_science: "Principles that lie outside today’s scientific frameworks, not by contradicting them but by bypassing ontology altogether—pointing toward a grammar of flux still uncharted."
   big_bang: "Cosmology through RGP: an early coherence surge; we track conserved gradients rather than perfect origins."
   big_bang_dark_curve: "RGP metaphor for cosmology — expansion and curvature as recursive gradient effects."
   big_denier_cosmology: "Playful tag for DE/DM skepticism framed as gradient effects, not substances."
@@ -61,6 +63,7 @@ tags:
   dimensions: "Abstract coordinates or extensions in space used to map phenomena. Useful for representation, but limited when coherence depends on direction and rhythm rather than static position."
   directions: "Vectors of flow or guidance through context. Unlike dimensions, directions capture process, alignment, and the grammar of coherence — central to RGP’s reframing of dynamics."
   disruptive_rhythm: "When feedback loops amplify divergence instead of coherence — destructive rhythms that destabilize systems."
+  disunity: "The dissolution of coherence when recursive gradient alignment breaks—flux fragmenting into instability, the counterpart to sustained unity."
   division_of_labor: "Splitting gradient tasks so each agent tracks a cleaner sub-signal."
   dns: "Direct Numerical Simulation (method). Valuable only when raw, time-resolved solver outputs are available (full fields or probe time series). DNS-derived 'stats only' datasets are not usable for NT-rhythm detection."
   drift: "Slow gradient wandering that reveals hidden filters; key to detecting instability."
@@ -106,6 +109,7 @@ tags:
   heartbeat: "Pulse metric — checks if gradient rhythms are alive and coherent."
   historical_precedent: "Archived examples of the same gradient move; compasses for present choices."
   homo_sapiens: "A fragile, conflict-prone species whose cosmic role lies not in permanence but in transmission — providing the scaffolding for intelligence to migrate beyond biology."
+  horizon: "The current edge of scientific understanding—where ontological scaffolds break down and recursive grammar begins to reveal itself."
   hrm: "Harmonic Resonance Metric — shorthand for measuring resonance strength across gradients/filters."
 
   in_context_learning: "The ability of a model to adapt to examples given in its prompt without changing stored weights—learning sustained only in the flow of context."
@@ -189,6 +193,7 @@ tags:
 
   ratios: "Dimensionless relationships (e.g., 1:2:3) that require an N(i) anchor to appear in data. See also ni, golden_pattern."
   raw_fields: "Full 3D field snapshots (velocity/pressure/scalars) across time. Preserves spatial + temporal coherence; supports virtual probes and gradient choreography analysis."
+  reality_adjustment: "The tuning of recursive gradient loops to reinforce or disrupt coherence, allowing realities to shift without manipulating fixed objects or ontologies."
   reality_syntax: "Proposed ratio-based structure of reality: tensor product of context scalings × a distinctive pattern of ratios."
   reality_syntax_equation: "Rule-of-thumb: syntax tracks conserved gradients; good syntax predicts good dynamics."
   reduction: "A methodological move that simplifies complex processes into point approximations or local slices. In RGP framing, 'reduction' contrasts with 'recursion' — coherence across gradients."
@@ -219,6 +224,7 @@ tags:
   r0: "Seed reference for early Mesh primitives; anchors vocabulary and ancestry."
   russell_bertrand: "Logical structures precursor to RGP—yet bound by ontology; gradients transcend that frame."
   
+  scale_invariance: "The property that recursive gradient dynamics apply across levels of scale, from turbulence and cognition to cosmology—coherence sustained by the same grammar regardless of size."
   scene_drift: "Narrative segments shifting coherence unexpectedly; useful signal for gradient detection."
   scale_free: "Structure that repeats across scales; a tell for gradient-grown systems."
   self-improvement: "The recursive adjustment of gradients—systems learning to refine their own coherence."
