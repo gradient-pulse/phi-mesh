@@ -9,9 +9,15 @@ aliases:
     - ai_architecture
     - ai_architectures
 
+  attractor: 
+    - attractor_dynamics
+    
   automation:
     - Automation
 
+  beyond: 
+    - beyond_science
+  
   big_bang:
     - Big Bang
     - Big_Bang
@@ -220,6 +226,9 @@ aliases:
     - RΦ
     - r                    # ← audit variant; map lone “r” into r_phi
 
+  reality-adjust: 
+    - reality_adjustment
+  
   recursive_awakening:
     - recursive-awakening
     - recursive_awakening  # audit variant
@@ -263,6 +272,12 @@ aliases:
   rhythm_of_nature:
     - rhythm-of-nature
 
+  scale-free: 
+    - scale_invariance
+
+  scale_free: 
+    - scale_invariance
+  
   signal:
     - Signal
 
@@ -281,6 +296,7 @@ aliases:
     - triadic-emergence
 
   ud:
+    - disunity
     - UD
     - Unity-Disunity
     - unity-disunity
