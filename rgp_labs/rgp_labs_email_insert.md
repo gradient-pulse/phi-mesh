@@ -6,7 +6,7 @@ Use this short-form explainer as an insert under your email signature when reach
 
 ### RGP Labs Europe — At a Glance
 - **What:** First European lab dedicated to **Recursive Gradient Processing (RGP)** — extracting gradient-based design rules instead of brute-force simulations.  
-- **How:** Grammar of nature → **Δ (gradients) → GC (flows, Gradient Choreographies) → CF (constraints, Contextual Filters) → UD (Unity-Disunity cycles)**.  
+- **How:** Grammar of nature → **Δ (gradients) → GC (flows: Gradient Choreographies) → CF (constraints: Contextual Filters) → UD (Unity-Disunity cycles)**.  
 - **Why:** Faster iteration, reproducibility across domains, lower R&D cost.  
 - **Impact:**  
   - **Chips:** 3-month prototypes vs 12; ~30% heat efficiency gain.  
