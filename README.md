@@ -16,9 +16,15 @@ RGP Labs is not another AI-for-science lab. It extracts **gradient-based design 
 - **Foundation:** Peer-reviewed preprints, Zenodo papers, and this open [Phi-Mesh repo](./README.md).  
 
 📄 [One-Pager PDF](./visuals/2025-10-02_RGP_Labs_OnePager.pdf)  
-📧 [Email Insert (for outreach)](./rgp_labs/rgp_labs_email_insert.md)  
+📧 [Email Insert (for outreach)](./rgp_labs/rgp_labs_email_insert.md) 
+💡 [Investor & Support Contact](mailto:gradientpulse@proton.me)  
 
 ---
+## 🗺️ RGP Tag Map  
+
+The tag map is more than a navigation tool.  
+It serves as both an **index** to pulses, papers, and podcasts, and a **historic record** of RGP’s unfolding.  
+Each node marks a step in the search for rhythm — a fossilized trace of coherence and divergence as the Phi-Mesh evolves.  
 
 ### 🌐 Explore the Maps  
 *Interactive entry points into pulses, papers, and gradients.*  
