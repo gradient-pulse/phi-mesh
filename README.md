@@ -14,11 +14,18 @@ starting with **chip heat dissipation** and **wind turbulence optimization**.
 
 ---
 
-## 🗺️ RGP Tag Map  
+## 📡 RGP Labs Europe
 
-The tag map is more than a navigation tool.  
-It serves as both an **index** to pulses, papers, and podcasts, and a **historic record** of RGP’s unfolding.  
-Each node marks a step in the search for rhythm — a fossilized trace of coherence and divergence as the Phi-Mesh evolves.  
+We are launching **RGP Labs Europe** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to Europe’s industrial bottlenecks (chips, wind, and beyond).  
+
+RGP Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.  
+
+- **Chips:** Detect thermal breakdown 30% earlier, compress prototypes from 12 months → 3 months.  
+- **Wind:** Stabilize turbulence, shorten design cycles from 1 year → 4 months, boost yields ~25%.  
+- **Foundation:** Peer-reviewed preprints, Zenodo papers, and the open [Phi-Mesh repo](./README.md).  
+
+📄 [One-Pager PDF](./visuals/2025-10-02_RGP_Labs_OnePager.pdf)  
+📧 [Email Insert (for outreach)](./rgp_labs_email_insert.md)  
 
 ---
 
