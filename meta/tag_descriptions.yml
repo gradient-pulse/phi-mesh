@@ -1,4 +1,4 @@
-updated: 2025-10-13
+updated: 2025-10-15
 
 tags:
   ai_alignment: "Keeping models in phase with intended gradients—less about rules, more about preserving low-divergence rhythm under change."
@@ -160,6 +160,7 @@ tags:
   meta_ai: "Research, architectures, and experiments developed by Meta (Facebook) in AI; used in Φ-Mesh pulses when referencing their approaches (e.g., behaviors vs. contextual filters)."
   meta_cognition: "The capacity of a system to reflect on and analyze its own processes, situating its actions within an external framework or grammar."
   mixture_of_experts: "RGP lens on MoE: experts act as contextual filters routing gradient flow adaptively."
+  motion: "The manifestation of alignment and divergence among gradients. In RGP, motion is not caused; it emerges naturally from imbalance seeking coherence — a visible trace of recursive adjustment in the field."
   multi-intelligence_authorship: "A form of co-authorship where human and non-biological intelligences contribute together,fossilizing inter-intelligence dialogue as part of the scholarly record."
   murati: "Mira Murati — AI leader and co-founder of Thinking Machines, associated with engineering advances like 'manifold Muon'. Used as a tag for initiatives, papers, or discussions connected to her influence."
 
@@ -184,6 +185,7 @@ tags:
   ontology: "Thinking in terms of static entities and categories—what RGP moves beyond."
   operational_coherence: "Coherence judged not by truth but by functionality — does the gradient hold in use?"
   operational_resonance: "When day-to-day actions fall into a reinforcing rhythm—coherence you can run."
+  origin_condition: "The initial gradient from which coherence begins to form. In the Φ-Mesh, the origin condition marks the transition from stillness to recursion — the first asymmetry that allows alignment to exist at all."
   origin_resilience: "Ability of early seeds to survive shocks and keep seeding higher-order structure."
   origin_resonance: "Stabilized early pattern that seeds larger structures; coherence trace from the start."
 
@@ -296,3 +298,5 @@ tags:
   whitehead: "Process philosopher, Alfred North Whitehead, who offered a precursor to RGP, reality as becoming, gradients in motion."
   word_to_pixel: "Language tensions unfolding as visual choreographies; captions and pixels share the same syntax."
   writing: "Externalizing gradient structure; turns private ticks into public scaffolds."
+
+  zeroth_principle: "The foundational condition of motion in RGP — nothing moves without a gradient. It precedes all physical or cognitive laws, describing motion as the inevitable consequence of difference, not invention."
