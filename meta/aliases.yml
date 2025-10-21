@@ -78,6 +78,9 @@ aliases:
     - disruptive rhythm
     - disruptive-rhythm
 
+  european_tech_sovereignty:
+    - tech_sovereignty
+    
   experimenter_pulse:
     - AgentPulse
     - AutoPulse
