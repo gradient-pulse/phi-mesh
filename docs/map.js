@@ -121,19 +121,48 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- zoom/pan ---
-  const zoom = d3.zoom().scaleExtent([0.6, 2.0]).on('zoom', ev => root.attr('transform', ev.transform));
+  const zoom = d3.zoom().scaleExtent([0.8, 2.0]).on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // --- smooth centering helper ---
-  function centerOnNodes(selectedNodes) {
-    if (!selectedNodes || !selectedNodes.length) return;
-    const avgX = d3.mean(selectedNodes, d => d.x);
-    const avgY = d3.mean(selectedNodes, d => d.y);
-    const scale = Math.min(2.0, 0.9 / Math.sqrt(selectedNodes.length));
-    const translate = [W / 2 - scale * avgX, H / 2 - scale * avgY];
-    svg.transition()
-      .duration(800)
-      .call(zoom.transform, d3.zoomIdentity.translate(...translate).scale(scale));
+  // --- helpers ---
+  function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+
+  // Fit/center on nodes using a padded bounding box (safe for many matches)
+  function fitViewTo(nodes) {
+    if (!nodes || !nodes.length) return;
+
+    // If a lot of nodes match, just pan to centroid and keep scale ~1
+    if (nodes.length > 40) {
+      const cx = d3.mean(nodes, d => d.x);
+      const cy = d3.mean(nodes, d => d.y);
+      const k  = 1.0;
+      const tx = W/2 - k * cx;
+      const ty = H/2 - k * cy;
+      svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      return;
+    }
+
+    const xs = nodes.map(d => d.x), ys = nodes.map(d => d.y);
+    const minX = Math.min(...xs), maxX = Math.max(...xs);
+    const minY = Math.min(...ys), maxY = Math.max(...ys);
+    const pad  = 80;
+
+    const bw = Math.max(1, (maxX - minX) + pad);
+    const bh = Math.max(1, (maxY - minY) + pad);
+
+    const kx = W / bw, ky = H / bh;
+    const k  = clamp(Math.min(kx, ky), 0.9, 1.8);
+
+    const cx = (minX + maxX) / 2;
+    const cy = (minY + maxY) / 2;
+    const tx = W/2 - k * cx;
+    const ty = H/2 - k * cy;
+
+    svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+  }
+
+  function resetView(){
+    svg.transition().duration(400).call(zoom.transform, d3.zoomIdentity);
   }
 
   // --- background click clears focus and panels ---
@@ -256,9 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setFocus(keep);
     renderPulseList(tagId);
 
-    // new: auto-center on clicked tag and its neighbors
+    // auto-center on clicked tag and its neighbors (bbox-based)
     const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
-    centerOnNodes(selectedNodes);
+    fitViewTo(selectedNodes);
   }
 
   // --- search filter ---
@@ -269,11 +298,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       clearLeftPanel();
 
-      if (!q){ clearFocus(); return; }
+      if (!q){
+        clearFocus();
+        resetView();        // return to default zoom
+        return;
+      }
       const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
       const keep = new Set(matched.map(n=>n.id));
       setFocus(keep);
-      centerOnNodes(matched);
+      fitViewTo(matched);   // bbox-based fit, safe for many matches
     });
   }
 });
