@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- zoom/pan ---
-  const zoom = d3.zoom().scaleExtent([0.8, 2.0]).on('zoom', ev => root.attr('transform', ev.transform));
+  const zoom = d3.zoom().scaleExtent([0.3, 2.5]).on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
   // --- helpers ---
