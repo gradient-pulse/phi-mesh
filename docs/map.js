@@ -291,22 +291,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- search filter ---
-  if (searchInput){
-    searchInput.addEventListener('input', e => {
-      const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
-      const q = v.trim().toLowerCase();
+if (searchInput){
+  searchInput.addEventListener('input', e => {
+    const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
+    const q = v.trim().toLowerCase();
 
-      clearLeftPanel();
+    // NEW: clear any selected tag when typing
+    nodeSel.classed('selected', false);
 
-      if (!q){
-        clearFocus();
-        resetView();        // return to default zoom
-        return;
-      }
-      const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
-      const keep = new Set(matched.map(n=>n.id));
-      setFocus(keep);
-      fitViewTo(matched);   // bbox-based fit, safe for many matches
-    });
-  }
+    clearLeftPanel();
+    if (pulseList){
+      pulseList.textContent = 'Click a tag to list its pulses.';
+      pulseList.className = 'muted one-line';
+    }
+
+    if (!q){
+      clearFocus();
+      resetView();
+      return;
+    }
+
+    const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
+    const keep = new Set(matched.map(n=>n.id));
+    setFocus(keep);
+    fitViewTo(matched);
+  });
+}
 });
