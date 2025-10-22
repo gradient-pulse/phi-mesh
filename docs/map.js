@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (days <= 270) return '#86cbff';
     return '#74a9ff';
   }
-  // --- simulation (looser => less dense; slight upward bias) ---
+
+  // --- simulation ---
   const sim = d3.forceSimulation(DATA.nodes)
     .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.40))
     .force('charge', d3.forceManyBody().strength(-320))
@@ -99,9 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       g.append('text')
         .attr('class', 'tag-label')
-        .attr('text-anchor', 'middle')              // center horizontally
-        .attr('x', 0)                               // at node center (g is translated)
-        .attr('y', d => rScale(nodeScore(d)) + 12)  // just below ellipse bottom
+        .attr('text-anchor', 'middle')
+        .attr('x', 0)
+        .attr('y', d => rScale(nodeScore(d)) + 12)
         .text(d => d.id);
 
       g.on('mouseover', (ev,d)=>showTip(ev,d.id))
@@ -123,7 +124,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const zoom = d3.zoom().scaleExtent([0.35, 4]).on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // --- background click clears focus, right hint, and LEFT PANEL ---
+  // --- smooth centering helper ---
+  function centerOnNodes(selectedNodes) {
+    if (!selectedNodes || !selectedNodes.length) return;
+    const avgX = d3.mean(selectedNodes, d => d.x);
+    const avgY = d3.mean(selectedNodes, d => d.y);
+    const scale = Math.min(2.0, 0.9 / Math.sqrt(selectedNodes.length));
+    const translate = [W / 2 - scale * avgX, H / 2 - scale * avgY];
+    svg.transition()
+      .duration(800)
+      .call(zoom.transform, d3.zoomIdentity.translate(...translate).scale(scale));
+  }
+
+  // --- background click clears focus and panels ---
   svg.on('click', () => {
     clearFocus();
     nodeSel.classed('selected', false);
@@ -131,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pulseList.textContent = 'Click a tag to list its pulses.';
       pulseList.className = 'muted one-line';
     }
-    clearLeftPanel(); // ← new
+    clearLeftPanel();
   });
 
   // --- tooltip helpers ---
@@ -171,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // de-dupe by (id || title || date)
     const seen = new Set();
     const items = [];
     for (const p of raw){
@@ -181,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
       items.push(p);
     }
 
-    // newest first
     items.sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
 
     const rows = items.map(p => {
@@ -194,10 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>`;
     }).join('');
 
-    pulseList.className = ''; // allow multiple rows, but each is one-line
+    pulseList.className = '';
     pulseList.innerHTML = `<div style="font-weight:600; margin:2px 0 6px 0">${esc(tagId)}</div>${rows}`;
 
-    // clicking a pulse shows details in LEFT panel
     pulseList.querySelectorAll('[data-key]').forEach(el => {
       el.addEventListener('click', () => {
         const key = el.getAttribute('data-key') || '';
@@ -235,18 +245,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- tag click ---
   function onTagClick(tagId){
-    clearLeftPanel(); // ← clear left when switching tags
-    nodeSel.classed('selected', d => d.id === tagId); // just the clicked node
+    clearLeftPanel();
+    nodeSel.classed('selected', d => d.id === tagId);
 
-    // keep only neighbors + self
     const keep = new Set([tagId]);
     links.forEach(l => {
       if (l.source.id === tagId) keep.add(l.target.id);
       if (l.target.id === tagId) keep.add(l.source.id);
     });
     setFocus(keep);
-
     renderPulseList(tagId);
+
+    // new: auto-center on clicked tag and its neighbors
+    const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
+    centerOnNodes(selectedNodes);
   }
 
   // --- search filter ---
@@ -255,11 +267,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
       const q = v.trim().toLowerCase();
 
-      clearLeftPanel(); // ← typing changes context
+      clearLeftPanel();
 
       if (!q){ clearFocus(); return; }
-      const keep = new Set(DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q)).map(n=>n.id));
+      const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
+      const keep = new Set(matched.map(n=>n.id));
       setFocus(keep);
+      centerOnNodes(matched);
     });
   }
 });
