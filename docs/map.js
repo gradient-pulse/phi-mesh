@@ -1,272 +1,279 @@
-// Phi-Mesh Tag Map — full production build with gentle zoom refinement (2025-10-22)
+/* docs/map.js — render tag graph using window.PHI_DATA */
+document.addEventListener('DOMContentLoaded', () => {
+  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
+    ? window.PHI_DATA : { nodes:[], links:[] };
 
-(async () => {
-  const data = window.PHI_DATA || window.GRAPH_DATA || window.DATA;
-  if (!data || !data.nodes) {
-    console.error("Phi-Mesh map: missing dataset");
-    return;
+  // --- DOM ---
+  const svg = d3.select('#graph');
+  const tooltip = d3.select('#tooltip');
+  const leftContent = document.getElementById('left-content');
+  const leftHint = document.getElementById('left-hint');
+  const pulseList = document.getElementById('pulse-list');
+  const searchInput = document.getElementById('search');
+
+  // left panel starts empty (hint lives in header)
+  if (leftContent) leftContent.innerHTML = '';
+
+  // helper: reset left panel to the header hint
+  function clearLeftPanel(){
+    if (leftContent) leftContent.innerHTML = '';
+    if (leftHint) {
+      leftHint.textContent =
+        'Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details';
+    }
   }
 
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  // --- sizes & viewBox ---
+  const nodeEl = svg.node();
+  const W = (nodeEl && nodeEl.clientWidth)  || 1200;
+  const H = (nodeEl && nodeEl.clientHeight) || 800;
+  svg.attr('viewBox', `0 0 ${W} ${H}`)
+     .attr('preserveAspectRatio','xMidYMin meet'); // keep graph anchored to top
 
-  // --- SVG setup and background --------------------------------------------
-  const svg = d3
-    .select("body")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("id", "phi-map")
-    .style("background", "radial-gradient(circle at 50% 50%, #0b0b0d 0%, #000 100%)");
+  // --- layers ---
+  const root = svg.append('g');
+  const linkLayer = root.append('g').attr('class','links');
+  const nodeLayer = root.append('g').attr('class','nodes');
 
-  const defs = svg.append("defs");
+  // --- prep data ---
+  const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
+  const links = DATA.links.map(l => ({
+    source: idToNode.get(l.source) || l.source,
+    target: idToNode.get(l.target) || l.target
+  })).filter(l => l.source && l.target);
 
-  // Glow filter for active nodes
-  const glow = defs
-    .append("filter")
-    .attr("id", "glow")
-    .attr("x", "-50%")
-    .attr("y", "-50%")
-    .attr("width", "200%")
-    .attr("height", "200%");
-  glow
-    .append("feGaussianBlur")
-    .attr("stdDeviation", "3.5")
-    .attr("result", "coloredBlur");
-  const feMerge = glow.append("feMerge");
-  feMerge.append("feMergeNode").attr("in", "coloredBlur");
-  feMerge.append("feMergeNode").attr("in", "SourceGraphic");
+  // degree for fallback sizing
+  const degree = new Map();
+  links.forEach(l => {
+    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
+    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
+  });
 
-  // Subtle gridlines background
-  const gridPattern = defs
-    .append("pattern")
-    .attr("id", "grid")
-    .attr("width", 50)
-    .attr("height", 50)
-    .attr("patternUnits", "userSpaceOnUse");
-  gridPattern
-    .append("path")
-    .attr("d", "M 50 0 L 0 0 0 50")
-    .attr("fill", "none")
-    .attr("stroke", "#222")
-    .attr("stroke-width", "0.5");
-  svg.append("rect").attr("width", "100%").attr("height", "100%").attr("fill", "url(#grid)");
+  function nodeScore(d){
+    const c = d && d.centrality;
+    return (typeof c === 'number') ? c : (degree.get(d.id) || 1);
+  }
 
-  const g = svg.append("g").attr("class", "main-layer");
+  const centralities = DATA.nodes.map(nodeScore);
+  const mmMin = d3.min(centralities);
+  const mmMax = d3.max(centralities);
+  const cMin = (mmMin == null ? 0 : mmMin);
+  const cMax = (mmMax == null ? 1 : mmMax);
 
-  const zoom = d3
-    .zoom()
-    .scaleExtent([0.3, 5])
-    .on("zoom", (event) => {
-      g.attr("transform", event.transform);
+  const rScale = d3.scaleSqrt()
+    .domain([ (cMin === 0 ? 0.0001 : cMin), (cMax === 0 ? 1 : cMax) ])
+    .range([5, 20]); // slightly smaller nodes
+
+  const ellipseAspect = 1.6;
+
+  // ---- age → color for pulse list dots (hot -> cold) ----
+  function ageColor(days){
+    if (days == null) return '#86cbff';
+    if (days <= 14)  return '#ff7a66';
+    if (days <= 45)  return '#ff9b66';
+    if (days <= 120) return '#ffb066';
+    if (days <= 270) return '#86cbff';
+    return '#74a9ff';
+  }
+
+  // --- simulation ---
+  const sim = d3.forceSimulation(DATA.nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.40))
+    .force('charge', d3.forceManyBody().strength(-320))
+    .force('center', d3.forceCenter(W/2, H/2.0))
+    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.5));
+
+  // --- draw ---
+  const linkSel = linkLayer.selectAll('line')
+    .data(links)
+    .join('line')
+    .attr('class','link');
+
+  const nodeSel = nodeLayer.selectAll('g.node')
+    .data(DATA.nodes, d => d.id)
+    .join(enter => {
+      const g = enter.append('g').attr('class','node');
+
+      g.append('ellipse')
+        .attr('rx', d => rScale(nodeScore(d)) * ellipseAspect)
+        .attr('ry', d => rScale(nodeScore(d)));
+
+      g.append('text')
+        .attr('class', 'tag-label')
+        .attr('text-anchor', 'middle')
+        .attr('x', 0)
+        .attr('y', d => rScale(nodeScore(d)) + 12)
+        .text(d => d.id);
+
+      g.on('mouseover', (ev,d)=>showTip(ev,d.id))
+       .on('mousemove', moveTip)
+       .on('mouseout', hideTip)
+       .on('click', (ev,d)=>{ ev.stopPropagation(); onTagClick(d.id); });
+
+      return g;
     });
+
+  sim.on('tick', () => {
+    linkSel
+      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+    nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
+  });
+
+  // --- zoom/pan ---
+  const zoom = d3.zoom().scaleExtent([0.6, 2.0]).on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // --- Simulation setup -----------------------------------------------------
-  const simulation = d3
-    .forceSimulation(data.nodes)
-    .force(
-      "link",
-      d3
-        .forceLink(data.edges)
-        .id((d) => d.id)
-        .distance((d) => 60 + (d.weight || 1) * 10)
-    )
-    .force("charge", d3.forceManyBody().strength(-65))
-    .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("collision", d3.forceCollide().radius(28));
-
-  // --- Draw edges ----------------------------------------------------------
-  const link = g
-    .append("g")
-    .attr("class", "links")
-    .selectAll("line")
-    .data(data.edges)
-    .enter()
-    .append("line")
-    .attr("stroke", "#999")
-    .attr("stroke-opacity", 0.35)
-    .attr("stroke-width", (d) => Math.sqrt(d.weight || 1));
-
-  // --- Draw nodes ----------------------------------------------------------
-  const node = g
-    .append("g")
-    .attr("class", "nodes")
-    .selectAll("circle")
-    .data(data.nodes)
-    .enter()
-    .append("circle")
-    .attr("r", (d) => 6 + (d.centrality || 0) * 20)
-    .attr("fill", (d) =>
-      d.group
-        ? d3.schemeCategory10[d.group % 10]
-        : d.color || "rgba(0,180,255,0.75)"
-    )
-    .attr("stroke", "#111")
-    .attr("stroke-width", 0.7)
-    .style("filter", "url(#glow)")
-    .on("mouseover", (event, d) => {
-      tooltip
-        .style("opacity", 1)
-        .html(
-          `<b>${d.id}</b><br/>degree ${d.degree}<br/>centrality ${(d.centrality || 0).toFixed(2)}`
-        );
-    })
-    .on("mousemove", (event) => {
-      tooltip
-        .style("left", event.pageX + 8 + "px")
-        .style("top", event.pageY + 8 + "px");
-    })
-    .on("mouseout", () => tooltip.style("opacity", 0))
-    .on("click", (event, d) => {
-      centerOnNode(d);
-      showPulses(d);
-    });
-
-  // --- Draw labels ---------------------------------------------------------
-  const label = g
-    .append("g")
-    .attr("class", "labels")
-    .selectAll("text")
-    .data(data.nodes)
-    .enter()
-    .append("text")
-    .text((d) => d.id)
-    .attr("font-size", "10px")
-    .attr("fill", "#ccc")
-    .attr("pointer-events", "none")
-    .attr("text-anchor", "start");
-
-  // --- Tooltip -------------------------------------------------------------
-  const tooltip = d3
-    .select("body")
-    .append("div")
-    .attr("class", "tooltip")
-    .style("position", "absolute")
-    .style("background", "rgba(0,0,0,0.8)")
-    .style("color", "#fff")
-    .style("padding", "6px 8px")
-    .style("border-radius", "4px")
-    .style("font-size", "11px")
-    .style("opacity", 0)
-    .style("pointer-events", "none");
-
-  // --- Pulse pane ----------------------------------------------------------
-  const pulsePane = d3
-    .select("body")
-    .append("div")
-    .attr("id", "pulse-pane")
-    .style("position", "fixed")
-    .style("right", "14px")
-    .style("top", "14px")
-    .style("width", "260px")
-    .style("max-height", "70%")
-    .style("overflow-y", "auto")
-    .style("padding", "8px 10px")
-    .style("background", "rgba(0,0,0,0.6)")
-    .style("color", "#fff")
-    .style("border-radius", "8px")
-    .style("backdrop-filter", "blur(6px)")
-    .style("display", "none");
-
-  function showPulses(tag) {
-    if (!tag.pulses || tag.pulses.length === 0) return;
-    pulsePane.style("display", "block").html(
-      `<h4>${tag.id}</h4><ul>${tag.pulses
-        .map((p) => `<li>${p.title || p}</li>`)
-        .join("")}</ul>`
-    );
-  }
-
-  // Click outside to hide the pane
-  svg.on("click", (event) => {
-    if (event.target.tagName === "svg") pulsePane.style("display", "none");
-  });
-
-  // --- Simulation tick -----------------------------------------------------
-  let tickCount = 0;
-  simulation.on("tick", () => {
-    link
-      .attr("x1", (d) => d.source.x)
-      .attr("y1", (d) => d.source.y)
-      .attr("x2", (d) => d.target.x)
-      .attr("y2", (d) => d.target.y);
-
-    node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
-
-    if (++tickCount % 2 === 0) {
-      label.attr("x", (d) => d.x + 8).attr("y", (d) => d.y + 3);
-    }
-  });
-
-  // --- Search --------------------------------------------------------------
-  const searchBox = d3.select("input[type='search']");
-  if (searchBox.size()) {
-    searchBox.on("input", (event) => {
-      const query = event.target.value.trim().toLowerCase();
-      const matches = data.nodes.filter((n) => n.id.toLowerCase().includes(query));
-
-      node.attr("opacity", (d) => (!query ? 1 : matches.includes(d) ? 1 : 0.1));
-      label.attr("opacity", (d) => (!query ? 1 : matches.includes(d) ? 1 : 0.1));
-      link.attr("opacity", (d) =>
-        !query
-          ? 0.35
-          : matches.includes(d.source) || matches.includes(d.target)
-          ? 0.35
-          : 0.05
-      );
-
-      if (matches.length > 0 && query.length > 1) {
-        centerOnSelection(matches);
-      }
-    });
-
-    // Keyboard shortcuts
-    d3.select("body").on("keydown", (event) => {
-      if (event.key === "Escape") {
-        searchBox.node().value = "";
-        node.attr("opacity", 1);
-        label.attr("opacity", 1);
-        link.attr("opacity", 0.35);
-      }
-      if (event.key === "Enter") {
-        const q = searchBox.node().value.trim().toLowerCase();
-        if (!q) return;
-        const matches = data.nodes.filter((n) => n.id.toLowerCase().includes(q));
-        if (matches.length > 0) centerOnSelection(matches);
-      }
-    });
-  }
-
-  // --- Gentle zoom functions -----------------------------------------------
-  function centerOnSelection(selectedNodes) {
-    const avgX = d3.mean(selectedNodes, (d) => d.x) || width / 2;
-    const avgY = d3.mean(selectedNodes, (d) => d.y) || height / 2;
-    const translate = [width / 2 - avgX * 0.8, height / 2 - avgY * 0.8];
-    const scale = Math.min(1.4, 0.7 / Math.sqrt(selectedNodes.length));
-    svg
-      .transition()
-      .duration(1200)
-      .ease(d3.easeCubicOut)
+  // --- smooth centering helper ---
+  function centerOnNodes(selectedNodes) {
+    if (!selectedNodes || !selectedNodes.length) return;
+    const avgX = d3.mean(selectedNodes, d => d.x);
+    const avgY = d3.mean(selectedNodes, d => d.y);
+    const scale = Math.min(2.0, 0.9 / Math.sqrt(selectedNodes.length));
+    const translate = [W / 2 - scale * avgX, H / 2 - scale * avgY];
+    svg.transition()
+      .duration(800)
       .call(zoom.transform, d3.zoomIdentity.translate(...translate).scale(scale));
   }
 
-  function centerOnNode(d) {
-    const translate = [width / 2 - d.x * 0.9, height / 2 - d.y * 0.9];
-    svg
-      .transition()
-      .duration(1000)
-      .ease(d3.easeCubicOut)
-      .call(zoom.transform, d3.zoomIdentity.translate(...translate).scale(1.4));
-  }
-
-  // --- Resize --------------------------------------------------------------
-  window.addEventListener("resize", () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    svg.attr("width", w).attr("height", h);
-    simulation.force("center", d3.forceCenter(w / 2, h / 2));
+  // --- background click clears focus and panels ---
+  svg.on('click', () => {
+    clearFocus();
+    nodeSel.classed('selected', false);
+    if (pulseList){
+      pulseList.textContent = 'Click a tag to list its pulses.';
+      pulseList.className = 'muted one-line';
+    }
+    clearLeftPanel();
   });
 
-  console.log("Phi-Mesh Tag Map initialized — full edition with gentle zoom.");
-})();
+  // --- tooltip helpers ---
+  function showTip(evt, tag){
+    const n = idToNode.get(tag);
+    const desc = (DATA.tagDescriptions && DATA.tagDescriptions[tag]) ? DATA.tagDescriptions[tag] : '—';
+    const deg = degree.get(tag) || 0;
+    const cent = (n && typeof n.centrality === 'number') ? n.centrality.toFixed(2) : String(deg);
+    tooltip.html(
+      `<div style="font-weight:700; margin-bottom:4px">${esc(tag)}</div>
+       <div class="muted" style="margin-bottom:6px">degree ${deg} • centrality ${cent}</div>
+       <div style="white-space:pre-wrap; opacity:.92">${esc(desc)}</div>
+       <div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to list pulses</div>`
+    ).style('display','block');
+    moveTip(evt);
+  }
+  function moveTip(evt){ const p=12; tooltip.style('left',(evt.clientX+p)+'px').style('top',(evt.clientY+p)+'px'); }
+  function hideTip(){ tooltip.style('display','none'); }
+  function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])) }
+
+  // --- focus/dim ---
+  function setFocus(keepIds){
+    const keep = new Set(keepIds);
+    nodeSel.classed('dim', d => !keep.has(d.id));
+    linkSel.classed('dim', d => !(keep.has(d.source.id) && keep.has(d.target.id)));
+  }
+  function clearFocus(){ nodeSel.classed('dim', false); linkSel.classed('dim', false); }
+
+  // --- right sidebar list ---
+  function renderPulseList(tagId){
+    const raw = (DATA.pulsesByTag && Array.isArray(DATA.pulsesByTag[tagId])) ? DATA.pulsesByTag[tagId] : [];
+    if (!pulseList) return;
+
+    if (!raw.length){
+      pulseList.textContent = `No pulses for ${tagId}.`;
+      pulseList.className = 'muted one-line';
+      return;
+    }
+
+    const seen = new Set();
+    const items = [];
+    for (const p of raw){
+      const key = p.id || p.title || p.date || JSON.stringify(p).slice(0,60);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      items.push(p);
+    }
+
+    items.sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
+
+    const rows = items.map(p => {
+      const title = p.title || p.id || 'Pulse';
+      const date = p.date ? ` (${p.date})` : '';
+      const dot = ageColor(p.ageDays);
+      return `<div class="one-line" data-key="${esc(p.id||p.title||'')}" style="padding:6px 4px; cursor:pointer">
+                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${dot};margin-right:8px;vertical-align:middle"></span>
+                <span>${esc(title)}${esc(date)}</span>
+              </div>`;
+    }).join('');
+
+    pulseList.className = '';
+    pulseList.innerHTML = `<div style="font-weight:600; margin:2px 0 6px 0">${esc(tagId)}</div>${rows}`;
+
+    pulseList.querySelectorAll('[data-key]').forEach(el => {
+      el.addEventListener('click', () => {
+        const key = el.getAttribute('data-key') || '';
+        const pulse = items.find(p => (p.id||p.title||'') === key);
+        if (pulse) showPulseLeft(pulse);
+      });
+    });
+  }
+
+  function renderLinkBlock(label, items){
+    if (!Array.isArray(items) || !items.length) return '';
+    const norm = items.map(u => typeof u==='string' ? {title:u, url:u}
+      : (u && u.url ? u : {title:(u && (u.title||u.url)) || '', url:(u && u.url) || ''}));
+    let s = `<div style="margin-top:10px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
+    for (const it of norm){
+      const t = it.title || it.url || 'link';
+      const h = it.url || '#';
+      s += `<li class="one-line"><a href="${esc(h)}" target="_blank" rel="noopener">${esc(t)}</a></li>`;
+    }
+    s += `</ul></div>`;
+    return s;
+  }
+
+  function showPulseLeft(p){
+    if (leftHint) leftHint.textContent = '';
+    if (!leftContent) return;
+
+    const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
+    let html = `<div class="pulse-detail"><div style="font-weight:700; font-size:15px; margin-bottom:6px">${esc(p.title || p.id || 'Pulse')}${when}</div>`;
+    if (p.summary) html += `<div style="white-space:pre-wrap; margin:6px 0 12px 0">${esc(p.summary)}</div>`;
+    html += renderLinkBlock('Papers', p.papers);
+    html += renderLinkBlock('Podcasts', p.podcasts);
+    leftContent.innerHTML = html + `</div>`;
+  }
+
+  // --- tag click ---
+  function onTagClick(tagId){
+    clearLeftPanel();
+    nodeSel.classed('selected', d => d.id === tagId);
+
+    const keep = new Set([tagId]);
+    links.forEach(l => {
+      if (l.source.id === tagId) keep.add(l.target.id);
+      if (l.target.id === tagId) keep.add(l.source.id);
+    });
+    setFocus(keep);
+    renderPulseList(tagId);
+
+    // new: auto-center on clicked tag and its neighbors
+    const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
+    centerOnNodes(selectedNodes);
+  }
+
+  // --- search filter ---
+  if (searchInput){
+    searchInput.addEventListener('input', e => {
+      const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
+      const q = v.trim().toLowerCase();
+
+      clearLeftPanel();
+
+      if (!q){ clearFocus(); return; }
+      const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
+      const keep = new Set(matched.map(n=>n.id));
+      setFocus(keep);
+      centerOnNodes(matched);
+    });
+  }
+});
