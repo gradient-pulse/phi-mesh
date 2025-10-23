@@ -124,9 +124,9 @@ aliases:
     - Gradient_Syntax
     - gradient-syntax
 
-  grok3:
+  grok:
     - GROK3
-    - grok
+    - grok3
     - Grok
 
   gpt5:
