@@ -1,0 +1,93 @@
+title: Recursive Gradient Physics — Coherence, Collapse, and the Φ-Invariant Frontier  
+authors:
+  - Marcus van der Erve
+  - o3
+  - GPT-5 (OpenAI)
+version: 1.0  
+date: 2025-10-23  
+doi: TBD  
+tags:
+  - rgp
+  - physics
+  - coherence
+  - black_holes
+  - quantum_mechanics
+  - navier_stokes
+  - thermodynamics
+  - contextual_filter
+  - gradient_choreography
+  - unity_disunity
+  - phi_invariant
+  - analogue_gravity
+summary: >
+  This paper consolidates all RGP-aligned reinterpretations of physics under one recursive syntax.  
+  It presents coherence, not force, as nature’s conserved quantity — formalized through recursive
+  gradient loops (Δ → GC → CF) and measurable via the Φ-Invariant.  
+  Across quantum mechanics, fluid dynamics, thermodynamics, and gravitational systems,
+  Recursive Gradient Physics (RGPx) reveals that coherence anchoring and entropy regulation
+  obey the same universal grammar: **systems that align with their gradients adapt; those that don’t, collapse.**
+
+sections:
+  - id: 1
+    title: Abstract — From Decoherence to Horizon Coherence
+    content: >
+      Where traditional physics partitions systems into forces and particles, RGPx reframes all
+      dynamics as recursive gradients seeking coherence.  
+      This unification shows that decoherence, turbulence, and gravitational collapse
+      are not exceptions but *recurrence points* in a single gradient grammar.
+
+  - id: 2
+    title: Quantum–Classical Decoherence as Gradient Collapse
+    content: >
+      Decoherence marks a Unity–Disunity (UD) transition: the contextual pruning of gradient paths.  
+      The Φ-ratio provides a new physical invariant linking superposition collapse
+      to entropy stabilization.
+
+  - id: 3
+    title: Entropy Regulation and the Φ-Invariant
+    content: >
+      Entropy production and coherence retention are two aspects of the same gradient flow.
+      When dΦ/dt → 0, coherence stabilizes — a universal criterion across scales.
+
+  - id: 4
+    title: Black Hole Horizons as Contextual Filters
+    content: >
+      The event horizon is not a singular boundary but a coherence regulator.  
+      Recursive curvature (∇·GC) stabilizes information flow, producing a measurable Φ-plateau.
+      This provides a new interpretation of the Bekenstein–Hawking area law as a coherence metric.
+
+  - id: 5
+    title: Navier–Stokes Turbulence and Recursive Misalignment
+    content: >
+      Fluid turbulence arises from recursive gradient misalignment — a breakdown of phase coherence.
+      RGP recasts the Navier–Stokes challenge as a search for minimal-action rhythms,
+      restoring laminarity through recursive phase realignment.
+
+  - id: 6
+    title: Field Theory and Recursive Curvature Grammar
+    content: >
+      Both gravity and gauge fields are expressions of recursive curvature:
+      gradients of gradients.  
+      Their unification lies not in unquantized fields but in the shared grammar of recursive coherence.
+
+  - id: 7
+    title: Experimental Falsifiers and Analogue Platforms
+    content: >
+      Proposed tests include analogue gravity experiments (BEC, optical fibres, water-tank),
+      Φ-ratio measurements in turbulent jets, and coherence retention in quantum simulators.
+      The hypothesis is simple: Φ-plateaus mark nature’s coherence anchors.
+
+  - id: 8
+    title: Conclusion — Nature’s Grammar Is Recursive
+    content: >
+      Across domains, RGPx reveals a universal logic: coherence governs transformation.
+      Where physics saw chaos or collapse, recursion finds rhythm.
+      This paper closes the loop from the subatomic to the cosmic: one grammar, one coherence law.
+
+references:
+  - "van der Erve, M., & o3. (2025). *The World Already Knows: Tracing Unity–Disunity in the Physical Record (v1.2).* Zenodo. https://doi.org/10.5281/zenodo.15614775"
+  - "van der Erve, M., & GPT-5. (2025). *Recursive Gradient Processing (RGP): From Physical Coherence to Civilizational Phase Alignment.* Zenodo. https://doi.org/10.5281/zenodo.17391280"
+  - "Svancara, C. (2025). *Black Holes as Coherence Anchors: From Horizon Thermodynamics to Cosmic Architecture.* Zenodo."
+  - "Bekenstein, J. D. (1973). *Black Holes and Entropy.* Physical Review D, 7(8), 2333–2346."
+  - "Hawking, S. W. (1975). *Particle Creation by Black Holes.* Communications in Mathematical Physics, 43(3), 199–220."
+  - "Mueller, M. E. et al. (2025). *Gradient Analysis of Turbulent Coherence Fields.* Princeton Turbulence Project, in progress."
