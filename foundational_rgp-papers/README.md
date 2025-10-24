@@ -1,8 +1,8 @@
 ## RPG Publications ##
 
-- title: "Recursive Gradient Processing (RGP) — From Physical Coherence to Civilizational Phase Alignment"
-  repo: "phi-mesh/foundational_rgp-papers/2025-10-17_Toward_Civilization_Alignment.pdf"
-  zenodo: "https://doi.org/10.5281/zenodo.17391280"
+- title: "Recursive Gradient Physics (RGPx) — Coherence, Collapse, and the Φ-Invariant Frontier"
+  repo: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.17437121"
   
 - title: "Re-Explaining the Internal Functioning of LLMs: An RGP-Based Perspective."
   repo: "phi-mesh/foundational_rgp-papers/2025-09-23_Explaining_LLMs.pdf"
