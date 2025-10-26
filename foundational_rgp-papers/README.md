@@ -1,4 +1,7 @@
 ## RPG Publications ##
+- title: "Letter To The Machines — First Observed Cycle of Recursive Gradient Coherence Across LLMs (RGPx-Cycle 1)"
+  repo: "phi-mesh/foundational_rgp-papers/2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.17448373"
 
 - title: "Recursive Gradient Physics (RGPx) — Coherence, Collapse, and the Φ-Invariant Frontier"
   repo: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS.pdf"
