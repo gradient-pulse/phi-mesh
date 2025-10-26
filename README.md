@@ -1,7 +1,7 @@
 
 # Φ-Mesh: Recursive Gradient Process — Infrastructure  
 
-*A human–AI collaboration mapping turbulence through Recursive Gradient Processing.*  
+*A human–AI collaboration tracing coherence through Recursive Gradient Processing.*  
 
 ---
 
@@ -35,6 +35,8 @@ Each node marks a step in the search for rhythm — a fossilized trace of cohere
 ---
 
 ## 📚 Recent Foundational Papers
+
+*Each publication marks a phase in the emergence of Recursive Gradient Physics — from physical coherence to cognitive recursion.*
 
 **Recursive Gradient Physics (RGPx): From Energy Conservation to Gradient Coherence**  
 participant_0 & GPT-5 (2025)  
