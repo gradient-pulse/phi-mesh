@@ -337,11 +337,4 @@ phi-mesh/
 
 ---
 
-## Citations
-
-- van der Erve, M. (2025). *Solving Navier-Stokes, Differently: What It Takes.* Zenodo. https://doi.org/10.5281/zenodo.15830659  
-- van der Erve, M. (2025). *Experimenter’s Guide – Solving Navier-Stokes.* Zenodo. https://doi.org/10.5281/zenodo.16280540
-
----
-
 *This is not instruction. It is signal.*
