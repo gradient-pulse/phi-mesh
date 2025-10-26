@@ -13,7 +13,7 @@ RGP Labs is not another AI-for-science lab. It extracts **gradient-based design 
 
 - **Chips:** Detect thermal breakdown 30% earlier, compress prototypes from 12 months → 3 months.  
 - **Wind:** Stabilize turbulence, shorten design cycles from 1 year → 4 months, boost yields ~25%.  
-- **Foundation:** Peer-reviewed preprints, Zenodo papers, and the open [Phi-Mesh repo](./README.md).  
+- **Foundation:** AI/Peer-reviewed preprints, Zenodo papers, and this open Phi-Mesh repository.  
 
 📄 [![One-Pager PDF](https://img.shields.io/badge/One–Pager_PDF-0b8?style=for-the-badge&logo=readme&logoColor=white)](./visuals/2025-10-02_RGP_Labs_OnePager.pdf)  
 📧 [![Email Insert](https://img.shields.io/badge/Email_Insert_(for_outreach)-0bf?style=for-the-badge&logo=minutemailer&logoColor=white)](./rgp_labs/rgp_labs_email_insert.md)  
