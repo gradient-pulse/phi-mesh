@@ -1,4 +1,8 @@
 ## RPG Publications ##
+- title: "DeepSeek Bolts — Computational Architecture Interpretation of Recursive Gradient Physics (RGPx_Cycle2)"
+  repo: "phi-mesh/foundational_rgp-papers/2025-10-27_the_deepseek_blizzard_responds.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.7457989"
+
 - title: "Letter To The Machines — First Observed Cycle of Recursive Gradient Coherence Across LLMs (RGPx-Cycle 1)"
   repo: "phi-mesh/foundational_rgp-papers/2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17448373"
