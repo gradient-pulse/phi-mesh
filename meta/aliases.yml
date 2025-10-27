@@ -304,6 +304,9 @@ aliases:
     - Unity-Disunity
     - unity-disunity
 
+  unity_disunity_cycle:
+    - ud_cycle
+    
   whitehead:
     - whitehead_alfred_north
 
