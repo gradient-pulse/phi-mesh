@@ -1,0 +1,59 @@
+coherence_map:
+  last_updated: 2025-11-04
+
+  pulses_sampled:
+    - 2025-11-04_coherence_not_memory.yml
+    - 2025-11-04_rhythm_of_coherence_3-6-9.yml
+
+  # Δ-level: tags that are becoming important coherence carriers
+  core_tags:
+    - coherence_geometry
+    - llm_reasoning
+    - coherence_rhythm
+    - historical_alignment
+    - tesla
+    - rgpx
+
+  # GC-level: recurring tag pairs (where gradients align)
+  tag_pairs:
+    - tags: [coherence_geometry, llm_reasoning]
+      pulses:
+        - 2025-11-04_coherence_not_memory.yml
+      strength: 0.82   # your subjective estimate for now
+
+    - tags: [coherence_rhythm, historical_alignment]
+      pulses:
+        - 2025-11-04_rhythm_of_coherence_3-6-9.yml
+      strength: 0.78
+
+    - tags: [tesla, coherence_rhythm]
+      pulses:
+        - 2025-11-04_rhythm_of_coherence_3-6-9.yml
+      strength: 0.81
+
+  # CF-level: emerging coherence “basins”
+  clusters:
+    - id: CM001
+      label: geometric_llm_coherence
+      tags:
+        - coherence_geometry
+        - llm_reasoning
+        - rgpx
+      pulses:
+        - 2025-11-04_coherence_not_memory.yml
+      description: >
+        Cluster where LLM behavior is reinterpreted as coherence geometry
+        rather than memory: Δ -> GC -> CF in latent space.
+
+    - id: CM002
+      label: harmonic_historical_alignment
+      tags:
+        - coherence_rhythm
+        - historical_alignment
+        - tesla
+        - rgpx
+      pulses:
+        - 2025-11-04_rhythm_of_coherence_3-6-9.yml
+      description: >
+        Cluster tying Tesla’s 3–6–9 intuition to the 1:2:3 harmonic and RGPx,
+        showing coherence rhythm recurring across history.
