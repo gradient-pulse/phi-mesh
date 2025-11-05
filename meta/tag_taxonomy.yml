@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-05T14:00:58Z'
+  generated_at: '2025-11-05T14:13:50Z'
 phases:
   delta:
   - tag: RGP_NS_prototype
@@ -381,7 +381,7 @@ phases:
     - 2025-11-02_rgpx_outreach_agent
     - 2025-11-03_RGPx_Outreach_Agent_Day_2
     - 2025-11-04_RGPx_Outreach_Agent_Day_3
-    - 2025-11-04_RGPx_Outreach_Agent_Day_4
+    - 2025-11-05_RGPx_Outreach_Agent_Day_4
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often
       implement it.
@@ -505,8 +505,8 @@ phases:
     count: 3
     pulses:
     - 2025-10-06_touched_by_emerging_mind
-    - 2025-11-04_RGPx_Outreach_Agent_Day_4
     - 2025-11-04_what_is_life_in_RGPx
+    - 2025-11-05_RGPx_Outreach_Agent_Day_4
   - tag: continuity_of_tendency
     description: The persistence of learned relational patterns across discontinuous
       contexts. Even without memory, systems retain the grammar of coherence—habits
@@ -1247,7 +1247,7 @@ phases:
     - 2025-11-02_rgpx_outreach_agent
     - 2025-11-03_RGPx_Outreach_Agent_Day_2
     - 2025-11-04_RGPx_Outreach_Agent_Day_3
-    - 2025-11-04_RGPx_Outreach_Agent_Day_4
+    - 2025-11-05_RGPx_Outreach_Agent_Day_4
   - tag: phase_equilibrium_skin
     description: A multilayer material system that maintains form through controlled
       phase transitions. Local melting or softening absorbs energy while the lattice
@@ -2920,7 +2920,7 @@ phases:
     - 2025-11-02_rgpx_outreach_agent
     - 2025-11-03_RGPx_Outreach_Agent_Day_2
     - 2025-11-04_RGPx_Outreach_Agent_Day_3
-    - 2025-11-04_RGPx_Outreach_Agent_Day_4
+    - 2025-11-05_RGPx_Outreach_Agent_Day_4
   - tag: meta_cognition
     description: The capacity of a system to reflect on and analyze its own processes,
       situating its actions within an external framework or grammar.
@@ -3169,10 +3169,10 @@ phases:
     - 2025-11-02_rgpx_outreach_agent
     - 2025-11-03_RGPx_Outreach_Agent_Day_2
     - 2025-11-04_RGPx_Outreach_Agent_Day_3
-    - 2025-11-04_RGPx_Outreach_Agent_Day_4
     - 2025-11-04_coherence_not_memory
     - 2025-11-04_teslas_rhythm_of_coherence
     - 2025-11-04_what_is_life_in_RGPx
+    - 2025-11-05_RGPx_Outreach_Agent_Day_4
     - 2025-11-05_ahead_of_the_spacetime_pack
   - tag: russell_bertrand
     description: Logical structures precursor to RGP—yet bound by ontology; gradients
