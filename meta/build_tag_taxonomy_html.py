@@ -5,6 +5,7 @@ from pathlib import Path
 
 import yaml
 
+
 ROOT = Path(__file__).resolve().parent.parent
 META_DIR = ROOT / "meta"
 DOCS_DIR = ROOT / "docs"
@@ -22,13 +23,38 @@ def load_yaml(path: Path):
 
 def build_html():
     data = load_yaml(TAXONOMY_YAML)
-    meta = data.get("meta", {})
-    phases = data.get("phases", {})
+    meta = data.get("meta", {}) or {}
+    phases_raw = data.get("phases", {}) or {}
 
-    # Defensive sort per phase (builder already did this, but keep it stable)
-    for key, items in list(phases.items()):
-        phases[key] = sorted(items, key=lambda x: x.get("tag", ""))
+    # Normalize phases so every entry is a dict with tag/description/count/pulses
+    phases: dict[str, list[dict]] = {}
+    for key, items in phases_raw.items():
+        norm_items = []
+        for x in items or []:
+            if isinstance(x, dict):
+                # Ensure required keys exist
+                norm_items.append(
+                    {
+                        "tag": x.get("tag", ""),
+                        "description": x.get("description", "") or "",
+                        "count": int(x.get("count", 0) or 0),
+                        "pulses": x.get("pulses", []) or [],
+                    }
+                )
+            else:
+                # Bare string → minimal record
+                norm_items.append(
+                    {
+                        "tag": str(x),
+                        "description": "",
+                        "count": 0,
+                        "pulses": [],
+                    }
+                )
+        # Sort by tag name
+        phases[key] = sorted(norm_items, key=lambda rec: rec.get("tag", ""))
 
+    # Compact payload for the front-end
     front_payload = {
         "generated_at": meta.get("generated_at", ""),
         "phases": phases,
@@ -65,7 +91,7 @@ def build_html():
 
     h1 {{
       font-size: 1.9rem;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.35rem;
     }}
 
     .subtitle {{
@@ -78,7 +104,7 @@ def build_html():
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       align-items: center;
     }}
 
@@ -103,6 +129,46 @@ def build_html():
       border-color: #38bdf8;
     }}
 
+    .selection-panel {{
+      border-radius: 0.85rem;
+      border: 1px solid #111827;
+      background: radial-gradient(circle at top left, #020617 0, #020617 55%);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+    }}
+
+    .selection-title {{
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 0.25rem;
+    }}
+
+    .selection-tag {{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      color: #e5e7eb;
+    }}
+
+    .selection-meta {{
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-bottom: 0.35rem;
+    }}
+
+    .selection-description {{
+      font-size: 0.85rem;
+      color: #d1d5db;
+      margin-bottom: 0.25rem;
+    }}
+
+    .selection-pulses {{
+      font-size: 0.75rem;
+      color: #6b7280;
+    }}
+
     .phase-grid {{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -116,50 +182,51 @@ def build_html():
       background: linear-gradient(to bottom, #020617, #020617f2);
     }}
 
-    .phase-header {{
+    .phase-heading {{
       margin-bottom: 0.6rem;
     }}
 
     .phase-title {{
       font-size: 0.95rem;
       font-weight: 600;
-    }}
-
-    .phase-subtitles {{
-      text-align: right;
-      font-size: 0.78rem;
-      line-height: 1.25;
+      margin-bottom: 0.1rem;
     }}
 
     .phase-cycle {{
+      font-size: 0.8rem;
       color: #9ca3af;
+      margin-bottom: 0.05rem;
     }}
 
     .phase-label {{
-      color: #9ca3af;
-      white-space: nowrap;
+      font-size: 0.8rem;
+      color: #6b7280;
     }}
 
     .tag-list {{
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.25rem;
+      margin-top: 0.6rem;
+      max-height: 460px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
     }}
 
-    .tag-card {{
+    .tag-row {{
       border-radius: 9999px;
       border: 1px solid #111827;
-      padding: 0.3rem 0.65rem;
+      padding: 0.3rem 0.6rem;
       background-color: #020617;
-      transition: border-color 0.15s ease, background-color 0.15s ease,
-                  transform 0.1s ease;
-      cursor: default;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: border-color 0.12s ease, background-color 0.12s ease, transform 0.08s ease;
     }}
 
-    .tag-card:hover {{
+    .tag-row:hover {{
       border-color: #38bdf8;
       background-color: #020617;
       transform: translateY(-1px);
@@ -167,14 +234,17 @@ def build_html():
 
     .tag-name {{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 0.85rem;
       color: #e5e7eb;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 75%;
     }}
 
     .tag-count {{
       font-size: 0.75rem;
       color: #9ca3af;
-      margin-left: 0.75rem;
+      margin-left: 0.35rem;
       white-space: nowrap;
     }}
 
@@ -182,33 +252,6 @@ def build_html():
       font-size: 0.85rem;
       color: #6b7280;
       margin-top: 1.5rem;
-    }}
-
-    /* Custom tooltip layer */
-
-    .tooltip-layer {{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 40;
-      display: none;
-    }}
-
-    .tooltip-card {{
-      position: absolute;
-      max-width: 360px;
-      padding: 0.6rem 0.75rem;
-      border-radius: 0.6rem;
-      background: #020617;
-      border: 1px solid #38bdf8;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      font-size: 0.82rem;
-      color: #e5e7eb;
-      line-height: 1.4;
-      white-space: normal;
     }}
 
     @media (max-width: 640px) {{
@@ -242,6 +285,14 @@ def build_html():
       </label>
     </div>
 
+    <div id="selectionPanel" class="selection-panel" style="display:none;">
+      <div class="selection-title">Selected tag</div>
+      <div class="selection-tag" id="selectionTag"></div>
+      <div class="selection-meta" id="selectionMeta"></div>
+      <div class="selection-description" id="selectionDescription"></div>
+      <div class="selection-pulses" id="selectionPulses"></div>
+    </div>
+
     <div id="phaseGrid" class="phase-grid"></div>
 
     <div id="noResults" class="no-results" style="display:none;">
@@ -256,7 +307,7 @@ def build_html():
   <script>
     (function() {{
       const raw = document.getElementById("taxonomy-data").textContent;
-      const payload = JSON.parse(raw);
+      const payload = JSON.parse(raw || "{{}}");
       const phases = payload.phases || {{}};
 
       const phaseMeta = {{
@@ -289,54 +340,56 @@ def build_html():
       const searchBox = document.getElementById("searchBox");
       const noResults = document.getElementById("noResults");
 
-      // --- custom tooltip setup ---
+      const selectionPanel = document.getElementById("selectionPanel");
+      const selectionTag = document.getElementById("selectionTag");
+      const selectionMeta = document.getElementById("selectionMeta");
+      const selectionDescription = document.getElementById("selectionDescription");
+      const selectionPulses = document.getElementById("selectionPulses");
 
-      const tooltipLayer = document.createElement("div");
-      tooltipLayer.className = "tooltip-layer";
-      const tooltipCard = document.createElement("div");
-      tooltipCard.className = "tooltip-card";
-      tooltipLayer.appendChild(tooltipCard);
-      document.body.appendChild(tooltipLayer);
+      let currentSelection = null;
 
-      function showTooltip(text, x, y) {{
-        if (!text) return;
-        tooltipCard.textContent = text;
-        const offsetX = 14;
-        const offsetY = 14;
-        let left = x + offsetX;
-        let top = y + offsetY;
+      function clearSelection() {{
+        currentSelection = null;
+        selectionPanel.style.display = "none";
+        selectionTag.textContent = "";
+        selectionMeta.textContent = "";
+        selectionDescription.textContent = "";
+        selectionPulses.textContent = "";
+      }}
 
-        const rect = tooltipCard.getBoundingClientRect();
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-
-        if (left + rect.width + 16 > vw) {{
-          left = vw - rect.width - 16;
+      function selectTag(tagRecord, phaseKey) {{
+        if (!tagRecord) {{
+          clearSelection();
+          return;
         }}
-        if (top + rect.height + 16 > vh) {{
-          top = vh - rect.height - 16;
+        currentSelection = {{ ...tagRecord, phase: phaseKey }};
+        selectionPanel.style.display = "block";
+        selectionTag.textContent = tagRecord.tag || "";
+
+        const phaseInfo = phaseMeta[phaseKey] || {{}};
+        const count = tagRecord.count || 0;
+        selectionMeta.textContent =
+          (phaseInfo.title || phaseKey) +
+          " • " +
+          (phaseInfo.cycle || "") +
+          (count ? " • pulses: " + count : "");
+
+        const desc = (tagRecord.description || "").trim();
+        selectionDescription.textContent = desc || "No description available.";
+
+        const pulses = tagRecord.pulses || [];
+        if (pulses.length) {{
+          let text = "e.g. " + pulses.slice(0, 3).join(", ");
+          if (pulses.length > 3) text += ", …";
+          selectionPulses.textContent = text;
+        }} else {{
+          selectionPulses.textContent = "";
         }}
-
-        tooltipCard.style.left = left + "px";
-        tooltipCard.style.top = top + "px";
-
-        tooltipLayer.style.display = "block";
       }}
-
-      function moveTooltip(x, y) {{
-        if (tooltipLayer.style.display !== "block") return;
-        showTooltip(tooltipCard.textContent, x, y);
-      }}
-
-      function hideTooltip() {{
-        tooltipLayer.style.display = "none";
-      }}
-
-      // --- render function ---
 
       function render() {{
         const phaseValue = phaseFilter.value;
-        const searchValue = searchBox.value.trim().toLowerCase();
+        const searchValue = (searchBox.value || "").trim().toLowerCase();
 
         phaseGrid.innerHTML = "";
         let anyVisible = false;
@@ -347,10 +400,10 @@ def build_html():
 
           if (phaseValue !== "all" && phaseValue !== phaseKey) return;
 
+          // Filter by search
           const filtered = items.filter(item => {{
-            if (!searchValue) return true;
             const tag = (item.tag || "").toLowerCase();
-            return tag.includes(searchValue);
+            return !searchValue || tag.includes(searchValue);
           }});
 
           if (!filtered.length) return;
@@ -361,70 +414,73 @@ def build_html():
           phaseCol.className = "phase-column";
           phaseCol.dataset.phase = phaseKey;
 
-          const header = document.createElement("div");
-          header.className = "phase-header";
+          const heading = document.createElement("div");
+          heading.className = "phase-heading";
+
+          const phaseInfo = phaseMeta[phaseKey] || {{}};
 
           const title = document.createElement("div");
           title.className = "phase-title";
-          title.textContent = (phaseMeta[phaseKey] && phaseMeta[phaseKey].title) || phaseKey;
-
-          const subtitles = document.createElement("div");
-          subtitles.className = "phase-subtitles";
+          title.textContent = phaseInfo.title || phaseKey;
 
           const cycle = document.createElement("div");
           cycle.className = "phase-cycle";
-          cycle.textContent = (phaseMeta[phaseKey] && phaseMeta[phaseKey].cycle) || "";
+          cycle.textContent = phaseInfo.cycle || "";
 
           const label = document.createElement("div");
           label.className = "phase-label";
-          label.textContent = (phaseMeta[phaseKey] && phaseMeta[phaseKey].label) || "";
+          label.textContent = phaseInfo.label || "";
 
-          subtitles.appendChild(cycle);
-          subtitles.appendChild(label);
-
-          header.appendChild(title);
-          header.appendChild(subtitles);
+          heading.appendChild(title);
+          heading.appendChild(cycle);
+          heading.appendChild(label);
 
           const list = document.createElement("div");
           list.className = "tag-list";
 
           filtered.forEach(item => {{
-            const card = document.createElement("div");
-            card.className = "tag-card";
-            card.dataset.tag = item.tag;
-            card.dataset.phase = phaseKey;
+            const row = document.createElement("div");
+            row.className = "tag-row";
+            row.dataset.tag = item.tag;
+            row.dataset.phase = phaseKey;
 
-            const descText = (item.description || "").trim() || "No description available.";
+            const nameEl = document.createElement("div");
+            nameEl.className = "tag-name";
+            nameEl.textContent = item.tag;
 
-            const tagName = document.createElement("div");
-            tagName.className = "tag-name";
-            tagName.textContent = item.tag;
+            const countEl = document.createElement("div");
+            countEl.className = "tag-count";
+            countEl.textContent = "pulses: " + (item.count || 0);
 
-            const tagCount = document.createElement("div");
-            tagCount.className = "tag-count";
-            tagCount.textContent = "pulses: " + (item.count || 0);
+            row.appendChild(nameEl);
+            row.appendChild(countEl);
 
-            card.appendChild(tagName);
-            card.appendChild(tagCount);
+            row.addEventListener("click", () => selectTag(item, phaseKey));
 
-            // Instant, styled tooltip
-            card.addEventListener("mouseenter", (ev) => {{
-              showTooltip(descText, ev.clientX, ev.clientY);
-            }});
-            card.addEventListener("mousemove", (ev) => {{
-              moveTooltip(ev.clientX, ev.clientY);
-            }});
-            card.addEventListener("mouseleave", hideTooltip);
-
-            list.appendChild(card);
+            list.appendChild(row);
           }});
 
-          phaseCol.appendChild(header);
+          phaseCol.appendChild(heading);
           phaseCol.appendChild(list);
           phaseGrid.appendChild(phaseCol);
         }});
 
         noResults.style.display = anyVisible ? "none" : "block";
+
+        // If search is cleared, also clear the selection panel
+        if (!searchValue) {{
+          clearSelection();
+        }} else if (currentSelection) {{
+          // If we have a selection, but it's no longer visible under filters, clear it
+          const visiblePhase = phaseFilter.value === "all" ||
+                               phaseFilter.value === currentSelection.phase;
+          const tagMatchesSearch = (currentSelection.tag || "")
+            .toLowerCase()
+            .includes(searchValue);
+          if (!visiblePhase || !tagMatchesSearch) {{
+            clearSelection();
+          }}
+        }}
       }}
 
       phaseFilter.addEventListener("change", render);
