@@ -31,9 +31,8 @@ def load_tag_descriptions() -> Dict[str, str]:
     Canonical tags + descriptions from meta/tag_descriptions.yml
     """
     raw = load_yaml(META_DIR / "tag_descriptions.yml", {})
-    out = {}
+    out: Dict[str, str] = {}
     for tag, desc in raw.items():
-        # keys in this file are already canonical; keep as-is
         if tag is None:
             continue
         tag_str = str(tag).strip()
@@ -49,7 +48,7 @@ def load_aliases() -> Dict[str, str]:
     (alias_tag -> canonical_tag)
     """
     raw = load_yaml(META_DIR / "aliases.yml", {})
-    aliases = {}
+    aliases: Dict[str, str] = {}
     for alias, canonical in raw.items():
         if alias is None or canonical is None:
             continue
@@ -72,8 +71,7 @@ def iter_pulse_tags() -> List[Tuple[str, List[str]]]:
         slug = path.stem
         data = load_yaml(path, {})
         tags = data.get("tags") or []
-        # Normalize to list of strings
-        norm = []
+        norm: List[str] = []
         for t in tags:
             if t is None:
                 continue
@@ -87,23 +85,35 @@ def iter_pulse_tags() -> List[Tuple[str, List[str]]]:
 
 def load_phase_overrides() -> Dict[str, str]:
     """
-    Optional explicit phase mapping from meta/tag_phase_overrides.yml:
+    Optional explicit phase mapping from meta/tag_phase_overrides.yml.
 
-    tag_name:
-      phase: delta|gc|cf|unknown
+    Expected (but not required) format:
+
+      tag_name:
+        phase: delta|gc|cf|unknown
+
+    If the file is not a dict (e.g. it's a list or something else),
+    we simply ignore it and return {} so it never breaks the build.
     """
     raw = load_yaml(META_DIR / "tag_phase_overrides.yml", {})
-    out = {}
+
+    # Safety guard: if it's not a mapping, ignore overrides entirely.
+    if not isinstance(raw, dict):
+        return {}
+
+    out: Dict[str, str] = {}
     for tag, info in raw.items():
         if tag is None or info is None:
+            continue
+        if not isinstance(info, dict):
             continue
         phase = info.get("phase")
         if not phase:
             continue
-        phase = str(phase).strip().lower()
-        if phase not in {"delta", "gc", "cf", "unknown"}:
+        phase_str = str(phase).strip().lower()
+        if phase_str not in {"delta", "gc", "cf", "unknown"}:
             continue
-        out[str(tag).strip()] = phase
+        out[str(tag).strip()] = phase_str
     return out
 
 
@@ -180,10 +190,10 @@ def build_taxonomy():
                 stats[canonical] = {"count": 0, "pulses": []}
 
             entry = stats[canonical]
-            entry["count"] = int(entry["count"]) + 1  # type: ignore
+            entry["count"] = int(entry["count"]) + 1  # type: ignore[arg-type]
 
             # Keep up to 3 example pulses per tag
-            pulses: List[str] = entry["pulses"]  # type: ignore
+            pulses: List[str] = entry["pulses"]  # type: ignore[assignment]
             if len(pulses) < 3:
                 pulses.append(slug)
 
@@ -202,8 +212,8 @@ def build_taxonomy():
     for tag in sorted(all_tags):
         desc = tag_desc.get(tag, "").strip()
         s = stats.get(tag, {"count": 0, "pulses": []})
-        count = int(s.get("count", 0))  # type: ignore
-        pulses = list(s.get("pulses", []))  # type: ignore
+        count = int(s.get("count", 0))  # type: ignore[arg-type]
+        pulses = list(s.get("pulses", []))  # type: ignore[arg-type]
 
         phase = infer_phase(tag, desc, overrides)
 
