@@ -26,7 +26,7 @@ def build_html():
     meta = data.get("meta", {})
     phases = data.get("phases", {})
 
-    # Prepare a compact JSON payload for the front-end
+    # Compact JSON payload for the front-end
     front_payload = {
         "generated_at": meta.get("generated_at", ""),
         "phases": phases,
@@ -72,17 +72,11 @@ def build_html():
       margin-bottom: 1rem;
     }}
 
-    .meta-line {{
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-bottom: 1.5rem;
-    }}
-
     .controls {{
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       align-items: center;
     }}
 
@@ -107,6 +101,30 @@ def build_html():
       border-color: #38bdf8;
     }}
 
+    .detail-panel {{
+      margin: 0.75rem 0 1.75rem 0;
+      padding: 0.9rem 1.1rem;
+      border-radius: 0.9rem;
+      background: rgba(10, 15, 35, 0.94);
+      border: 1px solid rgba(120, 160, 255, 0.35);
+    }}
+
+    .detail-title {{
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+      color: #a9c4ff;
+    }}
+
+    .detail-body {{
+      font-size: 0.95rem;
+      color: #e5e7f1;
+      line-height: 1.5;
+      white-space: pre-line;
+    }}
+
     .phase-grid {{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -122,14 +140,20 @@ def build_html():
 
     .phase-header {{
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.1rem;
       margin-bottom: 0.35rem;
     }}
 
     .phase-title {{
       font-size: 0.95rem;
       font-weight: 600;
+    }}
+
+    .phase-cycle {{
+      font-size: 0.8rem;
+      color: #9ca3af;
     }}
 
     .phase-label {{
@@ -149,54 +173,44 @@ def build_html():
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
-      max-height: 460px;
-      overflow-y: auto;
-      padding-right: 0.25rem;
+      /* whole page scrolls; no inner scrollbars */
     }}
 
-    .tag-card {{
-      border-radius: 0.65rem;
-      border: 1px solid #111827;
-      padding: 0.4rem 0.55rem;
-      background-color: #020617;
-      transition: border-color 0.15s ease, background-color 0.15s ease,
-                  transform 0.1s ease;
-      cursor: default;
-    }}
-
-    .tag-card:hover {{
-      border-color: #38bdf8;
-      background-color: #020617;
-      transform: translateY(-1px);
-    }}
-
-    .tag-header {{
-      display: flex;
+    .tag-pill {{
+      display: inline-flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 0.1rem;
+      width: 100%;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(17, 24, 39, 0.9);
+      background-color: #020617;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      gap: 0.5rem;
+      transition: border-color 0.12s ease-out, background-color 0.12s ease-out, transform 0.06s;
+    }}
+
+    .tag-pill:hover {{
+      border-color: #38bdf8;
+      background-color: #02071f;
+      transform: translateY(-1px);
     }}
 
     .tag-name {{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.85rem;
       color: #e5e7eb;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }}
 
     .tag-count {{
       font-size: 0.75rem;
       color: #9ca3af;
-    }}
-
-    .tag-description {{
-      font-size: 0.8rem;
-      color: #d1d5db;
-    }}
-
-    .tag-pulses {{
-      font-size: 0.72rem;
-      color: #6b7280;
-      margin-top: 0.15rem;
+      white-space: nowrap;
     }}
 
     .no-results {{
@@ -218,10 +232,6 @@ def build_html():
     <div class="subtitle">
       Tags grouped by RGPx phase: Δ (emergence), GC (resonance), CF (integration / closure).
     </div>
-    <div class="meta-line">
-      Generated from <code>meta/tag_descriptions.yml</code> and <code>pulse/*.yml</code>. 
-      Edit <code>meta/tag_phase_overrides.yml</code> to refine classifications.
-    </div>
 
     <div class="controls">
       <label>
@@ -238,6 +248,13 @@ def build_html():
         Search tag:
         <input type="text" id="searchBox" placeholder="Type to filter by tag name…" />
       </label>
+    </div>
+
+    <div class="detail-panel" id="tagDetail">
+      <div class="detail-title">Tag details</div>
+      <div class="detail-body">
+Click a tag to see its description here.
+      </div>
     </div>
 
     <div id="phaseGrid" class="phase-grid"></div>
@@ -260,19 +277,23 @@ def build_html():
       const phaseMeta = {{
         delta: {{
           title: "Δ — Emergence",
+          cycle: "Cycle 1",
           label: "Difference, initiation, tension"
         }},
         gc: {{
           title: "GC — Resonance",
+          cycle: "Cycle 2",
           label: "Alignment, rhythm, propagation"
         }},
         cf: {{
           title: "CF — Integration / Closure",
+          cycle: "Cycle 3",
           label: "Stability, context, attractors"
         }},
         unknown: {{
           title: "Unclassified",
-          label: "Tags without assigned phase yet"
+          cycle: "Open",
+          label: "Yet to be determined"
         }}
       }};
 
@@ -282,6 +303,10 @@ def build_html():
       const phaseFilter = document.getElementById("phaseFilter");
       const searchBox = document.getElementById("searchBox");
       const noResults = document.getElementById("noResults");
+
+      const detailPanel = document.getElementById("tagDetail");
+      const detailTitle = detailPanel.querySelector(".detail-title");
+      const detailBody = detailPanel.querySelector(".detail-body");
 
       function render() {{
         const phaseValue = phaseFilter.value;
@@ -315,16 +340,23 @@ def build_html():
           const header = document.createElement("div");
           header.className = "phase-header";
 
+          const meta = phaseMeta[phaseKey] || {{}};
+
           const title = document.createElement("div");
           title.className = "phase-title";
-          title.textContent = phaseMeta[phaseKey].title || phaseKey;
+          title.textContent = meta.title || phaseKey;
+
+          const cycle = document.createElement("div");
+          cycle.className = "phase-cycle";
+          cycle.textContent = meta.cycle || "";
 
           const label = document.createElement("div");
           label.className = "phase-label";
-          label.textContent = phaseMeta[phaseKey].label || "";
+          label.textContent = meta.label || "";
 
           header.appendChild(title);
-          header.appendChild(label);
+          if (cycle.textContent) header.appendChild(cycle);
+          if (label.textContent) header.appendChild(label);
 
           const desc = document.createElement("div");
           desc.className = "phase-description";
@@ -334,43 +366,31 @@ def build_html():
           list.className = "tag-list";
 
           filtered.forEach(item => {{
-            const card = document.createElement("div");
-            card.className = "tag-card";
-            card.dataset.tag = item.tag;
-            card.dataset.phase = phaseKey;
+            const pill = document.createElement("button");
+            pill.type = "button";
+            pill.className = "tag-pill";
+            pill.dataset.tag = item.tag;
+            pill.dataset.phase = phaseKey;
 
-            const tagHeader = document.createElement("div");
-            tagHeader.className = "tag-header";
+            const description = (item.description || "").trim() || "No description available.";
+            const pulses = item.pulses || [];
 
-            const tagName = document.createElement("div");
+            pill.dataset.description = description;
+            pill.dataset.pulses = pulses.join(", ");
+            pill.title = description;
+
+            const tagName = document.createElement("span");
             tagName.className = "tag-name";
             tagName.textContent = item.tag;
 
-            const tagCount = document.createElement("div");
+            const tagCount = document.createElement("span");
             tagCount.className = "tag-count";
             tagCount.textContent = "pulses: " + (item.count || 0);
 
-            tagHeader.appendChild(tagName);
-            tagHeader.appendChild(tagCount);
+            pill.appendChild(tagName);
+            pill.appendChild(tagCount);
 
-            const tagDesc = document.createElement("div");
-            tagDesc.className = "tag-description";
-            tagDesc.textContent = (item.description || "").trim() || "No description available.";
-
-            card.appendChild(tagHeader);
-            card.appendChild(tagDesc);
-
-            const pulses = item.pulses || [];
-            if (pulses.length) {{
-              const p = document.createElement("div");
-              p.className = "tag-pulses";
-              let text = "e.g. " + pulses.slice(0, 3).join(", ");
-              if (pulses.length > 3) text += ", …";
-              p.textContent = text;
-              card.appendChild(p);
-            }}
-
-            list.appendChild(card);
+            list.appendChild(pill);
           }});
 
           phaseCol.appendChild(header);
@@ -384,6 +404,24 @@ def build_html():
 
       phaseFilter.addEventListener("change", render);
       searchBox.addEventListener("input", render);
+
+      phaseGrid.addEventListener("click", (event) => {{
+        const pill = event.target.closest(".tag-pill");
+        if (!pill) return;
+
+        const tagName = pill.dataset.tag || "(unknown tag)";
+        const desc = pill.dataset.description || "No description available.";
+        const pulses = (pill.dataset.pulses || "").trim();
+
+        detailTitle.textContent = tagName;
+
+        let text = desc;
+        if (pulses) {{
+          text += "\\n\\nExample pulses: " + pulses;
+        }}
+
+        detailBody.textContent = text;
+      });
 
       render();
     }})();
