@@ -117,9 +117,6 @@ def build_html():
     }}
 
     .phase-header {{
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
       margin-bottom: 0.6rem;
     }}
 
