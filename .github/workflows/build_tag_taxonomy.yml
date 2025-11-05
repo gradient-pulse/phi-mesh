@@ -1,6 +1,7 @@
 name: Build Tag Taxonomy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
