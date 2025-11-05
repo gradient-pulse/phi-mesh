@@ -1,137 +1,332 @@
 from __future__ import annotations
 
+import datetime as _dt
 from pathlib import Path
-import datetime
+from typing import Dict, List, Any
+
 import yaml
+
 
 ROOT = Path(__file__).resolve().parent.parent
 META_DIR = ROOT / "meta"
 PULSE_DIR = ROOT / "pulse"
 
-TAG_DESC_PATH = META_DIR / "tag_descriptions.yml"
-PHASE_OVERRIDES_PATH = META_DIR / "tag_phase_overrides.yml"
-OUT_PATH = META_DIR / "tag_taxonomy.yml"
+TAG_DESCRIPTIONS = META_DIR / "tag_descriptions.yml"
+TAG_PHASE_OVERRIDES = META_DIR / "tag_phase_overrides.yml"
+
+OUT_YAML = META_DIR / "tag_taxonomy.yml"
+OUT_MD = META_DIR / "tag_taxonomy.md"
 
 
-def load_yaml(path: Path):
-    """Safe YAML loader."""
+PhaseKey = str  # "delta" | "gc" | "cf" | "unknown"
+
+
+def _load_yaml(path: Path) -> Any:
     if not path.exists():
         return {}
     with path.open("r", encoding="utf-8") as f:
         return yaml.safe_load(f) or {}
 
 
-def collect_tag_index() -> dict[str, list[str]]:
+def load_tag_descriptions() -> Dict[str, str]:
+    raw = _load_yaml(TAG_DESCRIPTIONS)
+    if not isinstance(raw, dict):
+        raise ValueError(f"{TAG_DESCRIPTIONS} must be a mapping of tag -> description")
+    return {str(k): ("" if v is None else str(v)).strip() for k, v in raw.items()}
+
+
+def load_pulse_tag_counts() -> Dict[str, List[str]]:
     """
-    Walk pulse/*.yml (and subfolders), collect tags -> list of pulse ids.
-
-    - Skips non-YAML files.
-    - Skips obvious non-pulse files (e.g. README).
-    - Treats either of these shapes as valid:
-
-        tags: [a, b, c]
-
-      or:
-
-        pulse:
-          tags: [a, b, c]
+    Scan pulse/*.yml (and pulse/**/ if present) and build:
+        tag -> [pulse_slug, ...]
+    where pulse_slug is filename without extension.
     """
-    tag_index: dict[str, list[str]] = {}
+    tag_to_pulses: Dict[str, List[str]] = {}
 
     if not PULSE_DIR.exists():
-        return tag_index
+        return tag_to_pulses
 
-    for path in PULSE_DIR.rglob("*.yml"):
-        # Ignore README or other non-pulse helpers
-        if path.name.lower().startswith("readme"):
+    patterns = ["*.yml", "*/*.yml"]
+    for pattern in patterns:
+        for path in PULSE_DIR.glob(pattern):
+            if path.name.startswith("README"):
+                continue
+            try:
+                data = _load_yaml(path)
+            except Exception:
+                continue
+
+            if not isinstance(data, dict):
+                continue
+
+            tags = data.get("tags") or []
+            if not isinstance(tags, list):
+                continue
+
+            slug = path.stem
+            for t in tags:
+                tag = str(t).strip()
+                if not tag:
+                    continue
+                tag_to_pulses.setdefault(tag, []).append(slug)
+
+    return tag_to_pulses
+
+
+def load_phase_overrides() -> Dict[str, PhaseKey]:
+    """
+    Optional manual override file:
+        delta: [tag1, tag2, ...]
+        gc:    [...]
+        cf:    [...]
+        unknown: [...]
+    """
+    overrides_raw = _load_yaml(TAG_PHASE_OVERRIDES)
+    if not overrides_raw:
+        return {}
+
+    overrides: Dict[str, PhaseKey] = {}
+    for phase_key in ("delta", "gc", "cf", "unknown"):
+        tags = overrides_raw.get(phase_key) or []
+        if not isinstance(tags, list):
             continue
-
-        try:
-            with path.open("r", encoding="utf-8") as f:
-                data = yaml.safe_load(f) or {}
-        except Exception:
-            # Don't let one bad file kill the taxonomy build
-            continue
-
-        tags = []
-        if isinstance(data, dict):
-            if "tags" in data and isinstance(data["tags"], list):
-                tags = data["tags"]
-            elif "pulse" in data and isinstance(data["pulse"], dict):
-                inner = data["pulse"]
-                if "tags" in inner and isinstance(inner["tags"], list):
-                    tags = inner["tags"]
-
-        if not tags:
-            continue
-
-        # Use a compact id like "2025-11-04_what_is_life" or "archive/2024-…"
-        pulse_id = path.relative_to(PULSE_DIR).with_suffix("").as_posix()
-
         for tag in tags:
-            if not isinstance(tag, str):
-                continue
-            tag = tag.strip()
-            if not tag:
-                continue
-            tag_index.setdefault(tag, [])
-            if pulse_id not in tag_index[tag]:
-                tag_index[tag].append(pulse_id)
-
-    # Sort pulse ids for determinism
-    for tag, ids in tag_index.items():
-        tag_index[tag] = sorted(ids)
-
-    return tag_index
+            tag_str = str(tag).strip()
+            if tag_str:
+                overrides[tag_str] = phase_key
+    return overrides
 
 
-def build_tag_taxonomy():
-    """Build complete tag taxonomy from descriptions, pulses, and phase overrides."""
-    tag_data = load_yaml(TAG_DESC_PATH)
-    phase_overrides = load_yaml(PHASE_OVERRIDES_PATH)
-    tag_index = collect_tag_index()
+# --- Heuristic classification -------------------------------------------------
 
-    # Four phase buckets
-    phases: dict[str, list[dict]] = {"delta": [], "gc": [], "cf": [], "unknown": []}
 
-    # Iterate through all known tags from descriptions
-    for tag, desc in tag_data.items():
-        pulses = tag_index.get(tag, [])
+# A small curated core mapping so key concepts are always placed sensibly.
+CORE_PHASE_MAP: Dict[str, PhaseKey] = {
+    # Δ — Emergence
+    "gradient": "delta",
+    "delta_resonance": "delta",
+    "emergence": "delta",
+    "origin_condition": "delta",
+    "genesis": "delta",
+    "proto_pulse": "delta",
+    "memetic_seed": "delta",
+
+    # GC — Resonance
+    "coherence": "gc",
+    "coherence_rhythm": "gc",
+    "coherence_emergence": "gc",
+    "gradient_choreography": "gc",
+    "resonance": "gc",
+    "nt_rhythm": "gc",
+    "phi_harmonics": "gc",
+    "triad_of_resonance": "gc",
+    "inter_model_alignment": "gc",
+    "inter_model_coherence": "gc",
+
+    # CF — Integration / Closure
+    "contextual_filter": "cf",
+    "coherence_closure": "cf",
+    "unity_disunity_cycle": "cf",
+    "ud": "cf",
+    "phase_alignment": "cf",
+    "societal_coherence": "cf",
+    "cf_bank": "cf",
+    "selective_permeability": "cf",
+}
+
+
+DELTA_KEYWORDS = {
+    "emerge", "emergence", "seed", "proto", "origin", "initial", "first",
+    "difference", "delta", "asymmetry", "spark", "birth", "genesis",
+}
+
+GC_KEYWORDS = {
+    "resonance", "resonate", "alignment", "align", "rhythm", "harmonic",
+    "choreography", "wave", "field", "propagation", "synchron", "coherence",
+    "phase-lock", "heartbeat", "ladder",
+}
+
+CF_KEYWORDS = {
+    "context", "filter", "closure", "integrat", "attractor", "stability",
+    "stable", "governance", "societ", "economy", "architecture",
+    "bank", "library", "memory", "invariant", "cycle", "unity", "disunity",
+}
+
+
+def classify_tag_heuristic(tag: str, desc: str) -> PhaseKey:
+    """
+    Best-effort automatic phase classifier based on:
+      - small curated core mapping
+      - keyword hits in (tag + description)
+    Returns: "delta" | "gc" | "cf" | "unknown"
+    """
+
+    tag_l = tag.lower()
+    desc_l = desc.lower()
+
+    # 1. Core mapping first (hard override)
+    if tag in CORE_PHASE_MAP:
+        return CORE_PHASE_MAP[tag]
+    if tag_l in CORE_PHASE_MAP:
+        return CORE_PHASE_MAP[tag_l]
+
+    # 2. Keyword scoring
+    text = f"{tag_l} {desc_l}"
+
+    def count_hits(keywords: set[str]) -> int:
+        return sum(1 for kw in keywords if kw in text)
+
+    delta_score = count_hits(DELTA_KEYWORDS)
+    gc_score = count_hits(GC_KEYWORDS)
+    cf_score = count_hits(CF_KEYWORDS)
+
+    scores = {
+        "delta": delta_score,
+        "gc": gc_score,
+        "cf": cf_score,
+    }
+
+    best_phase = max(scores, key=scores.get)
+    best_score = scores[best_phase]
+
+    # If no signal at all, or ambiguous tie, treat as unknown.
+    if best_score <= 0:
+        return "unknown"
+
+    # Avoid classifying when everything is equally weak.
+    non_zero = [p for p, s in scores.items() if s == best_score and s > 0]
+    if len(non_zero) != 1:
+        return "unknown"
+
+    return best_phase
+
+
+# --- Build taxonomy -----------------------------------------------------------
+
+
+def build_tag_taxonomy() -> Dict[str, Any]:
+    tag_descriptions = load_tag_descriptions()
+    tag_to_pulses = load_pulse_tag_counts()
+    overrides = load_phase_overrides()
+
+    all_tags = sorted(set(tag_descriptions.keys()) | set(tag_to_pulses.keys()))
+
+    phases: Dict[PhaseKey, List[Dict[str, Any]]] = {
+        "delta": [],
+        "gc": [],
+        "cf": [],
+        "unknown": [],
+    }
+
+    for tag in all_tags:
+        desc = tag_descriptions.get(tag, "")
+        pulses = sorted(tag_to_pulses.get(tag, []))
         count = len(pulses)
-        phase = "unknown"
 
-        # Assign phase by override lists (if present)
-        for key in ("delta", "gc", "cf"):
-            if tag in phase_overrides.get(key, []):
-                phase = key
-                break
+        # 1) explicit override wins
+        if tag in overrides:
+            phase: PhaseKey = overrides[tag]
+        else:
+            phase = classify_tag_heuristic(tag, desc)
 
-        phases[phase].append(
-            {
-                "tag": tag,
-                "description": desc,
-                "count": count,
-                "pulses": pulses,
-            }
-        )
+        entry = {
+            "tag": tag,
+            "description": desc,
+            "count": count,
+            "pulses": pulses,
+        }
+        phases[phase].append(entry)
 
-    # Sort tags alphabetically in each phase for easier scanning
-    for key in phases:
-        phases[key] = sorted(phases[key], key=lambda x: x.get("tag", ""))
+    # Sort tags within each phase by tag name
+    for lst in phases.values():
+        lst.sort(key=lambda e: e["tag"])
 
-    out = {
+    taxonomy = {
         "meta": {
-            "generated_at": datetime.datetime.utcnow().isoformat(),
+            "generated_at": _dt.datetime.utcnow().isoformat(timespec="seconds") + "Z",
         },
         "phases": phases,
     }
+    return taxonomy
 
-    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with OUT_PATH.open("w", encoding="utf-8") as f:
-        yaml.safe_dump(out, f, sort_keys=False, allow_unicode=True)
 
-    print(f"✅ Written taxonomy YAML: {OUT_PATH}")
+# --- Markdown rendering -------------------------------------------------------
+
+
+PHASE_TITLES = {
+    "delta": "Δ — Emergence (Cycle 1)",
+    "gc": "GC — Resonance (Cycle 2)",
+    "cf": "CF — Integration / Closure (Cycle 3)",
+    "unknown": "Unclassified — Open",
+}
+
+PHASE_SUBTITLES = {
+    "delta": "Difference, initiation, tension.",
+    "gc": "Alignment, rhythm, propagation.",
+    "cf": "Stability, context, attractors.",
+    "unknown": "Tags whose phase is not yet determined.",
+}
+
+
+def to_markdown(taxonomy: Dict[str, Any]) -> str:
+    phases: Dict[PhaseKey, List[Dict[str, Any]]] = taxonomy.get("phases", {})
+    lines: List[str] = []
+
+    lines.append("# Φ-Mesh Tag Taxonomy\n")
+    lines.append(
+        "Tags grouped by RGPx phase: Δ (emergence), GC (resonance), CF (integration / closure).\n"
+    )
+
+    generated_at = taxonomy.get("meta", {}).get("generated_at")
+    if generated_at:
+        lines.append(f"_Generated at: {generated_at}_\n")
+
+    for phase_key in ("delta", "gc", "cf", "unknown"):
+        items = phases.get(phase_key, []) or []
+        if not items:
+            continue
+
+        lines.append("\n---\n")
+        lines.append(f"## {PHASE_TITLES.get(phase_key, phase_key)}\n")
+        lines.append(f"{PHASE_SUBTITLES.get(phase_key, '')}\n")
+
+        for item in items:
+            tag = item["tag"]
+            desc = (item.get("description") or "").strip()
+            count = item.get("count", 0)
+            pulses = item.get("pulses") or []
+
+            lines.append(f"- **`{tag}`**  \n")
+            if desc:
+                lines.append(f"  {desc}  \n")
+            lines.append(f"  _pulses: {count}_")
+            if pulses:
+                example_str = ", ".join(pulses[:3])
+                if len(pulses) > 3:
+                    example_str += ", …"
+                lines.append(f"  _(e.g. {example_str})_")
+            lines.append("")
+
+    return "\n".join(lines).strip() + "\n"
+
+
+# --- Entry point --------------------------------------------------------------
+
+
+def main() -> None:
+    taxonomy = build_tag_taxonomy()
+
+    # YAML
+    OUT_YAML.write_text(
+        yaml.safe_dump(taxonomy, sort_keys=False, allow_unicode=True),
+        encoding="utf-8",
+    )
+    print(f"Wrote {OUT_YAML}")
+
+    # Markdown
+    OUT_MD.write_text(to_markdown(taxonomy), encoding="utf-8")
+    print(f"Wrote {OUT_MD}")
 
 
 if __name__ == "__main__":
-    build_tag_taxonomy()
+    main()
