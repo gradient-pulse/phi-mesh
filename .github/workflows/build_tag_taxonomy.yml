@@ -7,7 +7,11 @@ on:
       - main
     paths:
       - "meta/tag_descriptions.yml"
+      - "meta/tag_index.yml"
+      - "meta/tag_phase_overrides.yml"
       - "pulse/*.yml"
+      # if you ever nest pulses, switch to:
+      # - "pulse/**/*.yml"
       - "meta/build_tag_taxonomy.py"
       - "meta/build_tag_taxonomy_html.py"
 
@@ -33,7 +37,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
 
-      - name: Build tag taxonomy (YAML + Markdown)
+      - name: Build tag taxonomy (YAML)
         run: |
           python meta/build_tag_taxonomy.py
 
@@ -46,8 +50,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          if git status --porcelain | grep -qE "meta/tag_taxonomy.yml|meta/tag_taxonomy.md|docs/tag_taxonomy.html"; then
-            git add meta/tag_taxonomy.yml meta/tag_taxonomy.md docs/tag_taxonomy.html
+          # Only look for the files we actually generate now
+          if git status --porcelain | grep -qE "meta/tag_taxonomy.yml|docs/tag_taxonomy.html"; then
+            git add meta/tag_taxonomy.yml docs/tag_taxonomy.html
             git commit -m "Auto-update tag taxonomy"
             git push
           else
