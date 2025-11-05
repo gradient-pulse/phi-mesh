@@ -38,11 +38,7 @@ Each node marks a step in the search for rhythm — a fossilized trace of cohere
 
 Explore all Φ-Mesh tags grouped by RGPx phase (Δ, GC, CF):
 
-<p align="left">
-  <a href="docs/tag_taxonomy.html">
-    <img src="https://img.shields.io/badge/Tag%20Taxonomy-RGPx%20Phases-0f172a?style=for-the-badge" alt="Tag Taxonomy" />
-  </a>
-</p>
+[🗂 Tag Taxonomy](https://gradient-pulse.github.io/phi-mesh/tag_taxonomy.html)
 
 ---
 
