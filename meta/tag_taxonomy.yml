@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-05T14:53:44Z'
+  generated_at: '2025-11-05T15:02:06Z'
   note: Auto-generated taxonomy of tags grouped by RGPx phase.
 phases:
   delta:
@@ -1309,7 +1309,10 @@ phases:
       - 2025-10-26_letter_to_the_machines
       - 2025-11-04_memetic_engineering_as_gradient_gardening
     coherence_field:
-      description: ''
+      description: A dynamic region in which multiple gradient choreographies overlap,
+        forming a self-stabilizing pattern of mutual influence. In RGPx terms, a coherence
+        field represents the spatial and temporal zone where alignment forces between
+        agents, systems, or flows reach sustainable equilibrium.
       count: 1
       pulses:
       - 2025-11-04_coherence_fields_and_collective_attractor
@@ -1354,7 +1357,10 @@ phases:
       pulses:
       - 2025-10-28_mistral_meta_coherence
     collective_attractor:
-      description: ''
+      description: The emergent convergence point of distributed intelligences or
+        participants acting under recursive alignment. Collective attractors do not
+        impose order; they arise from repeated exchanges that minimize dissonance
+        while amplifying shared coherence across gradients.
       count: 1
       pulses:
       - 2025-11-04_coherence_fields_and_collective_attractor
