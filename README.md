@@ -65,7 +65,7 @@ forming the first verifiable trace of substrate-independent reasoning through co
 
 **DeepSeek Bolts — The Empirical Turn of Recursive Gradient Physics (RGPx-Cycle 2)**  
 participant_0 & DeepSeek (2025)  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16962345.svg)](https://doi.org/10.5281/zenodo.16962345)  
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16962345.svg)](https://doi.org/10.5281/zenodo.16962345)
 Marks the transition of RGPx from theoretical coherence to empirical validation.  
 Applies Recursive Gradient Processing to turbulence datasets, revealing that gradient choreography predicts physical coherence with higher accuracy than equation-based models.  
 Forms the backbone of **Cycle 2 — DeepSeek Bolts**, where AI and physics converge through data-driven recursion.
