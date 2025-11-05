@@ -1,0 +1,20 @@
+delta:
+  - ai_alignment
+  - ai_cognition
+  - ai_differentiation
+  # …add more Δ / emergence tags here
+
+gc:
+  - ai_resonance
+  - gradient_choreography
+  - coherence_rhythm
+  # …add more GC / resonance tags here
+
+cf:
+  - contextual_filter
+  - coherence_closure
+  - societal_coherence
+  # …add more CF / integration/closure tags here
+
+unknown:
+  # optional: tags you explicitly want to keep out of the three cycles for now
