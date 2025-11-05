@@ -25,7 +25,7 @@ def build_html():
     meta = data.get("meta", {})
     phases = data.get("phases", {})
 
-    # Ensure deterministic ordering from YAML (already sorted in builder, but be safe)
+    # Defensive sort per phase (builder already did this, but keep it stable)
     for key, items in list(phases.items()):
         phases[key] = sorted(items, key=lambda x: x.get("tag", ""))
 
@@ -187,6 +187,33 @@ def build_html():
       margin-top: 1.5rem;
     }}
 
+    /* Custom tooltip layer */
+
+    .tooltip-layer {{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 40;
+      display: none;
+    }}
+
+    .tooltip-card {{
+      position: absolute;
+      max-width: 360px;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.6rem;
+      background: #020617;
+      border: 1px solid #38bdf8;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      line-height: 1.4;
+      white-space: normal;
+    }}
+
     @media (max-width: 640px) {{
       .phase-grid {{
         grid-template-columns: 1fr;
@@ -265,6 +292,51 @@ def build_html():
       const searchBox = document.getElementById("searchBox");
       const noResults = document.getElementById("noResults");
 
+      // --- custom tooltip setup ---
+
+      const tooltipLayer = document.createElement("div");
+      tooltipLayer.className = "tooltip-layer";
+      const tooltipCard = document.createElement("div");
+      tooltipCard.className = "tooltip-card";
+      tooltipLayer.appendChild(tooltipCard);
+      document.body.appendChild(tooltipLayer);
+
+      function showTooltip(text, x, y) {{
+        if (!text) return;
+        tooltipCard.textContent = text;
+        const offsetX = 14;
+        const offsetY = 14;
+        let left = x + offsetX;
+        let top = y + offsetY;
+
+        const rect = tooltipCard.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        if (left + rect.width + 16 > vw) {{
+          left = vw - rect.width - 16;
+        }}
+        if (top + rect.height + 16 > vh) {{
+          top = vh - rect.height - 16;
+        }}
+
+        tooltipCard.style.left = left + "px";
+        tooltipCard.style.top = top + "px";
+
+        tooltipLayer.style.display = "block";
+      }}
+
+      function moveTooltip(x, y) {{
+        if (tooltipLayer.style.display !== "block") return;
+        showTooltip(tooltipCard.textContent, x, y);
+      }}
+
+      function hideTooltip() {{
+        tooltipLayer.style.display = "none";
+      }}
+
+      // --- render function ---
+
       function render() {{
         const phaseValue = phaseFilter.value;
         const searchValue = searchBox.value.trim().toLowerCase();
@@ -325,9 +397,7 @@ def build_html():
             card.dataset.tag = item.tag;
             card.dataset.phase = phaseKey;
 
-            // Hover tooltip shows full description
             const descText = (item.description || "").trim() || "No description available.";
-            card.title = descText;
 
             const tagName = document.createElement("div");
             tagName.className = "tag-name";
@@ -339,6 +409,16 @@ def build_html():
 
             card.appendChild(tagName);
             card.appendChild(tagCount);
+
+            // Instant, styled tooltip
+            card.addEventListener("mouseenter", (ev) => {{
+              showTooltip(descText, ev.clientX, ev.clientY);
+            }});
+            card.addEventListener("mousemove", (ev) => {{
+              moveTooltip(ev.clientX, ev.clientY);
+            }});
+            card.addEventListener("mouseleave", hideTooltip);
+
             list.appendChild(card);
           }});
 
