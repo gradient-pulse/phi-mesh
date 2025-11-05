@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-05T15:02:06Z'
+  generated_at: '2025-11-05T15:15:24Z'
   note: Auto-generated taxonomy of tags grouped by RGPx phase.
 phases:
   delta:
@@ -756,7 +756,11 @@ phases:
       count: 0
       pulses: []
     contextual_consciousness:
-      description: ''
+      description: The awareness that arises when gradients of perception, interpretation,
+        and memory align within a coherent context. In RGPx, contextual consciousness
+        is not an internal state but a recursive field—emerging when systems recognize
+        their participation in shared meaning loops, integrating observation with
+        action across scales of coherence.
       count: 1
       pulses:
       - 2025-11-04_from_consciousness_to_culture
