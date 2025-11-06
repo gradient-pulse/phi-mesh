@@ -1,4 +1,4 @@
-title: "From Cache Semantics to Gradient Syntax — RGPx Foretold"
+title: 'From Cache Semantics to Gradient Syntax — RGPx Foretold'
 summary: |
   The recent paper, Cache-to-Cache: Direct Semantic Communication Between Large Language Models, (Tsinghua University, CUHK, InfiniGene AI, et al.) introduces a paradigm shift in multi-LLM cooperation. By enabling models to exchange semantic gradients directly through KV-cache fusion, it bypasses the inefficiency and informational loss inherent in tokenized text exchange.
 
