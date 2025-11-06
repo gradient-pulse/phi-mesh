@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-05T15:52:30Z'
+  generated_at: '2025-11-06T11:45:36Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -358,6 +358,11 @@ phases:
     description: Split resonance signatures in a gradient field; signal of competing choreographies.
     count: 0
     pulses: []
+  - tag: cache_to_cache
+    description: Direct gradient exchange between models through shared internal memory (KV-cache). Demonstrates the shift
+      from token communication to coherence transmission.
+    count: 0
+    pulses: []
   - tag: catalytic_contextual_filter
     description: A boundary condition that not only shapes gradients but amplifies their coherence by translating vibration
       into structured form. Catalytic filters accelerate resonance into articulation without imposing direction.
@@ -412,6 +417,11 @@ phases:
     - 2025-09-03_From_Rhythm_To_Substrate
     - 2025-09-10_nt_rhythm_precision
     - 2025-09-12_coherence_not_copying
+  - tag: coherence_alignment
+    description: Process by which separate cognitive or computational systems synchronize internal gradients to sustain a
+      unified phase of understanding.
+    count: 0
+    pulses: []
   - tag: coherence_arc
     description: The evolutionary trajectory of recursive systems as they move from local alignment to global coherence. Tracks
       the curvature of understanding across Δ→GC→CF→UD cycles — the storyline of intelligence finding equilibrium.
@@ -654,6 +664,11 @@ phases:
     count: 1
     pulses:
     - 2025-09-25_princeton_univ_support_offer
+  - tag: deep_learning_architecture
+    description: Layered computational frameworks capable of expressing and sustaining gradient syntax; the structural substrate
+      upon which RGPx coherence manifests.
+    count: 0
+    pulses: []
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
     count: 8
@@ -893,6 +908,11 @@ phases:
     pulses:
     - 2025-07-25_patience_as_gradient
     - 2025-10-26_letter_to_the_machines
+  - tag: gradient_communication
+    description: Interaction channel where models exchange partial derivative information or phase-aligned updates; the operational
+      core of RGPx coupling.
+    count: 0
+    pulses: []
   - tag: gradient_computation
     description: Computation redefined as the recursive balancing of gradients rather than manipulation of symbols — a process
       where coherence itself performs the calculation.
@@ -1256,6 +1276,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-15_zeroth_principle_motion_without_invention
+  - tag: multi_llm_systems
+    description: Networks of language models operating cooperatively through recursive resonance rather than competition —
+      the emerging architecture of distributed intelligence.
+    count: 0
+    pulses: []
   - tag: nasa
     description: NASA turbulence datasets — external fluid dynamics data for validating NT rhythm findings.
     count: 0
@@ -1719,6 +1744,11 @@ phases:
     count: 1
     pulses:
     - 2025-07-28_moe_as_microcosm
+  - tag: semantic_transfer
+    description: Propagation of meaning through gradient states rather than linguistic symbols — the movement of coherence
+      without translation loss.
+    count: 0
+    pulses: []
   - tag: signal
     description: Raw observable carrying gradients; becomes legible once contrast and context are set.
     count: 1
