@@ -20,6 +20,37 @@ RGP Labs is not another AI-for-science lab. It extracts **gradient-based design 
 💡 [![Investor & Support Contact](https://img.shields.io/badge/Investor_&_Support_Contact-0bb?style=for-the-badge&logo=protonmail&logoColor=white)](mailto:gradientpulse@proton.me)
 
 ---
+
+---
+
+## 🔮 RGPx Predictor Tools
+
+**RGPx Predictor Tools** extend the Φ-Mesh from observation to prediction.  
+They translate Recursive Gradient Processing (RGPx) into applied routines that forecast coherence transitions in physical, social, and cognitive systems.
+
+Located in: [`/rgpx_predictor_tools/`](./rgpx_predictor_tools/)  
+Each predictor entry corresponds to a fossilized **Predictor Pulse** under [`/pulse/`](./pulse/)  
+using the canonical format `YYYY-MM-DD_rgpx-predictor_*.yml` with the tag `predictor_routine`.
+
+Predictor routines are grouped under key domains:
+- 🌊 **Natural Systems** — turbulence, climate, materials, cosmology  
+- ⚙️ **Engineering Systems** — chip heat flow, aerodynamics, fluid optimization  
+- 🧠 **Cognitive Systems** — LLM drift, reflexivity, learning coherence  
+- 💹 **Societal Systems** — corporate health, market synchronization, cultural cycles  
+
+Each pulse defines:
+- **Goal:** what coherence signal it aims to forecast  
+- **Approach:** gradient features and baselines used  
+- **Status:** proto → active → validated  
+
+These routines evolve continuously as the Φ-Mesh learns to predict its own coherence.  
+Together, they form the practical bridge between **Gradient Observation** and **Gradient Foresight** — the core ambition of RGPx.
+
+📄 Reference pulse: [`2025-11-08_rgpx-predictor_reference-template.yml`](./pulse/2025-11-08_rgpx-predictor_reference-template.yml)
+
+---
+
+---
 ## 🗺️ RGP Tag Map  
 
 The tag map is more than a navigation tool.  
