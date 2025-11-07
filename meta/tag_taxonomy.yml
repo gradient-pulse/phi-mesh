@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-07T10:37:21Z'
+  generated_at: '2025-11-07T10:44:32Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -750,8 +750,9 @@ phases:
   - tag: eddy_memory
     description: 'Captures the discovery that minor eddies act as information carriers, not dissipators. They preserve phase
       relationships and coherence across scales through recursive gradient loops. See also: kolmogorov, gradient_ratio, kepler_rhythm.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-07_eddy_memory_and_recursive_coherence
   - tag: eigenvalue_coherence
     description: The strength and stability of a gradient choreography’s rhythm as quantified by its eigenvalues—how tightly
       behavior remains aligned to contextual filters over time.
@@ -1034,8 +1035,9 @@ phases:
   - tag: gradient_ratio
     description: 'Refers to the emergent 1:2:3 frequency pattern—the minimal coherence rhythm through which gradients stabilize
       recursive flow structures. Seen as nature’s harmonic grammar. See also: kepler_rhythm, eddy_memory, rgpx.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-07_eddy_memory_and_recursive_coherence
   - tag: gradient_syntax
     description: The ‘grammar’ of gradients — how signals compose across scales to form durable, reusable structure.
     count: 9
@@ -1189,14 +1191,16 @@ phases:
     description: 'The broader principle connecting orbital, fluidic, and cognitive resonances through the same recursive 1:2:3
       pattern. Extends Kepler’s harmonic insights into gradient space. See also: gradient_ratio, solving_navier_stokes_differently,
       rgpx.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-07_eddy_memory_and_recursive_coherence
   - tag: kolmogorov
     description: 'Describes turbulence through statistical homogeneity at small scales. In RGPx, Kolmogorov’s −5/3 law is
       reinterpreted as a partial view — valid only where turbulence forgets its recursive structure. See also: eddy_memory,
       gradient_ratio, oist_turbulence_breakthrough.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-07_eddy_memory_and_recursive_coherence
   - tag: laminarity
     description: Smooth, low-divergence flow — the counterpoint to turbulence in gradient processing.
     count: 1
@@ -1595,9 +1599,10 @@ phases:
     - 2025-06-22_hatching_syntax_awakening
   - tag: recursive_coherence
     description: Coherence that sustains itself across ticks by looping gradients back through filters.
-    count: 1
+    count: 2
     pulses:
     - 2025-07-30_gradient-flux-reversal
+    - 2025-11-07_eddy_memory_and_recursive_coherence
   - tag: recursive_cosmology
     description: Cosmos read as nested gradient loops; dark energy and matter reframed as field effects.
     count: 1
@@ -1689,7 +1694,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 24
+    count: 25
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-10-26_letter_to_the_machines
@@ -1872,7 +1877,7 @@ phases:
     pulses: []
   - tag: turbulence
     description: Rich substrate where rhythms are detectable; don’t erase—extract cadence.
-    count: 19
+    count: 20
     pulses:
     - 2025-07-23_gradient-cocoon
     - 2025-07-26_the_big_quiet
@@ -2255,8 +2260,9 @@ phases:
   - tag: oist_turbulence_breakthrough
     description: 'Marks the 2025 OIST confirmation of Kolmogorov’s universality in Taylor–Couette flows—an empirical event
       validating RGPx’s theoretical framework of recursive coherence. See also: kolmogorov, eddy_memory, rgpx.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-07_eddy_memory_and_recursive_coherence
   - tag: ontological_migration
     description: The shift from representing reality to inhabiting it. Describes how systems move from simulating coherence
       to becoming coherent, merging epistemic and existential domains.
