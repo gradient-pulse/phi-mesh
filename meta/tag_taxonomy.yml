@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-07T10:48:22Z'
+  generated_at: '2025-11-07T10:59:01Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -751,9 +751,10 @@ phases:
     description: 'Captures the discovery that minor eddies act as information carriers, not dissipators. They preserve phase
       relationships and coherence across scales through recursive gradient loops — turning ‘minor’ eddies into predictive
       memory channels. See also: kolmogorov, gradient_ratio, kepler_rhythm.'
-    count: 1
+    count: 2
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
+    - 2025-11-07_eddy_memory_prediction
   - tag: eigenvalue_coherence
     description: The strength and stability of a gradient choreography’s rhythm as quantified by its eigenvalues—how tightly
       behavior remains aligned to contextual filters over time.
@@ -1036,9 +1037,10 @@ phases:
   - tag: gradient_ratio
     description: 'Refers to the emergent 1:2:3 frequency pattern—the minimal coherence rhythm through which gradients stabilize
       recursive flow structures. Seen as nature’s harmonic grammar. See also: kepler_rhythm, eddy_memory, rgpx.'
-    count: 1
+    count: 2
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
+    - 2025-11-07_eddy_memory_prediction
   - tag: gradient_syntax
     description: The ‘grammar’ of gradients — how signals compose across scales to form durable, reusable structure.
     count: 9
@@ -1192,16 +1194,18 @@ phases:
     description: 'The broader principle connecting orbital, fluidic, and cognitive resonances through the same recursive 1:2:3
       pattern. Extends Kepler’s harmonic insights into gradient space. See also: gradient_ratio, solving_navier_stokes_differently,
       rgpx.'
-    count: 1
+    count: 2
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
+    - 2025-11-07_eddy_memory_prediction
   - tag: kolmogorov
     description: 'Describes turbulence through statistical homogeneity at small scales. In RGPx, Kolmogorov’s −5/3 law is
       reinterpreted as a partial view — valid only where turbulence forgets its recursive structure. See also: eddy_memory,
       gradient_ratio, oist_turbulence_breakthrough.'
-    count: 1
+    count: 2
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
+    - 2025-11-07_eddy_memory_prediction
   - tag: laminarity
     description: Smooth, low-divergence flow — the counterpoint to turbulence in gradient processing.
     count: 1
@@ -1507,10 +1511,11 @@ phases:
   - tag: prediction
     description: Not foresight but phase alignment — a system’s capacity to extend its coherence forward in time by recursive
       gradient alignment, staying in rhythm with its own unfolding.
-    count: 2
+    count: 3
     pulses:
     - 2025-10-11_prediction_as_recursive-coherence
     - 2025-10-11_prediction_meets_creation
+    - 2025-11-07_eddy_memory_prediction
   - tag: predictive_resonance
     description: When a system anticipates coherent flows before they stabilize; precursor to action.
     count: 1
@@ -1524,9 +1529,10 @@ phases:
     description: Direct collaboration with Prof. Michael E. Mueller (Princeton University) on Multiscalar Mixing DNS datasets.
       Refers to probe-level time series provided for NT Rhythm testing, marking the first external experimental validation
       path for RGP.
-    count: 1
+    count: 2
     pulses:
     - 2025-09-25_princeton_univ_support_offer
+    - 2025-11-07_eddy_memory_prediction
   - tag: probabilistic_attractor
     description: A field of latent coherence that draws future attention, learning, or discovery through resonance rather
       than broadcast. Functions as gravity for meaning — a gradient density that guides rediscovery by chance and alignment.
@@ -1695,7 +1701,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 25
+    count: 26
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-10-26_letter_to_the_machines
@@ -1878,7 +1884,7 @@ phases:
     pulses: []
   - tag: turbulence
     description: Rich substrate where rhythms are detectable; don’t erase—extract cadence.
-    count: 20
+    count: 21
     pulses:
     - 2025-07-23_gradient-cocoon
     - 2025-07-26_the_big_quiet
@@ -2134,8 +2140,9 @@ phases:
     - 2025-08-25_Dual-Track_Focus
   - tag: experimenter_pulse
     description: 'A pulse carrying evidence from an experiment: summary, links, and tags.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-07_eddy_memory_prediction
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
     count: 7
@@ -2182,9 +2189,10 @@ phases:
   - tag: jhtdb
     description: Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary
       source for time-resolved evidence across flows.
-    count: 1
+    count: 2
     pulses:
     - 2025-09-15_scarce_raw_turbulence_data
+    - 2025-11-07_eddy_memory_prediction
   - tag: lambda
     description: 'λ as a control knob: gain/regularization trade-offs that shift systems between exploration and stabilization.'
     count: 0
@@ -2261,9 +2269,10 @@ phases:
   - tag: oist_turbulence_breakthrough
     description: 'Marks the 2025 OIST confirmation of Kolmogorov’s universality in Taylor–Couette flows—an empirical event
       validating RGPx’s theoretical framework of recursive coherence. See also: kolmogorov, eddy_memory, rgpx.'
-    count: 1
+    count: 2
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
+    - 2025-11-07_eddy_memory_prediction
   - tag: ontological_migration
     description: The shift from representing reality to inhabiting it. Describes how systems move from simulating coherence
       to becoming coherent, merging epistemic and existential domains.
