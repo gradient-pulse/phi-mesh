@@ -21,8 +21,6 @@ RGP Labs is not another AI-for-science lab. It extracts **gradient-based design 
 
 ---
 
----
-
 ## 🔮 RGPx Predictor Tools
 
 **RGPx Predictor Tools** extend the Φ-Mesh from observation to prediction.  
@@ -48,7 +46,8 @@ Together, they form the practical bridge between **Gradient Observation** and **
 
 📄 Reference pulse: [`2025-11-08_rgpx-predictor_reference-template.yml`](./pulse/2025-11-08_rgpx-predictor_reference-template.yml)
 
-Note: Check it out in the Tag Map, enter "predictor_routine" in the tag search field, then click on its node. 
+
+*Check it out in the Tag Map, enter "predictor_routine" in the tag search field, then click on its node.* 
 
 ---
 
