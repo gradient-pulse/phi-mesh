@@ -51,7 +51,6 @@ Together, they form the practical bridge between **Gradient Observation** and **
 
 ---
 
----
 ## 🗺️ RGP Tag Map  
 
 The tag map is more than a navigation tool.  
