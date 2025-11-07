@@ -51,12 +51,13 @@ summary: >
   ---
   approach:
   Gradient or NT-rhythm features used; baselines for comparison.
+  ---
+  status: proto
 tags:
   - rgpx
   - prediction
   - predictor_routine
   - [domain tags]
-status: proto
 papers:
   - [relevant RGPx paper(s), html-format repo links]
 podcasts:
