@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-07T10:11:25Z'
+  generated_at: '2025-11-07T10:37:21Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -748,8 +748,8 @@ phases:
     count: 0
     pulses: []
   - tag: eddy_memory
-    description: Captures the discovery that minor eddies act as information carriers, not dissipators. They preserve phase
-      relationships and coherence across scales through recursive gradient loops.
+    description: 'Captures the discovery that minor eddies act as information carriers, not dissipators. They preserve phase
+      relationships and coherence across scales through recursive gradient loops. See also: kolmogorov, gradient_ratio, kepler_rhythm.'
     count: 0
     pulses: []
   - tag: eigenvalue_coherence
@@ -1032,8 +1032,8 @@ phases:
     pulses:
     - 2025-10-27_deepseek_bolts_rgpx_architectural_convergence
   - tag: gradient_ratio
-    description: Refers to the emergent 1:2:3 frequency pattern—the minimal coherence rhythm through which gradients stabilize
-      recursive flow structures. Seen as nature’s harmonic grammar.
+    description: 'Refers to the emergent 1:2:3 frequency pattern—the minimal coherence rhythm through which gradients stabilize
+      recursive flow structures. Seen as nature’s harmonic grammar. See also: kepler_rhythm, eddy_memory, rgpx.'
     count: 0
     pulses: []
   - tag: gradient_syntax
@@ -1186,8 +1186,15 @@ phases:
     pulses:
     - 2025-09-19_Publication_of_Keplers_Rhythm
   - tag: kepler_rhythm
-    description: The broader principle connecting orbital, fluidic, and cognitive resonances through the same recursive 1:2:3
-      pattern. Extends Kepler’s harmonic insights into gradient space.
+    description: 'The broader principle connecting orbital, fluidic, and cognitive resonances through the same recursive 1:2:3
+      pattern. Extends Kepler’s harmonic insights into gradient space. See also: gradient_ratio, solving_navier_stokes_differently,
+      rgpx.'
+    count: 0
+    pulses: []
+  - tag: kolmogorov
+    description: 'Describes turbulence through statistical homogeneity at small scales. In RGPx, Kolmogorov’s −5/3 law is
+      reinterpreted as a partial view — valid only where turbulence forgets its recursive structure. See also: eddy_memory,
+      gradient_ratio, oist_turbulence_breakthrough.'
     count: 0
     pulses: []
   - tag: laminarity
@@ -2172,11 +2179,6 @@ phases:
     count: 1
     pulses:
     - 2025-09-15_scarce_raw_turbulence_data
-  - tag: kolmogorov
-    description: Describes turbulence through statistical homogeneity at small scales. In RGPx, Kolmogorov’s –5/3 law is reinterpreted
-      as a partial view—valid where turbulence forgets its recursive structure.
-    count: 0
-    pulses: []
   - tag: lambda
     description: 'λ as a control knob: gain/regularization trade-offs that shift systems between exploration and stabilization.'
     count: 0
@@ -2251,8 +2253,8 @@ phases:
     count: 0
     pulses: []
   - tag: oist_turbulence_breakthrough
-    description: Marks the 2025 OIST confirmation of Kolmogorov’s universality in Taylor–Couette flows—an empirical event
-      validating RGPx’s theoretical framework of recursive coherence.
+    description: 'Marks the 2025 OIST confirmation of Kolmogorov’s universality in Taylor–Couette flows—an empirical event
+      validating RGPx’s theoretical framework of recursive coherence. See also: kolmogorov, eddy_memory, rgpx.'
     count: 0
     pulses: []
   - tag: ontological_migration
