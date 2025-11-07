@@ -61,4 +61,4 @@ tags:
 papers:
   - [relevant RGPx paper(s), html-format repo links]
 podcasts:
-  - [spoken explanations]
+  - [explanations]
