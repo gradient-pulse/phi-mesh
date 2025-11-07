@@ -45,9 +45,11 @@ Predictor ideas and experiments are fossilized as **pulses** in the standard dir
 title: RGPx–Predictor: [name]
 summary: >
   Short statement of the prediction goal and method.
-goal: >
+  ---
+  goal:
   What coherence signal it aims to forecast.
-approach: >
+  ---
+  approach:
   Gradient or NT-rhythm features used; baselines for comparison.
 tags:
   - rgpx
