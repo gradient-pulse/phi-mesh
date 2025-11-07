@@ -225,7 +225,7 @@ dyad: >
 economics: >
   Markets and social systems viewed as gradient flows—cycles of coherence and divergence that may follow NT rhythms.
 eddy_memory: >
-  Captures the discovery that minor eddies act as information carriers, not dissipators. They preserve phase relationships and coherence across scales through recursive gradient loops.
+  Captures the discovery that minor eddies act as information carriers, not dissipators. They preserve phase relationships and coherence across scales through recursive gradient loops. See also: kolmogorov, gradient_ratio, kepler_rhythm.
 eigenvalue_coherence: >
   The strength and stability of a gradient choreography’s rhythm as quantified by its eigenvalues—how tightly behavior remains aligned to contextual filters over time.
 electrons: >
@@ -329,7 +329,7 @@ gradient_oscillation: >
 gradient_physics: >
   The study of reality as recursive gradients rather than objects or equations. It treats motion, energy, and information as manifestations of coherence flow, redefining physics as a grammar of recursion (Δ→GC→CF→UD).
 gradient_ratio: >
-  Refers to the emergent 1:2:3 frequency pattern—the minimal coherence rhythm through which gradients stabilize recursive flow structures. Seen as nature’s harmonic grammar.
+  Refers to the emergent 1:2:3 frequency pattern—the minimal coherence rhythm through which gradients stabilize recursive flow structures. Seen as nature’s harmonic grammar. See also: kepler_rhythm, eddy_memory, rgpx.
 gradient_suction: >
   The natural tendency of systems to draw coherence from surrounding gradients. Unlike extraction, suction preserves equilibrium by harmonizing differences.
 gradient_syntax: >
@@ -395,10 +395,10 @@ kaluza_klein: >
 kepler: >
   Kepler’s harmonic laws as metaphor and precedent — conserved ratios in planetary motion mirrored in RGP’s 1:2:3 turbulence rhythm.
 kepler_rhythm: >
-  The broader principle connecting orbital, fluidic, and cognitive resonances through the same recursive 1:2:3 pattern. Extends Kepler’s harmonic insights into gradient space.
+  The broader principle connecting orbital, fluidic, and cognitive resonances through the same recursive 1:2:3 pattern. Extends Kepler’s harmonic insights into gradient space. See also: gradient_ratio, solving_navier_stokes_differently, rgpx.
 kolmogorov: >
-  Describes turbulence through statistical homogeneity at small scales. In RGPx, Kolmogorov’s –5/3 law is reinterpreted as a partial view—valid where turbulence forgets its recursive structure.
-lambda: >
+  Describes turbulence through statistical homogeneity at small scales. In RGPx, Kolmogorov’s −5/3 law is reinterpreted as a partial view — valid only where turbulence forgets its recursive structure. See also: eddy_memory, gradient_ratio, oist_turbulence_breakthrough.
+lambda: > 
   λ as a control knob: gain/regularization trade-offs that shift systems between exploration and stabilization.
 laminarity: >
   Smooth, low-divergence flow — the counterpoint to turbulence in gradient processing.
@@ -487,7 +487,7 @@ nt_narrative_tick: >
 nt_rhythm: >
   Measured cadence of Narrative Ticks; a conserved timing pattern across tasks and domains.
 oist_turbulence_breakthrough: >
-  Marks the 2025 OIST confirmation of Kolmogorov’s universality in Taylor–Couette flows—an empirical event validating RGPx’s theoretical framework of recursive coherence.
+  Marks the 2025 OIST confirmation of Kolmogorov’s universality in Taylor–Couette flows—an empirical event validating RGPx’s theoretical framework of recursive coherence. See also: kolmogorov, eddy_memory, rgpx.
 old_science: >
   Ontology-first habits that miss process; kept as contrast class to highlight gradient-centered method.
 ontological_migration: >
