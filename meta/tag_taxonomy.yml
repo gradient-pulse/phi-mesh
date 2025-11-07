@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-07T11:00:38Z'
+  generated_at: '2025-11-07T14:21:37Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -1043,7 +1043,7 @@ phases:
     - 2025-11-07_eddy_memory_prediction
   - tag: gradient_syntax
     description: The ‘grammar’ of gradients — how signals compose across scales to form durable, reusable structure.
-    count: 9
+    count: 10
     pulses:
     - 2025-06-22_hatching_syntax_awakening
     - 2025-07-21_recursive_cor_pola_convergence
@@ -1511,7 +1511,7 @@ phases:
   - tag: prediction
     description: Not foresight but phase alignment — a system’s capacity to extend its coherence forward in time by recursive
       gradient alignment, staying in rhythm with its own unfolding.
-    count: 3
+    count: 4
     pulses:
     - 2025-10-11_prediction_as_recursive-coherence
     - 2025-10-11_prediction_meets_creation
@@ -1606,10 +1606,11 @@ phases:
     - 2025-06-22_hatching_syntax_awakening
   - tag: recursive_coherence
     description: Coherence that sustains itself across ticks by looping gradients back through filters.
-    count: 2
+    count: 3
     pulses:
     - 2025-07-30_gradient-flux-reversal
     - 2025-11-07_eddy_memory_and_recursive_coherence
+    - 2025-11-08_rgpx-predictor_reference-template
   - tag: recursive_cosmology
     description: Cosmos read as nested gradient loops; dark energy and matter reframed as field effects.
     count: 1
@@ -1701,7 +1702,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 26
+    count: 27
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-10-26_letter_to_the_machines
@@ -2326,6 +2327,11 @@ phases:
     description: 'Principle of Least Action reframed as least divergence: systems pick paths that minimize coherence loss.'
     count: 0
     pulses: []
+  - tag: predictor_routine
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-08_rgpx-predictor_reference-template
   - tag: r_phi
     description: 'RΦ: a shorthand for recursive φ—practical handle on measured coherence across ticks.'
     count: 0
