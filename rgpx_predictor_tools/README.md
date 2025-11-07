@@ -58,6 +58,6 @@ tags:
   - [domain tags]
 status: proto
 papers:
-  - [relevant RGPx paper(s)]
-links:
-  - [data or repo links]
+  - [relevant RGPx paper(s), html-format repo links]
+podcasts:
+  - [spoken explanations]
