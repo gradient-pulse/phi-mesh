@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-07T10:44:32Z'
+  generated_at: '2025-11-07T10:48:22Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -749,7 +749,8 @@ phases:
     pulses: []
   - tag: eddy_memory
     description: 'Captures the discovery that minor eddies act as information carriers, not dissipators. They preserve phase
-      relationships and coherence across scales through recursive gradient loops. See also: kolmogorov, gradient_ratio, kepler_rhythm.'
+      relationships and coherence across scales through recursive gradient loops — turning ‘minor’ eddies into predictive
+      memory channels. See also: kolmogorov, gradient_ratio, kepler_rhythm.'
     count: 1
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
