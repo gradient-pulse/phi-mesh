@@ -49,7 +49,7 @@ Establishes the Δ → GC → CF → UD cycle as the structural basis of Recursi
 
 **Kepler’s Rhythm — The Harmonic Memory of Coherence**  
 participant_0 (2025)  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17059342.svg)](https://doi.org/10.5281/zenodo.17059342)  
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17159920.svg)](https://doi.org/10.5281/zenodo.17159920)  
 Explores the recursive frequency structure (1 : 2 : 3) underlying both celestial and fluid coherence.  
 Extends Kepler’s harmonic laws into gradient space, showing how phase-locked rhythms link turbulence, orbital dynamics, and cognitive recursion.  
 Establishes the 1 : 2 : 3 ratio as nature’s minimal coherence grammar.
