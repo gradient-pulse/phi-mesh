@@ -21,7 +21,7 @@ RGP Labs is not another AI-for-science lab. It extracts **gradient-based design 
 
 ---
 
-## 🔮 RGPx Predictor Tools (in preparation)
+## 🔮 RGPx Predictor Tools — *in preparation*
 
 **RGPx Predictor Tools** extend the Φ-Mesh from observation to prediction.  
 They translate Recursive Gradient Processing (RGPx) into applied routines that forecast coherence transitions in physical, social, and cognitive systems.
