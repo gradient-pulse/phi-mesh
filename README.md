@@ -47,7 +47,7 @@ Together, they form the practical bridge between **Gradient Observation** and **
 📄 Reference pulse: [`2025-11-08_rgpx-predictor_reference-template.yml`](./pulse/2025-11-08_rgpx-predictor_reference-template.yml)
 
 
-*Check it out in the **RGP Tag Map** -> "predictor_routine" in search field left -> click its node -> view its pulses.* 
+*Check it out in the **RGP Tag Map** -> "predictor_routine" in search field -> click its node -> view its pulses.* 
 
 ---
 
