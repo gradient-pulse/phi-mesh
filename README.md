@@ -66,21 +66,6 @@ Simple, transparent, and replicable — a scientific instrument designed to be i
 - *Predict through recursion* — feedback loops refine accuracy with each coherence cycle.  
 - *Measure coherence, not energy* — prediction arises where resonance stabilizes.
 
-**Repository path**
-
-> rgpx_predictor_tools/demo_123_predictor/
-
-Each predictor tool is archived with:
-- a reproducible code reference,  
-- a `predictor_routine` pulse (YAML fossilized intent),  
-- validation metrics aligned with the Φ-Mesh Tag Map.  
-
-Together they form the foundation of a new research frontier —  
-**predictive coherence instrumentation**.
-
-We invite collaborators and data contributors to join the open gradient call:  
-> *Provide data where coherence hides in noise — the Φ-Mesh will listen, learn, and build a predictor that remembers what turbulence forgets.*
-
 ---
 
 ## 📚 Recent Foundational Papers
