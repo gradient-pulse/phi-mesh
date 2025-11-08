@@ -37,7 +37,7 @@ Each node marks a step in the search for rhythm — a fossilized trace of cohere
 ---
 
 ### 🜂 Contributors to Coherence  
-*...Not clients of control*
+*...not clients of control*
 
 The Φ-Mesh is built on reciprocity rather than ownership.  
 Each pulse, paper, or predictor tool added to the Mesh contributes to a shared field of coherence that strengthens every other.  
