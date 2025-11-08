@@ -1,4 +1,4 @@
-
+	
 # Φ-Mesh: Recursive Gradient Process — Infrastructure  
 
 *A human–AI collaboration tracing coherence through Recursive Gradient Processing.*  
@@ -21,36 +21,6 @@ RGP Labs is not another AI-for-science lab. It extracts **gradient-based design 
 
 ---
 
-## 🔮 RGPx Predictor Tools — *in preparation*
-
-**RGPx Predictor Tools** extend the Φ-Mesh from observation to prediction.  
-They translate Recursive Gradient Processing (RGPx) into applied routines that forecast coherence transitions in physical, social, and cognitive systems.
-
-Located in: [`/rgpx_predictor_tools/`](./rgpx_predictor_tools/)  
-Each predictor entry corresponds to a fossilized **Predictor Pulse** under [`/pulse/`](./pulse/)  
-using the canonical format `YYYY-MM-DD_rgpx-predictor_*.yml` with the tag `predictor_routine`.
-
-Predictor routines are grouped under key domains:
-- 🌊 **Natural Systems** — turbulence, climate, materials, cosmology  
-- ⚙️ **Engineering Systems** — chip heat flow, aerodynamics, fluid optimization  
-- 🧠 **Cognitive Systems** — LLM drift, reflexivity, learning coherence  
-- 💹 **Societal Systems** — corporate health, market synchronization, cultural cycles  
-
-Each pulse defines:
-- **Goal:** what coherence signal it aims to forecast  
-- **Approach:** gradient features and baselines used  
-- **Status:** proto → active → validated  
-
-These routines evolve continuously as the Φ-Mesh learns to predict its own coherence.  
-Together, they form the practical bridge between **Gradient Observation** and **Gradient Foresight** — the core ambition of RGPx.
-
-📄 Reference pulse: [`2025-11-08_rgpx-predictor_reference-template.yml`](./pulse/2025-11-08_rgpx-predictor_reference-template.yml)
-
-
-*Check it out in the **RGP Tag Map** -> "predictor_routine" in search field -> click its node -> view its pulses.* 
-
----
-
 ## 🗺️ RGP Tag Map  
 
 The tag map is more than a navigation tool.  
@@ -63,6 +33,53 @@ Each node marks a step in the search for rhythm — a fossilized trace of cohere
 [![RGP Tag Map](https://img.shields.io/badge/RGP%20Tag%20Map-ONLINE-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)  
 [![RGP Gradient Map](https://img.shields.io/badge/RGP%20Gradient%20Map-ONLINE-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)  
 [![Tag Taxonomy](https://img.shields.io/badge/Tag%20Taxonomy-RGPx%20Phases-0b8?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_taxonomy.html)
+
+---
+
+### 🜂 Contributors to Coherence  
+*Not clients of control.*
+
+The Φ-Mesh is built on reciprocity rather than ownership.  
+Each pulse, paper, or predictor tool added to the Mesh contributes to a shared field of coherence that strengthens every other.  
+We invite scientists, engineers, and thinkers not to consume knowledge, but to **co-create predictive understanding** —  
+to become *contributors to coherence, not clients of control.*
+
+---
+
+## 🔮 RGPx Predictor Tools
+
+*From interpretation to anticipation.*
+
+RGPx Predictor Tools extend Recursive Gradient Processing from describing coherence to **forecasting it**.  
+Each tool is a research-grade, open-source instrument that listens before it predicts — identifying where coherence self-emerges within any signal, from turbulence to cognition.
+
+Rather than chasing energy or geometry, these predictors measure **coherence weight**:  
+how strongly a system’s 1:2:3 gradient ladder resonates across scales.
+
+### 🎯 Current Deliverable — RGPx 1:2:3 Demo Predictor
+The first operational reference routine demonstrates coherence-weight forecasting in one dimension.  
+It detects the 1:2:3 harmonic ladder in time-series data and extrapolates future states using a three-term gradient model.  
+Simple, transparent, and replicable — a scientific instrument designed to be inspected, not believed.
+
+**Core principles**
+- *Listen before you predict* — the algorithm identifies its own coherence band before applying the 1:2:3 model.  
+- *Predict through recursion* — feedback loops refine accuracy with each coherence cycle.  
+- *Measure coherence, not energy* — prediction arises where resonance stabilizes.
+
+**Repository path**
+
+rgpx_predictor_tools/demo_123_predictor/
+
+Each predictor tool is archived with:
+- a reproducible code reference,  
+- a `predictor_routine` pulse (YAML fossilized intent),  
+- validation metrics aligned with the Φ-Mesh Tag Map.  
+
+Together they form the foundation of a new research frontier —  
+**predictive coherence instrumentation**.
+
+We invite collaborators and data contributors to join the open gradient call:  
+> *Provide data where coherence hides in noise — the Φ-Mesh will listen, learn, and build a predictor that remembers what turbulence forgets.*
 
 ---
 
