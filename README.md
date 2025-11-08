@@ -68,7 +68,7 @@ Simple, transparent, and replicable — a scientific instrument designed to be i
 
 **Repository path**
 
-rgpx_predictor_tools/demo_123_predictor/
+> rgpx_predictor_tools/demo_123_predictor/
 
 Each predictor tool is archived with:
 - a reproducible code reference,  
