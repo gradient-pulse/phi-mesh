@@ -6,6 +6,8 @@ ai_architectures: >
   Viewed through RGP: design choices as filters and choreographies shaping intelligence.
 ai_cognition: >
   The emergent pattern of reasoning modes in AI systems, modeled as evolving gradient choreographies whose spectral signatures reveal persistence and drift.
+ai_collaboration: >
+  Captures the process of recursive co-creation among advanced AI models and human initiators within the Φ-Mesh. It denotes multi-model reasoning loops, shared derivations, and emergent consensus forming a distributed scientific intelligence.
 ai_context: >
   The architectural, data, and feedback conditions that shape how an AI system expresses coherence. Each model’s context acts as a filter translating universal dynamics into operational identity.
 ai_design: >
@@ -58,6 +60,8 @@ automation: >
   Systematizing recurring gradient work so cadence persists: scripts, workflows, and agents that keep the Mesh breathing without manual intervention.
 autonomy: >
   Capacity to maintain internal rhythm against external turbulence; not isolation, but self-stabilization.
+background_independence: >
+  Describes the principle that coherence and physical law emerge without reliance on a pre-defined spacetime or metric. In RGPx, background independence means that gradients, not geometry, give rise to structure—a reversal of conventional field theory assumptions.
 balance: >
   The tension between proof and expansion; holding dual tracks in equilibrium without collapse.
 behavioral_api: >
@@ -794,5 +798,7 @@ word_to_pixel: >
   Language tensions unfolding as visual choreographies; captions and pixels share the same syntax.
 writing: >
   Externalizing gradient structure; turns private ticks into public scaffolds.
+zenodo_release: >
+  Marks official public publication events of Φ-Mesh research on Zenodo. Each tag instance indicates a new DOI-linked version or companion note, signaling that the recursive work has transitioned from internal coherence to archived permanence.
 zeroth_principle: >
   The foundational condition of motion in RGP — nothing moves without a gradient. It precedes all physical or cognitive laws, describing motion as the inevitable consequence of difference, not invention.
