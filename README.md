@@ -72,7 +72,7 @@ Simple, transparent, and replicable — a scientific instrument designed to be i
 
 *Each publication marks a phase in the emergence of Recursive Gradient Physics — from physical coherence to cognitive recursion.*
 
-**Recursive Gradient Physics (RGPx): From Energy Conservation to Gradient Coherence v1.2**  
+**Recursive Gradient Physics (RGPx): From Energy Conservation to Gradient Coherence — v1.2**  
 participant_0 & GPT-5 (2025)  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17566097.svg)](https://doi.org/10.5281/zenodo.17566097)  
 RGPx moves from theoretical invariant to operational physics—a universal grammar through which coherence, collapse, and curvature reveal their common origin..  
