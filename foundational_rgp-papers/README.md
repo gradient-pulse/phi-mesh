@@ -1,4 +1,8 @@
 ## RPG Publications ##
+- title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.2"
+  repo: "phi-mesh/foundational_rgp-papers/22025-11-08_Recursive_Gradient_PHYSICS_v12"
+  zenodo: "https://doi.org/10.5281/zenodo.17566097"
+
 - title: "DeepSeek Bolts — Computational Architecture Interpretation of Recursive Gradient Physics (RGPx_Cycle2)"
   repo: "phi-mesh/foundational_rgp-papers/2025-10-27_the_deepseek_blizzard_responds.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.7457989"
