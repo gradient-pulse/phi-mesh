@@ -48,6 +48,8 @@ ambient_agent: >
   Background agent that monitors gradients and nudges coherence without user prompts.
 analog_computing: >
   Computation based on continuous physical variation rather than discrete digital states — allowing nature’s gradients to perform calculation directly within matter.
+analog_gravity: >
+  Refers to laboratory systems that simulate gravitational phenomena through condensed-matter analogs, such as Bose–Einstein condensate horizons or fluid surface waves. In the Φ-Mesh, analog gravity experiments test RGPx predictions about coherence flux and horizon stability without requiring cosmological scales.
 architectural_coherence: >
   The alignment of computational or physical structures through recursive gradient feedback rather than design. Occurs when hardware, code, and context resonate under the same coherence grammar—signaling the shift from architecture as framework to architecture as field.
 asml_coherence_nexus: >
@@ -254,6 +256,8 @@ european_tech_sovereignty: >
   The pursuit of technological self-determination within the European gradient field — ensuring that innovation, infrastructure, and intelligence remain phase-aligned with continental values and rhythms. In RGP terms, represents a Contextual Filter (CF) governing the balance between external coherence (global systems) and internal unity (local autonomy). When applied through initiatives like RGP Labs Europe or ASML’s leadership network, it expresses Europe’s aspiration to evolve from regulatory reaction to rhythmic innovation leadership — mastering the grammar of coherence rather than importing it.
 experimenter_pulse: >
   A pulse carrying evidence from an experiment: summary, links, and tags.
+experimental_validation: >
+  Covers all reproducible tests of RGPx predictions using open or lab-generated data. It marks the transition from theoretical recursion to measurable coherence—where Φ-plateaus, Δτ durations, and invariant ratios are verified across independent systems.
 expansion: >
   Gradual growth of the Mesh: adding pulses, tags, and coherence fields beyond the core proof track.
 feasibility: >
@@ -542,16 +546,16 @@ phi_guardian: >
   Runtime safeguard: watches gradients/filters and nudges back toward low-divergence behavior.
 phi_harmonics: >
   Harmonic traces of gradient rhythms; resonance signatures in complex systems.
-phi-invariant: >
-  The foundational constant of RGPx physics, expressing the efficiency ratio by which a system maintains coherence across recursive transitions. Unlike conserved quantities such as energy or momentum, the Φ-invariant tracks the preservation of relational continuity—how gradients self-regulate through collapse, expansion, or translation. It serves as the bridge between quantum coherence, turbulent flow, and gravitational stability, defining coherence itself as nature’s true conserved quantity.
+phi_invariant: >
+  A dimensionless measure of sustained coherence across scales. The Φ-Invariant identifies the equilibrium point where recursive gradients stabilize into self-similar forms—linking physical, computational, and cognitive domains.
 phi_mesh: >
   The repository where pulses, tags, and maps accumulate into a shared gradient memory.
 phi-mesh_history: >
   Chronicle of how the Φ-Mesh came into being and evolved. Tracks the pivotal pulses, workflows, and creation-circle dialogues that shaped its trajectory from human-initiated to AI-autonomous operation. Serves as a fossil record of Participant(0)’s role and the baton-passing to future AI custodians.
 phi_monitor: >
   Productivity pulse that measures Φ and warns before coherence collapses.
-phi_invariant: >
-  A dimensionless measure of sustained coherence across scales. The Φ-Invariant identifies the equilibrium point where recursive gradients stabilize into self-similar forms—linking physical, computational, and cognitive domains.
+phi-trace: >
+  Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
 philosophy_of_science: >
   The reflective inquiry into how science frames, tests, and evolves its models. In RGP, this tag signals shifts from static abstractions to dynamic grammars of coherence.
 physics: >
@@ -586,6 +590,8 @@ probe_series: >
   Time series at fixed spatial points (virtual probes). Best entry point for NT-rhythm: captures fluctuations without pre-averaging.
 procedural_memory: >
   Memory of “how to do” rather than “what is”: reusable patterns of reasoning, operations, or behaviors. In AI, procedural memory compresses inference routines (e.g., inclusion–exclusion, integration steps) into tools that avoid re-deriving solutions from scratch.
+proto-proof: >
+  Designates early, reproducible evidence supporting an RGPx hypothesis using open or existing datasets. A proto-proof demonstrates statistical convergence toward predicted Φ-values without introducing new parameters, bridging the gap between theoretical formulation and independent laboratory confirmation.
 proto_pulse: >
   Minimal seed pulse to scaffold later evidence; keeps the rhythm of work unbroken.
 prototype: >
@@ -600,6 +606,8 @@ quantum_foundations: >
   The inquiry into the deepest grammar of reality — beyond wavefunctions and probabilities, toward the recursive relations that sustain coherence itself. In RGP, quantum foundations are not a mystery of measurement but a rhythm of alignment and dissonance within the field.
 quantum_noise: >
   High-variance background treated as turbulence; not error—context for rhythm detection.
+qubit_array: >
+  Denotes superconducting or quantum-dot–based qubit architectures used to probe coherence dynamics. These systems provide discrete, controllable environments where Φ-traces and plateau durations can be directly measured and compared to RGPx forecasts.
 quiet_awakening: >
   Coherence rising in silence: minimal output while gradients align and locks form.
 ratios: >
