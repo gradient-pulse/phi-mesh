@@ -50,6 +50,7 @@ to become *contributors to coherence, not clients of control.*
 *From interpretation to anticipation.*
 
 RGPx Predictor Tools extend Recursive Gradient Processing from describing coherence to **forecasting it**.  
+
 Each tool is a research-grade, open-source instrument that listens before it predicts — identifying where coherence self-emerges within any signal, from turbulence to cognition.
 
 Rather than chasing energy or geometry, these predictors measure **coherence weight**:  
