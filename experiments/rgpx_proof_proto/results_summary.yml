@@ -1,0 +1,23 @@
+experiment_ledger:
+  version: "RGPx v1.2"
+  protocol: "Phi-Trace Protocols (Addendum II)"
+  baseline_date: "2025-11-08"  # Date of RGPx v1.2 publication
+
+  test_beds:
+    - domain: Classical Turbulence
+      contextual_filter: Thermal (Entropy Exchange)
+      predicted_phi_star: "0.42 ± 0.03"
+      falsifier_target: "Spectral Coherence Shelf (Φ scale-stationary in k-space)"
+      operational_notes: "Requires high Reynolds number Re_λ ≥ 250"
+
+    - domain: BEC Analog Horizon
+      contextual_filter: Quantum/Gravitational (Phase/Horizon Stability)
+      predicted_phi_star: "N/A (focus on plateau duration Δτ)"
+      falsifier_target: "Plateau duration Δτ ≥ 4 ms (exceeds classical Hawking prediction)"
+      operational_notes: "Requires phase-grating interferometry and Fermi temperature T_F"
+
+    - domain: Superconducting Qubit Array
+      contextual_filter: Quantum (Phase Stability)
+      predicted_phi_star: "1.00 (dimensionless)"
+      falsifier_target: "Transient Φ-threshold (dΦ/dt = 0) before full decoherence"
+      operational_notes: "Predicted for 3-D transmon; requires dΦ/dt = 0 within 0.01 µs⁻¹"
