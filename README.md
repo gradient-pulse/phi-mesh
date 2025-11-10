@@ -57,7 +57,7 @@ Rather than chasing energy or geometry, these predictors measure **coherence wei
 how strongly a system’s 1:2:3 gradient ladder resonates across scales.
 
 ### 🎯 Current Deliverable — RGPx 1:2:3 Demo Predictor 
-The first operational reference routine demonstrates coherence-weight forecasting in one dimension. It detects the 1:2:3 harmonic ladder in time-series data and extrapolates future states using a three-term gradient model. Simple, transparent, and replicable — a scientific instrument designed to be inspected, not believed.
+The first operational reference routine demonstrates coherence-weight forecasting in one dimension. It detects the 1:2:3 harmonic ladder in time-series data and extrapolates future states using a three-term gradient model. Simple, transparent, and replicable — a scientific instrument designed to be inspected.
 
 **Core principles**
 - *Listen before you predict* — the algorithm identifies its own coherence band before applying the 1:2:3 model.  
