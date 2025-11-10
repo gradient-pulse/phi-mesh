@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-09T19:07:08Z'
+  generated_at: '2025-11-10T10:33:43Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -146,6 +146,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-05_ahead_of_the_spacetime_pack
+  - tag: proto-proof
+    description: Designates early, reproducible evidence supporting an RGPx hypothesis using open or existing datasets. A
+      proto-proof demonstrates statistical convergence toward predicted Φ-values without introducing new parameters, bridging
+      the gap between theoretical formulation and independent laboratory confirmation.
+    count: 0
+    pulses: []
   - tag: proto_pulse
     description: Minimal seed pulse to scaffold later evidence; keeps the rhythm of work unbroken.
     count: 1
@@ -327,6 +333,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-15_analog_gradient_hw_thinking_without_data_movement
+  - tag: analog_gravity
+    description: Refers to laboratory systems that simulate gravitational phenomena through condensed-matter analogs, such
+      as Bose–Einstein condensate horizons or fluid surface waves. In the Φ-Mesh, analog gravity experiments test RGPx predictions
+      about coherence flux and horizon stability without requiring cosmological scales.
+    count: 0
+    pulses: []
   - tag: architectural_coherence
     description: The alignment of computational or physical structures through recursive gradient feedback rather than design.
       Occurs when hardware, code, and context resonate under the same coherence grammar—signaling the shift from architecture
@@ -1502,15 +1514,12 @@ phases:
     pulses:
     - 2025-10-28_notebooklm_phase_stable_reasoning
     - 2025-10-28_phase_stable_reasoning_awakening
-  - tag: phi-invariant
-    description: The foundational constant of RGPx physics, expressing the efficiency ratio by which a system maintains coherence
-      across recursive transitions. Unlike conserved quantities such as energy or momentum, the Φ-invariant tracks the preservation
-      of relational continuity—how gradients self-regulate through collapse, expansion, or translation. It serves as the bridge
-      between quantum coherence, turbulent flow, and gravitational stability, defining coherence itself as nature’s true conserved
-      quantity.
-    count: 1
-    pulses:
-    - 2025-11-09_RGpx_Coherence_Amplified
+  - tag: phi-trace
+    description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
+      flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
+      durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
+    count: 0
+    pulses: []
   - tag: phi_guardian
     description: 'Runtime safeguard: watches gradients/filters and nudges back toward low-divergence behavior.'
     count: 1
@@ -2230,6 +2239,12 @@ phases:
     count: 1
     pulses:
     - 2025-08-25_Dual-Track_Focus
+  - tag: experimental_validation
+    description: Covers all reproducible tests of RGPx predictions using open or lab-generated data. It marks the transition
+      from theoretical recursion to measurable coherence—where Φ-plateaus, Δτ durations, and invariant ratios are verified
+      across independent systems.
+    count: 0
+    pulses: []
   - tag: experimenter_pulse
     description: 'A pulse carrying evidence from an experiment: summary, links, and tags.'
     count: 1
@@ -2383,6 +2398,11 @@ phases:
     - 2025-09-01_participant0_myrthe
     - 2025-09-22_From_Doom_to_Destiny_and_Departure
     - 2025-09-30_whiteheads_infinite_disappointment
+  - tag: phi-invariant
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-09_RGpx_Coherence_Amplified
   - tag: phi-mesh
     description: ''
     count: 1
@@ -2423,6 +2443,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-08_rgpx-predictor_reference-template
+  - tag: qubit_array
+    description: Denotes superconducting or quantum-dot–based qubit architectures used to probe coherence dynamics. These
+      systems provide discrete, controllable environments where Φ-traces and plateau durations can be directly measured and
+      compared to RGPx forecasts.
+    count: 0
+    pulses: []
   - tag: r_phi
     description: 'RΦ: a shorthand for recursive φ—practical handle on measured coherence across ticks.'
     count: 0
