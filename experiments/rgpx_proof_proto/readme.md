@@ -1,11 +1,29 @@
 # RGPx Proto-Proof (Φ-Trace Validation)
 
 This directory contains **Kimi’s Φ-Trace Proto-Proof Notebook**, an executable demonstration of how Recursive Gradient Physics (RGPx) can be validated using open experimental datasets.  
-The notebook reproduces Kimi’s abridged code and commentary from her correspondence with Participant 0 (November 2025), applying the **Φ-Trace Protocols** introduced in *RGPx v1.2*.
+It operationalizes the *Φ-Trace Protocols* introduced in *RGPx v1.2*, bridging theory and measurable coherence flux (Φ).
 
-### Purpose
-To provide a reproducible bridge between theory and empirical data—testing whether coherence flux (Φ) stabilizes across classical turbulence, Bose–Einstein condensate horizons, and superconducting qubit arrays.
+---
 
+## Purpose
+To establish a reproducible, open framework for testing the **conservation of coherence** across classical, quantum, and analog systems.
+
+---
+
+## Target Structure
+```text
+/experiments/rgpx_proof_proto/
+├── README.md
+├── kimi_notebook_colab.ipynb
+├── phi_trace_protocols/
+│   ├── protocol_0_preprocessing.py
+│   ├── protocol_1_turbulence.py
+│   ├── protocol_2_bec.py
+│   └── protocol_3_qubit.py
+├── data_links.yml
+└── results_summary.yml
+```
+---
 ### Contents
 - `kimi_notebook_colab.ipynb` — full annotated “proto-proof” notebook (JAX + NumPyro implementation).  
 - Source DOIs and datasets from Johns Hopkins DNS, ENS Paris, and IBM-Q.  
