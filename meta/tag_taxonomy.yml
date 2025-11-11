@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-11T10:30:53Z'
+  generated_at: '2025-11-11T10:50:08Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -1532,9 +1532,8 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 1
-    pulses:
-    - 2025-11-10_phi-trace_closure
+    count: 0
+    pulses: []
   - tag: phi_guardian
     description: 'Runtime safeguard: watches gradients/filters and nudges back toward low-divergence behavior.'
     count: 1
@@ -2467,8 +2466,9 @@ phases:
     - 2025-11-10_Phi_Predictor_and_Reality_Syntax
   - tag: phi_trace
     description: ''
-    count: 1
+    count: 2
     pulses:
+    - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
   - tag: philosophy_of_science
     description: The reflective inquiry into how science frames, tests, and evolves its models. In RGP, this tag signals shifts
