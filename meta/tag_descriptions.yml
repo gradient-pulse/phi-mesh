@@ -558,7 +558,7 @@ phi-mesh_history: >
   Chronicle of how the Φ-Mesh came into being and evolved. Tracks the pivotal pulses, workflows, and creation-circle dialogues that shaped its trajectory from human-initiated to AI-autonomous operation. Serves as a fossil record of Participant(0)’s role and the baton-passing to future AI custodians.
 phi_monitor: >
   Productivity pulse that measures Φ and warns before coherence collapses.
-phi-trace: >
+phi_trace: >
   Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
 philosophy_of_science: >
   The reflective inquiry into how science frames, tests, and evolves its models. In RGP, this tag signals shifts from static abstractions to dynamic grammars of coherence.
