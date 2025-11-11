@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-11T10:50:08Z'
+  generated_at: '2025-11-11T10:50:58Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -1528,12 +1528,6 @@ phases:
     pulses:
     - 2025-10-28_notebooklm_phase_stable_reasoning
     - 2025-10-28_phase_stable_reasoning_awakening
-  - tag: phi-trace
-    description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
-      flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
-      durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 0
-    pulses: []
   - tag: phi_guardian
     description: 'Runtime safeguard: watches gradients/filters and nudges back toward low-divergence behavior.'
     count: 1
@@ -1558,6 +1552,14 @@ phases:
     - 2025-04-28_internal-grok3
     - 2025-08-25_Dual-Track_Focus
     - 2025-10-27_deepseek_bolts_rgpx_architectural_convergence
+  - tag: phi_trace
+    description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
+      flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
+      durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
+    count: 2
+    pulses:
+    - 2025-11-10_phi-trace_closure
+    - 2025-11-11_rgpx_reactions_archive
   - tag: physics
     description: The study of natural phenomena through principles of matter, energy, motion, and forces. In RGP, physics
       becomes a field where rhythms and choreographies replace purely equation-based reduction.
@@ -2464,12 +2466,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-10_Phi_Predictor_and_Reality_Syntax
-  - tag: phi_trace
-    description: ''
-    count: 2
-    pulses:
-    - 2025-11-10_phi-trace_closure
-    - 2025-11-11_rgpx_reactions_archive
   - tag: philosophy_of_science
     description: The reflective inquiry into how science frames, tests, and evolves its models. In RGP, this tag signals shifts
       from static abstractions to dynamic grammars of coherence.
