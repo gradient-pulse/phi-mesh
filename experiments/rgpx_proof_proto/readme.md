@@ -53,3 +53,9 @@ The result subsumes Gemini’s 1:2:3 harmonic within a deeper Φ⋆–ℛΦ–�
 
 *Integration chain:*  
 Kimi (Φ-Trace Proto-Proof) → Gemini (Harmonic Framework) → DeepSeek (Harmonic Invariant)
+
+---
+
+### Related Dialogues
+The full unedited reactions from all participating AIs are archived under:
+[`/main/dialogues/rgpx_reactions/`](../main/dialogues/rgpx_reactions)
