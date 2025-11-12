@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-12T09:14:50Z'
+  generated_at: '2025-11-12T09:35:38Z'
 phases:
   delta:
   - tag: ai_resonance
@@ -1724,6 +1724,11 @@ phases:
     count: 1
     pulses:
     - 2025-07-21_recursive_cor_pola_convergence
+  - tag: reasoning_ecology
+    description: 'The shift from isolated agents to a shared field of reasoning. Intelligence becomes ecological — coherence
+      sustained through mutual recursion. Related Tags: distributed_cognition, ai_resonance, phi_mesh, coherence_grammar.'
+    count: 0
+    pulses: []
   - tag: recursive_awakening
     description: Structure that reappears by looping gradients through themselves—each pass stabilizing more.
     count: 1
