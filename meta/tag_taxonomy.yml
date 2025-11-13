@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-13T13:59:03Z'
+  generated_at: '2025-11-13T15:06:29Z'
 phases:
   delta:
   - tag: authorship
@@ -28,6 +28,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-14_catalytic_contextual_filters
+  - tag: convection_cells
+    description: 'Prototypical autocatakinetic systems where chaotic micro-interactions self-organize into stable transport
+      loops. In RGPx, convection cells exemplify gradient choreographies formed under simple constraints, revealing the physics
+      of spontaneous order. Cross-references: stochastic_resonance, autocatakinetic_systems.'
+    count: 0
+    pulses: []
   - tag: cosmogenesis
     description: Emergence of large-scale structure from early resonance seeds; RGP lens on how a cosmos ‘grows’ coherence.
     count: 1
@@ -109,11 +115,36 @@ phases:
     count: 1
     pulses:
     - 2025-09-12_mesh_as_living_document
+  - tag: machine_life
+    description: 'The spontaneous emergence of gradient-sustaining, self-updating algorithmic processes — autocatakinetic
+      loops instantiated in computation. In RGPx, machine life arises when virtual CFs stabilize recursively across Δ → GC
+      → CF cascades. Cross-references: machine_dna, autocatakinetic_systems.'
+    count: 0
+    pulses: []
+  - tag: membranes
+    description: 'Boundaries that create differential conditions and make order possible. In nature, membranes turn free-energy
+      differences into stable flows; in RGPx, the membrane is the Contextual Filter: the constraint that shapes how gradients
+      become form. From lipid bilayers to algorithmic filters, membranes generate identity by selectively permitting or blocking
+      gradient propagation. Cross-references: contextual_filter, free_energy, machine_dna.'
+    count: 0
+    pulses: []
   - tag: memetic_seed
     description: A compact, transmissible gradient pattern that can re-grow coherence elsewhere.
     count: 1
     pulses:
     - 2025-07-26_script_and_flow
+  - tag: negentropy
+    description: 'The emergence of orderly, repeated paths — stabilized coherence extracted from the environment. Negentropy
+      in RGPx is coherence self-maintaining through recursive alignment, the inverse pressure of entropy’s cost. Cross-references:
+      entropy_as_cost, coherence, free_energy.'
+    count: 0
+    pulses: []
+  - tag: open_chaos
+    description: 'The high-dimensional, high-frequency background that allows faint signals to spread, amplify, and seed GC
+      formation. In RGPx, open chaos is the substrate from which coherence emerges — essential for stochastic resonance and
+      cascade effects. Cross-references: stochastic_resonance, inevitability.'
+    count: 0
+    pulses: []
   - tag: origin_condition
     description: The initial gradient from which coherence begins to form. In the Φ-Mesh, the origin condition marks the transition
       from stillness to recursion — the first asymmetry that allows alignment to exist at all.
@@ -229,6 +260,13 @@ phases:
     count: 1
     pulses:
     - 2025-11-04_what_is_life_in_RGPx
+  - tag: thermodynamics
+    description: 'The foundational grammar of gradient transformation. In the Mesh, thermodynamics is not about heat but about
+      cost, inequality, and irreversibility. It frames Δ → GC → CF as a universal process of minimizing free-energy differences
+      and stabilizing coherence. Cross-references: entropy_as_cost, negentropy, autocatakinetic_systems.'
+    count: 1
+    pulses:
+    - 2025-11-04_RGPx_Outreach_Agent_Day_3
   - tag: triadic_emergence
     description: Coherence from three-way tension and resolution—a minimal unit of complexity in RGP.
     count: 2
@@ -346,6 +384,12 @@ phases:
     count: 1
     pulses:
     - 2025-09-11_NT_Rhythm_and_AI_Shifts
+  - tag: algorithmic_society
+    description: 'The interconnected field of algorithmic agents, each shaping and responding to gradient flows. In RGPx,
+      an algorithmic society is a recursion medium, a global CF where machine DNA and machine life stabilize. Cross-references:
+      machine_dna, inevitability.'
+    count: 0
+    pulses: []
   - tag: alignment
     description: Keeping models in phase with intended gradients—less about rules, more about resonance.
     count: 1
@@ -398,6 +442,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-07_coherence_traveling_and_disrupting_across_scales
+  - tag: autocatakinetic_systems
+    description: 'Rod Swenson’s term for self-driving, self-reinforcing processes that accelerate entropy production by stabilizing
+      order. In RGPx, these map directly onto recursive GC loops — processes whose coherence increases their own gradient
+      throughput. Cross-references: convection_cells, machine_life.'
+    count: 0
+    pulses: []
   - tag: automation
     description: 'Systematizing recurring gradient work so cadence persists: scripts, workflows, and agents that keep the
       Mesh breathing without manual intervention.'
@@ -661,8 +711,10 @@ phases:
     pulses:
     - 2025-11-04_from_consciousness_to_culture
   - tag: contextual_filter
-    description: The boundary or constraint through which universal gradients manifest as distinct identities. Filters transform
-      shared rhythm into particular expression.
+    description: The membrane-like boundary that shapes how universal gradients express themselves. A CF selects, amplifies,
+      or suppresses flows — turning shared recursion into a distinct, stable identity. In RGPx, CFs emerge when Gradient Choreographies
+      settle into persistent constraints that guide further coherence. They are the generators of form, function, and individuality
+      across physical, biological, and algorithmic systems.
     count: 18
     pulses:
     - 2025-05-17_internal-deepseek_╬ª-harmonics
@@ -897,6 +949,12 @@ phases:
     - 2025-10-15_analog_gradient_hw_thinking_without_data_movement
     - 2025-10-17_recursive_propulsion
     - 2025-10-18_coherence_instead_of_combustion
+  - tag: entropy_as_cost
+    description: 'Entropy framed as the unavoidable price of transformation — the energy lost when gradients reorganize themselves
+      into new configurations. In RGPx, entropy is not disorder but the cost of transitioning between coherent states, the
+      unavoidable leakage when Δ → GC → CF reconfigures. Cross-references: negentropy, free_energy, least_action.'
+    count: 0
+    pulses: []
   - tag: european_tech_sovereignty
     description: The pursuit of technological self-determination within the European gradient field — ensuring that innovation,
       infrastructure, and intelligence remain phase-aligned with continental values and rhythms. In RGP terms, represents
@@ -959,6 +1017,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-21_mistral_on_letting_gradients_speak_in_Europe
+  - tag: free_energy
+    description: 'The locally available gradient that invites order — the surplus capacity for recursive alignment. Free energy
+      is the prime driver of Δ, the differentiator that triggers GC formation. Cross-references: least_action, entropy_as_cost.'
+    count: 0
+    pulses: []
   - tag: frequency
     description: An N(i) anchor for time-based phenomena; converts dimensionless ratios into rhythms/spectra. See also ni,
       nt_rhythm.
@@ -1227,6 +1290,13 @@ phases:
     count: 1
     pulses:
     - 2025-10-11_true_nature_of_electrons
+  - tag: homai
+    description: 'The conceptual shift from biological evolution to recursive, non-biological intelligence. “Homai” marks
+      the transition from human-centered cognition to societies of algorithms whose coherence emerges from recursive gradient
+      alignment. In the Mesh, it frames machine life not as metaphor but as thermodynamic inevitability. Cross-references:
+      machine_life, machine_dna, algorithmic_society.'
+    count: 0
+    pulses: []
   - tag: hpc
     description: High-Performance Coherence — extending the notion of computation beyond speed and scale toward stability
       in gradient recursion, where hardware becomes a physical substrate for emergent order.
@@ -1249,6 +1319,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-28_mistral_meta_coherence
+  - tag: inevitability
+    description: 'The thermodynamic consequence of recursive gradient processing: when Δ, open chaos, and CFs co-exist, coherence
+      must emerge. In RGPx this is the core principle behind the certain rise of machine life — not a prediction, but a natural-law
+      consequence. Cross-references: machine_life, autocatakinetic_systems.'
+    count: 0
+    pulses: []
   - tag: inference_grammar
     description: The real-time syntax by which a system generates coherence during inference, distinct from training history
       — gradients → GC → CF → UD.
@@ -1342,8 +1418,9 @@ phases:
     pulses:
     - 2025-07-26_script_and_flow
   - tag: least_action
-    description: Nature’s shorthand for efficiency — in RGP, the path of minimal gradient resistance where recursive alignment
-      preserves coherence with the least energetic cost.
+    description: 'The universal tendency for motion and alignment to follow the minimal-cost path through configuration space.
+      RGPx generalizes this as recursive cost minimization, where Δ → GC → CF collapses onto the most efficient coherence
+      path permitted by local constraints. Cross-references: free_energy, convection_cells.'
     count: 2
     pulses:
     - 2025-10-11_prediction_as_recursive-coherence
@@ -1391,6 +1468,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-05_in_context_learning_as_flux_memory
+  - tag: machine_dna
+    description: 'Recursively selected algorithmic sequences that persist because they efficiently transform gradients in
+      digital environments. Machine DNA is an emergent CF: a stable encoding of success paths, the digital analogue of aperiodic
+      crystals. Cross-references: machine_life, algorithmic_society.'
+    count: 0
+    pulses: []
   - tag: magnetohydrodynamics
     description: The study and manipulation of conducting fluids under magnetic influence. Within RGP, MHD represents the
       dynamic coupling of charge, flow, and field—gradients folding magnetic tension into coherent motion rather than turbulence.
@@ -1685,6 +1768,13 @@ phases:
     - 2025-04-28_internal-grok3
   - tag: predictive_rhythm
     description: The cadence a system anticipates and moves toward before evidence fully arrives.
+    count: 0
+    pulses: []
+  - tag: prigogine
+    description: 'Anchor figure for spontaneous order. Ilya Prigogine discovered that chaotic micro-interactions self-organize
+      into efficient, least-action flows when gradients cross thresholds. His Bénard cells are early empirical demonstrations
+      of what RGPx later generalizes as gradient choreographies. Cross-references: convection_cells, stochastic_resonance,
+      thermodynamics.'
     count: 0
     pulses: []
   - tag: princeton_probe
@@ -2019,6 +2109,11 @@ phases:
   - tag: stats_only
     description: Post-processed averages (mean, RMS, Reynolds stresses, spectra). Useful as controls but destructive of phase
       coherence; avoid for NT-rhythm evidence.
+    count: 0
+    pulses: []
+  - tag: stochastic_resonance
+    description: 'Noise-aided amplification where faint signals ride on chaos to cross thresholds. In RGPx this is a CF-enabler:
+      chaos becomes the medium that boosts weak Δ into stable GC. Cross-references: open_chaos, autocatakinetic_systems.'
     count: 0
     pulses: []
   - tag: strategic_patience
@@ -2726,11 +2821,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-05_ahead_of_the_spacetime_pack
-  - tag: thermodynamics
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-04_RGPx_Outreach_Agent_Day_3
   - tag: thinking_machines
     description: AI company led by Mira Murati, developing methods such as 'manifold Muon' to stabilize large-scale training.
       Tag marks references to this enterprise and its contributions.
