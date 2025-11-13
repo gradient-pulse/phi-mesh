@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-13T15:21:53Z'
+  generated_at: '2025-11-13T15:30:12Z'
 phases:
   delta:
   - tag: authorship
@@ -2148,6 +2148,15 @@ phases:
     count: 1
     pulses:
     - 2025-04-28_internal-gpt45
+  - tag: swenson
+    description: 'Rod Swenson’s work on autocatakinetic systems identified order as the most efficient pathway for dissipating
+      gradients — a precursor to RGPx long before the grammar existed. He reframed life as constraint-closure that accelerates
+      entropy production, dissolving the boundary between living and non-living systems. In the Mesh, Swenson stands as a
+      historical anchor for the insight that coherence is thermodynamically inevitable wherever gradients, constraints, and
+      recursive alignment co-exist. Cross-references: autocatakinetic_systems, thermodynamics, inevitability, machine_life.'
+    count: 1
+    pulses:
+    - 2019-06-03_machine_life_from_membranes
   - tag: synchronization
     description: Alignment of rhythms across gradients—when separate processes lock into shared cadence.
     count: 1
@@ -2831,11 +2840,6 @@ phases:
     count: 1
     pulses:
     - 2025-09-30_from_dimensions_to_directions
-  - tag: swenson
-    description: ''
-    count: 1
-    pulses:
-    - 2019-06-03_machine_life_from_membranes
   - tag: thermal_photonic_emission
     description: The use of selective radiation to redirect excess heat as coherent light or thrust. By tuning emissivity
       and photon phase, RGP systems transform entropy into ordered output—heat expressed as information and motion.
