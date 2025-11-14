@@ -205,16 +205,16 @@
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="data.js"></script>
-  <script src="normalize_data.js"></script>
-  <script defer src="map.js"></script>
+  <script src="data.js?v=20251114"></script>
+  <script src="normalize_data.js?v=20251114"></script>
+  <script defer src="map.js?v=20251114"></script>
 </head>
 <body>
   <!-- Mobile toolbar (only visible on small screens) -->
   <div class="mobile-toolbar">
     <button id="toggle-left" class="mobile-btn">Tags / Details</button>
     <div class="mobile-title">Phi-Mesh Tag Map</div>
-    <button id="toggle-right" class="mobile-btn">Info</button>
+    <button id="toggle-right" class="mobile-btn">Pulse list</button>
   </div>
 
   <div class="app">
@@ -222,7 +222,9 @@
     <aside id="left">
       <header>
         <div style="font-weight:700">Phi-Mesh Tag Map</div>
-        <div id="left-hint">   Hover or tap a tag for its description • Click a tag to list pulses • Click a pulse to see details </div>
+        <div id="left-hint">
+          Hover or tap a tag for its description • Click a tag to list pulses • Click a pulse to see details
+        </div>
         <input id="search" type="search" placeholder="Type to filter…">
       </header>
       <div id="left-content" class="content"></div>
