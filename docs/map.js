@@ -302,31 +302,48 @@ document.addEventListener('DOMContentLoaded', () => {
     fitViewTo(selectedNodes);
   }
 
-  // --- search filter ---
-  if (searchInput){
-    searchInput.addEventListener('input', e => {
-      const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
-      const q = v.trim().toLowerCase();
+// --- search filter ---
+if (searchInput){
+  // live filtering as you type
+  searchInput.addEventListener('input', e => {
+    const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
+    const q = v.trim().toLowerCase();
 
-      // clear selected tag when typing
-      nodeSel.classed('selected', false);
+    // clear any selected tag when typing
+    nodeSel.classed('selected', false);
 
-      clearLeftPanel();
-      if (pulseList){
-        pulseList.textContent = 'Click a tag to list its pulses.';
-        pulseList.className = 'muted one-line';
+    clearLeftPanel();
+    if (pulseList){
+      pulseList.textContent = 'Click a tag to list its pulses.';
+      pulseList.className = 'muted one-line';
+    }
+
+    if (!q){
+      clearFocus();
+      resetView();
+      return;
+    }
+
+    const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
+    const keep = new Set(matched.map(n=>n.id));
+    setFocus(keep);
+    fitViewTo(matched);
+  });
+
+  // when user hits Enter / Done on mobile, hide left sidebar so graph is visible
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      // hide keyboard
+      searchInput.blur();
+
+      // on small screens, slide panels away
+      if (window.matchMedia('(max-width: 860px)').matches) {
+        const left  = document.getElementById('left');
+        const right = document.getElementById('right');
+        if (left)  left.classList.remove('open');
+        if (right) right.classList.remove('open');
       }
-
-      if (!q){
-        clearFocus();
-        resetView();
-        return;
-      }
-
-      const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
-      const keep = new Set(matched.map(n=>n.id));
-      setFocus(keep);
-      fitViewTo(matched);
-    });
-  }
+    }
+  });
+}
 });
