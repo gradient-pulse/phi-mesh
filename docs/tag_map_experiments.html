@@ -9,17 +9,55 @@
       --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6;
       --link:#9fc9ff; --accent:#82c7ff; --pulse:#ff8a70;
     }
-    html, body { height:100%; margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial }
-    .app { display:grid; grid-template-columns:300px 1fr 300px; height:100% }
+    html, body {
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial
+    }
+    .app {
+      display:grid;
+      grid-template-columns:300px 1fr 300px;
+      height:100%;
+    }
 
     /* sidebars */
-    aside { background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92)); border-right:1px solid rgba(255,255,255,.06); display:flex; flex-direction:column }
-    aside.right { border-right:none; border-left:1px solid rgba(255,255,255,.06) }
-    header { padding:12px 14px 8px; border-bottom:1px solid rgba(255,255,255,.06) }
+    aside {
+      background:linear-gradient(180deg,var(--panel),rgba(20,20,28,.92));
+      border-right:1px solid rgba(255,255,255,.06);
+      display:flex;
+      flex-direction:column;
+    }
+    aside.right {
+      border-right:none;
+      border-left:1px solid rgba(255,255,255,.06);
+    }
+    header {
+      padding:12px 14px 8px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
     #left-hint { color:var(--muted); font-size:12px }
-    #search { width:100%; background:#0f1220; border:1px solid rgba(255,255,255,.08); color:var(--fg); padding:9px 10px; border-radius:8px; outline:none; margin-top:8px }
-    #left .content, #right .content { padding:10px 12px; overflow:auto }
-    .one-line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block }
+    #search {
+      width:100%;
+      background:#0f1220;
+      border:1px solid rgba(255,255,255,.08);
+      color:var(--fg);
+      padding:9px 10px;
+      border-radius:8px;
+      outline:none;
+      margin-top:8px;
+    }
+    #left .content, #right .content {
+      padding:10px 12px;
+      overflow:auto;
+    }
+    .one-line {
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      display:block;
+    }
     .muted { color:var(--muted) }
 
     /* original left pulse sizing (kept for compatibility) */
@@ -31,12 +69,12 @@
     #right .pulse-detail {
       font-size:12px;
       line-height:1.35;
-      color:#b0b6c2;        /* faint grey */
+      color:#b0b6c2;
     }
     #left .pulse-detail a,
     #right .pulse-detail a {
       font-size:12px;
-      color:#c0c5d0;        /* slightly brighter link */
+      color:#c0c5d0;
       text-decoration:none;
     }
     #left .pulse-detail a:hover,
@@ -47,15 +85,14 @@
 
     /* graph */
     svg { width:100%; height:100% }
-    /* .node text { font-size:12px; fill:#d3e0f2; pointer-events:none } */
     .node ellipse { fill:#74b7ff; stroke:none }
     .node.dim text, .node.dim ellipse { opacity:.22 }
     .node.selected ellipse { fill:var(--pulse) }
-    .link { stroke:#b9c7dd; stroke-opacity:.24 }    /* brighter links */
+    .link { stroke:#b9c7dd; stroke-opacity:.24 }
     .link.dim { stroke-opacity:.08 }
     .node .tag-label {
-      pointer-events: none;         /* clicks go to the node */
-      dominant-baseline: hanging;   /* anchor from top edge */
+      pointer-events: none;
+      dominant-baseline: hanging;
       font-size: 12px;
       fill: var(--muted);
       stroke: none;
@@ -65,20 +102,98 @@
 
     /* --- View toggle buttons (Insights / Experiments) --- */
     .view-toggle {
-      position: fixed; top: 12px; right: 12px; z-index: 9999;
-      display: flex; gap: 6px;
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 9999;
+      display: flex;
+      gap: 6px;
     }
     .toggle-btn {
       padding: 6px 14px;
       border: 1px solid #6b7280;
       border-radius: 6px;
       background: #1f2937;
-      color: #fff; text-decoration: none;
+      color: #fff;
+      text-decoration: none;
       font: 500 13px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       transition: background .15s, border-color .15s;
     }
     .toggle-btn:hover { background: #374151; border-color: #9ca3af; }
     .toggle-btn.active { background: #7c3aed; border-color: #7c3aed; }
+
+    /* -------- MOBILE LAYOUT -------- */
+    .mobile-toolbar {
+      display:none;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        padding-top:44px;
+      }
+
+      .app {
+        grid-template-columns:1fr;
+        height:auto;
+      }
+
+      /* slide-in sidebars */
+      aside {
+        position:fixed;
+        top:44px;
+        bottom:0;
+        left:0;
+        width:80%;
+        max-width:340px;
+        z-index:9000;
+        transform:translateX(-100%);
+        transition:transform .2s ease-out;
+      }
+      aside.right {
+        left:auto;
+        right:0;
+        transform:translateX(100%);
+      }
+      aside.open {
+        transform:translateX(0);
+      }
+
+      #graph {
+        height:100vh;
+      }
+
+      .mobile-toolbar {
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        height:44px;
+        background:rgba(11,12,16,.96);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 10px;
+        z-index:9500;
+        border-bottom:1px solid rgba(255,255,255,.06);
+      }
+      .mobile-title {
+        font-weight:600;
+        font-size:13px;
+        color:var(--fg);
+      }
+      .mobile-btn {
+        border:1px solid rgba(255,255,255,.18);
+        border-radius:999px;
+        padding:4px 10px;
+        background:#111827;
+        color:var(--fg);
+        font-size:12px;
+      }
+
+      .view-toggle {
+        top:54px;
+      }
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -88,6 +203,13 @@
   <script defer src="map.js"></script>
 </head>
 <body>
+  <!-- Mobile toolbar (only visible on small screens) -->
+  <div class="mobile-toolbar">
+    <button id="toggle-left" class="mobile-btn">Tags</button>
+    <div class="mobile-title">Phi-Mesh Tag Map</div>
+    <button id="toggle-right" class="mobile-btn">Info</button>
+  </div>
+
   <div class="app">
     <!-- LEFT -->
     <aside id="left">
@@ -96,7 +218,6 @@
         <div id="left-hint">Hover a tag for its description • Click a tag to list pulses • Click a pulse to see details</div>
         <input id="search" type="search" placeholder="Type to filter…">
       </header>
-      <!-- IMPORTANT: keep class="content" so the shared styles apply -->
       <div id="left-content" class="content"></div>
     </aside>
 
@@ -121,5 +242,35 @@
     <a class="toggle-btn" href="tag_map.html">Insights</a>
     <a class="toggle-btn active" href="tag_map_experiments.html">Experiments</a>
   </div>
+
+  <!-- Mobile sidebar toggles -->
+  <script>
+    (function() {
+      const left = document.getElementById('left');
+      const right = document.getElementById('right');
+      const tl = document.getElementById('toggle-left');
+      const tr = document.getElementById('toggle-right');
+      const graph = document.getElementById('graph');
+
+      if (!left || !right || !tl || !tr) return;
+
+      tl.addEventListener('click', function () {
+        left.classList.toggle('open');
+        right.classList.remove('open');
+      });
+
+      tr.addEventListener('click', function () {
+        right.classList.toggle('open');
+        left.classList.remove('open');
+      });
+
+      if (graph) {
+        graph.addEventListener('click', function () {
+          left.classList.remove('open');
+          right.classList.remove('open');
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
