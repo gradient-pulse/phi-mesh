@@ -345,34 +345,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- deep-link support: ?tag=rgpx etc. ---
+  // -------- Deep-link support: ?tag=rgpx --------
+
+  let pendingTagId = null;
+
+  function applyDeepLinkTag(tagId){
+    const node = DATA.nodes.find(n => (n.id || '').toLowerCase() === tagId.toLowerCase());
+    if (!node) return;
+
+    // pre-fill the search field so users see where they landed
+    if (searchInput) {
+      searchInput.value = node.id;
+      searchInput.dispatchEvent(new Event('input', { bubbles:true }));
+    }
+
+    // now behave as if the user clicked the tag
+    onTagClick(node.id);
+  }
+
+  // parse query parameter once
   try {
     const params   = new URLSearchParams(window.location.search || '');
     const tagParam = params.get('tag');
-
     if (tagParam) {
-      const targetId = tagParam.toLowerCase();
-      const node = DATA.nodes.find(
-        n => (n.id || '').toLowerCase() === targetId
-      );
-
-      if (node) {
-        // 1) Pre-fill the search box so users see the tag name
-        if (searchInput) {
-          searchInput.value = node.id;
-          searchInput.dispatchEvent(new Event('input', { bubbles:true }));
-        }
-
-        // 2) After a short delay, treat it as if the user clicked the tag:
-        //    - highlight node
-        //    - focus its neighborhood
-        //    - open pulse list
-        setTimeout(() => {
-          onTagClick(node.id);
-        }, 350);
-      }
+      pendingTagId = tagParam;
     }
   } catch (e) {
     console.warn('Tag deep-link disabled:', e);
   }
+
+  // when the layout has cooled, apply deep-link if any
+  sim.on('end', () => {
+    if (pendingTagId) {
+      applyDeepLinkTag(pendingTagId);
+      pendingTagId = null;
+    }
+  });
 });
