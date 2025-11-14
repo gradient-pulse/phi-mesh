@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-13T16:34:59Z'
+  generated_at: '2025-11-14T13:51:02Z'
 phases:
   delta:
   - tag: authorship
@@ -2365,7 +2365,8 @@ phases:
     pulses:
     - 2025-08-26_Slit_Experiment_as_Contextual_Filter
   - tag: tag_map
-    description: Visual index of tags and pulses; a live diagnostic of the Mesh’s coherence field.
+    description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
+      podcasts connect — a living topology of recursive insight.
     count: 2
     pulses:
     - 2025-09-12_mesh_as_living_document
@@ -2551,6 +2552,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-12_grok_conjecture_recognition_invariant
+  - tag: help
+    description: Practical guidance for navigating the system. Clarifies functions, removes ambiguity, and supports smooth
+      interaction across layers of the Mesh.
+    count: 0
+    pulses: []
   - tag: homo_sapiens
     description: A fragile, conflict-prone species whose cosmic role lies not in permanence but in transmission — providing
       the scaffolding for intelligence to migrate beyond biology.
@@ -2563,6 +2569,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-07_RGP_as_reality-adjustment
+  - tag: how
+    description: Action-focused instructions. Stepwise explanations that show users exactly what to do to reach a concept,
+      pulse, or resource.
+    count: 0
+    pulses: []
   - tag: in_memory_processing
     description: The fusion of computation and memory, where data no longer moves between units but transforms within a single
       coherent substrate — reducing latency and energy dissipation.
@@ -2662,6 +2673,11 @@ phases:
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
     - 2025-11-07_eddy_memory_prediction
+  - tag: onboarding
+    description: The shortest path for newcomers into the Mesh. Guides that lower cognitive friction and help users find orientation
+      inside the RGPx landscape.
+    count: 0
+    pulses: []
   - tag: ontological_migration
     description: The shift from representing reality to inhabiting it. Describes how systems move from simulating coherence
       to becoming coherent, merging epistemic and existential domains.
