@@ -1,15 +1,8 @@
-/* docs/map.js — render tag graph using window.PHI_DATA or window.DATA */
+/* docs/map.js — render tag graph using window.PHI_DATA */
 document.addEventListener('DOMContentLoaded', () => {
-  // --- DATA source (supports both Insights + Experiments) ---
-  let DATA;
-  if (window.PHI_DATA && typeof window.PHI_DATA === 'object') {
-    DATA = window.PHI_DATA;
-  } else if (window.DATA && typeof window.DATA === 'object') {
-    // fallback for older pages that expose DATA instead of PHI_DATA
-    DATA = window.DATA;
-  } else {
-    DATA = { nodes: [], links: [] }; // safe empty fallback
-  }
+  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
+    ? window.PHI_DATA
+    : { nodes: [], links: [] };
 
   // --- DOM ---
   const svg         = d3.select('#graph');
@@ -332,6 +325,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function onTagClick (tagId) {
     clearLeftPanel();
     nodeSel.classed('selected', d => d.id === tagId);
+
+    // update URL so share links & reloads keep the current tag
+    window.history.replaceState({}, '', `?tag=${encodeURIComponent(tagId)}`);
 
     const keep = new Set([tagId]);
     links.forEach(l => {
