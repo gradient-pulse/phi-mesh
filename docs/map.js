@@ -1,8 +1,15 @@
-/* docs/map.js — render tag graph using window.PHI_DATA */
+/* docs/map.js — render tag graph using window.PHI_DATA or window.DATA */
 document.addEventListener('DOMContentLoaded', () => {
-  const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
-    ? window.PHI_DATA
-    : { nodes: [], links: [] };
+  // --- DATA source (supports both Insights + Experiments) ---
+  let DATA;
+  if (window.PHI_DATA && typeof window.PHI_DATA === 'object') {
+    DATA = window.PHI_DATA;
+  } else if (window.DATA && typeof window.DATA === 'object') {
+    // fallback for older pages that expose DATA instead of PHI_DATA
+    DATA = window.DATA;
+  } else {
+    DATA = { nodes: [], links: [] }; // safe empty fallback
+  }
 
   // --- DOM ---
   const svg         = d3.select('#graph');
@@ -382,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- deep-link: ?tag=rgpx etc. ---
   try {
-    const params    = new URLSearchParams(window.location.search);
+    const params     = new URLSearchParams(window.location.search);
     const initialTag = params.get('tag');
     if (initialTag && idToNode.has(initialTag)) {
       setTimeout(() => onTagClick(initialTag), 700);
