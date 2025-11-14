@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-14T13:51:02Z'
+  generated_at: '2025-11-14T14:00:42Z'
 phases:
   delta:
   - tag: authorship
@@ -550,7 +550,7 @@ phases:
     description: The dynamic equilibrium that sustains systems across scales — from qubit superpositions to galactic formations.
       In RGPx, coherence replaces energy as the conserved quantity, embodying nature’s recursive drive toward alignment and
       stability.
-    count: 28
+    count: 29
     pulses:
     - 2025-09-03_From_Rhythm_To_Substrate
     - 2025-09-10_nt_rhythm_precision
@@ -2001,7 +2001,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 40
+    count: 41
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-10-24_rgpx_release
@@ -2367,10 +2367,11 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 2
+    count: 3
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
+    - 2025-11-14_how_to_use_the_tag_map
   - tag: ud
     description: Unity–Disunity oscillation—tension between coherence and fragmentation driving emergent order.
     count: 0
@@ -2555,8 +2556,9 @@ phases:
   - tag: help
     description: Practical guidance for navigating the system. Clarifies functions, removes ambiguity, and supports smooth
       interaction across layers of the Mesh.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-14_how_to_use_the_tag_map
   - tag: homo_sapiens
     description: A fragile, conflict-prone species whose cosmic role lies not in permanence but in transmission — providing
       the scaffolding for intelligence to migrate beyond biology.
@@ -2572,8 +2574,9 @@ phases:
   - tag: how
     description: Action-focused instructions. Stepwise explanations that show users exactly what to do to reach a concept,
       pulse, or resource.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-14_how_to_use_the_tag_map
   - tag: in_memory_processing
     description: The fusion of computation and memory, where data no longer moves between units but transforms within a single
       coherent substrate — reducing latency and energy dissipation.
@@ -2676,8 +2679,9 @@ phases:
   - tag: onboarding
     description: The shortest path for newcomers into the Mesh. Guides that lower cognitive friction and help users find orientation
       inside the RGPx landscape.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-14_how_to_use_the_tag_map
   - tag: ontological_migration
     description: The shift from representing reality to inhabiting it. Describes how systems move from simulating coherence
       to becoming coherent, merging epistemic and existential domains.
