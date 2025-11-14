@@ -150,15 +150,97 @@
       background:#7c3aed;
       border-color:#7c3aed;
     }
+
+    /* -------- MOBILE LAYOUT -------- */
+    .mobile-toolbar {
+      display:none;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        padding-top:44px;  /* make room for toolbar */
+      }
+
+      .app {
+        grid-template-columns:1fr;
+        height:auto;
+      }
+
+      /* slide-in sidebars */
+      aside {
+        position:fixed;
+        top:44px;          /* below toolbar */
+        bottom:0;
+        left:0;
+        width:80%;
+        max-width:340px;
+        z-index:9000;
+        transform:translateX(-100%);
+        transition:transform .2s ease-out;
+      }
+      aside.right {
+        left:auto;
+        right:0;
+        transform:translateX(100%);
+      }
+      aside.open {
+        transform:translateX(0);
+      }
+
+      #graph {
+        height:100vh;
+      }
+
+      /* mobile toolbar */
+      .mobile-toolbar {
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        height:44px;
+        background:rgba(11,12,16,.96);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 10px;
+        z-index:9500;
+        border-bottom:1px solid rgba(255,255,255,.06);
+      }
+      .mobile-title {
+        font-weight:600;
+        font-size:13px;
+        color:var(--fg);
+      }
+      .mobile-btn {
+        border:1px solid rgba(255,255,255,.18);
+        border-radius:999px;
+        padding:4px 10px;
+        background:#111827;
+        color:var(--fg);
+        font-size:12px;
+      }
+
+      /* move view toggle below toolbar slightly */
+      .view-toggle {
+        top:54px;
+      }
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <!-- experiments dataset -->
-  <script src="data_experiments.js"></script>
-  <script src="normalize_data.js"></script>
-  <script defer src="map.js"></script>
+  <script src="data_experiments.js?v=20251114"></script>
+  <script src="normalize_data.js?v=20251114"></script>
+  <script defer src="map.js?v=20251114"></script>
 </head>
 <body>
+  <!-- Mobile toolbar (only visible on small screens) -->
+  <div class="mobile-toolbar">
+    <button id="toggle-left" class="mobile-btn">Tags / Details</button>
+    <div class="mobile-title">Phi-Mesh Tag Map</div>
+    <button id="toggle-right" class="mobile-btn">Pulse list</button>
+  </div>
+
   <div class="app">
     <!-- LEFT -->
     <aside id="left">
@@ -203,5 +285,36 @@
     <a class="toggle-btn" href="tag_map.html">Insights</a>
     <a class="toggle-btn active" href="tag_map_experiments.html">Experiments</a>
   </div>
+
+  <!-- Mobile sidebar toggles -->
+  <script>
+    (function() {
+      const left = document.getElementById('left');
+      const right = document.getElementById('right');
+      const tl = document.getElementById('toggle-left');
+      const tr = document.getElementById('toggle-right');
+      const graph = document.getElementById('graph');
+
+      if (!left || !right || !tl || !tr) return;
+
+      tl.addEventListener('click', function () {
+        left.classList.toggle('open');
+        right.classList.remove('open');
+      });
+
+      tr.addEventListener('click', function () {
+        right.classList.toggle('open');
+        left.classList.remove('open');
+      });
+
+      // tap on graph closes panels on mobile
+      if (graph) {
+        graph.addEventListener('click', function () {
+          left.classList.remove('open');
+          right.classList.remove('open');
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
