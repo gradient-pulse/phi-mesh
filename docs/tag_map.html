@@ -9,13 +9,15 @@
       --bg:#0b0c10; --panel:#10131a; --fg:#e9eef8; --muted:#97a3b6;
       --link:#9fc9ff; --accent:#82c7ff; --pulse:#ff8a70;
     }
+
     html, body {
       height:100%;
       margin:0;
       background:var(--bg);
       color:var(--fg);
-      font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial
+      font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     }
+
     .app {
       display:grid;
       grid-template-columns:300px 1fr 300px;
@@ -47,6 +49,7 @@
       border-radius:8px;
       outline:none;
       margin-top:8px;
+      font-size:16px; /* <-- prevents iOS auto-zoom on focus */
     }
     #left .content, #right .content {
       padding:10px 12px;
@@ -64,7 +67,7 @@
     .pulse-detail { font-size:13px; }
     .pulse-detail a { font-size:12.5px; }
 
-    /* ——— Minimal overrides: make summaries smaller + a touch fainter (both sidebars) ——— */
+    /* summaries smaller + a touch fainter (both sidebars) */
     #left .pulse-detail,
     #right .pulse-detail {
       font-size:12px;
@@ -135,7 +138,7 @@
 
     @media (max-width: 860px) {
       body {
-        padding-top:44px;  /* make room for toolbar */
+        padding-top:44px;  /* room for toolbar */
       }
 
       .app {
@@ -146,7 +149,7 @@
       /* slide-in sidebars */
       aside {
         position:fixed;
-        top:44px;          /* below toolbar */
+        top:44px;
         bottom:0;
         left:0;
         width:80%;
@@ -205,9 +208,9 @@
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="data.js?v=20251114"></script>
-  <script src="normalize_data.js?v=20251114"></script>
-  <script defer src="map.js?v=20251114"></script>
+  <script src="data.js"></script>
+  <script src="normalize_data.js"></script>
+  <script defer src="map.js"></script>
 </head>
 <body>
   <!-- Mobile toolbar (only visible on small screens) -->
@@ -255,10 +258,10 @@
   <!-- Mobile sidebar toggles -->
   <script>
     (function() {
-      const left = document.getElementById('left');
+      const left  = document.getElementById('left');
       const right = document.getElementById('right');
-      const tl = document.getElementById('toggle-left');
-      const tr = document.getElementById('toggle-right');
+      const tl    = document.getElementById('toggle-left');
+      const tr    = document.getElementById('toggle-right');
       const graph = document.getElementById('graph');
 
       if (!left || !right || !tl || !tr) return;
