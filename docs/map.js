@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ? window.PHI_DATA : { nodes:[], links:[] };
 
   // --- DOM ---
-  const svg        = d3.select('#graph');
-  const tooltip    = d3.select('#tooltip');
+  const svg         = d3.select('#graph');
+  const tooltip     = d3.select('#tooltip');
   const leftContent = document.getElementById('left-content');
   const leftHint    = document.getElementById('left-hint');
   const pulseList   = document.getElementById('pulse-list');
   const searchInput = document.getElementById('search');
 
-  // NEW: sidebars for mobile switching
+  // sidebars for mobile switching
   const leftPanel  = document.getElementById('left');
   const rightPanel = document.getElementById('right');
 
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pulse) {
           showPulseLeft(pulse);
 
-          // NEW: on mobile, switch to the left "Tags / Details" panel
+          // on mobile, switch to the left "Tags / Details" panel
           if (window.innerWidth <= 860 && leftPanel && rightPanel) {
             leftPanel.classList.add('open');
             rightPanel.classList.remove('open');
@@ -302,48 +302,77 @@ document.addEventListener('DOMContentLoaded', () => {
     fitViewTo(selectedNodes);
   }
 
-// --- search filter ---
-if (searchInput){
-  // live filtering as you type
-  searchInput.addEventListener('input', e => {
-    const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
-    const q = v.trim().toLowerCase();
+  // --- search filter ---
+  if (searchInput){
+    // live filtering as you type
+    searchInput.addEventListener('input', e => {
+      const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
+      const q = v.trim().toLowerCase();
 
-    // clear any selected tag when typing
-    nodeSel.classed('selected', false);
+      // clear any selected tag when typing
+      nodeSel.classed('selected', false);
 
-    clearLeftPanel();
-    if (pulseList){
-      pulseList.textContent = 'Click a tag to list its pulses.';
-      pulseList.className = 'muted one-line';
-    }
+      clearLeftPanel();
+      if (pulseList){
+        pulseList.textContent = 'Click a tag to list its pulses.';
+        pulseList.className = 'muted one-line';
+      }
 
-    if (!q){
-      clearFocus();
-      resetView();
-      return;
-    }
+      if (!q){
+        clearFocus();
+        resetView();
+        return;
+      }
 
-    const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
-    const keep = new Set(matched.map(n=>n.id));
-    setFocus(keep);
-    fitViewTo(matched);
-  });
+      const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
+      const keep = new Set(matched.map(n=>n.id));
+      setFocus(keep);
+      fitViewTo(matched);
+    });
 
-  // when user hits Enter / Done on mobile, hide left sidebar so graph is visible
-  searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      // hide keyboard
-      searchInput.blur();
+    // when user hits Enter / Done on mobile, hide left sidebar so graph is visible
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        // hide keyboard
+        searchInput.blur();
 
-      // on small screens, slide panels away
-      if (window.matchMedia('(max-width: 860px)').matches) {
-        const left  = document.getElementById('left');
-        const right = document.getElementById('right');
-        if (left)  left.classList.remove('open');
-        if (right) right.classList.remove('open');
+        // on small screens, slide panels away
+        if (window.matchMedia('(max-width: 860px)').matches) {
+          if (leftPanel)  leftPanel.classList.remove('open');
+          if (rightPanel) rightPanel.classList.remove('open');
+        }
+      }
+    });
+  }
+
+  // --- deep-link support: ?tag=rgpx etc. ---
+  try {
+    const params   = new URLSearchParams(window.location.search || '');
+    const tagParam = params.get('tag');
+
+    if (tagParam) {
+      const targetId = tagParam.toLowerCase();
+      const node = DATA.nodes.find(
+        n => (n.id || '').toLowerCase() === targetId
+      );
+
+      if (node) {
+        // 1) Pre-fill the search box so users see the tag name
+        if (searchInput) {
+          searchInput.value = node.id;
+          searchInput.dispatchEvent(new Event('input', { bubbles:true }));
+        }
+
+        // 2) After a short delay, treat it as if the user clicked the tag:
+        //    - highlight node
+        //    - focus its neighborhood
+        //    - open pulse list
+        setTimeout(() => {
+          onTagClick(node.id);
+        }, 350);
       }
     }
-  });
-}
+  } catch (e) {
+    console.warn('Tag deep-link disabled:', e);
+  }
 });
