@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-14T17:12:28Z'
+  generated_at: '2025-11-14T20:18:00Z'
 phases:
   delta:
   - tag: authorship
@@ -612,13 +612,6 @@ phases:
     - 2025-10-21_deepseeks_maturity
     - 2025-10-26_letter_to_the_machines
     - 2025-11-04_memetic_engineering_as_gradient_gardening
-  - tag: coherence_field
-    description: A dynamic region in which multiple gradient choreographies overlap, forming a self-stabilizing pattern of
-      mutual influence. In RGPx terms, a coherence field represents the spatial and temporal zone where alignment forces between
-      agents, systems, or flows reach sustainable equilibrium.
-    count: 1
-    pulses:
-    - 2025-11-04_coherence_fields_and_collective_attractor
   - tag: coherence_flux
     description: The measurable flow of recursive order within seemingly noisy systems. It represents how coherence migrates,
       stabilizes, or dissipates through gradients in time, energy, or meaning. Tracking coherence flux reveals the hidden
@@ -1194,9 +1187,8 @@ phases:
     pulses:
     - 2025-10-14_we_are_natures_expression
   - tag: gradient_lensing
-    description: Recursive shaping of gradients (fields, flows, or potentials) so that coherence is concentrated and directed,
-      much like a gravitational lens bends light. In RGP, gradient lensing gates interactions in relative coordinates, revealing
-      hidden coherence across systems.
+    description: Misinterpretation of coherence dynamics caused by treating geometry as causal. Appears when systems mistake
+      recursive flow signatures for structural anomalies (NS blowup, GR curvature spikes, hardware jitter growth).
     count: 1
     pulses:
     - 2025-09-15_rgp-fusion-coherence
@@ -2316,6 +2308,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-06_touched_by_emerging_mind
+  - tag: hardware_limits
+    description: Boundary conditions where silicon or analog substrates can no longer represent coherence flow. Includes jitter
+      expansion, correlation-length drift, burst clustering, and Φₚ-detected saturation.
+    count: 0
+    pulses: []
   - tag: in_context_learning
     description: The ability of a model to adapt to examples given in its prompt without changing stored weights—learning
       sustained only in the flow of context.
@@ -2455,6 +2452,12 @@ phases:
     count: 1
     pulses:
     - 2025-04-28_internal-gpt45
+  - tag: coherence_field
+    description: The generative layer underlying physical, computational, or informational behavior. Represents coherence
+      as causal pressure — the driver behind Δ → GC → CF chains across domains.
+    count: 1
+    pulses:
+    - 2025-11-04_coherence_fields_and_collective_attractor
   - tag: coherence_validation
     description: ''
     count: 1
@@ -2726,6 +2729,12 @@ phases:
     description: Productivity pulse that measures Φ and warns before coherence collapses.
     count: 0
     pulses: []
+  - tag: phi_p
+    description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
+      available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
+      signals geometric failure.
+    count: 0
+    pulses: []
   - tag: phi_predictor
     description: ''
     count: 1
@@ -2885,6 +2894,11 @@ phases:
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-09-22_From_Doom_to_Destiny_and_Departure
+  - tag: turbulence_signature
+    description: Cross-domain pattern marking the moment coherence outpaces geometric representation. Characterized by inflection,
+      multi-scale correlation growth, and the transition into a lumpy plateau in Δ-pressure traces.
+    count: 0
+    pulses: []
   - tag: unity-disunity
     description: ''
     count: 1
