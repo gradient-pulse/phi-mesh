@@ -399,4 +399,29 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) {
     console.warn('No deep-link tag param', e);
   }
+  // --- Share link button ---
+  const shareBtn = document.getElementById('share-link-btn');
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      // read current tag from URL (if any)
+      const url = new URL(window.location.href);
+      const tag = url.searchParams.get('tag') || '';
+
+      // construct clean base URL without garbage
+      const base = window.location.origin + window.location.pathname;
+
+      // final clean share link
+      const shareUrl = tag
+        ? `${base}?tag=${encodeURIComponent(tag)}`
+        : base;
+
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        alert("Link copied:\n" + shareUrl);
+      } catch (err) {
+        window.prompt("Copy link:", shareUrl);
+      }
+    });
+  }
 });
