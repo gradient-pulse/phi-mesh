@@ -1,22 +1,25 @@
 /* docs/map.js — render tag graph using window.PHI_DATA */
 document.addEventListener('DOMContentLoaded', () => {
   const DATA = (window.PHI_DATA && typeof window.PHI_DATA === 'object')
-    ? window.PHI_DATA
-    : { nodes: [], links: [] };
+    ? window.PHI_DATA : { nodes:[], links:[] };
 
   // --- DOM ---
   const svg        = d3.select('#graph');
   const tooltip    = d3.select('#tooltip');
-  const leftContent= document.getElementById('left-content');
-  const leftHint   = document.getElementById('left-hint');
-  const pulseList  = document.getElementById('pulse-list');
-  const searchInput= document.getElementById('search');
+  const leftContent = document.getElementById('left-content');
+  const leftHint    = document.getElementById('left-hint');
+  const pulseList   = document.getElementById('pulse-list');
+  const searchInput = document.getElementById('search');
+
+  // NEW: sidebars for mobile switching
+  const leftPanel  = document.getElementById('left');
+  const rightPanel = document.getElementById('right');
 
   // left panel starts empty (hint lives in header)
   if (leftContent) leftContent.innerHTML = '';
 
   // helper: reset left panel to the header hint
-  function clearLeftPanel() {
+  function clearLeftPanel(){
     if (leftContent) leftContent.innerHTML = '';
     if (leftHint) {
       leftHint.textContent =
@@ -29,12 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const W = (nodeEl && nodeEl.clientWidth)  || 1200;
   const H = (nodeEl && nodeEl.clientHeight) || 800;
   svg.attr('viewBox', `0 0 ${W} ${H}`)
-     .attr('preserveAspectRatio', 'xMidYMin meet'); // keep graph anchored to top
+     .attr('preserveAspectRatio','xMidYMin meet'); // keep graph anchored to top
 
   // --- layers ---
   const root      = svg.append('g');
-  const linkLayer = root.append('g').attr('class', 'links');
-  const nodeLayer = root.append('g').attr('class', 'nodes');
+  const linkLayer = root.append('g').attr('class','links');
+  const nodeLayer = root.append('g').attr('class','nodes');
 
   // --- prep data ---
   const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
@@ -46,11 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // degree for fallback sizing
   const degree = new Map();
   links.forEach(l => {
-    degree.set(l.source.id, (degree.get(l.source.id) || 0) + 1);
-    degree.set(l.target.id, (degree.get(l.target.id) || 0) + 1);
+    degree.set(l.source.id, (degree.get(l.source.id)||0)+1);
+    degree.set(l.target.id, (degree.get(l.target.id)||0)+1);
   });
 
-  function nodeScore(d) {
+  function nodeScore(d){
     const c = d && d.centrality;
     return (typeof c === 'number') ? c : (degree.get(d.id) || 1);
   }
@@ -62,13 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const cMax = (mmMax == null ? 1 : mmMax);
 
   const rScale = d3.scaleSqrt()
-    .domain([(cMin === 0 ? 0.0001 : cMin), (cMax === 0 ? 1 : cMax)])
+    .domain([ (cMin === 0 ? 0.0001 : cMin), (cMax === 0 ? 1 : cMax) ])
     .range([5, 20]); // slightly smaller nodes
 
   const ellipseAspect = 1.6;
 
   // ---- age → color for pulse list dots (hot -> cold) ----
-  function ageColor(days) {
+  function ageColor(days){
     if (days == null) return '#86cbff';
     if (days <= 14)  return '#ff7a66';
     if (days <= 45)  return '#ff9b66';
@@ -79,21 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- simulation ---
   const sim = d3.forceSimulation(DATA.nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(100).strength(0.40))
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(100).strength(0.40))
     .force('charge', d3.forceManyBody().strength(-320))
-    .force('center', d3.forceCenter(W / 2, H / 2.0))
-    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d)) * 1.5));
+    .force('center', d3.forceCenter(W/2, H/2.0))
+    .force('collide', d3.forceCollide().radius(d => rScale(nodeScore(d))*1.5));
 
   // --- draw ---
   const linkSel = linkLayer.selectAll('line')
     .data(links)
     .join('line')
-    .attr('class', 'link');
+    .attr('class','link');
 
   const nodeSel = nodeLayer.selectAll('g.node')
     .data(DATA.nodes, d => d.id)
     .join(enter => {
-      const g = enter.append('g').attr('class', 'node');
+      const g = enter.append('g').attr('class','node');
 
       g.append('ellipse')
         .attr('rx', d => rScale(nodeScore(d)) * ellipseAspect)
@@ -106,33 +109,27 @@ document.addEventListener('DOMContentLoaded', () => {
         .attr('y', d => rScale(nodeScore(d)) + 12)
         .text(d => d.id);
 
-      g.on('mouseover', (ev, d) => showTip(ev, d.id))
+      g.on('mouseover', (ev,d)=>showTip(ev,d.id))
        .on('mousemove', moveTip)
        .on('mouseout', hideTip)
-       .on('click', (ev, d) => {
-         ev.stopPropagation();
-         onTagClick(d.id);
-       });
+       .on('click', (ev,d)=>{ ev.stopPropagation(); onTagClick(d.id); });
 
       return g;
     });
 
   sim.on('tick', () => {
     linkSel
-      .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-    nodeSel.attr('transform', d => `translate(${d.x},${d.y})`);
+      .attr('x1', d=>d.source.x).attr('y1', d=>d.source.y)
+      .attr('x2', d=>d.target.x).attr('y2', d=>d.target.y);
+    nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
   });
 
   // --- zoom/pan ---
-  const zoom = d3.zoom()
-    .scaleExtent([0.2, 2.5])
-    .on('zoom', ev => root.attr('transform', ev.transform));
-
+  const zoom = d3.zoom().scaleExtent([0.2, 2.5]).on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
   // --- helpers ---
-  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
 
   // Fit/center on nodes using a padded bounding box (safe for many matches)
   function fitViewTo(nodes) {
@@ -143,10 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const cx = d3.mean(nodes, d => d.x);
       const cy = d3.mean(nodes, d => d.y);
       const k  = 1.0;
-      const tx = W / 2 - k * cx;
-      const ty = H / 2 - k * cy;
-      svg.transition().duration(600)
-        .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      const tx = W/2 - k * cx;
+      const ty = H/2 - k * cy;
+      svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
       return;
     }
 
@@ -163,14 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cx = (minX + maxX) / 2;
     const cy = (minY + maxY) / 2;
-    const tx = W / 2 - k * cx;
-    const ty = H / 2 - k * cy;
+    const tx = W/2 - k * cx;
+    const ty = H/2 - k * cy;
 
-    svg.transition().duration(600)
-      .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+    svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
   }
 
-  function resetView() {
+  function resetView(){
     svg.transition().duration(400).call(zoom.transform, d3.zoomIdentity);
   }
 
@@ -178,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   svg.on('click', () => {
     clearFocus();
     nodeSel.classed('selected', false);
-    if (pulseList) {
+    if (pulseList){
       pulseList.textContent = 'Click a tag to list its pulses.';
       pulseList.className = 'muted one-line';
     }
@@ -186,132 +181,89 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- tooltip helpers ---
-  function showTip(evt, tag) {
-    const n    = idToNode.get(tag);
-    const desc = (DATA.tagDescriptions && DATA.tagDescriptions[tag])
-      ? DATA.tagDescriptions[tag]
-      : '—';
-    const deg  = degree.get(tag) || 0;
-    const cent = (n && typeof n.centrality === 'number')
-      ? n.centrality.toFixed(2)
-      : String(deg);
-
+  function showTip(evt, tag){
+    const n = idToNode.get(tag);
+    const desc = (DATA.tagDescriptions && DATA.tagDescriptions[tag]) ? DATA.tagDescriptions[tag] : '—';
+    const deg = degree.get(tag) || 0;
+    const cent = (n && typeof n.centrality === 'number') ? n.centrality.toFixed(2) : String(deg);
     tooltip.html(
       `<div style="font-weight:700; margin-bottom:4px">${esc(tag)}</div>
        <div class="muted" style="margin-bottom:6px">degree ${deg} • centrality ${cent}</div>
        <div style="white-space:pre-wrap; opacity:.92">${esc(desc)}</div>
        <div style="margin-top:6px; font-size:12px; color:#97a3b6">Click to list pulses</div>`
-    ).style('display', 'block');
-
+    ).style('display','block');
     moveTip(evt);
   }
-
-  function moveTip(evt) {
-    const pad = 12;
-    let x = evt.clientX + pad;
-    let y = evt.clientY + pad;
-
-    const tt = tooltip.node();
-    if (tt) {
-      const rect = tt.getBoundingClientRect();
-      const vw = window.innerWidth  || W;
-      const vh = window.innerHeight || H;
-
-      if (x + rect.width > vw - 4)  x = vw - rect.width  - 4;
-      if (y + rect.height > vh - 4) y = vh - rect.height - 4;
-      if (x < 4)  x = 4;
-      if (y < 4)  y = 4;
-    }
-
-    tooltip.style('left', x + 'px').style('top', y + 'px');
-  }
-
-  function hideTip() {
-    tooltip.style('display', 'none');
-  }
-
-  function esc(s) {
-    return String(s || '').replace(/[&<>"']/g, c => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    }[c]));
-  }
+  function moveTip(evt){ const p=12; tooltip.style('left',(evt.clientX+p)+'px').style('top',(evt.clientY+p)+'px'); }
+  function hideTip(){ tooltip.style('display','none'); }
+  function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])) }
 
   // --- focus/dim ---
-  function setFocus(keepIds) {
+  function setFocus(keepIds){
     const keep = new Set(keepIds);
     nodeSel.classed('dim', d => !keep.has(d.id));
     linkSel.classed('dim', d => !(keep.has(d.source.id) && keep.has(d.target.id)));
   }
-
-  function clearFocus() {
-    nodeSel.classed('dim', false);
-    linkSel.classed('dim', false);
-  }
+  function clearFocus(){ nodeSel.classed('dim', false); linkSel.classed('dim', false); }
 
   // --- right sidebar list ---
-  function renderPulseList(tagId) {
-    const raw = (DATA.pulsesByTag && Array.isArray(DATA.pulsesByTag[tagId]))
-      ? DATA.pulsesByTag[tagId]
-      : [];
-
+  function renderPulseList(tagId){
+    const raw = (DATA.pulsesByTag && Array.isArray(DATA.pulsesByTag[tagId])) ? DATA.pulsesByTag[tagId] : [];
     if (!pulseList) return;
 
-    if (!raw.length) {
+    if (!raw.length){
       pulseList.textContent = `No pulses for ${tagId}.`;
       pulseList.className = 'muted one-line';
       return;
     }
 
-    const seen  = new Set();
+    const seen = new Set();
     const items = [];
-    for (const p of raw) {
-      const key = p.id || p.title || p.date || JSON.stringify(p).slice(0, 60);
+    for (const p of raw){
+      const key = p.id || p.title || p.date || JSON.stringify(p).slice(0,60);
       if (seen.has(key)) continue;
       seen.add(key);
       items.push(p);
     }
 
-    items.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    items.sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
 
     const rows = items.map(p => {
       const title = p.title || p.id || 'Pulse';
-      const date  = p.date ? ` (${p.date})` : '';
-      const dot   = ageColor(p.ageDays);
-      return `<div class="one-line" data-key="${esc(p.id || p.title || '')}" style="padding:6px 4px; cursor:pointer">
+      const date = p.date ? ` (${p.date})` : '';
+      const dot = ageColor(p.ageDays);
+      return `<div class="one-line" data-key="${esc(p.id||p.title||'')}" style="padding:6px 4px; cursor:pointer">
                 <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${dot};margin-right:8px;vertical-align:middle"></span>
                 <span>${esc(title)}${esc(date)}</span>
               </div>`;
     }).join('');
 
     pulseList.className = '';
-    pulseList.innerHTML =
-      `<div style="font-weight:600; margin:2px 0 6px 0">${esc(tagId)}</div>${rows}`;
+    pulseList.innerHTML = `<div style="font-weight:600; margin:2px 0 6px 0">${esc(tagId)}</div>${rows}`;
 
     pulseList.querySelectorAll('[data-key]').forEach(el => {
       el.addEventListener('click', () => {
-        const key   = el.getAttribute('data-key') || '';
-        const pulse = items.find(p => (p.id || p.title || '') === key);
-        if (pulse) showPulseLeft(pulse);
+        const key = el.getAttribute('data-key') || '';
+        const pulse = items.find(p => (p.id||p.title||'') === key);
+        if (pulse) {
+          showPulseLeft(pulse);
+
+          // NEW: on mobile, switch to the left "Tags / Details" panel
+          if (window.innerWidth <= 860 && leftPanel && rightPanel) {
+            leftPanel.classList.add('open');
+            rightPanel.classList.remove('open');
+          }
+        }
       });
     });
   }
 
-  function renderLinkBlock(label, items) {
+  function renderLinkBlock(label, items){
     if (!Array.isArray(items) || !items.length) return '';
-    const norm = items.map(u =>
-      typeof u === 'string'
-        ? { title: u, url: u }
-        : (u && u.url
-            ? u
-            : { title: (u && (u.title || u.url)) || '', url: (u && u.url) || '' })
-    );
-
+    const norm = items.map(u => typeof u==='string' ? {title:u, url:u}
+      : (u && u.url ? u : {title:(u && (u.title||u.url)) || '', url:(u && u.url) || ''}));
     let s = `<div style="margin-top:10px"><strong>${label}</strong><ul style="padding-left:18px; margin:6px 0 0 0">`;
-    for (const it of norm) {
+    for (const it of norm){
       const t = it.title || it.url || 'link';
       const h = it.url || '#';
       s += `<li class="one-line"><a href="${esc(h)}" target="_blank" rel="noopener">${esc(t)}</a></li>`;
@@ -320,29 +272,20 @@ document.addEventListener('DOMContentLoaded', () => {
     return s;
   }
 
-  function showPulseLeft(p) {
+  function showPulseLeft(p){
     if (leftHint) leftHint.textContent = '';
     if (!leftContent) return;
 
     const when = p.date ? ` <span class="muted">(${esc(p.date)})</span>` : '';
-    let html = `<div class="pulse-detail">
-                  <div style="font-weight:700; font-size:15px; margin-bottom:6px">
-                    ${esc(p.title || p.id || 'Pulse')}${when}
-                  </div>`;
-
-    if (p.summary) {
-      html += `<div style="white-space:pre-wrap; margin:6px 0 12px 0">
-                 ${esc(p.summary)}
-               </div>`;
-    }
-
-    html += renderLinkBlock('Papers',   p.papers);
+    let html = `<div class="pulse-detail"><div style="font-weight:700; font-size:15px; margin-bottom:6px">${esc(p.title || p.id || 'Pulse')}${when}</div>`;
+    if (p.summary) html += `<div style="white-space:pre-wrap; margin:6px 0 12px 0">${esc(p.summary)}</div>`;
+    html += renderLinkBlock('Papers', p.papers);
     html += renderLinkBlock('Podcasts', p.podcasts);
     leftContent.innerHTML = html + `</div>`;
   }
 
   // --- tag click ---
-  function onTagClick(tagId) {
+  function onTagClick(tagId){
     clearLeftPanel();
     nodeSel.classed('selected', d => d.id === tagId);
 
@@ -351,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (l.source.id === tagId) keep.add(l.target.id);
       if (l.target.id === tagId) keep.add(l.source.id);
     });
-
     setFocus(keep);
     renderPulseList(tagId);
 
@@ -361,32 +303,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- search filter ---
-  if (searchInput) {
+  if (searchInput){
     searchInput.addEventListener('input', e => {
-      const v = (e && e.target && typeof e.target.value === 'string')
-        ? e.target.value
-        : '';
+      const v = (e && e.target && typeof e.target.value === 'string') ? e.target.value : '';
       const q = v.trim().toLowerCase();
 
-      // clear any selected tag when typing
+      // clear selected tag when typing
       nodeSel.classed('selected', false);
 
       clearLeftPanel();
-      if (pulseList) {
+      if (pulseList){
         pulseList.textContent = 'Click a tag to list its pulses.';
-        pulseList.className   = 'muted one-line';
+        pulseList.className = 'muted one-line';
       }
 
-      if (!q) {
+      if (!q){
         clearFocus();
         resetView();
         return;
       }
 
-      const matched = DATA.nodes.filter(
-        n => (n.id || '').toLowerCase().includes(q)
-      );
-      const keep = new Set(matched.map(n => n.id));
+      const matched = DATA.nodes.filter(n => (n.id||'').toLowerCase().includes(q));
+      const keep = new Set(matched.map(n=>n.id));
       setFocus(keep);
       fitViewTo(matched);
     });
