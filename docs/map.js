@@ -4,16 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
     ? window.PHI_DATA : { nodes:[], links:[] };
 
   // --- DOM ---
-  const svg         = d3.select('#graph');
-  const tooltip     = d3.select('#tooltip');
+  const svg        = d3.select('#graph');
+  const tooltip    = d3.select('#tooltip');
   const leftContent = document.getElementById('left-content');
   const leftHint    = document.getElementById('left-hint');
   const pulseList   = document.getElementById('pulse-list');
   const searchInput = document.getElementById('search');
 
-  // sidebars for mobile switching
+  // NEW: sidebars for mobile switching
   const leftPanel  = document.getElementById('left');
   const rightPanel = document.getElementById('right');
+
+  // NEW: share button (Insights + Experiments pages both define #share-btn)
+  const shareBtn   = document.getElementById('share-btn');
+
+  // track which tag is currently focused/selected
+  let currentTagId = null;
 
   // left panel starts empty (hint lives in header)
   if (leftContent) leftContent.innerHTML = '';
@@ -173,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
   svg.on('click', () => {
     clearFocus();
     nodeSel.classed('selected', false);
+    currentTagId = null;
     if (pulseList){
       pulseList.textContent = 'Click a tag to list its pulses.';
       pulseList.className = 'muted one-line';
@@ -287,6 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- tag click ---
   function onTagClick(tagId){
     clearLeftPanel();
+    currentTagId = tagId;
     nodeSel.classed('selected', d => d.id === tagId);
 
     const keep = new Set([tagId]);
@@ -311,6 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // clear any selected tag when typing
       nodeSel.classed('selected', false);
+      currentTagId = null;
 
       clearLeftPanel();
       if (pulseList){
@@ -333,52 +342,61 @@ document.addEventListener('DOMContentLoaded', () => {
     // when user hits Enter / Done on mobile, hide left sidebar so graph is visible
     searchInput.addEventListener('keydown', e => {
       if (e.key === 'Enter') {
-        // hide keyboard
         searchInput.blur();
-
-        // on small screens, slide panels away
         if (window.matchMedia('(max-width: 860px)').matches) {
-          if (leftPanel)  leftPanel.classList.remove('open');
-          if (rightPanel) rightPanel.classList.remove('open');
+          const left  = document.getElementById('left');
+          const right = document.getElementById('right');
+          if (left)  left.classList.remove('open');
+          if (right) right.classList.remove('open');
         }
       }
     });
   }
 
-  // -------- Deep-link support: ?tag=rgpx --------
+  // --- share button: build URL with ?tag=currentTagId and share/copy it ---
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      try {
+        const url = new URL(window.location.href);
+        if (currentTagId) {
+          url.searchParams.set('tag', currentTagId);
+        } else {
+          url.searchParams.delete('tag');
+        }
+        const shareUrl = url.toString();
 
-  let pendingTagId = null;
-
-  function applyDeepLinkTag(tagId){
-    const node = DATA.nodes.find(n => (n.id || '').toLowerCase() === tagId.toLowerCase());
-    if (!node) return;
-
-    // pre-fill the search field so users see where they landed
-    if (searchInput) {
-      searchInput.value = node.id;
-      searchInput.dispatchEvent(new Event('input', { bubbles:true }));
-    }
-
-    // now behave as if the user clicked the tag
-    onTagClick(node.id);
+        if (navigator.share) {
+          await navigator.share({
+            title: 'Phi-Mesh Tag Map',
+            text: currentTagId
+              ? `Phi-Mesh tag: ${currentTagId}`
+              : 'Phi-Mesh Tag Map',
+            url: shareUrl,
+          });
+        } else if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(shareUrl);
+          alert('Link copied to clipboard:\n' + shareUrl);
+        } else {
+          // very old browsers
+          prompt('Copy this link:', shareUrl);
+        }
+      } catch (err) {
+        console.error('Share failed', err);
+        alert('Unable to share link. You can copy this URL:\n' + window.location.href);
+      }
+    });
   }
 
-  // parse query parameter once
+  // --- deep-link: ?tag=rgpx etc. ---
   try {
-    const params   = new URLSearchParams(window.location.search || '');
-    const tagParam = params.get('tag');
-    if (tagParam) {
-      pendingTagId = tagParam;
+    const params = new URLSearchParams(window.location.search);
+    const initialTag = params.get('tag');
+    if (initialTag && idToNode.has(initialTag)) {
+      currentTagId = initialTag;
+      // wait a moment for layout to settle, then focus
+      setTimeout(() => onTagClick(initialTag), 700);
     }
   } catch (e) {
-    console.warn('Tag deep-link disabled:', e);
+    console.warn('No deep-link tag param', e);
   }
-
-  // when the layout has cooled, apply deep-link if any
-  sim.on('end', () => {
-    if (pendingTagId) {
-      applyDeepLinkTag(pendingTagId);
-      pendingTagId = null;
-    }
-  });
 });
