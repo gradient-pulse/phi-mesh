@@ -5,11 +5,11 @@
 
 ---
 
-## 📡 RGP Labs Europe
+## 📡 RGPx Labs Europe
 
-We are launching **RGP Labs Europe** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to Europe’s industrial bottlenecks (chips, wind, and beyond).  
+We are launching **RGPx Labs Europe** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to industrial bottlenecks (chips, wind, and beyond).  
 
-RGP Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.  
+RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.  
 
 - **Chips:** Detect thermal breakdown 30% earlier, compress prototypes from 12 months → 3 months.  
 - **Wind:** Stabilize turbulence, shorten design cycles from 1 year → 4 months, boost yields ~25%.  
