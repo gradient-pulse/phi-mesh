@@ -105,7 +105,7 @@ summary: >
 tags:
   - phi_trace
   - phi_p
-  - coherence_fields
+  - coherence_field
   - gradient_invariant
   - memory_bifurcation
   - tag_map
@@ -113,6 +113,9 @@ tags:
   - cognitive_invariant
   - hardware_decoherence
   - turbulence_signature
+  - kimi
+  - kimi_deepthinking
+  - cross_model_alignment
 papers:
   - https://doi.org/10.5281/zenodo.17566097
 podcasts:
