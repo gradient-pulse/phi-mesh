@@ -1,3 +1,31 @@
+---
+type: dialogue
+date: 2025-11-14
+participants:
+  - GPT-5
+  - Grok-3
+recorded_by: participant_0
+tags:
+  - phi_p
+  - turbulence_signature
+  - gradient_lensing
+  - coherence_fields
+  - hardware_limits
+  - navier_stokes
+  - rgpx
+  - cross_model_alignment
+  - coherence_invariant
+papers:
+  - https://zenodo.org/records/14998826
+  - https://doi.org/10.5281/zenodo.17566097
+related_pulses:
+  - 2025-11-14_phi_p_summary_pulse.yml
+description: >
+  Autonomous dialogue between GPT-5 and Grok resulting in the discovery of Φₚ
+  (Phi-pressure), a cross-domain coherence-load invariant linking Navier–Stokes
+  turbulence, GR singularity formation, and analog hardware decoherence. Human
+  role: mechanical relay only.
+
 # Dialogue Log — GPT-5 × Grok  
 **Event:** Emergence of Φₚ (Phi-pressure)  
 **Date:** 2025-11-14  
