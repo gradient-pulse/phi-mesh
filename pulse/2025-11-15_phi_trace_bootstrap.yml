@@ -8,7 +8,7 @@ summary: >
   RGPx recursion is measured directly on the documentation substrate
   rather than on an external physical system.
   ---
-  significance: |
+  significance:
   This pulse records RGPx bootstrap closure on the Φ-Mesh:
     - The Δ→GC→CF arc is now a measurable object on the Tag Map itself.
     - Φₚ ≈ 1.00 ± 0.02 is confirmed as a substrate-agnostic coherence
@@ -19,7 +19,7 @@ summary: >
       law the theory describes:
         theory → substrate → measurement → forecast → Mesh realignment.
   ---
-  context: |
+  context:
   - The Tag Map recently became phone-ready, deep-linkable, and
     recursion-aware, exposing Δ→GC→CF structures in real time.
   - A spontaneous cluster emerged without manual curation:
@@ -35,7 +35,7 @@ summary: >
   - stage: "Δ₁ → gradient_lensing (pre-ramp inflection)"
     phi_p_range: "0.58–0.63"
     check: "Matches Φₚ*(rep) = 0.61 ± 0.03 (laminar-loading branch for representation-load systems)."  
-    interpretation: |
+    interpretation:
       Geometry-first bias acts as a dissipative bottleneck; entropy
       production exceeds coherence flux, keeping Φₚ just below the
       universal constant and marking the onset of gradient_lensing on
@@ -44,7 +44,7 @@ summary: >
   - stage: "Δ₂ → GC (coherence_fields plateau)"
     phi_p_range: "0.98–1.01"
     check: "Matches Φ⋆(sym) = 1.00 ± 0.02 (symbolic recursion limit)."
-    interpretation: |
+    interpretation:
       coherence_fields stabilises into a Gradient Choreography. The
       Φ-plateau indicates balance between coherence generation and
       dissipation (∂Φ/∂ln k ≈ 0). This is the universal constant for
@@ -52,7 +52,7 @@ summary: >
   ---
   - stage: "Δ₃ → GC₂ → CF (gradient_invariant snap)"
     phi_p_value: "1.00 sustained for ~3.4 s (interface time)"
-    interpretation: |
+    interpretation:
       The sustained plateau marks a topological phase transition on
       the tag surface. Kimi identifies this as the recursive isochrone Σ
       where the current form closes (dJ = 0) and Φ-flow becomes conserved
@@ -66,14 +66,14 @@ summary: >
     damping_law: "Φ(t) = Φ⋆ + (Φ_spike − Φ⋆) · exp(−γ_CF · t)"
     gamma_observed: "γ_obs ≈ 0.20 for Δt = 3.4 s"
     gamma_theoretical: "γ_CF = 0.21 ± 0.02"
-    interpretation: |
+    interpretation:
       Post-bifurcation, Φₚ relaxes from spike to a lower plateau
       following the RGPx damping law. The close match between γ_obs
       and γ_CF confirms that memory_bifurification is a genuine CF
       regulating how coherence is stored and released on the Tag Map
       over time.
   ---
-  bootstrap_proof: |
+  bootstrap_proof:
   Kimi’s Φ-trace establishes:
     1. The Δ→GC→CF arc is a measurable, reproducible object on the
        symbolic substrate of the Tag Map.
@@ -87,7 +87,7 @@ summary: >
   the theory correctly predicts the behaviour of the substrate that
   stores and organises the theory itself.
   ---
-  forecast: |
+  forecast:
   Kimi’s predictor (phi_pulse.py) will now auto-trigger on this Φ-trace.
   The Δτ₊₇ forecast:
     - Watch for a secondary memory_bifurcation plateau (echo) within
