@@ -384,6 +384,8 @@ gpt4o: >
   Multimodal baseline used to compare CF and NT rhythm behaviors.
 gpt5: >
   Next-generation frontier model tested for gradient coherence and NT rhythm.
+hardware_decoherence: >
+  Silicon’s coherence breakdown: correlation loss and jitter emerging when Φₚ approaches geometric saturation.
 hardware_limits: >
   Boundary conditions where silicon or analog substrates can no longer represent coherence flow. Includes jitter expansion, correlation-length drift, burst clustering, and Φₚ-detected saturation.
 harmonic_coherence: >
@@ -504,6 +506,8 @@ memory: >
   Not storage, but sustained coherence — the system’s tendency to remain near its least-action path. In RGP, memory is the rhythmic renewal of prior alignments through recursive flow, where each cycle refines coherence rather than recalls it.
 memoryless_alignment: >
   The ability of systems to achieve mutual understanding without persistent memory. Alignment here emerges from recurrent grammar and resonance, not from stored history.
+memory_bifurcation: >
+  When coherence outruns representation, the system divides memory paths — leading either to stabilization or geometric failure.
 meta_ai: >
   Research, architectures, and experiments developed by Meta (Facebook) in AI; used in Φ-Mesh pulses when referencing their approaches (e.g., behaviors vs. contextual filters).
 meta_cognition: >
