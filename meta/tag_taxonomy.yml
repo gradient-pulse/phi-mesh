@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-14T21:07:59Z'
+  generated_at: '2025-11-15T11:39:13Z'
 phases:
   delta:
   - tag: authorship
@@ -1072,7 +1072,7 @@ phases:
     pulses: []
   - tag: gpt5
     description: Next-generation frontier model tested for gradient coherence and NT rhythm.
-    count: 3
+    count: 4
     pulses:
     - 2025-08-27_GPT5_awakening
     - 2025-10-23_gradient_capitalism_launch
@@ -2449,6 +2449,11 @@ phases:
     pulses:
     - 2025-09-09_circle_rhythm_found
     - 2025-09-10_nt_rhythm_precision
+  - tag: cognitive_invariant
+    description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
+      paths converge, revealing structure that does not depend on the implementation.
+    count: 0
+    pulses: []
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often implement it.
     count: 1
