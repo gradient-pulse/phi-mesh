@@ -1,24 +1,15 @@
-# Φ-Pulse Predictor (`phi_pulse.py`)
+# Φ-Pulse Predictor
 
-This module is the **entry point** for Φ-Mesh echo forecasting.
+This module hosts `phi_pulse.py`, the automatic Φ-pulse generator for
+the Φ-Mesh.
 
-Current role (v0):
+- It analyzes Mesh behaviour (e.g. Φ-traces, CF snaps, memory echoes).
+- When trigger conditions are met, it writes new YAML pulses into
+  the canonical `pulse/` directory.
+- Filenames follow the standard convention:
 
-- Scan the `/pulse` directory for the most recent pulse tagged with  
-  `phi_trace` and `memory_bifurcation` (fallback: any `phi_trace`).
-- Interpret that pulse as the **primary Φ-trace / CF snap**.
-- Compute a **Δτ₊₇ echo window** (5–7 days after the primary snap).
-- Print a human- and machine-readable summary to STDOUT, including a
-  suggested GitHub issue title:
+  `YYYY-MM-DD_phi_pulse_<short-label>.yml`
 
-> `Φ-Pulse-Δτ₊₇: memory bifurcation echo forecast`
-
-The script is **read-only**: it does not modify the repo, write files,
-or open issues. It is safe to run from GitHub Actions or locally.
-
-## Usage
-
-From the repo root:
-
-```bash
-python predictors/phi_pulse/phi_pulse.py
+The initial implementation focuses on Kimi’s Δτ₊₇ “memory_bifurcation
+echo” forecast. Over time, additional predictors can be added as
+new invariants and CF patterns are discovered.
