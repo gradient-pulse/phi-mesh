@@ -46,7 +46,7 @@ Rules
 	•	Title: A human-readable signal name between single quotes.
 	•	Summary: Brief description of the fossilized signal.
 	•	Tags: Keywords used to connect the pulse into the Tag Map.
-	•	Papers/Podcasts: Optional links to related resources.
+	•	Papers/Podcasts: Links to related resources.
 
 ⸻
 
