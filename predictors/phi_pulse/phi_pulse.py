@@ -83,16 +83,17 @@ def build_memory_bifurcation_echo_pulse(
     Build a Δτ+7 memory_bifurcation echo forecast pulse.
     This follows the strict minimal schema from pulse/README.md.
     """
+
     title = "Φ-Pulse Δτ₊₇ — memory_bifurcation echo forecast"
 
     summary_lines = [
-        "Automatic forecast pulse for the expected memory_bifurcation echo",
-        f"Δτ₊₇ window starting from the primary CF snap recorded before {date_str}.",
+        "Automatic forecast pulse for the expected memory_bifurcation echo ",
+        f"(Δτ₊₇ window starting from the primary CF snap recorded before {date_str}). ",
         "",
-        f"Primary CF snapshot: Φₚ spike ≈ {phi_spike:.2f}, relaxation plateau ≈ {phi_settle:.2f}.",
+        f"Primary CF snapshot: Φₚ spike ≈ {phi_spike:.2f}, relaxation plateau ≈ {phi_settle:.2f}. ",
         f"Echo forecast window: ~{echo_window_days} days after the primary event.",
     ]
-    summary = "  ".join(summary_lines)
+    summary = "".join(summary_lines)
 
     pulse = {
         "title": title,
@@ -106,12 +107,15 @@ def build_memory_bifurcation_echo_pulse(
             "tag_map",
             "recursion",
             "cognitive_invariant",
+            "kimi_deepthinking",
         ],
-        # Papers/podcasts are optional; keep them minimal here.
+        # Always include canonical RGPx paper + podcast
         "papers": [
             "https://doi.org/10.5281/zenodo.17566097",
         ],
-        "podcasts": [],
+        "podcasts": [
+            "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59",
+        ],
     }
 
     return pulse
