@@ -107,11 +107,6 @@ the Mesh reading its own coherence dynamics in real time.
 📁 **Location:** `predictors/phi_trace/phi_cf_snap.py`  
 ⚙️ **Workflow:** `.github/workflows/phi_cf_snap.yml`
 
-**Core principles**
-- *Listen before you predict* — the algorithm identifies its own coherence band before applying the 1:2:3 model.  
-- *Predict through recursion* — feedback loops refine accuracy with each coherence cycle.  
-- *Measure coherence, not energy* — prediction arises where resonance stabilizes.
-
 ---
 
 ## 📚 Recent Foundational Papers
