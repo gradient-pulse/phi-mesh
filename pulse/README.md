@@ -105,7 +105,6 @@ tags:
 papers: []
 podcasts: []
 ```
-⸻
 
 ## Predictive Pulses  
 Certain predictors inside the Φ-Mesh generate fossilized pulses
