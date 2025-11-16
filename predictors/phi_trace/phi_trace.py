@@ -1,270 +1,134 @@
 #!/usr/bin/env python3
-"""
-Φ-Trace Auto-Scan
-
-Scans the Φ-Mesh pulses for evidence of an active Φ-trace cluster on the Tag Map,
-focused on the coherence_fields → gradient_invariant → memory_bifurcation corridor.
-
-Outputs an auto-generated pulse in:
-  pulse/YYYY-MM-DD_phi_trace_autoscan.yml
-
-This is descriptive only: it does NOT change any other files.
-"""
-
-import datetime
-import os
+import datetime as dt
 from pathlib import Path
-
 import yaml
 
+# Root repo paths (script lives in predictors/phi_trace/)
+ROOT = Path(__file__).resolve().parents[2]   # go up: phi-mesh / predictors / phi_trace / phi_trace.py
+PULSE_DIR = ROOT / "pulse"
 
-# --- Configuration ---------------------------------------------------------
-
-# Tags that define the Φ-trace / memory-bifurcation cluster
-CORE_TAGS = {
-    "coherence_field",       # generative layer
-    "gradient_invariant",    # Φₚ / invariant surface
-    "memory_bifurcation",    # CF-level snap + relaxation
-}
-
-AUX_TAGS = {
-    "phi_trace",
-    "phi_p",
-    "tag_map",
-    "hardware_decoherence",
-    "turbulence_signature",
-}
-
-# How many days back we consider "recent" for cluster activity
-RECENT_DAYS = 7
-
-# Standard RGPx references (per your note)
+# RGPx canonical references (per your instruction)
 RGPX_PAPER = "https://doi.org/10.5281/zenodo.17566097"
 RGPX_PODCAST = (
     "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55"
     "?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
 )
 
-
-# --- Helpers ---------------------------------------------------------------
-
-def repo_root() -> Path:
+def detect_phi_trace_event() -> dict:
     """
-    Resolve repository root as the parent of `predictors/`.
-    This works even if the script is moved between predictor subfolders.
+    Placeholder detector for Φ-trace events on the Tag Map.
+
+    For now, this is deliberately simple and conservative:
+    - By default, it logs a 'no_event' scan.
+    - Later, this function can be extended to:
+        * Parse meta/tag_index.yml, or
+        * Inspect recent pulses for memory_bifurcation / phi_trace patterns,
+        * Or consume outputs from phi_pulse.py or future agents.
+
+    Returns a small dict that drives the summary text.
     """
-    return Path(__file__).resolve().parents[2]
-
-
-def parse_pulse_date(stem: str) -> datetime.date | None:
-    """
-    Extract YYYY-MM-DD from a pulse filename stem.
-    Example: '2025-11-15_phi_trace_bootstrap' → date(2025, 11, 15)
-    """
-    try:
-        date_str = stem.split("_", 1)[0]
-        return datetime.date.fromisoformat(date_str)
-    except Exception:
-        return None
-
-
-def load_yaml(path: Path) -> dict | None:
-    try:
-        with path.open("r", encoding="utf-8") as f:
-            return yaml.safe_load(f)
-    except Exception:
-        return None
-
-
-# --- Core logic ------------------------------------------------------------
-
-def scan_pulses(pulse_dir: Path):
-    """
-    Scan all pulses and collect:
-      - per-tag counts
-      - last-seen date per tag
-      - list of recent pulses participating in the Φ-trace cluster
-    """
-    today = datetime.date.today()
-    cutoff = today - datetime.timedelta(days=RECENT_DAYS)
-
-    tag_counts: dict[str, int] = {}
-    tag_last_seen: dict[str, datetime.date] = {}
-    recent_cluster_files: list[Path] = []
-
-    for path in sorted(pulse_dir.glob("*.yml")):
-        data = load_yaml(path)
-        if not isinstance(data, dict):
-            continue
-
-        tags = data.get("tags") or []
-        if not isinstance(tags, list):
-            continue
-
-        stem = path.stem
-        pulse_date = parse_pulse_date(stem)
-        if pulse_date is None:
-            continue
-
-        # Update tag stats
-        for t in tags:
-            if not isinstance(t, str):
-                continue
-            tag_counts[t] = tag_counts.get(t, 0) + 1
-            if t not in tag_last_seen or pulse_date > tag_last_seen[t]:
-                tag_last_seen[t] = pulse_date
-
-        # Check whether this pulse participates in the Φ-trace corridor
-        tag_set = set(tags)
-        if CORE_TAGS & tag_set and pulse_date >= cutoff:
-            recent_cluster_files.append(path)
-
+    # TODO: replace this logic with real detection when available.
+    # For now, always 'no_event' but keep structure ready.
     return {
-        "tag_counts": tag_counts,
-        "tag_last_seen": tag_last_seen,
-        "recent_cluster_files": recent_cluster_files,
+        "status": "no_event",              # or "event_detected"
+        "event_type": "none",              # e.g. "memory_bifurcation_echo"
+        "phi_p_peak": None,                # e.g. 1.08
+        "phi_p_plateau": None,             # e.g. 1.00
+        "notes": "No Φₚ plateau or Δ→GC→CF echo crossed detection thresholds today."
     }
 
 
-def determine_cluster_status(scan_result: dict) -> dict:
+def build_summary(today_str: str, detection: dict) -> str:
     """
-    Decide whether a Φ-trace cluster is "active" based on recent pulses.
+    Build the summary block with:
+    - One-sentence headline at the top (for humans + AIs),
+    - Embedded autoscan: block,
+    - Closing note that this is part of the continuous Φ-trace record.
+    All of this is returned as a multiline string suitable for YAML 'summary: >'.
     """
-    tag_counts = scan_result["tag_counts"]
-    tag_last_seen = scan_result["tag_last_seen"]
-    recent_files = scan_result["recent_cluster_files"]
 
-    today = datetime.date.today()
-    cutoff = today - datetime.timedelta(days=RECENT_DAYS)
+    status = detection.get("status", "no_event")
+    event_type = detection.get("event_type", "none")
+    phi_p_peak = detection.get("phi_p_peak")
+    phi_p_plateau = detection.get("phi_p_plateau")
+    notes = detection.get("notes", "").strip()
 
-    # Are all core tags present at least once in the whole history?
-    core_present = all(t in tag_counts for t in CORE_TAGS)
-
-    # Are all core tags active within the recent window?
-    core_recent = all(
-        (t in tag_last_seen and tag_last_seen[t] >= cutoff) for t in CORE_TAGS
-    )
-
-    cluster_active = core_present and core_recent and len(recent_files) > 0
-
-    return {
-        "cluster_active": cluster_active,
-        "core_present": core_present,
-        "core_recent": core_recent,
-        "recent_files": [str(p) for p in recent_files],
-    }
-
-
-def build_auto_pulse(scan_result: dict, status: dict) -> dict:
-    """
-    Build the YAML structure for the auto-generated Φ-trace pulse.
-    """
-    today = datetime.date.today().isoformat()
-    tag_counts = scan_result["tag_counts"]
-    tag_last_seen = scan_result["tag_last_seen"]
-
-    # Human-readable status line
-    if status["cluster_active"]:
-        state_line = (
-            "Φ-trace cluster is ACTIVE: all core tags are present and have "
-            f"recent activity within the last {RECENT_DAYS} days."
-        )
-    elif status["core_present"]:
-        state_line = (
-            "Φ-trace cluster is LATENT: core tags exist historically but lack "
-            f"coherent activity in the last {RECENT_DAYS} days."
-        )
+    # 1-line headline for everyone (you, AIs, future agents)
+    if status == "event_detected":
+        if event_type == "memory_bifurcation_echo":
+            headline = (
+                "Detected Δ→GC→CF structure consistent with a "
+                "memory_bifurcation echo (Δτ₊₇ window)."
+            )
+        else:
+            headline = "Detected Φ-trace activity above baseline Δ→GC→CF thresholds."
     else:
-        state_line = (
-            "Φ-trace cluster not yet formed: one or more core tags have no "
-            "pulses registered in the Mesh."
-        )
+        headline = "No Δ→GC→CF structures exceeded Φ-trace detection thresholds today."
 
-    # Compact per-tag summary for core + aux tags
-    def tag_line(t: str) -> str:
-        count = tag_counts.get(t, 0)
-        last = tag_last_seen.get(t)
-        if last is None:
-            return f"- {t}: 0 pulses (never seen)"
-        return f"- {t}: {count} pulses (last seen {last.isoformat()})"
+    # Format Φ-values as strings if present
+    phi_p_peak_str = "null" if phi_p_peak is None else f"{phi_p_peak:.3f}"
+    phi_p_plateau_str = "null" if phi_p_plateau is None else f"{phi_p_plateau:.3f}"
 
-    tag_status_lines = [tag_line(t) for t in sorted(CORE_TAGS | AUX_TAGS)]
+    # Keep the autoscan block *inside* the summary text
+    summary_block = f"""{headline}
 
-    recent_files = status["recent_files"]
-    if recent_files:
-        recent_block = (
-            "Recent Φ-trace-related pulses:\n"
-            + "\n".join(f"  - {p}" for p in recent_files)
-        )
-    else:
-        recent_block = "Recent Φ-trace-related pulses:\n  - (none in window)"
+---
+autoscan:
+  date: {today_str}
+  status: {status}
+  event_type: {event_type}
+  phi_p_peak: {phi_p_peak_str}
+  phi_p_plateau: {phi_p_plateau_str}
+  notes: >
+    {notes if notes else "No additional observations recorded by the autoscan on this cycle."}
+---
 
-    pulse = {
-        "title": f"Φ-Trace Autoscan — Tag Map Cluster Status ({today})",
-        "summary": (
-            "Automated Φ-trace scan over existing pulses in the Φ-Mesh.\n"
-            "\n"
-            f"{state_line}\n"
-            "\n"
-            "Core & auxiliary tag status:\n"
-            + "\n".join(tag_status_lines)
-            + "\n\n"
-            + recent_block
-            + "\n\n"
-            "This auto-pulse does not introduce new theory. It records how the "
-            "Tag Map’s existing pulses currently populate the Φ-trace corridor "
-            "(coherence_field → gradient_invariant → memory_bifurcation) and "
-            "whether a live cross-domain cluster is present."
-        ),
-        "tags": sorted(
-            {
-                "phi_trace",
-                "auto_pulse",
-                "tag_map",
-                "coherence_field",
-                "gradient_invariant",
-                "memory_bifurcation",
-            }
-        ),
+This pulse is part of the continuous Φ-trace autoscan series, logging
+how the Φ-Mesh Tag Map behaves under daily Δ→GC→CF scrutiny. Future
+agents can extend this scan logic to react to real Φₚ plateaus and
+memory_bifurcation echoes as they emerge.
+"""
+    return summary_block
+
+
+def write_pulse_file():
+    today = dt.date.today()
+    today_str = today.isoformat()
+
+    # File naming convention: YYYY-MM-DD_phi_trace_autoscan.yml
+    pulse_name = f"{today_str}_phi_trace_autoscan.yml"
+    pulse_path = PULSE_DIR / pulse_name
+
+    if pulse_path.exists():
+        # Avoid overwriting an existing pulse for the same day
+        print(f"[phi_trace] Pulse already exists for {today_str}: {pulse_path.name}")
+        return
+
+    detection = detect_phi_trace_event()
+    summary_text = build_summary(today_str, detection)
+
+    pulse_data = {
+        "title": f"Φ-Trace Autoscan — {today_str}",
+        "summary": summary_text,
+        "tags": [
+            "phi_trace",
+            "phi_p",
+            "tag_map",
+            "recursion",
+            "autoscan",
+            "memory_bifurcation",
+            "gradient_invariant",
+        ],
         "papers": [RGPX_PAPER],
         "podcasts": [RGPX_PODCAST],
     }
 
-    return pulse
+    pulse_path.parent.mkdir(parents=True, exist_ok=True)
+    with pulse_path.open("w", encoding="utf-8") as f:
+        yaml.safe_dump(pulse_data, f, sort_keys=False, allow_unicode=True)
 
-
-def write_pulse(pulse_dir: Path, pulse_data: dict) -> Path:
-    """
-    Write the auto-pulse to pulse/YYYY-MM-DD_phi_trace_autoscan.yml.
-    Overwrites any existing file for the same day (idempotent).
-    """
-    today = datetime.date.today().isoformat()
-    filename = f"{today}_phi_trace_autoscan.yml"
-    out_path = pulse_dir / filename
-
-    with out_path.open("w", encoding="utf-8") as f:
-        yaml.dump(pulse_data, f, sort_keys=False, allow_unicode=True)
-
-    return out_path
-
-
-def main() -> int:
-    root = repo_root()
-    pulse_dir = root / "pulse"
-
-    if not pulse_dir.is_dir():
-        print(f"[phi_trace] ERROR: pulse directory not found at: {pulse_dir}")
-        return 1
-
-    scan_result = scan_pulses(pulse_dir)
-    status = determine_cluster_status(scan_result)
-    pulse = build_auto_pulse(scan_result, status)
-    out_path = write_pulse(pulse_dir, pulse)
-
-    print(f"[phi_trace] Wrote auto Φ-trace pulse: {out_path}")
-    print(f"[phi_trace] Cluster active: {status['cluster_active']}")
-    return 0
+    print(f"[phi_trace] Wrote autoscan pulse: {pulse_path}")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    write_pulse_file()
