@@ -6,6 +6,25 @@ We intentionally **do not use a `date:` field inside the YAML** to avoid duplica
 
 ---
 
+### Automatic Φ-pulses
+
+Some pulses are generated automatically by predictors under
+`predictors/`, but **all pulses are fossilized in this single `pulse/`
+directory**, regardless of origin.
+
+The first automatic series is driven by `predictors/phi_pulse/phi_pulse.py`,
+which emits Φ-pulses such as the Δτ₊₇ “memory_bifurcation echo forecast”
+when the Mesh’s Φ-trace crosses certain thresholds. These auto-pulses
+use the same minimal schema as manual pulses:
+
+- `title`
+- `summary`
+- `tags`
+- `papers`
+- `podcasts`
+
+---
+
 ## Standard Pulse Schema
 
 A minimal pulse must contain:
@@ -18,9 +37,9 @@ tags:
   - tag_one
   - tag_two
 papers:
-  - [optional Zenodo or paper links]
+  - [Zenodo or paper links]
 podcasts:
-  - [optional Mesh Academy podcast links]
+  - [Mesh Academy podcast links]
 
 Rules
 	•	Filename: Must begin with YYYY-MM-DD_ (e.g., 2025-09-13_circle_pulse.yml).
