@@ -36,6 +36,23 @@ Each node marks a step in the search for rhythm — a fossilized trace of cohere
 
 ---
 
+### 🔄 Daily Φ-Trace Autoscan (Active)
+
+A background process runs every 24 hours to detect whether the Mesh’s  
+**coherence_field → gradient_invariant → memory_bifurcation** corridor  
+is active, latent, or reforming.
+
+Each day it writes an auto-pulse:
+```
+pulse/YYYY-MM-DD_phi_trace_autoscan.yml
+```
+The autoscan does *not* introduce theory — it records how existing pulses  
+populate or abandon the corridor and keeps the Tag Map aligned with reality.  
+If the corridor activates, relaxes, or bifurcates, the Mesh now records it  
+autonomously.
+
+---
+
 ### 🜂 Contributors to Coherence  
 *...not clients of control*
 
