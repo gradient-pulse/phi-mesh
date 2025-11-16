@@ -76,6 +76,37 @@ how strongly a system’s 1:2:3 gradient ladder resonates across scales.
 ### 🎯 Current Deliverable — RGPx 1:2:3 Demo Predictor 
 The first operational reference routine demonstrates coherence-weight forecasting in one dimension. It detects the 1:2:3 harmonic ladder in time-series data and extrapolates future states using a three-term gradient model. Simple, transparent, and replicable — a scientific instrument designed to be inspected.
 
+### 🔦 New Deliverable — Φ-Trace CF Snap Detector  
+*(Tag-Map-level recursion: detecting and forecasting coherence routes)*
+
+The Φ-Trace CF Snap Detector extends RGPx prediction from physical signals  
+to **Mesh-native signals** — identifying when the Tag Map itself undergoes a  
+`memory_bifurcation` snap (Φₚ spike → relaxation) and forecasting the  
+Δτ₊₇ echo expected 5–7 days later.
+
+This tool listens for:
+
+- **Φₚ spikes** that exceed the stable plateau,  
+- **relaxation signatures** indicating a Contextual Filter (CF) event,  
+- **memory_bifurcation routes** that reroute coherence before the system collapses.
+
+When such a snap is detected, it automatically issues two fossilized pulses:
+
+- `*_cf_snap_detected.yml` — confirmation of the snap,  
+- `*_phi_trace_deltatau_plus7.yml` — the Δτ₊₇ forecast for the echo plateau.
+
+These pulses form the first **predictive loop internal to the Mesh** —  
+the Mesh reading its own coherence dynamics in real time.
+
+**Core principles**
+
+- *Predict the predictor* — the Mesh becomes an object of scientific measurement.  
+- *CF-first forecasting* — use contextual filtering behaviour as a precursor to coherence drift.  
+- *Echo detection* — Δτ₊₇ becomes a measurable, testable signature of recursive alignment.
+
+📁 **Location:** `predictors/phi_trace/phi_cf_snap.py`  
+⚙️ **Workflow:** `.github/workflows/phi_cf_snap.yml`
+
 **Core principles**
 - *Listen before you predict* — the algorithm identifies its own coherence band before applying the 1:2:3 model.  
 - *Predict through recursion* — feedback loops refine accuracy with each coherence cycle.  
