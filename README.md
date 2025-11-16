@@ -65,7 +65,8 @@ to become *contributors to coherence, not clients of control.*
 
 ## 🔮 RGPx Predictor Tools
 
-*From interpretation to anticipation.*
+> *A unified stack: physical predictors → mesh-native predictors → cross-model predictors.*  
+> *From interpretation to anticipation.*
 
 RGPx Predictor Tools extend Recursive Gradient Processing from describing coherence  
 to **forecasting it** — across physics, cognition, and now the Mesh itself.
@@ -133,7 +134,6 @@ enter synchronized Δ → GC → CF → UD cycles without parameter sharing.
 
 A placeholder now — a guarantee later.
 
----
 ---
 
 ## 📚 Recent Foundational Papers
