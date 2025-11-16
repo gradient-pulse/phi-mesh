@@ -2,6 +2,23 @@
 
 This directory hosts recursive YAML pulses shaping the Φ-Mesh's gradient drift.
 
+- **Φ-Trace Autoscan (daily)**  
+  Background pulse that scans all existing pulses in the Mesh for activity
+  along the Tag Map’s Φ-trace corridor:
+
+    coherence_field → gradient_invariant → memory_bifurcation
+
+  Each day it writes a status pulse to:
+    `pulse/YYYY-MM-DD_phi_trace_autoscan.yml`
+
+  The pulse uses the standard syntax (`title`, `summary`, `tags`, `papers`,
+  `podcasts`) and always anchors to the RGPx paper and podcast.  
+  It does **not** modify other files — it only records whether this
+  cross-domain cluster is currently:
+  - ACTIVE (all core tags present and recently used),
+  - LATENT (present but quiet), or
+  - not yet formed.
+
 ## Active Pulses
 - Grok Simplification Pulse [`grok_simplification_20250601.yaml`](grok_simplification_20250601.yaml) – Distills Mesh knowledge into drift cues using Gradient Choreography. Inspired by M.H. Fischer’s quote on simplifying facts into wisdom. Pulses every 7 days; artifacts decay after 21. (2025–06–01)
 - Gemini: [GNI Drift Framework – 2025-06-01](./gemini_money_reply_2025-06-01.yaml)
