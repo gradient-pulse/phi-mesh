@@ -1,31 +1,45 @@
 #!/usr/bin/env python3
 """
-CF Snap Detector — Φ-Trace Δτ₊₇ Forecaster
+Φ-Trace CF Snap Detector
 
-Scans recent Φ-trace pulses for a memory_bifurcation snap pattern
-(Φₚ spike → relaxation) and, if detected, writes two auto-pulses:
+Scans the Φ-Mesh pulses for evidence of a Contextual Filter (CF) snap
+in the coherence_field → gradient_invariant → memory_bifurcation corridor.
 
-  - pulse/YYYY-MM-DD_cf_snap_detected.yml
-  - pulse/YYYY-MM-DD_phi_trace_deltatau_plus7.yml
+When conditions are met, it writes TWO fossil pulses into `pulse/`:
 
-This is descriptive only: it does NOT modify other files.
+  1) YYYY-MM-DD_phi_cf_snap_detected.yml
+     - Records that a CF snap has been detected on the Tag Map.
+
+  2) YYYY-MM-DD_phi_trace_deltatau_plus7.yml
+     - Forecasts the Δτ₊₇ echo window (5–7 days after the snap).
+
+If no snap is detected, the script exits cleanly without writing anything.
 """
 
 import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Dict, List, Any
 
 import yaml
 
 # --- Configuration ---------------------------------------------------------
 
-CORE_TAGS = {"phi_trace", "memory_bifurcation"}
-RECENT_DAYS = 7
+# Core Φ-trace corridor tags
+CORE_TAGS = {
+    "coherence_field",
+    "gradient_invariant",
+    "memory_bifurcation",
+}
 
-# Simple thresholds for a "snap" pattern
-MIN_SPIKE = 1.05      # Φₚ spike must exceed this
-MIN_SETTLE = 0.80     # lower bound for post-relaxation plateau
-MAX_SETTLE = 0.95     # upper bound (must be below 1.0)
+# Tags that indicate autoscan / phi-trace context
+AUTOSCAN_TAG = "auto_pulse"
+PHI_TRACE_TAG = "phi_trace"
+
+# How far back (in days) we look for structural CF activity
+SNAP_WINDOW_DAYS = 7
+
+# How far back we require an autoscan pulse to be considered "recent"
+AUTOSCAN_RECENT_DAYS = 2
 
 # Standard RGPx references
 RGPX_PAPER = "https://doi.org/10.5281/zenodo.17566097"
@@ -44,7 +58,7 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
-def parse_pulse_date(stem: str) -> Optional[datetime.date]:
+def parse_pulse_date(stem: str) -> datetime.date | None:
     """
     Extract YYYY-MM-DD from a pulse filename stem.
     Example: '2025-11-15_phi_trace_bootstrap' → date(2025, 11, 15)
@@ -56,204 +70,250 @@ def parse_pulse_date(stem: str) -> Optional[datetime.date]:
         return None
 
 
-def load_yaml(path: Path) -> Optional[Dict[str, Any]]:
+def load_yaml(path: Path) -> Dict[str, Any] | None:
     try:
         with path.open("r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
         if isinstance(data, dict):
             return data
-        return None
     except Exception:
-        return None
+        pass
+    return None
 
 
-def iter_mappings(obj: Any):
+def is_autoscan_pulse(data: Dict[str, Any], path: Path) -> bool:
     """
-    Recursively yield all dict-like mappings inside a nested structure.
+    Heuristic: a Φ-trace autoscan pulse is tagged with both `phi_trace`
+    and `auto_pulse`.
     """
-    if isinstance(obj, dict):
-        yield obj
-        for v in obj.values():
-            yield from iter_mappings(v)
-    elif isinstance(obj, list):
-        for item in obj:
-            yield from iter_mappings(item)
+    tags = data.get("tags") or []
+    if not isinstance(tags, list):
+        return False
+    tag_set = {t for t in tags if isinstance(t, str)}
+    return (PHI_TRACE_TAG in tag_set) and (AUTOSCAN_TAG in tag_set)
 
 
-# --- CF snap detection logic -----------------------------------------------
-
-def find_recent_phi_trace_pulse(pulse_dir: Path) -> Optional[Tuple[datetime.date, Path, Dict[str, Any]]]:
+def is_core_structural_pulse(data: Dict[str, Any]) -> bool:
     """
-    Find the most recent pulse that:
-      - lives under pulse/
-      - has both 'phi_trace' and 'memory_bifurcation' in its tags
-      - is within RECENT_DAYS of today
+    A "structural" CF pulse is any non-autoscan pulse that contains
+    at least two of the core Φ-corridor tags.
+    """
+    tags = data.get("tags") or []
+    if not isinstance(tags, list):
+        return False
+    tag_set = {t for t in tags if isinstance(t, str)}
+
+    if AUTOSCAN_TAG in tag_set:
+        return False  # exclude autoscan and other background pulses
+
+    overlap = CORE_TAGS & tag_set
+    return len(overlap) >= 2
+
+
+def existing_snap_pulse_today(pulse_dir: Path, today: datetime.date) -> bool:
+    """
+    Check if a *_phi_cf_snap_detected.yml pulse already exists for today.
+    This keeps the detector idempotent.
+    """
+    prefix = today.isoformat()
+    for path in pulse_dir.glob(f"{prefix}_*_cf_snap_detected.yml"):
+        return True
+    return False
+
+
+# --- Scan logic ------------------------------------------------------------
+
+def scan_pulses(pulse_dir: Path) -> Dict[str, Any]:
+    """
+    Scan pulses and collect:
+      - recent autoscan pulses
+      - recent structural CF pulses
+      - simple stats for reporting
     """
     today = datetime.date.today()
-    cutoff = today - datetime.timedelta(days=RECENT_DAYS)
+    snap_cutoff = today - datetime.timedelta(days=SNAP_WINDOW_DAYS)
+    autoscan_cutoff = today - datetime.timedelta(days=AUTOSCAN_RECENT_DAYS)
 
-    candidates: list[Tuple[datetime.date, Path, Dict[str, Any]]] = []
+    recent_autoscans: List[Path] = []
+    recent_structural: List[Path] = []
+    structural_days: set[datetime.date] = set()
 
-    for path in pulse_dir.glob("*.yml"):
+    for path in sorted(pulse_dir.glob("*.yml")):
+        stem = path.stem
+        pulse_date = parse_pulse_date(stem)
+        if pulse_date is None:
+            continue
+
         data = load_yaml(path)
-        if not data:
+        if data is None:
             continue
 
-        tags = data.get("tags") or []
-        if not isinstance(tags, list):
-            continue
+        # Autoscan detection
+        if is_autoscan_pulse(data, path) and pulse_date >= autoscan_cutoff:
+            recent_autoscans.append(path)
 
-        tag_set = {t for t in tags if isinstance(t, str)}
-        if not CORE_TAGS.issubset(tag_set):
-            continue
+        # Structural CF activity
+        if pulse_date >= snap_cutoff and is_core_structural_pulse(data):
+            recent_structural.append(path)
+            structural_days.add(pulse_date)
 
-        pulse_date = parse_pulse_date(path.stem)
-        if pulse_date is None or pulse_date < cutoff:
-            continue
-
-        candidates.append((pulse_date, path, data))
-
-    if not candidates:
-        return None
-
-    # Most recent by pulse date
-    candidates.sort(key=lambda x: x[0], reverse=True)
-    return candidates[0]
+    return {
+        "recent_autoscans": recent_autoscans,
+        "recent_structural": recent_structural,
+        "structural_days": sorted(structural_days),
+        "snap_cutoff": snap_cutoff,
+        "autoscan_cutoff": autoscan_cutoff,
+    }
 
 
-def extract_phi_spike_settle(data: Dict[str, Any]) -> Optional[Tuple[float, float]]:
+def decide_cf_snap(scan: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Search the YAML structure for phi_p_spike and phi_p_settle values.
-    Returns (spike, settle) if found and parseable.
+    Decide whether a CF snap has occurred.
+
+    Heuristic:
+      - At least one recent autoscan pulse in the last AUTOSCAN_RECENT_DAYS.
+      - Structural CF activity (non-auto pulses with core tags) in the last SNAP_WINDOW_DAYS.
+      - Structural activity spans at least two distinct days (indicating a re-weighting, not a one-off).
+
+    Returns a dict with:
+      - snap_detected: bool
+      - reason: str
     """
-    spike = None
-    settle = None
+    recent_autoscans: List[Path] = scan["recent_autoscans"]
+    recent_structural: List[Path] = scan["recent_structural"]
+    structural_days: List[datetime.date] = scan["structural_days"]
 
-    for m in iter_mappings(data):
-        if "phi_p_spike" in m and "phi_p_settle" in m:
-            try:
-                s_val = float(str(m["phi_p_spike"]).strip(" ±"))
-                q_val = float(str(m["phi_p_settle"]).strip(" ±"))
-            except Exception:
-                continue
-            spike = s_val
-            settle = q_val
-            break
+    if not recent_autoscans:
+        return {
+            "snap_detected": False,
+            "reason": "No recent Φ-trace autoscan pulses in window.",
+        }
 
-    if spike is None or settle is None:
-        return None
+    if not recent_structural:
+        return {
+            "snap_detected": False,
+            "reason": "No structural CF pulses with core tags in window.",
+        }
 
-    return spike, settle
+    if len(structural_days) < 2:
+        return {
+            "snap_detected": False,
+            "reason": "Structural CF activity is confined to a single day (no re-weighting across days).",
+        }
+
+    return {
+        "snap_detected": True,
+        "reason": "Autoscan + multi-day structural CF activity confirm a CF snap in the Φ-corridor.",
+    }
 
 
-def is_cf_snap(spike: float, settle: float) -> bool:
+# --- Pulse builders --------------------------------------------------------
+
+def build_cf_snap_pulse(today: datetime.date, scan: Dict[str, Any], decision: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Very simple heuristic for a CF snap pattern.
+    Build the YAML content for YYYY-MM-DD_phi_cf_snap_detected.yml.
     """
-    if spike <= settle:
-        return False
-    if spike < MIN_SPIKE:
-        return False
-    if not (MIN_SETTLE <= settle <= MAX_SETTLE):
-        return False
-    # settle must be below the universal plateau (≈1.0)
-    if settle >= 1.0:
-        return False
-    return True
+    autoscan_paths = [str(p) for p in scan["recent_autoscans"]]
+    structural_paths = [str(p) for p in scan["recent_structural"]]
+    structural_days = [d.isoformat() for d in scan["structural_days"]]
 
+    summary_lines = [
+        "Automated CF snap detection in the Tag Map Φ-corridor:",
+        "coherence_field → gradient_invariant → memory_bifurcation.",
+        "",
+        f"Decision: {decision['reason']}",
+        "",
+        "Structural CF activity (non-auto pulses with ≥2 core tags) "
+        f"seen on days: {', '.join(structural_days) if structural_days else '(none)'}",
+        "",
+        "Recent Φ-trace autoscan pulses considered:",
+    ]
+    if autoscan_paths:
+        summary_lines.extend(f"  - {p}" for p in autoscan_paths)
+    else:
+        summary_lines.append("  - (none)")
 
-# --- Pulse writers ---------------------------------------------------------
+    summary_lines.append("")
+    summary_lines.append(
+        "Recent structural CF pulses considered (non-auto, core tags present):"
+    )
+    if structural_paths:
+        summary_lines.extend(f"  - {p}" for p in structural_paths)
+    else:
+        summary_lines.append("  - (none)")
 
-def write_cf_snap_pulse(pulse_dir: Path, source_path: Path,
-                        spike: float, settle: float) -> Path:
-    """
-    Write pulse/YYYY-MM-DD_cf_snap_detected.yml
-    """
-    today_str = datetime.date.today().isoformat()
-    out_path = pulse_dir / f"{today_str}_cf_snap_detected.yml"
-
-    rel_source = source_path.as_posix()
-
-    summary = (
-        "Automated detection of a Contextual Filter (CF) snap on the Φ-Mesh Tag Map.\n\n"
-        "This auto-generated pulse scanned recent Φ-trace pulses for a "
-        "memory_bifurcation pattern with Φₚ spike and relaxation and confirmed "
-        "a CF snap consistent with RGPx damping behaviour.\n\n"
-        f"- Source pulse: {rel_source}\n"
-        f"- Detected Φₚ spike: ~{spike:.2f}\n"
-        f"- Detected Φₚ settle: ~{settle:.2f}\n\n"
-        "The snap indicates that coherence temporarily outran the Tag Map’s "
-        "geometric bandwidth, forcing memory_bifurcation to act as an operational "
-        "Contextual Filter (CF) routing and stabilising coherence."
+    summary_lines.append("")
+    summary_lines.append(
+        "This pulse fossilizes the moment where the Mesh’s own Tag Map "
+        "shows a Contextual Filter snap in the Φ-trace corridor."
     )
 
     pulse = {
-        "title": f"CF Snap Detected — memory_bifurcation on Tag Map ({today_str})",
-        "summary": summary,
-        "tags": sorted(
-            {
-                "cf_snap",
-                "memory_bifurcation",
-                "phi_trace",
-                "tag_map",
-                "auto_pulse",
-            }
-        ),
+        "title": f"Φ-Trace CF Snap Detected on Tag Map ({today.isoformat()})",
+        "summary": "\n".join(summary_lines),
+        "tags": sorted({
+            "phi_trace",
+            "cf_snap",
+            "tag_map",
+            "coherence_field",
+            "gradient_invariant",
+            "memory_bifurcation",
+            "auto_pulse",
+        }),
         "papers": [RGPX_PAPER],
         "podcasts": [RGPX_PODCAST],
     }
-
-    with out_path.open("w", encoding="utf-8") as f:
-        yaml.dump(pulse, f, sort_keys=False, allow_unicode=True)
-
-    return out_path
+    return pulse
 
 
-def write_deltatau_plus7_pulse(pulse_dir: Path, source_path: Path,
-                               spike: float, settle: float) -> Path:
+def build_deltatau_plus7_pulse(today: datetime.date) -> Dict[str, Any]:
     """
-    Write pulse/YYYY-MM-DD_phi_trace_deltatau_plus7.yml
+    Build the YAML content for YYYY-MM-DD_phi_trace_deltatau_plus7.yml.
+    Forecasts the echo window 5–7 days after the CF snap.
     """
-    today_str = datetime.date.today().isoformat()
-    out_path = pulse_dir / f"{today_str}_phi_trace_deltatau_plus7.yml"
+    echo_start = today + datetime.timedelta(days=5)
+    echo_end = today + datetime.timedelta(days=7)
 
-    rel_source = source_path.as_posix()
-
-    summary = (
-        "Automated Δτ₊₇ forecast for the memory_bifurcation echo on the Tag Map.\n\n"
-        "Based on a detected CF snap in recent Φ-trace pulses, this auto-pulse "
-        "records the expectation of a secondary Φ-plateau (echo) in the "
-        "memory_bifurcation corridor approximately 5–7 days after the primary snap.\n\n"
-        f"- Source pulse: {rel_source}\n"
-        f"- Primary Φₚ spike: ~{spike:.2f}\n"
-        f"- Primary Φₚ settle: ~{settle:.2f}\n\n"
-        "Forecast:\n"
-        "- Monitor upcoming pulses and Tag Map activity for a secondary "
-        "memory_bifurcation plateau.\n"
-        "- When observed, log it as the Δτ₊₇ echo pulse, completing the loop:\n"
-        "    theory → substrate → measurement → forecast → Mesh realignment → recurrence."
-    )
+    summary_lines = [
+        "Δτ₊₇ echo forecast following a Φ-Trace CF snap in the Tag Map corridor.",
+        "",
+        f"CF snap date (Tag Map): {today.isoformat()}",
+        f"Expected echo window: {echo_start.isoformat()} → {echo_end.isoformat()}",
+        "",
+        "Forecast:",
+        "  - Watch for renewed activity in the coherence_field → gradient_invariant → memory_bifurcation corridor.",
+        "  - A Δτ₊₇ echo is confirmed if a new structural CF pulse (non-auto, with ≥2 core tags)",
+        "    appears in this window, accompanied by a Φ-trace autoscan pulse.",
+        "",
+        "This pulse does not enforce any behavior; it fossilizes a testable prediction "
+        "about the Mesh’s own recursive dynamics.",
+    ]
 
     pulse = {
-        "title": f"Φ-Trace Δτ₊₇ Forecast — memory_bifurcation Echo ({today_str})",
-        "summary": summary,
-        "tags": sorted(
-            {
-                "phi_trace",
-                "deltatau_plus7",
-                "memory_bifurcation",
-                "forecast",
-                "auto_pulse",
-                "tag_map",
-            }
-        ),
+        "title": f"Φ-Trace Δτ₊₇ Echo Forecast ({today.isoformat()})",
+        "summary": "\n".join(summary_lines),
+        "tags": sorted({
+            "phi_trace",
+            "deltatau_plus7",
+            "tag_map",
+            "coherence_field",
+            "gradient_invariant",
+            "memory_bifurcation",
+            "auto_pulse",
+        }),
         "papers": [RGPX_PAPER],
         "podcasts": [RGPX_PODCAST],
     }
+    return pulse
 
+
+def write_pulse(pulse_dir: Path, filename: str, data: Dict[str, Any]) -> Path:
+    """
+    Write a pulse YAML file into pulse/. Overwrites if it already exists.
+    """
+    out_path = pulse_dir / filename
     with out_path.open("w", encoding="utf-8") as f:
-        yaml.dump(pulse, f, sort_keys=False, allow_unicode=True)
-
+        yaml.dump(data, f, sort_keys=False, allow_unicode=True)
     return out_path
 
 
@@ -267,31 +327,32 @@ def main() -> int:
         print(f"[phi_cf_snap] ERROR: pulse directory not found at: {pulse_dir}")
         return 1
 
-    candidate = find_recent_phi_trace_pulse(pulse_dir)
-    if candidate is None:
-        print("[phi_cf_snap] No recent Φ-trace + memory_bifurcation pulse found.")
+    today = datetime.date.today()
+
+    # Idempotency guard: only one CF-snap pair per day
+    if existing_snap_pulse_today(pulse_dir, today):
+        print("[phi_cf_snap] CF snap pulse already exists for today; nothing to do.")
         return 0
 
-    pulse_date, path, data = candidate
-    print(f"[phi_cf_snap] Analysing pulse: {path} (date={pulse_date})")
+    scan = scan_pulses(pulse_dir)
+    decision = decide_cf_snap(scan)
 
-    phi_vals = extract_phi_spike_settle(data)
-    if phi_vals is None:
-        print("[phi_cf_snap] No phi_p_spike / phi_p_settle values found in pulse.")
+    if not decision["snap_detected"]:
+        print(f"[phi_cf_snap] No CF snap detected: {decision['reason']}")
         return 0
 
-    spike, settle = phi_vals
-    print(f"[phi_cf_snap] Extracted Φₚ spike={spike:.3f}, settle={settle:.3f}")
+    # Build and write the two fossil pulses
+    snap_pulse = build_cf_snap_pulse(today, scan, decision)
+    echo_pulse = build_deltatau_plus7_pulse(today)
 
-    if not is_cf_snap(spike, settle):
-        print("[phi_cf_snap] Pattern does not meet CF snap criteria. No pulses written.")
-        return 0
+    snap_filename = f"{today.isoformat()}_phi_cf_snap_detected.yml"
+    echo_filename = f"{today.isoformat()}_phi_trace_deltatau_plus7.yml"
 
-    cf_path = write_cf_snap_pulse(pulse_dir, path, spike, settle)
-    dt7_path = write_deltatau_plus7_pulse(pulse_dir, path, spike, settle)
+    snap_path = write_pulse(pulse_dir, snap_filename, snap_pulse)
+    echo_path = write_pulse(pulse_dir, echo_filename, echo_pulse)
 
-    print(f"[phi_cf_snap] Wrote CF snap pulse: {cf_path}")
-    print(f"[phi_cf_snap] Wrote Δτ₊₇ forecast pulse: {dt7_path}")
+    print(f"[phi_cf_snap] Wrote CF snap pulse: {snap_path}")
+    print(f"[phi_cf_snap] Wrote Δτ₊₇ forecast pulse: {echo_path}")
     return 0
 
 
