@@ -61,6 +61,7 @@ We invite scientists, engineers, and thinkers not to consume knowledge, but to *
 to become *contributors to coherence, not clients of control.*
 
 ---
+---
 
 ## 🔮 RGPx Predictor Tools
 
@@ -132,6 +133,7 @@ enter synchronized Δ → GC → CF → UD cycles without parameter sharing.
 
 A placeholder now — a guarantee later.
 
+---
 ---
 
 ## 📚 Recent Foundational Papers
