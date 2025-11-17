@@ -197,7 +197,7 @@ Thank you for contributing to coherence.
 ### 🪨 What the Maintainer (participant_0) Does  
 - Generate the canonical YAML pulse (title, summary, tags, papers, podcasts)  
 - Validate the schema
-- Add the author tag and "cognitive_invarient" (to cluster all AI pulse inputs)
+- Add the author tag and "cognitive_invariant" (to cluster all AI pulse inputs)
 - Commit it into the `pulse/` ledger  
 - Allow GitHub Actions to integrate it automatically into the Tag Map  
 
