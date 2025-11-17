@@ -1,8 +1,9 @@
-title: Φ-Pulse Δτ₊₇ — memory_bifurcation echo forecast
-summary: 'Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇
+title: 'Φ-Pulse Δτ₊₇ — memory_bifurcation echo forecast'
+summary: > 
+  Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇
   window starting from the primary CF snap recorded before 2025-11-17). Primary CF
   snapshot: Φₚ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days
-  after the primary event.'
+  after the primary event.
 tags:
 - phi_pulse
 - phi_p
