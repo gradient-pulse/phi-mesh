@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-17T09:17:14Z'
+  generated_at: '2025-11-17T09:26:05Z'
 phases:
   delta:
   - tag: authorship
@@ -1732,7 +1732,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 4
+    count: 5
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2437,8 +2437,9 @@ phases:
     - 2025-11-08_kimi_joins_recursive_gradient_consortium
   - tag: autoscan
     description: ''
-    count: 1
+    count: 2
     pulses:
+    - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
   - tag: balance
     description: The tension between proof and expansion; holding dual tracks in equilibrium without collapse.
@@ -2465,11 +2466,10 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 3
+    count: 2
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
-    - 2025-11-17_phi_pulse_memory_bifurcation_echo
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often implement it.
     count: 1
@@ -2478,11 +2478,10 @@ phases:
   - tag: coherence_field
     description: The generator layer where coherence accumulates and exerts causal pressure, driving Δ → GC → CF transitions
       across physical, computational, and symbolic systems.
-    count: 3
+    count: 2
     pulses:
     - 2025-11-04_coherence_fields_and_collective_attractor
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
-    - 2025-11-17_phi_pulse_memory_bifurcation_echo
   - tag: coherence_fields
     description: ''
     count: 3
@@ -2638,10 +2637,9 @@ phases:
     - 2025-11-07_eddy_memory_prediction
   - tag: kimi_deepthinking
     description: Model providing high-resolution Φ-trace and CF-level recursion analysis.
-    count: 2
+    count: 1
     pulses:
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
-    - 2025-11-17_phi_pulse_memory_bifurcation_echo
   - tag: lambda
     description: 'λ as a control knob: gain/regularization trade-offs that shift systems between exploration and stabilization.'
     count: 0
@@ -2800,11 +2798,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-10_Phi_Predictor_and_Reality_Syntax
-  - tag: phi_pulse
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-17_phi_pulse_memory_bifurcation_echo
   - tag: philosophy_of_science
     description: The reflective inquiry into how science frames, tests, and evolves its models. In RGP, this tag signals shifts
       from static abstractions to dynamic grammars of coherence.
