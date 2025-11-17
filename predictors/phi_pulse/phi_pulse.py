@@ -10,14 +10,29 @@ PODCAST_LINK = (
     "bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
 )
 
+# --- YAML CONFIG: force single quotes for all strings -----------------------
+
+
+def single_quote_representer(dumper, data):
+    """
+    Represent all Python str values as single-quoted scalars in YAML.
+    This guarantees:
+      - title: '...'
+      - tags: ['tag_one', 'tag_two']
+      - URLs and other strings are also single-quoted
+    """
+    return dumper.represent_scalar("tag:yaml.org,2002:str", data, style="'")
+
+
+yaml.add_representer(str, single_quote_representer)
+
 
 def write_pulse(filename: str, pulse: dict):
     """
-    Writes a YAML pulse file following the exact Phi-Mesh canonical schema.
+    Writes a YAML pulse file following the Phi-Mesh canonical schema.
     Ensures:
-      - title is a plain string (PyYAML will single-quote when needed)
-      - summary is emitted as a folded block (`summary: >`)
-      - ordering: title, summary, (optional blocks), tags, papers, podcasts
+      - all strings are single-quoted (via custom representer)
+      - stable key ordering: title, summary, (optional blocks), tags, papers, podcasts
     """
     path = os.path.join(PULSE_DIR, filename)
 
@@ -33,7 +48,7 @@ def write_pulse(filename: str, pulse: dict):
 
 def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
     """
-    Generates the Δτ₊₇ echo pulse with exact canonical formatting and tags.
+    Generates the Δτ₊₇ echo pulse with exact canonical tags.
 
     Canonical echo tags:
       - phi_trace
@@ -47,7 +62,6 @@ def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
 
     title = "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
 
-    # Summary will be emitted as `summary: >` by the dumper
     summary_lines = [
         "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇)",
         "window starting from the primary CF snap recorded before "
@@ -139,7 +153,7 @@ def run_predictor():
     """
 
     today = datetime.utcnow()
-    yesterday = today - timedelta(days=1)
+    yesterday = today - timedelta(days=1)  # reserved for future use
 
     # 1. Autoscan (placeholder logic for now)
     scan_result = {
