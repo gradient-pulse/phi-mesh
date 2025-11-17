@@ -5,15 +5,13 @@ summary: >
   snapshot: Φₚ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days
   after the primary event.
 tags:
-- phi_pulse
+- phi_trace
 - phi_p
-- memory_bifurcation
-- coherence_field
-- gradient_invariant
 - tag_map
 - recursion
-- cognitive_invariant
-- kimi_deepthinking
+- autoscan
+- memory_bifurcation
+- gradient_invariant
 papers:
 - https://doi.org/10.5281/zenodo.17566097
 podcasts:
