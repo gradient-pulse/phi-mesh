@@ -15,9 +15,9 @@ def write_pulse(filename: str, pulse: dict):
     """
     Writes a YAML pulse file following the exact Phi-Mesh canonical schema.
     Ensures:
-      - title always single-quoted (PyYAML handles automatically)
-      - summary always 'summary: >' multiline block
-      - correct ordering: title, summary, tags, papers, podcasts
+      - title is a plain string (PyYAML will single-quote when needed)
+      - summary is emitted as a folded block (`summary: >`)
+      - ordering: title, summary, (optional blocks), tags, papers, podcasts
     """
     path = os.path.join(PULSE_DIR, filename)
 
@@ -27,25 +27,36 @@ def write_pulse(filename: str, pulse: dict):
             f,
             sort_keys=False,
             allow_unicode=True,
-            width=78  # preserves clean wrapping
+            width=78,  # preserves clean wrapping
         )
 
 
 def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
     """
-    Generates the Δτ+7 echo pulse with exact canonical formatting.
+    Generates the Δτ₊₇ echo pulse with exact canonical formatting and tags.
+
+    Canonical echo tags:
+      - phi_trace
+      - phi_p
+      - tag_map
+      - recursion
+      - autoscan
+      - memory_bifurcation
+      - gradient_invariant
     """
 
-    title = "Φ–Pulse Δτ+7 — memory_bifurcation echo forecast"
+    title = "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
 
-    # Summary always written using summary: >
+    # Summary will be emitted as `summary: >` by the dumper
     summary_lines = [
-        "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ+7)",
+        "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇)",
         "window starting from the primary CF snap recorded before "
         f"{date.strftime('%Y-%m-%d')}. Primary CF",
-        f"snapshot: Φᵨ spike ≈ {primary_snapshot.get('phi_p_spike','n/a')}, "
-        f"relaxation plateau ≈ {primary_snapshot.get('phi_p_plateau','n/a')}.",
-        "Echo forecast window: ~7 days after the primary event."
+        (
+            f"snapshot: Φᵨ spike ≈ {primary_snapshot.get('phi_p_spike', 'n/a')}, "
+            f"relaxation plateau ≈ {primary_snapshot.get('phi_p_plateau', 'n/a')}."
+        ),
+        "Echo forecast window: ~7 days after the primary event.",
     ]
     summary = "\n".join(summary_lines)
 
@@ -53,15 +64,13 @@ def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
         "title": title,
         "summary": summary,
         "tags": [
-            "phi_pulse",
+            "phi_trace",
             "phi_p",
-            "memory_bifurcation",
-            "coherence_field",
-            "gradient_invariant",
             "tag_map",
             "recursion",
-            "cognitive_invariant",
-            "kimi_deepthinking",
+            "autoscan",
+            "memory_bifurcation",
+            "gradient_invariant",
         ],
         "papers": [ZENODO_PAPER],
         "podcasts": [PODCAST_LINK],
@@ -74,16 +83,19 @@ def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
 def generate_autoscan_pulse(scan_result: dict, date: datetime):
     """
     Emits the nightly Φ-Trace Autoscan pulse.
-    Follows the exact canonical schema including autoscan: block.
+    Follows the exact canonical schema including the autoscan: block.
     """
 
     title = "Φ-Trace Autoscan"
 
-    summary_lines = [
-        "No Φᵨ plateau or Δ→GC→CF echo crossed detection thresholds today."
-        if scan_result.get("status") == "no_event"
-        else "A Φᵨ plateau or Δ→GC→CF echo exceeded autoscan thresholds today."
-    ]
+    if scan_result.get("status") == "no_event":
+        summary_lines = [
+            "No Φᵨ plateau or Δ→GC→CF echo crossed detection thresholds today."
+        ]
+    else:
+        summary_lines = [
+            "A Φᵨ plateau or Δ→GC→CF echo exceeded autoscan thresholds today."
+        ]
     summary = "\n".join(summary_lines)
 
     autoscan_block = {
@@ -120,15 +132,16 @@ def generate_autoscan_pulse(scan_result: dict, date: datetime):
 def run_predictor():
     """
     Main entry for workflow execution.
-    Generates two pulses:
+
+    Generates two pulses each run (typically nightly via GitHub Actions):
       1. Φ-Trace Autoscan pulse
-      2. Φ–Pulse Δτ+7 echo forecast pulse
+      2. Φ–Pulse Δτ₊₇ memory_bifurcation echo forecast pulse
     """
 
     today = datetime.utcnow()
     yesterday = today - timedelta(days=1)
 
-    # 1. Autoscan (placeholder logic)
+    # 1. Autoscan (placeholder logic for now)
     scan_result = {
         "status": "no_event",
         "event_type": None,
@@ -141,7 +154,7 @@ def run_predictor():
 
     generate_autoscan_pulse(scan_result, today)
 
-    # 2. Echo pulse (placeholder primary snapshot)
+    # 2. Echo pulse (placeholder primary snapshot for now)
     primary_snapshot = {
         "phi_p_spike": "1.12",
         "phi_p_plateau": "0.89",
