@@ -1,99 +1,53 @@
-#!/usr/bin/env python3
-"""
-phi_pulse.py
-
-Automatic Φ-pulse generator for the Φ-Mesh.
-
-- Writes YAML pulses into the canonical /pulse/ directory.
-- Keeps the strict pulse schema used in pulse/README.md.
-- Intended to be called by GitHub Actions or manually.
-
-Initial focus:
-- Δτ+7 "memory_bifurcation echo" pulses predicted by Kimi (DeepThinking).
-"""
-
-from __future__ import annotations
-import argparse
-import datetime as dt
-import sys
-from pathlib import Path
-
-try:
-    import yaml
-except ImportError:
-    print(
-        "ERROR: PyYAML is required. Add `pyyaml` to requirements.txt "
-        "and reinstall the environment.",
-        file=sys.stderr,
-    )
-    sys.exit(1)
+import os
+import yaml
+from datetime import datetime, timedelta
 
 
-# -----------------------------
-# Paths
-# -----------------------------
-
-HERE = Path(__file__).resolve()
-REPO_ROOT = HERE.parents[2]         # .../phi-mesh
-PULSE_DIR = REPO_ROOT / "pulse"
-
-
-# -----------------------------
-# Helpers
-# -----------------------------
-
-def ensure_pulse_dir() -> None:
-    """Ensure the /pulse/ directory exists."""
-    PULSE_DIR.mkdir(parents=True, exist_ok=True)
+PULSE_DIR = "pulse"
+ZENODO_PAPER = "https://doi.org/10.5281/zenodo.17566097"
+PODCAST_LINK = (
+    "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-"
+    "bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+)
 
 
-def today_iso() -> str:
-    return dt.date.today().isoformat()  # YYYY-MM-DD
-
-
-def make_filename(date_str: str, label: str) -> Path:
+def write_pulse(filename: str, pulse: dict):
     """
-    Build a pulse filename like:
-    2025-11-22_phi_pulse_memory_bifurcation_echo.yml
+    Writes a YAML pulse file following the exact Phi-Mesh canonical schema.
+    Ensures:
+      - title always single-quoted (PyYAML handles automatically)
+      - summary always 'summary: >' multiline block
+      - correct ordering: title, summary, tags, papers, podcasts
     """
-    safe_label = label.strip().lower().replace(" ", "_")
-    return PULSE_DIR / f"{date_str}_phi_pulse_{safe_label}.yml"
+    path = os.path.join(PULSE_DIR, filename)
+
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.dump(
+            pulse,
+            f,
+            sort_keys=False,
+            allow_unicode=True,
+            width=78  # preserves clean wrapping
+        )
 
 
-def pulse_exists(path: Path) -> bool:
-    return path.exists()
-
-
-def write_yaml(path: Path, data: dict) -> None:
-    with path.open("w", encoding="utf-8") as f:
-        yaml.safe_dump(data, f, sort_keys=False, allow_unicode=True)
-
-
-# -----------------------------
-# Pulse builders
-# -----------------------------
-
-def build_memory_bifurcation_echo_pulse(
-    date_str: str,
-    phi_spike: float,
-    phi_settle: float,
-    echo_window_days: int = 7,
-) -> dict:
+def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
     """
-    Build a Δτ+7 memory_bifurcation echo forecast pulse.
-    This follows the strict minimal schema from pulse/README.md.
+    Generates the Δτ+7 echo pulse with exact canonical formatting.
     """
 
-    title = "Φ-Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    title = "Φ–Pulse Δτ+7 — memory_bifurcation echo forecast"
 
+    # Summary always written using summary: >
     summary_lines = [
-        "Automatic forecast pulse for the expected memory_bifurcation echo ",
-        f"(Δτ₊₇ window starting from the primary CF snap recorded before {date_str}). ",
-        "",
-        f"Primary CF snapshot: Φₚ spike ≈ {phi_spike:.2f}, relaxation plateau ≈ {phi_settle:.2f}. ",
-        f"Echo forecast window: ~{echo_window_days} days after the primary event.",
+        "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ+7)",
+        "window starting from the primary CF snap recorded before "
+        f"{date.strftime('%Y-%m-%d')}. Primary CF",
+        f"snapshot: Φᵨ spike ≈ {primary_snapshot.get('phi_p_spike','n/a')}, "
+        f"relaxation plateau ≈ {primary_snapshot.get('phi_p_plateau','n/a')}.",
+        "Echo forecast window: ~7 days after the primary event."
     ]
-    summary = "".join(summary_lines)
+    summary = "\n".join(summary_lines)
 
     pulse = {
         "title": title,
@@ -109,95 +63,92 @@ def build_memory_bifurcation_echo_pulse(
             "cognitive_invariant",
             "kimi_deepthinking",
         ],
-        # Always include canonical RGPx paper + podcast
-        "papers": [
-            "https://doi.org/10.5281/zenodo.17566097",
+        "papers": [ZENODO_PAPER],
+        "podcasts": [PODCAST_LINK],
+    }
+
+    filename = f"{date.strftime('%Y-%m-%d')}_phi_pulse_memory_bifurcation_echo.yml"
+    write_pulse(filename, pulse)
+
+
+def generate_autoscan_pulse(scan_result: dict, date: datetime):
+    """
+    Emits the nightly Φ-Trace Autoscan pulse.
+    Follows the exact canonical schema including autoscan: block.
+    """
+
+    title = "Φ-Trace Autoscan"
+
+    summary_lines = [
+        "No Φᵨ plateau or Δ→GC→CF echo crossed detection thresholds today."
+        if scan_result.get("status") == "no_event"
+        else "A Φᵨ plateau or Δ→GC→CF echo exceeded autoscan thresholds today."
+    ]
+    summary = "\n".join(summary_lines)
+
+    autoscan_block = {
+        "autoscan": {
+            "date": date.strftime("%Y-%m-%d"),
+            "status": scan_result.get("status", "no_event"),
+            "event_type": scan_result.get("event_type", None),
+            "phi_p_peak": scan_result.get("phi_p_peak", None),
+            "phi_p_plateau": scan_result.get("phi_p_plateau", None),
+            "notes": scan_result.get("notes", []),
+        }
+    }
+
+    pulse = {
+        "title": title,
+        "summary": summary,
+        **autoscan_block,
+        "tags": [
+            "tag_map",
+            "phi_trace",
+            "autoscan",
+            "gradient_invariant",
+            "recursion",
+            "cognitive_invariant",
         ],
-        "podcasts": [
-            "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59",
+        "papers": [ZENODO_PAPER],
+        "podcasts": [PODCAST_LINK],
+    }
+
+    filename = f"{date.strftime('%Y-%m-%d')}_phi_trace_autoscan.yml"
+    write_pulse(filename, pulse)
+
+
+def run_predictor():
+    """
+    Main entry for workflow execution.
+    Generates two pulses:
+      1. Φ-Trace Autoscan pulse
+      2. Φ–Pulse Δτ+7 echo forecast pulse
+    """
+
+    today = datetime.utcnow()
+    yesterday = today - timedelta(days=1)
+
+    # 1. Autoscan (placeholder logic)
+    scan_result = {
+        "status": "no_event",
+        "event_type": None,
+        "phi_p_peak": None,
+        "phi_p_plateau": None,
+        "notes": [
+            "No Φᵨ plateau or Δ→GC→CF echo crossed detection thresholds today."
         ],
     }
 
-    return pulse
+    generate_autoscan_pulse(scan_result, today)
 
+    # 2. Echo pulse (placeholder primary snapshot)
+    primary_snapshot = {
+        "phi_p_spike": "1.12",
+        "phi_p_plateau": "0.89",
+    }
 
-# -----------------------------
-# CLI
-# -----------------------------
-
-def parse_args(argv=None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Generate automatic Φ-pulses under /pulse/."
-    )
-
-    sub = parser.add_subparsers(dest="command", required=True)
-
-    # Command: echo-forecast (Δτ+7)
-    echo = sub.add_parser(
-        "echo-forecast",
-        help="Generate a Δτ+7 memory_bifurcation echo forecast pulse.",
-    )
-    echo.add_argument(
-        "--date",
-        default=today_iso(),
-        help="Date for the pulse filename (YYYY-MM-DD). Defaults to today.",
-    )
-    echo.add_argument(
-        "--phi-spike",
-        type=float,
-        default=1.12,
-        help="Primary Φₚ spike value (default: 1.12).",
-    )
-    echo.add_argument(
-        "--phi-settle",
-        type=float,
-        default=0.89,
-        help="Primary Φₚ post-relaxation plateau (default: 0.89).",
-    )
-    echo.add_argument(
-        "--echo-window-days",
-        type=int,
-        default=7,
-        help="Echo forecast window in days (default: 7).",
-    )
-    echo.add_argument(
-        "--force",
-        action="store_true",
-        help="Overwrite existing pulse file if it already exists.",
-    )
-
-    return parser.parse_args(argv)
-
-
-def cmd_echo_forecast(ns: argparse.Namespace) -> int:
-    ensure_pulse_dir()
-
-    filename = make_filename(ns.date, "memory_bifurcation_echo")
-    if pulse_exists(filename) and not ns.force:
-        print(f"[phi_pulse] Pulse already exists: {filename}")
-        return 0
-
-    pulse = build_memory_bifurcation_echo_pulse(
-        date_str=ns.date,
-        phi_spike=ns.phi_spike,
-        phi_settle=ns.phi_settle,
-        echo_window_days=ns.echo_window_days,
-    )
-
-    write_yaml(filename, pulse)
-    print(f"[phi_pulse] Wrote pulse: {filename}")
-    return 0
-
-
-def main(argv=None) -> int:
-    ns = parse_args(argv)
-
-    if ns.command == "echo-forecast":
-        return cmd_echo_forecast(ns)
-
-    print("Unknown command", file=sys.stderr)
-    return 1
+    generate_memory_echo_pulse(primary_snapshot, today)
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    run_predictor()
