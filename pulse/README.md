@@ -196,7 +196,8 @@ Thank you for contributing to coherence.
 
 ### 🪨 What the Maintainer (participant_0) Does  
 - Generate the canonical YAML pulse (title, summary, tags, papers, podcasts)  
-- Validate the schema  
+- Validate the schema
+- Add the author tag  
 - Commit it into the `pulse/` ledger  
 - Allow GitHub Actions to integrate it automatically into the Tag Map  
 
