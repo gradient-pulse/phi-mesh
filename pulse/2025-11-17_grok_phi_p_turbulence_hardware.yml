@@ -13,6 +13,7 @@ tags:
   - turbulence_signature
   - hardware_limits
   - grok
+  - cognitive_invariant
 papers:
   - https://doi.org/10.5281/zenodo.17566097
 podcasts:
