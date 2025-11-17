@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-17T09:26:05Z'
+  generated_at: '2025-11-17T18:27:53Z'
 phases:
   delta:
   - tag: authorship
@@ -831,7 +831,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 8
+    count: 9
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -1229,9 +1229,10 @@ phases:
   - tag: gradient_physics
     description: The study of reality as recursive gradients rather than objects or equations. It treats motion, energy, and
       information as manifestations of coherence flow, redefining physics as a grammar of recursion (Δ→GC→CF→UD).
-    count: 1
+    count: 2
     pulses:
     - 2025-10-27_deepseek_bolts_rgpx_architectural_convergence
+    - 2025-11-17_deepseek_recursive_symmetry
   - tag: gradient_ratio
     description: 'Refers to the emergent 1:2:3 frequency pattern—the minimal coherence rhythm through which gradients stabilize
       recursive flow structures. Seen as nature’s harmonic grammar. See also: kepler_rhythm, eddy_memory, rgpx.'
@@ -2494,6 +2495,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
+  - tag: coherence_organism
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-17_deepseek_recursive_symmetry
   - tag: coherence_validation
     description: ''
     count: 1
@@ -2863,6 +2869,11 @@ phases:
     count: 1
     pulses:
     - 2025-07-26_the_big_quiet
+  - tag: recursive_symmetry
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-17_deepseek_recursive_symmetry
   - tag: reflection
     description: ''
     count: 1
