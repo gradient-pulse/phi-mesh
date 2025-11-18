@@ -54,6 +54,8 @@ aliases:
 
   coherence_field:
     - coherence_fields
+    - CoherenceField
+    - Coherence_Fields
     - coherence-fields
 
   compute:
@@ -162,6 +164,9 @@ aliases:
   gpt5:
     - GPT5
 
+  harmonic_invariant:
+    - harmonic_invariants
+    
   hrm:
     - HRM
 
