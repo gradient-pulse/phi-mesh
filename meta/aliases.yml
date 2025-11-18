@@ -1,7 +1,7 @@
-# TODO: Normalize search on canonical tags
-# Current state: tag map search hits alias entries (e.g. icl) but not the canonical form (in_context_learning).
-# Fix needed in generate_graph_data.py + frontend search: always canonicalize tags and queries.
 aliases:
+  ai_alignment:
+    - AI_alignment
+    
   ai_architectures:
     - AIArchitecture
     - AI_architecture
@@ -9,12 +9,21 @@ aliases:
     - ai_architecture
     - ai_architectures
 
+  ai_role_differentiation:
+    - AI_role_differentiation
+  
+  analog_gravity:
+    - Analog_gravity
+  
   attractor: 
     - attractor_dynamics
     
   automation:
     - Automation
 
+  behavioral_api:
+    - behavioral_API
+  
   beyond: 
     - beyond_science
   
@@ -43,6 +52,10 @@ aliases:
   coherence_amplifier:
     - coherence-amplifier
 
+  coherence_field:
+    - coherence_fields
+    - coherence-fields
+
   compute:
     - computation
     - processing
@@ -53,6 +66,9 @@ aliases:
     - contectual_filter
     - contextual-filter
     - contextualfilter     # ← audit variant
+
+  cor:
+    - CoR
 
   cosmic_attractor: 
     - cosmological_attractor
@@ -70,7 +86,15 @@ aliases:
   dark_matter:
     - DarkMatter
     - Dark_Matter
-
+  
+  deepseek:
+    - DeepSeek
+    - deepSeek
+  
+  delta_pressure:
+    - Δ_pressure
+    - delta-pressure
+  
   development_process:
     - development-process
 
@@ -92,6 +116,9 @@ aliases:
     - experimenterpulse   # ← audit variant (squashed)
     - finding
     - lab_note
+
+  experiments:
+    - Experiments
 
   flux_entrenched_universe:
     - flux-entrenched_universe
@@ -128,7 +155,10 @@ aliases:
     - GROK3
     - grok3
     - Grok
-
+  
+  gpt4o:
+    - GPT4o
+  
   gpt5:
     - GPT5
 
@@ -198,6 +228,9 @@ aliases:
     - "\u03A6-harmonics"
     - harmonics            # ← audit shorthand
 
+  phi_invariant:
+    - phi-invariant
+
   phi_mesh:
     - PhiMesh
     - Phi-mesh
@@ -215,6 +248,13 @@ aliases:
   physics_based_asic:
     - asic
 
+  pola:
+    - PoLA
+  
+  predictor_routine:
+    - Predictor_Routine
+    - predictor-routine
+  
   proto_pulse:
     - proto-pulse
     - protopulse
