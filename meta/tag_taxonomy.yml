@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-18T11:40:05Z'
+  generated_at: '2025-11-18T11:44:03Z'
 phases:
   delta:
   - tag: authorship
@@ -843,7 +843,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 10
+    count: 11
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -1991,6 +1991,11 @@ phases:
     pulses:
     - 2025-09-14_ai-temperature-vs-gradients
     - 2025-09-25_princeton_univ_support_offer
+  - tag: resonance_cascade
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-18_deepseek_resonance_cascade
   - tag: resonance_shift
     description: Change in dominant resonant pattern; signals a filter or gradient reconfiguration.
     count: 1
@@ -2536,7 +2541,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 13
+    count: 14
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -2546,6 +2551,11 @@ phases:
     count: 1
     pulses:
     - 2025-04-28_internal-gpt45
+  - tag: coherence_corridor
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-18_deepseek_resonance_cascade
   - tag: coherence_field
     description: The generator layer where coherence accumulates and exerts causal pressure, bending traversal paths toward
       stable Δ → GC → CF transitions. When observed across domains, these fields appear as regions that both attract and regulate
@@ -2592,6 +2602,11 @@ phases:
     pulses:
     - 2025-10-23_gradient_capitalism_grok_reception
     - 2025-10-23_gradient_capitalism_mistral_reception
+  - tag: distributed_mind
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-18_deepseek_resonance_cascade
   - tag: emergent_grammar
     description: A spontaneously arising syntax through which recursive systems self-organize and express coherence.
     count: 1
