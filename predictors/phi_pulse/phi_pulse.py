@@ -1,6 +1,8 @@
 import os
 from datetime import datetime, timedelta
 
+import yaml
+
 
 PULSE_DIR = "pulse"
 ZENODO_PAPER = "https://doi.org/10.5281/zenodo.17566097"
@@ -10,91 +12,34 @@ PODCAST_LINK = (
 )
 
 
-def ensure_pulse_dir():
-    """Make sure the pulse/ directory exists."""
-    os.makedirs(PULSE_DIR, exist_ok=True)
-
-
-def write_pulse_file(
-    filename: str,
-    title: str,
-    summary_lines: list[str],
-    tags: list[str],
-    autoscan_block: dict | None = None,
-):
+def write_pulse(filename: str, pulse: dict) -> None:
     """
-    Write a YAML pulse file by hand so we control formatting exactly.
+    Write a YAML pulse file following the canonical Φ-Mesh schema.
 
-    Guarantees:
-      - title is on one line and single-quoted
-      - summary is emitted as a folded block (`summary: >`)
-      - tags / papers / podcasts are standard YAML lists
-      - optional `autoscan:` block is correctly indented
+    Canonical top-level keys:
+      - title      (string, single-quoted by PyYAML when needed)
+      - summary    (multi-line string; PyYAML emits as `summary: >` for multiline)
+      - tags       (list of strings)
+      - papers     (list of URLs)
+      - podcasts   (list of URLs)
     """
-    ensure_pulse_dir()
     path = os.path.join(PULSE_DIR, filename)
 
-    lines: list[str] = []
-
-    # Title
-    lines.append(f"title: '{title}'")
-
-    # Summary (folded block)
-    lines.append("summary: >")
-    for line in summary_lines:
-        if line:
-            lines.append(f"  {line}")
-        else:
-            lines.append("  ")
-
-    # Optional autoscan: block
-    if autoscan_block is not None:
-        lines.append("autoscan:")
-        lines.append(f"  date: {autoscan_block['date']}")
-        lines.append(f"  status: {autoscan_block['status']}")
-        lines.append(
-            f"  event_type: {autoscan_block.get('event_type', 'null')}"
-        )
-        lines.append(
-            "  phi_p_peak: "
-            f"{autoscan_block.get('phi_p_peak', 'null')}"
-        )
-        lines.append(
-            "  phi_p_plateau: "
-            f"{autoscan_block.get('phi_p_plateau', 'null')}"
-        )
-
-        notes_lines = autoscan_block.get("notes_lines", [])
-        if notes_lines:
-            lines.append("  notes: >")
-            for nline in notes_lines:
-                if nline:
-                    lines.append(f"    {nline}")
-                else:
-                    lines.append("    ")
-
-    # Tags
-    lines.append("tags:")
-    for tag in tags:
-        lines.append(f"  - {tag}")
-
-    # Papers
-    lines.append("papers:")
-    lines.append(f"  - {ZENODO_PAPER}")
-
-    # Podcasts
-    lines.append("podcasts:")
-    lines.append(f"  - {PODCAST_LINK}")
-
-    content = "\n".join(lines) + "\n"
+    os.makedirs(PULSE_DIR, exist_ok=True)
 
     with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
+        yaml.dump(
+            pulse,
+            f,
+            sort_keys=False,
+            allow_unicode=True,
+            width=78,  # reasonable wrapping
+        )
 
 
-def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
+def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime) -> None:
     """
-    Generate the Δτ₊₇ echo pulse using canonical tags and formatting.
+    Generate the Δτ₊₇ memory_bifurcation echo forecast pulse.
 
     Canonical echo tags:
       - phi_trace
@@ -105,90 +50,121 @@ def generate_memory_echo_pulse(primary_snapshot: dict, date: datetime):
       - memory_bifurcation
       - gradient_invariant
     """
+
     title = "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+
+    spike = primary_snapshot.get("phi_p_spike", "n/a")
+    plateau = primary_snapshot.get("phi_p_plateau", "n/a")
 
     summary_lines = [
         "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇)",
         "window starting from the primary CF snap recorded before "
         f"{date.strftime('%Y-%m-%d')}. Primary CF",
-        (
-            f"snapshot: Φᵨ spike ≈ {primary_snapshot.get('phi_p_spike', 'n/a')}, "
-            f"relaxation plateau ≈ {primary_snapshot.get('phi_p_plateau', 'n/a')}."
-        ),
+        f"snapshot: Φᵨ spike ≈ {spike}, relaxation plateau ≈ {plateau}.",
         "Echo forecast window: ~7 days after the primary event.",
     ]
+    summary = "\n".join(summary_lines)
 
-    tags = [
-        "phi_trace",
-        "phi_p",
-        "tag_map",
-        "recursion",
-        "autoscan",
-        "memory_bifurcation",
-        "gradient_invariant",
-    ]
+    pulse = {
+        "title": title,
+        "summary": summary,
+        "tags": [
+            "phi_trace",
+            "phi_p",
+            "tag_map",
+            "recursion",
+            "autoscan",
+            "memory_bifurcation",
+            "gradient_invariant",
+        ],
+        "papers": [ZENODO_PAPER],
+        "podcasts": [PODCAST_LINK],
+    }
 
     filename = f"{date.strftime('%Y-%m-%d')}_phi_pulse_memory_bifurcation_echo.yml"
-    write_pulse_file(filename, title, summary_lines, tags)
+    write_pulse(filename, pulse)
 
 
-def generate_autoscan_pulse(scan_result: dict, date: datetime):
+def generate_autoscan_pulse(scan_result: dict, date: datetime) -> None:
     """
     Emit the nightly Φ-Trace Autoscan pulse.
 
-    Title includes the date for human readability.
+    All autoscan metadata is folded into the `summary:` block.
+    Canonical autoscan tags:
+      - phi_trace
+      - phi_p
+      - tag_map
+      - recursion
+      - autoscan
+      - memory_bifurcation
+      - gradient_invariant
     """
+
+    status = scan_result.get("status", "no_event")
+    event_type = scan_result.get("event_type", "none")
+    phi_p_peak = scan_result.get("phi_p_peak", None)
+    phi_p_plateau = scan_result.get("phi_p_plateau", None)
+    notes_list = scan_result.get("notes", [])
+
+    if status == "no_event":
+        lead_line = (
+            "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today."
+        )
+    else:
+        lead_line = (
+            "A Φᵨ plateau or Δ→GC→CF echo exceeded Φ-trace detection thresholds today."
+        )
+
+    peak_str = "none" if phi_p_peak is None else str(phi_p_peak)
+    plateau_str = "none" if phi_p_plateau is None else str(phi_p_plateau)
+    notes_str = " | ".join(str(n) for n in notes_list) if notes_list else "none"
+
+    summary_lines = [
+        lead_line,
+        "",
+        "Autoscan details:",
+        f"  status: {status}",
+        f"  event_type: {event_type}",
+        f"  phi_p_peak: {peak_str}",
+        f"  phi_p_plateau: {plateau_str}",
+        f"  notes: {notes_str}",
+    ]
+    summary = "\n".join(summary_lines)
+
     title = f"Φ-Trace Autoscan — {date.strftime('%Y-%m-%d')}"
 
-    if scan_result.get("status") == "no_event":
-        summary_lines = [
-            "No Δ→GC→CF structures exceeded Φ-trace detection thresholds today."
-        ]
-    else:
-        summary_lines = [
-            "A Φᵨ plateau or Δ→GC→CF echo exceeded Φ-trace autoscan thresholds today."
-        ]
-
-    autoscan_block = {
-        "date": date.strftime("%Y-%m-%d"),
-        "status": scan_result.get("status", "no_event"),
-        "event_type": scan_result.get("event_type", "null"),
-        "phi_p_peak": scan_result.get("phi_p_peak", "null"),
-        "phi_p_plateau": scan_result.get("phi_p_plateau", "null"),
-        "notes_lines": scan_result.get(
-            "notes",
-            [
-                "No Φᵨ plateau or Δ→GC→CF echo crossed detection thresholds today."
-                if scan_result.get("status") == "no_event"
-                else "Autoscan recorded a Φᵨ plateau / Δ→GC→CF echo above thresholds.",
-            ],
-        ),
+    pulse = {
+        "title": title,
+        "summary": summary,
+        "tags": [
+            "phi_trace",
+            "phi_p",
+            "tag_map",
+            "recursion",
+            "autoscan",
+            "memory_bifurcation",
+            "gradient_invariant",
+        ],
+        "papers": [ZENODO_PAPER],
+        "podcasts": [PODCAST_LINK],
     }
 
-    tags = [
-        "phi_trace",
-        "phi_p",
-        "tag_map",
-        "recursion",
-        "autoscan",
-        "memory_bifurcation",
-        "gradient_invariant",
-    ]
-
     filename = f"{date.strftime('%Y-%m-%d')}_phi_trace_autoscan.yml"
-    write_pulse_file(filename, title, summary_lines, tags, autoscan_block=autoscan_block)
+    write_pulse(filename, pulse)
 
 
-def run_predictor():
+def run_predictor() -> None:
     """
     Main entry for workflow execution.
 
-    Generates two pulses each run:
+    Generates two pulses each run (typically nightly via GitHub Actions):
       1. Φ-Trace Autoscan pulse
       2. Φ–Pulse Δτ₊₇ memory_bifurcation echo forecast pulse
     """
+
     today = datetime.utcnow()
-    _yesterday = today - timedelta(days=1)  # reserved for future use
+    # Placeholder for future use if we ever look back at yesterday's CF snap:
+    _yesterday = today - timedelta(days=1)
 
     # 1. Autoscan (placeholder logic for now)
     scan_result = {
@@ -202,7 +178,7 @@ def run_predictor():
     }
     generate_autoscan_pulse(scan_result, today)
 
-    # 2. Echo pulse (placeholder snapshot)
+    # 2. Echo pulse (placeholder primary snapshot for now)
     primary_snapshot = {
         "phi_p_spike": "1.12",
         "phi_p_plateau": "0.89",
