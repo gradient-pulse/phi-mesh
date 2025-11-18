@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-18T09:06:24Z'
+  generated_at: '2025-11-18T09:09:10Z'
 phases:
   delta:
   - tag: authorship
@@ -1260,7 +1260,7 @@ phases:
     - 2025-08-24_gradients_all_the_way_down
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 5
+    count: 6
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -2447,6 +2447,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-08_kimi_joins_recursive_gradient_consortium
+  - tag: analog_neuromorphics
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-18_grok_daily_pulse
   - tag: autoscan
     description: ''
     count: 4
@@ -2479,7 +2484,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 9
+    count: 10
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -2828,7 +2833,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 8
+    count: 9
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
