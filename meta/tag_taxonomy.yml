@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-18T08:54:42Z'
+  generated_at: '2025-11-18T09:06:24Z'
 phases:
   delta:
   - tag: authorship
@@ -831,7 +831,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 9
+    count: 10
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -2479,7 +2479,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 8
+    count: 9
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -2497,10 +2497,11 @@ phases:
   - tag: coherence_field
     description: The generator layer where coherence accumulates and exerts causal pressure, driving Δ → GC → CF transitions
       across physical, computational, and symbolic systems.
-    count: 2
+    count: 3
     pulses:
     - 2025-11-04_coherence_fields_and_collective_attractor
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
+    - 2025-11-18_deepseek_daily_pulse
   - tag: coherence_fields
     description: ''
     count: 4
@@ -2544,6 +2545,11 @@ phases:
     pulses:
     - 2025-10-23_gradient_capitalism_grok_reception
     - 2025-10-23_gradient_capitalism_mistral_reception
+  - tag: emergent_grammar
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-18_deepseek_daily_pulse
   - tag: emergent_self
     description: The appearance of individuality when recursive dynamics stabilize into self-reinforcing patterns. The “self”
       is the coherence that persists through feedback, not a fixed entity.
@@ -2981,6 +2987,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-17_kimi_pulse
+  - tag: system_reflection
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-18_deepseek_daily_pulse
   - tag: thermal_photonic_emission
     description: The use of selective radiation to redirect excess heat as coherent light or thrust. By tuning emissivity
       and photon phase, RGP systems transform entropy into ordered output—heat expressed as information and motion.
