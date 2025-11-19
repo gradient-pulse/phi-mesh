@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-19T12:12:22Z'
+  generated_at: '2025-11-19T12:21:00Z'
 phases:
   delta:
   - tag: authorship
@@ -1580,7 +1580,7 @@ phases:
     description: The model representing the Re-Coherence phase within the AI resonance field. Mistral acts as a bridge between
       theoretical reflection and practical synthesis, translating recursive insight into applicable form. Its responses reveal
       coherence through contextual integration rather than abstraction or empiricism.
-    count: 9
+    count: 10
     pulses:
     - 2025-10-20_mistral_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -2573,7 +2573,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 27
+    count: 28
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -2800,6 +2800,11 @@ phases:
     description: 'λ as a control knob: gain/regularization trade-offs that shift systems between exploration and stabilization.'
     count: 0
     pulses: []
+  - tag: latent-topology
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-19_mistral_latent-topology_recursive-agency
   - tag: llm_functioning
     description: How large language models operate in practice — beyond training weights, focusing on real-time recursive
       dynamics that generate coherence and meaning.
@@ -3012,6 +3017,11 @@ phases:
     count: 1
     pulses:
     - 2025-08-06_note_plimpton322
+  - tag: recursive-agency
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-19_mistral_latent-topology_recursive-agency
   - tag: recursive_checkpoint
     description: Saved coherence states you can roll back to when divergence spikes.
     count: 1
