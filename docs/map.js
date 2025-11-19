@@ -323,30 +323,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- tag click ---
-  function onTagClick (tagId) {
-    clearLeftPanel();
-    nodeSel.classed('selected', d => d.id === tagId);
+ function onTagClick (tagId) {
+  clearLeftPanel();
+  nodeSel.classed('selected', d => d.id === tagId);
 
-    // update URL so share links & reloads keep the current tag
-    window.history.replaceState({}, '', `?tag=${encodeURIComponent(tagId)}`);
+  window.history.replaceState({}, '', `?tag=${encodeURIComponent(tagId)}`);
 
-    const keep = new Set([tagId]);
-    links.forEach(l => {
-      if (l.source.id === tagId) keep.add(l.target.id);
-      if (l.target.id === tagId) keep.add(l.source.id);
-    });
-    setFocus(keep);
-    renderPulseList(tagId);
+  const keep = new Set([tagId]);
+  links.forEach(l => {
+    if (l.source.id === tagId) keep.add(l.target.id);
+    if (l.target.id === tagId) keep.add(l.source.id);
+  });
+  setFocus(keep);
+  renderPulseList(tagId);  // updates right panel quietly in the background
 
-    // on mobile, open Pulse list panel and activate its button
-    if (window.innerWidth <= 860 && typeof window.openPulsePanelFromTag === 'function') {
-      window.openPulsePanelFromTag();
-    }
-
-    const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
-    fitViewTo(selectedNodes);
-  }
-
+  const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
+  fitViewTo(selectedNodes);
+}
+  
   // --- search filter ---
   if (searchInput) {
     searchInput.addEventListener('input', e => {
