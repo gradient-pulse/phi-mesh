@@ -323,10 +323,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- tag click ---
- function onTagClick (tagId) {
+function onTagClick (tagId) {
   clearLeftPanel();
   nodeSel.classed('selected', d => d.id === tagId);
 
+  // keep tag in URL for share link
   window.history.replaceState({}, '', `?tag=${encodeURIComponent(tagId)}`);
 
   const keep = new Set([tagId]);
@@ -335,10 +336,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (l.target.id === tagId) keep.add(l.source.id);
   });
   setFocus(keep);
-  renderPulseList(tagId);  // updates right panel quietly in the background
+  renderPulseList(tagId);  // just updates content in the background
 
   const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
   fitViewTo(selectedNodes);
+
+  // IMPORTANT: on mobile, make sure Pulse list is NOT shown
+  if (window.innerWidth <= 860 && rightPanel) {
+    rightPanel.classList.remove('open');
+    const tr = document.getElementById('toggle-right');
+    if (tr) tr.classList.remove('active');
+  }
 }
   
   // --- search filter ---
