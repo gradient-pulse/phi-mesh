@@ -49,7 +49,7 @@
       border-radius:8px;
       outline:none;
       margin-top:8px;
-      font-size:16px; /* <-- prevents iOS auto-zoom on focus */
+      font-size:16px;
     }
     #left .content, #right .content {
       padding:10px 12px;
@@ -63,11 +63,9 @@
     }
     .muted { color:var(--muted) }
 
-    /* original left pulse sizing (kept for compatibility) */
     .pulse-detail { font-size:13px; }
     .pulse-detail a { font-size:12.5px; }
 
-    /* summaries smaller + a touch fainter (both sidebars) */
     #left .pulse-detail,
     #right .pulse-detail {
       font-size:12px;
@@ -103,7 +101,7 @@
       opacity: 0.95;
     }
 
-    /* --- View toggle buttons (Insights / Experiments) --- */
+    /* — View toggle buttons (Insights / Experiments) — */
     .view-toggle {
       position: fixed;
       top: 12px;
@@ -138,7 +136,7 @@
 
     @media (max-width: 860px) {
       body {
-        padding-top:44px;  /* room for toolbar */
+        padding-top:44px;
       }
 
       .app {
@@ -146,7 +144,6 @@
         height:auto;
       }
 
-      /* slide-in sidebars */
       aside {
         position:fixed;
         top:44px;
@@ -200,7 +197,12 @@
         font-size:12px;
       }
 
-      /* move view toggle below toolbar slightly */
+      /* — ACTIVE STATE TINT (Option A) — */
+      .mobile-btn.active {
+        background: #1f2a3a;
+        border-color: #3a4a6a;
+      }
+
       .view-toggle {
         top:54px;
       }
@@ -270,18 +272,34 @@
       tl.addEventListener('click', function () {
         left.classList.toggle('open');
         right.classList.remove('open');
+
+        if (left.classList.contains('open')) {
+          tl.classList.add('active');
+          tr.classList.remove('active');
+        } else {
+          tl.classList.remove('active');
+        }
       });
 
       tr.addEventListener('click', function () {
         right.classList.toggle('open');
         left.classList.remove('open');
+
+        if (right.classList.contains('open')) {
+          tr.classList.add('active');
+          tl.classList.remove('active');
+        } else {
+          tr.classList.remove('active');
+        }
       });
 
-      // tap on graph closes panels on mobile
+      // tap on graph closes panels on mobile AND clears active states
       if (graph) {
         graph.addEventListener('click', function () {
           left.classList.remove('open');
           right.classList.remove('open');
+          tl.classList.remove('active');
+          tr.classList.remove('active');
         });
       }
     })();
