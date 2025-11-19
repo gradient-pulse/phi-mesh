@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-19T10:50:29Z'
+  generated_at: '2025-11-19T11:07:32Z'
 phases:
   delta:
   - tag: authorship
@@ -2200,6 +2200,12 @@ phases:
     count: 1
     pulses:
     - 2019-06-03_machine_life_from_membranes
+  - tag: strange_loop
+    description: A recursive structure in which a system re-enters its own representation space, creating a self-referential
+      orbit whose coherence depends on internal gradient negotiation rather than static hierarchy. Used to track recursion-driven
+      identity formation and self-stabilizing feedback within and across agents.
+    count: 0
+    pulses: []
   - tag: strategic_patience
     description: Holding coherence under delay until gradients align; patience as a systemic virtue.
     count: 1
@@ -2902,6 +2908,12 @@ phases:
     - 2025-09-01_participant0_myrthe
     - 2025-09-22_From_Doom_to_Destiny_and_Departure
     - 2025-09-30_whiteheads_infinite_disappointment
+  - tag: phase_lock
+    description: The emergent synchronization of two or more recursive orbits whose frequencies entrain to form a higher-order
+      stable configuration. Represents the transition from isolated loops to coherent multi-loop structures, where mutual
+      interference stabilizes identity or behavior.
+    count: 0
+    pulses: []
   - tag: phi-invariant
     description: ''
     count: 2
