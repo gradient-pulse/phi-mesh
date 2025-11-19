@@ -322,6 +322,16 @@
         }
       });
 
+      // called from map.js when a tag is clicked on mobile
+      window.openPulsePanelFromTag = function () {
+        if (window.innerWidth <= 860 && left && right && tl && tr) {
+          right.classList.add('open');
+          left.classList.remove('open');
+          tr.classList.add('active');
+          tl.classList.remove('active');
+        }
+      };
+
       if (graph) {
         graph.addEventListener('click', function () {
           left.classList.remove('open');
