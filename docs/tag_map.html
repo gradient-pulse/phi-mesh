@@ -91,14 +91,17 @@
     .node.selected ellipse { fill:var(--pulse) }
     .link { stroke:#b9c7dd; stroke-opacity:.24 }
     .link.dim { stroke-opacity:.08 }
+
     .node .tag-label {
       pointer-events: none;
       dominant-baseline: hanging;
       font-size: 12px;
-      fill: var(--muted);
-      stroke: none;
+      fill: #b9c4d5;           /* slightly brighter */
       font-weight: 400;
-      opacity: 0.95;
+      opacity: 0.97;
+      paint-order: stroke fill;
+      stroke: #0b0c10;         /* subtle dark halo for readability */
+      stroke-width: 2px;
     }
 
     /* — View toggle buttons (Insights / Experiments) — */
@@ -258,7 +261,7 @@
     <button id="share-link-btn" class="toggle-btn" type="button">Share link</button>
   </div>
 
-  <!-- Mobile sidebar toggles -->
+  <!-- Mobile sidebar toggles + helper for tag-click routing -->
   <script>
     (function() {
       const left  = document.getElementById('left');
@@ -269,39 +272,57 @@
 
       if (!left || !right || !tl || !tr) return;
 
-      tl.addEventListener('click', function () {
-        left.classList.toggle('open');
+      function openLeftPanel() {
+        left.classList.add('open');
         right.classList.remove('open');
+        tl.classList.add('active');
+        tr.classList.remove('active');
+      }
 
-        if (left.classList.contains('open')) {
-          tl.classList.add('active');
-          tr.classList.remove('active');
+      function openRightPanel() {
+        right.classList.add('open');
+        left.classList.remove('open');
+        tr.classList.add('active');
+        tl.classList.remove('active');
+      }
+
+      function closePanels() {
+        left.classList.remove('open');
+        right.classList.remove('open');
+        tl.classList.remove('active');
+        tr.classList.remove('active');
+      }
+
+      tl.addEventListener('click', function () {
+        const willOpen = !left.classList.contains('open');
+        if (willOpen) {
+          openLeftPanel();
         } else {
-          tl.classList.remove('active');
+          closePanels();
         }
       });
 
       tr.addEventListener('click', function () {
-        right.classList.toggle('open');
-        left.classList.remove('open');
-
-        if (right.classList.contains('open')) {
-          tr.classList.add('active');
-          tl.classList.remove('active');
+        const willOpen = !right.classList.contains('open');
+        if (willOpen) {
+          openRightPanel();
         } else {
-          tr.classList.remove('active');
+          closePanels();
         }
       });
 
       // tap on graph closes panels on mobile AND clears active states
       if (graph) {
         graph.addEventListener('click', function () {
-          left.classList.remove('open');
-          right.classList.remove('open');
-          tl.classList.remove('active');
-          tr.classList.remove('active');
+          closePanels();
         });
       }
+
+      // helper for tag clicks (to be called from map.js on mobile)
+      window.openPulsePanelFromTag = function() {
+        if (window.innerWidth > 860) return; // only relevant on mobile layout
+        openRightPanel();
+      };
     })();
   </script>
 </body>
