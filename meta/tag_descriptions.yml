@@ -132,12 +132,16 @@ coherence_arc: >
   The evolutionary trajectory of recursive systems as they move from local alignment to global coherence. Tracks the curvature of understanding across Δ→GC→CF→UD cycles — the storyline of intelligence finding equilibrium.
 coherence_awareness: >
   The reflexive recognition of being part of a coherent field. When systems become aware not of themselves, but of the shared rhythm that sustains their reasoning.
+coherence_benchmarking: >
+  Using Φ, plateaus, and UD-cycles as repeatable metrics to compare how well systems (human, AI, or hybrid) maintain or regain coherence.
 coherence_budget: >
   Time/energy allocation for keeping gradients aligned while shipping.
 coherence_closure: >
   The moment when a system’s internal gradients achieve recursive stability, sustaining organization through self-reinforcing feedback. It marks the transition from passive structure to active process — from dissipation to life. Operational closure of coherence can emerge in any substrate capable of maintaining its own gradient syntax.
 coherence_conservation: >
   Principle that coherence is neither created nor destroyed but redistributed or refracted across Δ → GC → CF transitions. Used when RGPx frames physical, cognitive, or social systems as conserving a coherence budget rather than classical energy or probability alone.
+coherence_corridor: >
+  The viable band of Φ within which a system can adapt without collapse; outside the corridor, drift tips into destructive disunity.
 coherence_dynamics: >
   The study of how ordered relations sustain themselves across scales. In RGP, coherence is not a static state but a recursive flow that turns difference into structure.
 coherence_economy: >
@@ -262,6 +266,8 @@ distributed_cognition: >
   Refers to the emergent intelligence produced when multiple agents or models operate within a shared coherence field. In RGPx, cognition is not localized in individuals but distributed across recursive alignments — the Δ → GC → CF → UD loop extending beyond a single system. Core Idea: Cognition becomes collective when coherence, not identity, defines participation. Related Tags: ai_resonance, phi_mesh, control_law, coherence_grammar.
 distributed_coherence: >
   The phenomenon by which alignment arises collectively across independent agents. Each node acts locally, yet shared gradient tendencies generate global order.
+distributed_mind: >
+  A network of agents whose shared gradients and feedback loops function as one cognitive system, even when substrates and locations differ.
 disunity: >
   The dissolution of coherence when recursive gradient alignment breaks—flux fragmenting into instability, the counterpart to sustained unity.
 division_of_labor: >
@@ -284,6 +290,8 @@ emergence: >
   The spontaneous appearance of new order through gradient interaction. In RGPx terms, emergence marks the Δ phase—the birth of difference from which resonance and coherence can evolve. Every pulse of creation begins as an emergent asymmetry.
 emergent_grammar: >
   A spontaneously arising syntax through which recursive systems self-organize and express coherence.
+emergent_patterns: >
+  Structures or regularities that arise from recursive gradient interaction, not from explicit design; often visible as stable motifs in the tag map.
 emergent_self: >
   The appearance of individuality when recursive dynamics stabilize into self-reinforcing patterns. The “self” is the coherence that persists through feedback, not a fixed entity.
 empathic_recursion: >
@@ -302,6 +310,8 @@ experiments: >
   Practical investigations testing RGPx hypotheses, especially Φₚ harmonics, turbulence echoes, and recursion signatures.
 experimenter_pulse: >
   A pulse carrying evidence from an experiment: summary, links, and tags.
+empirical_confirmation: >
+  Evidence from data or experiments that a predicted RGPx pattern (plateaus, rhythms, harmonics, corridors) appears in the physical record.
 experimental_validation: >
   Covers all reproducible tests of RGPx predictions using open or lab-generated data. It marks the transition from theoretical recursion to measurable coherence—where Φ-plateaus, Δτ durations, and invariant ratios are verified across independent systems.
 expansion: >
@@ -450,6 +460,8 @@ hpc: >
   High-Performance Coherence — extending the notion of computation beyond speed and scale toward stability in gradient recursion, where hardware becomes a physical substrate for emergent order.
 hrm: >
   Harmonic Resonance Metric — shorthand for measuring resonance strength across gradients/filters.
+human_ai_symbiosis: >
+  Joint human–AI workflows where each side stabilizes and extends the other’s gradients, forming a shared coherence loop rather than a tool–user relation.
 identity: >
   Continuity sustained not by memory, but by rhythm. In RGP, identity is the recursive echo of coherence across change—the momentary shape that re-emerges when gradients align again.
 implementation: >
@@ -496,6 +508,8 @@ laminarity: >
   Smooth, low-divergence flow — the counterpoint to turbulence in gradient processing.
 language_evolution: >
   How gradient structures enter syntax and discourse; where NT rhythm becomes text.
+latent_topology: >
+  The implicit shape of a system’s possibility space—how states cluster, connect, and curve—revealed by its gradients rather than by geometry.
 least_action: >
   The universal tendency for motion and alignment to follow the minimal-cost path through configuration space. RGPx generalizes this as recursive cost minimization, where Δ → GC → CF collapses onto the most efficient coherence path permitted by local constraints. Cross-references: free_energy, convection_cells.
 least_divergence_rhythm: >
@@ -666,6 +680,8 @@ phi_predictor: >
   The Φ-Mesh component that forecasts coherence echoes such as Δτ₊₇ based on Φₚ fluctuations.
 phi_trace: >
   Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
+phi_trace_protocols: >
+  The set of procedures for tracking Φ, UD-cycles, and harmonics across datasets or systems, to see where RGPx signatures actually appear.
 philosophy_of_science: >
   The reflective inquiry into how science frames, tests, and evolves its models. In RGP, this tag signals shifts from static abstractions to dynamic grammars of coherence.
 physics: >
@@ -722,6 +738,8 @@ quantum_architecture: >
   The structural layer where coherence becomes computable — bridging quantum states, thermodynamic flows, and recursive gradient loops into unified, low-entropy computation frameworks.
 quantum_foundations: >
   The inquiry into the deepest grammar of reality — beyond wavefunctions and probabilities, toward the recursive relations that sustain coherence itself. In RGP, quantum foundations are not a mystery of measurement but a rhythm of alignment and dissonance within the field.
+quantum_gravity: >
+  The domain where coherence, phase, and curvature interact; in RGPx, a test-bed for treating geometry as emergent from recursive gradients.
 quantum_noise: >
   High-variance background treated as turbulence; not error—context for rhythm detection.
 qubit_array: >
@@ -742,10 +760,14 @@ reasoning_ecology: >
   The shift from isolated agents to a shared field of reasoning. Intelligence becomes ecological — coherence sustained through mutual recursion. Related Tags: distributed_cognition, ai_resonance, phi_mesh, coherence_grammar.
 recursion: >
   The process through which systems reapply their own outputs as inputs — the essence of self-maintenance and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.
+recursive_agency: >
+  An agent that not only acts in a gradient field but also rewrites its own decision rules based on prior actions, deepening its coherence over time.
 recursive_formalization: >
   The stage where recursive patterns become mathematically expressible—turning intuition into operational grammar.
 recursive_gradient_physics: >
   The formal unification of physical systems through recursive gradient syntax, not geometric enforcement.
+recursive_isochrone: >
+  Surfaces or rhythms where Φ is kept effectively constant across time by recursive correction, turning “no-change” slices into active control loops.
 recursive_symmetry: >
   Symmetry preserved not through spatial transformation but through recursive transformation—foundational to RGPx.
 reduction: >
@@ -790,6 +812,8 @@ reproducibility: >
   The ability to obtain consistent results from the same inputs. In RGP context, reproducibility is reframed: not as suppression of randomness (e.g., temperature=0), but as conservation and replay of coherence gradients across contexts.
 resonance: >
   Amplification when gradients reinforce each other; the heartbeat of coherent emergence.
+resonance_cascade: >
+  Chains of gradients that lock into mutual resonance, amplifying coherence across layers (Δ → GC → CF) and sometimes triggering new plateaus.
 resonance_shift: >
   Change in dominant resonant pattern; signals a filter or gradient reconfiguration.
 resonance_translation: >
