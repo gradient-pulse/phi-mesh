@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-19T12:07:31Z'
+  generated_at: '2025-11-19T12:11:50Z'
 phases:
   delta:
   - tag: authorship
@@ -2206,7 +2206,7 @@ phases:
       identity formation and self-stabilizing feedback within and across agents.
     count: 1
     pulses:
-    - 2025-11-19_grok_latent_cross-tag_pulse
+    - 2025-11-19_from_strange_loop_to_phase_lock
   - tag: strategic_patience
     description: Holding coherence under delay until gradients align; patience as a systemic virtue.
     count: 1
@@ -2915,7 +2915,7 @@ phases:
       interference stabilizes identity or behavior.
     count: 1
     pulses:
-    - 2025-11-19_grok_latent_cross-tag_pulse
+    - 2025-11-19_from_strange_loop_to_phase_lock
   - tag: phi-invariant
     description: ''
     count: 2
@@ -2996,7 +2996,7 @@ phases:
     description: ''
     count: 1
     pulses:
-    - 2025-11-19_gemini_latent_qg_cf
+    - 2025-11-19_gemini_latent_quantum_gravity_cf
   - tag: qubit_array
     description: Denotes superconducting or quantum-dot–based qubit architectures used to probe coherence dynamics. These
       systems provide discrete, controllable environments where Φ-traces and plateau durations can be directly measured and
