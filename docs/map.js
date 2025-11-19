@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const W = (nodeEl && nodeEl.clientWidth)  || 1200;
   const H = (nodeEl && nodeEl.clientHeight) || 800;
   svg.attr('viewBox', `0 0 ${W} ${H}`)
-     .attr('preserveAspectRatio', 'xMidYMin meet'); // keep graph anchored to top
+     .attr('preserveAspectRatio', 'xMidYMin meet');
 
   // --- layers ---
   const root      = svg.append('g');
@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     target: idToNode.get(l.target) || l.target
   })).filter(l => l.source && l.target);
 
-  // degree for fallback sizing
   const degree = new Map();
   links.forEach(l => {
     degree.set(l.source.id, (degree.get(l.source.id) || 0) + 1);
@@ -67,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const rScale = d3.scaleSqrt()
     .domain([(cMin === 0 ? 0.0001 : cMin), (cMax === 0 ? 1 : cMax)])
-    .range([5, 20]); // slightly smaller nodes
+    .range([5, 20]);
 
   const ellipseAspect = 1.6;
 
@@ -131,14 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
     .on('zoom', ev => root.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // --- helpers ---
   function clamp (v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-  // Fit/center on nodes using a padded bounding box (safe for many matches)
   function fitViewTo (nodes) {
     if (!nodes || !nodes.length) return;
 
-    // If a lot of nodes match, just pan to centroid and keep scale ~1
     if (nodes.length > 40) {
       const cx = d3.mean(nodes, d => d.x);
       const cy = d3.mean(nodes, d => d.y);
@@ -269,6 +265,11 @@ document.addEventListener('DOMContentLoaded', () => {
     pulseList.innerHTML =
       `<div style="font-weight:600; margin:2px 0 6px 0">${esc(tagId)}</div>${rows}`;
 
+    // keep list from “jumping” by resetting scroll to top
+    if (pulseList.parentElement) {
+      pulseList.parentElement.scrollTop = 0;
+    }
+
     pulseList.querySelectorAll('[data-key]').forEach(el => {
       el.addEventListener('click', () => {
         const key   = el.getAttribute('data-key') || '';
@@ -337,20 +338,24 @@ document.addEventListener('DOMContentLoaded', () => {
     setFocus(keep);
     renderPulseList(tagId);
 
+    // on mobile, open Pulse list panel and activate its button
+    if (window.innerWidth <= 860 && typeof window.openPulsePanelFromTag === 'function') {
+      window.openPulsePanelFromTag();
+    }
+
     const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
     fitViewTo(selectedNodes);
   }
 
   // --- search filter ---
   if (searchInput) {
-    // live filtering as you type
     searchInput.addEventListener('input', e => {
       const v = (e && e.target && typeof e.target.value === 'string')
         ? e.target.value
         : '';
       const q = v.trim().toLowerCase();
 
-      nodeSel.classed('selected', false);  // clear any selected tag
+      nodeSel.classed('selected', false);
       clearLeftPanel();
       if (pulseList) {
         pulseList.textContent = 'Click a tag to list its pulses.';
@@ -371,7 +376,6 @@ document.addEventListener('DOMContentLoaded', () => {
       fitViewTo(matched);
     });
 
-    // when user hits Enter / Done on mobile, hide left sidebar so graph is visible
     searchInput.addEventListener('keydown', e => {
       if (e.key === 'Enter') {
         searchInput.blur();
