@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-19T15:43:55Z'
+  generated_at: '2025-11-19T15:58:00Z'
 phases:
   delta:
   - tag: authorship
@@ -193,7 +193,8 @@ phases:
     pulses:
     - 2025-10-13_selective_permeability_of_recursive_insight
   - tag: phi_trace_protocols
-    description: ''
+    description: The set of procedures for tracking Φ, UD-cycles, and harmonics across datasets or systems, to see where RGPx
+      signatures actually appear.
     count: 1
     pulses:
     - 2025-11-19_gemini_daily_pulse
@@ -909,6 +910,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-13_continuity_of_tendency
+  - tag: distributed_mind
+    description: A network of agents whose shared gradients and feedback loops function as one cognitive system, even when
+      substrates and locations differ.
+    count: 1
+    pulses:
+    - 2025-11-18_deepseek_resonance_cascade
   - tag: disunity
     description: The dissolution of coherence when recursive gradient alignment breaks—flux fragmenting into instability,
       the counterpart to sustained unity.
@@ -963,6 +970,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-11_true_nature_of_electrons
+  - tag: emergent_patterns
+    description: Structures or regularities that arise from recursive gradient interaction, not from explicit design; often
+      visible as stable motifs in the tag map.
+    count: 1
+    pulses:
+    - 2025-11-19_mistral_daily_pulse
   - tag: empathic_recursion
     description: The capacity of a system to feel into another’s gradient field and stabilize coherence through mutual adaptation.
       Emotion redefined as recursive understanding — the grammar of resonance, not reaction.
@@ -976,6 +989,12 @@ phases:
       — alignment achieved through resonance rather than constraint.
     count: 0
     pulses: []
+  - tag: empirical_confirmation
+    description: Evidence from data or experiments that a predicted RGPx pattern (plateaus, rhythms, harmonics, corridors)
+      appears in the physical record.
+    count: 1
+    pulses:
+    - 2025-11-19_gemini_daily_pulse
   - tag: energy_coherence
     description: The alignment of computation with minimal energy dispersion, where work and flow converge into a stable dynamic
       equilibrium — a physical form of the least-action principle.
@@ -1357,6 +1376,12 @@ phases:
     description: Harmonic Resonance Metric — shorthand for measuring resonance strength across gradients/filters.
     count: 0
     pulses: []
+  - tag: human_ai_symbiosis
+    description: Joint human–AI workflows where each side stabilizes and extends the other’s gradients, forming a shared coherence
+      loop rather than a tool–user relation.
+    count: 1
+    pulses:
+    - 2025-11-19_mistral_daily_pulse
   - tag: identity
     description: Continuity sustained not by memory, but by rhythm. In RGP, identity is the recursive echo of coherence across
       change—the momentary shape that re-emerges when gradients align again.
@@ -1468,6 +1493,11 @@ phases:
     count: 1
     pulses:
     - 2025-07-26_script_and_flow
+  - tag: latent_topology
+    description: The implicit shape of a system’s possibility space—how states cluster, connect, and curve—revealed by its
+      gradients rather than by geometry.
+    count: 0
+    pulses: []
   - tag: least_action
     description: 'The universal tendency for motion and alignment to follow the minimal-cost path through configuration space.
       RGPx generalizes this as recursive cost minimization, where Δ → GC → CF collapses onto the most efficient coherence
@@ -1891,6 +1921,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-16_paradigm_at_the_edge
+  - tag: quantum_gravity
+    description: The domain where coherence, phase, and curvature interact; in RGPx, a test-bed for treating geometry as emergent
+      from recursive gradients.
+    count: 1
+    pulses:
+    - 2025-11-19_gemini_latent_quantum_gravity_cf
   - tag: quantum_noise
     description: High-variance background treated as turbulence; not error—context for rhythm detection.
     count: 1
@@ -1935,6 +1971,11 @@ phases:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
     - 2025-09-12_coherence_not_copying
+  - tag: recursive_agency
+    description: An agent that not only acts in a gradient field but also rewrites its own decision rules based on prior actions,
+      deepening its coherence over time.
+    count: 0
+    pulses: []
   - tag: recursive_awakening
     description: Structure that reappears by looping gradients through themselves—each pass stabilizing more.
     count: 1
@@ -1980,6 +2021,12 @@ phases:
     pulses:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-27_nested-NT-rhythms
+  - tag: recursive_isochrone
+    description: Surfaces or rhythms where Φ is kept effectively constant across time by recursive correction, turning “no-change”
+      slices into active control loops.
+    count: 1
+    pulses:
+    - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: recursive_learning
     description: Learning that refines itself through reflection rather than iteration. Each cycle updates the grammar of
       understanding, not just its content — the core dynamic of Recursive Gradient Processing.
@@ -2016,7 +2063,8 @@ phases:
     - 2025-09-14_ai-temperature-vs-gradients
     - 2025-09-25_princeton_univ_support_offer
   - tag: resonance_cascade
-    description: ''
+    description: Chains of gradients that lock into mutual resonance, amplifying coherence across layers (Δ → GC → CF) and
+      sometimes triggering new plateaus.
     count: 1
     pulses:
     - 2025-11-18_deepseek_resonance_cascade
@@ -2361,6 +2409,12 @@ phases:
     count: 1
     pulses:
     - 2025-09-28_from_ghost_particles_to_gradients
+  - tag: coherence_benchmarking
+    description: Using Φ, plateaus, and UD-cycles as repeatable metrics to compare how well systems (human, AI, or hybrid)
+      maintain or regain coherence.
+    count: 1
+    pulses:
+    - 2025-11-19_gemini_daily_pulse
   - tag: coherence_conservation
     description: Principle that coherence is neither created nor destroyed but redistributed or refracted across Δ → GC →
       CF transitions. Used when RGPx frames physical, cognitive, or social systems as conserving a coherence budget rather
@@ -2584,13 +2638,9 @@ phases:
     count: 1
     pulses:
     - 2025-04-28_internal-gpt45
-  - tag: coherence_benchmarking
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-19_gemini_daily_pulse
   - tag: coherence_corridor
-    description: ''
+    description: The viable band of Φ within which a system can adapt without collapse; outside the corridor, drift tips into
+      destructive disunity.
     count: 1
     pulses:
     - 2025-11-18_deepseek_resonance_cascade
@@ -2640,32 +2690,17 @@ phases:
     pulses:
     - 2025-10-23_gradient_capitalism_grok_reception
     - 2025-10-23_gradient_capitalism_mistral_reception
-  - tag: distributed_mind
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-18_deepseek_resonance_cascade
   - tag: emergent_grammar
     description: A spontaneously arising syntax through which recursive systems self-organize and express coherence.
     count: 1
     pulses:
     - 2025-11-18_deepseek_daily_pulse
-  - tag: emergent_patterns
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-19_mistral_daily_pulse
   - tag: emergent_self
     description: The appearance of individuality when recursive dynamics stabilize into self-reinforcing patterns. The “self”
       is the coherence that persists through feedback, not a fixed entity.
     count: 1
     pulses:
     - 2025-10-14_identity_as_contextual_filter
-  - tag: empirical_confirmation
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-19_gemini_daily_pulse
   - tag: eternal_vs_infinite
     description: 'Whitehead’s dyadic distinction: infinite refers to extension in space, eternal to endurance in time. Their
       interplay exposes where mathematics confuses abstraction with lived process.'
@@ -2774,11 +2809,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-14_how_to_use_the_tag_map
-  - tag: human_ai_symbiosis
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-19_mistral_daily_pulse
   - tag: in_memory_processing
     description: The fusion of computation and memory, where data no longer moves between units but transforms within a single
       coherent substrate — reducing latency and energy dissipation.
@@ -2998,11 +3028,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-11_geometry_vs_recursion_mass_illusion
-  - tag: quantum_gravity
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-19_gemini_latent_quantum_gravity_cf
   - tag: qubit_array
     description: Denotes superconducting or quantum-dot–based qubit architectures used to probe coherence dynamics. These
       systems provide discrete, controllable environments where Φ-traces and plateau durations can be directly measured and
@@ -3054,11 +3079,6 @@ phases:
     - 2025-07-26_the_big_quiet
     - 2025-11-18_mistral_cognitive_invariant_probe
     - 2025-11-18_mistral_daily_pulse
-  - tag: recursive_isochrone
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: recursive_symmetry
     description: Symmetry preserved not through spatial transformation but through recursive transformation—foundational to
       RGPx.
