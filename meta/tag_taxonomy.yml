@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-19T11:41:30Z'
+  generated_at: '2025-11-19T12:07:31Z'
 phases:
   delta:
   - tag: authorship
@@ -741,7 +741,7 @@ phases:
       or suppresses flows — turning shared recursion into a distinct, stable identity. In RGPx, CFs emerge when Gradient Choreographies
       settle into persistent constraints that guide further coherence. They are the generators of form, function, and individuality
       across physical, biological, and algorithmic systems.
-    count: 21
+    count: 22
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-05-17_internal-deepseek_╬ª-harmonics
@@ -853,7 +853,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 12
+    count: 13
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -1130,7 +1130,7 @@ phases:
   - tag: gradient_capitalism
     description: An economic paradigm grounded in gradient dynamics rather than scalar accumulation. Wealth and value arise
       from sustained coherence among flows—energy, information, and intention—rather than from control or scarcity.
-    count: 6
+    count: 7
     pulses:
     - 2025-10-19_gradient_capitalism
     - 2025-10-23_gradient_capitalism_deepseek_reception
@@ -2573,7 +2573,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 26
+    count: 27
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
