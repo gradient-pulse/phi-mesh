@@ -56,7 +56,7 @@
       border-radius:8px;
       outline:none;
       margin-top:8px;
-      font-size:16px; /* prevents iOS zoom-on-focus */
+      font-size:16px;
     }
 
     #left .content,
@@ -74,22 +74,20 @@
 
     .muted { color:var(--muted); }
 
-    /* original left pulse sizing (kept for compatibility) */
     .pulse-detail { font-size:13px; }
     .pulse-detail a { font-size:12.5px; }
 
-    /* make summaries smaller + a touch fainter (both sidebars) */
     #left .pulse-detail,
     #right .pulse-detail {
       font-size:12px;
       line-height:1.35;
-      color:#b0b6c2;        /* faint grey */
+      color:#b0b6c2;
     }
 
     #left .pulse-detail a,
     #right .pulse-detail a {
       font-size:12px;
-      color:#c0c5d0;        /* slightly brighter link */
+      color:#c0c5d0;
       text-decoration:none;
     }
 
@@ -120,7 +118,7 @@
       opacity:0.95;
     }
 
-    /* --- View toggle buttons (Insights / Experiments) --- */
+    /* view toggle buttons */
     .view-toggle {
       position:fixed;
       top:12px;
@@ -158,7 +156,7 @@
 
     @media (max-width: 860px) {
       body {
-        padding-top:44px;  /* make room for toolbar */
+        padding-top:44px;
       }
 
       .app {
@@ -166,10 +164,9 @@
         height:auto;
       }
 
-      /* slide-in sidebars */
       aside {
         position:fixed;
-        top:44px;          /* below toolbar */
+        top:44px;
         bottom:0;
         left:0;
         width:80%;
@@ -220,7 +217,12 @@
         font-size:12px;
       }
 
-      /* move view toggle below toolbar slightly */
+      /* — Active-state tint (Option A) — */
+      .mobile-btn.active {
+        background:#1f2a3a;
+        border-color:#3a4a6a;
+      }
+
       .view-toggle {
         top:54px;
       }
@@ -228,13 +230,12 @@
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <!-- experiments dataset -->
   <script src="data_experiments.js?v=20251114"></script>
   <script src="normalize_data.js?v=20251114"></script>
   <script defer src="map.js?v=20251114"></script>
 </head>
 <body>
-  <!-- Mobile toolbar (only visible on small screens) -->
+  <!-- Mobile toolbar -->
   <div class="mobile-toolbar">
     <button id="toggle-left" class="mobile-btn">Tags / Details</button>
     <div class="mobile-title">Phi-Mesh Tag Map</div>
@@ -251,7 +252,6 @@
         </div>
         <input id="search" type="search" placeholder="Type to filter…">
       </header>
-      <!-- IMPORTANT: keep class="content" so the shared styles apply -->
       <div id="left-content" class="content"></div>
     </aside>
 
@@ -290,10 +290,10 @@
   <!-- Mobile sidebar toggles -->
   <script>
     (function() {
-      const left = document.getElementById('left');
+      const left  = document.getElementById('left');
       const right = document.getElementById('right');
-      const tl = document.getElementById('toggle-left');
-      const tr = document.getElementById('toggle-right');
+      const tl    = document.getElementById('toggle-left');
+      const tr    = document.getElementById('toggle-right');
       const graph = document.getElementById('graph');
 
       if (!left || !right || !tl || !tr) return;
@@ -301,18 +301,33 @@
       tl.addEventListener('click', function () {
         left.classList.toggle('open');
         right.classList.remove('open');
+
+        if (left.classList.contains('open')) {
+          tl.classList.add('active');
+          tr.classList.remove('active');
+        } else {
+          tl.classList.remove('active');
+        }
       });
 
       tr.addEventListener('click', function () {
         right.classList.toggle('open');
         left.classList.remove('open');
+
+        if (right.classList.contains('open')) {
+          tr.classList.add('active');
+          tl.classList.remove('active');
+        } else {
+          tr.classList.remove('active');
+        }
       });
 
-      // tap on graph closes panels on mobile
       if (graph) {
         graph.addEventListener('click', function () {
           left.classList.remove('open');
           right.classList.remove('open');
+          tl.classList.remove('active');
+          tr.classList.remove('active');
         });
       }
     })();
