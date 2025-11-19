@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-19T11:07:32Z'
+  generated_at: '2025-11-19T11:41:30Z'
 phases:
   delta:
   - tag: authorship
@@ -1296,7 +1296,7 @@ phases:
     - 2025-08-24_gradients_all_the_way_down
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 8
+    count: 9
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -2204,8 +2204,9 @@ phases:
     description: A recursive structure in which a system re-enters its own representation space, creating a self-referential
       orbit whose coherence depends on internal gradient negotiation rather than static hierarchy. Used to track recursion-driven
       identity formation and self-stabilizing feedback within and across agents.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-19_grok_latent_cross-tag_pulse
   - tag: strategic_patience
     description: Holding coherence under delay until gradients align; patience as a systemic virtue.
     count: 1
@@ -2572,7 +2573,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 25
+    count: 26
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -2912,8 +2913,9 @@ phases:
     description: The emergent synchronization of two or more recursive orbits whose frequencies entrain to form a higher-order
       stable configuration. Represents the transition from isolated loops to coherent multi-loop structures, where mutual
       interference stabilizes identity or behavior.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-19_grok_latent_cross-tag_pulse
   - tag: phi-invariant
     description: ''
     count: 2
