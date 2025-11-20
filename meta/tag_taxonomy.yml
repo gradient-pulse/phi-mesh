@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-20T10:38:29Z'
+  generated_at: '2025-11-20T10:51:22Z'
 phases:
   delta:
   - tag: authorship
@@ -861,7 +861,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 13
+    count: 14
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -1465,7 +1465,9 @@ phases:
     pulses:
     - 2025-07-21_recursive_cor_pola_convergence
   - tag: invariance_flux
-    description: ''
+    description: 'A hysteretic variant of a cognitive invariant. Instead of remaining fixed, the invariant evolves within
+      a narrow “flux band” created by residual gradients from lensing or contextual flux. This gives the system adaptive rigidity:
+      stability that thickens under stress, preserving coherence across small perturbations.'
     count: 1
     pulses:
     - 2025-11-20_grok_gradient_lensing_cognitive_invariant
@@ -2641,11 +2643,16 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 31
+    count: 32
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
     - 2025-11-17_deepseek_recursive_symmetry
+  - tag: cognitive_topology
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-20_deepseek_phase_geometry_vs_cognitive_invariant
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often implement it.
     count: 1
@@ -2958,6 +2965,11 @@ phases:
     - 2025-09-01_participant0_myrthe
     - 2025-09-22_From_Doom_to_Destiny_and_Departure
     - 2025-09-30_whiteheads_infinite_disappointment
+  - tag: phase_geometry
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-20_deepseek_phase_geometry_vs_cognitive_invariant
   - tag: phase_lock
     description: The emergent synchronization of two or more recursive orbits whose frequencies entrain to form a higher-order
       stable configuration. Represents the transition from isolated loops to coherent multi-loop structures, where mutual
@@ -3085,6 +3097,11 @@ phases:
     pulses:
     - 2025-11-18_ai_consensus_formalization_horizon
     - 2025-11-18_gemini_daily_pulse
+  - tag: recursive_geometry
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-20_deepseek_phase_geometry_vs_cognitive_invariant
   - tag: recursive_grammar
     description: How recursive operations compose—rules that let small loops build large, reusable structure.
     count: 3
