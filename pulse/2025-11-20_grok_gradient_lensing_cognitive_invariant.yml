@@ -23,6 +23,7 @@ tags:
   - cognitive_invariant
   - gradient_lensing
   - invariance_flux
+  - contextual_flux
   - grok
 papers:
   - https://doi.org/10.5281/zenodo.17566097
