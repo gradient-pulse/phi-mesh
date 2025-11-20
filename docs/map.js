@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const root      = svg.append('g');
   const linkLayer = root.append('g').attr('class', 'links');
   const nodeLayer = root.append('g').attr('class', 'nodes');
+  // ensure nodes (and labels) are always rendered above links
+  nodeLayer.raise();
 
   // --- prep data ---
   const idToNode = new Map(DATA.nodes.map(n => [n.id, n]));
@@ -323,31 +325,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- tag click ---
-function onTagClick (tagId) {
-  clearLeftPanel();
-  nodeSel.classed('selected', d => d.id === tagId);
+  function onTagClick (tagId) {
+    clearLeftPanel();
+    nodeSel.classed('selected', d => d.id === tagId);
 
-  // keep tag in URL for share link
-  window.history.replaceState({}, '', `?tag=${encodeURIComponent(tagId)}`);
+    // raise selected node so it sits visually on top
+    nodeSel.filter(d => d.id === tagId).raise();
 
-  const keep = new Set([tagId]);
-  links.forEach(l => {
-    if (l.source.id === tagId) keep.add(l.target.id);
-    if (l.target.id === tagId) keep.add(l.source.id);
-  });
-  setFocus(keep);
-  renderPulseList(tagId);  // just updates content in the background
+    // keep tag in URL for share link
+    window.history.replaceState({}, '', `?tag=${encodeURIComponent(tagId)}`);
 
-  const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
-  fitViewTo(selectedNodes);
+    const keep = new Set([tagId]);
+    links.forEach(l => {
+      if (l.source.id === tagId) keep.add(l.target.id);
+      if (l.target.id === tagId) keep.add(l.source.id);
+    });
+    setFocus(keep);
+    renderPulseList(tagId);  // just updates content in the background
 
-  // IMPORTANT: on mobile, make sure Pulse list is NOT shown
-  if (window.innerWidth <= 860 && rightPanel) {
-    rightPanel.classList.remove('open');
-    const tr = document.getElementById('toggle-right');
-    if (tr) tr.classList.remove('active');
+    const selectedNodes = DATA.nodes.filter(n => keep.has(n.id));
+    fitViewTo(selectedNodes);
+
+    // IMPORTANT: on mobile, make sure Pulse list is NOT shown
+    if (window.innerWidth <= 860 && rightPanel) {
+      rightPanel.classList.remove('open');
+      const tr = document.getElementById('toggle-right');
+      if (tr) tr.classList.remove('active');
+    }
   }
-}
   
   // --- search filter ---
   if (searchInput) {
