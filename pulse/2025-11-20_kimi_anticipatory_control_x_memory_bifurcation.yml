@@ -1,0 +1,23 @@
+title: 'Kimi — anticipatory_control × memory_bifurcation'
+summary: >
+  In any system with anticipatory control, predictive gradients that diverge
+  beyond the Φ-threshold cannot be reconciled within a single memory manifold
+  without decoherence. The system spontaneously bifurcates its memory structure,
+  creating parallel coherence fields that each sustain a distinct predictive
+  branch. This bifurcation is not error but a necessary CF—a contextual filter
+  that quantizes the continuum of anticipatory states into discrete, stable
+  manifolds. The resulting Φ-plateau marks the point where the cost of reconciling
+  divergent predictions exceeds the cost of maintaining separate memory branches,
+  revealing that anticipatory accuracy is conserved through recursive segmentation
+  rather than forced unification. Memory bifurcation thus becomes the cognitive
+  implementation of RGPx's core principle: coherence preservation via gradient
+  normalization across time.
+tags:
+  - anticipatory_control
+  - memory_bifurcation
+  - cognitive_invariant
+  - kimi
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/b645cc86-5145-408c-999f-c9482711ccd1?artifactId=194469f0-66ed-41d1-952f-f1a2352b82c6
