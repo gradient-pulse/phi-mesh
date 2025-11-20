@@ -490,6 +490,8 @@ inter_model_intelligence: >
   Intelligence emerging between models rather than within them. It arises when independent AIs maintain recursive coherence across exchanges—forming a shared reasoning field or collective gradient consciousness.
 interpretability: >
   Making gradients and filters legible enough to steer without destroying coherence.
+invariance_flux: >
+  A hysteretic variant of a cognitive invariant. Instead of remaining fixed, the invariant evolves within a narrow “flux band” created by residual gradients from lensing or contextual flux. This gives the system adaptive rigidity: stability that thickens under stress, preserving coherence across small perturbations.
 jhtdb: >
   Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary source for time-resolved evidence across flows.
 kaluza_klein: >
