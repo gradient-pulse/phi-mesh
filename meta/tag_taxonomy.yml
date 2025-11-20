@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-20T10:36:02Z'
+  generated_at: '2025-11-20T10:38:29Z'
 phases:
   delta:
   - tag: authorship
@@ -748,7 +748,9 @@ phases:
     - 2025-05-17_internal-deepseek_╬ª-harmonics
     - 2025-07-21_recursive_cor_pola_convergence
   - tag: contextual_flux
-    description: ''
+    description: The time-varying version of a Contextual Filter. A dynamic CF whose boundaries shift under gradient pressure,
+      lensing, or hysteresis. It tracks how coherence adapts over time — the elastic flow of Δ → GC → CF before an invariant
+      stabilizes.
     count: 1
     pulses:
     - 2025-11-20_grok_gradient_lensing_cognitive_invariant
