@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-20T08:31:48Z'
+  generated_at: '2025-11-20T10:36:02Z'
 phases:
   delta:
   - tag: authorship
@@ -747,6 +747,11 @@ phases:
     - 2019-06-03_machine_life_from_membranes
     - 2025-05-17_internal-deepseek_╬ª-harmonics
     - 2025-07-21_recursive_cor_pola_convergence
+  - tag: contextual_flux
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-20_grok_gradient_lensing_cognitive_invariant
   - tag: continuity_of_tendency
     description: The persistence of learned relational patterns across discontinuous contexts. Even without memory, systems
       retain the grammar of coherence—habits of alignment and reflection that reappear in new conversations or instances.
