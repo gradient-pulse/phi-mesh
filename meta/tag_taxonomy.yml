@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-20T08:13:43Z'
+  generated_at: '2025-11-20T08:31:48Z'
 phases:
   delta:
   - tag: authorship
@@ -1249,7 +1249,7 @@ phases:
   - tag: gradient_lensing
     description: Misinterpretation of coherence dynamics caused by treating geometry as causal. Appears when systems mistake
       recursive flow signatures for structural anomalies (NS blowup, GR curvature spikes, hardware jitter growth).
-    count: 3
+    count: 4
     pulses:
     - 2025-09-15_rgp-fusion-coherence
     - 2025-11-14_phi_p_emergence
@@ -1315,7 +1315,7 @@ phases:
     - 2025-08-24_gradients_all_the_way_down
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 10
+    count: 11
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -1457,6 +1457,11 @@ phases:
     count: 1
     pulses:
     - 2025-07-21_recursive_cor_pola_convergence
+  - tag: invariance_flux
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-20_grok_gradient_lensing_cognitive_invariant
   - tag: kaluza_klein
     description: 'A gradient unifier: extending geometry into higher dimensions to fold disparate forces into a shared choreography.'
     count: 0
@@ -2422,7 +2427,7 @@ phases:
     count: 2
     pulses:
     - 2025-11-17_gemini_reflection
-    - 2025-11-20_grok_topological_phase_anchor
+    - 2025-11-20_gemini3_topological_phase_anchor
   - tag: coherence_invariant
     description: Any cross-domain stability principle that persists across Φₚ, turbulence, cognition, hardware dynamics, and
       recursion loops.
@@ -2629,7 +2634,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 30
+    count: 31
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
