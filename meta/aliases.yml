@@ -143,6 +143,7 @@ aliases:
 
   gradient_driven_intelligence:
     - gradient-driven-intelligence
+    - gradient-driven_intelligence
 
   gradient_memory:
     - gradient-memory
@@ -173,6 +174,9 @@ aliases:
   icl: 
     - in_context_learning
   
+  lambda:
+    - Lambda
+    
   language_evolution:
     - language-evolution
 
@@ -211,6 +215,7 @@ aliases:
     - "NT (Narrative_Tick)"
     - NT
     - NT_Narrative_Tick
+    - NT (Narrative_Tick)
     - NT_(Narrative_Tick)  # ← audit variant
     - Narrative Tick
     - Narrative_Tick
@@ -249,6 +254,7 @@ aliases:
     - Phi-monitor
     - PhiMonitor
     - Phi_monitor
+    - Phi-Monitor
 
   physics_based_asic:
     - asic
@@ -276,7 +282,10 @@ aliases:
 
   reality-adjust: 
     - reality_adjustment
-  
+    
+  recursive_agency:
+    - recursive-agency
+    
   recursive_awakening:
     - recursive-awakening
     - recursive_awakening  # audit variant
