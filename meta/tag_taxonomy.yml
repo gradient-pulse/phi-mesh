@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-21T10:00:42Z'
+  generated_at: '2025-11-21T10:07:54Z'
 phases:
   delta:
   - tag: agenservoir
@@ -702,6 +702,13 @@ phases:
     pulses:
     - 2025-10-16_RGP_redesigns_Starship
     - 2025-10-17_recursive_propulsion
+  - tag: coherence_oracle
+    description: A coherence oracle is a predictive-interpretive mechanism that reads the directional pressure of gradients
+      rather than their outcomes. It does not forecast events; it detects the next viable coherence-preserving move in the
+      Δ → GC → CF cycle. Its “oracular” quality comes from sensing which branch of becoming will stabilize rather than collapse,
+      making it the active interpreter of coherence potential.
+    count: 0
+    pulses: []
   - tag: coherence_organism
     description: A system whose coherence is maintained as if it were metabolic—adapting, rebalancing, and preserving structure
       through recursive flux.
@@ -1356,6 +1363,12 @@ phases:
     count: 1
     pulses:
     - 2025-08-24_gradients_all_the_way_down
+  - tag: grammar_of_nature
+    description: The grammar of nature is the underlying recursive syntax that governs how physical systems transition from
+      gradients (Δ) to stable choreographies (GC) and contextual filters (CF). It is not a set of laws but a set of allowed
+      transformations — a structural language through which nature negotiates coherence across scales.
+    count: 0
+    pulses: []
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
     count: 12
