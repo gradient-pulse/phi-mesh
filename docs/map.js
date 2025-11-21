@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pulseList.className = 'muted one-line';
     }
     clearLeftPanel();
+    hideTip();
   });
 
   // --- tooltip helpers ---
