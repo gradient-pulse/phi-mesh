@@ -45,7 +45,7 @@ jobs:
         run: |
           python meta/build_tag_taxonomy_html.py
 
-      - name: Commit and push changes (if any)
+      - name: Commit and safe-push changes (if any)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -53,8 +53,15 @@ jobs:
           # Only look for the files we actually generate now
           if git status --porcelain | grep -qE "meta/tag_taxonomy.yml|docs/tag_taxonomy.html"; then
             git add meta/tag_taxonomy.yml docs/tag_taxonomy.html
-            git commit -m "Auto-update tag taxonomy"
-            git push
+            git commit -m "Auto-update tag taxonomy" || echo "Nothing to commit."
+
+            # --- safe-push: rebase on remote main, then try to push without failing the job ---
+            git fetch origin main || echo "No remote main to fetch."
+            git rebase origin/main || echo "Rebase failed or unnecessary, continuing with local state."
+
+            if ! git push origin HEAD:main; then
+              echo "Non fast-forward or push conflict on main. Skipping taxonomy push this run (safe-push)."
+            fi
           else
             echo "No taxonomy changes to commit."
           fi
