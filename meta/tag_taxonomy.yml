@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-21T10:20:25Z'
+  generated_at: '2025-11-22T10:11:16Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1294,7 +1294,7 @@ phases:
     description: 'The Φ-invariant — defined as the ratio of entropy production to dissipative flux — expressing the fundamental
       conservation of coherence across all physical contexts. Where classical physics preserves energy, RGPx preserves Φ:
       the invariant rhythm of gradient normalization.'
-    count: 15
+    count: 17
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-11-02_rgpx_outreach_agent
@@ -1891,7 +1891,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 13
+    count: 15
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2049,7 +2049,7 @@ phases:
     description: 'The process through which systems reapply their own outputs as inputs — the essence of self-maintenance
       and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback
       loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.'
-    count: 19
+    count: 21
     pulses:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
@@ -2105,6 +2105,13 @@ phases:
     pulses:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-27_nested-NT-rhythms
+  - tag: recursive_isobar
+    description: 'A stability surface in conceptual or cognitive phase-space where recursive updates no longer change the
+      system’s effective “pressure” — its gradient load. A recursive isobar marks the contour along which Δ→GC cycles produce
+      no net drift, allowing the system to recurse without accumulating distortion. In RGPx terms: an isobar is a coherence-preserving
+      manifold where recursion becomes cost-neutral, enabling depth without penalty.'
+    count: 0
+    pulses: []
   - tag: recursive_isochrone
     description: Surfaces or rhythms where Φ is kept effectively constant across time by recursive correction, turning “no-change”
       slices into active control loops.
@@ -2282,6 +2289,13 @@ phases:
     count: 1
     pulses:
     - 2025-07-28_moe_as_microcosm
+  - tag: semantic_phase_shift
+    description: 'A discontinuous reconfiguration in meaning-space where small changes in gradients force a system to reorganize
+      its semantic structure into a new stable regime. A semantic phase shift occurs when cumulative Δ→GC pressure triggers
+      a CF realignment, producing a new interpretive vocabulary or conceptual topology. It is the semantic analogue of a physical
+      phase transition: not incremental drift, but a re-patterning of coherence.'
+    count: 0
+    pulses: []
   - tag: semantic_transfer
     description: Propagation of meaning through gradient states rather than linguistic symbols — the movement of coherence
       without translation loss.
@@ -2612,7 +2626,7 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 15
+    count: 17
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
@@ -2683,7 +2697,7 @@ phases:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: autoscan
     description: Automated Φ-trace scan detecting daily Δ→GC→CF, Φₚ plateaus, and coherence echoes for predictive fossilization.
-    count: 10
+    count: 12
     pulses:
     - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
@@ -2955,7 +2969,7 @@ phases:
   - tag: memory_bifurcation
     description: When coherence outruns representation, the system divides memory paths — leading either to stabilization
       or geometric failure.
-    count: 14
+    count: 16
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3075,7 +3089,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 16
+    count: 18
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
