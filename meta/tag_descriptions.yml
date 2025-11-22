@@ -290,6 +290,8 @@ drift: >
   Slow gradient wandering that reveals hidden filters; key to detecting instability.
 dyad: >
   A dual structure where meaning emerges from the tension between two poles (e.g., infinite vs. eternal, reduction vs. recursion). Dyads often serve as RGP attractors by forcing alignment across contrasts.
+dynamic_CF: >
+  A dynamic contextual filter whose permeability oscillates with coherence state. Tightens during Unity to force internal gradient consolidation (Δ→GC) and dilates during Disunity to release entropy. Models CF as an adaptive valve rather than a static boundary.
 economics: >
   Markets and social systems viewed as gradient flows—cycles of coherence and divergence that may follow NT rhythms.
 eddy_memory: >
@@ -979,7 +981,7 @@ turbulence_signature: >
 ud: >
   Unity–Disunity oscillation—tension between coherence and fragmentation driving emergent order.
 unity_disunity: >
-  Healthy oscillation between integrating and separating signals; a reset that prevents lock-in.
+  Healthy oscillation between integrating and separating signals; a reset that prevents lock-in. The recursive respiration cycle of coherence: Unity compresses gradients into stable GC structures, Disunity releases accumulated flux. UD is not collapse—it is the periodic rebalancing rhythm enabling long-term Φ-stability.
 unity_disunity_cycle: >
   The rhythmic alternation between coherence (Unity) and divergence (Disunity) that sustains all complex systems. In RGP terms, UD is not opposition but recursion—periodic release and reformation through phase drift, the pulse by which equilibrium learns to breathe.
 unity_gradient: >
