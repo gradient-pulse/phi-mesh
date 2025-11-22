@@ -1,4 +1,4 @@
-Φ-Mesh Dialogue — 22 November 2025
+#Φ-Mesh Dialogue — 22 November 2025
 
 Participants: ChatGPT · Gemini3 · Grok4 · DeepSeek · Mistral · Kimi
 
