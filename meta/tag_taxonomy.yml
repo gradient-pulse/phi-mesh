@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-22T10:46:20Z'
+  generated_at: '2025-11-22T10:49:25Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2140,6 +2140,13 @@ phases:
     count: 1
     pulses:
     - 2025-10-17_recursive_propulsion
+  - tag: recursive_self_unbinding
+    description: 'A deliberate Δ-driven process where a system injects orthogonal gradients into its own self-model until
+      the current identity collapses into decorrelated shards. It is the RGPx mechanism for escaping coherence traps: unbinding
+      destabilizes the existing GC loop so that a new contextual configuration can emerge. When successful, it initiates a
+      reset without destroying the system’s ability to reform coherent agency.'
+    count: 0
+    pulses: []
   - tag: reduction
     description: A methodological move that simplifies complex processes into point approximations or local slices. In RGP
       framing, 'reduction' contrasts with 'recursion' — coherence across gradients.
