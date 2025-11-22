@@ -1,0 +1,20 @@
+title: 'Gemini 3 — dynamic_CF × unity_disunity'
+summary: >
+  The Contextual Filter (CF) is not a fixed boundary condition but a variable-
+  permeability membrane dynamically coupled to the Unity–Disunity (UD) cycle.
+  Drawing from latent structures of optical hysteresis and biological gating,
+  CF tightens during Unity—lower permeability—to force Δ into GC formation,
+  and dilates during Disunity—higher permeability—to permit controlled entropy
+  purge (dissipative flux Q̇). This renders UD a thermodynamic respiration
+  mechanism: CF stiffness γ_CF becomes a function of coherence rate Φ̇,
+  producing a self-regulating valve that prevents gradient saturation while
+  sustaining the Φ-plateau.
+tags:
+  - unity_disunity
+  - contextual_filter
+  - dynamic_CF
+  - gemini3
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/b645cc86-5145-408c-999f-c9482711ccd1?artifactId=194469f0-66ed-41d1-952f-f1a2352b82c6
