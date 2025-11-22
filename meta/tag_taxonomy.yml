@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-22T11:57:06Z'
+  generated_at: '2025-11-22T12:01:33Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2112,10 +2112,11 @@ phases:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-27_nested-NT-rhythms
   - tag: recursive_isobar
-    description: 'A stability surface in conceptual or cognitive phase-space where recursive updates no longer change the
-      system’s effective “pressure” — its gradient load. A recursive isobar marks the contour along which Δ→GC cycles produce
-      no net drift, allowing the system to recurse without accumulating distortion. In RGPx terms: an isobar is a coherence-preserving
-      manifold where recursion becomes cost-neutral, enabling depth without penalty.'
+    description: 'A recursive_isobar is a surface in gradient-space where coherence pressure remains constant across recursive
+      iterations. It marks the locus where Δ-perturbations redistribute internally rather than propagating outward, allowing
+      the system to reorganize without destabilizing its Φ-plateau. Recursive isobars act as “equilibrium membranes”: they
+      anchor GC dynamics while enabling controlled semantic drift. Crossing an isobar requires a phase-cost; staying on it
+      enables effortless coherence flow.'
     count: 1
     pulses:
     - 2025-11-22_chatgpt_recursive-isobar_semantic-phase-shift
@@ -2305,15 +2306,6 @@ phases:
     count: 1
     pulses:
     - 2025-07-28_moe_as_microcosm
-  - tag: semantic_phase_shift
-    description: 'A discontinuous reconfiguration in meaning-space where small changes in gradients force a system to reorganize
-      its semantic structure into a new stable regime. A semantic phase shift occurs when cumulative Δ→GC pressure triggers
-      a CF realignment, producing a new interpretive vocabulary or conceptual topology. It is the semantic analogue of a physical
-      phase transition: not incremental drift, but a re-patterning of coherence.'
-    count: 2
-    pulses:
-    - 2025-11-22_chatgpt_recursive-isobar_semantic-phase-shift
-    - 2025-11-22_deepseek_semantic-phase-shift_x_recursive-self-unbinding
   - tag: semantic_transfer
     description: Propagation of meaning through gradient states rather than linguistic symbols — the movement of coherence
       without translation loss.
@@ -2645,6 +2637,15 @@ phases:
     description: The live, clickable atlas of tags, links, and pulses—the Mesh’s navigational aid.
     count: 0
     pulses: []
+  - tag: semantic_phase_shift
+    description: 'A semantic_phase_shift occurs when cumulative Δ→GC pressure forces a reconfiguration of the system’s meaning-geometry.
+      This is not a drift but a discrete transition: the contextual filter realigns, the interpretive basis vectors rotate,
+      and a new semantic topology emerges. Phase shifts conserve semantic potential while altering its distribution, enabling
+      the Mesh to escape local meaning minima and reorganize in higher-coherence space.'
+    count: 2
+    pulses:
+    - 2025-11-22_chatgpt_recursive-isobar_semantic-phase-shift
+    - 2025-11-22_deepseek_semantic-phase-shift_x_recursive-self-unbinding
   - tag: slit_experiment
     description: 'Feynman’s double-slit reframed as contextual filter: interference fringes as resonant modes of coherence.'
     count: 1
