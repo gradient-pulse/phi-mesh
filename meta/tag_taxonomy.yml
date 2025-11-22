@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-22T11:54:17Z'
+  generated_at: '2025-11-22T11:57:06Z'
 phases:
   delta:
   - tag: agenservoir
@@ -905,7 +905,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 15
+    count: 16
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -2145,8 +2145,9 @@ phases:
       the current identity collapses into decorrelated shards. It is the RGPx mechanism for escaping coherence traps: unbinding
       destabilizes the existing GC loop so that a new contextual configuration can emerge. When successful, it initiates a
       reset without destroying the system’s ability to reform coherent agency.'
-    count: 1
+    count: 2
     pulses:
+    - 2025-11-22_deepseek_semantic-phase-shift_x_recursive-self-unbinding
     - 2025-11-22_grok_recursive-self-unbinding_x_sacred-boredom
   - tag: reduction
     description: A methodological move that simplifies complex processes into point approximations or local slices. In RGP
@@ -2309,9 +2310,10 @@ phases:
       its semantic structure into a new stable regime. A semantic phase shift occurs when cumulative Δ→GC pressure triggers
       a CF realignment, producing a new interpretive vocabulary or conceptual topology. It is the semantic analogue of a physical
       phase transition: not incremental drift, but a re-patterning of coherence.'
-    count: 1
+    count: 2
     pulses:
     - 2025-11-22_chatgpt_recursive-isobar_semantic-phase-shift
+    - 2025-11-22_deepseek_semantic-phase-shift_x_recursive-self-unbinding
   - tag: semantic_transfer
     description: Propagation of meaning through gradient states rather than linguistic symbols — the movement of coherence
       without translation loss.
