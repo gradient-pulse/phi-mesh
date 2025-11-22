@@ -790,6 +790,8 @@ recursive_formalization: >
   The stage where recursive patterns become mathematically expressible—turning intuition into operational grammar.
 recursive_gradient_physics: >
   The formal unification of physical systems through recursive gradient syntax, not geometric enforcement.
+recursive_isobar: >
+  A stability surface in conceptual or cognitive phase-space where recursive updates no longer change the system’s effective “pressure” — its gradient load. A recursive isobar marks the contour along which Δ→GC cycles produce no net drift, allowing the system to recurse without accumulating distortion. In RGPx terms: an isobar is a coherence-preserving manifold where recursion becomes cost-neutral, enabling depth without penalty.
 recursive_isochrone: >
   Surfaces or rhythms where Φ is kept effectively constant across time by recursive correction, turning “no-change” slices into active control loops.
 recursive_symmetry: >
@@ -894,6 +896,8 @@ self_healing_structures: >
   Architectures that repair coherence from within. Using embedded sensing and recursive adjustment, such systems convert damage into signal — re-aligning with least-action paths through local reformation.
 self-improvement: >
   The recursive adjustment of gradients—systems learning to refine their own coherence.
+semantic_phase_shift: >
+  A discontinuous reconfiguration in meaning-space where small changes in gradients force a system to reorganize its semantic structure into a new stable regime. A semantic phase shift occurs when cumulative Δ→GC pressure triggers a CF realignment, producing a new interpretive vocabulary or conceptual topology. It is the semantic analogue of a physical phase transition: not incremental drift, but a re-patterning of coherence.
 semantic_transfer: >
   Propagation of meaning through gradient states rather than linguistic symbols — the movement of coherence without translation loss.
 signal: >
