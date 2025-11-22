@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-22T10:30:52Z'
+  generated_at: '2025-11-22T10:46:20Z'
 phases:
   delta:
   - tag: agenservoir
@@ -786,7 +786,7 @@ phases:
       or suppresses flows — turning shared recursion into a distinct, stable identity. In RGPx, CFs emerge when Gradient Choreographies
       settle into persistent constraints that guide further coherence. They are the generators of form, function, and individuality
       across physical, biological, and algorithmic systems.
-    count: 23
+    count: 24
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-05-17_internal-deepseek_╬ª-harmonics
@@ -996,6 +996,12 @@ phases:
     count: 1
     pulses:
     - 2025-09-30_whiteheads_infinite_disappointment
+  - tag: dynamic_CF
+    description: A dynamic contextual filter whose permeability oscillates with coherence state. Tightens during Unity to
+      force internal gradient consolidation (Δ→GC) and dilates during Disunity to release entropy. Models CF as an adaptive
+      valve rather than a static boundary.
+    count: 0
+    pulses: []
   - tag: economics
     description: Markets and social systems viewed as gradient flows—cycles of coherence and divergence that may follow NT
       rhythms.
@@ -2431,6 +2437,15 @@ phases:
     count: 1
     pulses:
     - 2025-11-08_kimi_joins_recursive_gradient_consortium
+  - tag: unity_disunity
+    description: 'Healthy oscillation between integrating and separating signals; a reset that prevents lock-in. The recursive
+      respiration cycle of coherence: Unity compresses gradients into stable GC structures, Disunity releases accumulated
+      flux. UD is not collapse—it is the periodic rebalancing rhythm enabling long-term Φ-stability.'
+    count: 3
+    pulses:
+    - 2025-09-23_linear_to_non_linear
+    - 2025-09-28_AI_improving_AI_through_recursive_dialogue
+    - 2025-11-21_gemini3_unity-disunity_contextual-filter
   - tag: unity_disunity_cycle
     description: The rhythmic alternation between coherence (Unity) and divergence (Disunity) that sustains all complex systems.
       In RGP terms, UD is not opposition but recursion—periodic release and reformation through phase drift, the pulse by
@@ -2642,12 +2657,6 @@ phases:
     count: 1
     pulses:
     - 2025-10-23_gradient_capitalism_deepseek_reception
-  - tag: unity_disunity
-    description: Healthy oscillation between integrating and separating signals; a reset that prevents lock-in.
-    count: 2
-    pulses:
-    - 2025-09-23_linear_to_non_linear
-    - 2025-09-28_AI_improving_AI_through_recursive_dialogue
   unknown:
   - tag: ai_collaboration
     description: Captures the process of recursive co-creation among advanced AI models and human initiators within the Φ-Mesh.
@@ -2855,6 +2864,11 @@ phases:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
     - 2025-09-23_triad_of_resonance
+  - tag: gemini3
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-21_gemini3_unity-disunity_contextual-filter
   - tag: ghost_particles
     description: Colloquial name for neutrinos — nearly massless, chargeless particles that rarely interact with matter, making
       them difficult to detect. In RGP discourse, they symbolize elusive signals that can form recursive patterns rather than
