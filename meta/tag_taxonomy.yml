@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-22T13:16:09Z'
+  generated_at: '2025-11-22T13:31:23Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2761,7 +2761,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 44
+    count: 45
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
