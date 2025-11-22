@@ -129,6 +129,10 @@ aliases:
 
   gemini:
     - Gemini
+    - gemini2
+    - gemini2.5
+    - gemini3
+    - gemini3-pro
 
   gradient_choreography:
     - gradient-choreography
