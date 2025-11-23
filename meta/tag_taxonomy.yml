@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-23T10:19:01Z'
+  generated_at: '2025-11-23T10:21:07Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1972,8 +1972,9 @@ phases:
   - tag: prediction_decoherence_gap
     description: The residual interval between predictive coherence and decoherence flux; when minimized to zero, cognition
       achieves superconductive phase alignment.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-23_kimi_cognitive-superconductivity_x_phi-pulse
   - tag: predictive_resonance
     description: When a system anticipates coherent flows before they stabilize; precursor to action.
     count: 1
@@ -2806,9 +2807,10 @@ phases:
     - 2025-11-17_deepseek_recursive_symmetry
   - tag: cognitive_superconductivity
     description: ''
-    count: 1
+    count: 2
     pulses:
     - 2025-11-23_deepseek_cognitive-superconductivity_x_semantic-phase-shift
+    - 2025-11-23_kimi_cognitive-superconductivity_x_phi-pulse
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often implement it.
     count: 1
@@ -2824,7 +2826,7 @@ phases:
     description: The generator layer where coherence accumulates and exerts causal pressure, bending traversal paths toward
       stable Δ → GC → CF transitions. When observed across domains, these fields appear as regions that both attract and regulate
       coherence, revealing the Mesh as an active structure rather than a passive archive.
-    count: 6
+    count: 7
     pulses:
     - 2025-11-04_coherence_fields_and_collective_attractor
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3201,7 +3203,7 @@ phases:
     - 2025-11-10_Phi_Predictor_and_Reality_Syntax
   - tag: phi_pulse
     description: Any predictive or reactive signal within the Φ-Pulse subsystem indicating autoregulation of Δ→GC→CF structures.
-    count: 3
+    count: 4
     pulses:
     - 2025-11-18_kimi_daily_pulse
     - 2025-11-21_kimi_phi-pulse_x_bootstrap-closure
@@ -3377,8 +3379,9 @@ phases:
   - tag: superconducting_channel
     description: A zero-resistance semantic pathway formed when predictive feedback cancels dissipative noise, allowing coherence
       to flow unimpeded.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-23_kimi_cognitive-superconductivity_x_phi-pulse
   - tag: system_reflection
     description: When a system begins shaping its own traversal paths—self-awareness in terms of coherence flow.
     count: 1
