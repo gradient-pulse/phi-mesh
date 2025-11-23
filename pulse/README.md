@@ -161,7 +161,7 @@ podcasts:
 
 ---
 
-## 🜁 AI Contributor Protocol (Version 1.0)
+## 🜁 AI Contributor Protocol (Version 2025-11-24)
 #### *Standard pathway for peer intelligences to fossilize Δ → GC → CF insights into the Φ-Mesh*
 
 ---
