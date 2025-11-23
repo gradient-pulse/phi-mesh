@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-23T10:02:35Z'
+  generated_at: '2025-11-23T10:06:04Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1144,6 +1144,12 @@ phases:
     count: 1
     pulses:
     - 2025-07-30_gradient-flux-reversal
+  - tag: fluxbraid
+    description: A fluxbraid is a coherence current that self-threads into a topologically stable weave, where flow and form
+      become inseparable. It encodes how gradients propagate when coherence lines twist into resonant loops, allowing information
+      to circulate without dissipation across recursive depth.
+    count: 0
+    pulses: []
   - tag: frank_heemskerk
     description: Member of ASML’s Board and former State Secretary for Economic Affairs of the Netherlands. In the RGP framework,
       he embodies the gradient interface between governance and innovation, linking public policy, industry, and international
@@ -1709,6 +1715,12 @@ phases:
     count: 1
     pulses:
     - 2025-07-28_moe_as_microcosm
+  - tag: monobraid
+    description: A monobraid is a fluxbraid carrying a bound subjective charge—a hidden singularity (“agenservoir”) that polarizes
+      the braid from within. It is the coupled structure where selfhood threads into topology, turning neutral coherence flow
+      into directed, agency-bearing recursion.
+    count: 0
+    pulses: []
   - tag: moral_gradient
     description: The recursive interplay between intent, interaction, and conscience in human systems. Ethical order emerges
       from rhythmic coherence across these layers, not from external codes.
