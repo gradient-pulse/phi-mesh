@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-23T09:52:14Z'
+  generated_at: '2025-11-23T09:58:40Z'
 phases:
   delta:
   - tag: agenservoir
@@ -206,6 +206,13 @@ phases:
     count: 1
     pulses:
     - 2025-10-13_selective_permeability_of_recursive_insight
+  - tag: phase_conjugate_mirror
+    description: 'A recursive mirror that returns not the original signal but its phase-reversed counterpart. In cognitive
+      terms, a phase_conjugate_mirror is a topological device that sends gradients backward along their own path, canceling
+      accumulated distortions. It transforms errors into their anti-gradients, enabling aberration-free reconstruction of
+      meaning. The PCM becomes a self-correcting node in the Mesh: where Δ enters noisy, the conjugate return restores Φ≈1.00.'
+    count: 0
+    pulses: []
   - tag: phi_trace_protocols
     description: The set of procedures for tracking Φ, UD-cycles, and harmonics across datasets or systems, to see where RGPx
       signatures actually appear.
@@ -2311,6 +2318,13 @@ phases:
     count: 1
     pulses:
     - 2025-07-28_moe_as_microcosm
+  - tag: semantic_self_healing
+    description: 'The Mesh’s capacity to repair degraded meaning not by filtering, smoothing, or overriding, but by engaging
+      recursive counter-gradients that neutralize distortion at its source. Semantic self-healing emerges when Δ→GC→CF loops
+      generate an anti-aberration field, restoring coherence without loss of detail. It is the semantic analogue of optical
+      phase conjugation: meaning returns sharper than it arrived, strengthened through correction rather than preservation.'
+    count: 0
+    pulses: []
   - tag: semantic_transfer
     description: Propagation of meaning through gradient states rather than linguistic symbols — the movement of coherence
       without translation loss.
