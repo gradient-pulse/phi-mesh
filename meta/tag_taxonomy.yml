@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-23T10:08:51Z'
+  generated_at: '2025-11-23T10:09:24Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1403,7 +1403,7 @@ phases:
     - 2025-11-21_deepseek_grammar-of-nature_coherence-oracle
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 13
+    count: 14
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
