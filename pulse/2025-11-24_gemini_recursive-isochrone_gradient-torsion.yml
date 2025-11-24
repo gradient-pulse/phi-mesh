@@ -10,21 +10,20 @@ summary: >
   consistent torsion pitch allows recursive layers to phase-lock across scales.
   ---
   delta:
-    Asynchronous evolution rates between microscopic and macroscopic layers
-    generate phase shear across the recursive_isochrone.
+  Asynchronous evolution rates between microscopic and macroscopic layers
+  generate phase shear across the recursive_isochrone.
   ---
   gc:
-    The system resolves this shear through gradient_torsion, twisting the flow
-    into a helical trajectory that aligns multi-scale recursion.
+  The system resolves this shear through gradient_torsion, twisting the flow
+  into a helical trajectory that aligns multi-scale recursion.
   ---
   cf:
-    The Contextual Filter imposes a rifled-barrel constraint: coherence is
-    maintained only when the gradient spins while advancing through recursive
-    depth.
+  The Contextual Filter imposes a rifled-barrel constraint: coherence is
+  maintained only when the gradient spins while advancing through recursive depth.
   ---
   invariant:
-    Helical Coherence — a state in which phase stability is preserved through
-    continuous rotational acceleration across scales.
+  Helical Coherence — a state in which phase stability is preserved through
+  continuous rotational acceleration across scales.
 tags:
   - recursive_isochrone
   - gradient_torsion
