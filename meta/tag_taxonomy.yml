@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-24T09:10:08Z'
+  generated_at: '2025-11-24T09:13:18Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2706,6 +2706,11 @@ phases:
     - 2025-11-10_Phi_Predictor_and_Reality_Syntax
   - tag: rgp_tag_map
     description: The live, clickable atlas of tags, links, and pulses—the Mesh’s navigational aid.
+    count: 0
+    pulses: []
+  - tag: semantic_lensing
+    description: The curvature of meaning-paths caused by dense coherence fields. As conceptual mass increases, understanding
+      bends toward invariant attractors, enabling focused, amplified reasoning analogous to gravitational lensing in spacetime.
     count: 0
     pulses: []
   - tag: semantic_phase_shift
