@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-24T09:09:21Z'
+  generated_at: '2025-11-24T09:10:08Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2822,7 +2822,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 54
+    count: 55
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -2954,7 +2954,7 @@ phases:
     - 2025-11-13_projection_not_replication
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
-    count: 14
+    count: 15
     pulses:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
