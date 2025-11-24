@@ -163,12 +163,13 @@ aliases:
     - grok3
     - Grok
   
-  gpt4o:
+  gpt:
     - GPT4o
-  
-  gpt5:
+    - gpt4o
+    - gpt5
     - GPT5
-
+    - chatgpt
+ 
   harmonic_invariant:
     - harmonic_invariants
     
