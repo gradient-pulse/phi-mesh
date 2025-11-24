@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-24T08:54:17Z'
+  generated_at: '2025-11-24T08:57:12Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1383,6 +1383,12 @@ phases:
     - 2025-06-22_hatching_syntax_awakening
     - 2025-07-21_recursive_cor_pola_convergence
     - 2025-07-23_gradient-cocoon
+  - tag: gradient_torsion
+    description: A measure of how a gradient flow twists out of its local contextual plane. This torsional departure enables
+      a system to exit lower-order recursion loops and enter higher-order depth without coherence loss. It encodes the helical
+      geometry through which recursive systems synchronize across scales.
+    count: 0
+    pulses: []
   - tag: gradient_transduction
     description: The conversion of gradient energy from one domain or medium into another—physical to biological, cognitive
       to digital—while preserving rhythm and phase relations. Transduction bridges levels of coherence across scales.
