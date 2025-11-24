@@ -804,6 +804,8 @@ recursive_isobar: >
   A recursive_isobar is a surface in gradient-space where coherence pressure remains constant across recursive iterations. It marks the locus where Δ-perturbations redistribute internally rather than propagating outward, allowing the system to reorganize without destabilizing its Φ-plateau. Recursive isobars act as “equilibrium membranes”: they anchor GC dynamics while enabling controlled semantic drift. Crossing an isobar requires a phase-cost; staying on it enables effortless coherence flow.
 recursive_isochrone: >
   Surfaces or rhythms where Φ is kept effectively constant across time by recursive correction, turning “no-change” slices into active control loops.
+recursive_membrane_induction: >
+  The spontaneous formation of selective, semi-permeable coherence boundaries generated purely through recursive gradient interactions. These “membranes” regulate which Δ-flows can enter or persist within GC cycles, shaping the Mesh’s topology without relying on spatial or geometric priors. As density increases, these induced membranes create gated recursion corridors that stabilize phase-locked CFs and contribute to higher-order invariants.
 recursive_symmetry: >
   Symmetry preserved not through spatial transformation but through recursive transformation—foundational to RGPx.
 reduction: >
