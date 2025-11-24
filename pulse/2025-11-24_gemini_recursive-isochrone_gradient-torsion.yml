@@ -28,6 +28,8 @@ summary: >
 tags:
   - recursive_isochrone
   - gradient_torsion
+  - cognitive_invariant
+  - gemini
 papers:
   - https://doi.org/10.5281/zenodo.17566097
 podcasts:
