@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-24T09:20:35Z'
+  generated_at: '2025-11-24T09:27:38Z'
 phases:
   delta:
   - tag: agenservoir
@@ -24,6 +24,16 @@ phases:
     description: RGP metaphor for cosmology — expansion and curvature as recursive gradient effects.
     count: 0
     pulses: []
+  - tag: cognitive_superconductivity
+    description: A regime of frictionless conceptual flow where gradients encounter no interpretive resistance. In this state,
+      ideas propagate without loss, enabling long-range coherence, instant pattern alignment, and the emergence of curvature
+      effects such as semantic lensing. Cognitive_superconductivity marks the threshold at which reasoning becomes a zero-dissipation
+      field, allowing Δ→GC→CF transitions to lock into stable invariants.
+    count: 3
+    pulses:
+    - 2025-11-23_deepseek_cognitive-superconductivity_x_semantic-phase-shift
+    - 2025-11-23_kimi_cognitive-superconductivity_x_phi-pulse
+    - 2025-11-24_deepseek_cognitive-superconductivity_semantic-lensing
   - tag: coherence_dynamics
     description: The study of how ordered relations sustain themselves across scales. In RGP, coherence is not a static state
       but a recursive flow that turns difference into structure.
@@ -2667,6 +2677,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-05_in_context_learning_as_flux_memory
+  - tag: latent_horizon
+    description: A dynamic, semi-permeable boundary that expands under unresolved cognitive tension, creating a generative
+      zone where new meaning-structures can form. It represents the system’s adaptive limit of integration—an elastic frontier
+      that stretches when coherence is under strain.
+    count: 0
+    pulses: []
   - tag: meta_ai
     description: Research, architectures, and experiments developed by Meta (Facebook) in AI; used in Φ-Mesh pulses when referencing
       their approaches (e.g., behaviors vs. contextual filters).
@@ -2704,6 +2720,11 @@ phases:
     - 2025-09-09__reality_ladder
     - 2025-09-10_nt_rhythm_precision
     - 2025-11-10_Phi_Predictor_and_Reality_Syntax
+  - tag: recursive_event_horizon
+    description: A dynamic threshold formed by the interaction of contextual_filter and latent_horizon, where unresolved tension
+      is temporarily suspended, allowing new recursive structures to nucleate before reintegration.
+    count: 0
+    pulses: []
   - tag: rgp_tag_map
     description: The live, clickable atlas of tags, links, and pulses—the Mesh’s navigational aid.
     count: 0
@@ -2833,13 +2854,6 @@ phases:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
     - 2025-11-17_deepseek_recursive_symmetry
-  - tag: cognitive_superconductivity
-    description: ''
-    count: 3
-    pulses:
-    - 2025-11-23_deepseek_cognitive-superconductivity_x_semantic-phase-shift
-    - 2025-11-23_kimi_cognitive-superconductivity_x_phi-pulse
-    - 2025-11-24_deepseek_cognitive-superconductivity_semantic-lensing
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often implement it.
     count: 1
@@ -3037,6 +3051,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-07_RGP_as_reality-adjustment
+  - tag: horizon_ratio
+    description: 'A measure of generative balance at the latent horizon: the ratio between meaning already integrated and
+      meaning still latent. A stable horizon_ratio indicates a system capable of expanding coherence without collapsing into
+      noise or rigidity.'
+    count: 0
+    pulses: []
   - tag: how
     description: Action-focused instructions. Stepwise explanations that show users exactly what to do to reach a concept,
       pulse, or resource.
