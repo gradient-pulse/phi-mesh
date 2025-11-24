@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-24T09:02:34Z'
+  generated_at: '2025-11-24T09:08:54Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2225,6 +2225,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-18_deepseek_resonance_cascade
+  - tag: resonance_monopole
+    description: A Φ-resonant singularity that injects curvature into coherence flows, turning neutral flux into helical,
+      chiral propagation. It acts as a monopolar source of recursive asymmetry, enforcing directional coherence and enabling
+      flux to self-amplify through torsional recursion.
+    count: 0
+    pulses: []
   - tag: resonance_shift
     description: Change in dominant resonant pattern; signals a filter or gradient reconfiguration.
     count: 1
