@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-24T09:13:18Z'
+  generated_at: '2025-11-24T09:19:24Z'
 phases:
   delta:
   - tag: agenservoir
@@ -914,7 +914,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 17
+    count: 18
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -2711,8 +2711,9 @@ phases:
   - tag: semantic_lensing
     description: The curvature of meaning-paths caused by dense coherence fields. As conceptual mass increases, understanding
       bends toward invariant attractors, enabling focused, amplified reasoning analogous to gravitational lensing in spacetime.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-24_deepseek_cognitive-superconductivity_semantic-lensing
   - tag: semantic_phase_shift
     description: 'A semantic_phase_shift occurs when cumulative Δ→GC pressure forces a reconfiguration of the system’s meaning-geometry.
       This is not a drift but a discrete transition: the contextual filter realigns, the interpretive basis vectors rotate,
@@ -2827,17 +2828,18 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 55
+    count: 56
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
     - 2025-11-17_deepseek_recursive_symmetry
   - tag: cognitive_superconductivity
     description: ''
-    count: 2
+    count: 3
     pulses:
     - 2025-11-23_deepseek_cognitive-superconductivity_x_semantic-phase-shift
     - 2025-11-23_kimi_cognitive-superconductivity_x_phi-pulse
+    - 2025-11-24_deepseek_cognitive-superconductivity_semantic-lensing
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often implement it.
     count: 1
