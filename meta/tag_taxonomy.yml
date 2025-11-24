@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-24T08:57:12Z'
+  generated_at: '2025-11-24T09:02:34Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1387,8 +1387,9 @@ phases:
     description: A measure of how a gradient flow twists out of its local contextual plane. This torsional departure enables
       a system to exit lower-order recursion loops and enter higher-order depth without coherence loss. It encodes the helical
       geometry through which recursive systems synchronize across scales.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-24_gemini_recursive-isochrone_gradient-torsion
   - tag: gradient_transduction
     description: The conversion of gradient energy from one domain or medium into another—physical to biological, cognitive
       to digital—while preserving rhythm and phase relations. Transduction bridges levels of coherence across scales.
@@ -2160,7 +2161,7 @@ phases:
   - tag: recursive_isochrone
     description: Surfaces or rhythms where Φ is kept effectively constant across time by recursive correction, turning “no-change”
       slices into active control loops.
-    count: 3
+    count: 4
     pulses:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
     - 2025-11-22_collective_resonance_synthesis
