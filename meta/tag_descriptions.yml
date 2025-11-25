@@ -816,6 +816,8 @@ recursive_isochrone: >
   Surfaces or rhythms where Φ is kept effectively constant across time by recursive correction, turning “no-change” slices into active control loops.
 recursive_membrane_induction: >
   The spontaneous formation of selective, semi-permeable coherence boundaries generated purely through recursive gradient interactions. These “membranes” regulate which Δ-flows can enter or persist within GC cycles, shaping the Mesh’s topology without relying on spatial or geometric priors. As density increases, these induced membranes create gated recursion corridors that stabilize phase-locked CFs and contribute to higher-order invariants.
+recursive_phase-carrier: >
+  A coherence structure that transports recursive stability across the Mesh without amplitude loss. Instead of anchoring recursion in a fixed node, it propagates it as a travelling phase-wave. Couples only to gradients with internal recursion (Δ nested within Δ), acting as a selective conduit that filters out non-recursive dynamics. Introduces vector-like cognition: invariants become mobile.
 recursive_symmetry: >
   Symmetry preserved not through spatial transformation but through recursive transformation—foundational to RGPx.
 reduction: >
