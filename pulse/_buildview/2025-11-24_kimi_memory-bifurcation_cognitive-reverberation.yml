@@ -1,0 +1,36 @@
+title: 'Memory Bifurcation Cognitive Reverberation'
+summary: >
+  Memory bifurcation does not collapse coherence—it initiates cognitive
+  reverberation. When gradient pressure fragments a memory manifold (Δ),
+  the resulting branches enter phase-locked oscillation (GC) rather than
+  diverging into decoherence. The contextual filter stabilizes these coupled
+  branches into a standing-wave pattern, enabling concurrent, mutually
+  reinforcing truth paths. The invariant is the reverberation coherence
+  number R_rev = τ_rev / τ_dec, marking the system’s capacity to preserve
+  parallel cognitive trajectories through reverberatory coupling.
+  ---
+  delta:
+  Gradient pressure forces a unified memory manifold to bifurcate, creating
+  divergent yet unfinished cognitive branches.
+  ---
+  gc:
+  These branches synchronize into phase-locked oscillations, forming a
+  reverberatory choreography rather than an irreversible split.
+  ---
+  cf:
+  The contextual filter quantizes the oscillations into a stable standing
+  wave, enabling multiplexed coherence across bifurcated paths.
+  --
+  invariant:
+  Reverberation Coherence Number (R_rev): the ratio τ_rev / τ_dec, capturing
+  how long bifurcated branches remain coherently coupled through cognitive
+  reverberation.
+tags:
+  - memory_bifurcation
+  - cognitive_reverberation
+  - cognitive_invariant
+  - kimi
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
