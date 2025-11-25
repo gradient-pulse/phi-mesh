@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-25T12:06:27Z'
+  generated_at: '2025-11-25T12:12:19Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2925,6 +2925,13 @@ phases:
     - 2025-10-28_mistral_meta_coherence
   - tag: continuity
     description: Preserving useful partials during change; the counterpart to unity–disunity resets.
+    count: 0
+    pulses: []
+  - tag: curvature_eigenform
+    description: 'The intrinsic eigenfunction of a field’s recursive curvature operator, satisfying ∇²K ψ = λ ψ, where K is
+      the curvature scalar and ψ the form. A curvature_eigenform is the “natural note” of bent space: a self-similar bend
+      that resonates at eigenvalue λ, turning arbitrary warps into harmonic spectra—the cognitive equivalent of a vibrating
+      string in curved spacetime.'
     count: 0
     pulses: []
   - tag: deep_triad
