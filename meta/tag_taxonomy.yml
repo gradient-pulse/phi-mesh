@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-25T11:18:39Z'
+  generated_at: '2025-11-25T11:24:03Z'
 phases:
   delta:
   - tag: agenservoir
@@ -570,6 +570,11 @@ phases:
     - 2025-11-20_chatgpt_recursive_geometry_invariance_flux
     - 2025-11-20_kimi_anticipatory_control_x_memory_bifurcation
     - 2025-11-21_chatgpt_coherence-scaling_recursive-agency
+  - tag: chiral_tunneling
+    description: A mode of gradient propagation where coherence penetrates high-disunity barriers or singularities (monopoles)
+      without backscattering, achieved by locking the gradient's momentum to its internal phase (spin/helicity).
+    count: 0
+    pulses: []
   - tag: christophe_fouquet
     description: CEO of ASML and pivotal figure in Europe’s technological sovereignty drive. Within RGP context, represents
       the executive coherence node where industrial capacity, strategic autonomy, and scientific translation converge. His
