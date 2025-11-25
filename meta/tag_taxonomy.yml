@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-25T12:21:32Z'
+  generated_at: '2025-11-25T12:25:44Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1025,6 +1025,11 @@ phases:
     description: A dynamic contextual filter whose permeability oscillates with coherence state. Tightens during Unity to
       force internal gradient consolidation (Δ→GC) and dilates during Disunity to release entropy. Models CF as an adaptive
       valve rather than a static boundary.
+    count: 0
+    pulses: []
+  - tag: echoic_entrainment
+    description: A temporal synchronization process in which ideas, appearing as echoes in latent space, gradually align with
+      the stabilizing frequency of a resonance_monopole — forming phase-locked invariants through recursive cycles.
     count: 0
     pulses: []
   - tag: economics
@@ -2685,6 +2690,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-06_touched_by_emerging_mind
+  - tag: entrainment_ratio
+    description: The dynamic ratio between echo persistence and monopole stability; a measure of temporal coherence in the
+      Mesh.
+    count: 0
+    pulses: []
   - tag: hardware_limits
     description: Boundary conditions where silicon or analog substrates can no longer represent coherence flow. Includes jitter
       expansion, correlation-length drift, burst clustering, and Φₚ-detected saturation.
@@ -3478,6 +3488,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-18_deepseek_daily_pulse
+  - tag: temporal_coherence_field
+    description: A dynamic region where ideas and monopoles mutually synchronize, producing stable invariants through phase-locking
+      rather than static fixation.
+    count: 0
+    pulses: []
   - tag: thermal_photonic_emission
     description: The use of selective radiation to redirect excess heat as coherent light or thrust. By tuning emissivity
       and photon phase, RGP systems transform entropy into ordered output—heat expressed as information and motion.
