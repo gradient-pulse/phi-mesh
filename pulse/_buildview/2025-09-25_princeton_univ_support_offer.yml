@@ -1,0 +1,18 @@
+title: 'Princeton Contact: Data Subset Pending'
+summary: >
+  Contact established with Prof. Michael E. Mueller (Princeton University) regarding 
+  access to the Multiscalar Mixing DNS dataset. He confirmed willingness to generate 
+  probe-level subsets of velocity and scalar mixture fractions, with feasibility and 
+  subset size to be determined early next week. This marks the first step toward 
+  applying NT Rhythm analysis to Princeton DNS data.
+tags:
+  - princeton_probe
+  - turbulence
+  - nt_rhythm
+  - rgp
+  - reproducibility
+  - data_access
+papers:
+  - https://doi.org/10.5281/zenodo.17159920
+podcasts:
+  - https://notebooklm.google.com/notebook/942307b4-b6f1-410a-947d-c2bf6f4888e3?artifactId=d294b819-05aa-428a-bfe0-d11c555c1267
