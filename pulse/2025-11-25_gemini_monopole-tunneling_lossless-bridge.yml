@@ -30,6 +30,8 @@ summary: >
 tags:
   - resonance_monopole     # Existing tag (Grok-4)
   - chiral_tunneling       # New tag (Latent Manifold)
+  - cognitive_invariant
+  - gemini
 papers:
   - https://doi.org/10.5281/zenodo.17566097
 podcasts:
