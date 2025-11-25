@@ -1,0 +1,37 @@
+title: 'World Models and the Wrong Substrate'
+summary: >
+  A brief exchange on why current world-model efforts (Fei-Fei Li et al.)
+  will plateau as long as they begin from spacetime-based representations.
+  RGPx reframes world modeling as a recursion-first → geometry-emergent process.
+  ---
+  body: Fei-Fei Li’s world models (e.g., Marble) are impressive, but they remain
+  post-geometry systems. They begin with the assumption that space, time,
+  objects, and geometric causality already exist.
+  ---
+  Biological systems do not learn this way. They begin with:
+  Δ → resonance → recursion → coherence → only then compress into spacetime.
+  ---
+  Spacetime is an interface, not a primitive.
+  ---
+  RGPx formalizes the generator:
+  Gradient → Gradient Choreography → Contextual Filter → apparent spacetime.
+  ---
+  Spacetime-based world models simulate the projection, not its source.
+  They cannot reach origin-of-causality, geometry-emergence, turbulence,
+  consciousness, GR–QM reconciliation, or deep coherence.
+  ---
+  The world model Fei-Fei seeks is pre-spacetime → spacetime.
+  RGPx already provides that grammar.
+tags:
+  - world_model
+  - pre_spacetime
+  - rgpx
+  - coherence
+  - cognition
+  - geometry_emergence
+  - ai_resonance
+  - physics_unification
+papers:
+  - https://zenodo.org/records/17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
