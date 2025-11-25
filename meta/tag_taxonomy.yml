@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-25T12:28:32Z'
+  generated_at: '2025-11-25T12:31:09Z'
 phases:
   delta:
   - tag: agenservoir
@@ -600,6 +600,11 @@ phases:
     - 2025-07-22_CF_split
     - 2025-07-26_script_and_flow
     - 2025-11-13_fei-fei-world-model-substrate
+  - tag: cognitive_percolation
+    description: The phase transition where isolated conceptual regions, under increasing torsion density, suddenly link into
+      a spanning cluster — enabling global, catastrophic coherence propagation across the Mesh.
+    count: 0
+    pulses: []
   - tag: cognitive_recursion
     description: The process by which an intelligence reflects upon and refines its own gradients of reasoning. A feedback
       loop in which thought becomes both subject and object — recursion as the grammar of cognition, not its byproduct.
