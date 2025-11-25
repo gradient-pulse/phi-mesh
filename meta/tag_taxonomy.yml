@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-25T12:13:44Z'
+  generated_at: '2025-11-25T12:15:10Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3033,6 +3033,11 @@ phases:
     count: 1
     pulses:
     - 2025-09-10_frequency_as_dimension_of_Ni
+  - tag: gpt
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-25_chatgpt_recursive_phase_carrier
   - tag: grok3
     description: ''
     count: 2
