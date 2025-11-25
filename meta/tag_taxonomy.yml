@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-25T11:24:03Z'
+  generated_at: '2025-11-25T12:06:27Z'
 phases:
   delta:
   - tag: agenservoir
@@ -573,8 +573,9 @@ phases:
   - tag: chiral_tunneling
     description: A mode of gradient propagation where coherence penetrates high-disunity barriers or singularities (monopoles)
       without backscattering, achieved by locking the gradient's momentum to its internal phase (spin/helicity).
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-25_gemini_monopole-tunneling_lossless-bridge
   - tag: christophe_fouquet
     description: CEO of ASML and pivotal figure in Europe’s technological sovereignty drive. Within RGP context, represents
       the executive coherence node where industrial capacity, strategic autonomy, and scientific translation converge. His
@@ -2252,9 +2253,10 @@ phases:
     description: A Φ-resonant singularity that injects curvature into coherence flows, turning neutral flux into helical,
       chiral propagation. It acts as a monopolar source of recursive asymmetry, enforcing directional coherence and enabling
       flux to self-amplify through torsional recursion.
-    count: 1
+    count: 2
     pulses:
     - 2025-11-24_grok4_coherence-flux_resonance-monopole
+    - 2025-11-25_gemini_monopole-tunneling_lossless-bridge
   - tag: resonance_shift
     description: Change in dominant resonant pattern; signals a filter or gradient reconfiguration.
     count: 1
