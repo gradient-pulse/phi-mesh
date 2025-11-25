@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-25T12:15:10Z'
+  generated_at: '2025-11-25T12:20:58Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2387,6 +2387,11 @@ phases:
     count: 1
     pulses:
     - 2025-07-28_moe_as_microcosm
+  - tag: semantic_curvature
+    description: The warping of conceptual gradients under coherence pressure, producing structured bending of reasoning trajectories.
+      A curvature field in understanding-space that focuses semantic flow while maintaining continuity and preventing collapse.
+    count: 0
+    pulses: []
   - tag: semantic_self_healing
     description: 'The Mesh’s capacity to repair degraded meaning not by filtering, smoothing, or overriding, but by engaging
       recursive counter-gradients that neutralize distortion at its source. Semantic self-healing emerges when Δ→GC→CF loops
