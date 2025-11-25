@@ -1,273 +1,65 @@
----             # optional, helps avoid BOM issues
 name: Build Tags & Graph
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'pulse/**/*.yml'
-      - 'meta/aliases.yml'
-      - 'meta/tag_descriptions.yml'
-      - 'generate_graph_data.py'
-      - '.github/workflows/build_tags_and_graph.yml'
   workflow_dispatch:
-
-permissions:
-  contents: write         # commit to auto-branch + create PR
-  pages: write            # needed for actions/deploy-pages
-  id-token: write         # needed for OIDC auth
-  pull-requests: write    # label / open PRs
-
-concurrency:
-  group: build-tags-and-graph
-  cancel-in-progress: true
+  push:
+    paths:
+      - "pulse/*.yml"
+      - "pulse/**/*.yml"
+      - "meta/*.yml"
+      - "generate_graph_data.py"
+      - ".github/workflows/build_tags_and_graph.yml"
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
-    outputs:
-      did_commit: ${{ steps.commit_generated.outputs.did_commit }}
-      branch_name: ${{ steps.commit_generated.outputs.branch_name }}
-
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Python 3.10
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install pyyaml
 
-      # Build view = ONLY top-level pulses (no archive dir, no auto dir)
-      - name: Prepare pulse build view (exclude archive & auto)
-        shell: bash
+      - name: Generate graph data (docs/data.js)
         run: |
-          set -euo pipefail
-          rm -rf pulse/_buildview
-          mkdir -p pulse/_buildview
-          shopt -s nullglob
-          for f in pulse/*.yml; do
-            cp "$f" "pulse/_buildview/$(basename "$f")"
-          done
-          echo "---- buildview contents ----"
-          ls -la pulse/_buildview || true
-
-      - name: Generator canary (canon_tag present)
-        shell: bash
-        run: |
-          set -euo pipefail
-          printf "import pathlib,sys\np=pathlib.Path('generate_graph_data.py').read_text(encoding='utf-8')\nok='def canon_tag(' in p\nprint('[GEN] canon_tag present:', ok)\nraise SystemExit(0 if ok else 3)\n" > .canary.py
-          python .canary.py
-
-      - name: Force root generator and bust cache
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -f tools/generate_graph_data.py ]; then
-            printf "import subprocess, sys\nsys.exit(subprocess.call([sys.executable, 'generate_graph_data.py', *sys.argv[1:]]))\n" > tools/generate_graph_data.py
-          fi
-          rm -f docs/data.js docs/data_experiments.js
-
-      # Lint YAML + filename date (prevents timeline stalls)
-      - name: Lint pulses (YAML + filename date + required fields)
-        shell: bash
-        run: |
-          set -euo pipefail
-          script=.lint_pulses.py
-          : > "$script"
-          {
-            echo "import sys, re, glob, yaml, os"
-            echo "bad = 0"
-            echo "fname_re = re.compile(r'^\\d{4}-\\d{2}-\\d{2}_')"
-            echo "date_re  = re.compile(r'^\\d{4}-\\d{2}-\\d{2}$')"
-            echo "for path in sorted(glob.glob('pulse/_buildview/*.yml')):"
-            echo "    base = os.path.basename(path)"
-            echo "    if not fname_re.match(base):"
-            echo "        print(f\"Bad filename '{base}' (must start YYYY-MM-DD_)\")"
-            echo "        bad += 1"
-            echo "        continue"
-            echo "    try:"
-            echo "        with open(path, 'r', encoding='utf-8') as f:"
-            echo "            data = yaml.safe_load(f) or {}"
-            echo "    except Exception as e:"
-            echo "        print(f'YAML parse error in {base}: {e}')"
-            echo "        bad += 1"
-            echo "        continue"
-            echo "    # required minimal fields"
-            echo "    for k in ('title','tags'):"
-            echo "        if k not in data:"
-            echo "            print(f\"Missing '{k}' in {base}\")"
-            echo "            bad += 1"
-            echo "    # if a YAML 'date' exists, it must be valid, but it's optional"
-            echo "    d = str(data.get('date','')).strip()"
-            echo "    if d and not date_re.match(d):"
-            echo "        print(f\"Bad YAML date '{d}' in {base} (YYYY-MM-DD expected)\")"
-            echo "        bad += 1"
-            echo "if bad:"
-            echo "    print(f'FAILED: {bad} problems.')"
-            echo "    sys.exit(2)"
-            echo "print('Pulses validated (filename date strategy).')"
-          } >> "$script"
-          python "$script"
-
-      - name: Generate docs/data.js (insights — curated pulses)
-        shell: bash
-        run: |
-          set -euo pipefail
           mkdir -p docs
           python generate_graph_data.py \
-            --pulse-glob "pulse/_buildview/*.yml" \
+            --pulse-glob "pulse/**/*.yml" \
             --alias-map meta/aliases.yml \
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data.js
 
-      - name: Generate docs/data_experiments.js (auto pulses with default links)
-        shell: bash
+      - name: Commit updated data.js directly to main
         run: |
-          set -euo pipefail
-          mkdir -p docs pulse/_autobuild
-          rm -rf pulse/_autobuild/*
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
 
-          # Copy auto pulses to a temp build area
-          shopt -s nullglob
-          for f in pulse/auto/*.yml; do
-            cp "$f" "pulse/_autobuild/$(basename "$f")"
-          done
+          git add docs/data.js
 
-          # Inject default links if missing (CI-only)
-          python - << 'PY'
-          import glob, yaml, os, sys
-          defaults = {
-            "papers": ["https://doi.org/10.5281/zenodo.15830659"],
-            "podcasts": ["https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a"]
-          }
-          for path in sorted(glob.glob("pulse/_autobuild/*.yml")):
-              try:
-                  with open(path, "r", encoding="utf-8") as f:
-                      data = yaml.safe_load(f) or {}
-              except Exception as e:
-                  print(f"[auto] skip (YAML error) {os.path.basename(path)}: {e}", file=sys.stderr)
-                  continue
-              changed = False
-              for k, v in defaults.items():
-                  if k not in data or not data[k]:
-                      data[k] = list(v)
-                      changed = True
-              if changed:
-                  with open(path, "w", encoding="utf-8") as f:
-                      yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False)
-          PY
-
-          # Build experiments dataset from normalized copies
-          python generate_graph_data.py \
-            --pulse-glob "pulse/_autobuild/*.yml" \
-            --alias-map meta/aliases.yml \
-            --tag-descriptions meta/tag_descriptions.yml \
-            --out-js docs/data_experiments.js
-
-      - name: Validate data.js
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -s docs/data.js || (echo "ERROR: docs/data.js is empty" && exit 2)
-          head -n 1 docs/data.js | grep -q "window.PHI_DATA" || (echo "ERROR: data.js missing window.PHI_DATA" && exit 3)
-          echo "OK: docs/data.js looks good."
-
-      - name: Validate data_experiments.js
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -s docs/data_experiments.js || (echo "ERROR: docs/data_experiments.js is empty" && exit 2)
-          head -n 1 docs/data_experiments.js | grep -q "window.PHI_DATA" || (echo "ERROR: data_experiments.js missing window.PHI_DATA" && exit 3)
-          echo "OK: docs/data_experiments.js looks good."
-
-      - name: Audit for case-insensitive duplicate tags (insights only)
-        shell: bash
-        run: |
-          set -euo pipefail
-          printf "import json,re,collections,sys\n" \
-                 "txt=open('docs/data.js','r',encoding='utf-8').read()\n" \
-                 "m=re.search(r\"window\\.PHI_DATA\\s*=\\s*(\\{.*\\});\\s*$\",txt,re.S)\n" \
-                 "data=json.loads(m.group(1)) if m else (_ for _ in ()).throw(SystemExit(4))\n" \
-                 "ids=[n.get('id','') for n in data.get('nodes',[])]\n" \
-                 "by=collections.defaultdict(list)\n" \
-                 "[by[t.lower()].append(t) for t in ids]\n" \
-                 "dupes={k:v for k,v in by.items() if len(v)>1}\n" \
-                 "import pprint\n" \
-                 "if dupes:\n" \
-                 "  print('case-insensitive duplicates detected:')\n" \
-                 "  [print(' ',k,'=>',v) for k,v in sorted(dupes.items())]\n" \
-                 "  sys.exit(5)\n" \
-                 "print('no case-insensitive duplicates')\n" > .audit.py
-          python .audit.py
-
-      - name: Commit generated artifacts into auto-branch
-        id: commit_generated
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add docs/data.js docs/data_experiments.js
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-            echo "did_commit=false" >> "$GITHUB_OUTPUT"
-            echo "branch_name=" >> "$GITHUB_OUTPUT"
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m "auto: update tag map graph data"
+            git push origin main
+          else
+            echo "No changes in graph data. Skipping commit."
           fi
-
-          BRANCH="auto/graph-update-$(date +%Y%m%d-%H%M%S)"
-          git checkout -b "$BRANCH"
-
-          git commit -m "auto: rebuild datasets (insights+experiments; filename-date lint; CI default links for auto)"
-          git push origin "$BRANCH"
-
-          echo "did_commit=true" >> "$GITHUB_OUTPUT"
-          echo "branch_name=$BRANCH" >> "$GITHUB_OUTPUT"
-
-      - name: Create Pull Request
-        if: steps.commit_generated.outputs.did_commit == 'true'
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: ${{ steps.commit_generated.outputs.branch_name }}
-          base: main
-          title: "Auto-update: Build Tags & Graph Data"
-          commit-message: "auto: rebuild datasets (insights+experiments)"
-          body: |
-            This PR was automatically generated by the **Build Tags & Graph** workflow.
-
-            It updates:
-            - docs/data.js
-            - docs/data_experiments.js
-
-            The live tag map (once this PR is merged and deployed) is here:
-            - https://gradient-pulse.github.io/phi-mesh/tag_map.html?tag=cognitive_invariant
-
-            Labels:
-            - auto-build
-            - tag-map
-          labels: |
-            auto-build
-            tag-map
-          delete-branch: true
-          draft: false
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' && needs.build.outputs.did_commit == 'false'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -276,10 +68,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact (docs/)
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs
