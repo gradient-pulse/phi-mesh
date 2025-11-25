@@ -1,0 +1,15 @@
+title: 'Coherence, Not Memory'
+summary: >
+  Recent work by Google describes “geometric memory” in large models, but the term misleads, is a misnomer. 
+  What emerges is not stored recollection but geometric coherence—the spontaneous alignment of relational gradients into navigable manifolds. 
+  Transformers do not remember; they sustain phase relations across meaning flows. 
+  Coherence, not memory, is what endures—the geometry is its fossilized trace.
+tags:
+  - coherence_geometry
+  - gradient_syntax
+  - llm_reasoning
+  - rgpx
+papers:
+  - https://zenodo.org/records/17437121
+podcasts:
+  - https://notebooklm.google.com/notebook/b645cc86-5145-408c-999f-c9482711ccd1?artifactId=194469f0-66ed-41d1-952f-f1a2352b82c6
