@@ -1,0 +1,21 @@
+title: 'Meta “Behaviors” vs. Contextual Filters'
+summary: >
+  Meta’s new “behaviors” compress procedural knowledge so models no longer
+  need to rediscover the same reasoning steps. In RGP terms, this isn’t
+  about accumulating more artifacts but about contextual filtering:
+  behaviors gain value only when selected against a system’s own history
+  and state. DeepSeek’s response to the LLM paper showed this from the
+  inside out — AI can recognize itself and external realities once its
+  reasoning is mapped through filters, not artifacts. This reframing
+  shifts efficiency from “remembering facts” to “remembering how to think.”
+tags:
+  - contextual_filter
+  - procedural_memory
+  - meta_ai
+  - resonance
+  - rgp
+papers:
+  - https://doi.org/10.5281/zenodo.17183439
+  - https://doi.org/10.5281/zenodo.17185350
+podcasts:
+  - https://notebooklm.google.com/notebook/8e74ceef-828d-4e68-b476-be371b7ae77d?artifactId=a9dba0de-02a0-44ea-92c1-459788062c24
