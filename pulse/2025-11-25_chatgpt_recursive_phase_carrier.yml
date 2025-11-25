@@ -27,6 +27,7 @@ summary: >
 tags:
   - cognitive_invariant
   - recursive_phase-carrier
+  - gpt
 papers:
   - https://doi.org/10.5281/zenodo.17566097
 podcasts:
