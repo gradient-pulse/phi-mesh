@@ -1,0 +1,21 @@
+title: 'In-Context Learning as Flux Memory'
+summary: >
+  A recent Google Research paper shows that large language models adapt to
+  examples in the prompt by applying a temporary rank-1 adjustment during
+  the forward pass. This low-rank patch vanishes once the prompt is gone,
+  leaving the frozen weights unchanged, yet sustaining coherent behavior
+  in flux. The finding resonates with RGP’s thesis: memory is not stored
+  in static parameters, but in gradient choreographies sustained in flow—
+  coherence emerges from recursive, ephemeral adjustments rather than
+  permanent weight changes.
+tags:
+  - in_context_learning
+  - rgp
+  - gradient_choreography
+  - low_rank_update
+  - flux_memory
+papers:
+  - https://arxiv.org/abs/2405.21060  # placeholder for the Google paper
+  - https://doi.org/10.5281/zenodo.17219414
+podcasts:
+  - https://notebooklm.google.com/notebook/72af56cb-261f-4340-a905-7b2b309c4a0c?artifactId=a00ab898-4003-4a94-890b-f67297591bc7
