@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-26T10:33:00Z'
+  generated_at: '2025-11-26T10:46:14Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3568,6 +3568,11 @@ phases:
   - tag: temporal_coherence_field
     description: A dynamic region where ideas and monopoles mutually synchronize, producing stable invariants through phase-locking
       rather than static fixation.
+    count: 0
+    pulses: []
+  - tag: temporal_solenoid
+    description: Quantized loop of coherence stored in time rather than space, where a helical vortex wraps around its own
+      temporal axis so each cycle re-induces the next—turning memory into preserved temporal vorticity instead of static storage.
     count: 0
     pulses: []
   - tag: thermal_photonic_emission
