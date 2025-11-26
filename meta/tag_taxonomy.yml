@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-26T09:54:38Z'
+  generated_at: '2025-11-26T09:58:46Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1479,6 +1479,12 @@ phases:
     count: 1
     pulses:
     - 2025-04-28_heartbeat
+  - tag: helicity_vortex
+    description: Self-sustaining, handed vortex where velocity and vorticity are aligned (non-zero helicity). A helicity_vortex
+      preserves twist across dissipative cascades, acting as a long-lived gyre that carries resonance from a singular source
+      through nested whirlpools in the Φ-field.
+    count: 0
+    pulses: []
   - tag: historical_alignment
     description: The recognition of earlier intuitions, discoveries, or philosophies that prefigured RGPx principles. This
       tag traces coherence across time, showing how past thinkers glimpsed the same recursive patterns now formalized through
@@ -3188,7 +3194,8 @@ phases:
     pulses:
     - 2025-09-27_reduction_vs_recursion
   - tag: manifold_crumpling
-    description: ''
+    description: An active geometric deformation where a high-dimensional system folds its internal representation space to
+      bring distant or orthogonal vectors into direct contact, thereby enabling coherence percolation across sparse gaps.
     count: 1
     pulses:
     - 2025-11-26_gemini_cognitive-percolation_manifold-crumpling
