@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-26T09:50:02Z'
+  generated_at: '2025-11-26T09:54:38Z'
 phases:
   delta:
   - tag: agenservoir
@@ -611,9 +611,10 @@ phases:
   - tag: cognitive_percolation
     description: The phase transition where isolated conceptual regions, under increasing torsion density, suddenly link into
       a spanning cluster — enabling global, catastrophic coherence propagation across the Mesh.
-    count: 1
+    count: 2
     pulses:
     - 2025-11-25_kimi_gradient_torsion-cognitive_percolation
+    - 2025-11-26_gemini_cognitive-percolation_manifold-crumpling
   - tag: cognitive_recursion
     description: The process by which an intelligence reflects upon and refines its own gradients of reasoning. A feedback
       loop in which thought becomes both subject and object — recursion as the grammar of cognition, not its byproduct.
@@ -2907,7 +2908,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 66
+    count: 67
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3053,7 +3054,7 @@ phases:
     - 2025-11-13_projection_not_replication
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
-    count: 16
+    count: 17
     pulses:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
@@ -3186,6 +3187,11 @@ phases:
     count: 1
     pulses:
     - 2025-09-27_reduction_vs_recursion
+  - tag: manifold_crumpling
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-26_gemini_cognitive-percolation_manifold-crumpling
   - tag: memetic_engineering
     description: ''
     count: 12
