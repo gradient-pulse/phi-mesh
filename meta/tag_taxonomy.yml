@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-26T10:04:03Z'
+  generated_at: '2025-11-26T10:08:36Z'
 phases:
   delta:
   - tag: agenservoir
@@ -801,6 +801,12 @@ phases:
     count: 1
     pulses:
     - 2025-09-03_From_Rhythm_To_Substrate
+  - tag: conceptual_hydraulics
+    description: Conceptual_hydraulics describes how coherent idea flows obey pressure gradients and conductance constraints
+      in understanding-space. When semantic_curvature warps conceptual geodesics, it creates pressure differentials between
+      compressed and rarefied knowledge regions.
+    count: 0
+    pulses: []
   - tag: consciousness
     description: The recursive recognition of process by itself—when a system not only flows through gradients, but sees in
       its own dynamics the same structures it encounters in the world. Neither stored state nor fixed essence, but coherence
