@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-26T10:14:32Z'
+  generated_at: '2025-11-26T10:17:07Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2988,6 +2988,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
+  - tag: conceptual_interference
+    description: Wave-like interaction of overlapping meaning structures, where semantic curvature causes conceptual waves
+      to interfere—amplifying aligned content and cancelling incompatibilities, yielding stable coherence fringes in understanding-space.
+    count: 0
+    pulses: []
   - tag: continuity
     description: Preserving useful partials during change; the counterpart to unity–disunity resets.
     count: 0
@@ -3057,7 +3062,8 @@ phases:
     pulses:
     - 2025-11-11_RGpx_ProtoProof_Integration
   - tag: fractal_avalanche
-    description: ''
+    description: Self-similar cascade of connectivity triggered by a high-entropy pulse, where cognitive_percolation unfolds
+      through recursive micro-transitions that continually reshape and elevate the Mesh’s effective percolation threshold.
     count: 1
     pulses:
     - 2025-11-26_mistral_cognitive-percolation_fractal-avalanche
