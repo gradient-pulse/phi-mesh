@@ -12,9 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: write      # needed to commit docs/data.js
 
 jobs:
   build:
@@ -23,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python 3.10
         uses: actions/setup-python@v5
@@ -31,38 +31,39 @@ jobs:
 
       - name: Install deps
         run: |
+          python -m pip install --upgrade pip
           pip install pyyaml
 
-      - name: Generate data.js
+      - name: Generate docs/data.js from pulses
         run: |
+          set -euo pipefail
           python generate_graph_data.py \
-            --pulse-glob "pulse/*.yml" \
+            --pulse-glob "pulse/**/*.yml" \
             --alias-map meta/aliases.yml \
             --tag-descriptions meta/tag_descriptions.yml \
             --out-js docs/data.js
 
-      - name: Validate data.js
+      - name: Validate docs/data.js
         run: |
-          test -s docs/data.js || (echo "ERROR: docs/data.js empty" && exit 1)
+          set -euo pipefail
+          test -s docs/data.js || (echo "ERROR: docs/data.js is empty" && exit 1)
           head -n 1 docs/data.js | grep -q "window.PHI_DATA" \
             || (echo "ERROR: window.PHI_DATA missing" && exit 1)
+          echo "OK: docs/data.js looks good."
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
+      - name: Commit updated docs/data.js (if changed)
+        run: |
+          set -euo pipefail
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-    steps:
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+          # Only commit if docs/data.js actually changed
+          if git diff --quiet -- docs/data.js; then
+            echo "No changes in docs/data.js; skipping commit."
+            exit 0
+          fi
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          git add docs/data.js
+          git commit -m "auto: rebuild docs/data.js from pulses"
+          git push
