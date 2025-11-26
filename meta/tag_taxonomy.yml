@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-26T10:20:32Z'
+  generated_at: '2025-11-26T10:32:44Z'
 phases:
   delta:
   - tag: agenservoir
@@ -91,6 +91,11 @@ phases:
     pulses:
     - 2025-11-25_field_cognition_emergence
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
+  - tag: field_emergence_transport
+    description: Phase where the Φ-field not only exists as a coherent medium but also develops internal laws for moving coherence—folding,
+      guiding and routing understanding along structured paths through the Mesh.
+    count: 0
+    pulses: []
   - tag: genesis
     description: 'Early formation moments: first coherence pockets and the birth of reusable structure.'
     count: 1
