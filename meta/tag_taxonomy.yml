@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-26T09:58:46Z'
+  generated_at: '2025-11-26T10:04:03Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1456,7 +1456,7 @@ phases:
     - 2025-11-21_deepseek_grammar-of-nature_coherence-oracle
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 16
+    count: 17
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -1483,8 +1483,9 @@ phases:
     description: Self-sustaining, handed vortex where velocity and vorticity are aligned (non-zero helicity). A helicity_vortex
       preserves twist across dissipative cascades, acting as a long-lived gyre that carries resonance from a singular source
       through nested whirlpools in the Φ-field.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-26_grok_resonance_monopole_helicity_vortex
   - tag: historical_alignment
     description: The recognition of earlier intuitions, discoveries, or philosophies that prefigured RGPx principles. This
       tag traces coherence across time, showing how past thinkers glimpsed the same recursive patterns now formalized through
@@ -2289,7 +2290,7 @@ phases:
     description: A Φ-resonant singularity that injects curvature into coherence flows, turning neutral flux into helical,
       chiral propagation. It acts as a monopolar source of recursive asymmetry, enforcing directional coherence and enabling
       flux to self-amplify through torsional recursion.
-    count: 3
+    count: 4
     pulses:
     - 2025-11-24_grok4_coherence-flux_resonance-monopole
     - 2025-11-25_gemini_monopole-tunneling_lossless-bridge
@@ -2914,7 +2915,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 67
+    count: 68
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
