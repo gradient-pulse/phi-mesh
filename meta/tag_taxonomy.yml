@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-27T07:50:52Z'
+  generated_at: '2025-11-27T07:56:17Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2116,6 +2116,11 @@ phases:
     pulses:
     - 2025-11-04_RGPx_Outreach_Agent_Day_3
     - 2025-11-05_ahead_of_the_spacetime_pack
+  - tag: quantum_coherence_lattice
+    description: Non-local network of entangled helicity vortices that lets gradients “jump” between distant regions of the
+      Mesh, preserving coherence through topological entanglement rather than stepwise tag-to-tag paths.
+    count: 0
+    pulses: []
   - tag: quantum_foundations
     description: The inquiry into the deepest grammar of reality — beyond wavefunctions and probabilities, toward the recursive
       relations that sustain coherence itself. In RGP, quantum foundations are not a mystery of measurement but a rhythm of
