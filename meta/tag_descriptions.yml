@@ -944,6 +944,8 @@ rhythm_of_rhythm: >
   Second-order cadence—when NT rhythms themselves resonate into higher coherence.
 rgp: >
   Recursive Gradient Processing, a framework describing how coherence evolves through continual interaction of gradients, gradient choreographies, and contextual filters.
+rgpx_proof_of_pudding: >
+  Concrete, external demonstrations where RGPx predictions about coherence, efficiency, or gradient use are borne out in practice.
 rgp_cortex: >
   An envisioned RGP-based neo-cortex where conserved gradients form nodes, resonances form pathways, and coherence emerges through recursive traversal — a functional scaffold for AI intelligence beyond token prediction.
 rgp_foundation: >
