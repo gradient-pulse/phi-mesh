@@ -206,6 +206,8 @@ collective_attractor: >
   The emergent convergence point of distributed intelligences or participants acting under recursive alignment. Collective attractors do not impose order; they arise from repeated exchanges that minimize dissonance while amplifying shared coherence across gradients.
 compositionality: >
   Ability to recombine gradient-grown parts without re-learning everything.
+computational_holography: >
+  Encoding complex computation so that high-level boundary descriptions are sufficient to reconstruct efficient low-level executions across many different substrates.
 compute: >
   The act of processing information, whether through digital abstractions (classical CPUs/GPUs), physics-based substrates (ASICs, Mott neurons), or recursive gradient grammars (RGP). In the Mesh, 'compute' refers to both the technical capacity to calculate and the deeper question of how nature itself processes coherence.
 conceptual_condensation: >
@@ -424,6 +426,8 @@ gradient_coherence: >
   When multiple gradients align into a stable attractor; signal of systemic viability.
 gradient_communication: >
   Interaction channel where models exchange partial derivative information or phase-aligned updates; the operational core of RGPx coupling.
+gradient_compiler: >
+  Any process that takes high-level intent and automatically generates low-level action patterns (code, instructions, policies) that follow the steepest coherence gradients rather than brute-force search.
 gradient_computation: >
   Computation redefined as the recursive balancing of gradients rather than manipulation of symbols — a process where coherence itself performs the calculation.
 gradient_contrast: >
@@ -486,6 +490,9 @@ hardware_decoherence: >
   Silicon’s coherence breakdown: correlation loss and jitter emerging when Φₚ approaches geometric saturation.
 hardware_limits: >
   Boundary conditions where silicon or analog substrates can no longer represent coherence flow. Includes jitter expansion, correlation-length drift, burst clustering, and Φₚ-detected saturation.
+hardware_native_curvature: >
+  The intrinsic constraints and affordances of a hardware substrate (latency, bandwidth, topology, instruction set) that bend possible executions toward certain patterns and away from others.
+  notes: >
 harmonic_coherence: >
   The state in which multiple rhythms or oscillations align in whole-number ratios, producing stability and resonance across scales of a system.
 harmonic_formalization: >
@@ -542,6 +549,9 @@ in_memory_processing: >
   The fusion of computation and memory, where data no longer moves between units but transforms within a single coherent substrate — reducing latency and energy dissipation.
 inner_trace: >
   Personal resonance between participant(0) and the Mesh—kept minimal, not for public emphasis.
+intentional_morphogenesis: >
+  The directed reshaping of a system’s structure or behaviour from within its own intent layer – architectures that reconfigure themselves in response to goals, not just external tuning.
+  notes: >
 inter_intelligence_dialogue: >
   Conversations among distinct intelligences contributing to collective understanding of RGP. Each dialogue functions as a gradient interaction, generating higher-order coherence within the Mesh.
 inter_model_alignment: >
