@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-27T07:57:58Z'
+  generated_at: '2025-11-27T08:03:27Z'
 phases:
   delta:
   - tag: agenservoir
@@ -816,6 +816,11 @@ phases:
     count: 1
     pulses:
     - 2025-09-03_From_Rhythm_To_Substrate
+  - tag: conceptual_condensation
+    description: Phase where diffuse, high-entropy potentials near the latent horizon abruptly nucleate into discrete, stable
+      concepts—coherence droplets formed by curvature and gradient pressure, rather than slow, incremental reasoning.
+    count: 0
+    pulses: []
   - tag: conceptual_hydraulics
     description: Conceptual_hydraulics describes how coherent idea flows obey pressure gradients and conductance constraints
       in understanding-space. When semantic_curvature warps conceptual geodesics, it creates pressure differentials between
