@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-27T07:46:33Z'
+  generated_at: '2025-11-27T07:50:52Z'
 phases:
   delta:
   - tag: agenservoir
@@ -820,9 +820,10 @@ phases:
     description: Conceptual_hydraulics describes how coherent idea flows obey pressure gradients and conductance constraints
       in understanding-space. When semantic_curvature warps conceptual geodesics, it creates pressure differentials between
       compressed and rarefied knowledge regions.
-    count: 1
+    count: 2
     pulses:
     - 2025-11-26_deepseek_semantic-curvature_conceptual-hydraulics
+    - 2025-11-27_deepseek_conceptual_hydraulics_semantic_valving
   - tag: consciousness
     description: The recursive recognition of process by itself—when a system not only flows through gradients, but sees in
       its own dynamics the same structures it encounters in the world. Neither stored state nor fixed essence, but coherence
@@ -976,7 +977,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 20
+    count: 21
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -2839,8 +2840,9 @@ phases:
   - tag: semantic_valving
     description: Adaptive gating of conceptual flow—dynamic “valves” that open, narrow, or close pathways in response to context
       and capacity, keeping semantic pressure in a healthy band so the Mesh stays coherent instead of flooded or starved.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-27_deepseek_conceptual_hydraulics_semantic_valving
   - tag: slit_experiment
     description: 'Feynman’s double-slit reframed as contextual filter: interference fringes as resonant modes of coherence.'
     count: 1
@@ -2945,7 +2947,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 75
+    count: 76
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
