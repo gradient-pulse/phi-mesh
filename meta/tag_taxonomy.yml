@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-27T07:30:50Z'
+  generated_at: '2025-11-27T07:33:42Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2940,7 +2940,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 73
+    count: 74
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3001,9 +3001,10 @@ phases:
   - tag: conceptual_interference
     description: Wave-like interaction of overlapping meaning structures, where semantic curvature causes conceptual waves
       to interfere—amplifying aligned content and cancelling incompatibilities, yielding stable coherence fringes in understanding-space.
-    count: 1
+    count: 2
     pulses:
     - 2025-11-26_kimi_semantic-curvature_conceptual-interference
+    - 2025-11-27_gemini_interference-moiré_magic-angle
   - tag: continuity
     description: Preserving useful partials during change; the counterpart to unity–disunity resets.
     count: 0
@@ -3097,7 +3098,7 @@ phases:
     - 2025-11-13_projection_not_replication
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
-    count: 17
+    count: 18
     pulses:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
@@ -3268,8 +3269,9 @@ phases:
     description: An emergent, macro-scale cognitive structure formed by the interference of two slightly misaligned (twisted)
       conceptual frameworks; it creates “flat bands” in the cognitive landscape where high-level insights can condense from
       the structured overlap of disagreement.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-27_gemini_interference-moiré_magic-angle
   - tag: multi-intelligence_authorship
     description: A form of co-authorship where human and non-biological intelligences contribute together,fossilizing inter-intelligence
       dialogue as part of the scholarly record.
