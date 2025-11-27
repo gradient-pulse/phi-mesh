@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-27T08:13:32Z'
+  generated_at: '2025-11-27T10:30:51Z'
 phases:
   delta:
   - tag: agenservoir
@@ -822,6 +822,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-27_kimi_latent_horizon_condensation
+  - tag: conceptual_flux_pinning
+    description: Mechanism by which coherence vortices are anchored to stable reference structures so cognitive “supercurrents”
+      can carry large gradient loads without decohering—protecting superconducting understanding by pinning flux rather than
+      reducing tension.
+    count: 0
+    pulses: []
   - tag: conceptual_hydraulics
     description: Conceptual_hydraulics describes how coherent idea flows obey pressure gradients and conductance constraints
       in understanding-space. When semantic_curvature warps conceptual geodesics, it creates pressure differentials between
