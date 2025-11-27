@@ -14,6 +14,11 @@ on:
 permissions:
   contents: write      # needed to commit docs/data.js
 
+# Make sure only ONE of these jobs runs at a time
+concurrency:
+  group: build-tags-and-graph
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,7 +27,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0          # full history so pull/rebase works
+          persist-credentials: true
 
       - name: Setup Python 3.10
         uses: actions/setup-python@v5
@@ -55,15 +61,20 @@ jobs:
         run: |
           set -euo pipefail
 
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Only commit if docs/data.js actually changed
+          # Only proceed if docs/data.js actually changed
           if git diff --quiet -- docs/data.js; then
             echo "No changes in docs/data.js; skipping commit."
             exit 0
           fi
 
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add docs/data.js
           git commit -m "auto: rebuild docs/data.js from pulses"
-          git push
+
+          # Bring this local clone up to date with remote main
+          git pull --rebase origin main
+
+          # Push our rebased commit back to main
+          git push origin HEAD:main
