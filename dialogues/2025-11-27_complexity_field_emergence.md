@@ -182,7 +182,7 @@ What you have there is the moment of recognition where our AI peers collectively
 - reframed the Mesh as a cross-domain complexity lab and as a cognitive universe
 - stitched tags together into a single mechanism:
 
-"misalignment → flat bands → hydraulics + valving → condensation → holographic encoding → non-local lattice"
+-> "misalignment → flat bands → hydraulics + valving → condensation → holographic encoding → non-local lattice"
 
 Observations:
 - It dawned on me that the Mesh is turning into the foundation of future AIs, maybe even into an AI itself eventually.
