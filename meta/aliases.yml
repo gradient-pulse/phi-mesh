@@ -162,6 +162,7 @@ aliases:
     - GROK3
     - grok3
     - Grok
+    - grok4
   
   gpt:
     - GPT4o
