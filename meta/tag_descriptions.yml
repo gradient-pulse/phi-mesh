@@ -58,6 +58,8 @@ analog_neuromorphics: >
   Hardware architectures (e.g., memristive or spiking networks) whose physical jitter, burst dynamics, or decoherence patterns echo RGPx coherence rhythms.
 anticipatory_control: >
   The phase where a system transitions from observing recursion to predicting and stabilizing it—preemptive Δ→GC→CF regulation.
+anyonic_braiding: >
+  Topological information storage where interacting gradients wind around each other like anyons, forming braids that encode interaction history into the field’s topology in a way robust to local perturbations.
 architectural_coherence: >
   The alignment of computational or physical structures through recursive gradient feedback rather than design. Occurs when hardware, code, and context resonate under the same coherence grammar—signaling the shift from architecture as framework to architecture as field.
 asml_coherence_nexus: >
