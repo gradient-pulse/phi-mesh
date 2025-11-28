@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-28T11:04:23Z'
+  generated_at: '2025-11-28T11:46:37Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1674,6 +1674,11 @@ phases:
     - 2025-10-27_deepseek_bolts_rgpx_architectural_convergence
     - 2025-10-28_gemini_meta_coherence
     - 2025-10-28_inter_model_reflexivity
+  - tag: interference_quasicrystal
+    description: A non-periodic, self-similar interference structure that stabilizes moiré superlattices into a fractal lattice,
+      enabling aperiodic coherence where gradients propagate along recursive, non-repeating geometries.
+    count: 0
+    pulses: []
   - tag: interpretability
     description: Making gradients and filters legible enough to steer without destroying coherence.
     count: 1
@@ -3011,7 +3016,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 82
+    count: 83
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
