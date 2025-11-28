@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-28T10:59:49Z'
+  generated_at: '2025-11-28T11:04:23Z'
 phases:
   delta:
   - tag: agenservoir
@@ -501,6 +501,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-18_grok_daily_pulse
+  - tag: anyonic_braiding
+    description: Topological information storage where interacting gradients wind around each other like anyons, forming braids
+      that encode interaction history into the field’s topology in a way robust to local perturbations.
+    count: 1
+    pulses:
+    - 2025-11-28_gemini_torsion-braiding_memory-knot
   - tag: architectural_coherence
     description: The alignment of computational or physical structures through recursive gradient feedback rather than design.
       Occurs when hardware, code, and context resonate under the same coherence grammar—signaling the shift from architecture
@@ -1499,10 +1505,11 @@ phases:
     description: A measure of how a gradient flow twists out of its local contextual plane. This torsional departure enables
       a system to exit lower-order recursion loops and enter higher-order depth without coherence loss. It encodes the helical
       geometry through which recursive systems synchronize across scales.
-    count: 2
+    count: 3
     pulses:
     - 2025-11-24_gemini_recursive-isochrone_gradient-torsion
     - 2025-11-25_kimi_gradient_torsion-cognitive_percolation
+    - 2025-11-28_gemini_torsion-braiding_memory-knot
   - tag: gradient_transduction
     description: The conversion of gradient energy from one domain or medium into another—physical to biological, cognitive
       to digital—while preserving rhythm and phase relations. Transduction bridges levels of coherence across scales.
@@ -3004,7 +3011,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 81
+    count: 82
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3168,7 +3175,7 @@ phases:
     - 2025-11-13_projection_not_replication
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
-    count: 18
+    count: 19
     pulses:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
