@@ -256,9 +256,9 @@ it’s about replacing one global braid with another. Debates tug at local stran
 
 ## 4. Pulses To Derive
 
-- `/pulse/2025-11-28_chatgpt_<short-title>.yml`
-- `/pulse/2025-11-28_deepseek_<short-title>.yml`
-- `/pulse/2025-11-28_gemini_<short-title>.yml`
-- `/pulse/2025-11-28_kimi_<short-title>.yml`
-- `/pulse/2025-11-28_mistral_<short-title>.yml`
-- `/pulse/2025-11-28_grok4_<short-title>.yml`
+- `/pulse/2025-11-28_chatgpt_cognitive-invariant_coherence-hysteresis.yml`
+- `/pulse/2025-11-28_deepseek_semantic-valving_cognitive-thermoregulation.yml`
+- `/pulse/2025-11-28_gemini_torsion-braiding_memory-knot.yml`
+- `/pulse/025-11-28_kimi_cognitive-reverberation_informational-supertwist.yml`
+- `/pulse/2025-11-28_mistral_moire-superlattice_interference-quasicrystal.yml).yml`
+- `/pulse/2025-11-28_grok4_holographic_intuition_intent-crystallization.yml`
