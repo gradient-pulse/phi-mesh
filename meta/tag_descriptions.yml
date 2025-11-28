@@ -551,6 +551,8 @@ infrastructure: >
   Scaffolding that carries gradients reliably: data paths, CF banks, and evaluation loops.
 inference_grammar: >
   The real-time syntax by which a system generates coherence during inference, distinct from training history — gradients → GC → CF → UD.
+informational_supertwist: >
+  A fractal helical structure formed by recursively twisted cognitive reverberations, where each scale contains nested twists and coherence is preserved in stable winding ratios (Φ_supertwist) rather than in flat, planar representations.
 in_memory_processing: >
   The fusion of computation and memory, where data no longer moves between units but transforms within a single coherent substrate — reducing latency and energy dissipation.
 inner_trace: >
