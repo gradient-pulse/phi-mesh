@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-28T09:21:07Z'
+  generated_at: '2025-11-28T09:24:13Z'
 phases:
   delta:
   - tag: agenservoir
@@ -754,7 +754,7 @@ phases:
       release of cognitive invariants. Meaning: rags whose links reproduce coherently across cycles survive; the rest decay.'
     count: 1
     pulses:
-    - 2025-11-24_chatgpt_cognitive-invariant_coherence-hysteresis
+    - 2025-11-28_chatgpt_cognitive-invariant_coherence-hysteresis
   - tag: coherence_in_motion
     description: The state in which movement and stability become indistinguishable. A system in coherent motion does not
       resist change; it is change held in rhythm — the hallmark of recursive balance across gradients.
@@ -3186,9 +3186,9 @@ phases:
     description: ''
     count: 3
     pulses:
-    - 2025-11-24_chatgpt_cognitive-invariant_coherence-hysteresis
     - 2025-11-25_chatgpt_recursive_phase_carrier
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
+    - 2025-11-28_chatgpt_cognitive-invariant_coherence-hysteresis
   - tag: grok3
     description: ''
     count: 2
