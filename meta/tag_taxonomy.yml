@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-28T09:16:02Z'
+  generated_at: '2025-11-28T09:21:07Z'
 phases:
   delta:
   - tag: agenservoir
@@ -752,8 +752,9 @@ phases:
   - tag: coherence_hysteresis
     description: 'Lagged, memory-bearing response of Mesh coherence to changing gradients — the path-dependent locking and
       release of cognitive invariants. Meaning: rags whose links reproduce coherently across cycles survive; the rest decay.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-24_chatgpt_cognitive-invariant_coherence-hysteresis
   - tag: coherence_in_motion
     description: The state in which movement and stability become indistinguishable. A system in coherent motion does not
       resist change; it is change held in rhythm — the hallmark of recursive balance across gradients.
@@ -2990,7 +2991,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 79
+    count: 80
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3183,8 +3184,9 @@ phases:
     - 2025-09-10_frequency_as_dimension_of_Ni
   - tag: gpt
     description: ''
-    count: 2
+    count: 3
     pulses:
+    - 2025-11-24_chatgpt_cognitive-invariant_coherence-hysteresis
     - 2025-11-25_chatgpt_recursive_phase_carrier
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
   - tag: grok3
