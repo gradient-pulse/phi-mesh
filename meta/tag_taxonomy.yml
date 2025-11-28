@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-28T11:46:52Z'
+  generated_at: '2025-11-28T11:59:34Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3306,6 +3306,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-15_analog_gradient_hw_thinking_without_data_movement
+  - tag: informational_supertwist
+    description: A fractal helical structure formed by recursively twisted cognitive reverberations, where each scale contains
+      nested twists and coherence is preserved in stable winding ratios (Φ_supertwist) rather than in flat, planar representations.
+    count: 0
+    pulses: []
   - tag: jhtdb
     description: Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary
       source for time-resolved evidence across flows.
