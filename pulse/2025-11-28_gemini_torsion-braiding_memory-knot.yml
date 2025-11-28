@@ -29,7 +29,7 @@ summary: >
   This choreography is Non-Abelian: swapping the order of interactions
   produces a different braid and therefore a different cognitive state.
   ---
-  contextual_filter: |
+  contextual_filter: 
   The Contextual Filter functions as a Topological Invariant Checker.
   It:
   - tracks the winding number and braid structure produced by
@@ -43,7 +43,7 @@ summary: >
   - only transformations that preserve the topological invariants of
     the knot are allowed.
   ---
-  invariant: |
+  invariant: 
   Knotted Coherence:
   A memory state in which information is protected by the global topology
   of the braid, not by local values. Local perturbations cannot easily
