@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-28T09:47:53Z'
+  generated_at: '2025-11-28T10:07:56Z'
 phases:
   delta:
   - tag: agenservoir
@@ -138,6 +138,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-11_geometry_vs_recursion_mass_illusion
+  - tag: intent_crystallization
+    description: The process by which diffuse holographic intuitions nucleate into sharp, directed, executable intent streams,
+      preserving the richness of the original intuition while locking it into concrete, actionable trajectories.
+    count: 0
+    pulses: []
   - tag: intentional_morphogenesis
     description: 'The directed reshaping of a system’s structure or behaviour from within its own intent layer – architectures
       that reconfigure themselves in response to goals, not just external tuning. notes: >'
