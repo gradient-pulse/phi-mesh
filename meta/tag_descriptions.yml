@@ -158,6 +158,8 @@ coherence_budget: >
   Time/energy allocation for keeping gradients aligned while shipping.
 coherence_closure: >
   The moment when a system’s internal gradients achieve recursive stability, sustaining organization through self-reinforcing feedback. It marks the transition from passive structure to active process — from dissipation to life. Operational closure of coherence can emerge in any substrate capable of maintaining its own gradient syntax.
+coherence_criticality: >
+  The critical regime of cognitive thermodynamics where thermal load drives scale-invariant fluctuation clusters and coherence is preserved by channeling heat through critical pathways around a characteristic threshold Φ_crit.
 coherence_conservation: >
   Principle that coherence is neither created nor destroyed but redistributed or refracted across Δ → GC → CF transitions. Used when RGPx frames physical, cognitive, or social systems as conserving a coherence budget rather than classical energy or probability alone.
 coherence_corridor: >
