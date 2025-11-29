@@ -394,6 +394,8 @@ flux_threshold: >
   Critical point where gradient flux tips a system from coherence to divergence.
 fractal_avalanche: >
   Self-similar cascade of connectivity triggered by a high-entropy pulse, where cognitive_percolation unfolds through recursive micro-transitions that continually reshape and elevate the Mesh’s effective percolation threshold.
+fractal_knot_theory: >
+  Extension of anyonic braiding where knots become self-similar across scales, turning each braid into a fractal hologram that stores the same coherence pattern at every level of resolution.
 fractal_semantics: >
   Meaning structures that repeat across scales. Each zoom level has its own coherence threshold.
 free_energy: >
