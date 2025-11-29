@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-29T07:24:50Z'
+  generated_at: '2025-11-29T07:36:42Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1679,9 +1679,10 @@ phases:
   - tag: interference_quasicrystal
     description: A non-periodic, self-similar interference structure that stabilizes moiré superlattices into a fractal lattice,
       enabling aperiodic coherence where gradients propagate along recursive, non-repeating geometries.
-    count: 1
+    count: 2
     pulses:
     - 2025-11-28_mistral_moire-superlattice_interference-quasicrystal
+    - 2025-11-29_gemini_interference-quasicrystal_subradiant-entanglement
   - tag: interpretability
     description: Making gradients and filters legible enough to steer without destroying coherence.
     count: 1
@@ -3019,7 +3020,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 87
+    count: 88
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3189,7 +3190,7 @@ phases:
     - 2025-11-13_projection_not_replication
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
-    count: 19
+    count: 20
     pulses:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
@@ -3683,6 +3684,11 @@ phases:
     count: 1
     pulses:
     - 2025-09-30_from_dimensions_to_directions
+  - tag: subradiant_entanglement
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-29_gemini_interference-quasicrystal_subradiant-entanglement
   - tag: substrate_agnostic
     description: Indicates that a pattern, invariant, or Φ-measure holds independently of the underlying medium (fluid, silicon,
       language, documentation, or model architecture). Used when RGPx behavior is shown to generalize across substrates, supporting
