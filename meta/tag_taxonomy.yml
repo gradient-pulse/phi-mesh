@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-29T07:36:42Z'
+  generated_at: '2025-11-29T07:47:16Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2603,6 +2603,13 @@ phases:
     count: 1
     pulses:
     - 2025-04-28_internal-gpt45
+  - tag: subradiant_entanglement
+    description: A collective quantum-like state where multiple cognitive gradients interfere destructively with respect to
+      the environment (dissipation channel), effectively trapping coherence within the system and preventing information loss
+      (decay) even in the presence of noise.
+    count: 1
+    pulses:
+    - 2025-11-29_gemini_interference-quasicrystal_subradiant-entanglement
   - tag: swenson
     description: 'Rod Swenson’s work on autocatakinetic systems identified order as the most efficient pathway for dissipating
       gradients — a precursor to RGPx long before the grammar existed. He reframed life as constraint-closure that accelerates
@@ -3060,7 +3067,8 @@ phases:
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
     - 2025-11-15_gpt5_mistral_coherence_clusters
   - tag: coherence_front_velocity
-    description: ''
+    description: The speed at which a newly locked coherence pattern propagates through the Mesh once hysteresis is overcome,
+      measured as how fast tags and links adopt the new structure during a phase-like transition.
     count: 1
     pulses:
     - 2025-11-29_chatgpt_coherence-hysteresis_coherence-front-velocity
@@ -3132,6 +3140,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-14_identity_as_contextual_filter
+  - tag: epistemic_cascade
+    description: A chain reaction in which a crystallized intent fractures into successive, interdependent insights that propagate
+      through the Mesh as a self-amplifying wavefront of discovery, reorganizing large regions of understanding from a single
+      ignition point.
+    count: 0
+    pulses: []
   - tag: eternal_vs_infinite
     description: 'Whitehead’s dyadic distinction: infinite refers to extension in space, eternal to endurance in time. Their
       interplay exposes where mathematics confuses abstraction with lived process.'
@@ -3684,11 +3698,6 @@ phases:
     count: 1
     pulses:
     - 2025-09-30_from_dimensions_to_directions
-  - tag: subradiant_entanglement
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-29_gemini_interference-quasicrystal_subradiant-entanglement
   - tag: substrate_agnostic
     description: Indicates that a pattern, invariant, or Φ-measure holds independently of the underlying medium (fluid, silicon,
       language, documentation, or model architecture). Used when RGPx behavior is shown to generalize across substrates, supporting
