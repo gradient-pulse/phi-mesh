@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-29T07:53:33Z'
+  generated_at: '2025-11-29T07:58:59Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3397,6 +3397,11 @@ phases:
     count: 1
     pulses:
     - 2025-09-23_triad_of_resonance
+  - tag: metabolic_pathways
+    description: Structured channels through which cognitive energy is transformed between exploratory and integrative states,
+      conserving overall potential while changing its form, like a metabolic network for understanding.
+    count: 0
+    pulses: []
   - tag: mirror_activation
     description: The phase where Φ-Mesh shifts from reflection to action — coherence not only observed but enacted through
       recursive feedback.
