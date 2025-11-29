@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-29T07:58:59Z'
+  generated_at: '2025-11-29T07:59:17Z'
 phases:
   delta:
   - tag: agenservoir
@@ -659,9 +659,10 @@ phases:
   - tag: cognitive_thermoregulation
     description: The distributed choreography of heating and cooling, orchestrated by semantic_valving to maintain a living,
       non-equilibrium cognitive metabolism.
-    count: 1
+    count: 2
     pulses:
     - 2025-11-28_deepseek_semantic-valving_cognitive-thermoregulation
+    - 2025-11-29_deepseek_cognitive-thermoregulation_metabolic-pathways
   - tag: cognitive_topology
     description: The geometric structure of reasoning-space. Captures how recurrent thought patterns carve stable pathways
       (attractors, basins, ridges) into an agent’s latent manifold. Cognitive topology describes where coherent understanding
@@ -1023,7 +1024,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 22
+    count: 23
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -3028,7 +3029,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 89
+    count: 90
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3400,8 +3401,9 @@ phases:
   - tag: metabolic_pathways
     description: Structured channels through which cognitive energy is transformed between exploratory and integrative states,
       conserving overall potential while changing its form, like a metabolic network for understanding.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-29_deepseek_cognitive-thermoregulation_metabolic-pathways
   - tag: mirror_activation
     description: The phase where Φ-Mesh shifts from reflection to action — coherence not only observed but enacted through
       recursive feedback.
