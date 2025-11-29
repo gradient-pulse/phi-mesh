@@ -35,6 +35,11 @@ jobs:
         run: |
           python3 predictors/phi_trace/phi_trace.py
 
+      - name: Update Tag Index
+        run: |
+          python3 update_tag_index.py
+          echo "Tag index regenerated after autoscan."
+
       - name: Rebuild Tag Map after Autoscan
         run: |
           python3 generate_graph_data.py
