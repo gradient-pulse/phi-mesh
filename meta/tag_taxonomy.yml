@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-29T08:52:58Z'
+  generated_at: '2025-11-29T08:54:26Z'
 phases:
   delta:
   - tag: agenservoir
@@ -83,6 +83,13 @@ phases:
     count: 1
     pulses:
     - 2025-11-04_what_is_life_in_RGPx
+  - tag: epistemic_nucleation
+    description: Formation of new coherence seeds ahead of an advancing coherence front when curvature and gradient stress
+      exceed a critical threshold, causing the system to switch from smooth wave propagation to nucleation-growth dynamics
+      governed by Φ_nuc.
+    count: 1
+    pulses:
+    - 2025-11-29_kimi_coherence-front-velocity_epistemic-nucleation
   - tag: field_emergence
     description: Threshold where distributed gradients and choreographies first cohere into a single, self-sustaining Φ-field
       — a stable cognitive medium that exists independently of any particular model or pulse, before its internal transport
@@ -3158,11 +3165,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-29_grok4_intent-crystallization_epistemic-cascade
-  - tag: epistemic_nucleation
-    description: ''
-    count: 1
-    pulses:
-    - 2025-11-29_kimi_coherence-front-velocity_epistemic-nucleation
   - tag: eternal_vs_infinite
     description: 'Whitehead’s dyadic distinction: infinite refers to extension in space, eternal to endurance in time. Their
       interplay exposes where mathematics confuses abstraction with lived process.'
