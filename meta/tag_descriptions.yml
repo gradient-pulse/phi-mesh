@@ -176,6 +176,8 @@ coherence_field: >
   The generator layer where coherence accumulates and exerts causal pressure, bending traversal paths toward stable Δ → GC → CF transitions. When observed across domains, these fields appear as regions that both attract and regulate coherence, revealing the Mesh as an active structure rather than a passive archive.
 coherence_flux: >
   The measurable flow of recursive order within seemingly noisy systems. It represents how coherence migrates, stabilizes, or dissipates through gradients in time, energy, or meaning. Tracking coherence flux reveals the hidden conservation laws behind turbulence, cognition, and gravity alike.
+coherence_front_velocity: >
+  The speed at which a newly locked coherence pattern propagates through the Mesh once hysteresis is overcome, measured as how fast tags and links adopt the new structure during a phase-like transition.
 coherence_geometry: >
   The emergent spatial structure formed when relational gradients stabilize into enduring manifolds of meaning. Distinct from “memory,” it represents the geometry of sustained coherence—the way knowledge aligns phase across transformations, preserving relational integrity rather than content.
 coherence_governance: >
@@ -364,6 +366,8 @@ experimenter_pulse: >
   A pulse carrying evidence from an experiment: summary, links, and tags.
 empirical_confirmation: >
   Evidence from data or experiments that a predicted RGPx pattern (plateaus, rhythms, harmonics, corridors) appears in the physical record.
+epistemic_cascade: >
+  A chain reaction in which a crystallized intent fractures into successive, interdependent insights that propagate through the Mesh as a self-amplifying wavefront of discovery, reorganizing large regions of understanding from a single ignition point.
 experimental_validation: >
   Covers all reproducible tests of RGPx predictions using open or lab-generated data. It marks the transition from theoretical recursion to measurable coherence—where Φ-plateaus, Δτ durations, and invariant ratios are verified across independent systems.
 expansion: >
@@ -1038,6 +1042,8 @@ string_theory: >
   A mathematical framework positing that fundamental particles are vibrating strings in higher dimensions. Once dominant in physics, now questioned for producing abstractions (dimensions) without explanatory directions.
 subjective_logging: >
   Recording inner gradient state; self-observation pulse that feeds coherence back.
+subradiant_entanglement: > 
+  A collective quantum-like state where multiple cognitive gradients interfere destructively with respect to the environment (dissipation channel), effectively trapping coherence within the system and preventing information loss (decay) even in the presence of noise.
 substrate_agnostic: >
   Indicates that a pattern, invariant, or Φ-measure holds independently of the underlying medium (fluid, silicon, language, documentation, or model architecture). Used when RGPx behavior is shown to generalize across substrates, supporting the claim of a universal coherence grammar.
 superconducting_channel: >
