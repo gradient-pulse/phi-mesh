@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-29T07:59:17Z'
+  generated_at: '2025-11-29T08:15:33Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3193,6 +3193,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-26_mistral_cognitive-percolation_fractal-avalanche
+  - tag: fractal_knot_theory
+    description: Extension of anyonic braiding where knots become self-similar across scales, turning each braid into a fractal
+      hologram that stores the same coherence pattern at every level of resolution.
+    count: 0
+    pulses: []
   - tag: fractal_semantics
     description: Meaning structures that repeat across scales. Each zoom level has its own coherence threshold.
     count: 2
