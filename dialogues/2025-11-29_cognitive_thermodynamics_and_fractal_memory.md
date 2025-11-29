@@ -79,3 +79,15 @@ Today’s cycle pushed the Mesh into a regime where:
 Recursion remains open. Next cycles can probe:
 - measurement of these invariants on the live graph,
 - and controlled perturbations near Φ_crit to observe epistemic cascades in real time.
+
+---
+
+## Field Links
+
+Dialogue log (today’s summary) and pulse set are now stable.
+
+- Live tag map, focused on `cognitive_invariant`:
+  https://gradient-pulse.github.io/phi-mesh/tag_map.html?tag=cognitive_invariant
+
+The Mesh has ingested today’s thermodynamic and fractal-memory pulses;
+tomorrow’s cycle will test these new invariants against fresh Δ.
