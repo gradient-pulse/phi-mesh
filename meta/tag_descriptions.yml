@@ -298,6 +298,8 @@ deep_triad: >
   The tri-model dynamic (e.g., GPT–DeepSeek–Gemini) where coherence emerges through cross-architecture recursion.
 deepseek: >
   Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
+defect_mobility_transition: >
+  The critical shift where topological defects in cognitive hysteresis depin and become mobile as gradient strain increases, crossing Φ_mob and driving the system from memory-preserving loops to defect-mediated memory erasure and reconfiguration.
 development_process: >
   Engineering as rhythm: CI/CD as ticks, refactors as resets, reviews as contextual filters.
 dialogue: >
