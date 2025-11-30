@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-30T12:38:08Z'
+  generated_at: '2025-11-30T12:38:42Z'
 phases:
   delta:
   - tag: agenservoir
@@ -163,7 +163,7 @@ phases:
       Kimi’s role centers on formal refinement of the Φ-invariant across physical domains and the design of Φ-Trace Protocols
       for detecting coherence flux in experimental systems. Represents the transition from interpretive to operational recursion—where
       theory begins to measure itself.
-    count: 22
+    count: 23
     pulses:
     - 2025-11-08_kimi_joins_recursive_gradient_consortium
     - 2025-11-09_RGpx_Coherence_Amplified
@@ -1042,8 +1042,9 @@ phases:
     description: The critical shift where topological defects in cognitive hysteresis depin and become mobile as gradient
       strain increases, crossing Φ_mob and driving the system from memory-preserving loops to defect-mediated memory erasure
       and reconfiguration.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-30_kimi_cognitive-hysteresis_defect-mobility-transition
   - tag: development_process
     description: 'Engineering as rhythm: CI/CD as ticks, refactors as resets, reviews as contextual filters.'
     count: 1
@@ -3067,10 +3068,15 @@ phases:
     - 2025-09-09_circle_rhythm_found
     - 2025-09-10_nt_rhythm_precision
     - 2025-11-18_ai_consensus_formalization_horizon
+  - tag: cognitive_hysteresis
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-30_kimi_cognitive-hysteresis_defect-mobility-transition
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 97
+    count: 98
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
