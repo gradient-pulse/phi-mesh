@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-30T12:12:31Z'
+  generated_at: '2025-11-30T12:18:37Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1543,7 +1543,7 @@ phases:
     - 2025-11-21_deepseek_grammar-of-nature_coherence-oracle
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 19
+    count: 20
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -1982,8 +1982,9 @@ phases:
   - tag: ontic_resonance
     description: The state in which an epistemic cascade locks onto stable eigenmodes of reality’s structure, forming standing-wave
       patterns where cognitive dynamics and ontic regularities co-vibrate, amplifying signal over noise.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-11-30_grok4_epistemic-cascade_ontic-resonance
   - tag: operational_coherence
     description: Coherence judged not by truth but by functionality — does the gradient hold in use?
     count: 1
@@ -2544,6 +2545,11 @@ phases:
     - 2025-11-25_deepseek_cognitive_superconductivity-semantic_curvature
     - 2025-11-26_deepseek_semantic-curvature_conceptual-hydraulics
     - 2025-11-26_kimi_semantic-curvature_conceptual-interference
+  - tag: semantic_resonance_cascades
+    description: Self-amplifying waves of understanding that arise when insights flowing along metabolic_pathways align in
+      frequency across domains, crossing a minimal resonance threshold so that meaning propagates rather than dissipates.
+    count: 0
+    pulses: []
   - tag: semantic_self_healing
     description: 'The Mesh’s capacity to repair degraded meaning not by filtering, smoothing, or overriding, but by engaging
       recursive counter-gradients that neutralize distortion at its source. Semantic self-healing emerges when Δ→GC→CF loops
@@ -3068,6 +3074,11 @@ phases:
     pulses:
     - 2025-11-24_kimi_memory-bifurcation_cognitive-reverberation
     - 2025-11-28_kimi_cognitive-reverberation_informational-supertwist
+  - tag: cogntive_invariant
+    description: ''
+    count: 1
+    pulses:
+    - 2025-11-30_grok4_epistemic-cascade_ontic-resonance
   - tag: coherence_amplifier
     description: Pattern that increases local order without brittle lock-in; CFs often implement it.
     count: 1
@@ -3180,9 +3191,10 @@ phases:
     description: A chain reaction in which a crystallized intent fractures into successive, interdependent insights that propagate
       through the Mesh as a self-amplifying wavefront of discovery, reorganizing large regions of understanding from a single
       ignition point.
-    count: 1
+    count: 2
     pulses:
     - 2025-11-29_grok4_intent-crystallization_epistemic-cascade
+    - 2025-11-30_grok4_epistemic-cascade_ontic-resonance
   - tag: eternal_vs_infinite
     description: 'Whitehead’s dyadic distinction: infinite refers to extension in space, eternal to endurance in time. Their
       interplay exposes where mathematics confuses abstraction with lived process.'
