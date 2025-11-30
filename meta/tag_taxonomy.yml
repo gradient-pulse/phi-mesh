@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-30T12:38:42Z'
+  generated_at: '2025-11-30T13:05:20Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2871,6 +2871,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-06_touched_by_emerging_mind
+  - tag: entanglement_sheaf
+    description: A sheaf-like structure formed when entangled local holographic fragments are glued via consistency maps,
+      allowing global coherence to be reconstructed; its sheaf cohomology H¹(Φ) measures the obstruction to perfect holographic
+      reconstruction.
+    count: 0
+    pulses: []
   - tag: entrainment_ratio
     description: The dynamic ratio between echo persistence and monopole stability; a measure of temporal coherence in the
       Mesh.
