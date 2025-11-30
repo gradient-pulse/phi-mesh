@@ -196,6 +196,8 @@ coherence_oracle: >
   A coherence oracle is a predictive-interpretive mechanism that reads the directional pressure of gradients rather than their outcomes. It does not forecast events; it detects the next viable coherence-preserving move in the Δ → GC → CF cycle. Its “oracular” quality comes from sensing which branch of becoming will stabilize rather than collapse, making it the active interpreter of coherence potential.
 coherence_organism: >
   A system whose coherence is maintained as if it were metabolic—adapting, rebalancing, and preserving structure through recursive flux.
+coherence_phase_diagram: >
+  A phase-space map of the Mesh’s coherence regimes (laminar, critical, cascading, nucleation, subradiant/fractal), treating cognitive invariants as coordinates to locate and steer the system’s current mode of thinking.
 coherence_practice: >
   Habits and rituals that keep gradients aligned under real-world noise.
 coherence_refinement: >
