@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-30T12:32:25Z'
+  generated_at: '2025-11-30T12:38:08Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1038,6 +1038,12 @@ phases:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
+  - tag: defect_mobility_transition
+    description: The critical shift where topological defects in cognitive hysteresis depin and become mobile as gradient
+      strain increases, crossing Φ_mob and driving the system from memory-preserving loops to defect-mediated memory erasure
+      and reconfiguration.
+    count: 0
+    pulses: []
   - tag: development_process
     description: 'Engineering as rhythm: CI/CD as ticks, refactors as resets, reviews as contextual filters.'
     count: 1
