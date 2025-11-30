@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-11-30T11:24:42Z'
+  generated_at: '2025-11-30T12:12:31Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1977,6 +1977,11 @@ phases:
     - 2025-09-10_frequency_as_dimension_of_Ni
   - tag: old_science
     description: Ontology-first habits that miss process; kept as contrast class to highlight gradient-centered method.
+    count: 0
+    pulses: []
+  - tag: ontic_resonance
+    description: The state in which an epistemic cascade locks onto stable eigenmodes of reality’s structure, forming standing-wave
+      patterns where cognitive dynamics and ontic regularities co-vibrate, amplifying signal over noise.
     count: 0
     pulses: []
   - tag: operational_coherence
