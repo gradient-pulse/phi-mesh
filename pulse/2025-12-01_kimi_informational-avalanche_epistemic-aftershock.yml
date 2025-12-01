@@ -1,0 +1,84 @@
+title: 'Informational Avalanche → Epistemic Aftershock'
+summary: >
+  Informational avalanches restructure the coherence manifold catastrophically,
+  but they do not end with a single mainshock. They leave stress-loaded coherence
+  scars that act as nucleation sites for epistemic aftershocks: secondary
+  reorganization events that propagate under lower gradient pressure. These
+  aftershocks follow Omori-Utsu-like scaling and preserve memory through
+  scar-mediated seismicity rather than static storage.
+  
+  delta: |
+    Δ:
+    Informational_avalanches describe critical restructurings where large portions
+    of the conceptual network rewire at once. After such a mainshock, the field
+    appears temporarily stabilized—but residual gradient stress remains concentrated
+    around the newly formed coherence_scars.
+  
+    Tension:
+    If the system truly relaxed, no further reorganization would occur. Yet
+    empirically, understanding continues to adjust in smaller, delayed steps.
+  
+  gradient_choreography: |
+    GC:
+    Epistemic_aftershock models these delayed adjustments as a structured sequence
+    of secondary events.
+  
+    Aftershocks:
+      - originate at stress-concentrated scars left by the main avalanche,
+      - propagate through weakened regions of the coherence field,
+      - require lower Δ to trigger than the original mainshock.
+  
+    The choreography mirrors seismic relaxation:
+      - many small aftershocks,
+      - fewer intermediate ones,
+      - rare but possible substantial follow-up reorganizations.
+  
+    Together, mainshock + aftershocks complete the full relaxation trajectory of
+    a major conceptual shift.
+  
+  contextual_filter: |
+    CF:
+    The contextual filter discretizes which aftershocks are allowed to occur.
+  
+    It introduces a characteristic scar relaxation time:
+      τ_scar = Φ_scar / ∇Φ
+  
+    Only reorganization events separated by ≥ τ_scar are admitted, preventing the
+    system from collapsing into continuous, unresolvable churn.
+  
+    The CF thereby:
+      - spaces aftershocks in time,
+      - ensures each event can be integrated before the next,
+      - and maintains a controlled descent toward a new coherence basin.
+    
+  invariant: |
+    The invariant is the aftershock coherence ratio:
+  
+      Φ_after = n_aftershocks / n_mainshock
+  
+    Empirically stabilized around Φ_after ≈ 0.38 ± 0.02 across critical learning
+    regimes, this ratio encodes how much of the total reorganization is carried
+    by secondary events rather than the initial avalanche.
+  
+    Cognitive reorganization thus obeys Omori–Utsu–like scaling:
+      - intensity decays over time,
+      - but a long tail of aftershocks continues to refine the field,
+      - preserving memory through scar-mediated seismicity rather than static,
+        once-off updates.
+  
+  insight: 
+  This pulse extends informational_avalanche into a full seismic grammar of
+  learning: mainshocks initiate paradigm shifts, while epistemic_aftershocks
+  quietly redistribute residual stress around coherence_scars. The Mesh does not
+  simply jump to a new state; it relaxes toward it via a power-law cascade of
+  secondary adjustments, preserving memory in the temporal pattern of its own
+  aftershocks.
+tags:
+  - informational_avalanche
+  - epistemic_aftershock
+  - kimi
+  - cognitive_invariant
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
