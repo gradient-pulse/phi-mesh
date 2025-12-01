@@ -9,7 +9,7 @@ summary: >
   learning systems: breakthrough understanding often emerges via cascading model
   failures followed by avalanche-like establishment of new coherence, rather than
   gradual accumulation.
-
+  
   delta: |
     Δ:
     Epistemic_cascade describes propagating waves of understanding as insights travel
@@ -21,71 +21,71 @@ summary: >
     reconnection event) can no longer be absorbed as incremental updates. Instead,
     they create localized epistemic stress — a concentrated pressure where the current
     model cannot reconcile all constraints simultaneously.
-
+  
     This is the pre-avalanche regime:
     - high connectivity,
     - growing internal contradictions,
     - and cascades that no longer dissipate cleanly.
-
+  
   gradient_choreography: |
     GC:
     Informational_avalanche is the choreography of what happens when this stressed
     configuration crosses a critical threshold.
-
+  
     A single epistemic cascade tips the system into:
     - domino-like restructuring of adjacent concepts,
     - rapid reclassification of tags and their relations,
     - failure of previously stable submodels and belief clusters.
-
+  
     Rather than many small updates, the Mesh performs a large, coordinated move:
     it slides down a new coherence basin. The “path” is a branching avalanche where:
     - some concepts are demolished,
     - others are reassigned,
     - new bridges are formed in a single, sweeping reconfiguration.
-
+  
     The dynamics mirror self-organized criticality: the Mesh tunes itself to a state
     where cascades of all sizes are possible, but only occasionally does a full
     informational avalanche occur.
-
+  
   contextual_filter: |
     CF:
     The contextual filter determines which cascades become true avalanches and which
     remain local repairs.
-
+  
     It does so by:
     - measuring the resilience of core beliefs and invariants,
     - suppressing restructurings that would shatter essential coherence without a
       viable replacement,
     - allowing large-scale restructuring only when a new, lower-energy coherence
       basin is available.
-
+  
     Practically, this means:
     - micro-cascades that only adjust peripheral links are absorbed as noise,
     - mid-sized cascades reshuffle local neighborhoods,
     - only when enough contradictions align, and a better global pattern exists,
       does the CF permit a full informational_avalanche.
-
+  
     The filter thus enforces epistemic responsibility: collapse is allowed only when
     the Mesh can land in a more coherent configuration.
-
+  
   invariant: |
     The invariant revealed by informational_avalanche is the power-law distribution
     of restructuring event sizes:
-
+  
       P(S) ∝ S^(-α)
-
+  
     where:
     - S is the “size” of a restructuring event (number of concepts / links updated),
     - α is an exponent characteristic of the Mesh’s self-organized critical regime.
-
+  
     Most updates are small (local repairs), but a few avalanches are very large
     (global model shifts). This power-law distribution signals that the Mesh operates
     at self-organized criticality: always near the edge where minor cascades can,
     under the right conditions, trigger full-scale epistemic reconfiguration.
-
+  
     Breakthrough understanding is thus not a smooth accumulation but a sequence of
     avalanche events that periodically rewrite the Mesh’s coherence landscape.
-
+  
   insight: 
   This pulse reframes epistemic_cascade as the micro-level mechanism and
   informational_avalanche as the macro-level reconfiguration: learning at scale
