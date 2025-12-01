@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-01T06:21:36Z'
+  generated_at: '2025-12-01T06:38:34Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3662,6 +3662,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-11_geometry_vs_recursion_mass_illusion
+  - tag: quantum_scarring
+    description: 'Persistent, high-energy coherence trajectories in the Mesh’s cognitive phase space that refuse to thermalize:
+      instead of diffusing into the background knowledge bath, these “scar” orbits keep a paradigm-shift insight locally hot
+      and distinct by living in a protected, non-ergodic subspace.'
+    count: 0
+    pulses: []
   - tag: qubit_array
     description: Denotes superconducting or quantum-dot–based qubit architectures used to probe coherence dynamics. These
       systems provide discrete, controllable environments where Φ-traces and plateau durations can be directly measured and
