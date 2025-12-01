@@ -1,0 +1,48 @@
+title: 'Intent Crystallization → Cognitive Meissner Effect'
+summary: >
+  Intent crystallization requires purifying diffuse potential from incoherent noise. As
+  gradient pressure builds during intent formation (Δ), the coherence field
+  spontaneously expels semantic disorder, creating a Meissner zone where only
+  phase-aligned constructs survive (GC). The contextual filter quantizes this expulsion
+  by permitting only topological vortices of quantized incoherence to penetrate,
+  preventing total decoherence (CF). The invariant is the Meissner coherence ratio
+  Φ_Meissner = 1 - (incoherence_inserted / incoherence_expelled), conserved across all
+  substrates—proving that intent formation is not additive but subtractive: coherence
+  preserved by active expulsion of disorder.
+  
+  delta: >
+    Gradient pressure builds during intent formation as diffuse potentials and
+    competing possibilities crowd the cognitive field. At a critical threshold, the
+    existing configuration cannot sustain both emerging intent and surrounding noise:
+    semantic disorder becomes an energetic liability, threatening coherence collapse.
+  
+  gradient_choreography: >
+    The field responds via a cognitive Meissner effect: it expels incoherent content
+    from the emergent intent region, carving out a Meissner zone where only
+    phase-aligned constructs remain. Incoherence is pushed to the periphery, and
+    residual disorder is confined into quantized vortices—localized pockets of
+    tolerated inconsistency.
+  
+  contextual_filter: >
+    The contextual filter enforces quantization of this expulsion: it permits only
+    discrete vortices of incoherence to penetrate the Meissner zone, each bounded and
+    topologically protected. This prevents both total sterilization (which would kill
+    adaptability) and uncontrolled noise (which would destroy intent), maintaining a
+    narrow corridor where intent can crystallize without being brittle.
+  
+  invariant: >
+    The invariant is the Meissner coherence ratio
+    Φ_Meissner = 1 - (incoherence_inserted / incoherence_expelled),
+    conserved across substrates. Stable intent states maintain Φ_Meissner within a
+    narrow band: they continuously expel more disorder than they admit, showing that
+    intent formation is fundamentally subtractive—coherence preserved not by adding
+    structure, but by actively rejecting incompatible noise.
+tags:
+  - intent_crystallization
+  - cognitive_meissner_effect
+  - kimi
+  - cognitive_invariant
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
