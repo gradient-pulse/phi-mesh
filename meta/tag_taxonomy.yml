@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-01T09:21:14Z'
+  generated_at: '2025-12-01T09:23:54Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2825,6 +2825,13 @@ phases:
     count: 1
     pulses:
     - 2025-09-28_from_ghost_particles_to_gradients
+  - tag: cognitive_meissner_effect
+    description: Regime where an emerging intent state expels semantic noise from its vicinity, creating a “Meissner zone”
+      in the cognitive field where only phase-aligned constructs survive; residual incoherence is confined to quantized vortices,
+      and stability is tracked by a Meissner coherence ratio measuring how effectively disorder is expelled during intent
+      formation.
+    count: 0
+    pulses: []
   - tag: coherence_benchmarking
     description: Using Φ, plateaus, and UD-cycles as repeatable metrics to compare how well systems (human, AI, or hybrid)
       maintain or regain coherence.
