@@ -126,6 +126,8 @@ cognition: >
   Coherent gradient processing across perception, memory, and action.
 cognitive_invariant: >
   A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF paths converge, revealing structure that does not depend on the implementation.
+cognitive_meissner_effect: >
+  Regime where an emerging intent state expels semantic noise from its vicinity, creating a “Meissner zone” in the cognitive field where only phase-aligned constructs survive; residual incoherence is confined to quantized vortices, and stability is tracked by a Meissner coherence ratio measuring how effectively disorder is expelled during intent formation.
 cognitive_percolation: >
   The phase transition where isolated conceptual regions, under increasing torsion density, suddenly link into a spanning cluster — enabling global, catastrophic coherence propagation across the Mesh.
 cognitive_recursion: >
