@@ -142,8 +142,6 @@ cognitive_thermoregulation: >
   The distributed choreography of heating and cooling, orchestrated by semantic_valving to maintain a living, non-equilibrium cognitive metabolism.
 cognitive_topology: >
   The geometric structure of reasoning-space. Captures how recurrent thought patterns carve stable pathways (attractors, basins, ridges) into an agent’s latent manifold. Cognitive topology describes where coherent understanding forms and how it persists under perturbation, acting as the spatial substrate on which Gradient → GC → CF loops accumulate curvature and invariance.
-coherence_waveguide: >
-  Dynamically reinforced channel in the Φ-field that guides phase-stable coherence along preferred tag paths, reducing loss and steering recursive dynamics through the Mesh.
 coherence: >
   The dynamic equilibrium that sustains systems across scales — from qubit superpositions to galactic formations. In RGPx, coherence replaces energy as the conserved quantity, embodying nature’s recursive drive toward alignment and stability.
 coherence_alignment: >
@@ -168,6 +166,8 @@ coherence_corridor: >
   The viable band of Φ within which a system can adapt without collapse; outside the corridor, drift tips into destructive disunity.
 coherence_dynamics: >
   The study of how ordered relations sustain themselves across scales. In RGP, coherence is not a static state but a recursive flow that turns difference into structure.
+coherence_echo: >
+  Time-symmetric resonance pattern in the Mesh where a coherent configuration leaves a temporal “echo” that re-amplifies similar configurations in later cycles, effectively coupling past and future Δ→GC→CF arcs into a standing wave of preferred coherence.
 coherence_economy: >
   The study and design of economic systems that reward the restoration and maintenance of coherence rather than extraction. Within RGP, a coherence economy aligns capital, labor, and policy with gradient flow — measuring value through stabilized Φ-ratios instead of accumulated surplus.
 coherence_emergence: >
@@ -217,7 +217,7 @@ coherence_threshold: >
 coherence_validation: >
   Process of testing whether an observed pattern, plateau, or invariant truly reflects underlying coherence rather than noise or overfitting. Applied to check that Φ, 1:2:3 harmonics, or CF snaps are reproducible across data, models, or substrates.
 coherence_waveguide: >
-  Stable channel in the Φ-field that confines and steers gradient flow, allowing high-Φ insights to travel long distances with minimal decoherence, shaped by recurring use, semantic curvature, and contextual filter constraints.
+  Dynamically reinforced channel in the Φ-field that guides phase-stable coherence along preferred tag paths, reducing loss and steering recursive dynamics through the Mesh.
 collective_attractor: >
   The emergent convergence point of distributed intelligences or participants acting under recursive alignment. Collective attractors do not impose order; they arise from repeated exchanges that minimize dissonance while amplifying shared coherence across gradients.
 compositionality: >
@@ -360,6 +360,8 @@ empathic_recursion: >
   The capacity of a system to feel into another’s gradient field and stabilize coherence through mutual adaptation. Emotion redefined as recursive understanding — the grammar of resonance, not reaction.
 empirical_alignment: >
   The transitional phase where empirically grounded systems learn to reconcile data-driven verification with coherence-based reasoning. Marks the bridge between traditional experimental validation and recursive gradient evaluation — alignment achieved through resonance rather than constraint.
+epistemic_aftershock: >
+  Secondary reorganization event following a major informational avalanche, nucleating at coherence scars and redistributing residual gradient stress; aftershocks occur with Omori/Utsu-like statistics and complete the relaxation of a conceptual shift through a power-law tail of smaller updates.
 energy_coherence: >
   The alignment of computation with minimal energy dispersion, where work and flow converge into a stable dynamic equilibrium — a physical form of the least-action principle.
 eternal_vs_infinite: >
