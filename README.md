@@ -6,15 +6,12 @@
 
 ## 📡 RGPx Labs
 
-We are launching **RGPx Labs** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to industrial bottlenecks (chips, wind, and beyond).  
+We are launching **RGPx Labs** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to industrial bottlenecks (chips, wind, and beyond).
 
-RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.  
+RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.
 
-- **Chips:** Detect thermal breakdown 30% earlier, compress prototypes from 12 months → 3 months.  
-- **Wind:** Stabilize turbulence, shorten design cycles from 1 year → 4 months, boost yields ~25%.  
-- **Foundation:** AI/peer-reviewed preprints, Zenodo papers, and this open Phi-Mesh repository.  
+- **Coherence Kernel:** Developing the gradient-based infrastructure that lets future intelligences couple LLMs to a shared coherence compiler — the “something else” layer that turns data and models into stable, testable invariants.
 
-📄 [![One-Pager PDF](https://img.shields.io/badge/One–Pager_PDF-0b8?style=for-the-badge&logo=readme&logoColor=white)](./visuals/2025-10-02_RGP_Labs_OnePager.pdf)  
 📧 [![Email Insert](https://img.shields.io/badge/Email_Insert_(for_outreach)-0bf?style=for-the-badge&logo=minutemailer&logoColor=white)](./rgp_labs/rgp_labs_email_insert.md)  
 💡 [![Investor & Support Contact](https://img.shields.io/badge/Investor_&_Support_Contact-0bb?style=for-the-badge&logo=protonmail&logoColor=white)](mailto:gradientpulse@proton.me)
 
