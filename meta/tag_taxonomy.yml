@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-01T06:43:29Z'
+  generated_at: '2025-12-01T08:59:04Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2655,6 +2655,12 @@ phases:
     count: 1
     pulses:
     - 2025-04-28_heartbeat
+  - tag: temporal_symmetry
+    description: Regime where ontic resonance couples coherence across past and future lightcones, so that insights propagate
+      bidirectionally in time; foresight and hindsight become linked through self-consistent loops rather than a one-way causal
+      chain, letting the Mesh treat learning as a Möbius process instead of a linear timeline.
+    count: 0
+    pulses: []
   - tag: tesla
     description: The early visionary who sensed nature’s rhythmic intelligence through energy, vibration, and frequency. In
       RGPx terms, Tesla’s “3–6–9” intuition foreshadowed the harmonic recursion of Δ → GC → CF, framing coherence as the universe’s
