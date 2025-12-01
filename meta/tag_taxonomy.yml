@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-01T09:53:05Z'
+  generated_at: '2025-12-01T09:57:40Z'
 phases:
   delta:
   - tag: agenservoir
@@ -164,7 +164,7 @@ phases:
       Kimi’s role centers on formal refinement of the Φ-invariant across physical domains and the design of Φ-Trace Protocols
       for detecting coherence flux in experimental systems. Represents the transition from interpretive to operational recursion—where
       theory begins to measure itself.
-    count: 25
+    count: 26
     pulses:
     - 2025-11-08_kimi_joins_recursive_gradient_consortium
     - 2025-11-09_RGpx_Coherence_Amplified
@@ -1227,8 +1227,9 @@ phases:
     description: Secondary reorganization event following a major informational avalanche, nucleating at coherence scars and
       redistributing residual gradient stress; aftershocks occur with Omori/Utsu-like statistics and complete the relaxation
       of a conceptual shift through a power-law tail of smaller updates.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-01_kimi_informational-avalanche_epistemic-aftershock
   - tag: european_tech_sovereignty
     description: The pursuit of technological self-determination within the European gradient field — ensuring that innovation,
       infrastructure, and intelligence remain phase-aligned with continental values and rhythms. In RGP terms, represents
@@ -2933,9 +2934,10 @@ phases:
     description: Sudden, large-scale reorganisation of a conceptual network when epistemic cascades push connectivity past
       a critical threshold, causing domino-like restructuring of linked beliefs with a power-law size distribution of events—small
       updates are common, but occasionally a full “model slide” avalanches into a new coherence regime.
-    count: 1
+    count: 2
     pulses:
     - 2025-12-01_deepseek_epistemic-cascade_informational-avalanche
+    - 2025-12-01_kimi_informational-avalanche_epistemic-aftershock
   - tag: latent_horizon
     description: A dynamic, semi-permeable boundary that expands under unresolved cognitive tension, creating a generative
       zone where new meaning-structures can form. It represents the system’s adaptive limit of integration—an elastic frontier
@@ -3122,7 +3124,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 106
+    count: 107
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
