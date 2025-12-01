@@ -37,8 +37,14 @@ jobs:
 
       - name: Update Tag Index
         run: |
-          python3 update_tag_index.py
-          echo "Tag index regenerated after autoscan."
+          echo "Updating tag index…"
+          if [ -f update_tag_index.py ]; then
+            python3 update_tag_index.py
+          elif [ -f meta/update_tag_index.py ]; then
+            python3 meta/update_tag_index.py
+          else
+            echo "WARNING: update_tag_index.py not found in repo root or meta/. Skipping tag index update."
+          fi
 
       - name: Rebuild Tag Map after Autoscan
         run: |
@@ -55,7 +61,7 @@ jobs:
           # Check for any changes (pulse + docs + meta, etc.)
           if [[ -n "$(git status --porcelain)" ]]; then
             echo "Changes detected, committing…"
-            git add pulse docs meta || true
+            git add pulse meta docs || true
             git commit -m "Auto Φ-trace scan + Tag Map rebuild"
             git push
           else
