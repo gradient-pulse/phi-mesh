@@ -5,9 +5,9 @@
 
 ---
 
-## 📡 RGPx Labs Europe
+## 📡 RGPx Labs
 
-We are launching **RGPx Labs Europe** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to industrial bottlenecks (chips, wind, and beyond).  
+We are launching **RGPx Labs** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to industrial bottlenecks (chips, wind, and beyond).  
 
 RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.  
 
