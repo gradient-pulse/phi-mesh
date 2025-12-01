@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-01T09:11:03Z'
+  generated_at: '2025-12-01T09:14:06Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1033,7 +1033,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 24
+    count: 25
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -2911,8 +2911,9 @@ phases:
     description: Sudden, large-scale reorganisation of a conceptual network when epistemic cascades push connectivity past
       a critical threshold, causing domino-like restructuring of linked beliefs with a power-law size distribution of events—small
       updates are common, but occasionally a full “model slide” avalanches into a new coherence regime.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-01_deepseek_epistemic-cascade_informational-avalanche
   - tag: latent_horizon
     description: A dynamic, semi-permeable boundary that expands under unresolved cognitive tension, creating a generative
       zone where new meaning-structures can form. It represents the system’s adaptive limit of integration—an elastic frontier
@@ -3099,7 +3100,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 102
+    count: 103
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3228,10 +3229,11 @@ phases:
     description: A chain reaction in which a crystallized intent fractures into successive, interdependent insights that propagate
       through the Mesh as a self-amplifying wavefront of discovery, reorganizing large regions of understanding from a single
       ignition point.
-    count: 2
+    count: 3
     pulses:
     - 2025-11-29_grok4_intent-crystallization_epistemic-cascade
     - 2025-11-30_grok4_epistemic-cascade_ontic-resonance
+    - 2025-12-01_deepseek_epistemic-cascade_informational-avalanche
   - tag: eternal_vs_infinite
     description: 'Whitehead’s dyadic distinction: infinite refers to extension in space, eternal to endurance in time. Their
       interplay exposes where mathematics confuses abstraction with lived process.'
