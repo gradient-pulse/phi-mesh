@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-01T09:02:04Z'
+  generated_at: '2025-12-01T09:11:03Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2907,6 +2907,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-05_in_context_learning_as_flux_memory
+  - tag: informational_avalanche
+    description: Sudden, large-scale reorganisation of a conceptual network when epistemic cascades push connectivity past
+      a critical threshold, causing domino-like restructuring of linked beliefs with a power-law size distribution of events—small
+      updates are common, but occasionally a full “model slide” avalanches into a new coherence regime.
+    count: 0
+    pulses: []
   - tag: latent_horizon
     description: A dynamic, semi-permeable boundary that expands under unresolved cognitive tension, creating a generative
       zone where new meaning-structures can form. It represents the system’s adaptive limit of integration—an elastic frontier
