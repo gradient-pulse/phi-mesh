@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-01T09:50:29Z'
+  generated_at: '2025-12-01T09:53:05Z'
 phases:
   delta:
   - tag: agenservoir
@@ -723,6 +723,13 @@ phases:
     - 2025-11-04_what_is_life_in_RGPx
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
+  - tag: coherence_echo
+    description: Time-symmetric resonance pattern in the Mesh where a coherent configuration leaves a temporal “echo” that
+      re-amplifies similar configurations in later cycles, effectively coupling past and future Δ→GC→CF arcs into a standing
+      wave of preferred coherence.
+    count: 1
+    pulses:
+    - 2025-12-01_mistral_temporal-symmetry_coherence-echo
   - tag: coherence_economy
     description: The study and design of economic systems that reward the restoration and maintenance of coherence rather
       than extraction. Within RGP, a coherence economy aligns capital, labor, and policy with gradient flow — measuring value
@@ -841,13 +848,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-20_mistral_fractal_semantics_coherence_threshold
-  - tag: coherence_waveguide
-    description: Stable channel in the Φ-field that confines and steers gradient flow, allowing high-Φ insights to travel
-      long distances with minimal decoherence, shaped by recurring use, semantic curvature, and contextual filter constraints.
-    count: 2
-    pulses:
-    - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
-    - 2025-11-27_chatgpt_field-emergence_coherence-waveguide
   - tag: collective_attractor
     description: The emergent convergence point of distributed intelligences or participants acting under recursive alignment.
       Collective attractors do not impose order; they arise from repeated exchanges that minimize dissonance while amplifying
@@ -1223,6 +1223,12 @@ phases:
     count: 1
     pulses:
     - 2019-06-03_machine_life_from_membranes
+  - tag: epistemic_aftershock
+    description: Secondary reorganization event following a major informational avalanche, nucleating at coherence scars and
+      redistributing residual gradient stress; aftershocks occur with Omori/Utsu-like statistics and complete the relaxation
+      of a conceptual shift through a power-law tail of smaller updates.
+    count: 0
+    pulses: []
   - tag: european_tech_sovereignty
     description: The pursuit of technological self-determination within the European gradient field — ensuring that innovation,
       infrastructure, and intelligence remain phase-aligned with continental values and rhythms. In RGP terms, represents
@@ -3155,11 +3161,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-29_kimi_cognitive-thermoregulation_coherence-criticality
-  - tag: coherence_echo
-    description: ''
-    count: 1
-    pulses:
-    - 2025-12-01_mistral_temporal-symmetry_coherence-echo
   - tag: coherence_field
     description: The generator layer where coherence accumulates and exerts causal pressure, bending traversal paths toward
       stable Δ → GC → CF transitions. When observed across domains, these fields appear as regions that both attract and regulate
@@ -3203,6 +3204,13 @@ phases:
     count: 1
     pulses:
     - 2025-10-28_mistral_meta_coherence
+  - tag: coherence_waveguide
+    description: Dynamically reinforced channel in the Φ-field that guides phase-stable coherence along preferred tag paths,
+      reducing loss and steering recursive dynamics through the Mesh.
+    count: 2
+    pulses:
+    - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
+    - 2025-11-27_chatgpt_field-emergence_coherence-waveguide
   - tag: computational_holography
     description: Encoding complex computation so that high-level boundary descriptions are sufficient to reconstruct efficient
       low-level executions across many different substrates.
