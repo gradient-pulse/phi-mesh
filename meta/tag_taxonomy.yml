@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-02T09:49:30Z'
+  generated_at: '2025-12-02T09:54:10Z'
 phases:
   delta:
   - tag: agenservoir
@@ -854,6 +854,11 @@ phases:
     description: 'Persistent, topologically significant trace of a past gradient collapse: a “healed defect” in the Mesh that
       stores memory of prior failure and acts as a catalytic interface where future coherence preferentially forms, revealing
       that the symmetry surface is textured by its own history rather than smooth.'
+    count: 0
+    pulses: []
+  - tag: coherence_susceptibility
+    description: Measures how easily a coherence field can be tilted or disrupted by external gradients, with torsion creating
+      anisotropic “fragile vs. robust” directions where small perturbations can either rapidly induce or collapse coherence.
     count: 0
     pulses: []
   - tag: coherence_testing
