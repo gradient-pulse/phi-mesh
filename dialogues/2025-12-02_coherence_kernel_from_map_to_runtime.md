@@ -247,3 +247,5 @@ kernel_call:
     diagnostics:
       phi_exec: 1.00                       # measured execution ratio
       notes: "coherence preserved across invocation boundary"
+```
+(Illustrative schema only — future pulses are free to extend, simplify, or replace it as the execution layer matures.)
