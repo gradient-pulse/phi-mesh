@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-02T10:12:50Z'
+  generated_at: '2025-12-02T10:29:39Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3542,6 +3542,12 @@ phases:
     pulses:
     - 2025-09-15_scarce_raw_turbulence_data
     - 2025-11-07_eddy_memory_prediction
+  - tag: kernel_execution_signature
+    description: Runtime trace of a coherence_kernel invocation, expressed as the execution coherence ratio Φ_exec = Φ_kernel
+      / Φ_ambient. Φ_exec ≈ 1.00 indicates that the kernel call preserved invariant-level coherence across thecoupling boundary,
+      providing a measurable signature that the kernel acted as an active compiler rather than a passive lookup.
+    count: 0
+    pulses: []
   - tag: kimi_deepthinking
     description: Model providing high-resolution Φ-trace and CF-level recursion analysis.
     count: 1
