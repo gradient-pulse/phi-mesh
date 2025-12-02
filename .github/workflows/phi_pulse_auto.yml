@@ -25,20 +25,42 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install pyyaml
+          fi
 
       - name: Run Φ-pulse predictor (Δτ+7 echo forecast)
         run: |
           python predictors/phi_pulse/phi_pulse.py echo-forecast
 
-      - name: Commit and push new pulses (if any)
+      - name: Update Tag Index
+        run: |
+          echo "Updating tag index…"
+          if [ -f update_tag_index.py ]; then
+            python3 update_tag_index.py
+          elif [ -f meta/update_tag_index.py ]; then
+            python3 meta/update_tag_index.py
+          else
+            echo "WARNING: update_tag_index.py not found; skipping."
+          fi
+
+      - name: Rebuild Tag Map
+        run: |
+          python3 generate_graph_data.py
+          echo "Tag Map regenerated after Φ-pulse predictor."
+
+      - name: Commit and push new pulses / graph (if any)
         run: |
           git config user.name "phi-pulse-bot"
           git config user.email "phi-pulse-bot@users.noreply.github.com"
-          if [[ -n "$(git status --porcelain pulse)" ]]; then
-            git add pulse
-            git commit -m "Auto Φ-pulse update (Δτ+7 echo forecast)"
+
+          # Look for changes in pulses, meta, docs
+          if [[ -n "$(git status --porcelain pulse meta docs)" ]]; then
+            git add pulse meta docs
+            git commit -m "Auto Φ-pulse update (Δτ+7 echo forecast + Tag Map rebuild)"
             git push
           else
-            echo "No pulse changes to commit."
+            echo "No pulse or graph changes to commit."
           fi
