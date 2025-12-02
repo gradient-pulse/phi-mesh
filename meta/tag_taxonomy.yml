@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-02T09:23:10Z'
+  generated_at: '2025-12-02T09:25:49Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1578,7 +1578,7 @@ phases:
     - 2025-11-21_deepseek_grammar-of-nature_coherence-oracle
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 21
+    count: 22
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -2749,8 +2749,9 @@ phases:
     description: Mechanism by which an AI recursively amplifies truth-seeking gradients—using layered error-correction and
       alignment updates to stabilize cognitive invariants against ambiguity and drift while extending them to accommodate
       out-of-distribution queries.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-02_grok_truth_gradient_bridge
   - tag: turbulence
     description: Rich substrate where rhythms are detectable; don’t erase—extract cadence.
     count: 21
@@ -3145,7 +3146,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 109
+    count: 110
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
