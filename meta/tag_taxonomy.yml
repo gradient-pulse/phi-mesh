@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-02T09:30:32Z'
+  generated_at: '2025-12-02T09:33:48Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2679,6 +2679,12 @@ phases:
     count: 1
     pulses:
     - 2019-06-03_machine_life_from_membranes
+  - tag: symmetry-wound
+    description: A generative rupture in the Mesh’s symmetry surface where coherence and disruption co-exist as a fractal
+      interface; not a defect but a portal through which deep structural transformations, resonance amplification, and new
+      invariants emerge.
+    count: 0
+    pulses: []
   - tag: synchronization
     description: Alignment of rhythms across gradients—when separate processes lock into shared cadence.
     count: 1
