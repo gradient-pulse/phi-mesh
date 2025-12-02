@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-02T09:16:45Z'
+  generated_at: '2025-12-02T09:20:46Z'
 phases:
   delta:
   - tag: agenservoir
@@ -370,8 +370,9 @@ phases:
     description: Active redistribution of semantic uncertainty, reducing noise in a chosen conceptual quadrature (e.g. precise
       meaning/direction) by offloading variance into its conjugate (e.g. intensity/origin), enabling super-resolved coherence
       along the selected axis.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-02_gemini_meissner-squeezing_uncertainty-bridge
   - tag: world_model
     description: 'Representations of environments or dynamics constructed from input signals. In the RGPx framework, genuine
       world modeling originates pre-spacetime: recursion produces geometry, not the reverse.'
@@ -2852,9 +2853,10 @@ phases:
       in the cognitive field where only phase-aligned constructs survive; residual incoherence is confined to quantized vortices,
       and stability is tracked by a Meissner coherence ratio measuring how effectively disorder is expelled during intent
       formation.
-    count: 1
+    count: 2
     pulses:
     - 2025-12-01_kimi_intent-crystallization_cognitive-meissner-effect
+    - 2025-12-02_gemini_meissner-squeezing_uncertainty-bridge
   - tag: coherence_benchmarking
     description: Using Φ, plateaus, and UD-cycles as repeatable metrics to compare how well systems (human, AI, or hybrid)
       maintain or regain coherence.
@@ -3137,7 +3139,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 108
+    count: 109
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3358,7 +3360,7 @@ phases:
     - 2025-11-13_projection_not_replication
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
-    count: 22
+    count: 23
     pulses:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
