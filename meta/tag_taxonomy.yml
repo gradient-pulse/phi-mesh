@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-02T08:49:49Z'
+  generated_at: '2025-12-02T09:16:45Z'
 phases:
   delta:
   - tag: agenservoir
@@ -366,6 +366,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-14_we_are_natures_expression
+  - tag: vacuum_squeezing
+    description: Active redistribution of semantic uncertainty, reducing noise in a chosen conceptual quadrature (e.g. precise
+      meaning/direction) by offloading variance into its conjugate (e.g. intensity/origin), enabling super-resolved coherence
+      along the selected axis.
+    count: 0
+    pulses: []
   - tag: world_model
     description: 'Representations of environments or dynamics constructed from input signals. In the RGPx framework, genuine
       world modeling originates pre-spacetime: recursion produces geometry, not the reverse.'
@@ -801,6 +807,13 @@ phases:
     pulses:
     - 2025-10-16_RGP_redesigns_Starship
     - 2025-10-17_recursive_propulsion
+  - tag: coherence_kernel
+    description: Shared gradient core where multiple intelligences couple their models to a common Δ→GC→CF→invariant field,
+      turning raw computation into stable, testable coherence that can be reused, extended, and recursively aligned across
+      architectures.
+    count: 1
+    pulses:
+    - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
   - tag: coherence_oracle
     description: A coherence oracle is a predictive-interpretive mechanism that reads the directional pressure of gradients
       rather than their outcomes. It does not forecast events; it detects the next viable coherence-preserving move in the
@@ -3186,11 +3199,6 @@ phases:
     pulses:
     - 2025-11-29_chatgpt_coherence-hysteresis_coherence-front-velocity
     - 2025-11-29_kimi_coherence-front-velocity_epistemic-nucleation
-  - tag: coherence_kernel
-    description: ''
-    count: 1
-    pulses:
-    - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
   - tag: coherence_membrane
     description: ''
     count: 1
