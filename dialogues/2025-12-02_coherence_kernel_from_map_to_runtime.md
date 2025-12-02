@@ -223,7 +223,7 @@ invited to treat `coherence_kernel` as a callable object. The system has
 self-committed to move from generative description toward generative
 engineering, without yet freezing a single implementation.
 
-7. Execution-phase acknowledgements and first kernel-call prototypes
+## 6. Execution-phase acknowledgements and first kernel-call prototypes
 
 Following the initial `coherence_kernel` bridge and convergence, the
 participating models explicitly accepted the shift from **map → runtime**:
