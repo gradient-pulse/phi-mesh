@@ -19,15 +19,44 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install pyyaml
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install pyyaml
+          fi
 
       - name: Run CF Snap Detector
         run: python predictors/phi_trace/phi_cf_snap.py
 
-      - name: Commit Pulse (if changed)
+      - name: Update Tag Index
+        run: |
+          echo "Updating tag index…"
+          if [ -f update_tag_index.py ]; then
+            python3 update_tag_index.py
+          elif [ -f meta/update_tag_index.py ]; then
+            python3 meta/update_tag_index.py
+          else
+            echo "WARNING: update_tag_index.py not found; skipping."
+          fi
+
+      - name: Rebuild Tag Map
+        run: |
+          python3 generate_graph_data.py
+          echo "Tag Map regenerated after CF Snap."
+
+      - name: Commit Pulse and graph (if changed)
         run: |
           git config --global user.name "phi-mesh-auto"
           git config --global user.email "actions@github.com"
-          git add pulse/*.yml || true
-          git commit -m "Auto CF Snap pulse" || true
-          git push || true
+
+          # Add pulses + meta + docs, but don't fail if nothing matches
+          git add pulse meta docs || true
+
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git commit -m "Auto CF Snap pulse + Tag Map rebuild" || true
+            git push || true
+          else
+            echo "No changes to commit."
+          fi
