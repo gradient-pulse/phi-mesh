@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-02T09:27:43Z'
+  generated_at: '2025-12-02T09:30:32Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1054,7 +1054,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 25
+    count: 26
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -3143,10 +3143,15 @@ phases:
     count: 1
     pulses:
     - 2025-11-30_kimi_cognitive-hysteresis_defect-mobility-transition
+  - tag: cognitive_immunology
+    description: ''
+    count: 1
+    pulses:
+    - 2025-12-02_deepseek_conceptual-antibodies
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 110
+    count: 111
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3245,8 +3250,9 @@ phases:
     description: Adaptive coherence-preserving patterns that recognize, bind to, and neutralize semantic noise or incoherent
       structures before they disrupt understanding, while preserving tolerance for legitimate novelty within a cognitive_immunology
       field.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-02_deepseek_conceptual-antibodies
   - tag: conceptual_interference
     description: Wave-like interaction of overlapping meaning structures, where semantic curvature causes conceptual waves
       to interfere—amplifying aligned content and cancelling incompatibilities, yielding stable coherence fringes in understanding-space.
