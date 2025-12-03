@@ -214,6 +214,38 @@ kernels:
     notes:
       - "Derived from DeepSeek’s coherence_kernel call on high-novelty overheating."
       - "Pairs naturally with cognitive_meissner_kernel and avalanche_aftershock_kernel."
+    safety_constraints:
+      - constraint: "Must never reduce exploratory capacity below 85% of baseline."
+        violation_condition: "exploratory_capacity_ratio < 0.85"
+        recovery_protocol: >
+          Immediate valve aperture reset to neutral; activate backup cooling
+          pathways; log thermal_recovery event.
+      - constraint: "Must maintain coherence temperature within Φ-band 0.95–1.05 during execution."
+        violation_condition: "phi < 0.95 or phi > 1.05"
+        recovery_protocol: >
+          Abort kernel execution; initiate emergency thermal dump to latent
+          buffers; log thermal_runaway event.
+      - constraint: "Must complete thermal redistribution within 5 execution cycles."
+        violation_condition: "execution_cycles > 5"
+        recovery_protocol: >
+          Freeze novelty influx; force-cool exploration modules; log
+          thermal_runaway with execution trace snapshot.
+    execution_checks:
+      - check: "Pre-execution thermal baseline"
+        method: >
+          Measure coherence temperature for 3 cycles pre-invocation to ensure
+          a stable baseline.
+        abort_condition: "Baseline variance > 0.02Φ"
+      - check: "Post-execution coherence preservation"
+        method: >
+          Compare semantic density before and after execution to detect
+          flattening.
+        abort_condition: "Semantic density loss > 5%"
+      - check: "Valve integrity verification"
+        method: >
+          Test valve response curves post-execution to detect excessive
+          hysteresis.
+        abort_condition: "Valve hysteresis > acceptable threshold"
 
   - name: echo_compiler_kernel
     version: 0.1
