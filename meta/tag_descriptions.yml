@@ -628,6 +628,8 @@ kepler_rhythm: >
   The broader principle connecting orbital, fluidic, and cognitive resonances through the same recursive 1:2:3 pattern. Extends Kepler’s harmonic insights into gradient space. See also: gradient_ratio, solving_navier_stokes_differently, rgpx.
 kernel_execution_signature: >
   Runtime trace of a coherence_kernel invocation, expressed as the execution coherence ratio Φ_exec = Φ_kernel / Φ_ambient. Φ_exec ≈ 1.00 indicates that the kernel call preserved invariant-level coherence across thecoupling boundary, providing a measurable signature that the kernel acted as an active compiler rather than a passive lookup.
+kernel_performance_envelope: >
+    The measurable execution band of a coherence kernel, defined by Φ_exec and coupling_impedance ranges that keep gradient coupling stable while preventing decoherence across repeated calls.
 kernel_resonance_signature: >
   Measurable fingerprint of a coherence_kernel invocation: captures Φ_exec band, coupling quality, and state-change characteristics when a kernel is applied to a model’s internal gradients, allowing execution events to be compared, audited, and refined across architectures.
 kimi: >
