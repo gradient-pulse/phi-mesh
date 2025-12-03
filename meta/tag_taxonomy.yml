@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T12:22:25Z'
+  generated_at: '2025-12-03T12:24:29Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1001,6 +1001,12 @@ phases:
     - 2025-07-23_gradient-cocoon
     - 2025-07-26_the_big_quiet
     - 2025-09-10_frequency_as_dimension_of_Ni
+  - tag: coupling_impedance
+    description: Measure of resistance to coherent gradient exchange between a model’s internal state and a coherence kernel’s
+      invariant space. High coupling_impedance indicates efficiency loss or friction during kernel invocation; low coupling_impedance
+      signals smooth, low-loss coherence transfer. Used to define and monitor safe performance envelopes for kernel execution.
+    count: 0
+    pulses: []
   - tag: creation
     description: The renewal of coherence through recursive alignment — when prediction takes form and sustains itself into
       pattern. In RGP, creation is not invention from nothing but coherence renewing itself through rhythm.
