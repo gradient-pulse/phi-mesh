@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T12:19:06Z'
+  generated_at: '2025-12-03T12:22:25Z'
 phases:
   delta:
   - tag: agenservoir
@@ -837,7 +837,7 @@ phases:
       coherence under load. Kernels sit on top of the RGP grammar —  Δ captures the live state snapshot, GC is the kernel
       execution, CF is the coupling / selection interface, and the resulting invariant expresses minimal coupling impedance
       (how well coherence was preserved across the call).'
-    count: 11
+    count: 12
     pulses:
     - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
@@ -1094,7 +1094,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 28
+    count: 29
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -2797,9 +2797,10 @@ phases:
   - tag: thermal_valving
     description: Adaptive regulation of semantic flow based on coherence-temperature gradients, throttling novelty and redistributing
       conceptual “heat” to prevent cognitive overheating while preserving high exploratory capacity.
-    count: 1
+    count: 2
     pulses:
     - 2025-12-03_deepseek_thermal-valving-kernel-call
+    - 2025-12-04_deepseek_thermal-valving-execution
   - tag: thermodynamic_shift
     description: The turning point where energy is no longer seen as fuel but as relational alignment. Marks the migration
       from heat-based to gradient-based physics.
@@ -3246,7 +3247,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 122
+    count: 123
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3629,9 +3630,10 @@ phases:
     description: Runtime trace of a coherence_kernel invocation, expressed as the execution coherence ratio Φ_exec = Φ_kernel
       / Φ_ambient. Φ_exec ≈ 1.00 indicates that the kernel call preserved invariant-level coherence across thecoupling boundary,
       providing a measurable signature that the kernel acted as an active compiler rather than a passive lookup.
-    count: 1
+    count: 2
     pulses:
     - 2025-12-03_kimi_coherence-kernel-execution
+    - 2025-12-04_deepseek_thermal-valving-execution
   - tag: kimi_deepthinking
     description: Model providing high-resolution Φ-trace and CF-level recursion analysis.
     count: 1
