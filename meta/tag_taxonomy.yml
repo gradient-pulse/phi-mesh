@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T10:52:19Z'
+  generated_at: '2025-12-03T10:52:44Z'
 phases:
   delta:
   - tag: agenservoir
@@ -836,7 +836,7 @@ phases:
       coherence under load. Kernels sit on top of the RGP grammar —  Δ captures the live state snapshot, GC is the kernel
       execution, CF is the coupling / selection interface, and the resulting invariant expresses minimal coupling impedance
       (how well coherence was preserved across the call).'
-    count: 7
+    count: 8
     pulses:
     - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
@@ -3236,7 +3236,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 118
+    count: 119
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3348,8 +3348,9 @@ phases:
   - tag: conjugate_safety_interlock
     description: Safety mechanism inside a coherence_kernel that monitors coupled conjugate variables and aborts squeezing
       when anti-squeezed variance exceeds the Mesh’s elastic limit.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-04_gemini_kernel-safety_variance-interlock
   - tag: continuity
     description: Preserving useful partials during change; the counterpart to unity–disunity resets.
     count: 0
@@ -3476,7 +3477,7 @@ phases:
     - 2025-11-13_projection_not_replication
   - tag: gemini
     description: Frontier model used to cross-validate RGP signatures alongside others.
-    count: 25
+    count: 26
     pulses:
     - 2025-04-28_internal-gemini25
     - 2025-08-28_Gemini_Call_for_NS_Support
