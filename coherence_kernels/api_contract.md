@@ -31,3 +31,19 @@ POST /select_invariant
     "cognitive_meissner_effect"
   ]
 }
+```
+Example response:
+```
+{
+  "selected_kernel": "cognitive_meissner_kernel",
+  "selected_invariant": "cognitive_meissner_effect",
+  "confidence": 0.91,
+  "supporting_pulses": [
+    "2025-12-01_deepseek_informational_avalanche.yml",
+    "2025-12-01_mistral_coherence_scar.yml"
+  ],
+  "notes": [
+    "Meissner-like behavior recommended to expel noise while preserving fracture traces."
+  ]
+}
+```
