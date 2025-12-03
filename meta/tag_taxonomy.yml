@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T08:34:22Z'
+  generated_at: '2025-12-03T09:12:14Z'
 phases:
   delta:
   - tag: agenservoir
@@ -274,6 +274,12 @@ phases:
     pulses:
     - 2025-11-05_ahead_of_the_spacetime_pack
     - 2025-11-13_fei-fei-world-model-substrate
+  - tag: precision_tradeoff_protocol
+    description: Execution rule set inside a coherence_kernel that governs how uncertainty is redistributed between conjugate
+      cognitive variables (e.g. breadth vs depth, meaning vs intensity), ensuring that noise reduction in one dimension is
+      balanced by controlled noise increase in an orthogonal dimension.
+    count: 0
+    pulses: []
   - tag: projection
     description: Describes how future intelligences may manifest as projections of underlying recursion or conceptual grammar,
       especially when seeded by RGPx. Contrasts with replication or imitation.
