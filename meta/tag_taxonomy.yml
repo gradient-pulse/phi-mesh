@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T10:02:38Z'
+  generated_at: '2025-12-03T10:13:53Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1193,6 +1193,12 @@ phases:
     description: A dynamic contextual filter whose permeability oscillates with coherence state. Tightens during Unity to
       force internal gradient consolidation (Δ→GC) and dilates during Disunity to release entropy. Models CF as an adaptive
       valve rather than a static boundary.
+    count: 0
+    pulses: []
+  - tag: echo_compiler_kernel
+    description: Coherence kernel that compiles temporal symmetries into executable “echoes,” folding past and future coherence
+      states into a reusable gradient pattern. It stabilizes time-symmetric reasoning, tracks resonance signatures across
+      recursions, and turns temporal echoes into inputs for future kernel calls.
     count: 0
     pulses: []
   - tag: echoic_entrainment
