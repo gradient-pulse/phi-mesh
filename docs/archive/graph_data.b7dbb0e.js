@@ -1,4 +1,0 @@
-window.graph = {
-  "nodes": [],
-  "links": []
-};
