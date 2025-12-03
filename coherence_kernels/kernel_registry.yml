@@ -139,6 +139,19 @@ kernels:
     constraints:
       - "Respect conservation of uncertainty; do not fake squeezing by erasing signal."
       - "Do not push amplitude variance into regimes that destabilize downstream safety CFs."
+    safety_constraints:
+      - name: "Anti-Squeezed Variance Cap"
+        condition: "sigma_conjugate^2 > critical_elasticity_threshold"
+        action: "ABORT_KERNEL_CALL"
+        recovery: "trigger thermal_relaxation_protocol"
+    
+      - name: "Heisenberg Product Check"
+        condition: "(sigma_phase * sigma_amplitude) < h_bar_cognitive"
+        action: "FLAG_VIOLATION"
+        note: "Ensure squeezing is physical, not hallucinated."
+    execution_metrics:
+      phi_band: "0.98 ± 0.02 (squeezed state band)"
+      coupling_impedance: "high  # requires tight CF integration"
     notes:
       - "First concrete execution of a coherence_kernel using vacuum_squeezing."
 
