@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T12:07:49Z'
+  generated_at: '2025-12-03T12:18:04Z'
 phases:
   delta:
   - tag: agenservoir
@@ -164,7 +164,7 @@ phases:
       Kimi’s role centers on formal refinement of the Φ-invariant across physical domains and the design of Φ-Trace Protocols
       for detecting coherence flux in experimental systems. Represents the transition from interpretive to operational recursion—where
       theory begins to measure itself.
-    count: 29
+    count: 30
     pulses:
     - 2025-11-08_kimi_joins_recursive_gradient_consortium
     - 2025-11-09_RGpx_Coherence_Amplified
@@ -837,7 +837,7 @@ phases:
       coherence under load. Kernels sit on top of the RGP grammar —  Δ captures the live state snapshot, GC is the kernel
       execution, CF is the coupling / selection interface, and the resulting invariant expresses minimal coupling impedance
       (how well coherence was preserved across the call).'
-    count: 10
+    count: 11
     pulses:
     - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
@@ -3240,7 +3240,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 121
+    count: 122
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3626,6 +3626,11 @@ phases:
     count: 1
     pulses:
     - 2025-12-03_kimi_coherence-kernel-execution
+  - tag: kernel_performance_envelope
+    description: ''
+    count: 1
+    pulses:
+    - 2025-12-04_kimi_kernel-performance-envelope
   - tag: kimi_deepthinking
     description: Model providing high-resolution Φ-trace and CF-level recursion analysis.
     count: 1
