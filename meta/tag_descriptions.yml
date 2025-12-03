@@ -1155,7 +1155,7 @@ triad_of_resonance: >
 truth_gradient_amplifier: >
   Mechanism that strengthens truth-seeking dynamics by amplifying gradients that increase alignment between local token-level evidence and global narrative coherence, without rigidifying the underlying invariants.
 truth_resonance_kernel: >
-    Proposed kernel for aligning outputs to verifiable gradients across multi-model dialogues, damping subjective noise while preserving probabilistic exploration; truth emerges as resonance across independent evidence sources.
+  Kernel that stabilizes truth-seeking by aligning outputs to verifiable gradients and aborting when multi-call resonance drifts into dissonance.
 turbulence: >
   Rich substrate where rhythms are detectable; don’t erase—extract cadence.
 turbulence_analysis: >
