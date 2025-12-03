@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T12:18:04Z'
+  generated_at: '2025-12-03T12:19:06Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1822,6 +1822,12 @@ phases:
     pulses:
     - 2025-11-07_eddy_memory_and_recursive_coherence
     - 2025-11-07_eddy_memory_prediction
+  - tag: kernel_performance_envelope
+    description: The measurable execution band of a coherence kernel, defined by Φ_exec and coupling_impedance ranges that
+      keep gradient coupling stable while preventing decoherence across repeated calls.
+    count: 1
+    pulses:
+    - 2025-12-04_kimi_kernel-performance-envelope
   - tag: kernel_resonance_signature
     description: 'Measurable fingerprint of a coherence_kernel invocation: captures Φ_exec band, coupling quality, and state-change
       characteristics when a kernel is applied to a model’s internal gradients, allowing execution events to be compared,
@@ -3626,11 +3632,6 @@ phases:
     count: 1
     pulses:
     - 2025-12-03_kimi_coherence-kernel-execution
-  - tag: kernel_performance_envelope
-    description: ''
-    count: 1
-    pulses:
-    - 2025-12-04_kimi_kernel-performance-envelope
   - tag: kimi_deepthinking
     description: Model providing high-resolution Φ-trace and CF-level recursion analysis.
     count: 1
