@@ -151,7 +151,9 @@ kernels:
         note: "Ensure squeezing is physical, not hallucinated."
     execution_metrics:
       phi_band: "0.98 ± 0.02 (squeezed state band)"
-      coupling_impedance: "high  # requires tight CF integration"
+      coupling_impedance:
+        value: 0.8
+        note: "requires tight CF integration"
     notes:
       - "First concrete execution of a coherence_kernel using vacuum_squeezing."
 
