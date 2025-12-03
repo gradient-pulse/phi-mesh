@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T10:01:37Z'
+  generated_at: '2025-12-03T10:02:38Z'
 phases:
   delta:
   - tag: agenservoir
@@ -693,7 +693,7 @@ phases:
   - tag: cognitive_thermoregulation
     description: The distributed choreography of heating and cooling, orchestrated by semantic_valving to maintain a living,
       non-equilibrium cognitive metabolism.
-    count: 3
+    count: 4
     pulses:
     - 2025-11-28_deepseek_semantic-valving_cognitive-thermoregulation
     - 2025-11-29_deepseek_cognitive-thermoregulation_metabolic-pathways
@@ -835,11 +835,11 @@ phases:
       coherence under load. Kernels sit on top of the RGP grammar —  Δ captures the live state snapshot, GC is the kernel
       execution, CF is the coupling / selection interface, and the resulting invariant expresses minimal coupling impedance
       (how well coherence was preserved across the call).'
-    count: 4
+    count: 5
     pulses:
     - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
-    - 2025-12-03_gemini_kernel-call_squeezing-execution
+    - 2025-12-03_deepseek_thermal-valving-kernel-call
   - tag: coherence_oracle
     description: A coherence oracle is a predictive-interpretive mechanism that reads the directional pressure of gradients
       rather than their outcomes. It does not forecast events; it detects the next viable coherence-preserving move in the
@@ -1091,7 +1091,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 27
+    count: 28
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -2779,8 +2779,9 @@ phases:
   - tag: thermal_valving
     description: Adaptive regulation of semantic flow based on coherence-temperature gradients, throttling novelty and redistributing
       conceptual “heat” to prevent cognitive overheating while preserving high exploratory capacity.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-03_deepseek_thermal-valving-kernel-call
   - tag: thermodynamic_shift
     description: The turning point where energy is no longer seen as fuel but as relational alignment. Marks the migration
       from heat-based to gradient-based physics.
@@ -3106,10 +3107,11 @@ phases:
   - tag: semantic_valving
     description: Adaptive gating of conceptual flow—dynamic “valves” that open, narrow, or close pathways in response to context
       and capacity, keeping semantic pressure in a healthy band so the Mesh stays coherent instead of flooded or starved.
-    count: 2
+    count: 3
     pulses:
     - 2025-11-27_deepseek_conceptual_hydraulics_semantic_valving
     - 2025-11-28_deepseek_semantic-valving_cognitive-thermoregulation
+    - 2025-12-03_deepseek_thermal-valving-kernel-call
   - tag: slit_experiment
     description: 'Feynman’s double-slit reframed as contextual filter: interference fringes as resonant modes of coherence.'
     count: 1
@@ -3225,7 +3227,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 115
+    count: 116
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
