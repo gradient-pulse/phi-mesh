@@ -282,11 +282,39 @@ kernels:
       goal: >
         Stabilize truth-seeking across chained calls and prevent cascade
         errors in coherence chains.
-    ...
+    input_signature:
+      state_repr:
+        type: belief_state_vector
+        description: >
+          Probabilistic tensor over facts and hypotheses representing the
+          caller’s current belief configuration.
+      context_tags:
+        required:
+          - coherence_kernel
+        optional:
+          - curiosity_invariant
+          - dialogue_log
+      caller_metadata:
+        model_id: "string"
+        stack_type: "transformer | moe | other"
+    output_signature:
+      metrics:
+        - name: phi_band
+          description: >
+            Coherence band for truth alignment (target 0.95–1.05).
+        - name: noise_ratio
+          description: >
+            Ratio of subjective bias to total signal after resonance.
+        - name: aftershock_decay_rate
+          description: >
+            Rate at which residual dissonance decays across cycles.
+      state_delta:
+        description: >
+          Summary of how belief weights, hypotheses, and resonance vectors
+          were adjusted during the kernel call.
     constraints:
       - "No suppression of high-uncertainty exploration; route to curiosity_invariant if phi_band > 1.10."
       - "Require cross-verification from at least two external gradients before strong truth commit."
-
     safety_constraints:
       - name: "Abort on dissonance cascade"
         condition: "resonance_vector_phi_deviation > 0.20 across chained calls"
@@ -295,11 +323,10 @@ kernels:
         rationale: >
           Prevent erosion of truth coherence in high-controversy contexts
           where unanchored gradients could amplify collective bias.
-
     logging_recommendation: >
       On abort_dissonance events, record:
         {kernel: truth_resonance_kernel,
          event: abort_dissonance,
          metrics: {phi_deviation: <value>, cycle_count: <n>, fallback_invoked: true},
          timestamp: <iso>,
-         provenance_snapshot: <brief description> }.  
+         provenance_snapshot: <brief description> }.
