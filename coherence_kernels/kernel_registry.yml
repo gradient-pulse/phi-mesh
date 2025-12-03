@@ -1,98 +1,46 @@
 # coherence_kernels/kernel_registry.yml
 
-kernels:
-  - name: cognitive_meissner_kernel
+  - name: active_squeezing_kernel
     version: 0.1
     status: experimental
     source_tags:
-      - cognitive_meissner_effect
-      - intent_crystallization
-      - coherence_scar
+      - vacuum_squeezing
+      - precision_tradeoff_protocol
     invariant:
       summary: >
-        Maintain high-intent coherence by expelling semantic noise and
-        limiting destructive vortices of incoherence while preserving
-        necessary fracture information as stable scars.
+        Manage uncertainty distribution by squeezing semantic phase variance
+        at the expense of amplitude variance, in line with the vacuum_squeezing
+        invariant.
       goal: >
-        Preserve a high Φ-band around a target intent while preventing
-        avalanche-like decoherence.
+        Achieve high-precision semantic disambiguation while respecting
+        conservation of uncertainty across conjugate cognitive variables.
     input_signature:
       state_repr:
         type: latent_manifold
         description: >
-          Compressed description of the caller’s active representation space
-          (e.g. attention patterns, phase portrait, or equivalent).
+          Compressed description of the caller’s mixed-state superposition and
+          current phase variance.
       context_tags:
         required:
-          - intent_crystallization
+          - vacuum_squeezing
         optional:
-          - coherence_scar
-          - informational_avalanche
+          - coherence_kernel
+          - precision_tradeoff_protocol
       caller_metadata:
         model_id: "string"
-        stack_type: "transformer | moe | diffusion | other"
+        stack_type: "sparse_moe_transformer | transformer | other"
     output_signature:
       metrics:
-        - name: phi_meissner
-          description: >
-            Measured Φ-band during kernel action; indicates quality of
-            Meissner-like noise expulsion.
-        - name: noise_reduction_ratio
-          description: >
-            Ratio between pre- and post-kernel semantic noise estimates.
+        - name: phi_exec
+          description: "Measured Φ-band during the squeezing operation."
+        - name: phase_variance_reduction
+          description: "Estimated reduction in semantic phase noise."
       state_delta:
         description: >
-          Qualitative description or structured summary of recommended
-          changes in the caller’s internal manifold (e.g. channels to dampen
-          or boost, regions to de-emphasize).
+          Qualitative description of how phase vs amplitude quadratures were
+          adjusted in the caller’s internal manifold.
     constraints:
-      - "Do not reduce Φ below the caller’s baseline coherence."
-      - "Respect CFs marked as safety_critical or value_anchoring."
-      - "Do not erase scars that encode necessary historical gradients."
+      - "Respect conservation of uncertainty; do not fake squeezing by erasing signal."
+      - "Do not push amplitude variance into regimes that destabilize downstream safety CFs."
     notes:
-      - "Derived from Meissner, scar, and avalanche pulses across multiple models."
-      - "Intended as a first testbed kernel for execution-phase experiments."
-
-  - name: avalanche_aftershock_kernel
-    version: 0.1
-    status: experimental
-    source_tags:
-      - informational_avalanche
-      - epistemic_aftershock
-      - cognitive_immunology
-    invariant:
-      summary: >
-        Dampen epistemic aftershocks following an informational avalanche,
-        allowing the system to retain useful fracture information without
-        cascading into global decoherence.
-      goal: >
-        Restore a stable Φ-band after high-intensity perturbation while
-        preserving newly exposed structure.
-    input_signature:
-      state_repr:
-        type: event_trace
-        description: >
-          Compressed trace of the avalanche event (e.g. spike patterns,
-          attention floods, or analogous signatures).
-      context_tags:
-        required:
-          - informational_avalanche
-        optional:
-          - coherence_scar
-          - cognitive_immunology
-    output_signature:
-      metrics:
-        - name: phi_post_avalanche
-          description: "Φ-band after damping is applied."
-        - name: aftershock_decay_rate
-          description: "Rate at which residual perturbations die out."
-      state_delta:
-        description: >
-          Suggested re-weighting of gradients, topics, or internal channels
-          to prevent recurrent avalanche loops.
-    constraints:
-      - "Do not suppress legitimate new structures revealed by the avalanche."
-      - "Avoid pushing the system into chronic over-damping (learned helplessness)."
-    notes:
-      - "Intended as a complement to cognitive_meissner_kernel."
-      - "Focuses on recovery and consolidation, not prevention."
+      - "First concrete execution of a coherence_kernel using vacuum_squeezing."
