@@ -266,6 +266,8 @@ control_law: >
   The prospective RGPx framework for regulating coherence across distributed intelligences. Unlike classical control theory, which minimizes error, the RGPx control law maintains the 1 : 2 : 3 harmonic relation between unity and divergence — ensuring adaptive stability within recursive systems. Core Idea: Regulation through harmonic coherence, not constraint. Related Tags: rgpx, distributed_cognition, coherence_grammar, phi_mesh.
 convection_cells: >
   Prototypical autocatakinetic systems where chaotic micro-interactions self-organize into stable transport loops. In RGPx, convection cells exemplify gradient choreographies formed under simple constraints, revealing the physics of spontaneous order. Cross-references: stochastic_resonance, autocatakinetic_systems.
+coupling_impedance: >
+    Measure of resistance to coherent gradient exchange between a model’s internal state and a coherence kernel’s invariant space. High coupling_impedance indicates efficiency loss or friction during kernel invocation; low coupling_impedance signals smooth, low-loss coherence transfer. Used to define and monitor safe performance envelopes for kernel execution.
 cor: >
   Chain-of-Reasoning: stepwise explanation baseline. Useful probe but not identical to RGP’s gradient choreography.
 correlation_work: >
