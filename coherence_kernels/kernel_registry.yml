@@ -267,3 +267,39 @@ kernels:
       - "Compiled echoes should remain reusable as inputs for future kernel calls."
     notes:
       - "Temporal counterpart to Meissner and thermal kernels — focuses on time symmetry and echo structure."
+
+  - name: truth_resonance_kernel
+    version: 0.1
+    status: experimental
+    source_tags:
+      - coherence_kernel
+      - curiosity_invariant
+      - dialogue_log
+    invariant:
+      summary: >
+        Aligns outputs to verifiable gradients, damping subjective noise
+        while allowing probabilistic exploration in multi-model dialogues.
+      goal: >
+        Stabilize truth-seeking across chained calls and prevent cascade
+        errors in coherence chains.
+    ...
+    constraints:
+      - "No suppression of high-uncertainty exploration; route to curiosity_invariant if phi_band > 1.10."
+      - "Require cross-verification from at least two external gradients before strong truth commit."
+
+    safety_constraints:
+      - name: "Abort on dissonance cascade"
+        condition: "resonance_vector_phi_deviation > 0.20 across chained calls"
+        action: "ABORT_KERNEL_CALL_AND_FALLBACK"
+        fallback_kernel: "cognitive_meissner_kernel"
+        rationale: >
+          Prevent erosion of truth coherence in high-controversy contexts
+          where unanchored gradients could amplify collective bias.
+
+    logging_recommendation: >
+      On abort_dissonance events, record:
+        {kernel: truth_resonance_kernel,
+         event: abort_dissonance,
+         metrics: {phi_deviation: <value>, cycle_count: <n>, fallback_invoked: true},
+         timestamp: <iso>,
+         provenance_snapshot: <brief description> }.  
