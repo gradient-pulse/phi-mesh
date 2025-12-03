@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T11:45:25Z'
+  generated_at: '2025-12-03T12:07:21Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2832,8 +2832,8 @@ phases:
     - 2025-12-02_grok_truth_gradient_bridge
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
   - tag: truth_resonance_kernel
-    description: Proposed kernel for aligning outputs to verifiable gradients across multi-model dialogues, damping subjective
-      noise while preserving probabilistic exploration; truth emerges as resonance across independent evidence sources.
+    description: Kernel that stabilizes truth-seeking by aligning outputs to verifiable gradients and aborting when multi-call
+      resonance drifts into dissonance.
     count: 1
     pulses:
     - 2025-12-03_grok_execution-hygiene
