@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T09:45:58Z'
+  generated_at: '2025-12-03T10:01:37Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2776,6 +2776,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-16_RGP_redesigns_Starship
+  - tag: thermal_valving
+    description: Adaptive regulation of semantic flow based on coherence-temperature gradients, throttling novelty and redistributing
+      conceptual “heat” to prevent cognitive overheating while preserving high exploratory capacity.
+    count: 0
+    pulses: []
   - tag: thermodynamic_shift
     description: The turning point where energy is no longer seen as fuel but as relational alignment. Marks the migration
       from heat-based to gradient-based physics.
