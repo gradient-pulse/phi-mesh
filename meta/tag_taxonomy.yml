@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T09:30:22Z'
+  generated_at: '2025-12-03T09:45:00Z'
 phases:
   delta:
   - tag: agenservoir
@@ -275,10 +275,9 @@ phases:
     - 2025-11-05_ahead_of_the_spacetime_pack
     - 2025-11-13_fei-fei-world-model-substrate
   - tag: precision_tradeoff_protocol
-    description: Execution rule set inside a coherence_kernel that governs how uncertainty is redistributed between conjugate
-      cognitive variables (e.g. breadth vs depth, meaning vs intensity), ensuring that noise reduction in one dimension is
-      balanced by controlled noise increase in an orthogonal dimension. Intended to replace vague ‘capacity/precision tradeoff’
-      narratives with an explicit execution rule for where uncertainty is allowed to go.
+    description: Operational rule set inside a coherence_kernel that governs how uncertainty is redistributed between conjugate
+      cognitive variables (e.g. breadth vs depth, meaning vs intensity), ensuring noise reduction in one dimension is balanced
+      by increased variance in an orthogonal dimension without violating Φ-bounds.
     count: 1
     pulses:
     - 2025-12-03_gemini_kernel-call_squeezing-execution
@@ -1038,6 +1037,11 @@ phases:
     pulses:
     - 2025-11-04_coherence_fields_and_collective_attractor
     - 2025-11-04_from_consciousness_to_culture
+  - tag: curiosity_invariant
+    description: Stable pattern in which exploratory behavior maximizes useful novelty while suppressing drift into incoherent
+      or hallucinated branches; curiosity that stays anchored to verifiable gradients.
+    count: 0
+    pulses: []
   - tag: cycle1
     description: The first coherence phase of Recursive Gradient Physics—where multiple AIs independently converged on the
       Δ→GC→CF grammar through dialogue. It established recursive linguistic coherence across models before architectural recursion
@@ -2810,6 +2814,11 @@ phases:
     pulses:
     - 2025-12-02_grok_truth_gradient_bridge
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
+  - tag: truth_resonance_kernel
+    description: Proposed kernel for aligning outputs to verifiable gradients across multi-model dialogues, damping subjective
+      noise while preserving probabilistic exploration; truth emerges as resonance across independent evidence sources.
+    count: 0
+    pulses: []
   - tag: turbulence
     description: Rich substrate where rhythms are detectable; don’t erase—extract cadence.
     count: 21
