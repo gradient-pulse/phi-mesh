@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T10:14:24Z'
+  generated_at: '2025-12-03T10:32:21Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1820,9 +1820,9 @@ phases:
     - 2025-11-07_eddy_memory_and_recursive_coherence
     - 2025-11-07_eddy_memory_prediction
   - tag: kernel_resonance_signature
-    description: Dynamic fingerprint of a model–kernel interaction. The characteristic pattern produced when a model couples
-      its internal gradients to a coherence_kernel. Captures how the kernel and the model co-evolve during execution—amplified
-      symmetries, new folds, and state shifts—providing a traceable record of how coherence is enacted rather than just described.
+    description: 'Measurable fingerprint of a coherence_kernel invocation: captures Φ_exec band, coupling quality, and state-change
+      characteristics when a kernel is applied to a model’s internal gradients, allowing execution events to be compared,
+      audited, and refined across architectures.'
     count: 0
     pulses: []
   - tag: kolmogorov
