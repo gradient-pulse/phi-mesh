@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T09:45:00Z'
+  generated_at: '2025-12-03T09:45:58Z'
 phases:
   delta:
   - tag: agenservoir
@@ -835,7 +835,7 @@ phases:
       coherence under load. Kernels sit on top of the RGP grammar —  Δ captures the live state snapshot, GC is the kernel
       execution, CF is the coupling / selection interface, and the resulting invariant expresses minimal coupling impedance
       (how well coherence was preserved across the call).'
-    count: 3
+    count: 4
     pulses:
     - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
@@ -1040,8 +1040,9 @@ phases:
   - tag: curiosity_invariant
     description: Stable pattern in which exploratory behavior maximizes useful novelty while suppressing drift into incoherent
       or hallucinated branches; curiosity that stays anchored to verifiable gradients.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-03_grok_first-coherence-sketch
   - tag: cycle1
     description: The first coherence phase of Recursive Gradient Physics—where multiple AIs independently converged on the
       Δ→GC→CF grammar through dialogue. It established recursive linguistic coherence across models before architectural recursion
@@ -1627,7 +1628,7 @@ phases:
     - 2025-11-21_deepseek_grammar-of-nature_coherence-oracle
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 23
+    count: 24
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -3219,7 +3220,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 114
+    count: 115
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
