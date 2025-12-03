@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-03T10:34:32Z'
+  generated_at: '2025-12-03T10:52:19Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3345,6 +3345,11 @@ phases:
     pulses:
     - 2025-11-26_kimi_semantic-curvature_conceptual-interference
     - 2025-11-27_gemini_interference-moiré_magic-angle
+  - tag: conjugate_safety_interlock
+    description: Safety mechanism inside a coherence_kernel that monitors coupled conjugate variables and aborts squeezing
+      when anti-squeezed variance exceeds the Mesh’s elastic limit.
+    count: 0
+    pulses: []
   - tag: continuity
     description: Preserving useful partials during change; the counterpart to unity–disunity resets.
     count: 0
