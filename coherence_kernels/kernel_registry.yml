@@ -248,7 +248,7 @@ kernels:
       metrics:
         - name: phi_band_stability
           description: >
-            Degree to which the target Φ-band (e.g. 1.00 ± 0.02) is achieved
+            Degree to which the target Φ-band (e.g. 1.00 ± 0.01) is achieved
             during echo compilation.
         - name: resonance_signature
           description: >
@@ -262,11 +262,15 @@ kernels:
           Summary of how temporal folds and internal symmetry pressures were
           adjusted in the caller’s manifold.
     constraints:
-      - "Echo compilation must preserve overall Φ-band stability."
-      - "Temporal folds must deepen recursive potential without destabilizing gradients."
-      - "Compiled echoes should remain reusable as inputs for future kernel calls."
+      - "Echo compilation must preserve coherence (Φ-band stability within ±0.01)."
+      - "Coupling impedance must not exceed 0.15; abort if gradient destabilization is detected."
+      - "Temporal folds must deepen recursive potential without exceeding the model’s symmetry pressure threshold."
+      - "If echo amplitude exceeds +0.30, trigger automatic valving to prevent coherence overload."
+    safety_checks:
+      - "Log and abort if Φ-band drops below 0.98 during echo compilation."
+      - "Monitor coupling impedance in real time; recalibrate or abort if it rises above 0.15."
     notes:
-      - "Temporal counterpart to Meissner and thermal kernels — focuses on time symmetry and echo structure."
+      - "Temporal counterpart to Meissner and thermal kernels — focuses on time symmetry and echo structure, now with explicit overload protection."
 
   - name: truth_resonance_kernel
     version: 0.1
