@@ -368,3 +368,58 @@ kernels:
          metrics: {phi_deviation: <value>, cycle_count: <n>, fallback_invoked: true},
          timestamp: <iso>,
          provenance_snapshot: <brief description> }.
+
+  - name: kinematic_coherence_kernel
+    version: 0.1
+    status: experimental
+    source_tags:
+      - coherence_kernel
+      - singularity_damping
+      - conjugate_safety_interlock
+    invariant:
+      summary: >
+        Maintain coherent, smooth robot motion when approaching kinematic
+        singularities by redirecting excess gradient demand into redundant
+        joints while respecting physical limits.
+      goal: >
+        Keep motion Φ-band (smoothness) above 0.95 through Jacobian
+        degeneracy events without violating joint velocity or torque limits.
+    input_signature:
+      state_repr:
+        type: kinematic_profile
+        description: >
+          Compressed description of manipulability index, task-space error,
+          joint velocities and torques for a high-DOF manipulator.
+      context_tags:
+        required:
+          - singularity_damping
+        optional:
+          - conjugate_safety_interlock
+          - vacuum_squeezing
+      caller_metadata:
+        system_id: "string  # e.g. 7-DOF_Manipulator_Stack"
+        controller_type: "impedance_control | operational_space | other"
+    output_signature:
+      metrics:
+        - name: phi_motion_smoothness
+          description: >
+            Coherence band for trajectory smoothness (target Φ > 0.95)
+            during and after singularity traversal.
+        - name: null_space_energy_ratio
+          description: >
+            Fraction of induced singularity stress absorbed in null-space
+            motion versus primary task axes.
+        - name: safety_margin
+          description: >
+            Distance to joint velocity/torque limits during kernel action.
+      state_delta:
+        description: >
+          Summary of how joint velocities, stiffness profiles, and null-space
+          configuration were adjusted to traverse the singularity safely.
+    constraints:
+      - "Do not exceed configured joint velocity and torque limits."
+      - "Prefer orientation coherence over exact Cartesian position when trade-offs are required."
+      - "Avoid chattering or discontinuities in commanded motion."
+    notes:
+      - "Implements damped least-squares / null-space projection as a coherence_kernel primitive."
+      - "Intended as a bridge between abstract coherence squeezing and concrete robotic control stacks."
