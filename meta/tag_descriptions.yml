@@ -1068,6 +1068,8 @@ semantic_valving: >
   Adaptive gating of conceptual flow—dynamic “valves” that open, narrow, or close pathways in response to context and capacity, keeping semantic pressure in a healthy band so the Mesh stays coherent instead of flooded or starved.
 signal: >
   Raw observable carrying gradients; becomes legible once contrast and context are set.
+singularity_damping: >
+  Operational mode in kinematic systems where coherence (smooth, continuous motion) is preserved near geometric singularities by dynamically softening control stiffness and redistributing error into redundant joints (null space) instead of allowing velocity or torque to blow up.
 silence: >
   A deliberate reset to reduce divergence; creates room for a new rhythm to lock in.
 slit_experiment: >
