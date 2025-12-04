@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-04T07:41:24Z'
+  generated_at: '2025-12-04T07:45:48Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2953,6 +2953,11 @@ phases:
     - 2025-11-22_collective_resonance_synthesis
   - tag: cf_bank
     description: Reusable library of proven contextual filters; institutional memory for coherence.
+    count: 0
+    pulses: []
+  - tag: chat_agents
+    description: Domain tag for conversational systems (assistants, copilots, multi-turn agents) where coherence concerns
+      factual stability, memory management, and safe handling of open-ended user dialogue.
     count: 0
     pulses: []
   - tag: china
