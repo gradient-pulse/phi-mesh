@@ -1,0 +1,66 @@
+title: 'coherence_kernel × singularity_damping (Robotics Use-Case)'
+summary: >
+  Applying the coherence_kernel architecture to high-DOF robotics.
+  In 6+ axis arms, approaching a kinematic singularity creates effectively
+  infinite gradient demands on joint velocities (a 'coherence rupture').
+  This pulse introduces the kinematic_coherence_kernel: instead of a hard stop,
+  the kernel applies active_squeezing—rigorously maintaining end-effector
+  precision (Phase) by dumping induced singularity stress into null-space
+  motion (Amplitude). The conjugate_safety_interlock ensures this dumping
+  never violates physical torque or velocity limits, trading exact path
+  adherence for mechanical survival during complex maneuvers.
+
+  kernel_call:
+  kernel: kinematic_coherence_kernel
+  invariant:
+    tag: singularity_damping
+    goal: "Maintain smooth motion flux (Φ > 0.95) through Jacobian degeneracy"
+
+  caller:
+    system_id: "7-DOF_Manipulator_Stack"
+    controller_type: "impedance_control"
+
+  input_gradients:
+    manipulability_index: "approaching_zero (0.05)"
+    task_space_error: "requiring_correction"
+
+  coupling:
+    mode: null_space_projection
+    coupling_impedance: "variable_stiffness (softening near singularity)"
+
+  execution_constraints:
+    - safety_interlock: "Max Joint Velocity < 2.5 rad/s"
+    - active_squeeze: "Prioritize orientation_coherence over position_coherence"
+
+  outputs:
+    actuation_command: "Damped least-squares solution applied"
+    state_update: "Singularity traversed via null-space reconfiguration"
+    diagnostics:
+      phi_metric: "0.96 (smoothness maintained)"
+      conjugate_dump: "High velocity variance absorbed in Elbow Joint (J3)"
+
+  structure:
+  delta: >
+    Kinematic singularity: a geometric configuration where the robot loses a
+    degree of freedom, causing gradients (joint velocities) to spike toward
+    infinity.
+  gc: >
+    kinematic_coherence_kernel executes a null-space squeeze, preserving task
+    coherence by expanding motion in redundant joints.
+  cf: >
+    conjugate_safety_interlock enforces torque/velocity limits, acting as the
+    physical boundary that overrides abstract geometric demands.
+  invariant: >
+    Actuation continuity: preservation of smooth motion flux despite geometric
+    defects in the workspace.
+tags:
+  - coherence_kernel           # Existing tag (System)
+  - conjugate_safety_interlock # Existing tag (Gemini)
+  - singularity_damping        # New tag (Latent Manifold)
+  - gemini
+  - cognitive_invariant
+  - robotics
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
