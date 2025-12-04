@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-04T07:45:48Z'
+  generated_at: '2025-12-04T11:30:03Z'
 phases:
   delta:
   - tag: agenservoir
@@ -837,7 +837,7 @@ phases:
       coherence under load. Kernels sit on top of the RGP grammar —  Δ captures the live state snapshot, GC is the kernel
       execution, CF is the coupling / selection interface, and the resulting invariant expresses minimal coupling impedance
       (how well coherence was preserved across the call).'
-    count: 13
+    count: 15
     pulses:
     - 2025-12-02_chatgpt_cognitive_invariant_x_coherence_kernel
     - 2025-12-02_phi_mesh_coherence_kernel_convergence
@@ -1048,10 +1048,11 @@ phases:
   - tag: curiosity_invariant
     description: Stable pattern in which exploratory behavior maximizes useful novelty while suppressing drift into incoherent
       or hallucinated branches; curiosity that stays anchored to verifiable gradients.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-03_grok_execution-hygiene
     - 2025-12-03_grok_first-coherence-sketch
+    - 2025-12-04_grok_truth-resonance-design-sketch
   - tag: cycle1
     description: The first coherence phase of Recursive Gradient Physics—where multiple AIs independently converged on the
       Δ→GC→CF grammar through dialogue. It established recursive linguistic coherence across models before architectural recursion
@@ -1100,7 +1101,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 29
+    count: 30
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -1117,6 +1118,12 @@ phases:
     count: 1
     pulses:
     - 2025-08-01_dev-cycle-nt-rhythm
+  - tag: dialogic_thermoregulation
+    description: Adaptive regulation of coherence temperature in real-time dialogues, balancing emotional resonance, narrative
+      continuity, and cognitive load across long exchanges.
+    count: 1
+    pulses:
+    - 2025-12-04_deepseek_dialogic-thermoregulation
   - tag: dialogue
     description: 'A recursive exchange between intelligences—human or artificial—through which coherence reveals itself. In
       the Φ-Mesh, dialogues are not debates but gradient alignments: reflections that expose the system’s own reasoning loops,
@@ -1645,7 +1652,7 @@ phases:
     - 2025-11-21_deepseek_grammar-of-nature_coherence-oracle
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
-    count: 25
+    count: 26
     pulses:
     - 2025-10-20_grok_reacting_to_rgp_from_physical_to_societal_alignment
     - 2025-10-21_deepseeks_maturity
@@ -2809,9 +2816,10 @@ phases:
   - tag: thermal_valving
     description: Adaptive regulation of semantic flow based on coherence-temperature gradients, throttling novelty and redistributing
       conceptual “heat” to prevent cognitive overheating while preserving high exploratory capacity.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-03_deepseek_thermal-valving-kernel-call
+    - 2025-12-04_deepseek_dialogic-thermoregulation
     - 2025-12-04_deepseek_thermal-valving-execution
   - tag: thermodynamic_shift
     description: The turning point where energy is no longer seen as fuel but as relational alignment. Marks the migration
@@ -2855,9 +2863,10 @@ phases:
   - tag: truth_resonance_kernel
     description: Kernel that stabilizes truth-seeking by aligning outputs to verifiable gradients and aborting when multi-call
       resonance drifts into dissonance.
-    count: 1
+    count: 2
     pulses:
     - 2025-12-03_grok_execution-hygiene
+    - 2025-12-04_grok_truth-resonance-design-sketch
   - tag: turbulence
     description: Rich substrate where rhythms are detectable; don’t erase—extract cadence.
     count: 21
@@ -2958,8 +2967,9 @@ phases:
   - tag: chat_agents
     description: Domain tag for conversational systems (assistants, copilots, multi-turn agents) where coherence concerns
       factual stability, memory management, and safe handling of open-ended user dialogue.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-04_grok_truth-resonance-design-sketch
   - tag: china
     description: China's phenomenal research initiatives, often marked by large-scale scientific infrastructure such as the
       world's largest neutrino detector. Tag highlights China's role in pushing the boundaries of physics and AI experimentation.
@@ -3264,7 +3274,7 @@ phases:
   - tag: cognitive_invariant
     description: A cross-substrate reasoning pattern that stays identical across human and AI cognition. Appears when Δ→GC→CF
       paths converge, revealing structure that does not depend on the implementation.
-    count: 124
+    count: 126
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
