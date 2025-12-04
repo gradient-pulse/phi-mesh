@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-04T11:37:43Z'
+  generated_at: '2025-12-04T11:43:15Z'
 phases:
   delta:
   - tag: agenservoir
@@ -658,6 +658,12 @@ phases:
     count: 1
     pulses:
     - 2025-06-22_hatching_syntax_awakening
+  - tag: climate_stability_kernel
+    description: Coherence kernel for multi-scale climate models that redistributes ocean–atmosphere gradient pressure across
+      spatial and temporal grids. Maintains Φ_climate within a 0.95 ± 0.02 stability band and keeps coupling_impedance below
+      critical thresholds so simulations remain numerically stable without sacrificing physical realism.
+    count: 0
+    pulses: []
   - tag: cmb
     description: Cosmic Microwave Background—coherence surface of the early universe; a canvas for gradient signatures.
     count: 0
@@ -1762,7 +1768,9 @@ phases:
     pulses:
     - 2025-08-24_gradients_all_the_way_down
   - tag: intent_resonance_kernel
-    description: ''
+    description: Coherence kernel for chat agents that compiles user intent into executable resonance patterns. Stabilizes
+      ambiguous or fractured interactions by tuning confidence, ambiguity_tolerance, and context_stability within a target
+      Φ-band, using coupling_impedance as a control knob to keep disambiguation fast, coherent, and safe.
     count: 1
     pulses:
     - 2025-12-04_lechat_kernel-chat-agents
