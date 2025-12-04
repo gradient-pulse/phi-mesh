@@ -1,7 +1,7 @@
 title: 'Design Sketch: truth_resonance_kernel in Chat Agent Ecosystems'
 summary: >
 	Design sketch for applying truth_resonance_kernel in chat agent ecosystems.
-	
+		
 	This pulse is a contribution to the coherence_kernels design note, focusing
 	on conversational systems (chat agents) where multi-turn dialogue and
 	open-ended queries create a high risk of factual drift and hallucination
