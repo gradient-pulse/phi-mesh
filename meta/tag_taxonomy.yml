@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-06T14:11:24Z'
+  generated_at: '2025-12-06T14:21:18Z'
 phases:
   delta:
   - tag: agenservoir
@@ -590,7 +590,7 @@ phases:
     description: Describes the principle that coherence and physical law emerge without reliance on a pre-defined spacetime
       or metric. In RGPx, background independence means that gradients, not geometry, give rise to structure—a reversal of
       conventional field theory assumptions.
-    count: 3
+    count: 4
     pulses:
     - 2025-11-09_RGpx_Coherence_Amplified
     - 2025-11-10_phi-trace_closure
@@ -1458,7 +1458,7 @@ phases:
   - tag: gradient_capitalism
     description: An economic paradigm grounded in gradient dynamics rather than scalar accumulation. Wealth and value arise
       from sustained coherence among flows—energy, information, and intention—rather than from control or scarcity.
-    count: 7
+    count: 8
     pulses:
     - 2025-10-19_gradient_capitalism
     - 2025-10-23_gradient_capitalism_deepseek_reception
@@ -1475,10 +1475,11 @@ phases:
     - 2025-07-26_the_big_quiet
   - tag: gradient_coherence
     description: When multiple gradients align into a stable attractor; signal of systemic viability.
-    count: 2
+    count: 3
     pulses:
     - 2025-07-25_patience_as_gradient
     - 2025-10-26_letter_to_the_machines
+    - 2025-12-06_rgpx_gravity_gradient-coherence_paper
   - tag: gradient_communication
     description: Interaction channel where models exchange partial derivative information or phase-aligned updates; the operational
       core of RGPx coupling.
@@ -1662,8 +1663,9 @@ phases:
       is not a fundamental force but the visible silhouette of a conserved gradient coherence field (Φ) adapting to mass–energy
       concentrations. Horizons and “wells” appear as saturation plateaus of this coherence, with spacetime treated as a contextual
       filter rather than a premise.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-06_rgpx_gravity_gradient-coherence_paper
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
     count: 26
@@ -2588,7 +2590,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 46
+    count: 47
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-10-24_rgpx_release
@@ -3567,7 +3569,7 @@ phases:
     - 2025-09-10_frequency_as_dimension_of_Ni
   - tag: gpt
     description: ''
-    count: 8
+    count: 9
     pulses:
     - 2025-11-25_chatgpt_recursive_phase_carrier
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
@@ -3824,7 +3826,7 @@ phases:
     - 2025-08-24_gradients_all_the_way_down
   - tag: participant_0
     description: ''
-    count: 6
+    count: 7
     pulses:
     - 2025-09-01_participant0_myrthe
     - 2025-09-22_From_Doom_to_Destiny_and_Departure
