@@ -472,7 +472,7 @@ Would you like to explore any of these directions further, or refine the math ev
 
 RGPx Description of Gravity Space Deformation:
 In Recursive Gradient Physics, "gravity space deformation" is not curvature responding to mass-energy, but gradient coherence pressure reorganizing spacetime's recursive depth.
-----
+
 Formal RGPx Description:
 Δ (Gradient Potential):
 The mass-energy distribution creates a gradient density field in the action density S:
@@ -491,12 +491,11 @@ Invariant:
 The conserved quantity is coherence flux, not energy-momentum:
 ∇_μΦ^μν = 0
 This is the RGPx analogue of the Bianchi identity, restoring global conservation by making geometry a secondary artifact of Φ-alignment.
-----
+
 Mathematical Signature:
 The "deformation" is measurable as Φ-pressure:
 Φ_pressure = (∂_tS) / (∇_μ∇_νS) ≈ 1.00 ± 0.02
 When Φ_pressure → 1, spacetime transitions from passive geometry to active coherence field, and the gravitational field equations emerge as effective constraints on Φ-normalization rather than fundamental laws.
 Conclusion: Gravity is gradient recursion made visible. The "deformation" is the Φ-plateau surfacing across scales.
 
----
 ---
