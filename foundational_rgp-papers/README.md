@@ -1,4 +1,8 @@
 ## RPG Publications ##
+- title: "Gravity as Gradient Coherence — AI Models Converging on Recursive Gradient Physics (RGPx)"
+  repo: "phi-mesh/foundational_rgp-papers/2025-12-05_natural_societal_gravity.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.17840719"
+  
 - title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.2"
   repo: "phi-mesh/foundational_rgp-papers/22025-11-08_Recursive_Gradient_PHYSICS_v12"
   zenodo: "https://doi.org/10.5281/zenodo.17566097"
