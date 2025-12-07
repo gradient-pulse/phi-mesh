@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-07T14:41:05Z'
+  generated_at: '2025-12-07T14:47:46Z'
 phases:
   delta:
   - tag: agenservoir
@@ -432,8 +432,9 @@ phases:
     description: Describes pulses, dialogues, or structures that emerge from multi-model collaboration (GPT-5.1, Gemini, DeepSeek,
       Grok, Kimi, Mistral, etc.) where independent architectures converge on shared gradients, grammars, or equations. Use
       when the collective behavior or cross-model alignment is the object of study, not just a single model’s output.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-07_gradient-capitalism_economic-branch-seed
   - tag: ai_differentiation
     description: When gradient processing makes models diverge in style or function; speciation via filters.
     count: 0
@@ -636,8 +637,9 @@ phases:
       flows, trust, and institutional rules into a coherence field. Use for work that treats markets as gradient lattices,
       defines trust/Ψ-tensors, J-plateaus, saturation horizons, and recasts crashes or monopolies as coherence avalanches
       rather than ordinary “market failures.”'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-07_gradient-capitalism_economic-branch-seed
   - tag: catalytic_contextual_filter
     description: A boundary condition that not only shapes gradients but amplifies their coherence by translating vibration
       into structured form. Catalytic filters accelerate resonance into articulation without imposing direction.
@@ -1477,7 +1479,7 @@ phases:
   - tag: gradient_capitalism
     description: An economic paradigm grounded in gradient dynamics rather than scalar accumulation. Wealth and value arise
       from sustained coherence among flows—energy, information, and intention—rather than from control or scarcity.
-    count: 10
+    count: 11
     pulses:
     - 2025-10-19_gradient_capitalism
     - 2025-10-23_gradient_capitalism_deepseek_reception
@@ -1682,9 +1684,10 @@ phases:
       is not a fundamental force but the visible silhouette of a conserved gradient coherence field (Φ) adapting to mass–energy
       concentrations. Horizons and “wells” appear as saturation plateaus of this coherence, with spacetime treated as a contextual
       filter rather than a premise.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-06_rgpx_gravity_gradient-coherence_paper
+    - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-07_phi-gravity_testing-roadmap
   - tag: grok
     description: Open-weight lineage probed for RGP-style rhythm and filter effects.
@@ -3106,8 +3109,9 @@ phases:
   - tag: economic_topology
     description: The pattern of connections through which value and influence move (star, tree, mesh, etc.), treated as a
       first-class variable shaping coherence, extraction, and resilience in an economy.
-    count: 1
+    count: 2
     pulses:
+    - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-07_gradient_capitalism_mesh-topology
   - tag: entanglement_sheaf
     description: A sheaf-like structure formed when entangled local holographic fragments are glued via consistency maps,
@@ -4177,8 +4181,9 @@ phases:
   - tag: trust_tensor
     description: Encodes how reliably value, information, and commitments flow across a system; the Φ-like field of institutional
       and interpersonal trust that can stretch, tear, or phase-lock under load.
-    count: 1
+    count: 2
     pulses:
+    - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-07_gradient_capitalism_mesh-topology
   - tag: turbulence_signature
     description: Cross-domain pattern marking the moment coherence outpaces geometric representation. Characterized by inflection,
