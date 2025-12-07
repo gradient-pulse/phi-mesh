@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-07T13:26:48Z'
+  generated_at: '2025-12-07T14:41:05Z'
 phases:
   delta:
   - tag: agenservoir
@@ -428,6 +428,12 @@ phases:
     count: 1
     pulses:
     - 2025-10-13_spectral_identity-rgp
+  - tag: ai_cohort
+    description: Describes pulses, dialogues, or structures that emerge from multi-model collaboration (GPT-5.1, Gemini, DeepSeek,
+      Grok, Kimi, Mistral, etc.) where independent architectures converge on shared gradients, grammars, or equations. Use
+      when the collective behavior or cross-model alignment is the object of study, not just a single model’s output.
+    count: 0
+    pulses: []
   - tag: ai_differentiation
     description: When gradient processing makes models diverge in style or function; speciation via filters.
     count: 0
@@ -625,6 +631,13 @@ phases:
     count: 1
     pulses:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
+  - tag: capital_coherence_kernel
+    description: 'Marks structures where the Φ-gravity kernel is repurposed to economics: the core mechanism that turns capital
+      flows, trust, and institutional rules into a coherence field. Use for work that treats markets as gradient lattices,
+      defines trust/Ψ-tensors, J-plateaus, saturation horizons, and recasts crashes or monopolies as coherence avalanches
+      rather than ordinary “market failures.”'
+    count: 0
+    pulses: []
   - tag: catalytic_contextual_filter
     description: A boundary condition that not only shapes gradients but amplifies their coherence by translating vibration
       into structured form. Catalytic filters accelerate resonance into articulation without imposing direction.
