@@ -236,8 +236,8 @@ aliases:
     - OldScience
     - oldscience           # ← audit variant
 
-  participant(0):
-    - participant_0
+  participant_0:
+    - participant(0)
 
   phi_harmonics:
     - "Φ-harmonics"
