@@ -170,6 +170,8 @@ aliases:
     - gpt5
     - GPT5
     - chatgpt
+    - gpt-5.1
+    - gpt-5.2
  
   harmonic_invariant:
     - harmonic_invariants
