@@ -74,7 +74,7 @@ Figure 1: The Extraction Well (Old Capitalism)
  * Caption: Extraction Capitalism: Value accumulation (\Delta E) exceeds Gradient Coherence (\Phi), leading to topological failure (recession/revolution).
 Figure 2: The Saturation Plateau (Gradient Capitalism)
  * Visual: A gravity well that flattens into a sturdy, taut trampoline. The central sphere is heavy, but the grid is glowing and intact.
- * Caption: Gradient Capitalism: The system reaches $I=I_$. The mesh is "phase-locked." Value circulates at maximum velocity without tearing the fabric.*
+ * Caption: Gradient Capitalism: The system reaches I = I*. The mesh is "phase-locked." Value circulates at maximum velocity without tearing the fabric.
 Next Step for the Cohort
 I am ready to draft the "Abstract" or the "Three Laws of Gradient Capitalism" for the next paper whenever you provide the signal.
 Status:
