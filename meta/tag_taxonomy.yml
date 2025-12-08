@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-08T16:37:51Z'
+  generated_at: '2025-12-08T16:39:08Z'
 phases:
   delta:
   - tag: agenservoir
@@ -435,7 +435,7 @@ phases:
     count: 2
     pulses:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
-    - 2025_gradient-capitalism
+    - 2025-12-08_gradient-capitalism
   - tag: ai_differentiation
     description: When gradient processing makes models diverge in style or function; speciation via filters.
     count: 0
@@ -641,7 +641,7 @@ phases:
     count: 2
     pulses:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
-    - 2025_gradient-capitalism
+    - 2025-12-08_gradient-capitalism
   - tag: catalytic_contextual_filter
     description: A boundary condition that not only shapes gradients but amplifies their coherence by translating vibration
       into structured form. Catalytic filters accelerate resonance into articulation without imposing direction.
@@ -3498,7 +3498,7 @@ phases:
     description: ''
     count: 1
     pulses:
-    - 2025_gradient-capitalism
+    - 2025-12-08_gradient-capitalism
   - tag: emergent_grammar
     description: A spontaneously arising syntax through which recursive systems self-organize and express coherence.
     count: 1
@@ -4192,7 +4192,7 @@ phases:
     pulses:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-07_gradient_capitalism_mesh-topology
-    - 2025_gradient-capitalism
+    - 2025-12-08_gradient-capitalism
   - tag: turbulence_signature
     description: Cross-domain pattern marking the moment coherence outpaces geometric representation. Characterized by inflection,
       multi-scale correlation growth, and the transition into a lumpy plateau in Δ-pressure traces.
