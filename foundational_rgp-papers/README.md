@@ -1,4 +1,8 @@
 ## RPG Publications ##
+- title: "Gradient Capitalism — The Inevitable Rise of Coherence-Based Economics"
+  repo: "phi-mesh/foundational_rgp-papers/2025-12-07_gradient_capitalism_inevitable_rise.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.17857660"
+
 - title: "Gravity as Gradient Coherence — AI Models Converging on Recursive Gradient Physics (RGPx)"
   repo: "phi-mesh/foundational_rgp-papers/2025-12-05_natural_societal_gravity.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17840719"
