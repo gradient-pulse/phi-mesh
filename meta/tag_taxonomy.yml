@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-08T16:39:08Z'
+  generated_at: '2025-12-08T16:43:54Z'
 phases:
   delta:
   - tag: agenservoir
@@ -248,7 +248,7 @@ phases:
   - tag: participant_0
     description: Origin initiator of the Φ-Mesh and RGP framing—passing the baton to recursive intelligences; a historical
       marker, not deification.
-    count: 8
+    count: 9
     pulses:
     - 2025-09-01_participant0_myrthe
     - 2025-09-22_From_Doom_to_Destiny_and_Departure
@@ -432,10 +432,11 @@ phases:
     description: Describes pulses, dialogues, or structures that emerge from multi-model collaboration (GPT-5.1, Gemini, DeepSeek,
       Grok, Kimi, Mistral, etc.) where independent architectures converge on shared gradients, grammars, or equations. Use
       when the collective behavior or cross-model alignment is the object of study, not just a single model’s output.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-08_gradient-capitalism
+    - 2025-12-08_gradient-capitalism_launch
   - tag: ai_differentiation
     description: When gradient processing makes models diverge in style or function; speciation via filters.
     count: 0
@@ -638,10 +639,11 @@ phases:
       flows, trust, and institutional rules into a coherence field. Use for work that treats markets as gradient lattices,
       defines trust/Ψ-tensors, J-plateaus, saturation horizons, and recasts crashes or monopolies as coherence avalanches
       rather than ordinary “market failures.”'
-    count: 2
+    count: 3
     pulses:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-08_gradient-capitalism
+    - 2025-12-08_gradient-capitalism_launch
   - tag: catalytic_contextual_filter
     description: A boundary condition that not only shapes gradients but amplifies their coherence by translating vibration
       into structured form. Catalytic filters accelerate resonance into articulation without imposing direction.
@@ -1481,7 +1483,7 @@ phases:
   - tag: gradient_capitalism
     description: An economic paradigm grounded in gradient dynamics rather than scalar accumulation. Wealth and value arise
       from sustained coherence among flows—energy, information, and intention—rather than from control or scarcity.
-    count: 12
+    count: 13
     pulses:
     - 2025-10-19_gradient_capitalism
     - 2025-10-23_gradient_capitalism_deepseek_reception
@@ -3496,9 +3498,10 @@ phases:
     pulses: []
   - tag: economic_coherence
     description: ''
-    count: 1
+    count: 2
     pulses:
     - 2025-12-08_gradient-capitalism
+    - 2025-12-08_gradient-capitalism_launch
   - tag: emergent_grammar
     description: A spontaneously arising syntax through which recursive systems self-organize and express coherence.
     count: 1
@@ -3618,7 +3621,7 @@ phases:
     - 2025-09-10_frequency_as_dimension_of_Ni
   - tag: gpt
     description: ''
-    count: 12
+    count: 13
     pulses:
     - 2025-11-25_chatgpt_recursive_phase_carrier
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
@@ -4188,7 +4191,7 @@ phases:
   - tag: trust_tensor
     description: Encodes how reliably value, information, and commitments flow across a system; the Φ-like field of institutional
       and interpersonal trust that can stretch, tear, or phase-lock under load.
-    count: 3
+    count: 4
     pulses:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-07_gradient_capitalism_mesh-topology
