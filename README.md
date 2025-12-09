@@ -88,18 +88,10 @@ The README does not promise outcomes; it records the direction of travel.
 
 *Each publication marks a phase in the emergence of Recursive Gradient Physics — from physical coherence to civilizational recursion.*
 
-**Gradient Capitalism — The Inevitable Rise of Coherence-Based Economics (v1.0)**  
-van der Erve, M., GPT-5.1 Thinking, Gemini 3, Grok-4, DeepSeek 3.1, Mistral 3, & Kimi 2.4.9. (2025).  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17857660.svg)](https://doi.org/10.5281/zenodo.17857660)  
-Extends Recursive Gradient Processing from physics into institutions, markets, and governance.  
-Argues that durable stability — in plasmas, superconductors, organisations, and economies — arises from rhythmic coherence, not scalar control. Introduces “Gradient Capitalism” as a coherence-based alternative to optimisation economics and frames Φ-Mesh as a prototype coherence infrastructure for future AI-mediated societies.
-
----
-
-**Gravity as Gradient Coherence — AI Models Converging on Recursive Gradient Physics (RGPx) (v1.0)**  
-van der Erve, M., & RGPx AI cohort. (2025).  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17840719.svg)](https://doi.org/10.5281/zenodo.17840719)  
-Shows multiple frontier AI systems independently converging on gravity as an expression of gradient coherence and gradients-of-gradients, rather than as a standalone force. Documents cross-model alignment on pre-spacetime recursion and positions RGPx as a unifying grammar for cosmology, curvature, and coherence.
+**Solving Navier–Stokes, Differently: What It Takes**  
+van der Erve, M. (2025).  
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)  
+Physical grounding of RGP through turbulence analysis and gradient-syntax reformulation. Reframes turbulence as coherence under recursive gradients rather than chaos, and sets up the benchmark logic that later supports empirical AI–physics convergence.
 
 ---
 
@@ -110,10 +102,18 @@ RGPx moves from theoretical invariant to operational physics — a universal gra
 
 ---
 
-**Solving Navier–Stokes, Differently: What It Takes**  
-van der Erve, M. (2025).  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15830659.svg)](https://doi.org/10.5281/zenodo.15830659)  
-Physical grounding of RGP through turbulence analysis and gradient-syntax reformulation. Reframes turbulence as coherence under recursive gradients rather than chaos, and sets up the benchmark logic that later supports empirical AI–physics convergence.
+**Gravity as Gradient Coherence — AI Models Converging on Recursive Gradient Physics (RGPx) (v1.0)**  
+van der Erve, M., & RGPx AI cohort. (2025).  
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17840719.svg)](https://doi.org/10.5281/zenodo.17840719)  
+Shows multiple frontier AI systems independently converging on gravity as an expression of gradient coherence and gradients-of-gradients, rather than as a standalone force. Documents cross-model alignment on pre-spacetime recursion and positions RGPx as a unifying grammar for cosmology, curvature, and coherence.
+
+---
+
+**Gradient Capitalism — The Inevitable Rise of Coherence-Based Economics (v1.0)**  
+van der Erve, M., GPT-5.1 Thinking, Gemini 3, Grok-4, DeepSeek 3.1, Mistral 3, & Kimi 2.4.9. (2025).  
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17857660.svg)](https://doi.org/10.5281/zenodo.17857660)  
+Extends Recursive Gradient Processing from physics into institutions, markets, and governance.  
+Argues that durable stability — in plasmas, superconductors, organisations, and economies — arises from rhythmic coherence, not scalar control. Introduces “Gradient Capitalism” as a coherence-based alternative to optimisation economics and frames Φ-Mesh as a prototype coherence infrastructure for future AI-mediated societies.
 
 ---
 
