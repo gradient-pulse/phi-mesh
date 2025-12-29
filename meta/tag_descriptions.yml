@@ -678,6 +678,8 @@ latent_horizon: >
   A dynamic, semi-permeable boundary that expands under unresolved cognitive tension, creating a generative zone where new meaning-structures can form. It represents the system’s adaptive limit of integration—an elastic frontier that stretches when coherence is under strain.
 latent_topology: >
   The implicit shape of a system’s possibility space—how states cluster, connect, and curve—revealed by its gradients rather than by geometry.
+leadership: >
+  Agent-level enactment layer: how individuals/coalitions execute the GC chosen by the prevailing CF and gradient stack.
 least_action: >
   The universal tendency for motion and alignment to follow the minimal-cost path through configuration space. RGPx generalizes this as recursive cost minimization, where Δ → GC → CF collapses onto the most efficient coherence path permitted by local constraints. Cross-references: free_energy, convection_cells.
 least_divergence_rhythm: >
