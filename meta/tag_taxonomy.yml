@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-29T10:12:17Z'
+  generated_at: '2025-12-29T10:30:15Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1918,6 +1918,11 @@ phases:
   - tag: latent_topology
     description: The implicit shape of a system’s possibility space—how states cluster, connect, and curve—revealed by its
       gradients rather than by geometry.
+    count: 0
+    pulses: []
+  - tag: leadership
+    description: 'Agent-level enactment layer: how individuals/coalitions execute the GC chosen by the prevailing CF and gradient
+      stack.'
     count: 0
     pulses: []
   - tag: least_action
