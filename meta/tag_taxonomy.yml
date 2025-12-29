@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-29T10:30:15Z'
+  generated_at: '2025-12-29T10:30:53Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1923,8 +1923,9 @@ phases:
   - tag: leadership
     description: 'Agent-level enactment layer: how individuals/coalitions execute the GC chosen by the prevailing CF and gradient
       stack.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-29_coupling-selection_cf
   - tag: least_action
     description: 'The universal tendency for motion and alignment to follow the minimal-cost path through configuration space.
       RGPx generalizes this as recursive cost minimization, where Δ → GC → CF collapses onto the most efficient coherence
