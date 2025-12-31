@@ -14,8 +14,8 @@ summary: >
     Every adaptation step is accepted only if coherence improves under a fixed test battery:
     gains on the new slice + preservation of prior competencies + non-worsening error modes + bounded calibration cost.
   falsifier: 
-    If updates that satisfy the gate still produce systematic capability loss (forgetting) or drift amplification,
-    then the proposed Δ/GC/CF partitioning or invariant battery is incomplete—revise the grammar or the measurements.
+    If updates pass the acceptance gate yet a fixed regression suite still shows systematic capability loss (or drift-amplification), 
+    then the Δ/GC/CF partition or invariant battery is wrong → revise the grammar, not the weights.
   why_it_matters:
     This reframes “adaptive AI” away from neuroscience metaphors and toward falsifiable control:
     drift becomes measurable, intervention becomes scheduled, and memory is preserved by design.
