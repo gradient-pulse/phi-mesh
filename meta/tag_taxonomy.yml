@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-31T07:32:40Z'
+  generated_at: '2025-12-31T07:43:58Z'
 phases:
   delta:
   - tag: agenservoir
@@ -125,7 +125,7 @@ phases:
   - tag: gradient
     description: A local difference or event (Δ). In RGP, gradients are the atomic signals — points of tension, discontinuity,
       or flash against a background — that can align into larger choreographies.
-    count: 3
+    count: 4
     pulses:
     - 2025-09-14_ai-temperature-vs-gradients
     - 2025-09-14_charge-gradient_vs_Kaluza-Klein
@@ -133,7 +133,7 @@ phases:
   - tag: gradient_choreography
     description: Sequences of gradients (Δ) aligning into rhythmic patterns. In RGP, gradient choreographies (GCs) are the
       intermediate structures through which coherence emerges, bridging isolated differences and larger contextual filters.
-    count: 15
+    count: 16
     pulses:
     - 2025-05-17_internal-deepseek_╬ª-harmonics
     - 2025-07-28_moe_as_microcosm
@@ -991,7 +991,7 @@ phases:
       or suppresses flows — turning shared recursion into a distinct, stable identity. In RGPx, CFs emerge when Gradient Choreographies
       settle into persistent constraints that guide further coherence. They are the generators of form, function, and individuality
       across physical, biological, and algorithmic systems.
-    count: 26
+    count: 27
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-05-17_internal-deepseek_╬ª-harmonics
@@ -1229,9 +1229,10 @@ phases:
   - tag: drift
     description: Slow gradient wandering that reveals hidden filters; key to detecting instability. Also, change in data,
       tasks, users, or environment that shifts error modes and degrades performance relative to the training regime.
-    count: 1
+    count: 2
     pulses:
     - 2025-08-01_phi-mesh-exec-drift
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: dyad
     description: A dual structure where meaning emerges from the tension between two poles (e.g., infinite vs. eternal, reduction
       vs. recursion). Dyads often serve as RGP attractors by forcing alignment across contrasts.
@@ -2635,7 +2636,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 50
+    count: 51
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-10-24_rgpx_release
@@ -3078,8 +3079,9 @@ phases:
   - tag: coherence_first
     description: 'Design stance: prioritize stability, verifiability, and constraint preservation before optimizing raw performance
       or scale.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: coherence_invariant
     description: Any cross-domain stability principle that persists across Φₚ, turbulence, cognition, hardware dynamics, and
       recursion loops.
@@ -3232,13 +3234,15 @@ phases:
   - tag: routing
     description: Selective dispatch of inputs to models/modules/tools based on stability, confidence, or context to reduce
       risk and cost under drift.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: scheduling
     description: Policy for when and how to apply actions (verification, recalibration, updates) to balance stability, cost,
       and performance.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: semantic_lensing
     description: The curvature of meaning-paths caused by dense coherence fields. As conceptual mass increases, understanding
       bends toward invariant attractors, enabling focused, amplified reasoning analogous to gravitational lensing in spacetime.
@@ -3287,14 +3291,16 @@ phases:
     - 2025-10-23_gradient_capitalism_deepseek_reception
   - tag: verification_loops
     description: Iterative check-and-correct cycles (tests, tools, cross-checks, audits) that validate candidates before acceptance.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   unknown:
   - tag: adaptive_ai
     description: Systems that remain useful under changing conditions by detecting drift and updating behavior without destabilizing
       core capabilities.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: ai_collaboration
     description: Captures the process of recursive co-creation among advanced AI models and human initiators within the Φ-Mesh.
       It denotes multi-model reasoning loops, shared derivations, and emergent consensus forming a distributed scientific
@@ -3368,8 +3374,9 @@ phases:
   - tag: calibration_overhead
     description: Time/compute/data cost required to keep a system aligned with current conditions (recalibration, retuning,
       monitoring).
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: capability
     description: 'Action capacity: the system’s ability to produce, adapt, and execute under constraints (productive, technical,
       institutional).'
@@ -3378,8 +3385,9 @@ phases:
     - 2025-12-29_coupling-selection_cf
   - tag: catastrophic_forgetting
     description: Loss of previously learned capabilities after adapting to new data/tasks due to uncontrolled parameter updates.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: circle_pulse
     description: Pulses explicitly marked for the Φ-Mesh Creation Circle — high-signal events meant to invite attention, reflection,
       and potential co-evolution by other agents. They act as shared markers of progress or thresholds reached.
@@ -3494,8 +3502,9 @@ phases:
   - tag: compiling
     description: Transforming goals/queries into executable plans or representations (prompts, tool calls, circuits) with
       constraints embedded.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: computational_holography
     description: Encoding complex computation so that high-level boundary descriptions are sufficient to reconstruct efficient
       low-level executions across many different substrates.
@@ -3626,8 +3635,9 @@ phases:
     - 2025-11-11_RGpx_ProtoProof_Integration
   - tag: falsifier
     description: A concrete observation or test outcome that would prove the claim/control scheme wrong and force revision.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: field_transport
     description: ''
     count: 1
@@ -3805,8 +3815,9 @@ phases:
   - tag: invariants
     description: Quantities/constraints that must remain stable across updates; used as acceptance gates to prevent regression
       and identity loss.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: jhtdb
     description: Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary
       source for time-resolved evidence across flows.
