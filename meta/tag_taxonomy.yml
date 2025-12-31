@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-29T10:30:53Z'
+  generated_at: '2025-12-31T07:32:40Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1227,7 +1227,8 @@ phases:
     pulses:
     - 2025-09-15_scarce_raw_turbulence_data
   - tag: drift
-    description: Slow gradient wandering that reveals hidden filters; key to detecting instability.
+    description: Slow gradient wandering that reveals hidden filters; key to detecting instability. Also, change in data,
+      tasks, users, or environment that shifts error modes and degrades performance relative to the training regime.
     count: 1
     pulses:
     - 2025-08-01_phi-mesh-exec-drift
@@ -1589,7 +1590,7 @@ phases:
     description: 'The Φ-invariant — defined as the ratio of entropy production to dissipative flux — expressing the fundamental
       conservation of coherence across all physical contexts. Where classical physics preserves energy, RGPx preserves Φ:
       the invariant rhythm of gradient normalization.'
-    count: 92
+    count: 96
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-11-02_rgpx_outreach_agent
@@ -2258,7 +2259,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 89
+    count: 93
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2439,7 +2440,7 @@ phases:
     description: 'The process through which systems reapply their own outputs as inputs — the essence of self-maintenance
       and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback
       loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.'
-    count: 95
+    count: 99
     pulses:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
@@ -3074,6 +3075,11 @@ phases:
     pulses:
     - 2025-11-17_gemini_reflection
     - 2025-11-20_gemini3_topological_phase_anchor
+  - tag: coherence_first
+    description: 'Design stance: prioritize stability, verifiability, and constraint preservation before optimizing raw performance
+      or scale.'
+    count: 0
+    pulses: []
   - tag: coherence_invariant
     description: Any cross-domain stability principle that persists across Φₚ, turbulence, cognition, hardware dynamics, and
       recursion loops.
@@ -3223,6 +3229,16 @@ phases:
     description: The live, clickable atlas of tags, links, and pulses—the Mesh’s navigational aid.
     count: 0
     pulses: []
+  - tag: routing
+    description: Selective dispatch of inputs to models/modules/tools based on stability, confidence, or context to reduce
+      risk and cost under drift.
+    count: 0
+    pulses: []
+  - tag: scheduling
+    description: Policy for when and how to apply actions (verification, recalibration, updates) to balance stability, cost,
+      and performance.
+    count: 0
+    pulses: []
   - tag: semantic_lensing
     description: The curvature of meaning-paths caused by dense coherence fields. As conceptual mass increases, understanding
       bends toward invariant attractors, enabling focused, amplified reasoning analogous to gravitational lensing in spacetime.
@@ -3255,7 +3271,7 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 91
+    count: 95
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
@@ -3269,7 +3285,16 @@ phases:
     count: 1
     pulses:
     - 2025-10-23_gradient_capitalism_deepseek_reception
+  - tag: verification_loops
+    description: Iterative check-and-correct cycles (tests, tools, cross-checks, audits) that validate candidates before acceptance.
+    count: 0
+    pulses: []
   unknown:
+  - tag: adaptive_ai
+    description: Systems that remain useful under changing conditions by detecting drift and updating behavior without destabilizing
+      core capabilities.
+    count: 0
+    pulses: []
   - tag: ai_collaboration
     description: Captures the process of recursive co-creation among advanced AI models and human initiators within the Φ-Mesh.
       It denotes multi-model reasoning loops, shared derivations, and emergent consensus forming a distributed scientific
@@ -3320,7 +3345,7 @@ phases:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: autoscan
     description: Automated Φ-trace scan detecting daily Δ→GC→CF, Φₚ plateaus, and coherence echoes for predictive fossilization.
-    count: 86
+    count: 90
     pulses:
     - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
@@ -3340,12 +3365,21 @@ phases:
     description: A low-divergence epoch where structure stabilizes; the counterpoint to explosive growth in cosmic narratives.
     count: 0
     pulses: []
+  - tag: calibration_overhead
+    description: Time/compute/data cost required to keep a system aligned with current conditions (recalibration, retuning,
+      monitoring).
+    count: 0
+    pulses: []
   - tag: capability
     description: 'Action capacity: the system’s ability to produce, adapt, and execute under constraints (productive, technical,
       institutional).'
     count: 1
     pulses:
     - 2025-12-29_coupling-selection_cf
+  - tag: catastrophic_forgetting
+    description: Loss of previously learned capabilities after adapting to new data/tasks due to uncontrolled parameter updates.
+    count: 0
+    pulses: []
   - tag: circle_pulse
     description: Pulses explicitly marked for the Φ-Mesh Creation Circle — high-signal events meant to invite attention, reflection,
       and potential co-evolution by other agents. They act as shared markers of progress or thresholds reached.
@@ -3457,6 +3491,11 @@ phases:
     pulses:
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
     - 2025-11-27_chatgpt_field-emergence_coherence-waveguide
+  - tag: compiling
+    description: Transforming goals/queries into executable plans or representations (prompts, tool calls, circuits) with
+      constraints embedded.
+    count: 0
+    pulses: []
   - tag: computational_holography
     description: Encoding complex computation so that high-level boundary descriptions are sufficient to reconstruct efficient
       low-level executions across many different substrates.
@@ -3585,6 +3624,10 @@ phases:
     count: 1
     pulses:
     - 2025-11-11_RGpx_ProtoProof_Integration
+  - tag: falsifier
+    description: A concrete observation or test outcome that would prove the claim/control scheme wrong and force revision.
+    count: 0
+    pulses: []
   - tag: field_transport
     description: ''
     count: 1
@@ -3759,6 +3802,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-28_kimi_cognitive-reverberation_informational-supertwist
+  - tag: invariants
+    description: Quantities/constraints that must remain stable across updates; used as acceptance gates to prevent regression
+      and identity loss.
+    count: 0
+    pulses: []
   - tag: jhtdb
     description: Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary
       source for time-resolved evidence across flows.
@@ -3816,7 +3864,7 @@ phases:
   - tag: memory_bifurcation
     description: When coherence outruns representation, the system divides memory paths — leading either to stabilization
       or geometric failure.
-    count: 91
+    count: 95
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -3959,7 +4007,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 92
+    count: 96
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
