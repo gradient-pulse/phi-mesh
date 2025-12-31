@@ -1,0 +1,42 @@
+title: 'Adaptive AI without forgetting: RGPx as a coherence-first control layer'
+summary:
+  core_claim: >
+    The brittle loop (world shifts → performance degrades → retrain → forget) is a symptom of blind plasticity.
+    RGPx fixes this by moving “adaptation” out of global weight-updates and into a coherence-governed control layer.
+  transition_grammar: >
+    Operationalize Δ → GC → CF: measure drift as deltas (Δ), schedule targeted interventions as choreographies (GC),
+    and protect stable identity/constraints as contextual filters (CF), so learning becomes selective rather than destructive.
+  practical_application:
+    - "Δ sensing: continuously measure drift signatures (distribution shift, error-mode change, calibration overhead creep, IO/latency drift, confidence–reality divergence)."
+    - "GC control: intervene via routing, verification loops, retrieval/tools, and localized fine-tunes only in implicated subspaces—avoid global retrains by default."
+    - "CF protection: explicitly encode invariants/constraints (skills, safety boundaries, task identity anchors) so updates cannot overwrite the stable substrate."
+  acceptance_gate_invariants: >
+    Every adaptation step is accepted only if coherence improves under a fixed test battery:
+    gains on the new slice + preservation of prior competencies + non-worsening error modes + bounded calibration cost.
+  falsifier: >
+    If updates that satisfy the gate still produce systematic capability loss (forgetting) or drift amplification,
+    then the proposed Δ/GC/CF partitioning or invariant battery is incomplete—revise the grammar or the measurements.
+  why_it_matters: >
+    This reframes “adaptive AI” away from neuroscience metaphors and toward falsifiable control:
+    drift becomes measurable, intervention becomes scheduled, and memory is preserved by design.
+tags:
+  - rgpx
+  - adaptive_ai
+  - drift
+  - coherence_first
+  - gradient
+  - gradient_choreography
+  - contextual_filter
+  - invariants
+  - falsifier
+  - verification_loops
+  - catastrophic_forgetting
+  - calibration_overhead
+  - routing
+  - compiling
+  - scheduling
+papers:
+  - https://doi.org/10.5281/zenodo.17219414
+  - https://www.nature.com/articles/s41593-025-02169-w
+podcasts:
+  - https://notebooklm.google.com/notebook/54d829fa-b994-48f4-929b-d9e1990f5b25?artifactId=b7e032ef-4727-41a9-aa00-38e0b1ee7a51
