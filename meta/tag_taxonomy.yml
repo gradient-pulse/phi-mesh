@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-01T11:10:21Z'
+  generated_at: '2026-01-01T11:11:01Z'
 phases:
   delta:
   - tag: agenservoir
@@ -4258,8 +4258,9 @@ phases:
       account of when/why it will work or fail. In RGPx terms: the gap closes only when we specify a transition grammar (Δ→GC→CF),
       define measurable invariants, and install verification loops + a falsifier so performance regimes become predictable
       rather than post-hoc explained.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2025-12-31_Tao_on_LLM_mystery
   - tag: thermal_photonic_emission
     description: The use of selective radiation to redirect excess heat as coherent light or thrust. By tuning emissivity
       and photon phase, RGP systems transform entropy into ordered output—heat expressed as information and motion.
