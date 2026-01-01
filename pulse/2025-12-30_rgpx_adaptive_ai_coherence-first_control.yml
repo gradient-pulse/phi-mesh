@@ -3,6 +3,7 @@ summary: >
   core_claim: 
     The brittle loop (world shifts → performance degrades → retrain → forget) is a symptom of blind plasticity.
     RGPx fixes this by moving “adaptation” out of global weight-updates and into a coherence-governed control layer.
+    The ‘mystery’ is a control-theory gap: we lack observables for drift + acceptance gates for change.
   
   transition_grammar: 
     Operationalize Δ → GC → CF: measure drift as deltas (Δ), schedule targeted interventions as choreographies (GC),
