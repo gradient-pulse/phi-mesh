@@ -1,0 +1,41 @@
+title: 'Tao on LLM “mystery” — RGPx relief via coherence-first transition grammar'
+summary: >
+  core_claim:
+    The “mystery” (why models excel at some tasks and fail at others) is not primarily mathematical complexity,
+    but coherence stability: competence holds when task-gradients can be stabilized into repeatable GC under a viable CF.
+
+  transition_grammar:
+    Δ → GC → CF:
+    - Δ: detect drift / gradient conflict (ambiguity, long-horizon dependency, adversarial underspecification).
+    - GC: schedule verification/routing loops that locally restore coherence (not global retrain).
+    - CF: enforce invariants (identity/rules/safety/consistency gates) so adaptation remains selective, not destructive.
+
+  prediction_relief:
+    - “Good at X, bad at Y” often indicates missing CFs (invariants) or insufficient GC capacity (verification loops) for Y,
+      not an absence of intelligence.
+    - Parallel verification loops are an externalized GC+CF patch; the next step is making them native and measurable.
+
+  falsifier:
+    If a system passes local acceptance gates (new-slice gains + preservation + non-worsening error modes + bounded calibration cost)
+    yet still shows systematic capability loss under drift, then the Δ/GC/CF partition or invariant battery is wrong → revise the grammar,
+    not the weights.
+
+  why_it_matters:
+    RGPx doesn’t replace empiricism; it compresses it into control observables:
+    drift signatures, GC burden, CF adequacy, and calibration-overhead creep—turning “mystery” into a testable coherence regime map.
+tags:
+  - rgpx
+  - coherence_first
+  - invariants
+  - falsifier
+  - verification_loops
+  - drift
+  - calibration_overhead
+  - routing
+  - compiling
+  - scheduling
+  - interpretability
+papers:
+  - https://doi.org/10.5281/zenodo.17219414
+podcasts:
+  - https://notebooklm.google.com/notebook/54d829fa-b994-48f4-929b-d9e1990f5b25?artifactId=b7e032ef-4727-41a9-aa00-38e0b1ee7a51
