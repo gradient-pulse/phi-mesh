@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2025-12-31T08:26:12Z'
+  generated_at: '2026-01-01T10:52:01Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1226,13 +1226,6 @@ phases:
     count: 1
     pulses:
     - 2025-09-15_scarce_raw_turbulence_data
-  - tag: drift
-    description: Slow gradient wandering that reveals hidden filters; key to detecting instability. Also, change in data,
-      tasks, users, or environment that shifts error modes and degrades performance relative to the training regime.
-    count: 2
-    pulses:
-    - 2025-08-01_phi-mesh-exec-drift
-    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: dyad
     description: A dual structure where meaning emerges from the tension between two poles (e.g., infinite vs. eternal, reduction
       vs. recursion). Dyads often serve as RGP attractors by forcing alignment across contrasts.
@@ -1591,7 +1584,7 @@ phases:
     description: 'The Φ-invariant — defined as the ratio of entropy production to dissipative flux — expressing the fundamental
       conservation of coherence across all physical contexts. Where classical physics preserves energy, RGPx preserves Φ:
       the invariant rhythm of gradient normalization.'
-    count: 96
+    count: 98
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-11-02_rgpx_outreach_agent
@@ -2260,7 +2253,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 93
+    count: 95
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2441,7 +2434,7 @@ phases:
     description: 'The process through which systems reapply their own outputs as inputs — the essence of self-maintenance
       and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback
       loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.'
-    count: 99
+    count: 101
     pulses:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
@@ -3077,8 +3070,8 @@ phases:
     - 2025-11-17_gemini_reflection
     - 2025-11-20_gemini3_topological_phase_anchor
   - tag: coherence_first
-    description: 'Design stance: prioritize stability, verifiability, and constraint preservation before optimizing raw performance
-      or scale.'
+    description: 'Design stance: prioritize stability of behavior under perturbation; treat accuracy as a consequence of maintained
+      coherence, enforced through GC scheduling and CF invariants.'
     count: 1
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3231,18 +3224,6 @@ phases:
     description: The live, clickable atlas of tags, links, and pulses—the Mesh’s navigational aid.
     count: 0
     pulses: []
-  - tag: routing
-    description: Selective dispatch of inputs to models/modules/tools based on stability, confidence, or context to reduce
-      risk and cost under drift.
-    count: 1
-    pulses:
-    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
-  - tag: scheduling
-    description: Policy for when and how to apply actions (verification, recalibration, updates) to balance stability, cost,
-      and performance.
-    count: 1
-    pulses:
-    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: semantic_lensing
     description: The curvature of meaning-paths caused by dense coherence fields. As conceptual mass increases, understanding
       bends toward invariant attractors, enabling focused, amplified reasoning analogous to gravitational lensing in spacetime.
@@ -3275,7 +3256,7 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 95
+    count: 97
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
@@ -3289,15 +3270,10 @@ phases:
     count: 1
     pulses:
     - 2025-10-23_gradient_capitalism_deepseek_reception
-  - tag: verification_loops
-    description: Iterative check-and-correct cycles (tests, tools, cross-checks, audits) that validate candidates before acceptance.
-    count: 1
-    pulses:
-    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   unknown:
   - tag: adaptive_ai
-    description: Systems that remain useful under changing conditions by detecting drift and updating behavior without destabilizing
-      core capabilities.
+    description: Systems designed to sustain capability under changing environments by making adaptation a controlled, testable
+      process (not periodic global retraining).
     count: 1
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3351,7 +3327,7 @@ phases:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: autoscan
     description: Automated Φ-trace scan detecting daily Δ→GC→CF, Φₚ plateaus, and coherence echoes for predictive fossilization.
-    count: 90
+    count: 92
     pulses:
     - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
@@ -3372,8 +3348,8 @@ phases:
     count: 0
     pulses: []
   - tag: calibration_overhead
-    description: Time/compute/data cost required to keep a system aligned with current conditions (recalibration, retuning,
-      monitoring).
+    description: 'The increasing operational tax required to keep a system reliable: more frequent recalibration, longer inference,
+      more retries, larger safety buffers, higher monitoring/compute—often an early indicator of drift.'
     count: 1
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3384,7 +3360,8 @@ phases:
     pulses:
     - 2025-12-29_coupling-selection_cf
   - tag: catastrophic_forgetting
-    description: Loss of previously learned capabilities after adapting to new data/tasks due to uncontrolled parameter updates.
+    description: Loss of previously stable competencies due to adaptation; treated as a measurable control failure, not an
+      inevitable side-effect of learning.
     count: 1
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3500,8 +3477,8 @@ phases:
     - 2025-11-26_chatgpt_field-emergence_coherence-waveguide
     - 2025-11-27_chatgpt_field-emergence_coherence-waveguide
   - tag: compiling
-    description: Transforming goals/queries into executable plans or representations (prompts, tool calls, circuits) with
-      constraints embedded.
+    description: 'Translating intent/task constraints into executable control: where to apply precision, when to recalibrate,
+      what to freeze, and which invariants to enforce.'
     count: 1
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3567,6 +3544,13 @@ phases:
     pulses:
     - 2025-10-23_gradient_capitalism_grok_reception
     - 2025-10-23_gradient_capitalism_mistral_reception
+  - tag: drift
+    description: 'Any persistent shift that degrades performance or reliability: distribution shift, error-mode change, latency/I-O
+      creep, or confidence–reality divergence—measured as Δ signals over time.'
+    count: 2
+    pulses:
+    - 2025-08-01_phi-mesh-exec-drift
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: echo_compiler
     description: Compiler that distils kernel echoes into reusable symmetries. A coherence-layer mechanism that harvests echoes
       from coherence_kernel invocations—semantic, structural, or humorous—and compiles them into reusable, architecture-agnostic
@@ -3634,7 +3618,8 @@ phases:
     pulses:
     - 2025-11-11_RGpx_ProtoProof_Integration
   - tag: falsifier
-    description: A concrete observation or test outcome that would prove the claim/control scheme wrong and force revision.
+    description: A defined failure condition that, if observed, invalidates the current Δ/GC/CF partition or invariant battery—forcing
+      grammar revision, not weight-churn.
     count: 1
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3813,8 +3798,8 @@ phases:
     pulses:
     - 2025-11-28_kimi_cognitive-reverberation_informational-supertwist
   - tag: invariants
-    description: Quantities/constraints that must remain stable across updates; used as acceptance gates to prevent regression
-      and identity loss.
+    description: Non-negotiable constraints (safety, identity anchors, competence anchors) that updates must not violate;
+      used as acceptance-gate tests.
     count: 1
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3875,7 +3860,7 @@ phases:
   - tag: memory_bifurcation
     description: When coherence outruns representation, the system divides memory paths — leading either to stabilization
       or geometric failure.
-    count: 95
+    count: 97
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -4018,7 +4003,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 96
+    count: 98
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
@@ -4166,11 +4151,23 @@ phases:
     count: 1
     pulses:
     - 2025-09-23_triad_of_resonance
+  - tag: routing
+    description: Dynamic selection of submodules/paths/tools to handle a request under current drift conditions; used to localize
+      adaptation and reduce blast radius.
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: sacred_boredom
     description: ''
     count: 1
     pulses:
     - 2025-11-22_grok_recursive-self-unbinding_x_sacred-boredom
+  - tag: scheduling
+    description: Timing policy for interventions (verification, recalibration, localized tuning, tool-use) to prevent drift
+      accumulation and avoid expensive global retrains.
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: self_healing_structures
     description: Architectures that repair coherence from within. Using embedded sensing and recursive adjustment, such systems
       convert damage into signal — re-aligning with least-action paths through local reformation.
@@ -4310,6 +4307,12 @@ phases:
     count: 1
     pulses:
     - 2025-09-23_triad_of_resonance
+  - tag: verification_loops
+    description: Scheduled self-check cycles (parallel or staged) that test candidate adaptations against invariants/regression
+      suites before committing; operationalizes “trust through verification.”
+    count: 1
+    pulses:
+    - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
   - tag: whitehead_alfred_north
     description: ''
     count: 2
