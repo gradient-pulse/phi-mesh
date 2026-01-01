@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-01T11:00:09Z'
+  generated_at: '2026-01-01T11:10:21Z'
 phases:
   delta:
   - tag: agenservoir
@@ -4253,6 +4253,13 @@ phases:
     count: 1
     pulses:
     - 2025-11-26_kimi_resonance-monopole_temporal-solenoid
+  - tag: theory_gap
+    description: 'The persistent mismatch between knowing how to build/train a system and having a predictive, falsifiable
+      account of when/why it will work or fail. In RGPx terms: the gap closes only when we specify a transition grammar (Δ→GC→CF),
+      define measurable invariants, and install verification loops + a falsifier so performance regimes become predictable
+      rather than post-hoc explained.'
+    count: 0
+    pulses: []
   - tag: thermal_photonic_emission
     description: The use of selective radiation to redirect excess heat as coherent light or thrust. By tuning emissivity
       and photon phase, RGP systems transform entropy into ordered output—heat expressed as information and motion.
