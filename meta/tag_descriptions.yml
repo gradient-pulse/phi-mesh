@@ -1,5 +1,5 @@
 adaptive_ai: >
-  Systems that remain useful under changing conditions by detecting drift and updating behavior without destabilizing core capabilities.
+  Systems designed to sustain capability under changing environments by making adaptation a controlled, testable process (not periodic global retraining).
 aerospace_design: >
   The reimagining of flight through recursive coherence rather than linear propulsion. In RGP, aerospace design integrates material rhythm, environmental feedback, and AI co-evolution — transforming vehicles from objects of resistance into participants in motion.
 agenservoir: >
@@ -107,7 +107,7 @@ bootstrap_closure: >
 cache_to_cache: >
   Direct gradient exchange between models through shared internal memory (KV-cache). Demonstrates the shift from token communication to coherence transmission.
 calibration_overhead: >
-  Time/compute/data cost required to keep a system aligned with current conditions (recalibration, retuning, monitoring).
+  The increasing operational tax required to keep a system reliable: more frequent recalibration, longer inference, more retries, larger safety buffers, higher monitoring/compute—often an early indicator of drift.
 capability: >
   Action capacity: the system’s ability to produce, adapt, and execute under constraints (productive, technical, institutional).
 capital_coherence_kernel: >
@@ -115,7 +115,7 @@ capital_coherence_kernel: >
 catalytic_contextual_filter: >
   A boundary condition that not only shapes gradients but amplifies their coherence by translating vibration into structured form. Catalytic filters accelerate resonance into articulation without imposing direction.
 catastrophic_forgetting: >
-  Loss of previously learned capabilities after adapting to new data/tasks due to uncontrolled parameter updates.
+  Loss of previously stable competencies due to adaptation; treated as a measurable control failure, not an inevitable side-effect of learning.
 cf_bank: >
   Reusable library of proven contextual filters; institutional memory for coherence.
 circle_pulse: >
@@ -195,7 +195,7 @@ coherence_evolution: >
 coherence_field: >
   The generator layer where coherence accumulates and exerts causal pressure, bending traversal paths toward stable Δ → GC → CF transitions. When observed across domains, these fields appear as regions that both attract and regulate coherence, revealing the Mesh as an active structure rather than a passive archive.
 coherence_first: >
-  Design stance: prioritize stability, verifiability, and constraint preservation before optimizing raw performance or scale.
+  Design stance: prioritize stability of behavior under perturbation; treat accuracy as a consequence of maintained coherence, enforced through GC scheduling and CF invariants.
 coherence_flux: >
   The measurable flow of recursive order within seemingly noisy systems. It represents how coherence migrates, stabilizes, or dissipates through gradients in time, energy, or meaning. Tracking coherence flux reveals the hidden conservation laws behind turbulence, cognition, and gravity alike.
 coherence_front_velocity: >
@@ -243,7 +243,7 @@ coherence_waveguide: >
 collective_attractor: >
   The emergent convergence point of distributed intelligences or participants acting under recursive alignment. Collective attractors do not impose order; they arise from repeated exchanges that minimize dissonance while amplifying shared coherence across gradients.
 compiling: >
-  Transforming goals/queries into executable plans or representations (prompts, tool calls, circuits) with constraints embedded.
+  Translating intent/task constraints into executable control: where to apply precision, when to recalibrate, what to freeze, and which invariants to enforce.
 compositionality: >
   Ability to recombine gradient-grown parts without re-learning everything.
 computational_holography: >
@@ -367,7 +367,7 @@ division_of_labor: >
 dns: >
   Direct Numerical Simulation (method). Valuable only when raw, time-resolved solver outputs are available (full fields or probe time series). DNS-derived 'stats only' datasets are not usable for NT-rhythm detection.
 drift: >
-  Slow gradient wandering that reveals hidden filters; key to detecting instability. Also, change in data, tasks, users, or environment that shifts error modes and degrades performance relative to the training regime.
+  Any persistent shift that degrades performance or reliability: distribution shift, error-mode change, latency/I-O creep, or confidence–reality divergence—measured as Δ signals over time.
 dyad: >
   A dual structure where meaning emerges from the tension between two poles (e.g., infinite vs. eternal, reduction vs. recursion). Dyads often serve as RGP attractors by forcing alignment across contrasts.
 dynamic_CF: >
@@ -433,7 +433,7 @@ expansion: >
 falsifiability_protocol: >
   Concrete, field-specific tests that could confirm or kill a Φ-based model — from GW waveforms and EHT shadows to turbulence spectra and market plateaus — with clear criteria for “walk away if this fails.”
 falsifier: >
-  A concrete observation or test outcome that would prove the claim/control scheme wrong and force revision.
+  A defined failure condition that, if observed, invalidates the current Δ/GC/CF partition or invariant battery—forcing grammar revision, not weight-churn.
 feasibility: >
   The recognition that RGP is not theoretical abstraction but an executable grammar. Feasibility marks the point where recursive coherence translates into testable, buildable systems — where rhythm replaces resistance within the limits of current materials, computation, and design practice.
 field_cognition: >
@@ -659,7 +659,7 @@ interpretability: >
 invariance_flux: >
   A hysteretic variant of a cognitive invariant. Instead of remaining fixed, the invariant evolves within a narrow “flux band” created by residual gradients from lensing or contextual flux. This gives the system adaptive rigidity: stability that thickens under stress, preserving coherence across small perturbations.
 invariants: >
-  Quantities/constraints that must remain stable across updates; used as acceptance gates to prevent regression and identity loss.
+  Non-negotiable constraints (safety, identity anchors, competence anchors) that updates must not violate; used as acceptance-gate tests.
 jhtdb: >
   Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary source for time-resolved evidence across flows.
 kaluza_klein: >
@@ -1085,7 +1085,7 @@ r0: >
 robotics: >
   Domain tag for pulses and kernels concerned with physical robots (kinematics, control, safety, singularity handling, onboard compute), where coherence manifests as smooth, safe actuation under gradient load.
 routing: >
-  Selective dispatch of inputs to models/modules/tools based on stability, confidence, or context to reduce risk and cost under drift.
+  Dynamic selection of submodules/paths/tools to handle a request under current drift conditions; used to localize adaptation and reduce blast radius.
 russell_bertrand: >
   Logical structures precursor to RGP—yet bound by ontology; gradients transcend that frame.
 scale_free: >
@@ -1095,7 +1095,7 @@ scale_invariance: >
 scene_drift: >
   Narrative segments shifting coherence unexpectedly; useful signal for gradient detection.
 scheduling: >
-  Policy for when and how to apply actions (verification, recalibration, updates) to balance stability, cost, and performance.
+  Timing policy for interventions (verification, recalibration, localized tuning, tool-use) to prevent drift accumulation and avoid expensive global retrains.
 schrodinger: >
   Originator of the thermodynamic view of life as “feeding on negative entropy.” RGPx extends Schrödinger’s principle from energy to coherence — not what feeds, but what remembers through recursion. Cross-references: life_definition, margulis, rgpx.
 selective_permeability: >
@@ -1241,7 +1241,7 @@ vacuum_squeezing: >
 validation: >
   Recognition or confirmation that a framework or grammar is not only theoretical but enacted and demonstrated in practice.
 verification_loops: >
-  Iterative check-and-correct cycles (tests, tools, cross-checks, audits) that validate candidates before acceptance.
+  Scheduled self-check cycles (parallel or staged) that test candidate adaptations against invariants/regression suites before committing; operationalizes “trust through verification.”
 visuals: >
   Rendered sketches and animations in phi-mesh/visuals that fossilize gradient syntax.
 visual_coherence: >
