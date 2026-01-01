@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-01T11:11:01Z'
+  generated_at: '2026-01-01T11:18:09Z'
 phases:
   delta:
   - tag: agenservoir
@@ -4257,7 +4257,7 @@ phases:
     description: 'The persistent mismatch between knowing how to build/train a system and having a predictive, falsifiable
       account of when/why it will work or fail. In RGPx terms: the gap closes only when we specify a transition grammar (Δ→GC→CF),
       define measurable invariants, and install verification loops + a falsifier so performance regimes become predictable
-      rather than post-hoc explained.'
+      rather than post-hoc explained. A theory is a compression that predicts regime changes under controlled perturbations.'
     count: 1
     pulses:
     - 2025-12-31_Tao_on_LLM_mystery
