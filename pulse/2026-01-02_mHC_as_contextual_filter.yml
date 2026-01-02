@@ -13,9 +13,10 @@ summary: >
     intervention: "Adapt manifold projection strength or frequency online using the proxy."
     predicted_curve: "Stability + final performance improve vs any fixed projection tightness, especially at scale."
   
-  note:
-    Proxy must be explicitly defined (e.g., mixing amplification or a cheap Jacobian-spectrum estimate). Gradient-norm alone is not Jacobian drift.
-  
+  notes:
+    - Proxy must be explicitly defined (e.g., mixing amplification or a cheap Jacobian-spectrum estimate). Gradient-norm alone is not Jacobian drift.
+    - NotebookLM synthesis: frames Δ→GC→CF→UD as an adaptive stability loop (cheap proxy → tighten/loosen) rather than rigidity.
+    
   provenance: 
     triggered by a DeepSeek exchange on the mHC arXiv abstract screenshot.
 tags:
