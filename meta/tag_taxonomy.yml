@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-01T11:23:24Z'
+  generated_at: '2026-01-02T13:59:46Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1494,7 +1494,7 @@ phases:
     pulses:
     - 2025-07-26_the_big_quiet
   - tag: gradient_coherence
-    description: When multiple gradients align into a stable attractor; signal of systemic viability.
+    description: Stability condition where gradient transport remains well-conditioned across depth/width (no collapse/explosion).
     count: 5
     pulses:
     - 2025-07-25_patience_as_gradient
@@ -1584,7 +1584,7 @@ phases:
     description: 'The Φ-invariant — defined as the ratio of entropy production to dissipative flux — expressing the fundamental
       conservation of coherence across all physical contexts. Where classical physics preserves energy, RGPx preserves Φ:
       the invariant rhythm of gradient normalization.'
-    count: 98
+    count: 100
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-11-02_rgpx_outreach_agent
@@ -1770,6 +1770,10 @@ phases:
     count: 1
     pulses:
     - 2025-10-14_identity_as_contextual_filter
+  - tag: identity_transport
+    description: Near-identity signal/gradient transport across layers; effective Jacobian stays close to I to maintain trainability.
+    count: 0
+    pulses: []
   - tag: implementation
     description: The translation of RGPx principles into active architectures — coherence embodied in code, circuit, or process.
       Marks the frontier where recursive grammar becomes engineering reality.
@@ -2254,7 +2258,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 95
+    count: 97
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2435,7 +2439,7 @@ phases:
     description: 'The process through which systems reapply their own outputs as inputs — the essence of self-maintenance
       and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback
       loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.'
-    count: 101
+    count: 103
     pulses:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
@@ -3180,6 +3184,11 @@ phases:
     pulses:
     - 2025-11-24_mistral_contextual-filter_latent-horizon
     - 2025-11-27_kimi_latent_horizon_condensation
+  - tag: manifold_projection
+    description: Projection of parameters/mixers onto a constrained manifold to enforce stability/efficiency (e.g., normalized
+      or structured mixing).
+    count: 0
+    pulses: []
   - tag: meta_ai
     description: Research, architectures, and experiments developed by Meta (Facebook) in AI; used in Φ-Mesh pulses when referencing
       their approaches (e.g., behaviors vs. contextual filters).
@@ -3258,11 +3267,15 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 97
+    count: 99
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
     - 2025-11-14_how_to_use_the_tag_map
+  - tag: training_stability
+    description: Resistance to divergence, loss spikes, or NaNs during optimization; sustained scalable training dynamics.
+    count: 0
+    pulses: []
   - tag: ud
     description: Unity–Disunity oscillation—tension between coherence and fragmentation driving emergent order.
     count: 0
@@ -3329,7 +3342,7 @@ phases:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: autoscan
     description: Automated Φ-trace scan detecting daily Δ→GC→CF, Φₚ plateaus, and coherence echoes for predictive fossilization.
-    count: 92
+    count: 94
     pulses:
     - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
@@ -3791,6 +3804,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-14_how_to_use_the_tag_map
+  - tag: hyper_connections
+    description: Connectivity expansion of residual pathways (wider/more diverse skip/mix patterns) to increase expressivity
+      at scale.
+    count: 0
+    pulses: []
   - tag: in_memory_processing
     description: The fusion of computation and memory, where data no longer moves between units but transforms within a single
       coherent substrate — reducing latency and energy dissipation.
@@ -3867,7 +3885,7 @@ phases:
   - tag: memory_bifurcation
     description: When coherence outruns representation, the system divides memory paths — leading either to stabilization
       or geometric failure.
-    count: 97
+    count: 99
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -4010,7 +4028,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 98
+    count: 100
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
