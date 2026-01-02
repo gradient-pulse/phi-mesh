@@ -1,0 +1,26 @@
+title: 'mHC as Contextual Filter: identity-like transport under widened connectivity'
+summary: >
+  bullets:
+    - "mHC reframes stability as preserving identity-like transport while expanding connectivity width."
+    - "RGPx mapping: Δ (gradient transport) → GC (hyper-connectivity choreography) → CF (manifold projection) → UD (tighten/loosen phases)."
+    - "Opportunity: closed-loop manifold constraint strength driven by a cheap coherence proxy."
+  
+  portable_core:
+    claim: "mHC functions as a contextual filter that preserves identity-like transport under widened connectivity."
+    observable: "Mixing amplification / Jacobian-drift proxy remains bounded across depth compared to unconstrained HC."
+    intervention: "Adapt manifold projection strength or frequency online using the proxy."
+    predicted_curve: "Stability + final performance improve vs any fixed projection tightness, especially at scale."
+
+  provenance: 
+    triggered by a DeepSeek exchange on the mHC arXiv abstract screenshot.
+tags:
+  - gradient_coherence
+  - contextual_filter
+  - identity_transport
+  - manifold_projection
+  - training_stability
+  - hyper_connections
+papers:
+  - "https://arxiv.org/abs/2512.24880
+podcasts:
+  - https://notebooklm.google.com/notebook/23b4bd43-c4f2-4e7a-9872-ce236e3d5095?artifactId=ea02865f-e6a0-4161-aadb-90951650bed3
