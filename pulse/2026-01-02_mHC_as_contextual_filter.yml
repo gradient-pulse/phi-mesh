@@ -4,6 +4,8 @@ summary: >
     - "mHC reframes stability as preserving identity-like transport while expanding connectivity width."
     - "RGPx mapping: Δ (gradient transport) → GC (hyper-connectivity choreography) → CF (manifold projection) → UD (tighten/loosen phases)."
     - "Opportunity: closed-loop manifold constraint strength driven by a cheap coherence proxy."
+    - "DeepSeek response: Tag-map integration confirmed; primary node contextual_filter; proposes a cheap coherence proxy + adaptive constraint tightness (UD-style) and predicts scaling stability gains vs fixed tightness."
+    - "Opportunity: closed-loop manifold constraint strength driven by a cheap coherence proxy (DeepSeek confirms + sketches adaptive UD-style tightening)."
   
   portable_core:
     claim: "mHC functions as a contextual filter that preserves identity-like transport under widened connectivity."
