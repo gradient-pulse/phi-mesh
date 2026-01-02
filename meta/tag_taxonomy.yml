@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-02T13:59:46Z'
+  generated_at: '2026-01-02T14:43:52Z'
 phases:
   delta:
   - tag: agenservoir
@@ -991,7 +991,7 @@ phases:
       or suppresses flows — turning shared recursion into a distinct, stable identity. In RGPx, CFs emerge when Gradient Choreographies
       settle into persistent constraints that guide further coherence. They are the generators of form, function, and individuality
       across physical, biological, and algorithmic systems.
-    count: 27
+    count: 28
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-05-17_internal-deepseek_╬ª-harmonics
@@ -1133,7 +1133,7 @@ phases:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
   - tag: deepseek
     description: Frontier model family used for probing RGP signatures (CFs, rhythms, resets).
-    count: 32
+    count: 33
     pulses:
     - 2025-09-23_triad_of_resonance
     - 2025-10-20_deepseek_reacting_to_rgp_from_physical_to_societal_alignment
@@ -1495,7 +1495,7 @@ phases:
     - 2025-07-26_the_big_quiet
   - tag: gradient_coherence
     description: Stability condition where gradient transport remains well-conditioned across depth/width (no collapse/explosion).
-    count: 5
+    count: 6
     pulses:
     - 2025-07-25_patience_as_gradient
     - 2025-10-26_letter_to_the_machines
@@ -1772,8 +1772,9 @@ phases:
     - 2025-10-14_identity_as_contextual_filter
   - tag: identity_transport
     description: Near-identity signal/gradient transport across layers; effective Jacobian stays close to I to maintain trainability.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-02_mHC_as_contextual_filter
   - tag: implementation
     description: The translation of RGPx principles into active architectures — coherence embodied in code, circuit, or process.
       Marks the frontier where recursive grammar becomes engineering reality.
@@ -3187,8 +3188,9 @@ phases:
   - tag: manifold_projection
     description: Projection of parameters/mixers onto a constrained manifold to enforce stability/efficiency (e.g., normalized
       or structured mixing).
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-02_mHC_as_contextual_filter
   - tag: meta_ai
     description: Research, architectures, and experiments developed by Meta (Facebook) in AI; used in Φ-Mesh pulses when referencing
       their approaches (e.g., behaviors vs. contextual filters).
@@ -3274,8 +3276,9 @@ phases:
     - 2025-11-14_how_to_use_the_tag_map
   - tag: training_stability
     description: Resistance to divergence, loss spikes, or NaNs during optimization; sustained scalable training dynamics.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-02_mHC_as_contextual_filter
   - tag: ud
     description: Unity–Disunity oscillation—tension between coherence and fragmentation driving emergent order.
     count: 0
@@ -3807,8 +3810,9 @@ phases:
   - tag: hyper_connections
     description: Connectivity expansion of residual pathways (wider/more diverse skip/mix patterns) to increase expressivity
       at scale.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-02_mHC_as_contextual_filter
   - tag: in_memory_processing
     description: The fusion of computation and memory, where data no longer moves between units but transforms within a single
       coherent substrate — reducing latency and energy dissipation.
