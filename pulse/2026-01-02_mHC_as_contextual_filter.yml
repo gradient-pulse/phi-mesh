@@ -12,7 +12,10 @@ summary: >
     observable: "Mixing amplification / Jacobian-drift proxy remains bounded across depth compared to unconstrained HC."
     intervention: "Adapt manifold projection strength or frequency online using the proxy."
     predicted_curve: "Stability + final performance improve vs any fixed projection tightness, especially at scale."
-
+  
+  note:
+    Proxy must be explicitly defined (e.g., mixing amplification or a cheap Jacobian-spectrum estimate). Gradient-norm alone is not Jacobian drift.
+  
   provenance: 
     triggered by a DeepSeek exchange on the mHC arXiv abstract screenshot.
 tags:
