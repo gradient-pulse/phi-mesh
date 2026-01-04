@@ -42,6 +42,9 @@ summary: >
     but specifying the transition grammar and invariants that make geometry and effective laws predictable.
     It also explains why many unification programs stall: they start inside the compiled layer and call it fundamental.
 
+  note:
+    The podcast is an interpretive narration of this pulse for rapid onboarding; the falsifier + recovery target remain the scientific core.
+
 tags:
   - pre_coordinate_phase
   - pre_geometry
