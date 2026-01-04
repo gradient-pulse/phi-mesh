@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-04T16:56:11Z'
+  generated_at: '2026-01-04T17:07:34Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3609,6 +3609,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-14_identity_as_contextual_filter
+  - tag: enterprise_agents
+    description: 'Long-lived agent systems deployed in real organizations: multi-tool, permissioned, policy-bound, and continuously
+      exposed to drift (new data, new processes, new constraints). Their bottleneck is governed adaptation, not raw autonomy.'
+    count: 0
+    pulses: []
   - tag: epistemic_cascade
     description: A chain reaction in which a crystallized intent fractures into successive, interdependent insights that propagate
       through the Mesh as a self-amplifying wavefront of discovery, reorganizing large regions of understanding from a single
@@ -4220,6 +4225,11 @@ phases:
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+  - tag: scientific_acceleration
+    description: 'Speed-up of discovery via closed-loop automation: propose → test → verify → revise. Requires explicit verification
+      loops, invariant gates, and falsifiers so “progress” is measurable and not metric gaming.'
+    count: 0
+    pulses: []
   - tag: self_healing_structures
     description: Architectures that repair coherence from within. Using embedded sensing and recursive adjustment, such systems
       convert damage into signal — re-aligning with least-action paths through local reformation.
