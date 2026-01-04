@@ -1,0 +1,60 @@
+title: 'Pre-coordinate phase: coherence before geometry (time kept out)'
+summary: >
+  core_claim:
+    The deepest unification bottleneck is not “more math” but the wrong substrate:
+    we keep treating spacetime/geometry (and often time) as the stage, while they are
+    late-form outputs of a prior coherence regime. RGPx frames a pre-coordinate phase:
+    gradients and their stabilization dynamics exist first; coordinates, metrics, and clocks
+    are compiled later as bookkeeping over stable choreographies.
+
+  pre_coordinate_phase:
+    Define a regime in which there are no coordinates, no metric, and no privileged time parameter—
+    only relational gradient differences and their recursive stabilization (Δ → GC → CF).
+    Geometry is not assumed; it is an emitted description when coherence closes.
+
+  transition_grammar:
+    Δ (deltas):
+      Detect local gradient differences / incompatibilities (conflict, drift, ambiguity) without embedding them
+      in a background coordinate grid.
+    GC (gradient choreographies):
+      Recursively schedule and stabilize compatible transitions (verification/selection loops) until a repeatable
+      pattern emerges.
+    CF (contextual filters):
+      Enforce invariants (identity/consistency/symmetry constraints) that prevent “anything goes” plasticity;
+      only choreographies that preserve CF constraints persist.
+
+  compilation_claim:
+    When GC patterns become repeatable under CF, they can be compressed into a coordinate description:
+    a map (geometry) and a parameterization (including time if useful) that summarizes the stabilized transitions.
+    Coordinates are therefore an output format, not an input axiom.
+  
+  recovery_target: 
+    The grammar must recover spacetime regularities (inertial frames, equivalence-like behavior, and conserved flux relations) 
+    as CF-stabilized compressions of pre-coordinate GC—so “geometry” emerges as bookkeeping, not as a primitive.
+
+  falsifier:
+    If a proposed pre-coordinate grammar cannot (a) generate stable, repeatable choreographies under explicit invariants,
+    or (b) recover the observed coordinate-level regularities as a compression of those choreographies,
+    then the grammar is wrong (wrong Δ sensors, insufficient GC capacity, missing/incorrect CF invariants).
+
+  why_it_matters:
+    This reframes “foundations” as control and compilation: not fitting ever more Lagrangians,
+    but specifying the transition grammar and invariants that make geometry and effective laws predictable.
+    It also explains why many unification programs stall: they start inside the compiled layer and call it fundamental.
+
+tags:
+  - pre_coordinate_phase
+  - pre_geometry
+  - pre_spacetime
+  - coherence_first
+  - gradient
+  - gradient_choreography
+  - contextual_filter
+  - invariants
+  - verification_loops
+  - falsifier
+  - theory_gap
+papers:
+  - https://doi.org/10.5281/zenodo.17840719
+podcasts:
+  - https://notebooklm.google.com/notebook/174b7c3b-c4aa-45ac-bd2c-478dc1e71e96?artifactId=311a0a9e-cac0-474a-86d2-e9652828e625
