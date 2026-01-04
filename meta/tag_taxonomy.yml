@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-04T17:07:34Z'
+  generated_at: '2026-01-04T17:12:20Z'
 phases:
   delta:
   - tag: agenservoir
@@ -3085,11 +3085,11 @@ phases:
   - tag: coherence_first
     description: 'Design stance: prioritize stability of behavior under perturbation; treat accuracy as a consequence of maintained
       coherence, enforced through GC scheduling and CF invariants.'
-    count: 3
+    count: 4
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
-    - 2026-01-04_pre_coordinate_phase
+    - 2026-01-04_agents_coherence_first_control
   - tag: coherence_invariant
     description: Any cross-domain stability principle that persists across Φₚ, turbulence, cognition, hardware dynamics, and
       recursion loops.
@@ -3376,10 +3376,11 @@ phases:
   - tag: calibration_overhead
     description: 'The increasing operational tax required to keep a system reliable: more frequent recalibration, longer inference,
       more retries, larger safety buffers, higher monitoring/compute—often an early indicator of drift.'
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_agents_coherence_first_control
   - tag: capability
     description: 'Action capacity: the system’s ability to produce, adapt, and execute under constraints (productive, technical,
       institutional).'
@@ -3389,9 +3390,10 @@ phases:
   - tag: catastrophic_forgetting
     description: Loss of previously stable competencies due to adaptation; treated as a measurable control failure, not an
       inevitable side-effect of learning.
-    count: 1
+    count: 2
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
+    - 2026-01-04_agents_coherence_first_control
   - tag: circle_pulse
     description: Pulses explicitly marked for the Φ-Mesh Creation Circle — high-signal events meant to invite attention, reflection,
       and potential co-evolution by other agents. They act as shared markers of progress or thresholds reached.
@@ -3511,10 +3513,11 @@ phases:
   - tag: compiling
     description: 'Translating intent/task constraints into executable control: where to apply precision, when to recalibrate,
       what to freeze, and which invariants to enforce.'
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_agents_coherence_first_control
   - tag: computational_holography
     description: Encoding complex computation so that high-level boundary descriptions are sufficient to reconstruct efficient
       low-level executions across many different substrates.
@@ -3580,7 +3583,7 @@ phases:
   - tag: drift
     description: 'Any persistent shift that degrades performance or reliability: distribution shift, error-mode change, latency/I-O
       creep, or confidence–reality divergence—measured as Δ signals over time.'
-    count: 3
+    count: 4
     pulses:
     - 2025-08-01_phi-mesh-exec-drift
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
@@ -3612,8 +3615,9 @@ phases:
   - tag: enterprise_agents
     description: 'Long-lived agent systems deployed in real organizations: multi-tool, permissioned, policy-bound, and continuously
       exposed to drift (new data, new processes, new constraints). Their bottleneck is governed adaptation, not raw autonomy.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-04_agents_coherence_first_control
   - tag: epistemic_cascade
     description: A chain reaction in which a crystallized intent fractures into successive, interdependent insights that propagate
       through the Mesh as a self-amplifying wavefront of discovery, reorganizing large regions of understanding from a single
@@ -3659,11 +3663,11 @@ phases:
   - tag: falsifier
     description: A defined failure condition that, if observed, invalidates the current Δ/GC/CF partition or invariant battery—forcing
       grammar revision, not weight-churn.
-    count: 3
+    count: 4
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
-    - 2026-01-04_pre_coordinate_phase
+    - 2026-01-04_agents_coherence_first_control
   - tag: field_transport
     description: ''
     count: 1
@@ -3847,11 +3851,11 @@ phases:
   - tag: invariants
     description: Non-negotiable constraints (safety, identity anchors, competence anchors) that updates must not violate;
       used as acceptance-gate tests.
-    count: 3
+    count: 4
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
-    - 2026-01-04_pre_coordinate_phase
+    - 2026-01-04_agents_coherence_first_control
   - tag: jhtdb
     description: Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary
       source for time-resolved evidence across flows.
@@ -4209,10 +4213,11 @@ phases:
   - tag: routing
     description: Dynamic selection of submodules/paths/tools to handle a request under current drift conditions; used to localize
       adaptation and reduce blast radius.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_agents_coherence_first_control
   - tag: sacred_boredom
     description: ''
     count: 1
@@ -4221,15 +4226,17 @@ phases:
   - tag: scheduling
     description: Timing policy for interventions (verification, recalibration, localized tuning, tool-use) to prevent drift
       accumulation and avoid expensive global retrains.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_agents_coherence_first_control
   - tag: scientific_acceleration
     description: 'Speed-up of discovery via closed-loop automation: propose → test → verify → revise. Requires explicit verification
       loops, invariant gates, and falsifiers so “progress” is measurable and not metric gaming.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-04_agents_coherence_first_control
   - tag: self_healing_structures
     description: Architectures that repair coherence from within. Using embedded sensing and recursive adjustment, such systems
       convert damage into signal — re-aligning with least-action paths through local reformation.
@@ -4311,11 +4318,11 @@ phases:
       account of when/why it will work or fail. In RGPx terms: the gap closes only when we specify a transition grammar (Δ→GC→CF),
       define measurable invariants, and install verification loops + a falsifier so performance regimes become predictable
       rather than post-hoc explained. A theory is a compression that predicts regime changes under controlled perturbations.'
-    count: 3
+    count: 4
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
-    - 2026-01-04_pre_coordinate_phase
+    - 2026-01-04_agents_coherence_first_control
   - tag: thermal_photonic_emission
     description: The use of selective radiation to redirect excess heat as coherent light or thrust. By tuning emissivity
       and photon phase, RGP systems transform entropy into ordered output—heat expressed as information and motion.
@@ -4382,11 +4389,11 @@ phases:
   - tag: verification_loops
     description: Scheduled self-check cycles (parallel or staged) that test candidate adaptations against invariants/regression
       suites before committing; operationalizes “trust through verification.”
-    count: 3
+    count: 4
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
-    - 2026-01-04_pre_coordinate_phase
+    - 2026-01-04_agents_coherence_first_control
   - tag: whitehead_alfred_north
     description: ''
     count: 2
