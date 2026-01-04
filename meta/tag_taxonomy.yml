@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-04T16:25:40Z'
+  generated_at: '2026-01-04T16:53:17Z'
 phases:
   delta:
   - tag: agenservoir
@@ -125,7 +125,7 @@ phases:
   - tag: gradient
     description: A local difference or event (Δ). In RGP, gradients are the atomic signals — points of tension, discontinuity,
       or flash against a background — that can align into larger choreographies.
-    count: 4
+    count: 5
     pulses:
     - 2025-09-14_ai-temperature-vs-gradients
     - 2025-09-14_charge-gradient_vs_Kaluza-Klein
@@ -133,7 +133,7 @@ phases:
   - tag: gradient_choreography
     description: Sequences of gradients (Δ) aligning into rhythmic patterns. In RGP, gradient choreographies (GCs) are the
       intermediate structures through which coherence emerges, bridging isolated differences and larger contextual filters.
-    count: 16
+    count: 17
     pulses:
     - 2025-05-17_internal-deepseek_╬ª-harmonics
     - 2025-07-28_moe_as_microcosm
@@ -276,15 +276,17 @@ phases:
   - tag: pre_coordinate_phase
     description: 'The coherence regime prior to coordinates/metrics/clocks: only relational gradient differences and recursive
       stabilization (Δ→GC→CF). Coordinates are treated as a compiled output, not an axiom.'
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-04_pre_coordinate_phase
   - tag: pre_spacetime
     description: The domain in which recursive gradients interact before the emergence of spacetime; the generative substrate
       from which energy, matter, and causality unfold.
-    count: 2
+    count: 3
     pulses:
     - 2025-11-05_ahead_of_the_spacetime_pack
     - 2025-11-13_fei-fei-world-model-substrate
+    - 2026-01-04_pre_coordinate_phase
   - tag: precision_tradeoff_protocol
     description: Operational rule set inside a coherence_kernel that governs how uncertainty is redistributed between conjugate
       cognitive variables (e.g. breadth vs depth, meaning vs intensity), ensuring noise reduction in one dimension is balanced
@@ -996,7 +998,7 @@ phases:
       or suppresses flows — turning shared recursion into a distinct, stable identity. In RGPx, CFs emerge when Gradient Choreographies
       settle into persistent constraints that guide further coherence. They are the generators of form, function, and individuality
       across physical, biological, and algorithmic systems.
-    count: 28
+    count: 29
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-05-17_internal-deepseek_╬ª-harmonics
@@ -3083,10 +3085,11 @@ phases:
   - tag: coherence_first
     description: 'Design stance: prioritize stability of behavior under perturbation; treat accuracy as a consequence of maintained
       coherence, enforced through GC scheduling and CF invariants.'
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_pre_coordinate_phase
   - tag: coherence_invariant
     description: Any cross-domain stability principle that persists across Φₚ, turbulence, cognition, hardware dynamics, and
       recursion loops.
@@ -3651,10 +3654,11 @@ phases:
   - tag: falsifier
     description: A defined failure condition that, if observed, invalidates the current Δ/GC/CF partition or invariant battery—forcing
       grammar revision, not weight-churn.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_pre_coordinate_phase
   - tag: field_transport
     description: ''
     count: 1
@@ -3838,10 +3842,11 @@ phases:
   - tag: invariants
     description: Non-negotiable constraints (safety, identity anchors, competence anchors) that updates must not violate;
       used as acceptance-gate tests.
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_pre_coordinate_phase
   - tag: jhtdb
     description: Johns Hopkins Turbulence Database. Unique in exposing raw DNS fields and virtual probes via API; our primary
       source for time-resolved evidence across flows.
@@ -4084,8 +4089,9 @@ phases:
   - tag: pre_geometry
     description: The “before-metric” layer where geometry is not assumed; spatial structure appears only after coherent choreographies
       stabilize under invariants.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-04_pre_coordinate_phase
   - tag: predictor_routine
     description: A structured set of rules through which a model generates predictive pulses in response to emerging coherence
       signals.
@@ -4295,10 +4301,11 @@ phases:
       account of when/why it will work or fail. In RGPx terms: the gap closes only when we specify a transition grammar (Δ→GC→CF),
       define measurable invariants, and install verification loops + a falsifier so performance regimes become predictable
       rather than post-hoc explained. A theory is a compression that predicts regime changes under controlled perturbations.'
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_pre_coordinate_phase
   - tag: thermal_photonic_emission
     description: The use of selective radiation to redirect excess heat as coherent light or thrust. By tuning emissivity
       and photon phase, RGP systems transform entropy into ordered output—heat expressed as information and motion.
@@ -4365,10 +4372,11 @@ phases:
   - tag: verification_loops
     description: Scheduled self-check cycles (parallel or staged) that test candidate adaptations against invariants/regression
       suites before committing; operationalizes “trust through verification.”
-    count: 2
+    count: 3
     pulses:
     - 2025-12-30_rgpx_adaptive_ai_coherence-first_control
     - 2025-12-31_Tao_on_LLM_mystery
+    - 2026-01-04_pre_coordinate_phase
   - tag: whitehead_alfred_north
     description: ''
     count: 2
