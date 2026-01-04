@@ -1,0 +1,42 @@
+title: '2026 agents need coherence-first control, not more autonomy'
+summary: >
+  core_claim:
+    Enterprise agents and “scientific acceleration” will bottleneck on coherence under drift, not on autonomy.
+    The winning architecture adds a control layer that makes adaptation selective and testable.
+
+  mechanism:
+    - Δ (drift sensing): detect distribution shift, error-mode shift, confidence–reality divergence, and calibration_overhead creep.
+    - GC (choreography): schedule localized interventions (routing, tool-use, targeted updates) rather than global retrains.
+    - CF (filters): enforce invariants and acceptance gates so changes preserve identity, safety, and core competencies.
+
+  prediction:
+    Agents that lack explicit verification_loops + invariant gates will oscillate between:
+    (a) brittle overfitting to live feedback (catastrophic_forgetting / regression), and
+    (b) frozen behavior behind static guardrails (no real adaptation).
+
+  falsifier:
+    If a coherence-first control layer cannot reduce regression/forgetting and calibration_overhead while maintaining or improving
+    task success under drift (measured on a fixed regression suite + live drift slices), then the approach fails.
+
+  why_it_matters:
+    This reframes “agent progress” as control engineering: measurable drift signals, scheduled interventions,
+    invariant gates, and rollback semantics—turning autonomy into governed adaptation.
+
+tags:
+  - enterprise_agents
+  - scientific_acceleration
+  - drift
+  - verification_loops
+  - invariants
+  - falsifier
+  - coherence_first
+  - catastrophic_forgetting
+  - calibration_overhead
+  - scheduling
+  - routing
+  - compiling
+  - theory_gap
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
