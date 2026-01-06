@@ -1,0 +1,30 @@
+title: 'Tao Gap, RGPx Bridge: Why Simple LLM Machinery Yields Hard-to-Predict Capability'
+summary: >
+  RGPx basis: Zeroth/First/Second law as coherence thermodynamics—(0) coherence equilibrium: training stabilizes shared internal reference frames (latent conventions);
+  (1) budget constraint: compute/objective/data impose an action/energy-like conservation of what can be learned;
+  (2) entropy pressure: many near-equivalent compressions exist in the middle regime, producing path dependence. PoLA: least-action trajectory selection under constraints
+  (training landscape + inference context field). Syntax: Gradients → Gradient Choreographies (GC) → Contextual Filters (CF) → Unity–Disunity (UD).
+  Core claim: the “mystery” is meso-scale—capability is not explained by simple operations, but by when/how coherence crystallizes; GC/CF formation is a phase process,
+  and near UD thresholds small perturbations (data, prompts, finetunes, decoding settings) can flip trajectories, yielding capability jumps and brittleness.
+  Mechanism map: gradients carve preferred representational directions; GCs are synchronized reusable routines; CFs are stable selectors that activate the right choreography
+  and suppress competitors; UD marks the boundary where coherence locks (Unity) or fragments (Disunity). Why forecasting is hard: task success depends on constraint
+  geometry matching available CFs and on UD proximity; near-boundary regimes amplify path dependence. Testable predictions: (i) CF-stability proxy—Unity tasks remain
+  stable under paraphrases; UD-near tasks show high sensitivity and variance; (ii) coherence-cost proxy—higher uncertainty/entropy and lower self-consistency correlate
+  with failure pockets; (iii) boundary-shift effect—small finetunes/prompt-structure changes yield disproportionate gains/losses near UD. Experiments: paraphrase
+  perturbation sweeps, a coherence-cost index (entropy/logprob margin/agreement), and controlled CF-competition distractors. Notes: this is not metaphor—treat it as a
+  falsifiable meso-scale theory: measure CF stability and UD proximity and test whether they predict task performance. Next: add links to the original post + reply;
+  optionally attach a minimal G → GC → CF → UD figure; ensure tag-map lookup uses least_action. 
+tags:
+  - least_action
+  - contextual_filter
+  - gradient_choreography
+  - unity_disunity
+  - thermodynamic_coherence
+  - meso_scale
+  - capability_jumps
+  - llm_forecasting
+  - representation_dynamics
+papers:
+  - https://zenodo.org/records/15091347
+podcasts:
+  - https://notebooklm.google.com/notebook/3958b236-eacf-49b2-b98c-73da93554ef9?artifactId=8ab15800-2c74-4dec-9160-00f547d37186
