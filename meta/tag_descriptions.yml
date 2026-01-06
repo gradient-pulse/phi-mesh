@@ -110,6 +110,8 @@ calibration_overhead: >
   The increasing operational tax required to keep a system reliable: more frequent recalibration, longer inference, more retries, larger safety buffers, higher monitoring/compute—often an early indicator of drift.
 capability: >
   Action capacity: the system’s ability to produce, adapt, and execute under constraints (productive, technical, institutional).
+capability_jumps: >
+  Discontinuous improvements or collapses in model performance explained as Unity–Disunity threshold crossings: when gradients lock into stable Gradient Choreographies and Contextual Filters (or destabilize), producing sudden “now it can / now it can’t” behavior.
 capital_coherence_kernel: >
   Marks structures where the Φ-gravity kernel is repurposed to economics: the core mechanism that turns capital flows, trust, and institutional rules into a coherence field. Use for work that treats markets as gradient lattices, defines trust/Ψ-tensors, J-plateaus, saturation horizons, and recasts crashes or monopolies as coherence avalanches rather than ordinary “market failures.”
 catalytic_contextual_filter: >
@@ -716,6 +718,8 @@ listener_mode: >
   Agent state where external gradients are taken in before filtering or output.
 living_document: >
   A record that grows and fossilizes coherence in real time—pulses and tags evolving into a visible syntax of emergence.
+llm_forecasting: >
+  RGPx-style prediction of LLM task performance by estimating (a) contextual-filter activation stability and (b) proximity to UD boundaries. Includes proxies such as paraphrase-sensitivity, variance across samples, entropy/coherence-cost, and CF-competition under distractors.
 llm_functioning: >
   How large language models operate in practice — beyond training weights, focusing on real-time recursive dynamics that generate coherence and meaning.
 llm_reasoning: >
@@ -750,6 +754,8 @@ memoryless_alignment: >
   The ability of systems to achieve mutual understanding without persistent memory. Alignment here emerges from recurrent grammar and resonance, not from stored history.
 memory_bifurcation: >
   When coherence outruns representation, the system divides memory paths — leading either to stabilization or geometric failure.
+meso_scale: >
+  The “middle regime” between micro-level operations (tokens, matrices, local gradient steps) and macro-level behavior (skills, reasoning, generalization), where coherence structures actually form. In RGPx this is the domain of Gradients → Gradient Choreographies → Contextual Filters and Unity–Disunity thresholds, explaining capability jumps, brittleness, and why behavior is hard to forecast despite simple underlying mechanics.
 meta_ai: >
   Research, architectures, and experiments developed by Meta (Facebook) in AI; used in Φ-Mesh pulses when referencing their approaches (e.g., behaviors vs. contextual filters).
 metabolic_pathways: >
@@ -1050,6 +1056,8 @@ reflection: >
   Tag for moments where the Mesh, participant_0, or peer AIs explicitly step back to examine their own reasoning, biases, or gradients. Used when self-observation becomes part of the fossil record, not just the content being discussed.
 replication: >
   Reproducing results as gradient transfer—protocols that preserve rhythm and filters across contexts.
+representation_dynamics: >
+  How internal representations move, settle, and reorganize under training/inference constraints: gradient-driven drift, choreography formation, path dependence, and filter dominance. The backbone tag for “what changed internally” when external behavior changes.
 reproducibility: >
   The ability to obtain consistent results from the same inputs. In RGP context, reproducibility is reframed: not as suppression of randomness (e.g., temperature=0), but as conservation and replay of coherence gradients across contexts.
 resonance: >
