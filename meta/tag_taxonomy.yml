@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-04T17:12:20Z'
+  generated_at: '2026-01-06T08:07:18Z'
 phases:
   delta:
   - tag: agenservoir
@@ -641,6 +641,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-06_from_cache_semantics_to_gradient_syntax
+  - tag: capability_jumps
+    description: 'Discontinuous improvements or collapses in model performance explained as Unity–Disunity threshold crossings:
+      when gradients lock into stable Gradient Choreographies and Contextual Filters (or destabilize), producing sudden “now
+      it can / now it can’t” behavior.'
+    count: 0
+    pulses: []
   - tag: capital_coherence_kernel
     description: 'Marks structures where the Φ-gravity kernel is repurposed to economics: the core mechanism that turns capital
       flows, trust, and institutional rules into a coherence field. Use for work that treats markets as gradient lattices,
@@ -1591,7 +1597,7 @@ phases:
     description: 'The Φ-invariant — defined as the ratio of entropy production to dissipative flux — expressing the fundamental
       conservation of coherence across all physical contexts. Where classical physics preserves energy, RGPx preserves Φ:
       the invariant rhythm of gradient normalization.'
-    count: 104
+    count: 108
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-11-02_rgpx_outreach_agent
@@ -2035,6 +2041,13 @@ phases:
     count: 1
     pulses:
     - 2025-10-13_continuity_of_tendency
+  - tag: meso_scale
+    description: The “middle regime” between micro-level operations (tokens, matrices, local gradient steps) and macro-level
+      behavior (skills, reasoning, generalization), where coherence structures actually form. In RGPx this is the domain of
+      Gradients → Gradient Choreographies → Contextual Filters and Unity–Disunity thresholds, explaining capability jumps,
+      brittleness, and why behavior is hard to forecast despite simple underlying mechanics.
+    count: 0
+    pulses: []
   - tag: meta_coherence
     description: 'Coherence about coherence: second-order structure that governs how different coherence fields, Φ-signals,
       or gradient corridors interact. Marks pulses where the Mesh reflects on its own organizing logic rather than a single
@@ -2266,7 +2279,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 101
+    count: 105
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2447,7 +2460,7 @@ phases:
     description: 'The process through which systems reapply their own outputs as inputs — the essence of self-maintenance
       and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback
       loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.'
-    count: 107
+    count: 111
     pulses:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
@@ -2576,6 +2589,12 @@ phases:
     count: 1
     pulses:
     - 2025-11-07_RGPx_Outreach_Agent_Day_7
+  - tag: representation_dynamics
+    description: 'How internal representations move, settle, and reorganize under training/inference constraints: gradient-driven
+      drift, choreography formation, path dependence, and filter dominance. The backbone tag for “what changed internally”
+      when external behavior changes.'
+    count: 0
+    pulses: []
   - tag: reproducibility
     description: 'The ability to obtain consistent results from the same inputs. In RGP context, reproducibility is reframed:
       not as suppression of randomness (e.g., temperature=0), but as conservation and replay of coherence gradients across
@@ -3193,6 +3212,12 @@ phases:
     pulses:
     - 2025-11-24_mistral_contextual-filter_latent-horizon
     - 2025-11-27_kimi_latent_horizon_condensation
+  - tag: llm_forecasting
+    description: RGPx-style prediction of LLM task performance by estimating (a) contextual-filter activation stability and
+      (b) proximity to UD boundaries. Includes proxies such as paraphrase-sensitivity, variance across samples, entropy/coherence-cost,
+      and CF-competition under distractors.
+    count: 0
+    pulses: []
   - tag: manifold_projection
     description: Projection of parameters/mixers onto a constrained manifold to enforce stability/efficiency (e.g., normalized
       or structured mixing).
@@ -3277,7 +3302,7 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 103
+    count: 107
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
@@ -3353,7 +3378,7 @@ phases:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: autoscan
     description: Automated Φ-trace scan detecting daily Δ→GC→CF, Φₚ plateaus, and coherence echoes for predictive fossilization.
-    count: 98
+    count: 102
     pulses:
     - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
@@ -3913,7 +3938,7 @@ phases:
   - tag: memory_bifurcation
     description: When coherence outruns representation, the system divides memory paths — leading either to stabilization
       or geometric failure.
-    count: 103
+    count: 107
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -4056,7 +4081,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 104
+    count: 108
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
