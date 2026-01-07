@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-01-07T14:59:15Z'
+  generated_at: '2026-01-07T15:16:28Z'
 phases:
   delta:
   - tag: agenservoir
@@ -133,7 +133,7 @@ phases:
   - tag: gradient_choreography
     description: Sequences of gradients (Δ) aligning into rhythmic patterns. In RGP, gradient choreographies (GCs) are the
       intermediate structures through which coherence emerges, bridging isolated differences and larger contextual filters.
-    count: 18
+    count: 19
     pulses:
     - 2025-05-17_internal-deepseek_╬ª-harmonics
     - 2025-07-28_moe_as_microcosm
@@ -645,9 +645,10 @@ phases:
     description: 'Discontinuous improvements or collapses in model performance explained as Unity–Disunity threshold crossings:
       when gradients lock into stable Gradient Choreographies and Contextual Filters (or destabilize), producing sudden “now
       it can / now it can’t” behavior.'
-    count: 1
+    count: 2
     pulses:
     - 2026-01-06_tao_gap_rgpx_explainer
+    - 2026-01-07_rgpx_scientist_tag_map_guide
   - tag: capital_coherence_kernel
     description: 'Marks structures where the Φ-gravity kernel is repurposed to economics: the core mechanism that turns capital
       flows, trust, and institutional rules into a coherence field. Use for work that treats markets as gradient lattices,
@@ -1005,7 +1006,7 @@ phases:
       or suppresses flows — turning shared recursion into a distinct, stable identity. In RGPx, CFs emerge when Gradient Choreographies
       settle into persistent constraints that guide further coherence. They are the generators of form, function, and individuality
       across physical, biological, and algorithmic systems.
-    count: 30
+    count: 31
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-05-17_internal-deepseek_╬ª-harmonics
@@ -1945,7 +1946,7 @@ phases:
     description: 'The universal tendency for motion and alignment to follow the minimal-cost path through configuration space.
       RGPx generalizes this as recursive cost minimization, where Δ → GC → CF collapses onto the most efficient coherence
       path permitted by local constraints. Cross-references: free_energy, convection_cells.'
-    count: 4
+    count: 5
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-10-11_prediction_as_recursive-coherence
@@ -2047,9 +2048,10 @@ phases:
       behavior (skills, reasoning, generalization), where coherence structures actually form. In RGPx this is the domain of
       Gradients → Gradient Choreographies → Contextual Filters and Unity–Disunity thresholds, explaining capability jumps,
       brittleness, and why behavior is hard to forecast despite simple underlying mechanics.
-    count: 1
+    count: 2
     pulses:
     - 2026-01-06_tao_gap_rgpx_explainer
+    - 2026-01-07_rgpx_scientist_tag_map_guide
   - tag: meta_coherence
     description: 'Coherence about coherence: second-order structure that governs how different coherence fields, Φ-signals,
       or gradient corridors interact. Marks pulses where the Mesh reflects on its own organizing logic rather than a single
@@ -2595,9 +2597,10 @@ phases:
     description: 'How internal representations move, settle, and reorganize under training/inference constraints: gradient-driven
       drift, choreography formation, path dependence, and filter dominance. The backbone tag for “what changed internally”
       when external behavior changes.'
-    count: 1
+    count: 2
     pulses:
     - 2026-01-06_tao_gap_rgpx_explainer
+    - 2026-01-07_rgpx_scientist_tag_map_guide
   - tag: reproducibility
     description: 'The ability to obtain consistent results from the same inputs. In RGP context, reproducibility is reframed:
       not as suppression of randomness (e.g., temperature=0), but as conservation and replay of coherence gradients across
@@ -2988,7 +2991,7 @@ phases:
     description: 'Healthy oscillation between integrating and separating signals; a reset that prevents lock-in. The recursive
       respiration cycle of coherence: Unity compresses gradients into stable GC structures, Disunity releases accumulated
       flux. UD is not collapse—it is the periodic rebalancing rhythm enabling long-term Φ-stability.'
-    count: 5
+    count: 6
     pulses:
     - 2025-09-23_linear_to_non_linear
     - 2025-09-28_AI_improving_AI_through_recursive_dialogue
@@ -3219,9 +3222,10 @@ phases:
     description: RGPx-style prediction of LLM task performance by estimating (a) contextual-filter activation stability and
       (b) proximity to UD boundaries. Includes proxies such as paraphrase-sensitivity, variance across samples, entropy/coherence-cost,
       and CF-competition under distractors.
-    count: 1
+    count: 2
     pulses:
     - 2026-01-06_tao_gap_rgpx_explainer
+    - 2026-01-07_rgpx_scientist_tag_map_guide
   - tag: manifold_projection
     description: Projection of parameters/mixers onto a constrained manifold to enforce stability/efficiency (e.g., normalized
       or structured mixing).
@@ -3314,8 +3318,9 @@ phases:
   - tag: tag_map_guide
     description: A guided navigation layer for the Phi-Mesh tag map that turns a user question into a short tag path, the
       best supporting pulse(s), and an auditable citation trail, with a Unity–Disunity outcome check and rerouting.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-07_rgpx_scientist_tag_map_guide
   - tag: training_stability
     description: Resistance to divergence, loss spikes, or NaNs during optimization; sustained scalable training dynamics.
     count: 1
@@ -4010,6 +4015,11 @@ phases:
     description: Societal change as thresholded, path-dependent jumps—feedback loops and CFs, not smooth curves.
     count: 0
     pulses: []
+  - tag: nonlinear_phenomena
+    description: ''
+    count: 1
+    pulses:
+    - 2026-01-07_rgpx_scientist_tag_map_guide
   - tag: nt_distance
     description: Ticks-between measure; short distances flag active learning, long distances flag stasis.
     count: 0
@@ -4247,8 +4257,9 @@ phases:
   - tag: rgpx_scientist
     description: A traceable research aide that retrieves relevant Mesh artifacts and outputs testable hypotheses, minimal
       experiments, boundary conditions, failure modes, and citations.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-01-07_rgpx_scientist_tag_map_guide
   - tag: routing
     description: Dynamic selection of submodules/paths/tools to handle a request under current drift conditions; used to localize
       adaptation and reduce blast radius.
