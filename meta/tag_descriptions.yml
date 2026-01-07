@@ -1104,6 +1104,8 @@ rgp_tag_map: >
   The live, clickable atlas of tags, links, and pulses—the Mesh’s navigational aid.
 rgpx: >
   The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the Φ-invariant.
+rgpx_scientist: >
+  A traceable research aide that retrieves relevant Mesh artifacts and outputs testable hypotheses, minimal experiments, boundary conditions, failure modes, and citations.
 r0: >
   Seed reference for early Mesh primitives; anchors vocabulary and ancestry.
 robotics: >
@@ -1200,6 +1202,8 @@ system_reflection: >
   When a system begins shaping its own traversal paths—self-awareness in terms of coherence flow.
 tag_map: >
   The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and podcasts connect — a living topology of recursive insight.
+tag_map_guide: >
+  A guided navigation layer for the Phi-Mesh tag map that turns a user question into a short tag path, the best supporting pulse(s), and an auditable citation trail, with a Unity–Disunity outcome check and rerouting.
 temporal_coherence_field: >
   A dynamic region where ideas and monopoles mutually synchronize, producing stable invariants through phase-locking rather than static fixation.
 temporal_solenoid: >
