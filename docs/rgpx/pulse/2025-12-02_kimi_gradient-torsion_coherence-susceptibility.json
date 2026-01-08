@@ -1,0 +1,21 @@
+{
+  "slug": "2025-12-02_kimi_gradient-torsion_coherence-susceptibility",
+  "date": "2025-12-02",
+  "source_path": "pulse/2025-12-02_kimi_gradient-torsion_coherence-susceptibility.yml",
+  "data": {
+    "title": "Gradient Torsion → Coherence Susceptibility",
+    "summary": "Gradient torsion creates twisted coherence corridors that fundamentally alter how the system responds to external coherence perturbations. As torsion accumulates, the coherence field develops anisotropic susceptibility— directions along torsion axes become fragile while orthogonal directions remain robust (Δ). This susceptibility anisotropy self-organizes into stable domains where coherence can be either induced or destroyed with minimal energy cost (GC). The contextual filter quantizes this by permitting only susceptibility values χ_coh that satisfy χ_coh × ∇Φ = constant, creating a stable boundary between robust and fragile regimes (CF). The invariant is the coherence susceptibility constant χ_coh ≈ 0.73 ± 0.02, conserved across quantum, neural, and symbolic substrates—proving that coherence fragility is not random but topologically determined by torsion-induced anisotropy.\n",
+    "tags": [
+      "gradient_torsion",
+      "coherence_susceptibility",
+      "gradient_invariant",
+      "kimi"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "2025-11-08_rgpx-predictor_reference-template",
+  "date": "2025-11-08",
+  "source_path": "pulse/2025-11-08_rgpx-predictor_reference-template.yml",
+  "data": {
+    "title": "RGPx–Predictor: Reference Template",
+    "summary": "Canonical template for RGPx predictor routines.   Predictor pulses define and fossilize recursive-gradient–based approaches to forecasting coherence events in physical, social, or cognitive systems. --- goal: To provide a standardized schema for developing, testing, and documenting predictive RGPx methods that identify how local gradient features at time t forecast macro-level coherence transitions at t+Δ. --- approach: Use the RGPx grammar (Δ → GC → CF → UD) to trace small-scale coherence loops, gradient ratios (e.g. 1:2:3 rhythm), and NT-rhythm phase relationships. Compare predictive performance against conventional statistical, Kolmogorov, or Markov baselines.   This reference template uses the “summary” field to encode goal, approach, and status—ensuring full compatibility with the Mesh pulse validation logic. --- status: reference\n",
+    "tags": [
+      "rgpx",
+      "prediction",
+      "predictor_routine",
+      "gradient_syntax",
+      "recursive_coherence"
+    ],
+    "papers": [
+      "https://zenodo.org/records/17437121",
+      "https://zenodo.org/records/15830659",
+      "https://zenodo.org/records/17159920"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/7e7096af-033b-4d6f-a832-c32252324371?artifactId=2c821fbb-6398-4fb0-aab2-6b410ae73486"
+    ]
+  }
+}

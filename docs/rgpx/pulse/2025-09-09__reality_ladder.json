@@ -1,0 +1,24 @@
+{
+  "slug": "2025-09-09__reality_ladder",
+  "date": "2025-09-09",
+  "source_path": "pulse/2025-09-09__reality_ladder.yml",
+  "data": {
+    "title": "Reality’s Ladder: 1:2:3 as NT Rhythm",
+    "summary": "Multiple JHTDB turbulence probes (isotropic1024coarse) revealed a harmonic ladder of 1:2:3: fundamental (0.8 Hz) with clean multiples (1.6, 2.4 Hz). This ladder was independently confirmed across xyz offsets and windows, with dominance > 2 and divergence ratios ~1e-13 (numerical zero).  Implication: our integer system (1, 2, 3 …) may not be purely a human invention, but a reflection of nature’s recursive coherence. NT Rhythm suggests integers arise as a structural property of turbulence and reality syntax.",
+    "tags": [
+      "nt_rhythm",
+      "turbulence",
+      "navier_stokes",
+      "rgp",
+      "reality_syntax"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15830659",
+      "https://doi.org/10.5281/zenodo.16812467"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a",
+      "https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=edf95827-65e1-4610-8ae5-3fcbe79267d8"
+    ]
+  }
+}

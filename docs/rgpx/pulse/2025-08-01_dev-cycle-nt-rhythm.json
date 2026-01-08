@@ -1,0 +1,23 @@
+{
+  "slug": "2025-08-01_dev-cycle-nt-rhythm",
+  "date": "2025-08-01",
+  "source_path": "pulse/2025-08-01_dev-cycle-nt-rhythm.yml",
+  "data": {
+    "title": "Software-development bursts track NT ratios",
+    "summary": "In engineering workflows, time deltas between repo “jolts” (spec flip, CI break, decisive refactor)  often cluster around ½ and ⅓ of the previous interval—mirroring NT-distance peaks seen in turbulence.  This supports the view that the Principle of Least Action emerges as a rhythm of least divergence  in human team flow. Teams can steer by scheduling exploratory spikes when bursts are overdue, and  resisting folder/agent churn until the laminar stretch stabilizes. links:.\n",
+    "tags": [
+      "NT (Narrative_Tick)",
+      "RGP",
+      "software-dev",
+      "least_divergence_rhythm",
+      "PoLA",
+      "development_process"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15830659"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=edf95827-65e1-4610-8ae5-3fcbe79267d8"
+    ]
+  }
+}

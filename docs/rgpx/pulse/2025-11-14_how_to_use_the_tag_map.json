@@ -1,0 +1,24 @@
+{
+  "slug": "2025-11-14_how_to_use_the_tag_map",
+  "date": "2025-11-14",
+  "source_path": "pulse/2025-11-14_how_to_use_the_tag_map.yml",
+  "data": {
+    "title": "How to use the Tag Map to reach the RGPx paper in 10 seconds",
+    "summary": "A simple navigation guide for newcomers: how to use the Phi-Mesh interactive Tag Map on phone or laptop to reach the RGPx v1.2 paper and podcast instantly. --- details: The Tag Map is now fully phone-ready and shareable.   Here is the fastest way to reach the RGPx v1.2 paper: --- 1. Open the Tag Map  \n   https://gradient-pulse.github.io/phi-mesh/tag_map.html\n--- 2. Tap the search bar (top-left) and type:  \n   `rgpx`\n--- 3. Hit “return”. \n   The map auto-centers on the RGPx node.\n--- 4. Tap the RGPx node. \n   Pulses linked to RGPx appear on the right sidebar.\n--- 5. Tap the pulse titled:\n   \"Recursive Gradient Physics (RGPx) v1.2\"\n--- 6. The left sidebar now shows: \n   – the summary  \n   – the Zenodo paper link  \n   – the podcast link\n--- This sequence works identically on iPhone, iPad, laptop, or desktop. --- Tip: Use the Share link button (top-right) to copy a deep link for the tag you are viewing.   Perfect for forwarding specific concepts, tags, or pulses to colleagues or AIs.\n",
+    "tags": [
+      "rgpx",
+      "tag_map",
+      "onboarding",
+      "coherence",
+      "help",
+      "how"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/875fc20c-31a8-4e05-8ea0-703d61e6fa97?artifactId=08e714e7-6406-4e08-889a-a4ff46737b76",
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

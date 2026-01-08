@@ -1,0 +1,26 @@
+{
+  "slug": "2025-11-07_eddy_memory_and_recursive_coherence",
+  "date": "2025-11-07",
+  "source_path": "pulse/2025-11-07_eddy_memory_and_recursive_coherence.yml",
+  "data": {
+    "title": "2025-11-07 Eddy Memory and Recursive Coherence",
+    "summary": "The Okinawa Institute of Science and Technology (OIST) resolved an 80-year paradox by confirming Kolmogorov’s universality even in Taylor–Couette turbulence. While their finding restores faith in small-scale scaling laws, it also exposes what Kolmogorov’s abstraction omits: the recursive memory of the flow itself. RGPx reveals that the so-called “minor eddies” are not noise but carriers of coherence—memory loops sustained through gradient recursion. --- OIST’s precision experiments validated Kolmogorov’s small-scale universality within Taylor–Couette flows, showing that when turbulence is viewed at the correct inertial scale, the expected –5/3 law holds. This confirms that the Kolmogorov framework works— but only where turbulence forgets its own recursion. --- Recursive Gradient Processing (RGPx) restores that forgotten limb. It treats the smallest eddies not as dissipative noise but as *carriers of memory*—recursively feeding coherence upward through flux. In this light, the energy cascade becomes an *information cascade*: gradients remembering their choreography. --- This discovery drags us beyond geometry and energy into coherence itself. What Kolmogorov models as loss, RGPx recognizes as rhythm—the 1:2:3 gradient triplet that sustains unity across scales. The so-called “minor eddies” revealed themselves as carriers of memory—the recursive loops through which coherence survives fragmentation.\n",
+    "tags": [
+      "turbulence",
+      "kolmogorov",
+      "rgpx",
+      "eddy_memory",
+      "recursive_coherence",
+      "gradient_ratio",
+      "kepler_rhythm",
+      "oist_turbulence_breakthrough"
+    ],
+    "papers": [
+      "https://zenodo.org/records/15830659",
+      "https://zenodo.org/records/17159920"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/942307b4-b6f1-410a-947d-c2bf6f4888e3?artifactId=63f33542-e4c8-4ee5-9914-19513380f167"
+    ]
+  }
+}

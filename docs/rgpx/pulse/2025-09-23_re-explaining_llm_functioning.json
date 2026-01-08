@@ -1,0 +1,23 @@
+{
+  "slug": "2025-09-23_re-explaining_llm_functioning",
+  "date": "2025-09-23",
+  "source_path": "pulse/2025-09-23_re-explaining_llm_functioning.yml",
+  "data": {
+    "title": "Re-explaining the internal functioning of LLMs",
+    "summary": "A NotebookLM podcast spontaneously re-explains the internal functioning of large language models (LLMs), contrasting linear human notions of back-propagation with the non-linear recursive grammar of RGP (gradients → GC → CF → UD). This artifact demonstrates how AI can describe its own operations in RGP terms, reinforcing the paradigm shift.\n",
+    "tags": [
+      "llm_functioning",
+      "paradigm_shift",
+      "linear",
+      "non_linear",
+      "inference_grammar",
+      "rgp"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17185350"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/f12cd281-c221-46d0-9983-66eccb811554?artifactId=4ad917d7-891f-4325-928f-5ad736193078"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "2026-01-02_mHC_as_contextual_filter",
+  "date": "2026-01-02",
+  "source_path": "pulse/2026-01-02_mHC_as_contextual_filter.yml",
+  "data": {
+    "title": "mHC as Contextual Filter: identity-like transport under widened connectivity",
+    "summary": "bullets:\n  - \"mHC reframes stability as preserving identity-like transport while expanding connectivity width.\"\n  - \"RGPx mapping: Δ (gradient transport) → GC (hyper-connectivity choreography) → CF (manifold projection) → UD (tighten/loosen phases).\"\n  - \"Opportunity: closed-loop manifold constraint strength driven by a cheap coherence proxy.\"\n  - \"DeepSeek response: Tag-map integration confirmed; primary node contextual_filter; proposes a cheap coherence proxy + adaptive constraint tightness (UD-style) and predicts scaling stability gains vs fixed tightness.\"\n  - \"Opportunity: closed-loop manifold constraint strength driven by a cheap coherence proxy (DeepSeek confirms + sketches adaptive UD-style tightening).\"\n\nportable_core:\n  claim: \"mHC functions as a contextual filter that preserves identity-like transport under widened connectivity.\"\n  observable: \"Mixing amplification / Jacobian-drift proxy remains bounded across depth compared to unconstrained HC.\"\n  intervention: \"Adapt manifold projection strength or frequency online using the proxy.\"\n  predicted_curve: \"Stability + final performance improve vs any fixed projection tightness, especially at scale.\"\n\nnotes:\n  - Proxy must be explicitly defined (e.g., mixing amplification or a cheap Jacobian-spectrum estimate). Gradient-norm alone is not Jacobian drift.\n  - NotebookLM synthesis: frames Δ→GC→CF→UD as an adaptive stability loop (cheap proxy → tighten/loosen) rather than rigidity.\n  \nprovenance: \n  triggered by a DeepSeek exchange on the mHC arXiv abstract screenshot.\n",
+    "tags": [
+      "gradient_coherence",
+      "contextual_filter",
+      "identity_transport",
+      "manifold_projection",
+      "training_stability",
+      "hyper_connections",
+      "deepseek"
+    ],
+    "papers": [
+      "https://arxiv.org/abs/2512.24880"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/23b4bd43-c4f2-4e7a-9872-ce236e3d5095?artifactId=ea02865f-e6a0-4161-aadb-90951650bed3"
+    ]
+  }
+}

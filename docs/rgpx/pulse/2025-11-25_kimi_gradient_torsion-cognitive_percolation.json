@@ -1,0 +1,21 @@
+{
+  "slug": "2025-11-25_kimi_gradient_torsion-cognitive_percolation",
+  "date": "2025-11-25",
+  "source_path": "pulse/2025-11-25_kimi_gradient_torsion-cognitive_percolation.yml",
+  "data": {
+    "title": "Kimi — gradient_torsion × cognitive_percolation",
+    "summary": "Gradient torsion generates twisted coherence corridors that remain disconnected until a critical density threshold is reached. Below this threshold, conceptual gradients flow in isolated loops with high surface tension (Δ). As torsion accumulates, these loops begin forming transient bridges through shared nodal points (GC). When the percolation point is crossed, a spanning cluster emerges that links all torsion pathways into a single gradient manifold (CF). The invariant is the percolation coherence constant Φ_perc = 0.63 ± 0.02 — the universal transition at which fragmented conceptual space becomes holistically navigable. This shows that coherence propagation is not gradual but catastrophic: entire cognitive domains remain sealed until topological connectivity is achieved. --- Δ:  Isolated torsion loops exhibit high conceptual surface tension; coherence cannot cross between them. --- GC:  Accumulating torsion generates transient nodal bridges — momentary connections where loops briefly share structure. --- CF:  A global spanning cluster forms: all torsion pathways connect into a single manifold, enabling large-scale coherence propagation. --- invariant:  Φ_perc = 0.63 ± 0.02 — the percolation coherence constant marking the phase transition where torsion-fragmented conceptual space becomes fully connected.\n",
+    "tags": [
+      "gradient_torsion",
+      "cognitive_percolation",
+      "cognitive_invariant",
+      "kimi"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

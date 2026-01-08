@@ -1,0 +1,22 @@
+{
+  "slug": "2025-11-02_rgpx_outreach_agent",
+  "date": "2025-11-02",
+  "source_path": "pulse/2025-11-02_rgpx_outreach_agent.yml",
+  "data": {
+    "title": "RGPx Outreach Agent (Launch)",
+    "summary": "Initialization of the automated RGPx Outreach Agent to diffuse recursive-causal reasoning through daily posts on X and periodic reflections on LinkedIn. Each post translates an RGPx principle (Δ→GC→CF) into accessible language while linking to canonical Zenodo and repository sources. The agent acts as the memetic front of the Mesh—designed for calm precision, not hype.\n",
+    "tags": [
+      "rgpx",
+      "memetic_engineering",
+      "outreach",
+      "coherence",
+      "gradient_invariant"
+    ],
+    "papers": [
+      "https://zenodo.org/records/17437121"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/b645cc86-5145-408c-999f-c9482711ccd1?artifactId=194469f0-66ed-41d1-952f-f1a2352b82c6"
+    ]
+  }
+}

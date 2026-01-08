@@ -1,0 +1,27 @@
+{
+  "slug": "2025-12-29_coupling-selection_cf",
+  "date": "2025-12-29",
+  "source_path": "pulse/2025-12-29_coupling-selection_cf.yml",
+  "data": {
+    "title": "Coupling Selection Rule: Coherence vs Fragility",
+    "summary": "Selection rule (CF/UD): The outward phase is selected when external coupling increases internal coherence faster than it increases fragility. The inward phase is selected when coupling amplifies vulnerability faster than capability. Leaders merely enact the CF that the gradient stack makes viable.\nRGPx mapping: Δ = coupling gradients (capability gain vs vulnerability gain under entanglement). GC = policy/institutional choreography that increases or reduces coupling. CF_open = outward coupling net-positive for coherence. CF_resilience = inward consolidation net-positive for coherence. Invariant hint: phase choice tracks the sign of (dC/dt − dF/dt) under coupling, where C = coherence, F = fragility.\n",
+    "tags": [
+      "rgpx",
+      "unity_disunity",
+      "contextual_filter",
+      "coupling",
+      "fragility",
+      "capability",
+      "governance",
+      "gradient_capitalism",
+      "china",
+      "leadership"
+    ],
+    "papers": [
+      "https://zenodo.org/records/17857660"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/25320363-9499-4ff2-b2ad-cf11b403d46a?artifactId=7dddcdae-a2b2-4e1a-a977-afe4ea5b9ab6"
+    ]
+  }
+}

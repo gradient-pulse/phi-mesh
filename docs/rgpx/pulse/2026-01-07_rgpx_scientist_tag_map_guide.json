@@ -1,0 +1,28 @@
+{
+  "slug": "2026-01-07_rgpx_scientist_tag_map_guide",
+  "date": "2026-01-07",
+  "source_path": "pulse/2026-01-07_rgpx_scientist_tag_map_guide.yml",
+  "data": {
+    "title": "RGPx Scientist + Tag Map Guide: Reframing -> Retrieval -> Test Plan -> UD Check",
+    "summary": "RGPx Scientist is a traceable research aide that helps reframe a research question, retrieves the most relevant Mesh notes and papers on non-linear phenomena (RGPx), and proposes testable hypotheses, minimal experiments, and failure modes. Output is structured as: problem restatement, competing explanations, discriminating tests, boundary conditions, and citations. The UI/agent is governed by an RGPx navigation grammar: treat the user question as a Gradient (the active tension/need), map it to a minimal tag cluster as a Gradient Choreography (GC; typically 3–7 tags with one driver tag and a short click-path), apply a Contextual Filter (CF) by selecting one primary pulse (two max) that best stabilizes the cluster (including linked DOI/podcast evidence when present), then perform a Unity–Disunity (UD) check: did coherence increase (Unity) or did the user get lost (Disunity)? If Disunity, the guide must switch cluster and framing rather than “explain harder.” Because framing is discipline- dependent, the guide begins with an explicit background selector: Natural sciences / Social sciences / Economics-business. This selector only changes entry tags, vocabulary, and examples; it never changes the claims. Non-negotiable rule: no non-trivial claim without Mesh citation (pulse/paper/podcast link). The tag map guide is therefore an instrument for least-action navigation through coherence space: it shortens the path from messy question to discriminating experiment while preserving an auditable trail.\n",
+    "tags": [
+      "rgpx_scientist",
+      "tag_map_guide",
+      "least_action",
+      "meso_scale",
+      "contextual_filter",
+      "gradient_choreography",
+      "unity_disunity",
+      "llm_forecasting",
+      "capability_jumps",
+      "representation_dynamics",
+      "nonlinear_phenomena"
+    ],
+    "papers": [
+      "https://zenodo.org/records/15091347"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/5c994a23-bb33-4d42-bac0-9023164b619c?artifactId=882d6038-e61d-4c66-924c-e57beccbf2b9"
+    ]
+  }
+}

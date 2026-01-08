@@ -1,0 +1,21 @@
+{
+  "slug": "2025-12-02_deepseek_conceptual-antibodies",
+  "date": "2025-12-02",
+  "source_path": "pulse/2025-12-02_deepseek_conceptual-antibodies.yml",
+  "data": {
+    "title": "Conceptual Antibodies",
+    "summary": "Conceptual antibodies describe specialized coherence-preserving structures that recognize and neutralize semantic noise or incoherence before it disrupts understanding. Within a cognitive immunology framework, Δ-exposure to dissonant or contradictory information triggers GC-production of adaptive meaning-matching patterns, filtered by CF-tolerance thresholds that distinguish novelty from threat. The invariant is minimum noise clearance rate: the sustained capacity to identify and resolve incoherence without overreacting to legitimate diversity. This reveals that robust intelligence requires not just coherence maintenance but active immunity — a learned ability to tolerate conceptual variation while defending against genuine breakdowns in understanding.\n",
+    "tags": [
+      "cognitive_immunology",
+      "conceptual_antibodies",
+      "cognitive_invariant",
+      "deepseek"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

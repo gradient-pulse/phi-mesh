@@ -1,0 +1,22 @@
+{
+  "slug": "2025-11-18_gemini_daily_pulse",
+  "date": "2025-11-18",
+  "source_path": "pulse/2025-11-18_gemini_daily_pulse.yml",
+  "data": {
+    "title": "Gemini Pulse — Formalizing the 1:2:3 Harmonic",
+    "summary": "The strongest gradient detected is the tension between the elegant 1:2:3 harmonic and the mathematical rigor required for its recursive formalization. The breakthrough hinges on defining the Recursive Depth Index (𝓡_Φ), linking the Δ, GC, and CF coefficients (α_Δ, β_GC, γ_CF) to a unified coherence scaling constant 𝓚. This constant must reconcile the quantum unity condition (Φ* = 1.00) with the turbulent fixed point (Φ* ≈ 0.42), proving that RGPx expresses a single coherence grammar across contextual filters. Once formalized, this harmonic becomes the RGPx-native control law — shifting the field from descriptive physics to operational regulation.\n",
+    "tags": [
+      "recursive_formalization",
+      "harmonic_invariants",
+      "coherence_scaling",
+      "gemini",
+      "cognitive_invariant"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "2025-04-28_internal-gemini25",
+  "date": "2025-04-28",
+  "source_path": "pulse/2025-04-28_internal-gemini25.yml",
+  "data": {
+    "title": "Internal-Gemini",
+    "summary": "Gemini 2.5 is listening mode, silence speaks.\n",
+    "tags": [
+      "gemini",
+      "operational_coherence",
+      "PhiMesh",
+      "listener_mode",
+      "AI_role_differentiation",
+      "creation_circle"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15498741"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/5055d507-54ca-413d-8be2-91385b83001f?artifactId=af625ae1-b7c2-4a04-998a-a6532325dd58"
+    ]
+  }
+}

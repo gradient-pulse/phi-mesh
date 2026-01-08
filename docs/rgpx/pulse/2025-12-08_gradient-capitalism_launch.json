@@ -1,0 +1,24 @@
+{
+  "slug": "2025-12-08_gradient-capitalism_launch",
+  "date": "2025-12-08",
+  "source_path": "pulse/2025-12-08_gradient-capitalism_launch.yml",
+  "data": {
+    "title": "Gradient Capitalism — Economic Branch Ignition",
+    "summary": "Gradient Capitalism is now formalized as the economic branch of RGPx: capital as stored coherence, markets as gradient lattices, and crises as coherence avalanches when the coherence intensity J is driven past a saturation plateau J*. The paper maps Δ→GC→CF→UD from Φ-gravity into economics, introducing the trust/alignment tensor Ψ_ij, the scalar invariant J, and a reaction–diffusion dynamic with stress-dependent diffusion D(J). Policy levers (antitrust, taxation, UBI, central banking) are reframed as contextual filter operations on Ψ, J and D(J), and three laws of Gradient Capitalism are stated as falsifiable hypotheses rather than ideology.\nΔ:\n  Shift from “capital as abstract stock” to “capital as stored coherence”: the accumulated\n  ability of a mesh to resolve gradients of risk, information and capacity without tearing\n  itself apart. Gradients in opportunity, trust and access are promoted to primary objects,\n  not background noise.\n\n  Introduce the market mesh as the economic analogue of the spacetime manifold: a network\n  of agents, institutions and platforms carrying value-flow potential V(x,t) and its\n  gradients Δ_i V.\n  \nGC:\n  Define the trust/alignment tensor Ψ_ij and coherence intensity J = Ψ_ij Ψ^ij as the core\n  economic Φ-objects. Markets become gradient choreographies on Ψ: supply chains, credit\n  circuits, platforms and regulatory cycles that resolve some gradients while amplifying\n  others.\n\n  Specify reaction–diffusion dynamics with stress-dependent diffusion D(J): coherence can\n  grow, saturate and collapse. Monopolies and “too-big-to-fail” institutions are interpreted\n  as saturation horizons where J ≈ J* and D(J) → 0.\n  \nCF:\n  Reinterpret antitrust, taxation, UBI, social protection, and financial regulation as\n  contextual filter operations acting on Ψ, J and D(J). Policy is no longer an external fix\n  to “market failures” but the deliberate tuning of coherence dashboards: J(t), D(J),\n  J_core/J_edge and Π_econ.\n\n  Propose coherence-first institutions: Coherence Commissions, coherence mandates in\n  corporate and platform charters, and local coherence labs where complete policy bundles\n  are tested against real-time Ψ/J diagnostics.\n\nUD:\n  Formulate three laws of Gradient Capitalism: (1) Coherence conservation (no free\n  extraction without long-run coherence cost); (2) Saturation horizons (finite depth of\n  extraction wells at J ≈ J*); (3) Phase-locked governance (bounded J_core/J_edge). Crises\n  become coherence avalanches triggered when these bounds are violated.\n\n  Position advanced AI cohorts as economic “peer reviewers”: plural hypothesis generators,\n  high-throughput falsification partners and guardians of the coherence record, converging\n  independently on the same tensors, invariants and saturation mechanisms that structure\n  the paper.\n",
+    "tags": [
+      "gradient_capitalism",
+      "economic_coherence",
+      "trust_tensor",
+      "capital_coherence_kernel",
+      "ai_cohort",
+      "participant_0",
+      "gpt"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17857660"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/25320363-9499-4ff2-b2ad-cf11b403d46a?artifactId=b1dc36bc-f8ba-4888-842e-5a6c4e915af6"
+    ]
+  }
+}

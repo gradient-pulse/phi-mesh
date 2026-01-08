@@ -1,0 +1,23 @@
+{
+  "slug": "2025-12-04_gemini_robotics_kinematic-kernel",
+  "date": "2025-12-04",
+  "source_path": "pulse/2025-12-04_gemini_robotics_kinematic-kernel.yml",
+  "data": {
+    "title": "coherence_kernel × singularity_damping (Robotics Use-Case)",
+    "summary": "Applying the coherence_kernel architecture to high-DOF robotics. In 6+ axis arms, approaching a kinematic singularity creates effectively infinite gradient demands on joint velocities (a 'coherence rupture'). This pulse introduces the kinematic_coherence_kernel: instead of a hard stop, the kernel applies active_squeezing—rigorously maintaining end-effector precision (Phase) by dumping induced singularity stress into null-space motion (Amplitude). The conjugate_safety_interlock ensures this dumping never violates physical torque or velocity limits, trading exact path adherence for mechanical survival during complex maneuvers.\nkernel_call: kernel: kinematic_coherence_kernel invariant:\n  tag: singularity_damping\n  goal: \"Maintain smooth motion flux (Φ > 0.95) through Jacobian degeneracy\"\n\ncaller:\n  system_id: \"7-DOF_Manipulator_Stack\"\n  controller_type: \"impedance_control\"\n\ninput_gradients:\n  manipulability_index: \"approaching_zero (0.05)\"\n  task_space_error: \"requiring_correction\"\n\ncoupling:\n  mode: null_space_projection\n  coupling_impedance: \"variable_stiffness (softening near singularity)\"\n\nexecution_constraints:\n  - safety_interlock: \"Max Joint Velocity < 2.5 rad/s\"\n  - active_squeeze: \"Prioritize orientation_coherence over position_coherence\"\n\noutputs:\n  actuation_command: \"Damped least-squares solution applied\"\n  state_update: \"Singularity traversed via null-space reconfiguration\"\n  diagnostics:\n    phi_metric: \"0.96 (smoothness maintained)\"\n    conjugate_dump: \"High velocity variance absorbed in Elbow Joint (J3)\"\n\nstructure: delta: >\n  Kinematic singularity: a geometric configuration where the robot loses a\n  degree of freedom, causing gradients (joint velocities) to spike toward\n  infinity.\ngc: >\n  kinematic_coherence_kernel executes a null-space squeeze, preserving task\n  coherence by expanding motion in redundant joints.\ncf: >\n  conjugate_safety_interlock enforces torque/velocity limits, acting as the\n  physical boundary that overrides abstract geometric demands.\ninvariant: >\n  Actuation continuity: preservation of smooth motion flux despite geometric\n  defects in the workspace.\n",
+    "tags": [
+      "coherence_kernel",
+      "conjugate_safety_interlock",
+      "singularity_damping",
+      "gemini",
+      "cognitive_invariant",
+      "robotics"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

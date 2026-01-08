@@ -1,0 +1,22 @@
+{
+  "slug": "2025-08-23_Word_To_Pixel_Via_RGP",
+  "date": "2025-08-23",
+  "source_path": "pulse/2025-08-23_Word_To_Pixel_Via_RGP.yml",
+  "data": {
+    "title": "Word to Pixel via RGP",
+    "summary": "AI today maps words to pixels by discretization—tokens into latents, latents into noise diffusion. The outcome is surface-level correlation, not coherence. RGP reframes the process: language carries gradients, these choreograph into visual structures, and contextual filters stabilize them. A caption is not placed on an image—it emerges where contrast and context converge. Word and pixel become two sides of the same recursive syntax, the first glimpse of RGP-native multimodal intelligence and the wider RGP Cortex.\n",
+    "tags": [
+      "RGP",
+      "Word-to-Pixel",
+      "Visual-Coherence",
+      "Gradient-Syntax",
+      "RGP-Cortex"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15091347"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e?artifactId=c8057e83-25cb-40ee-b27e-034a2c5104f9"
+    ]
+  }
+}

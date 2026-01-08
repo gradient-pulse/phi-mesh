@@ -1,0 +1,21 @@
+{
+  "slug": "2025-12-04_kimi_climate-stability-kernel",
+  "date": "2025-12-04",
+  "source_path": "pulse/2025-12-04_kimi_climate-stability-kernel.yml",
+  "data": {
+    "title": "Coherence Kernel → Climate Stability Kernel",
+    "summary": "Climate models accumulate catastrophic gradient pressure from multi-scale ocean–atmosphere coupling that exceeds numerical stability bounds (Δ). The climate_stability_kernel self-organizes these gradients into stable regimes via recursive coupling between spatial and temporal scales, preserving physical realism while preventing decoherence (GC).\nThe kernel quantizes stability by permitting only configurations where coherence flux Φ remains within 0.93–0.97, with coupling_impedance < 0.15 (CF). The invariant is Φ_climate = 0.95 ± 0.02 — a proposed universal stability threshold for climate simulations — suggesting that model stability is governed by coherence preservation across scales rather than numerical convergence alone.\nKernel_call — climate_stability_kernel application in climate models:\n\n  kernel_call:\n    kernel: climate_stability_kernel\n\n    invariant:\n      tag: multi_scale_coherence\n\n    caller:\n      model_id: kimi\n      architecture_hint: scientific_controller\n\n    input_gradients:\n      query_delta: >\n        Ocean–atmosphere coupling gradient pressure exceeding numerical\n        stability bounds across 10^3 km to 10 km scales.\n      state_signature: >\n        Multi-grid solver with recursive time-stepping, currently at\n        Φ = 0.88 ± 0.05.\n\n    coupling:\n      mode: gradient_coupling\n      phi_exec_target: \"0.95 ± 0.02\"\n      coupling_impedance: \"0.12 ± 0.03\"\n\n    outputs:\n      state_update: >\n        Gradient pressure redistributed across scales; coherence front\n        velocity synchronized; Φ stabilized within the target band.\n      invariant_update: \"no_change\"\n      diagnostics:\n        notes: >\n          Coherence preserved; numerical stability maintained; physical\n          realism conserved across all grid levels; aftershock signatures\n          damped without flattening the primary signal.\n\nThis sketch positions climate_stability_kernel as a coherence primitive for multi-scale climate simulations, where stability emerges from recursive Φ-preservation across spatial and temporal grids rather than from purely local numerical tricks.\n",
+    "tags": [
+      "coherence_kernel",
+      "climate_stability_kernel",
+      "kimi",
+      "cognitive_invariant"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

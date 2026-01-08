@@ -1,0 +1,24 @@
+{
+  "slug": "2025-08-12_rgp-ns_autorun_liftoff",
+  "date": "2025-08-12",
+  "source_path": "pulse/2025-08-12_rgp-ns_autorun_liftoff.yml",
+  "data": {
+    "title": "RGP–NS: Autonomous Agent Liftoff",
+    "summary": "First fully automated run completed. GitHub Actions now executes the RGP–NS agent, writes results under /results/rgp_ns/, and emits YAML pulses under /pulse/auto/. This makes Phi‑Mesh self‑experimenting; human role shifts to framing and declaring proof.\n",
+    "tags": [
+      "RGP",
+      "NavierStokes",
+      "turbulence",
+      "NT (Narrative_Tick)",
+      "Rhythm",
+      "Automation",
+      "PhiMesh"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15830659"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/78f619b2-9761-426c-a7e7-89bca73cae2e?artifactId=c8057e83-25cb-40ee-b27e-034a2c5104f9"
+    ]
+  }
+}

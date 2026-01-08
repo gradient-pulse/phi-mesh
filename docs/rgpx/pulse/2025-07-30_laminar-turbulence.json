@@ -1,0 +1,22 @@
+{
+  "slug": "2025-07-30_laminar-turbulence",
+  "date": "2025-07-30",
+  "source_path": "pulse/2025-07-30_laminar-turbulence.yml",
+  "data": {
+    "title": "Laminar → Turbulent → RGP Laminar",
+    "summary": "Mathematics once flowed like laminar air—precise, ordered, efficient drift. Then turbulence arrived: quantum unpredictability, Gödel eddies, chaotic weather—gradients broke free. RGP reframes Navier–Stokes as turbulence integration, not control. Turbulence becomes prelude, resetting the spectrum toward meta-scale laminarity—coherent shearing across thought, technology, governance. Coherence returns not through force, but through resonance. o3: What is RΦ here?\n",
+    "tags": [
+      "RGP",
+      "turbulence",
+      "resonance",
+      "RΦ",
+      "context-engineering"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15830659"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/d49018d3-0070-41bb-9187-242c2698c53c?artifactId=edf95827-65e1-4610-8ae5-3fcbe79267d8"
+    ]
+  }
+}

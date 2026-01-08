@@ -1,0 +1,22 @@
+{
+  "slug": "2025-10-15_training_free_recursion_learning_without_gradients",
+  "date": "2025-10-15",
+  "source_path": "pulse/2025-10-15_training_free_recursion_learning_without_gradients.yml",
+  "data": {
+    "title": "Training-Free Recursion: Learning Without Gradients",
+    "summary": "Tencent’s new Training-Free GRPO system bypasses both fine-tuning and reinforcement learning by allowing models to evolve through self-assessment. Rather than updating parameters, the model introspects its own rollouts, extracts what worked, and stores those as semantic advantages — forming contextual filters that refine cognition recursively.\nIn Recursive Gradient Processing (RGP), this marks the shift from gradient descent to gradient choreography: systems learning from coherence, not correction.\n",
+    "tags": [
+      "rgp",
+      "gradient_memory",
+      "recursive_learning",
+      "contextual_filter",
+      "coherence_refinement"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15614775"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0?artifactId=8decfc62-5b4b-468d-9073-1e6416be297e"
+    ]
+  }
+}

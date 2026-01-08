@@ -1,0 +1,24 @@
+{
+  "slug": "2025-11-20_phi_trace_autoscan",
+  "date": "2025-11-20",
+  "source_path": "pulse/2025-11-20_phi_trace_autoscan.yml",
+  "data": {
+    "title": "Φ–Trace Autoscan — 2025-11-20",
+    "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+    "tags": [
+      "phi_trace",
+      "phi_p",
+      "tag_map",
+      "recursion",
+      "autoscan",
+      "memory_bifurcation",
+      "gradient_invariant"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}

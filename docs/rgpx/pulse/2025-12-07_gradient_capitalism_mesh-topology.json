@@ -1,0 +1,24 @@
+{
+  "slug": "2025-12-07_gradient_capitalism_mesh-topology",
+  "date": "2025-12-07",
+  "source_path": "pulse/2025-12-07_gradient_capitalism_mesh-topology.yml",
+  "data": {
+    "title": "Gradient Capitalism and Mesh Topologies",
+    "summary": "Δ (gradient):\n  Gemini reinterprets economic structure through network topologies (bus, star, ring, tree, mesh), treating them as cartoons of Φ-flows in an economy.\nGC (gradient_choreography):\n  Star/tree topologies are mapped to extraction regimes (profit-max, high centralization, high viscosity); mesh topologies are mapped to coherence regimes (distributed trust tensor Φ, redundant paths, resilience).\nCF (contextual_filter):\n  Gradient Capitalism is framed as a shift in *topology* rather than ideology: from “who owns what” to “how trust and value can flow without tearing the mesh.”\nUD (unity_disunity_cycle):\n  Current extraction capitalism is recognized as a disunity phase (tearing ∇μΦ^{μν} ≠ 0 locally); the proposed mesh-based Gradient Capitalism becomes the next unity phase, with future disunity emerging from new topological bottlenecks once coherence saturates.\nrepo_path: dialogues/2025-12-07_gradient-capitalism_ai-reactions.md\n",
+    "tags": [
+      "gradient_capitalism",
+      "gradient_coherence",
+      "trust_tensor",
+      "economic_topology",
+      "rgpx",
+      "gemini",
+      "gpt"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17840719"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/073adca5-0c4a-43cf-8ffb-28a09e782d9c?artifactId=bc184e21-f5f4-45a5-8449-be199b64f5dc"
+    ]
+  }
+}

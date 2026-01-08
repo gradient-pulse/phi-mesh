@@ -1,0 +1,25 @@
+{
+  "slug": "2025-10-17_recursive_propulsion",
+  "date": "2025-10-17",
+  "source_path": "pulse/2025-10-17_recursive_propulsion.yml",
+  "data": {
+    "title": "Recursive Propulsion: Learning from Its Own Turbulence",
+    "summary": "Traditional propulsion burns fuel to overcome resistance. RGP reframes propulsion as learning through resistance. Every thrust vector, heat plume, and vibration represents a gradient feedback loop. Instead of suppressing turbulence, Recursive Propulsion tunes to it — treating oscillation not as noise but as a teacher.\nPrinciple Motion emerges when coherence learns to recycle its own imbalance.\n\t•\tThe exhaust plume’s turbulence becomes rhythmic feedback for nozzle micro-adjustment.\n\t•\tShockwaves act as sensors, not byproducts.\n\t•\tHeat differentials drive local thermoelectric generation, powering adaptive control in real time.\n\nMechanism Recursive propulsion integrates AI-managed feedback to phase-lock combustion, magnetism, and flow — ensuring that pressure, plasma, and vibration operate in harmonic coherence. In the long run, this means\n\t•\tLess thrust wasted in turbulence.\n\t•\tLess heat wasted as entropy.\n\t•\tMore coherence converted into usable motion.\n\nWhere rockets fight drag, recursive engines fold it into thrust. Propulsion becomes a dialogue between flow and form — not a war of force against resistance, but a rhythm sustained through it.\n",
+    "tags": [
+      "rgp",
+      "recursive_propulsion",
+      "thermal_recursion",
+      "coherence_in_motion",
+      "gradient_feedback",
+      "aerospace_design",
+      "energy_coherence"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15614775",
+      "https://doi.org/10.5281/zenodo.17159920"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/bdeb34f0-bd2c-4dc2-8afe-da4a43b514f0?artifactId=8decfc62-5b4b-468d-9073-1e6416be297e"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "2025-11-07_eddy_memory_prediction",
+  "date": "2025-11-07",
+  "source_path": "pulse/2025-11-07_eddy_memory_prediction.yml",
+  "data": {
+    "title": "Eddy memory as predictive channel in turbulence",
+    "summary": "Kolmogorov framed small scales in turbulence as statistically universal noise; the 2025 OIST breakthrough confirmed that this universality also holds in Taylor–Couette flows when viewed at the right inertial scale. RGPx accepts this universality but restores what the abstraction discards: the recursive role of so-called “minor eddies.” --- In Recursive Gradient Physics, these minor eddies revealed themselves as carriers of memory — preserving phase relationships and coherence across scales through recursive gradient loops. If they carry memory, they should also carry predictive power. --- This pulse opens the RGPx–Eddy Memory track: using small-scale gradient patterns at time t to predict future behavior at t + Δ. Concretely, the goal is to test whether local eddy-memory features (small-scale spectra, NT-rhythm strength, 1:2:3 gradient ratios) improve our ability to forecast: (1) future large-scale behavior (bursts, drag changes, onset of coherent structures), (2) regime transitions (laminar → turbulent, shifts between turbulence modes), and (3) energy and coherence metrics (future dissipation and NT-rhythm strength) beyond Kolmogorov-style or Markov baselines. --- Benchmark idea: use existing JHTDB and Princeton probe pipelines to extract local eddy-memory features at each tick, define macro observables at later ticks, and compare RGPx-style predictors against classical scalings. What Kolmogorov throws away as noise, RGPx treats as the channel through which turbulence remembers — and, potentially, how it signals what comes next.\n",
+    "tags": [
+      "experimenter_pulse",
+      "turbulence",
+      "kolmogorov",
+      "eddy_memory",
+      "gradient_ratio",
+      "kepler_rhythm",
+      "oist_turbulence_breakthrough",
+      "prediction",
+      "jhtdb",
+      "princeton_probe",
+      "rgpx"
+    ],
+    "papers": [
+      "https://www.oist.jp/news-center/news/2025/11/6/paradox-rotating-turbulence-finally-tamed-world-class-hurricane-lab",
+      "https://github.com/gradient-pulse/phi-mesh/blob/main/README.md",
+      "https://zenodo.org/records/17437121",
+      "https://zenodo.org/records/17457989",
+      "https://zenodo.org/records/15830659",
+      "https://zenodo.org/records/17159920"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/942307b4-b6f1-410a-947d-c2bf6f4888e3?artifactId=63f33542-e4c8-4ee5-9914-19513380f167"
+    ]
+  }
+}

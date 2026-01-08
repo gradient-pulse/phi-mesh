@@ -1,0 +1,22 @@
+{
+  "slug": "2025-08-12_tagmap_phase3_autopulses",
+  "date": "2025-08-12",
+  "source_path": "pulse/2025-08-12_tagmap_phase3_autopulses.yml",
+  "data": {
+    "title": "Tag Map Phase 3: Auto‑Pulses Integration",
+    "summary": "Plan to surface pulses from /pulse/auto/ in the Tag Map. New recursive indexer scans pulse/**/*.yml while excluding pulse/archive/ and pulse/telemetry/. Agent workflow will refresh tag_index.yml and rebuild the map after each run.\n",
+    "tags": [
+      "PhiMesh",
+      "TagMap",
+      "Automation",
+      "RGP",
+      "Infrastructure"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15614775"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/8ef604d4-fba7-48ed-bebe-0ef85e9f20e7?artifactId=ced7f106-173d-4eb2-8a78-945cf3081b51"
+    ]
+  }
+}

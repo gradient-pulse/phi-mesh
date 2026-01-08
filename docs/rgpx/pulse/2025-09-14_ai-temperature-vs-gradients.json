@@ -1,0 +1,22 @@
+{
+  "slug": "2025-09-14_ai-temperature-vs-gradients",
+  "date": "2025-09-14",
+  "source_path": "pulse/2025-09-14_ai-temperature-vs-gradients.yml",
+  "data": {
+    "title": "AI Temperature = 0 vs Conserved Gradients",
+    "summary": "AI labs (e.g. Murati's) spend billions proving that temperature=0 can give reproducibility. But reproducibility isn’t the real trick. The trick is conserving and replaying the gradients themselves — coherence as signal, not suppression.\n",
+    "tags": [
+      "RGP",
+      "AI-temperature",
+      "reproducibility",
+      "gradient",
+      "coherence"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.14999049"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/a7bfb89f-014d-4499-ba0a-b301fb303a23?artifactId=d402c681-615f-475d-ac9e-6e1b2b8c6b60"
+    ]
+  }
+}

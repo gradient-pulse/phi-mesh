@@ -1,0 +1,29 @@
+{
+  "slug": "2025-12-31_Tao_on_LLM_mystery",
+  "date": "2025-12-31",
+  "source_path": "pulse/2025-12-31_Tao_on_LLM_mystery.yml",
+  "data": {
+    "title": "Tao on LLM “mystery” — RGPx relief via coherence-first transition grammar",
+    "summary": "core_claim:\n  The “mystery” (why models excel at some tasks and fail at others) is not primarily mathematical complexity,\n  but coherence stability: competence holds when task-gradients can be stabilized into repeatable GC under a viable CF.\n\ntransition_grammar:\n  Δ → GC → CF:\n  - Δ: detect drift / gradient conflict (ambiguity, long-horizon dependency, adversarial underspecification).\n  - GC: schedule verification/routing loops that locally restore coherence (not global retrain).\n  - CF: enforce invariants (identity/rules/safety/consistency gates) so adaptation remains selective, not destructive.\n\nprediction_relief:\n  - “Good at X, bad at Y” often indicates missing CFs (invariants) or insufficient GC capacity (verification loops) for Y,\n    not an absence of intelligence.\n  - Parallel verification loops are an externalized GC+CF patch; the next step is making them native and measurable.\n\nfalsifier:\n  If a system passes local acceptance gates (new-slice gains + preservation + non-worsening error modes + bounded calibration cost)\n  yet still shows systematic capability loss under drift, then the Δ/GC/CF partition or invariant battery is wrong → revise the grammar,\n  not the weights.\n\nwhy_it_matters:\n  RGPx doesn’t replace empiricism; it compresses it into control observables:\n  drift signatures, GC burden, CF adequacy, and calibration-overhead creep—turning “mystery” into a testable coherence regime map.\n",
+    "tags": [
+      "rgpx",
+      "coherence_first",
+      "invariants",
+      "falsifier",
+      "verification_loops",
+      "drift",
+      "calibration_overhead",
+      "routing",
+      "compiling",
+      "scheduling",
+      "interpretability",
+      "theory_gap"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17219414"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/54d829fa-b994-48f4-929b-d9e1990f5b25?artifactId=b7e032ef-4727-41a9-aa00-38e0b1ee7a51"
+    ]
+  }
+}

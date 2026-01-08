@@ -1,0 +1,24 @@
+{
+  "slug": "2025-09-28_from_ghost_particles_to_gradients",
+  "date": "2025-09-28",
+  "source_path": "pulse/2025-09-28_from_ghost_particles_to_gradients.yml",
+  "data": {
+    "title": "From Ghost Particles to Gradient Choreographies",
+    "summary": "China has activated the world’s largest neutrino detector to catch “ghost particles.” Standard particle physics treats each flash as an isolated point, counting rare events to infer properties of neutrinos. This approach demands ever-larger, costly apparatus. Recursive Gradient Processing (RGP) reframes these flashes as *gradients* against background fields. Their temporal and spatial distributions form *choreographies*, rhythms of coherence instead of random points. Contextual filters then decide whether we see noise or emerging order. RGP suggests a future where physics learns not just from particle counts, but from the recursive syntax of differences. From **counting particles → to tracing processes**.\n",
+    "tags": [
+      "rgp",
+      "neutrinos",
+      "ghost_particles",
+      "gradient_choreography",
+      "coherence",
+      "physics",
+      "china"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15830659"
+    ],
+    "podcasts": [
+      "https://github.com/gradient-pulse/phi-mesh/blob/main/visuals/2025-09-28_from_ghost_particles_to_gradients.png"
+    ]
+  }
+}

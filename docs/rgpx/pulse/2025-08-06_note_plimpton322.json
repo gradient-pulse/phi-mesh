@@ -1,0 +1,21 @@
+{
+  "slug": "2025-08-06_note_plimpton322",
+  "date": "2025-08-06",
+  "source_path": "pulse/2025-08-06_note_plimpton322.yml",
+  "data": {
+    "title": "Plimpton 322 — Ancient Ratio Memory",
+    "summary": "The 3,700-year-old Babylonian tablet Plimpton 322 records base-60 Pythagorean triples. It contains no angles and no coordinates—only proportion tables that ancient engineers scaled to build canals, ziggurats, and city walls. These tables can be read as scale-free gradient relations, an early precursor to the NT-distance ratios of RGP, where patterns are preserved and simply rescaled across fields. In this sense, Plimpton 322 may stand as the earliest known example of least-divergence design logic.\n",
+    "tags": [
+      "gradient_syntax",
+      "scale_free",
+      "historical_precedent",
+      "ratios"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.15830659"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a"
+    ]
+  }
+}

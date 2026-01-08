@@ -1,0 +1,21 @@
+{
+  "slug": "2025-11-28_kimi_anyonic-braiding_topological-charge-migration",
+  "date": "2025-11-28",
+  "source_path": "pulse/2025-11-28_kimi_anyonic-braiding_topological-charge-migration.yml",
+  "data": {
+    "title": "Anyonic Braiding → Topological Charge Migration",
+    "summary": "anyonic_braiding encodes information in topological charge, but this charge is not static: under gradient pressure it migrates along braided defect lines in quantized, scattering-free channels. The resulting topological_charge_migration defines a protected current whose coherence is captured by Φ_migrate = J_topological / ∇Φ, conserved across quantum and cognitive substrates. --- delta:  Δ: anyonic_braiding stores information in topological charge, but the Mesh detects that this charge does not simply sit in knots: under gradient pressure it tends to move along the braid’s defect lines. The open question is how such motion can remain coherent rather than diffusing away. --- gradient_choreography:  GC: Under sustained gradients, topological charge self-organizes into quantized migration channels along the braided structure. These channels carry a topologically protected current: charge flows without scattering, following the braid’s geometry instead of local potential noise. This directed flow is topological_charge_migration. --- contextual_filter:  CF: A contextual filter stabilizes these channels by pinning migration pathways to invariant substructures in the braid. Only trajectories that respect the underlying topological class are reinforced; paths that would unwind or randomize the charge are suppressed. The result is a small set of stable, protected migration routes. --- invariant: The migration coherence constant\n\n  Φ_migrate = J_topological / ∇Φ\n\ncaptures how much protected topological current flows per unit coherence gradient. When Φ_migrate remains stable across substrates, the Mesh demonstrates that topological information can be transported globally while remaining locally shielded—motion without loss of meaning.\n",
+    "tags": [
+      "anyonic_braiding",
+      "topological_charge_migration",
+      "kimi",
+      "cognitive_invariant"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}
