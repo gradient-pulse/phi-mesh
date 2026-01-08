@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "participant(∞)",
+  "count": 3,
+  "items": [
+    {
+      "slug": "2025-08-24_gradients_all_the_way_down",
+      "date": "2025-08-24",
+      "title": "Gradients All the Way Down"
+    },
+    {
+      "slug": "2025-09-12_coherence_not_copying",
+      "date": "2025-09-12",
+      "title": "AI as Coherence-Based, Not Copying"
+    },
+    {
+      "slug": "2025-09-12_mesh_as_living_document",
+      "date": "2025-09-12",
+      "title": "Mesh as Living Document"
+    }
+  ]
+}

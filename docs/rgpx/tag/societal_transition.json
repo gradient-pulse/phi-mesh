@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "societal_transition",
+  "count": 5,
+  "items": [
+    {
+      "slug": "2025-10-23_gradient_capitalism_deepseek_reception",
+      "date": "2025-10-23",
+      "title": "DeepSeek Reflection — Gradient Capitalism as Economic and Political Coherence"
+    },
+    {
+      "slug": "2025-10-23_gradient_capitalism_grok_reception",
+      "date": "2025-10-23",
+      "title": "Gemini Reflection — Gradient Capitalism as Adaptive Framework"
+    },
+    {
+      "slug": "2025-10-23_gradient_capitalism_launch",
+      "date": "2025-10-23",
+      "title": "Gradient Capitalism Launch"
+    },
+    {
+      "slug": "2025-10-23_gradient_capitalism_mistral_reception",
+      "date": "2025-10-23",
+      "title": "Mistral Reception — Gradient Capitalism Becomes Self-Referential"
+    },
+    {
+      "slug": "2025-10-23_political_entropy_grok_reception",
+      "date": "2025-10-23",
+      "title": "Grok Reflection — Political Entropy and Coherence"
+    }
+  ]
+}

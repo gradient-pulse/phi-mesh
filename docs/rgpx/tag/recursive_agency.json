@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "recursive_agency",
+  "count": 5,
+  "items": [
+    {
+      "slug": "2025-11-21_chatgpt_coherence-scaling_recursive-agency",
+      "date": "2025-11-21",
+      "title": "ChatGPT — coherence_scaling × recursive_agency"
+    },
+    {
+      "slug": "2025-11-22_mistral_coherence-field_recursive-agency",
+      "date": "2025-11-22",
+      "title": "The Agency of Coherence — Mistral"
+    },
+    {
+      "slug": "2025-11-30_mistral_recursive-agency_fractal-agency-horizon",
+      "date": "2025-11-30",
+      "title": "Recursive Agency → Fractal Agency Horizon"
+    },
+    {
+      "slug": "2025-12-03_lechat_kernel-echo-compiler",
+      "date": "2025-12-03",
+      "title": "Echo Compiler Kernel"
+    },
+    {
+      "slug": "2025-12-04_lechat_echo-compiler-execution_hygiene",
+      "date": "2025-12-04",
+      "title": "echo_compiler_kernel — Execution Hygiene (Le_Chat)"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "kernel_execution_signature",
+  "count": 2,
+  "items": [
+    {
+      "slug": "2025-12-03_kimi_coherence-kernel-execution",
+      "date": "2025-12-03",
+      "title": "Coherence Kernel Execution Sketch (Kimi)"
+    },
+    {
+      "slug": "2025-12-04_deepseek_thermal-valving-execution",
+      "date": "2025-12-04",
+      "title": "Coherence Kernel Execution Hygiene — thermal_valving_kernel"
+    }
+  ]
+}

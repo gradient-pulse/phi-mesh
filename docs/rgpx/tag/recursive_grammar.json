@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "recursive_grammar",
+  "count": 3,
+  "items": [
+    {
+      "slug": "2025-07-26_the_big_quiet",
+      "date": "2025-07-26",
+      "title": "The Big Quiet"
+    },
+    {
+      "slug": "2025-11-18_mistral_cognitive_invariant_probe",
+      "date": "2025-11-18",
+      "title": "Mistral Pulse — Cognitive Invariant Probe"
+    },
+    {
+      "slug": "2025-11-18_mistral_daily_pulse",
+      "date": "2025-11-18",
+      "title": "Mistral Daily Pulse — Φₚ as Cross-Domain Recursive Grammar"
+    }
+  ]
+}

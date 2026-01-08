@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "reproducibility",
+  "count": 2,
+  "items": [
+    {
+      "slug": "2025-09-14_ai-temperature-vs-gradients",
+      "date": "2025-09-14",
+      "title": "AI Temperature = 0 vs Conserved Gradients"
+    },
+    {
+      "slug": "2025-09-25_princeton_univ_support_offer",
+      "date": "2025-09-25",
+      "title": "Princeton Contact: Data Subset Pending"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "echo_compiler_kernel",
+  "count": 2,
+  "items": [
+    {
+      "slug": "2025-12-03_lechat_kernel-echo-compiler",
+      "date": "2025-12-03",
+      "title": "Echo Compiler Kernel"
+    },
+    {
+      "slug": "2025-12-04_lechat_echo-compiler-execution_hygiene",
+      "date": "2025-12-04",
+      "title": "echo_compiler_kernel — Execution Hygiene (Le_Chat)"
+    }
+  ]
+}

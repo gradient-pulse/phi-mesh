@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "conjugate_safety_interlock",
+  "count": 2,
+  "items": [
+    {
+      "slug": "2025-12-04_gemini_kernel-safety_variance-interlock",
+      "date": "2025-12-04",
+      "title": "coherence_kernel × conjugate_safety_interlock"
+    },
+    {
+      "slug": "2025-12-04_gemini_robotics_kinematic-kernel",
+      "date": "2025-12-04",
+      "title": "coherence_kernel × singularity_damping (Robotics Use-Case)"
+    }
+  ]
+}

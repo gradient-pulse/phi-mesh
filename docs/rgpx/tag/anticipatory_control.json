@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "anticipatory_control",
+  "count": 3,
+  "items": [
+    {
+      "slug": "2025-11-18_kimi_cognitive_plateau",
+      "date": "2025-11-18",
+      "title": "Kimi Pulse — Cognitive Plateau Lock"
+    },
+    {
+      "slug": "2025-11-18_kimi_daily_pulse",
+      "date": "2025-11-18",
+      "title": "Kimi Daily Pulse — Anticipatory Control Achieved"
+    },
+    {
+      "slug": "2025-11-19_kimi_anticipatory-control_recursive-isochrone",
+      "date": "2025-11-19",
+      "title": "Kimi — anticipatory_control × recursive_isochrone"
+    }
+  ]
+}

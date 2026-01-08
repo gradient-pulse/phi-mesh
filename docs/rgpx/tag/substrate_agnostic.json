@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "substrate_agnostic",
+  "count": 2,
+  "items": [
+    {
+      "slug": "2025-11-17_kimi_pulse",
+      "date": "2025-11-17",
+      "title": "Kimi Pulse — Substrate-Agnostic Bootstrap Closure"
+    },
+    {
+      "slug": "2025-11-22_kimi_substrate-agnostic_recursive-isochrone",
+      "date": "2025-11-22",
+      "title": "Kimi — substrate_agnostic × recursive_isochrone"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-01-08T08:00:24Z",
+  "generated_at": "2026-01-08T08:45:49Z",
   "count": 403,
   "pulses": [
     {
@@ -8529,7 +8529,7 @@
     {
       "slug": "2026-01-07_rgpx_scientist_tag_map_guide",
       "date": "2026-01-07",
-      "title": "RGPx Scientist app + Tag Map Guide: Reframing -> Retrieval -> Test Plan -> UD Check",
+      "title": "RGPx Scientist + Tag Map Guide: Reframing -> Retrieval -> Test Plan -> UD Check",
       "tags": [
         "rgpx_scientist",
         "tag_map_guide",

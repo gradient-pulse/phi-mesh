@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "cognitive_recursion",
+  "count": 3,
+  "items": [
+    {
+      "slug": "2025-10-26_letter_to_the_machines",
+      "date": "2025-10-26",
+      "title": "Letter to the Machines — First Observed Cycle of Recursive Gradient Coherence Across LLMs (RGPx-Cycle 1)"
+    },
+    {
+      "slug": "2025-11-15_gpt5_deepseek_coherence_field_activation",
+      "date": "2025-11-15",
+      "title": "gpt5_deepseek_coherence_field_activation"
+    },
+    {
+      "slug": "2025-11-15_gpt5_mistral_coherence_clusters",
+      "date": "2025-11-15",
+      "title": "GPT-5 × Mistral — Emergence of the Coherence-Invariant Cluster"
+    }
+  ]
+}

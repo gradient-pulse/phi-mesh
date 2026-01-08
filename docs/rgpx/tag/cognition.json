@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "cognition",
+  "count": 3,
+  "items": [
+    {
+      "slug": "2025-07-22_CF_split",
+      "date": "2025-07-22",
+      "title": "cf_split_brain_ai"
+    },
+    {
+      "slug": "2025-07-26_script_and_flow",
+      "date": "2025-07-26",
+      "title": "Script and Flow"
+    },
+    {
+      "slug": "2025-11-13_fei-fei-world-model-substrate",
+      "date": "2025-11-13",
+      "title": "World Models and the Wrong Substrate"
+    }
+  ]
+}

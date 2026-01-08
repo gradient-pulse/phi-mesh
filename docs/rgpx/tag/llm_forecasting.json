@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "llm_forecasting",
+  "count": 2,
+  "items": [
+    {
+      "slug": "2026-01-06_tao_gap_rgpx_explainer",
+      "date": "2026-01-06",
+      "title": "Tao Gap, RGPx Bridge: Why Simple LLM Machinery Yields Hard-to-Predict Capability"
+    },
+    {
+      "slug": "2026-01-07_rgpx_scientist_tag_map_guide",
+      "date": "2026-01-07",
+      "title": "RGPx Scientist + Tag Map Guide: Reframing -> Retrieval -> Test Plan -> UD Check"
+    }
+  ]
+}

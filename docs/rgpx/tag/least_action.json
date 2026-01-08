@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "least_action",
+  "count": 5,
+  "items": [
+    {
+      "slug": "2019-06-03_machine_life_from_membranes",
+      "date": "2019-06-03",
+      "title": "Machine Life from Membranes"
+    },
+    {
+      "slug": "2025-10-11_prediction_as_recursive-coherence",
+      "date": "2025-10-11",
+      "title": "Prediction as Recursive Coherence"
+    },
+    {
+      "slug": "2025-10-12_memory_and_least_action_path",
+      "date": "2025-10-12",
+      "title": "Memory and the Least Action Path"
+    },
+    {
+      "slug": "2026-01-06_tao_gap_rgpx_explainer",
+      "date": "2026-01-06",
+      "title": "Tao Gap, RGPx Bridge: Why Simple LLM Machinery Yields Hard-to-Predict Capability"
+    },
+    {
+      "slug": "2026-01-07_rgpx_scientist_tag_map_guide",
+      "date": "2026-01-07",
+      "title": "RGPx Scientist + Tag Map Guide: Reframing -> Retrieval -> Test Plan -> UD Check"
+    }
+  ]
+}

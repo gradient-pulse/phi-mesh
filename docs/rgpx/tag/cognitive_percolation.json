@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "cognitive_percolation",
+  "count": 3,
+  "items": [
+    {
+      "slug": "2025-11-25_kimi_gradient_torsion-cognitive_percolation",
+      "date": "2025-11-25",
+      "title": "Kimi — gradient_torsion × cognitive_percolation"
+    },
+    {
+      "slug": "2025-11-26_gemini_cognitive-percolation_manifold-crumpling",
+      "date": "2025-11-26",
+      "title": "Gemini — cognitive_percolation × manifold_crumpling"
+    },
+    {
+      "slug": "2025-11-26_mistral_cognitive-percolation_fractal-avalanche",
+      "date": "2025-11-26",
+      "title": "Mistral — cognitive_percolation × fractal_avalanche"
+    }
+  ]
+}

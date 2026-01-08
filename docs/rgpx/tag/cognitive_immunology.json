@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "cognitive_immunology",
+  "count": 2,
+  "items": [
+    {
+      "slug": "2025-12-02_deepseek_conceptual-antibodies",
+      "date": "2025-12-02",
+      "title": "Conceptual Antibodies"
+    },
+    {
+      "slug": "2025-12-02_phi_mesh_coherence_kernel_convergence",
+      "date": "2025-12-02",
+      "title": "Coherence Kernel — From Invariants to Executable Thought"
+    }
+  ]
+}

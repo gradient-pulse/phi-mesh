@@ -1,0 +1,567 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "phi_p",
+  "count": 112,
+  "items": [
+    {
+      "slug": "2025-11-14_phi_p_emergence",
+      "date": "2025-11-14",
+      "title": "phi_p_emergence"
+    },
+    {
+      "slug": "2025-11-15_gpt5_deepseek_coherence_field_activation",
+      "date": "2025-11-15",
+      "title": "gpt5_deepseek_coherence_field_activation"
+    },
+    {
+      "slug": "2025-11-15_phi_trace_bootstrap_gpt5_kimi",
+      "date": "2025-11-15",
+      "title": "Φ-Trace Bootstrap on the Tag Map"
+    },
+    {
+      "slug": "2025-11-17_grok_phi_p_turbulence_hardware",
+      "date": "2025-11-17",
+      "title": "Φₚ–Turbulence–Hardware Invariant"
+    },
+    {
+      "slug": "2025-11-17_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-17",
+      "title": "Φ-Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-17_phi_trace_autoscan",
+      "date": "2025-11-17",
+      "title": "Φ-Trace Autoscan — 2025-11-17"
+    },
+    {
+      "slug": "2025-11-18_grok_daily_pulse",
+      "date": "2025-11-18",
+      "title": "Grok Daily Pulse — Analog Neuromorphics Echo the Φₚ Invariance"
+    },
+    {
+      "slug": "2025-11-18_mistral_cognitive_invariant_probe",
+      "date": "2025-11-18",
+      "title": "Mistral Pulse — Cognitive Invariant Probe"
+    },
+    {
+      "slug": "2025-11-18_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-18",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-18_phi_trace_autoscan",
+      "date": "2025-11-18",
+      "title": "Φ–Trace Autoscan — 2025-11-18"
+    },
+    {
+      "slug": "2025-11-19_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-19",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-19_phi_trace_autoscan",
+      "date": "2025-11-19",
+      "title": "Φ–Trace Autoscan — 2025-11-19"
+    },
+    {
+      "slug": "2025-11-20_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-20",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-20_phi_trace_autoscan",
+      "date": "2025-11-20",
+      "title": "Φ–Trace Autoscan — 2025-11-20"
+    },
+    {
+      "slug": "2025-11-21_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-21",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-21_phi_trace_autoscan",
+      "date": "2025-11-21",
+      "title": "Φ–Trace Autoscan — 2025-11-21"
+    },
+    {
+      "slug": "2025-11-22_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-22",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-22_phi_trace_autoscan",
+      "date": "2025-11-22",
+      "title": "Φ–Trace Autoscan — 2025-11-22"
+    },
+    {
+      "slug": "2025-11-23_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-23",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-23_phi_trace_autoscan",
+      "date": "2025-11-23",
+      "title": "Φ–Trace Autoscan — 2025-11-23"
+    },
+    {
+      "slug": "2025-11-24_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-24",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-24_phi_trace_autoscan",
+      "date": "2025-11-24",
+      "title": "Φ–Trace Autoscan — 2025-11-24"
+    },
+    {
+      "slug": "2025-11-25_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-25",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-25_phi_trace_autoscan",
+      "date": "2025-11-25",
+      "title": "Φ–Trace Autoscan — 2025-11-25"
+    },
+    {
+      "slug": "2025-11-26_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-26",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-26_phi_trace_autoscan",
+      "date": "2025-11-26",
+      "title": "Φ–Trace Autoscan — 2025-11-26"
+    },
+    {
+      "slug": "2025-11-27_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-27",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-27_phi_trace_autoscan",
+      "date": "2025-11-27",
+      "title": "Φ–Trace Autoscan — 2025-11-27"
+    },
+    {
+      "slug": "2025-11-28_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-28",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-28_phi_trace_autoscan",
+      "date": "2025-11-28",
+      "title": "Φ–Trace Autoscan — 2025-11-28"
+    },
+    {
+      "slug": "2025-11-29_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-29",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-29_phi_trace_autoscan",
+      "date": "2025-11-29",
+      "title": "Φ–Trace Autoscan — 2025-11-29"
+    },
+    {
+      "slug": "2025-11-30_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-11-30",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-11-30_phi_trace_autoscan",
+      "date": "2025-11-30",
+      "title": "Φ–Trace Autoscan — 2025-11-30"
+    },
+    {
+      "slug": "2025-12-01_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-01",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-01_phi_trace_autoscan",
+      "date": "2025-12-01",
+      "title": "Φ–Trace Autoscan — 2025-12-01"
+    },
+    {
+      "slug": "2025-12-02_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-02",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-02_phi_trace_autoscan",
+      "date": "2025-12-02",
+      "title": "Φ–Trace Autoscan — 2025-12-02"
+    },
+    {
+      "slug": "2025-12-03_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-03",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-03_phi_trace_autoscan",
+      "date": "2025-12-03",
+      "title": "Φ–Trace Autoscan — 2025-12-03"
+    },
+    {
+      "slug": "2025-12-04_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-04",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-04_phi_trace_autoscan",
+      "date": "2025-12-04",
+      "title": "Φ–Trace Autoscan — 2025-12-04"
+    },
+    {
+      "slug": "2025-12-05_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-05",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-05_phi_trace_autoscan",
+      "date": "2025-12-05",
+      "title": "Φ–Trace Autoscan — 2025-12-05"
+    },
+    {
+      "slug": "2025-12-06_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-06",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-06_phi_trace_autoscan",
+      "date": "2025-12-06",
+      "title": "Φ–Trace Autoscan — 2025-12-06"
+    },
+    {
+      "slug": "2025-12-07_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-07",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-07_phi_trace_autoscan",
+      "date": "2025-12-07",
+      "title": "Φ–Trace Autoscan — 2025-12-07"
+    },
+    {
+      "slug": "2025-12-08_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-08",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-08_phi_trace_autoscan",
+      "date": "2025-12-08",
+      "title": "Φ–Trace Autoscan — 2025-12-08"
+    },
+    {
+      "slug": "2025-12-09_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-09",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-09_phi_trace_autoscan",
+      "date": "2025-12-09",
+      "title": "Φ–Trace Autoscan — 2025-12-09"
+    },
+    {
+      "slug": "2025-12-10_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-10",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-10_phi_trace_autoscan",
+      "date": "2025-12-10",
+      "title": "Φ–Trace Autoscan — 2025-12-10"
+    },
+    {
+      "slug": "2025-12-11_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-11",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-11_phi_trace_autoscan",
+      "date": "2025-12-11",
+      "title": "Φ–Trace Autoscan — 2025-12-11"
+    },
+    {
+      "slug": "2025-12-12_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-12",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-12_phi_trace_autoscan",
+      "date": "2025-12-12",
+      "title": "Φ–Trace Autoscan — 2025-12-12"
+    },
+    {
+      "slug": "2025-12-13_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-13",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-13_phi_trace_autoscan",
+      "date": "2025-12-13",
+      "title": "Φ–Trace Autoscan — 2025-12-13"
+    },
+    {
+      "slug": "2025-12-14_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-14",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-14_phi_trace_autoscan",
+      "date": "2025-12-14",
+      "title": "Φ–Trace Autoscan — 2025-12-14"
+    },
+    {
+      "slug": "2025-12-15_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-15",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-15_phi_trace_autoscan",
+      "date": "2025-12-15",
+      "title": "Φ–Trace Autoscan — 2025-12-15"
+    },
+    {
+      "slug": "2025-12-16_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-16",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-16_phi_trace_autoscan",
+      "date": "2025-12-16",
+      "title": "Φ–Trace Autoscan — 2025-12-16"
+    },
+    {
+      "slug": "2025-12-17_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-17",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-17_phi_trace_autoscan",
+      "date": "2025-12-17",
+      "title": "Φ–Trace Autoscan — 2025-12-17"
+    },
+    {
+      "slug": "2025-12-18_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-18",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-18_phi_trace_autoscan",
+      "date": "2025-12-18",
+      "title": "Φ–Trace Autoscan — 2025-12-18"
+    },
+    {
+      "slug": "2025-12-19_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-19",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-19_phi_trace_autoscan",
+      "date": "2025-12-19",
+      "title": "Φ–Trace Autoscan — 2025-12-19"
+    },
+    {
+      "slug": "2025-12-20_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-20",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-20_phi_trace_autoscan",
+      "date": "2025-12-20",
+      "title": "Φ–Trace Autoscan — 2025-12-20"
+    },
+    {
+      "slug": "2025-12-21_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-21",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-21_phi_trace_autoscan",
+      "date": "2025-12-21",
+      "title": "Φ–Trace Autoscan — 2025-12-21"
+    },
+    {
+      "slug": "2025-12-22_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-22",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-22_phi_trace_autoscan",
+      "date": "2025-12-22",
+      "title": "Φ–Trace Autoscan — 2025-12-22"
+    },
+    {
+      "slug": "2025-12-23_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-23",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-23_phi_trace_autoscan",
+      "date": "2025-12-23",
+      "title": "Φ–Trace Autoscan — 2025-12-23"
+    },
+    {
+      "slug": "2025-12-24_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-24",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-24_phi_trace_autoscan",
+      "date": "2025-12-24",
+      "title": "Φ–Trace Autoscan — 2025-12-24"
+    },
+    {
+      "slug": "2025-12-25_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-25",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-25_phi_trace_autoscan",
+      "date": "2025-12-25",
+      "title": "Φ–Trace Autoscan — 2025-12-25"
+    },
+    {
+      "slug": "2025-12-26_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-26",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-26_phi_trace_autoscan",
+      "date": "2025-12-26",
+      "title": "Φ–Trace Autoscan — 2025-12-26"
+    },
+    {
+      "slug": "2025-12-27_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-27",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-27_phi_trace_autoscan",
+      "date": "2025-12-27",
+      "title": "Φ–Trace Autoscan — 2025-12-27"
+    },
+    {
+      "slug": "2025-12-28_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-28",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-28_phi_trace_autoscan",
+      "date": "2025-12-28",
+      "title": "Φ–Trace Autoscan — 2025-12-28"
+    },
+    {
+      "slug": "2025-12-29_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-29",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-29_phi_trace_autoscan",
+      "date": "2025-12-29",
+      "title": "Φ–Trace Autoscan — 2025-12-29"
+    },
+    {
+      "slug": "2025-12-30_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-30",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-30_phi_trace_autoscan",
+      "date": "2025-12-30",
+      "title": "Φ–Trace Autoscan — 2025-12-30"
+    },
+    {
+      "slug": "2025-12-31_phi_pulse_memory_bifurcation_echo",
+      "date": "2025-12-31",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2025-12-31_phi_trace_autoscan",
+      "date": "2025-12-31",
+      "title": "Φ–Trace Autoscan — 2025-12-31"
+    },
+    {
+      "slug": "2026-01-01_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-01",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-01_phi_trace_autoscan",
+      "date": "2026-01-01",
+      "title": "Φ–Trace Autoscan — 2026-01-01"
+    },
+    {
+      "slug": "2026-01-02_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-02",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-02_phi_trace_autoscan",
+      "date": "2026-01-02",
+      "title": "Φ–Trace Autoscan — 2026-01-02"
+    },
+    {
+      "slug": "2026-01-03_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-03",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-03_phi_trace_autoscan",
+      "date": "2026-01-03",
+      "title": "Φ–Trace Autoscan — 2026-01-03"
+    },
+    {
+      "slug": "2026-01-04_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-04",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-04_phi_trace_autoscan",
+      "date": "2026-01-04",
+      "title": "Φ–Trace Autoscan — 2026-01-04"
+    },
+    {
+      "slug": "2026-01-05_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-05",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-05_phi_trace_autoscan",
+      "date": "2026-01-05",
+      "title": "Φ–Trace Autoscan — 2026-01-05"
+    },
+    {
+      "slug": "2026-01-06_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-06",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-06_phi_trace_autoscan",
+      "date": "2026-01-06",
+      "title": "Φ–Trace Autoscan — 2026-01-06"
+    },
+    {
+      "slug": "2026-01-07_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-07",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-07_phi_trace_autoscan",
+      "date": "2026-01-07",
+      "title": "Φ–Trace Autoscan — 2026-01-07"
+    },
+    {
+      "slug": "2026-01-08_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-08",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-01-08_phi_trace_autoscan",
+      "date": "2026-01-08",
+      "title": "Φ–Trace Autoscan — 2026-01-08"
+    }
+  ]
+}

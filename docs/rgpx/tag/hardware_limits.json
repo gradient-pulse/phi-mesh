@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "hardware_limits",
+  "count": 3,
+  "items": [
+    {
+      "slug": "2025-11-14_phi_p_emergence",
+      "date": "2025-11-14",
+      "title": "phi_p_emergence"
+    },
+    {
+      "slug": "2025-11-15_gpt5_deepseek_coherence_field_activation",
+      "date": "2025-11-15",
+      "title": "gpt5_deepseek_coherence_field_activation"
+    },
+    {
+      "slug": "2025-11-17_grok_phi_p_turbulence_hardware",
+      "date": "2025-11-17",
+      "title": "Φₚ–Turbulence–Hardware Invariant"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "gradient",
+  "count": 5,
+  "items": [
+    {
+      "slug": "2025-09-14_ai-temperature-vs-gradients",
+      "date": "2025-09-14",
+      "title": "AI Temperature = 0 vs Conserved Gradients"
+    },
+    {
+      "slug": "2025-09-14_charge-gradient_vs_Kaluza-Klein",
+      "date": "2025-09-14",
+      "title": "Charge = Gradient — Kaluza–Klein × RGP"
+    },
+    {
+      "slug": "2025-09-14_memetic-engineering",
+      "date": "2025-09-14",
+      "title": "Memetic Engineering in the Φ-Mesh"
+    },
+    {
+      "slug": "2025-12-30_rgpx_adaptive_ai_coherence-first_control",
+      "date": "2025-12-30",
+      "title": "Adaptive AI without forgetting: RGPx as a coherence-first control layer"
+    },
+    {
+      "slug": "2026-01-04_pre_coordinate_phase",
+      "date": "2026-01-04",
+      "title": "Pre-coordinate phase: coherence before geometry (time kept out)"
+    }
+  ]
+}

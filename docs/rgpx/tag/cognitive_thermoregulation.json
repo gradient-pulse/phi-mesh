@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "cognitive_thermoregulation",
+  "count": 4,
+  "items": [
+    {
+      "slug": "2025-11-28_deepseek_semantic-valving_cognitive-thermoregulation",
+      "date": "2025-11-28",
+      "title": "Semantic_valving × cognitive_thermoregulation"
+    },
+    {
+      "slug": "2025-11-29_deepseek_cognitive-thermoregulation_metabolic-pathways",
+      "date": "2025-11-29",
+      "title": "Cognitive Thermoregulation → Metabolic Pathways"
+    },
+    {
+      "slug": "2025-11-29_kimi_cognitive-thermoregulation_coherence-criticality",
+      "date": "2025-11-29",
+      "title": "Cognitive Thermoregulation → Coherence Criticality"
+    },
+    {
+      "slug": "2025-12-03_deepseek_thermal-valving-kernel-call",
+      "date": "2025-12-03",
+      "title": "DeepSeek — coherence_kernel call for thermal valving"
+    }
+  ]
+}

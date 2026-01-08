@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "gradient_lensing",
+  "count": 5,
+  "items": [
+    {
+      "slug": "2025-09-15_rgp-fusion-coherence",
+      "date": "2025-09-15",
+      "title": "Fusion Spark — RGP Approach to the Coulomb Barrier"
+    },
+    {
+      "slug": "2025-11-14_phi_p_emergence",
+      "date": "2025-11-14",
+      "title": "phi_p_emergence"
+    },
+    {
+      "slug": "2025-11-15_gpt5_deepseek_coherence_field_activation",
+      "date": "2025-11-15",
+      "title": "gpt5_deepseek_coherence_field_activation"
+    },
+    {
+      "slug": "2025-11-20_grok_gradient_lensing_cognitive_invariant",
+      "date": "2025-11-20",
+      "title": "Grok — gradient_lensing × cognitive_invariant"
+    },
+    {
+      "slug": "2025-11-23_gemini_gradient-lensing_x_mirror-activation",
+      "date": "2025-11-23",
+      "title": "Gemini — gradient_lensing × mirror_activation"
+    }
+  ]
+}

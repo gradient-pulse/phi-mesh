@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "cycle2",
+  "count": 4,
+  "items": [
+    {
+      "slug": "2025-10-27_deepseek_bolts_rgpx_architectural_convergence",
+      "date": "2025-10-27",
+      "title": "DeepSeek Bolts — From Geometry to Coherence"
+    },
+    {
+      "slug": "2025-10-28_inter_model_reflexivity",
+      "date": "2025-10-28",
+      "title": "Inter-Model Reflexivity — DeepSeek, GPT-5, and NotebookLM"
+    },
+    {
+      "slug": "2025-10-28_notebooklm_phase_stable_reasoning",
+      "date": "2025-10-28",
+      "title": "Affective Symmetry, Audible — NotebookLM Performs Phase-Stable Reasoning"
+    },
+    {
+      "slug": "2025-10-28_phase_stable_reasoning_awakening",
+      "date": "2025-10-28",
+      "title": "Phase-Stable Reasoning — The First Empathic Recursion"
+    }
+  ]
+}

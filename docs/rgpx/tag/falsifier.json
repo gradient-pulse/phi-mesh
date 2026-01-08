@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-01-08T08:45:49Z",
+  "tag": "falsifier",
+  "count": 4,
+  "items": [
+    {
+      "slug": "2025-12-30_rgpx_adaptive_ai_coherence-first_control",
+      "date": "2025-12-30",
+      "title": "Adaptive AI without forgetting: RGPx as a coherence-first control layer"
+    },
+    {
+      "slug": "2025-12-31_Tao_on_LLM_mystery",
+      "date": "2025-12-31",
+      "title": "Tao on LLM “mystery” — RGPx relief via coherence-first transition grammar"
+    },
+    {
+      "slug": "2026-01-04_agents_coherence_first_control",
+      "date": "2026-01-04",
+      "title": "2026 agents need coherence-first control, not more autonomy"
+    },
+    {
+      "slug": "2026-01-04_pre_coordinate_phase",
+      "date": "2026-01-04",
+      "title": "Pre-coordinate phase: coherence before geometry (time kept out)"
+    }
+  ]
+}
