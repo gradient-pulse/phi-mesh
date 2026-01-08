@@ -1,6 +1,7 @@
 name: Build RGPx JSON Index
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
