@@ -7,6 +7,7 @@ on:
     paths:
       - "pulse/**.yml"
       - "meta/build_rgpx_index.py"
+      - "meta/build_rgpx_slices.py"
       - "meta/tag_taxonomy.yml"
       - "meta/tag_descriptions.yml"
       - "meta/aliases.yml"
@@ -35,6 +36,10 @@ jobs:
       - name: Generate JSON
         run: |
           python meta/build_rgpx_index.py
+
+      - name: Build small index + per-tag slices
+        run: |
+          python meta/build_rgpx_slices.py
 
       - name: Commit and push if changed
         run: |
