@@ -31,6 +31,9 @@ readers_key_min:
     test_note: "Perturb context; if the repeated pattern persists, stabilization is present."
 
   essential_terms:
+    rgpx:
+      plain_definition: "Recursive Gradient Physics: a research framework for tracking how stable organization forms from differences under feedback."
+      testable_one_liner: "If organization is real, it persists under perturbation better than matched controls."
     coherence:
       plain_definition: "persistence of organized relationships under perturbation"
       testable_one_liner: "Apply a controlled perturbation; quantify how much structure survives vs baseline drift."
