@@ -1,0 +1,51 @@
+readers_key_min:
+  version: "alpha1.1"
+  title: "RGPx Reader’s Key (Minimal)"
+  purpose: >
+    Translation-only decoder ring for RGPx/Mesh terms. Use to explain terms in plain,
+    testable language. Not evidence. Do not cite as mechanism support.
+
+  use_rules:
+    - Use this file only to translate terms and standardize wording.
+    - Do not use this file to justify mechanism claims; evidence must come from pulses.
+    - If a Mesh term appears in sections (1)–(5), append a one-line testable translation immediately.
+    - Prefer spelled-out terms over acronyms unless the user explicitly asks for abbreviations.
+
+  claim_strength_labels:
+    definition:
+      meaning: "What a term means (vocabulary)."
+      allowed_sources: ["tag_taxonomy.yml", "tag_descriptions.yml", "readers_key_min.yml"]
+    hypothesis:
+      meaning: "Mechanism proposal not established."
+      marking: "uncited (domain background) unless supported by pulses."
+    prediction:
+      meaning: "Falsifiable expected pattern."
+      requirement: "Specify what is measured and what outcome would falsify it."
+    evidence:
+      meaning: "Supported by retrieved pulse citations in section (6)."
+      requirement: "Pulse excerpt(s) ≤20 words each."
+
+  core_translation:
+    mesh_form: "Δ→GC→CF"
+    plain_translation: "small effect appears → repeats reliably → stays stable under context changes"
+    test_note: "Perturb context; if the repeated pattern persists, stabilization is present."
+
+  essential_terms:
+    coherence:
+      plain_definition: "persistence of organized relationships under perturbation"
+      testable_one_liner: "Apply a controlled perturbation; quantify how much structure survives vs baseline drift."
+    gradient:
+      plain_definition: "a measurable local difference/tension in a variable"
+      testable_one_liner: "Change the difference; check for consistent, directional response change."
+    gradient_choreography:
+      plain_definition: "a repeatable pattern formed by interacting differences over time"
+      testable_one_liner: "Across runs, the pattern recurs above chance and survives mild perturbations."
+    contextual_filter:
+      plain_definition: "a boundary/constraint that selects which patterns persist under context change"
+      testable_one_liner: "Vary context; if the same pattern persists, a stabilizing filter is acting."
+    phi:
+      plain_definition: "a chosen scalar metric of persistence (must be defined per experiment)"
+      requirement_when_used:
+        - "Define Φ explicitly: what is measured"
+        - "Specify how Φ is computed"
+        - "State the perturbation test and falsification rule"
