@@ -1,0 +1,154 @@
+readers_key:
+  version: "alpha1.1"
+  title: "RGPx Reader’s Key"
+  purpose: >
+    Translation-only decoder ring: maps RGPx/Mesh terms to plain scientific language,
+    with testable one-liners. This file MUST NOT overwrite or “improve” tags or pulses.
+  use_rules:
+    - Use this file only to translate terms, define claim-strength labels, and standardize wording.
+    - Do not cite this file as mechanism evidence; it is a vocabulary/translation aid only.
+    - When a Mesh term appears in sections (1)–(5), immediately append its testable translation (one line).
+    - Prefer spelled-out terms over acronyms unless user explicitly asked for abbreviations.
+    - Avoid metaphysical framing; treat all terms as operational and testable.
+    - If a claim needs evidence, cite pulses (preferred) or mark "uncited (domain background)".
+
+claim_strength_labels:
+  definition:
+    meaning: "Term definition or naming convention (what we mean by the word)."
+    allowed_sources: ["tag_taxonomy.yml", "tag_descriptions.yml", "readers_key.yml"]
+  hypothesis:
+    meaning: "Proposed mechanism or cross-domain mapping not yet established."
+    required_marking: "uncited (domain background) unless supported by pulse evidence."
+  prediction:
+    meaning: "A measurable expected pattern under specified conditions."
+    required: "Must specify what is measured and how it would falsify the claim."
+  evidence:
+    meaning: "Supported by retrieved pulses and verbatim excerpts in section (6)."
+    required: "Pulse citation(s) in section (6) with ≤20-word excerpts."
+
+translation_patterns:
+  delta_to_gc_to_cf:
+    mesh_form: "Δ→GC→CF"
+    plain_translation: "small effect appears → repeats reliably → stays stable under context changes"
+    test_note: "Verify by perturbation: change context; see if the repeated pattern persists."
+  coherence_as_persistence:
+    mesh_form: "coherence"
+    plain_translation: "persistence of organized relationships under perturbation"
+    test_note: "Measure stability of a pattern across controlled perturbations; compare to baseline drift."
+
+glossary:
+  rgpx:
+    mesh_term: "RGPx"
+    plain_definition: "Recursive Gradient Processing (extended): a research method for tracking how stable organization forms from differences under feedback."
+    testable_one_liner: "If organization is real, it persists under perturbation better than matched controls."
+  mesh:
+    mesh_term: "Φ-Mesh / Mesh"
+    plain_definition: "Repository + tag map + pulses: a traceable record of claims, tests, and updates."
+    testable_one_liner: "A claim is only ‘supported’ when a pulse exists with a test and reproducible outcome."
+  tag:
+    mesh_term: "tag"
+    plain_definition: "A concept label used as an index coordinate."
+    testable_one_liner: "A tag is not evidence; it is a pointer to definitions and pulses."
+  pulse:
+    mesh_term: "pulse"
+    plain_definition: "A dated research entry describing an observation, test, outcome, and limits."
+    testable_one_liner: "A pulse earns ‘evidence’ status only if it includes a discriminating test and outcome."
+  gradient:
+    mesh_term: "gradient (Δ)"
+    plain_definition: "A local difference/tension that can drive change (in a measurable variable)."
+    testable_one_liner: "If Δ matters, changing Δ changes the system response in a consistent direction."
+  gradient_choreography:
+    mesh_term: "gradient choreography"
+    plain_definition: "A repeatable pattern formed by interacting differences over time."
+    testable_one_liner: "A choreography repeats across runs more than chance and survives mild perturbations."
+  contextual_filter:
+    mesh_term: "contextual filter"
+    plain_definition: "A boundary/constraint that selects which patterns persist under context change."
+    testable_one_liner: "Change context: if the same pattern persists, a stabilizing filter is present."
+  coherence:
+    mesh_term: "coherence"
+    plain_definition: "Persistence of organized relationships (structure/meaning/function) under perturbation."
+    testable_one_liner: "Perturb the system: measure how much of the structure survives vs. baseline."
+  coherence_flux:
+    mesh_term: "coherence flux"
+    plain_definition: "Rate of change of persistence (how quickly stability is gained or lost)."
+    testable_one_liner: "Compute stability over time; compare slopes across conditions/interventions."
+  coherence_grammar:
+    mesh_term: "coherence grammar"
+    plain_definition: "A recurring sequence of formation → repetition → stabilization observed across domains."
+    testable_one_liner: "Look for the same 3-phase structure across independent datasets and contexts."
+  phi:
+    mesh_term: "Φ"
+    plain_definition: "A placeholder name for a chosen scalar metric of persistence (must be defined per experiment)."
+    testable_one_liner: "Define Φ explicitly (what is counted); then test whether Φ is stable under perturbation."
+    required_fields_when_used:
+      - "Φ_definition: what is measured"
+      - "Φ_units_or_scale: unitless / ratio / score"
+      - "Φ_protocol: how computed (inputs, window, threshold)"
+  phi_corridor:
+    mesh_term: "Φ corridor"
+    plain_definition: "An empirically observed stability band for Φ under specified perturbations."
+    testable_one_liner: "Define corridor bounds from baseline; test if intervention keeps Φ within bounds."
+  plateau:
+    mesh_term: "plateau"
+    plain_definition: "A regime where improvement stalls or stability saturates despite further tuning."
+    testable_one_liner: "Change control parameters: if output stays flat within error, you’re in a plateau."
+  phase_locking:
+    mesh_term: "phase locking"
+    plain_definition: "Synchronization of repeating cycles across components or runs."
+    testable_one_liner: "Measure alignment of cycle timing across runs; compare to randomized controls."
+  harmonics_123:
+    mesh_term: "1:2:3 harmonics"
+    plain_definition: "A proposed ratio pattern in measured cycles (must be specified and tested, not asserted)."
+    testable_one_liner: "Define the signals; test whether peaks occur at ~1x, ~2x, ~3x more than chance."
+    default_status: "hypothesis"
+  context_drift:
+    mesh_term: "context drift"
+    plain_definition: "Loss of stable interpretation/behavior as context changes."
+    testable_one_liner: "Change prompts/conditions: quantify output stability vs. baseline variance."
+  minimal_discriminating_test:
+    mesh_term: "minimal discriminating test"
+    plain_definition: "Smallest experiment that separates 2–4 competing explanations."
+    testable_one_liner: "One intervention + one measurement that yields opposite predictions across hypotheses."
+
+writing_preferences:
+  discouraged_phrases:
+    - "philosophical"
+    - "unifies everything"
+    - "proves"
+    - "replaces X"   # unless supported by pulse evidence or marked uncited
+  preferred_phrases:
+    - "research framework"
+    - "testable hypothesis"
+    - "operational definition"
+    - "minimal discriminating test"
+    - "supported by pulses"  # only when citations exist
+
+measurement_templates:
+  phi_definition_template:
+    fields:
+      - name: "signal"
+        description: "What observable is measured (e.g., stability score, error rate, alignment rate)."
+      - name: "window"
+        description: "Time window / sample window."
+      - name: "normalization"
+        description: "How values are scaled (ratio, z-score, bounded 0–1)."
+      - name: "perturbation"
+        description: "What is changed to test persistence."
+      - name: "decision_rule"
+        description: "What outcome would falsify the hypothesis."
+  cross_model_alignment_template:
+    fields:
+      - name: "task"
+        description: "Same task across independent models/runs."
+      - name: "alignment_metric"
+        description: "Define alignment of reasoning phases or checkpoints (not surface text overlap)."
+      - name: "control"
+        description: "Randomized or shuffled baseline."
+      - name: "expected_split"
+        description: "How hypotheses differ in predicted alignment outcome."
+
+footer_note:
+  reminder: >
+    This file is a decoder ring for terminology and test structure.
+    It is not a source of evidence. Evidence must come from retrieved pulses.
