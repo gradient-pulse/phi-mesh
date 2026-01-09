@@ -39,7 +39,7 @@ translation_patterns:
 glossary:
   rgpx:
     mesh_term: "RGPx"
-    plain_definition: "Recursive Gradient Processing (extended): a research method for tracking how stable organization forms from differences under feedback."
+    plain_definition: "Recursive Gradient Physics: a research framework for tracking how stable organization forms from differences under feedback."
     testable_one_liner: "If organization is real, it persists under perturbation better than matched controls."
   mesh:
     mesh_term: "Φ-Mesh / Mesh"
