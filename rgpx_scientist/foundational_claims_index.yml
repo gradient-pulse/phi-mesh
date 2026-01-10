@@ -7,168 +7,153 @@ source_registry: "RGPx_Scientist/foundational_papers_index.yml"
 # They should be phrased so they can be tested or checked.
 
 papers:
-  - paper_id: gradient_capitalism_2025_12_07
-    claim_cards: []
+  - paper_id: ns_what_it_takes_2025_07_07
+    claim_cards:
+      - claim_id: ns_what_it_takes_2025_07_07__c01_ns_blindness_missing_variables
+        claim: "The standard Navier–Stokes approach is fundamentally blind to turbulence causes due to omitted variables."
+        claim_type: thesis
+        test_hook: "Operationalize as: compare explanatory lead indicators vs symptom-fit metrics on the same datasets."
+        evidence_excerpt: "This omission makes the standard approach fundamentally blind to the real causes of turbulence"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L1-L2"
 
-  - paper_id: natural_societal_gravity_2025_12_05
-    claim_cards: []
+      - claim_id: ns_what_it_takes_2025_07_07__c02_ns_terms_hide_dependencies
+        claim: "Each NS term encodes hidden assumptions; key flow variables depend on local gradients, alignment memory, tension histories, and recursion cycles."
+        claim_type: diagnosis
+        test_hook: "Use Table-1 dependencies as feature candidates; test whether they improve early-warning or regime classification."
+        evidence_excerpt: "each term carries hidden assumptions—idealized axioms that flatten the rich, recursive nature"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L19-L22"
 
-  - paper_id: rgpx_frontier_v12_2025_11_08
-    claim_cards: []
+      - claim_id: ns_what_it_takes_2025_07_07__c03_time_as_coordinate_not_cause
+        claim: "Treating time as smooth, objective input misses threshold-driven emergence; time sequences events but does not explain causes."
+        claim_type: framing
+        test_hook: "Benchmark event-based timestamps vs uniform-time forecasting for onset warnings (same data, same compute budget)."
+        evidence_excerpt: "time is a human-constructed coordinate, invented to sequence events rather than cause them"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L33-L35"
 
-  - paper_id: deepseek_bolts_cycle2_2025_10_27
-    claim_cards: []
+      - claim_id: ns_what_it_takes_2025_07_07__c04_one_sentence_litmus_validation_gate
+        claim: "A concrete validation gate is proposed: earlier vortex-shedding warning and cheaper accuracy vs standard LES."
+        claim_type: falsifiable_gate
+        test_hook: "Run the two-part benchmark: lead-time gain vs Q-criterion; NT-aware LES vs Smagorinsky on RMSE+cost."
+        thresholds:
+          lead_time_gain: "≥ 30% earlier warning"
+          accuracy: "≤ 5% RMSE"
+          cost: "≤ 0.5× cost"
+        evidence_excerpt: "If NT rhythms warn of vortex-shedding ≥ 30 % earlier and the NT-LES closes within 5 % RMSE"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L5-L7"
 
-  - paper_id: letter_to_machines_cycle1_2025_10_26
-    claim_cards: []
+      - claim_id: ns_what_it_takes_2025_07_07__c05_nt_definition_operational
+        claim: "Narrative Tick (NT) is defined operationally as a discrete, entropy-increasing coherence-shift event detected by a sign change above a σ threshold."
+        claim_type: definition_operational
+        test_hook: "Implement the NT detector and validate robustness checks (NT counts, energy-budget check, lambda sensitivity)."
+        evidence_excerpt: "detected when the time-derivative of |𝛻𝜔|changes sign above a σ threshold"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L1-L3"
 
-  - paper_id: rgpx_frontier_v10_2025_10_24
-    claim_cards: []
+      - claim_id: ns_what_it_takes_2025_07_07__c06_empirical_substrate_shared_datasets
+        claim: "Validation requires shared empirical substrate: open DNS cubes plus at least one real PIV dataset with time-resolved vorticity suitable for NT detection."
+        claim_type: protocol_requirement
+        test_hook: "Assemble JHTDB + one PIV dataset; confirm NT detection reproducibility across them."
+        evidence_excerpt: "Use open, high-resolution DNS cubes ... and secure at least one real-world PIV dataset"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L18-L22"
 
-  - paper_id: explaining_llms_2025_09_23
-    claim_cards: []
+      - claim_id: ns_what_it_takes_2025_07_07__c07_nt_detection_success_check_vs_q
+        claim: "Success criterion: NT detection should identify early turbulence-onset indicators that match or precede Q-criterion markers."
+        claim_type: benchmark_success_check
+        test_hook: "Compute lead-time gain of NT signals vs Q-criterion on identical datasets."
+        evidence_excerpt: "NT detection ... identifies early indicators of turbulence onset that match or precede traditional NS markers like Q-criterion"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L22-L24"
 
-  - paper_id: doom_to_destiny_v11_2025_09_23
+      - claim_id: ns_what_it_takes_2025_07_07__c08_syntax_extraction_without_pdes
+        claim: "A modular toolkit is proposed to extract NT event sequences and dimensionless ratios from raw velocity data without solving PDEs."
+        claim_type: method_claim
+        test_hook: "Build the three-module chain (collector/analyst/validator) and verify outputs on known benchmark flows."
+        evidence_excerpt: "extracts NT rhythms and Golden-Pattern ratios from raw velocity data—without relying on solving PDEs"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L25-L28"
+
+      - claim_id: ns_what_it_takes_2025_07_07__c09_michelson_morley_for_turbulence
+        claim: "A falsifiable benchmark protocol is framed as a 'Michelson–Morley for Turbulence' comparing RGP metrics against classical NS methods with pre-registered metrics."
+        claim_type: benchmark_protocol
+        test_hook: "Pre-register metrics: lead-time, RMSE, energy error, cost, robustness; then run side-by-side comparisons."
+        evidence_excerpt: "Design a falsifiable testbed that compares RGP’s predictive performance against classical NS methods"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L33-L35"
+
+      - claim_id: ns_what_it_takes_2025_07_07__c10_coherence_scalar_two_options
+        claim: "NT detection requires a scalar signal; two recommended options are enstrophy E(t) or vorticity-gradient norm G(t)=∫|∇|ω|| dV."
+        claim_type: measurement_definition
+        test_hook: "Implement both scalars and compare NT detection stability and early-warning lead time."
+        evidence_excerpt: "Two recommended options: 1. Enstrophy ... 2. Vorticity-gradient norm: G(t) = ∫ |𝛻|𝜔|| dV"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L15-L22"
+
+      - claim_id: ns_what_it_takes_2025_07_07__c11_why_not_qcriterion
+        claim: "Q-criterion is positioned as less sensitive to key NT events than G(t), because G(t) spikes on break/merge reorganizations."
+        claim_type: rationale
+        test_hook: "Quantify detection of break/merge events by Q vs G(t) on cylinder wake or channel flow data."
+        evidence_excerpt: "G(t) is more sensitive to moments when vortices break or merge—key NT events"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L22-L23"
+
+      - claim_id: ns_what_it_takes_2025_07_07__c12_signal_processing_defaults_k3
+        claim: "Default NT preprocessing uses temporal smoothing via moving average with span k=3 timesteps."
+        claim_type: default_parameter
+        test_hook: "Run k=3 baseline; evaluate sensitivity by varying k and tracking NT robustness metrics."
+        evidence_excerpt: "Apply a moving average with span k timesteps (default k = 3)"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L31-L33"
+
+      - claim_id: ns_what_it_takes_2025_07_07__c13_nt_detection_rule_signflip_threshold
+        claim: "NT candidates are detected when the normalized first difference flips sign and exceeds a magnitude threshold with default λ=1.5."
+        claim_type: algorithmic_rule
+        test_hook: "Implement sign-flip + magnitude threshold; verify event sparsity and physical significance using post-checks."
+        thresholds:
+          lambda_default: 1.5
+          interpretation: "≈ top 15% of events"
+        evidence_excerpt: "with default threshold λ = 1.5 (≈ top 15% of events)"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L15-L20"
+
+      - claim_id: ns_what_it_takes_2025_07_07__c14_quickstart_defaults_and_tuning
+        claim: "Quick-start defaults are specified (including k=3, λ=1.5) with a tuning procedure adjusting λ in ±0.2 increments based on NT count realism."
+        claim_type: operational_recipe
+        test_hook: "Run defaults once; inspect NT count per eddy time; adjust λ by ±0.2 until count is plausible."
+        evidence_excerpt: "Adjust λ by ±0.2 increments if NT count is unphysical"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L35-L39"
+
+      - claim_id: ns_what_it_takes_2025_07_07__c15_postchecks_targets_for_physical_significance
+        claim: "Post-check targets are defined: 1–4 NTs per eddy time (cylinder wake Re≈100), ≥1% local energy change near NTs, and <5% NT-list change under λ±0.1."
+        claim_type: validation_checks
+        test_hook: "Compute all three checks on a canonical dataset; reject runs failing thresholds."
+        thresholds:
+          nt_per_eddy_time: "1–4 (cylinder wake Re≈100)"
+          energy_change: "ΔK/K ≥ 1%"
+          reproducibility: "<5% NT list change for λ±0.1"
+        evidence_excerpt: "NT list changes by less than 5% when λ is varied by ±0.1"
+        source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L43-L52"
+
+  - paper_id: experimenters_guide_2025_07_21
     claim_cards: []
 
   - paper_id: keplers_rhythm_turbulence_2025_09_19
     claim_cards: []
 
-  - paper_id: experimenters_guide_2025_07_21
+  - paper_id: doom_to_destiny_v11_2025_09_23
     claim_cards: []
 
-  - paper_id: ns_what_it_takes_2025_07_07
-    foundational_claims:
-  - claim_id: ns_what_it_takes_2025_07_07__c01_ns_blindness_missing_variables
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "The standard Navier–Stokes approach is fundamentally blind to turbulence causes due to omitted variables."
-    claim_type: thesis
-    test_hook: "Operationalize as: compare explanatory lead indicators vs symptom-fit metrics on the same datasets."
-    evidence_excerpt: "This omission makes the standard approach fundamentally blind to the real causes of turbulence"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L1-L2"  [oai_citation:0‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
+  - paper_id: explaining_llms_2025_09_23
+    claim_cards: []
 
-  - claim_id: ns_what_it_takes_2025_07_07__c02_ns_terms_hide_dependencies
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Each NS term encodes hidden assumptions; key flow variables depend on local gradients, alignment memory, tension histories, and recursion cycles."
-    claim_type: diagnosis
-    test_hook: "Use Table-1 dependencies as feature candidates; test whether they improve early-warning or regime classification."
-    evidence_excerpt: "each term carries hidden assumptions—idealized axioms that flatten the rich, recursive nature"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L19-L22"  [oai_citation:1‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
+  - paper_id: rgpx_frontier_v10_2025_10_24
+    claim_cards: []
 
-  - claim_id: ns_what_it_takes_2025_07_07__c03_time_as_coordinate_not_cause
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Treating time as smooth, objective input misses threshold-driven emergence; time sequences events but does not explain causes."
-    claim_type: framing
-    test_hook: "Benchmark event-based timestamps vs uniform-time forecasting for onset warnings (same data, same compute budget)."
-    evidence_excerpt: "time is a human-constructed coordinate, invented to sequence events rather than cause them"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L33-L35"  [oai_citation:2‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
+  - paper_id: letter_to_machines_cycle1_2025_10_26
+    claim_cards: []
 
-  - claim_id: ns_what_it_takes_2025_07_07__c04_one_sentence_litmus_validation_gate
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "A concrete validation gate is proposed: earlier vortex-shedding warning and cheaper accuracy vs standard LES."
-    claim_type: falsifiable_gate
-    test_hook: "Run the two-part benchmark: lead-time gain vs Q-criterion; NT-aware LES vs Smagorinsky on RMSE+cost."
-    thresholds:
-      lead_time_gain: "≥ 30% earlier warning"
-      accuracy: "≤ 5% RMSE"
-      cost: "≤ 0.5× cost"
-    evidence_excerpt: "If NT rhythms warn of vortex-shedding ≥ 30 % earlier and the NT-LES closes within 5 % RMSE"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L5-L7"  [oai_citation:3‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
+  - paper_id: deepseek_bolts_cycle2_2025_10_27
+    claim_cards: []
 
-  - claim_id: ns_what_it_takes_2025_07_07__c05_nt_definition_operational
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Narrative Tick (NT) is defined operationally as a discrete, entropy-increasing coherence-shift event detected by a sign change above a σ threshold."
-    claim_type: definition_operational
-    test_hook: "Implement the NT detector and validate robustness checks (NT counts, energy-budget check, lambda sensitivity)."
-    evidence_excerpt: "detected when the time-derivative of |𝛻𝜔|changes sign above a σ threshold"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L1-L3"  [oai_citation:4‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
+  - paper_id: rgpx_frontier_v12_2025_11_08
+    claim_cards: []
 
-  - claim_id: ns_what_it_takes_2025_07_07__c06_empirical_substrate_shared_datasets
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Validation requires shared empirical substrate: open DNS cubes plus at least one real PIV dataset with time-resolved vorticity suitable for NT detection."
-    claim_type: protocol_requirement
-    test_hook: "Assemble JHTDB + one PIV dataset; confirm NT detection reproducibility across them."
-    evidence_excerpt: "Use open, high-resolution DNS cubes ... and secure at least one real-world PIV dataset"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L18-L22"  [oai_citation:5‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c07_nt_detection_success_check_vs_q
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Success criterion: NT detection should identify early turbulence-onset indicators that match or precede Q-criterion markers."
-    claim_type: benchmark_success_check
-    test_hook: "Compute lead-time gain of NT signals vs Q-criterion on identical datasets."
-    evidence_excerpt: "NT detection ... identifies early indicators of turbulence onset that match or precede traditional NS markers like Q-criterion"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L22-L24"  [oai_citation:6‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c08_syntax_extraction_without_pdes
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "A modular toolkit is proposed to extract NT event sequences and dimensionless ratios from raw velocity data without solving PDEs."
-    claim_type: method_claim
-    test_hook: "Build the three-module chain (collector/analyst/validator) and verify outputs on known benchmark flows."
-    evidence_excerpt: "extracts NT rhythms and Golden-Pattern ratios from raw velocity data—without relying on solving PDEs"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L25-L28"  [oai_citation:7‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c09_michelson_morley_for_turbulence
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "A falsifiable benchmark protocol is framed as a 'Michelson–Morley for Turbulence' comparing RGP metrics against classical NS methods with pre-registered metrics."
-    claim_type: benchmark_protocol
-    test_hook: "Pre-register metrics: lead-time, RMSE, energy error, cost, robustness; then run side-by-side comparisons."
-    evidence_excerpt: "Design a falsifiable testbed that compares RGP’s predictive performance against classical NS methods"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L33-L35"  [oai_citation:8‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c10_coherence_scalar_two_options
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "NT detection requires a scalar signal; two recommended options are enstrophy E(t) or vorticity-gradient norm G(t)=∫|∇|ω|| dV."
-    claim_type: measurement_definition
-    test_hook: "Implement both scalars and compare NT detection stability and early-warning lead time."
-    evidence_excerpt: "Two recommended options: 1. Enstrophy ... 2. Vorticity-gradient norm: G(t) = ∫ |𝛻|𝜔|| dV"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L15-L22"  [oai_citation:9‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c11_why_not_qcriterion
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Q-criterion is positioned as less sensitive to key NT events than G(t), because G(t) spikes on break/merge reorganizations."
-    claim_type: rationale
-    test_hook: "Quantify detection of break/merge events by Q vs G(t) on cylinder wake or channel flow data."
-    evidence_excerpt: "G(t) is more sensitive to moments when vortices break or merge—key NT events"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L22-L23"  [oai_citation:10‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c12_signal_processing_defaults_k3
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Default NT preprocessing uses temporal smoothing via moving average with span k=3 timesteps."
-    claim_type: default_parameter
-    test_hook: "Run k=3 baseline; evaluate sensitivity by varying k and tracking NT robustness metrics."
-    evidence_excerpt: "Apply a moving average with span k timesteps (default k = 3)"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L31-L33"  [oai_citation:11‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c13_nt_detection_rule_signflip_threshold
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "NT candidates are detected when the normalized first difference flips sign and exceeds a magnitude threshold with default λ=1.5."
-    claim_type: algorithmic_rule
-    test_hook: "Implement sign-flip + magnitude threshold; verify event sparsity and physical significance using post-checks."
-    thresholds:
-      lambda_default: 1.5
-      interpretation: "≈ top 15% of events"
-    evidence_excerpt: "with default threshold λ = 1.5 (≈ top 15% of events)"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L15-L20"  [oai_citation:12‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c14_quickstart_defaults_and_tuning
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Quick-start defaults are specified (including k=3, λ=1.5) with a tuning procedure adjusting λ in ±0.2 increments based on NT count realism."
-    claim_type: operational_recipe
-    test_hook: "Run defaults once; inspect NT count per eddy time; adjust λ by ±0.2 until count is plausible."
-    evidence_excerpt: "Adjust λ by ±0.2 increments if NT count is unphysical"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L35-L39"  [oai_citation:13‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
-
-  - claim_id: ns_what_it_takes_2025_07_07__c15_postchecks_targets_for_physical_significance
-    paper_id: ns_what_it_takes_2025_07_07
-    claim: "Post-check targets are defined: 1–4 NTs per eddy time (cylinder wake Re≈100), ≥1% local energy change near NTs, and <5% NT-list change under λ±0.1."
-    claim_type: validation_checks
-    test_hook: "Compute all three checks on a canonical dataset; reject runs failing thresholds."
-    thresholds:
-      nt_per_eddy_time: "1–4 (cylinder wake Re≈100)"
-      energy_change: "ΔK/K ≥ 1%"
-      reproducibility: "<5% NT list change for λ±0.1"
-    evidence_excerpt: "NT list changes by less than 5% when λ is varied by ±0.1"
-    source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L43-L52"  [oai_citation:14‡2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf](sediment://file_00000000da2c722f921ab7e8b8dc791b)
+  - paper_id: natural_societal_gravity_2025_12_05
+    claim_cards: []
+  
+  - paper_id: gradient_capitalism_2025_12_07
+    claim_cards: []
 
 # Claim card schema (reference)
 # - claim_id: <unique within paper>
