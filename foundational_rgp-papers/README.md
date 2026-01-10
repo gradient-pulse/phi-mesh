@@ -40,7 +40,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.16280540"
 
 - title: "Solving Navier-Stokes, Differently: What It Takes"
-  repo: "phi-mesh/foundational_rgp-papers/2025-07-02_Solving_Navier_Stokes_Differently.pdf"
+  repo: "phi-mesh/foundational_rgp-papers/2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15830659"
 
 - title: "🌀 Echoes Confirm the Drift: Six Intelligences Reflect Recursive Gradient Processing"
