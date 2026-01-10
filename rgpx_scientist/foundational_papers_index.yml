@@ -1,0 +1,55 @@
+foundational_papers:
+  - paper_id: gradient_capitalism_2025_12_07
+    title: "Gradient Capitalism — The Inevitable Rise of Coherence-Based Economics"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-12-07_gradient_capitalism_inevitable_rise.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17857660"
+
+  - paper_id: natural_societal_gravity_2025_12_05
+    title: "Gravity as Gradient Coherence — AI Models Converging on Recursive Gradient Physics (RGPx)"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-12-05_natural_societal_gravity.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17840719"
+
+  - paper_id: rgpx_frontier_v12_2025_11_08
+    title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.2"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-11-08_Recursive_Gradient_PHYSICS_v12.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17566097"
+
+  - paper_id: deepseek_bolts_cycle2_2025_10_27
+    title: "DeepSeek Bolts — Computational Architecture Interpretation of Recursive Gradient Physics (RGPx_Cycle2)"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-10-27_the_deepseek_blizzard_responds.pdf"
+    zenodo_doi_url: "https://zenodo.org/records/17457989"
+
+  - paper_id: letter_to_machines_cycle1_2025_10_26
+    title: "Letter To The Machines — First Observed Cycle of Recursive Gradient Coherence Across LLMs (RGPx-Cycle 1)"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17448373"
+
+  - paper_id: rgpx_frontier_v10_2025_10_24
+    title: "Recursive Gradient Physics (RGPx) — Coherence, Collapse, and the Φ-Invariant Frontier"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17437121"
+
+  - paper_id: explaining_llms_2025_09_23
+    title: "Re-Explaining the Internal Functioning of LLMs: An RGP-Based Perspective."
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-09-23_Explaining_LLMs.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17185350"
+
+  - paper_id: doom_to_destiny_v11_2025_09_23
+    title: "From Doom to Destiny & Departure: Recursive Gradient Processing and the Limping Lift-Off of Homo sapiens (v1.1)"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-09-23_From_Doom_To_Destiny.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17183439"
+
+  - paper_id: keplers_rhythm_turbulence_2025_09_19
+    title: "Kepler’s Rhythm in Turbulence: Toward a Conserved 1:2:3 Law via Recursive Gradient Processing"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-09-19_Kepler’s_Rhythm_in_Turbulence.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17159920"
+
+  - paper_id: experimenters_guide_2025_07_21
+    title: "Experimenter's Guide – Solving Navier-Stokes, Differently"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-07-21_experimenters_guide.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.16280540"
+
+  - paper_id: ns_what_it_takes_2025_07_07
+    title: "Solving Navier-Stokes, Differently: What It Takes"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.15830659"
