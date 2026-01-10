@@ -41,7 +41,7 @@ foundational_papers:
 
   - paper_id: keplers_rhythm_turbulence_2025_09_19
     title: "Kepler’s Rhythm in Turbulence: Toward a Conserved 1:2:3 Law via Recursive Gradient Processing"
-    repo_path: "phi-mesh/foundational_rgp-papers/2025-09-19_Kepler’s_Rhythm_in_Turbulence.pdf"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-09-19_Keplers_Rhythm_in_Turbulence.pdf"
     zenodo_doi_url: "https://doi.org/10.5281/zenodo.17159920"
 
   - paper_id: experimenters_guide_2025_07_21
