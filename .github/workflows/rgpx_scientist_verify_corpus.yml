@@ -7,11 +7,17 @@ on:
       - "phi-mesh/rgpx_scientist/**"
       - "phi-mesh/foundational_rgp-papers/**"
       - "phi-mesh/foundational_papers/**"
+      - "rgpx_scientist/**"
+      - "foundational_rgp-papers/**"
+      - "foundational_papers/**"
   pull_request:
     paths:
       - "phi-mesh/rgpx_scientist/**"
       - "phi-mesh/foundational_rgp-papers/**"
       - "phi-mesh/foundational_papers/**"
+      - "rgpx_scientist/**"
+      - "foundational_rgp-papers/**"
+      - "foundational_papers/**"
 
 jobs:
   verify-corpus:
@@ -26,25 +32,38 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Always run from repo root, but install/run inside the phi-mesh/ subdir
-      - name: Install dependencies (rgpx_scientist)
-        working-directory: phi-mesh
+      - name: Detect project root
+        id: project
+        shell: bash
+        run: |
+          if [ -d "phi-mesh/rgpx_scientist" ]; then
+            echo "dir=phi-mesh" >> "$GITHUB_OUTPUT"
+          else
+            echo "dir=." >> "$GITHUB_OUTPUT"
+          fi
+          echo "Using workdir: $(cat $GITHUB_OUTPUT | sed -n 's/^dir=//p')"
+
+      - name: Install dependencies
+        shell: bash
+        working-directory: ${{ steps.project.outputs.dir }}
         run: |
           python -m pip install --upgrade pip
-          pip install -r rgpx_scientist/requirements.txt
-          # Enables page counting in verify_corpus.py (optional but recommended)
+          if [ -f "rgpx_scientist/requirements.txt" ]; then
+            pip install -r rgpx_scientist/requirements.txt
+          fi
+          # Enables page counting (recommended)
           pip install pypdf
 
       - name: Verify corpus (sha256 + bytes; pages if available)
-        working-directory: phi-mesh
+        shell: bash
+        working-directory: ${{ steps.project.outputs.dir }}
         run: |
           python rgpx_scientist/verify_corpus.py
 
-      # Optional: print a regenerated manifest to logs for copy/paste when fixing mismatches.
-      # Only works if you added phi-mesh/rgpx_scientist/dump_manifest.py as discussed.
       - name: Dump manifest (for debugging / regeneration)
         if: always()
-        working-directory: phi-mesh
+        shell: bash
+        working-directory: ${{ steps.project.outputs.dir }}
         run: |
           if [ -f "rgpx_scientist/dump_manifest.py" ]; then
             echo "----- BEGIN regenerated foundational_papers_manifest.yml -----"
