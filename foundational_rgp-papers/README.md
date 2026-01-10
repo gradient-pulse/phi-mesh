@@ -20,11 +20,15 @@
   zenodo: "https://doi.org/10.5281/zenodo.17448373"
 
 - title: "Recursive Gradient Physics (RGPx) — Coherence, Collapse, and the Φ-Invariant Frontier"
-  repo: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS.pdf"
+  repo: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS_v11.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17437121"
+
+- title: "Recursive Gradient Physics (RGPx) — Coherence, Collapse, and the Φ-Invariant Frontier"
+  repo: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS_v10.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.17434881"
   
 - title: "Re-Explaining the Internal Functioning of LLMs: An RGP-Based Perspective."
-  repo: "phi-mesh/foundational_rgp-papers/2025-09-23_Explaining_LLMs.pdf"
+  repo: "phi-mesh/foundational_rgp-papers/2025-09-23_Re-Explaining_LLMs.pdf"
   zenodo. "https://doi.org/10.5281/zenodo.17185350"
 
 - title "From Doom to Destiny & Departure: Recursive Gradient Processing and the Limping Lift-Off of Homo sapiens (v1.1)" 
