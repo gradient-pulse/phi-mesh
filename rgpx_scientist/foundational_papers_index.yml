@@ -36,7 +36,7 @@ foundational_papers:
 
   - paper_id: explaining_llms_2025_09_23
     title: "Re-Explaining the Internal Functioning of LLMs: An RGP-Based Perspective."
-    repo_path: "phi-mesh/foundational_rgp-papers/2025-09-23_Explaining_LLMs.pdf"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-09-23_Re-Explaining_LLMs.pdf"
     zenodo_doi_url: "https://doi.org/10.5281/zenodo.17185350"
 
   - paper_id: doom_to_destiny_v11_2025_09_23
