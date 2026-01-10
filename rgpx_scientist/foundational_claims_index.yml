@@ -126,11 +126,181 @@ papers:
         source: "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L43-L52"
 
   - paper_id: experimenters_guide_2025_07_21
-    claim_cards: []
+    claim_cards:
+      - claim_id: experimenters_guide_2025_07_21__c01_protocol_90_day_falsifiable
+        claim: "A 90-day, falsifiable benchmark protocol is defined to test whether NT + distance-ratio rhythm can beat DNS on lead-time, RMSE, and GPU cost."
+        claim_type: protocol
+        test_hook: "Run the 90-day phases end-to-end and report lead-time, RMSE, and GPU hours side-by-side vs DNS baseline."
+        evidence_excerpt: "a 90-day, falsifiable protocol that bets on Narrative Ticks (NTs) and their distance-ratio rhythm to beat DNS"
+        source: "2025-07-21_experimenters_guide.pdf:L3-L5"
+
+      - claim_id: experimenters_guide_2025_07_21__c02_nt_flip_point_definition
+        claim: "NT is framed as the flip-point where disorder begins to order itself; the benchmark targets detecting the first such flip."
+        claim_type: framing
+        test_hook: "Verify the detector marks candidate NTs that align with early regime-change moments in the scalar signal."
+        evidence_excerpt: "We look for the instant disorder begins to order itself. That flip-point is the NT."
+        source: "2025-07-21_experimenters_guide.pdf:L6-L7"
+
+      - claim_id: experimenters_guide_2025_07_21__c03_why_ratios_scale_free_memory
+        claim: "NT distance ratios are proposed as scale-free signatures: distances carry memory, and their ratios cluster when physics repeats."
+        claim_type: hypothesis
+        test_hook: "Compute NT-distance ratios; check whether the histogram shows sharp peaks (non-flat) across runs."
+        evidence_excerpt: "NT distances carry scale-free memory; their ratios cluster when the same physics repeats."
+        source: "2025-07-21_experimenters_guide.pdf:L16-L18"
+
+      - claim_id: experimenters_guide_2025_07_21__c04_overlap_cycles_ratio_signature_survives
+        claim: "Even with overlapping DU cycles, the same ratio peaks should persist, making ratio-peaks an invariant candidate."
+        claim_type: invariance_claim
+        test_hook: "Perturb initial conditions / windowing; test whether ratio peaks remain stable."
+        evidence_excerpt: "Over-lapping DU cycles still share the same ratio peaks — an invariant to test."
+        source: "2025-07-21_experimenters_guide.pdf:L17-L18"
+
+      - claim_id: experimenters_guide_2025_07_21__c05_input_prereq_scalar_uniform_dt
+        claim: "The minimal input prerequisite is an HDF5 scalar timeseries G_t (e.g., drag/lift/KE), shape (N,), sampled at uniform Δt, used for NT detection."
+        claim_type: input_requirement
+        test_hook: "Validate dataset meets (N,) and uniform Δt; then run nt_detect.py without preprocessing hacks."
+        evidence_excerpt: "HDF5 file with dataset G_t (drag, lift, KE …) — shape (N,), uniform Δt — the same scalar used in the NT detection."
+        source: "2025-07-21_experimenters_guide.pdf:L19-L22"
+
+      - claim_id: experimenters_guide_2025_07_21__c06_smoke_test_histogram_not_flat
+        claim: "A 10-minute smoke test is defined: candidate NTs should be visible (red dots) and the ratio histogram should not be flat; sharp peaks indicate signal."
+        claim_type: quickstart_check
+        test_hook: "Run nt_detect + ratio_quicklook; accept only if histogram is non-flat with peaks."
+        evidence_excerpt: "histogram should not be flat; look for sharp peaks."
+        source: "2025-07-21_experimenters_guide.pdf:L24-L27"
+
+      - claim_id: experimenters_guide_2025_07_21__c07_benchmark_phases_and_deliverables
+        claim: "The benchmark is structured into phases with explicit deliverables: NT times, initial ratio scan, σ hyper-search, NT-aware solver runs, KPI calculation, and PR submission."
+        claim_type: protocol_steps
+        test_hook: "Track each phase output artifact (nt_times.txt, spiky histogram, σ*, forecast CSVs, KPI files, results PR)."
+        evidence_excerpt: "Phase Days Tool Deliverable"
+        source: "2025-07-21_experimenters_guide.pdf:L35-L41"
+
+      - claim_id: experimenters_guide_2025_07_21__c08_target_kpi_gate
+        claim: "The guide sets a KPI gate: lead-time ≥30%, RMSE ≤5%, and GPU cost ≤½ DNS."
+        claim_type: falsifiable_gate
+        test_hook: "Compute the three KPIs on the same dataset and compare to DNS baseline; pass/fail against thresholds."
+        thresholds:
+          lead_time_gain: "≥ 30%"
+          rmse: "≤ 5%"
+          gpu_cost: "≤ 0.5× DNS"
+        evidence_excerpt: "Target KPI lead-time ≥ 30% • RMSE ≤ 5% • GPU ≤ ½ DNS"
+        source: "2025-07-21_experimenters_guide.pdf:L42-L42"
+
+      - claim_id: experimenters_guide_2025_07_21__c09_sigma_scan_rule
+        claim: "σ should be scanned from 1.0 to 2.0 and selected by the clearest ratio peaks (strongest histogram structure)."
+        claim_type: tuning_rule
+        test_hook: "Run σ grid search 1.0–2.0; choose σ* maximizing peak sharpness / contrast."
+        evidence_excerpt: "Scan 1.0 – 2.0; pick the σ giving the clearest ratio peaks."
+        source: "2025-07-21_experimenters_guide.pdf:L18-L19"
+
+      - claim_id: experimenters_guide_2025_07_21__c10_cli_reference_pipeline
+        claim: "A minimal runnable CLI pipeline is specified: clone repo, run nt_detect.py to produce NT times, then run nt_ratio_cli.py to write *_ratios.txt outputs."
+        claim_type: method_recipe
+        test_hook: "Execute the exact CLI steps and verify expected output files exist and are non-empty."
+        evidence_excerpt: "python agents/nt_detect.py ... --sigma 1.5 ... python agents/nt_ratio_cli.py nt_times.txt"
+        source: "2025-07-21_experimenters_guide.pdf:L45-L55"
+
+      - claim_id: experimenters_guide_2025_07_21__c11_pola_interpretation_ratio_peaks
+        claim: "If NT-distance ratio peaks stabilize across runs, the guide interprets this as PoLA expressing itself as a minimal-divergence rhythm inside turbulence."
+        claim_type: interpretation
+        test_hook: "Repeat runs (different seeds/windows); test stability of ratio peaks; only then invoke the PoLA interpretation."
+        evidence_excerpt: "If your NT-distance histogram stabilises around the same ratio peaks across runs, you’re watching PoLA express itself inside turbulence."
+        source: "2025-07-21_experimenters_guide.pdf:L14-L16"
+
+      - claim_id: experimenters_guide_2025_07_21__c12_dimensionless_units_claim
+        claim: "Ratios are asserted to be dimensionless and thus comparable across scalars/units (as long as a consistent scalar G(t) is used per run)."
+        claim_type: measurement_note
+        test_hook: "Confirm that changing units rescales G(t) but leaves ratio histogram unchanged (within numerical tolerance)."
+        evidence_excerpt: "Units? Any scalar ...; ratios are dimension-less."
+        source: "2025-07-21_experimenters_guide.pdf:L21-L21"
 
   - paper_id: keplers_rhythm_turbulence_2025_09_19
-    claim_cards: []
+    claim_cards:
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c01_conserved_123_harmonic
+        claim: "High-Re turbulence contains a conserved 1:2:3 harmonic structure detectable in data as a stable ratio pattern."
+        claim_type: thesis
+        test_hook: "Run the NT-distance ratio extraction on independent turbulence datasets; verify the same ratio-peak structure persists."
+        evidence_excerpt: "a conserved 1:2:3 harmonic structure embedded in turbulence"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L10-L10"
 
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c02_data_driven_extraction_jhtdb
+        claim: "The 1:2:3 structure is extracted directly from JHTDB turbulence data using a Narrative Tick event-sampling approach."
+        claim_type: method_claim
+        test_hook: "Recompute NT timestamps and ratio histograms from JHTDB series; check stability across probes and windows."
+        evidence_excerpt: "Using the Johns Hopkins Turbulence Database (JHTDB)... We compute a time series of 'Narrative Ticks' (NTs)"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L10-L11"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c03_stable_across_probes_windows
+        claim: "The ratio structure is reported as stable across probes and time windows, suggesting it is not a sampling artifact."
+        claim_type: robustness_claim
+        test_hook: "Vary probe locations and window sizes; confirm ratio structure remains (qualitatively and quantitatively)."
+        evidence_excerpt: "stable across probes and time windows"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L11-L12"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c04_nt_definition_signflip_sigma
+        claim: "Narrative Ticks (NTs) are defined operationally as sign changes in the scalar signal derivative exceeding a sigma threshold."
+        claim_type: definition_operational
+        test_hook: "Implement NT detection exactly; verify detected NTs change predictably under σ sweeps (not random blow-up)."
+        evidence_excerpt: "an NT is detected as a sign change in the derivative of the scalar signal, exceeding a threshold σ"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L13-L17"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c05_distance_ratio_histogram_signature
+        claim: "The proposed signature is a histogram of ratios of consecutive NT distances; clustering indicates repeated physics."
+        claim_type: measurement_definition
+        test_hook: "Compute NT distances d_i and ratios r_i=d_i/d_{i+1}; check whether histogram exhibits stable clusters."
+        evidence_excerpt: "we compute their distances d_i and form ratios r_i = d_i / d_{i+1}"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L18-L20"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c06_quantized_ratio_sets
+        claim: "NT distances appear in discrete ratio sets (quantized), rather than forming a continuous spectrum."
+        claim_type: hypothesis
+        test_hook: "Test discreteness by comparing to shuffled-NT controls; quantify peak prominence vs null."
+        evidence_excerpt: "these NT distances cluster into discrete ratio sets"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L21-L22"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c07_kepler_analogy_ratio_prediction
+        claim: "A Kepler-style prediction is made: as harmonics stabilize, the NT-distance ratios should converge to conserved values."
+        claim_type: prediction
+        test_hook: "Track ratio histograms over time; test whether peaks sharpen/stabilize as the flow enters stable shedding regimes."
+        evidence_excerpt: "the ratios between NT distances converge to conserved values"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L34-L36"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c08_pola_interpretation_of_ratios
+        claim: "The paper interprets stable ratio clusters as the Principle of Least Action expressing itself as a discrete rhythm in turbulence."
+        claim_type: interpretation
+        test_hook: "Only apply this interpretation after demonstrating cross-run stability of the same ratio clusters."
+        evidence_excerpt: "PoLA is not just a principle of motion—it is a principle of rhythmic selection"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p3-L8-L12"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c09_scale_invariance_of_ratios
+        claim: "The ratio signature is asserted to be scale-invariant: ratios are conserved under scaling transformations."
+        claim_type: invariance_claim
+        test_hook: "Rescale the scalar signal (or compare different unit scalings) and confirm the ratio histogram remains unchanged."
+        evidence_excerpt: "ratios are conserved under a scaling transformation"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p4-L8-L10"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c10_extractable_without_solving_pdes
+        claim: "The rhythm is positioned as directly extractable from measured data without solving Navier–Stokes PDEs."
+        claim_type: framing
+        test_hook: "Demonstrate end-to-end extraction on measured / DNS data using only the scalar time series."
+        evidence_excerpt: "You don’t need to solve the PDE to see the law—you need to extract the ticks"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p3-L14-L16"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c11_not_a_replacement_for_ns
+        claim: "The approach is explicitly framed as complementing—not replacing—Navier–Stokes."
+        claim_type: scope_limit
+        test_hook: "State benchmark comparisons as ‘added predictive signal’ rather than ‘replacement’; evaluate side-by-side."
+        evidence_excerpt: "This does not replace Navier–Stokes. It adds a missing layer"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p5-L13-L18"
+
+      - claim_id: keplers_rhythm_turbulence_2025_09_19__c12_reproducibility_open_repo_data
+        claim: "Reproducibility is claimed via open tools and open datasets hosted with code on GitHub."
+        claim_type: reproducibility
+        test_hook: "Clone repo + run the extraction pipeline; verify you can regenerate the ratio histogram from referenced datasets."
+        evidence_excerpt: "open tools and open datasets, hosted on GitHub"
+        source: "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p5-L32-L36"
+    
   - paper_id: doom_to_destiny_v11_2025_09_23
     claim_cards: []
 
