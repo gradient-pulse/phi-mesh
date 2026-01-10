@@ -1,0 +1,106 @@
+# repo/RGPx_Scientist/foundational_papers_manifest.yml
+schema_version: "0.1"
+last_updated: "2026-01-10"
+source_registry: "RGPx_Scientist/foundational_papers_manifest.yml"
+
+# Purpose:
+# - Frozen, machine-checkable manifest of the app's foundational PDFs.
+# - repo_path is the local path inside this repo (not the Phi-Mesh repo).
+# - sha256/pages/bytes let the app verify “same file” across syncs.
+
+foundational_papers:
+  - paper_id: gradient_capitalism_2025_12_07
+    title: "Gradient Capitalism — The Inevitable Rise of Coherence-Based Economics"
+    repo_path: "repo/foundational_papers/2025-12-07_gradient_capitalism_inevitable_rise.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17857660"
+    sha256: "83bdda33e2096926ce69eb44ad5330bbc27c5126e026b1e1ea20c17a2d3d0a2e"
+    pages: 21
+    bytes: 506822
+
+  - paper_id: natural_societal_gravity_2025_12_05
+    title: "Gravity as Gradient Coherence — AI Models Converging on Recursive Gradient Physics (RGPx)"
+    repo_path: "repo/foundational_papers/2025-12-05_natural_societal_gravity.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17840719"
+    sha256: "b12a26f3e688b15fd4b3560e583b663a20580dbd99d76c54f4a3493385f8bb06"
+    pages: 11
+    bytes: 588935
+
+  - paper_id: rgpx_frontier_v12_2025_11_08
+    title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.2"
+    repo_path: "repo/foundational_papers/2025-11-08_Recursive_Gradient_PHYSICS_v12.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17566097"
+    zenodo_versions:
+      v1_0: "https://doi.org/10.5281/zenodo.17434881"
+      v1_1: "https://doi.org/10.5281/zenodo.17437121"
+      v1_2: "https://doi.org/10.5281/zenodo.17566097"
+    sha256: "a85ea6f0ae15d38243aebb0ec77e5d1ed064b935733872a3f9ccbbdb95e9f1e7"
+    pages: 13
+    bytes: 986043
+
+  - paper_id: deepseek_bolts_cycle2_2025_10_27
+    title: "DeepSeek Bolts — Computational Architecture Interpretation of Recursive Gradient Physics (RGPx_Cycle2)"
+    repo_path: "repo/foundational_papers/2025-10-27_the_deepseek_blizzard_responds.pdf"
+    zenodo_doi_url: "https://zenodo.org/records/17457989"
+    sha256: "d4370d2b9ebd3fcdfb5dcec30cbb8dd5c15f2ad98f266fdd65afbdc18a228f7a"
+    pages: 6
+    bytes: 1220090
+
+  - paper_id: letter_to_machines_cycle1_2025_10_26
+    title: "Letter To The Machines — First Observed Cycle of Recursive Gradient Coherence Across LLMs (RGPx-Cycle 1)"
+    repo_path: "repo/foundational_papers/2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17448373"
+    sha256: "026279faff109006f5837e7f549227b49ff9a6d7d700a5e2f9e1d77c00f33a4a"
+    pages: 4
+    bytes: 531709
+
+  - paper_id: rgpx_frontier_v10_2025_10_24
+    title: "Recursive Gradient Physics (RGPx) — Coherence, Collapse, and the Φ-Invariant Frontier"
+    repo_path: "repo/foundational_papers/2025-10-24_Recursive_Gradient_PHYSICS_v10.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17437121"
+    zenodo_versions:
+      v1_0: "https://doi.org/10.5281/zenodo.17434881"
+      v1_1: "https://doi.org/10.5281/zenodo.17437121"
+      v1_2: "https://doi.org/10.5281/zenodo.17566097"
+    sha256: "635323516cda1e03d79e1583748b08a071410501a10df729265c68b41a616b1f"
+    pages: 13
+    bytes: 988610
+
+  - paper_id: explaining_llms_2025_09_23
+    title: "Re-Explaining the Internal Functioning of LLMs: An RGP-Based Perspective."
+    repo_path: "repo/foundational_papers/2025-09-23_Re-Explaining_LLMs.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17185350"
+    sha256: "c86b67c9c7845466256d330d72ee28b5238f47c37d8cc8f0d5dc67a5be4f1c3d"
+    pages: 8
+    bytes: 326202
+
+  - paper_id: doom_to_destiny_v11_2025_09_23
+    title: "From Doom to Destiny & Departure: Recursive Gradient Processing and the Limping Lift-Off of Homo sapiens (v1.1)"
+    repo_path: "repo/foundational_papers/2025-09-23_From_Doom_To_Destiny.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17183439"
+    sha256: "5a3f34859b963d44878b49650af9f0fb67447fb93f33adf5d5f0e7be9f131c0a"
+    pages: 11
+    bytes: 613321
+
+  - paper_id: keplers_rhythm_turbulence_2025_09_19
+    title: "Kepler’s Rhythm in Turbulence: Toward a Conserved 1:2:3 Law via Recursive Gradient Processing"
+    repo_path: "repo/foundational_papers/2025-09-19_Keplers_Rhythm_in_Turbulence.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17159920"
+    sha256: "8209512461ee1b9913600ddae6f1ad88b9333d64d611eac3bc06fdab9f81efc3"
+    pages: 10
+    bytes: 628877
+
+  - paper_id: experimenters_guide_2025_07_21
+    title: "Experimenter's Guide – Solving Navier-Stokes, Differently"
+    repo_path: "repo/foundational_papers/2025-07-21_experimenters_guide.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.16280540"
+    sha256: "ef15d1a6bffa5dd5a2ae2bcd77d8b155dc252d92161de1a74c483f5312be2191"
+    pages: 3
+    bytes: 45441
+
+  - paper_id: ns_what_it_takes_2025_07_07
+    title: "Solving Navier-Stokes, Differently: What It Takes"
+    repo_path: "repo/foundational_papers/2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.15830659"
+    sha256: "991c581b8b2a3f2526ef4171509846a0813639355588e245c6b55cfad67b8b8c"
+    pages: 13
+    bytes: 577698
