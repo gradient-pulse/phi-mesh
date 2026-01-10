@@ -32,7 +32,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.17183439"
 
 - title: "Kepler’s Rhythm in Turbulence: Toward a Conserved 1:2:3 Law via Recursive Gradient Processing"
-  repo: "phi-mesh/foundational_rgp-papers/2025-09-19_Kepler’s_Rhythm_in_Turbulence.pdf"
+  repo: "phi-mesh/foundational_rgp-papers/2025-09-19_Keplers_Rhythm_in_Turbulence.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17159920"
 
 - title: "Experimenter's Guide – Solving Navier-Stokes, Differently"
