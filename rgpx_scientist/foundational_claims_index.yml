@@ -928,124 +928,103 @@ papers:
       
   - paper_id: gradient_capitalism_2025_12_07
     claim_cards:
-      - claim_id: gradient_capitalism_2025_12_07__c01_transition_to_coherence_regime
-        claim: "The paper claims capitalism is at a transition point, evolving toward a coherence-based economic regime."
+      - claim_id: gradient_capitalism_2025_12_07__c01_thesis_claims_first
         claim_type: thesis
-        test_hook: "Define measurable ‘coherence-based regime’ indicators (e.g., diffusion shutdown + saturation plateaus) and test whether they are increasing over decades vs price-only explanations."
-        evidence_excerpt: "capitalism has reached a transition point: it is evolving toward a coherence-based regime."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L12-L12"
-
-      - claim_id: gradient_capitalism_2025_12_07__c02_after_the_fact_metrics_not_drivers
-        claim: "GDP, profits, and inflation are framed as after-the-fact metrics; the proposed driver/target is economic coherence intensity rather than scalar output."
+        claim: "Gradient Capitalism reframes economics as a coherence-first system: price is secondary to system integrity, failure modes, and repair dynamics."
+        falsifiable: true
+        test_hook: "Compare predictive power of price-only indicators vs. coherence/repair indicators for crisis onset (pre/post)."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p2 L22–L28"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c02_markets_as_lattices
         claim_type: framing
-        test_hook: "Backtest whether proposed coherence proxies provide earlier warning of fragility/turning points than GDP/profit/inflation series at matched sampling frequency."
-        evidence_excerpt: "GDP, profits and inflation are after-the-fact metrics."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L14-L14"
-
-      - claim_id: gradient_capitalism_2025_12_07__c03_objective_scalar_J_from_trust_tensor
-        claim: "Economic ‘coherence intensity’ is defined as a scalar invariant J built from a trust tensor Ψ."
+        claim: "Markets behave like coupled gradient lattices where shocks propagate; crises manifest as coherence avalanches."
+        falsifiable: true
+        test_hook: "Look for avalanche-like event-size distributions and propagation fronts across sectors during stress periods."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p2 L25–L28"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c03_trust_alignment_tensor
         claim_type: definition_operational
-        test_hook: "Implement a candidate Ψ on transaction-network data (or exposure graphs), compute J(t), and evaluate whether J(t) correlates with stability/fragility regimes better than baseline risk metrics."
-        evidence_excerpt: "objective is economic coherence intensity: a scalar invariant J built from a trust tensor Ψ."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L16-L17"
-
-      - claim_id: gradient_capitalism_2025_12_07__c04_market_as_gradient_matching_price_is_consequence
-        claim: "Markets are framed as natural gradient-matching engines; price is treated as a consequence of coherence, not the cause."
-        claim_type: reframing
-        test_hook: "Test whether market microstructure variables that reflect matching/flow (order-book imbalance, network diffusion measures) predict price formation better than price-only autoregressive baselines."
-        evidence_excerpt: "Markets are natural gradient-matching engines. Price is the consequence—not the cause—of coherence."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L35-L35"
-
-      - claim_id: gradient_capitalism_2025_12_07__c05_trust_tensor_formal_object
-        claim: "The paper introduces the trust tensor Ψ as a central economic field-object intended to replace purely scalar descriptions."
-        claim_type: definition
-        test_hook: "Specify Ψ as a measurable tensor surrogate (e.g., covariance of contractual commitments across sectors) and check whether tensor structure adds predictive power over scalar concentration measures."
-        evidence_excerpt: "The central economic Φ-object is the trust tensor Ψ . Formally, we define"
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L262-L262"
-
-      - claim_id: gradient_capitalism_2025_12_07__c06_reaction_diffusion_dynamics_for_coherence
-        claim: "Economic coherence is modeled as evolving under a reaction–diffusion law with diffusion D(J), a saturation term toward J*, and a leakage term."
+        claim: "Introduce a trust-alignment tensor Ψ that generalizes stress-energy for economics, representing how trust and alignment distribute through society."
+        falsifiable: partially
+        test_hook: "Operationalize Ψ with measurable proxies (contract reliability, settlement latency, institutional trust surveys, default correlation structure)."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p2 L29–L30"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c04_scalar_intensity_J
+        claim_type: definition_operational
+        claim: "Define a scalar coherence intensity J derived from Ψ (J = Ψ·Ψ) as a measurable summary variable for system coherence."
+        falsifiable: true
+        test_hook: "Test whether J-like composites improve forecasts of instability vs. conventional macro variables."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p2 L32"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c05_reaction_diffusion_dynamics
         claim_type: method_claim
-        test_hook: "Fit a simplified reaction–diffusion surrogate to historical network/economic stress data; evaluate whether it reproduces observed build-up/plateau/crash dynamics out-of-sample."
-        evidence_excerpt: "the economy’s coherence evolves by a reaction–diffusion law:"
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L24-L25"
-
-      - claim_id: gradient_capitalism_2025_12_07__c07_law1_conservation_of_economic_coherence
-        claim: "Law 1 asserts economic coherence is conserved (absent external shocks), analogous to energy conservation."
-        claim_type: thesis
-        test_hook: "Operationalize ‘external shock’ vs endogenous reallocation; test whether a defined global coherence measure remains approximately conserved through internal transfers but not during exogenous shocks."
-        evidence_excerpt: "Economic coherence is conserved (in the absence of external shocks), just as energy is conserved."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L367-L369"
-
-      - claim_id: gradient_capitalism_2025_12_07__c08_law2_builds_then_brittles_beyond_threshold
-        claim: "Law 2 states capitalism naturally increases coherence intensity, but beyond a threshold coherence becomes brittle, concentrated, and unstable."
-        claim_type: hypothesis
-        test_hook: "Identify a candidate threshold on J(t) (or proxies); test whether volatility/cascade risk rises sharply beyond that threshold compared with a smooth-risk null."
-        evidence_excerpt: "beyond a threshold, coherence becomes brittle, concentrated and unstable."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L388-L390"
-
-      - claim_id: gradient_capitalism_2025_12_07__c09_monopolies_and_tbtf_are_saturation_horizons
-        claim: "Monopolies and too-big-to-fail institutions are framed as coherence saturation horizons (J≈J*) that require governance intervention."
-        claim_type: diagnosis
-        test_hook: "Compute concentration + diffusion proxies in sectors with monopoly power; test whether diffusion suppression and fragility signatures match the saturation-horizon prediction."
-        evidence_excerpt: "Monopolies and Too-Big-to-Fail institutions are coherence saturation horizons."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L411-L412"
-
-      - claim_id: gradient_capitalism_2025_12_07__c10_law3_crises_as_coherence_avalanches
-        claim: "Law 3 asserts crises are coherence avalanches: when too many nodes saturate, the system loses shock-absorption and cascades."
-        claim_type: mechanism_claim
-        test_hook: "On historical crises, test whether a ‘saturation fraction’ proxy (share of network nearing concentration limits) predicts cascades with lead time vs standard stress indicators."
-        evidence_excerpt: "Crises are coherence avalanches: when too many nodes saturate, the system cannot absorb shocks."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L417-L418"
-
-      - claim_id: gradient_capitalism_2025_12_07__c11_falsifiable_signatures_build_plateau_crash
-        claim: "The paper proposes falsifiable crisis signatures: long build-up in coherence, a high-J plateau, followed by collapse/fragmentation."
+        claim: "Model coherence propagation using reaction–diffusion dynamics for Ψ (diffusion, repair, friction), enabling regime classification and intervention design."
+        falsifiable: true
+        test_hook: "Fit reaction–diffusion-style models to trust/credit propagation data; validate out-of-sample on shock periods."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8 L5–L6"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes
+        claim_type: mapping_claim
+        claim: "Economic outcomes are driven by hidden gradients (information, trust, and access) that become visible through the actions of contextual filters."
+        falsifiable: partially
+        test_hook: "Identify whether shifts in filters (platform rules, regulation, gatekeeping) precede measurable reconfiguration of flows."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 L15–L22"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c07_law1_coherence_accumulates
+        claim_type: principle
+        claim: "Law 1: Coherence accumulates — capital is stored coherence; coherent systems compound faster."
+        falsifiable: true
+        test_hook: "Test whether high-trust/high-reliability regions show superlinear compounding vs. low-trust regions, controlling for inputs."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8 L50–L53"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c08_law2_extraction_collapses
+        claim_type: principle
+        claim: "Law 2: Extraction collapses — extreme extraction concentrates coherence and triggers systemic collapse dynamics."
+        falsifiable: true
+        test_hook: "Quantify extraction concentration vs. crisis frequency/severity; test for thresholds and hysteresis."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 L18–L24"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c09_law3_diffusion_is_growth
+        claim_type: principle
+        claim: "Law 3: Diffusion is growth — long-run growth depends on healthy diffusion across edges, not only core accumulation."
+        falsifiable: true
+        test_hook: "Measure diffusion (access, mobility, opportunity spread) and test whether it predicts sustained growth better than core-only metrics."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 L36–L39"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c10_inequality_as_phase_transition
         claim_type: falsifiable_gate
-        test_hook: "Backtest across multiple crises: require (i) rising proxy-J, (ii) plateau-like behavior, (iii) subsequent discontinuous breakdown; compare hit-rate vs chance baselines."
-        evidence_excerpt: "A crisis preceded by a long coherence build-up, followed by a plateau at high J and sudden collapse."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L476-L479"
-
-      - claim_id: gradient_capitalism_2025_12_07__c12_minimal_simulation_program_and_benchmarks
-        claim: "A minimal research program is proposed: agent-based meshes with Ψ-dynamics, historical-crisis replay, and benchmarking against VAR/GARCH and stress-testing tools."
-        claim_type: protocol
-        test_hook: "Implement a minimal agent-based Ψ-update model; run crisis replay; compare early-warning and false-positive rates vs VAR/GARCH on the same datasets."
-        evidence_excerpt: "Benchmark predictive performance against VAR, GARCH and standard stress-testing tools."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L526-L535"
-
-      - claim_id: gradient_capitalism_2025_12_07__c13_policy_sandboxes_adjust_D_beta_gamma
-        claim: "Policy levers (antitrust, UBI, capital controls, platform regulation) are framed as explicit modifications of D(J), β, and γ to keep J below J* while maintaining diffusion."
-        claim_type: policy_design
-        test_hook: "In simulation, intervene via D(J), β, γ; measure whether interventions reduce cascade frequency while preserving diffusion and output; compare to price-only policy rules."
-        evidence_excerpt: "Implement stylized versions of antitrust, UBI, capital controls and platform regulation as explicit modifications of D(J), β and γ."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L537-L539"
-
-      - claim_id: gradient_capitalism_2025_12_07__c14_antitrust_reframed_as_saturation_management
-        claim: "Antitrust is reframed as preventing regions where J≈J* and D(J)→0 from hardening into permanent extraction wells, rather than focusing on prices/market share."
-        claim_type: reframing
-        test_hook: "Compare two antitrust scoring rules on historical cases: (i) price/share, (ii) saturation+diffusion; test which better predicts later fragility and innovation decline."
-        evidence_excerpt: "preventing regions where J ≈ J* and D(J)→ 0 from hardening into permanent extraction wells."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L577-L579"
-
-      - claim_id: gradient_capitalism_2025_12_07__c15_taxation_and_redistribution_as_stability_tools
-        claim: "Taxation/redistribution add a stability dimension: raising diffusion and reducing overshoot toward J* is framed as a core objective."
-        claim_type: policy_claim
-        test_hook: "Test whether redistributive policies correlate with higher ‘diffusion proxies’ (mobility, entry rates, network connectivity) and lower cascade risk, controlling for GDP growth."
-        evidence_excerpt: "Coherence adds a third dimension: stability."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L589-L590"
-
-      - claim_id: gradient_capitalism_2025_12_07__c16_central_banks_should_track_coherence_dashboard
-        claim: "Central banks/treasuries are urged to publish a coherence dashboard (including J(t), diffusion, concentration, plateau proximity) and operate as coherence filters, not just inflation managers."
-        claim_type: governance_proposal
-        test_hook: "Construct a prototype dashboard using public financial-network proxies; test whether it improves early-warning lead time vs CPI-only monitoring."
-        evidence_excerpt: "Central banks and treasuries should publish a coherence dashboard: J(t), diffusion indicators, concentration indices, and plateau proximity."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L624-L626"
-
-      - claim_id: gradient_capitalism_2025_12_07__c17_economy_drawn_to_coherence_fixed_points
-        claim: "The paper suggests the economy may be drawn toward stable coherence fixed points, analogous to attractors in nature."
-        claim_type: hypothesis
-        test_hook: "Define candidate fixed-point indicators (plateau values, bounded variance) and test whether disparate economies/eras converge to similar ‘plateau signatures’ after normalization."
-        evidence_excerpt: "the economy, like nature, may be drawn toward stable coherence fixed points."
-        source: "2025-12-07_gradient_capitalism_inevitable_rise.pdf:L937-L938"
+        claim: "Inequality behaves like a phase-transition trigger: once coherence drops below a threshold, shocks convert to fragmentation rather than recovery."
+        falsifiable: true
+        test_hook: "Estimate thresholds where recovery time diverges and propagation becomes unstable as inequality increases."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p12 L3–L8"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c11_diffusion_proxies
+        claim_type: operational_metric
+        claim: "Diffusion can be proxied empirically (social mobility, opportunity dispersion, knowledge access), giving measurable targets for policy."
+        falsifiable: true
+        test_hook: "Define diffusion proxies and test interventions that increase them for downstream stability improvements."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 L2–L4"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c12_policy_as_cf_operations
+        claim_type: framing
+        claim: "Policy is not metaphor here: it is explicitly ‘CF operations’—i.e., shaping which gradients are amplified/suppressed and how stability is maintained."
+        falsifiable: partially
+        test_hook: "Classify policy moves as filter changes; test whether filter-shifts predict redistribution of flows and stability metrics."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 L24–L30"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c13_antitrust_as_diffusion_repair
+        claim_type: prescription
+        claim: "Antitrust is framed as diffusion repair: enforce competition to prevent coherence collapse into monopolistic funnels."
+        falsifiable: true
+        test_hook: "Compare diffusion metrics and shock resilience in markets before/after antitrust enforcement."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 L25–L29"
+    
+      - claim_id: gradient_capitalism_2025_12_07__c14_taxation_as_stability_control
+        claim_type: prescription
+        claim: "Taxation is treated as stability control that can reduce destructive extraction and keep the system above collapse thresholds."
+        falsifiable: true
+        test_hook: "Test whether tax structures that reduce extraction improve resilience metrics vs. those that don’t, controlling for confounders."
+        evidence_locator: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 L31–L33"
 
 # Claim card schema (reference)
 # - claim_id: <unique within paper>
