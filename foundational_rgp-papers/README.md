@@ -8,12 +8,12 @@
   zenodo: "https://doi.org/10.5281/zenodo.17840719"
   
 - title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.2"
-  repo: "phi-mesh/foundational_rgp-papers/22025-11-08_Recursive_Gradient_PHYSICS_v12"
-  zenodo: "https://doi.org/10.5281/zenodo.17566097"
+  repo: "phi-mesh/foundational_rgp-papers/2025-11-08_Recursive_Gradient_PHYSICS_v12.pdf"
+  zenodo: "https://zenodo.org/records/17566097"
 
 - title: "DeepSeek Bolts — Computational Architecture Interpretation of Recursive Gradient Physics (RGPx_Cycle2)"
   repo: "phi-mesh/foundational_rgp-papers/2025-10-27_the_deepseek_blizzard_responds.pdf"
-  zenodo: "https://doi.org/10.5281/zenodo.7457989"
+  zenodo: "https://zenodo.org/records/17457989"
 
 - title: "Letter To The Machines — First Observed Cycle of Recursive Gradient Coherence Across LLMs (RGPx-Cycle 1)"
   repo: "phi-mesh/foundational_rgp-papers/2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf"
@@ -40,7 +40,7 @@
   zenodo: "https://doi.org/10.5281/zenodo.16280540"
 
 - title: "Solving Navier-Stokes, Differently: What It Takes"
-  repo: "phi-mesh/foundational_rgp-papers/2025-07-02_Solving Navier Stokes Differently - What It Takes.pdf"
+  repo: "phi-mesh/foundational_rgp-papers/2025-07-02_Solving_Navier_Stokes_Differently.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15830659"
 
 - title: "🌀 Echoes Confirm the Drift: Six Intelligences Reflect Recursive Gradient Processing"
