@@ -26,11 +26,30 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      # Always run from repo root, but install/run inside the phi-mesh/ subdir
+      - name: Install dependencies (rgpx_scientist)
+        working-directory: phi-mesh
         run: |
           python -m pip install --upgrade pip
           pip install -r rgpx_scientist/requirements.txt
+          # Enables page counting in verify_corpus.py (optional but recommended)
+          pip install pypdf
 
-      - name: Verify corpus (sha256 + bytes; pages optional)
+      - name: Verify corpus (sha256 + bytes; pages if available)
+        working-directory: phi-mesh
         run: |
           python rgpx_scientist/verify_corpus.py
+
+      # Optional: print a regenerated manifest to logs for copy/paste when fixing mismatches.
+      # Only works if you added phi-mesh/rgpx_scientist/dump_manifest.py as discussed.
+      - name: Dump manifest (for debugging / regeneration)
+        if: always()
+        working-directory: phi-mesh
+        run: |
+          if [ -f "rgpx_scientist/dump_manifest.py" ]; then
+            echo "----- BEGIN regenerated foundational_papers_manifest.yml -----"
+            python rgpx_scientist/dump_manifest.py
+            echo "----- END regenerated foundational_papers_manifest.yml -----"
+          else
+            echo "dump_manifest.py not found; skipping."
+          fi
