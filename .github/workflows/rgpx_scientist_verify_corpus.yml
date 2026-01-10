@@ -1,0 +1,36 @@
+name: RGPx Scientist — Verify Corpus
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "phi-mesh/rgpx_scientist/**"
+      - "phi-mesh/foundational_rgp-papers/**"
+      - "phi-mesh/foundational_papers/**"
+  pull_request:
+    paths:
+      - "phi-mesh/rgpx_scientist/**"
+      - "phi-mesh/foundational_rgp-papers/**"
+      - "phi-mesh/foundational_papers/**"
+
+jobs:
+  verify-corpus:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r phi-mesh/rgpx_scientist/requirements.txt
+
+      - name: Verify corpus (sha256 + bytes; pages optional)
+        run: |
+          python phi-mesh/rgpx_scientist/verify_corpus.py
