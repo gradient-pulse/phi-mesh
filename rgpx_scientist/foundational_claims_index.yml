@@ -1,0 +1,54 @@
+schema_version: "0.1"
+last_updated: "2026-01-10"
+source_registry: "RGPx_Scientist/foundational_papers_index.yml"
+
+# Each entry here is a paper-level container with claim_cards.
+# Claim cards are SHORT. They are not full summaries.
+# They should be phrased so they can be tested or checked.
+
+papers:
+  - paper_id: gradient_capitalism_2025_12_07
+    claim_cards: []
+
+  - paper_id: natural_societal_gravity_2025_12_05
+    claim_cards: []
+
+  - paper_id: rgpx_frontier_v12_2025_11_08
+    claim_cards: []
+
+  - paper_id: deepseek_bolts_cycle2_2025_10_27
+    claim_cards: []
+
+  - paper_id: letter_to_machines_cycle1_2025_10_26
+    claim_cards: []
+
+  - paper_id: rgpx_frontier_v10_2025_10_24
+    claim_cards: []
+
+  - paper_id: explaining_llms_2025_09_23
+    claim_cards: []
+
+  - paper_id: doom_to_destiny_v11_2025_09_23
+    claim_cards: []
+
+  - paper_id: keplers_rhythm_turbulence_2025_09_19
+    claim_cards: []
+
+  - paper_id: experimenters_guide_2025_07_21
+    claim_cards: []
+
+  - paper_id: ns_what_it_takes_2025_07_07
+    claim_cards: []
+
+# Claim card schema (reference)
+# - claim_id: <unique within paper>
+#   claim: "<1–2 sentence testable statement>"
+#   type: one of [definition, hypothesis, method, empirical_result, prediction, metric, warning]
+#   confidence: one of [low, medium, high]   # your internal rating
+#   tags: [rgpx, ...]                        # reuse Mesh tags where possible
+#   anchors:
+#     - kind: one of [section, figure, table, equation, page]
+#       ref: "<e.g., 'Section 3.2', 'Fig. 4', 'Eq. (7)', 'p. 12'>"
+#   excerpt: "<optional ≤40 words verbatim if you want a quotable snippet>"
+#   depends_on: [<optional other claim_ids>]
+#   notes: "<optional: what would falsify / what data needed>"
