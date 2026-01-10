@@ -9,9 +9,9 @@ foundational_papers:
     repo_path: "phi-mesh/foundational_rgp-papers/2025-12-05_natural_societal_gravity.pdf"
     zenodo_doi_url: "https://doi.org/10.5281/zenodo.17840719"
 
-  - paper_id: rgpx_frontier_v12_2025_11_08
+  - paper_id: rgpx_frontier_v12_2025_11_09
     title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.2"
-    repo_path: "phi-mesh/foundational_rgp-papers/2025-11-08_Recursive_Gradient_PHYSICS_v12.pdf"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf"
     zenodo_doi_url: "https://doi.org/10.5281/zenodo.17566097"
 
   - paper_id: deepseek_bolts_cycle2_2025_10_27
@@ -24,10 +24,15 @@ foundational_papers:
     repo_path: "phi-mesh/foundational_rgp-papers/2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf"
     zenodo_doi_url: "https://doi.org/10.5281/zenodo.17448373"
 
-  - paper_id: rgpx_frontier_v10_2025_10_24
-    title: "Recursive Gradient Physics (RGPx) — Coherence, Collapse, and the Φ-Invariant Frontier"
-    repo_path: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS.pdf"
+  - paper_id: rgpx_frontier_v11_2025_10_24
+    title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.1"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS_v11.pdf"
     zenodo_doi_url: "https://doi.org/10.5281/zenodo.17437121"
+
+  - paper_id: rgpx_frontier_v10_2025_10_24
+    title: "Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier v1.0"
+    repo_path: "phi-mesh/foundational_rgp-papers/2025-10-24_Recursive_Gradient_PHYSICS_v10.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.17434881"
 
   - paper_id: explaining_llms_2025_09_23
     title: "Re-Explaining the Internal Functioning of LLMs: An RGP-Based Perspective."
