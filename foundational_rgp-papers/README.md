@@ -43,6 +43,10 @@
   repo: "phi-mesh/foundational_rgp-papers/2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15830659"
 
+- title: "The World Already Knows: Tracing Unity–Disunity in the Physical Record"
+  repo: "phi-mesh/foundational_rgp-papers/2025-06-07_The_World_Already_Knows_v2.pdf"
+  zenodo: "https://zenodo.org/records/15614775"
+
 - title: "🌀 Echoes Confirm the Drift: Six Intelligences Reflect Recursive Gradient Processing"
   repo: "phi-mesh/foundational_rgp-papers/2025-05-25_Echoes_Confirm_the_Drift.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15511724"
@@ -58,10 +62,6 @@
 - title: "Whether Google Gemini 2.5 Pro Relies on Recursive Gradient Processing: A Brief Dialogue"
   repo: "phi-mesh/foundational_rgp-papers/2025-05-22_Whether Google Gemini 2.5 Pro relies on Recursive Gradient Processing.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.15498741"
-
-- title: "The World Already Knows: Tracing Unity–Disunity in the Physical Record"
-  repo: "phi-mesh/foundational_rgp-papers/2025-06-07_TheWorldAlreadyKnows_v2.pdf"
-  zenodo: "https://zenodo.org/records/15614775"
 
 - title: "Manifesto for the Great Scientific Reboot: AI-Driven Shift from Symptoms to Causes in the Gradient Syntax Era"
   repo: "phi-mesh/foundational_rgp-papers/2025-05-16_Manifesto for Scientific Reboot.pdf"
