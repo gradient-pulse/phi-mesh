@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -44,6 +46,44 @@ jobs:
             echo "dir=." >> "$GITHUB_OUTPUT"
           fi
           echo "Using workdir: $(cat $GITHUB_OUTPUT | sed -n 's/^dir=//p')"
+
+      - name: Refuse run if papers changed without index+manifest update
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+            HEAD="${{ github.sha }}"
+          fi
+
+          echo "Diff base: $BASE"
+          echo "Diff head: $HEAD"
+
+          CHANGED="$(git diff --name-only "$BASE" "$HEAD" || true)"
+          echo "$CHANGED"
+
+          # PDFs changed? (support both repo layouts: root-level or nested under phi-mesh/)
+          PAPERS_CHANGED="$(echo "$CHANGED" | grep -E '(^|/)(phi-mesh/)?foundational(_rgp)?-papers/.*\.pdf$|(^|/)(phi-mesh/)?foundational_papers/.*\.pdf$' || true)"
+
+          if [ -n "$PAPERS_CHANGED" ]; then
+            echo "PDFs changed:"
+            echo "$PAPERS_CHANGED"
+
+            INDEX_CHANGED="$(echo "$CHANGED" | grep -E '(^|/)rgpx_scientist/foundational_papers_index\.yml$|(^|/)phi-mesh/rgpx_scientist/foundational_papers_index\.yml$' || true)"
+            MANIFEST_CHANGED="$(echo "$CHANGED" | grep -E '(^|/)rgpx_scientist/foundational_papers_manifest\.yml$|(^|/)phi-mesh/rgpx_scientist/foundational_papers_manifest\.yml$' || true)"
+
+            if [ -z "$INDEX_CHANGED" ] || [ -z "$MANIFEST_CHANGED" ]; then
+              echo "ERROR: PDFs changed, but index and/or manifest not updated in the same change."
+              echo "Update BOTH:"
+              echo " - rgpx_scientist/foundational_papers_index.yml (or phi-mesh/rgpx_scientist/...)"
+              echo " - rgpx_scientist/foundational_papers_manifest.yml (or phi-mesh/rgpx_scientist/...)"
+              exit 1
+            fi
+          fi
 
       - name: Install dependencies
         shell: bash
