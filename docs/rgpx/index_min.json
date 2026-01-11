@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-01-08T08:45:49Z",
-  "count": 403,
+  "generated_at": "2026-01-11T14:04:27Z",
+  "count": 410,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -5327,6 +5327,104 @@
         "autoscan",
         "memory_bifurcation",
         "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-01-09_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-09",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-01-09_phi_trace_autoscan",
+      "date": "2026-01-09",
+      "title": "Φ–Trace Autoscan — 2026-01-09",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-01-10_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-10",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-01-10_phi_trace_autoscan",
+      "date": "2026-01-10",
+      "title": "Φ–Trace Autoscan — 2026-01-10",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-01-11_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-11",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-01-11_phi_trace_autoscan",
+      "date": "2026-01-11",
+      "title": "Φ–Trace Autoscan — 2026-01-11",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-01-11_pola-nt-closure",
+      "date": "2026-01-11",
+      "title": "PoLA as Narrative-Tick Closure (pointer)",
+      "tags": [
+        "pola",
+        "narrative_ticks",
+        "experiment_design",
+        "trace_segmentation",
+        "predictive_stability",
+        "minimal_intervention",
+        "rgp_ns_prototype"
       ]
     }
   ]

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-01-08T08:45:49Z",
-  "count": 403,
+  "generated_at": "2026-01-11T14:04:27Z",
+  "count": 410,
   "pulses": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -8595,6 +8595,156 @@
         "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
       ],
       "source_path": "pulse/2026-01-08_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-01-09_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-09",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-01-09. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-01-09_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-01-09_phi_trace_autoscan",
+      "date": "2026-01-09",
+      "title": "Φ–Trace Autoscan — 2026-01-09",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-01-09_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-01-10_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-10",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-01-10. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-01-10_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-01-10_phi_trace_autoscan",
+      "date": "2026-01-10",
+      "title": "Φ–Trace Autoscan — 2026-01-10",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-01-10_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-01-11_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-01-11",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-01-11. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-01-11_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-01-11_phi_trace_autoscan",
+      "date": "2026-01-11",
+      "title": "Φ–Trace Autoscan — 2026-01-11",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-01-11_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-01-11_pola-nt-closure",
+      "date": "2026-01-11",
+      "title": "PoLA as Narrative-Tick Closure (pointer)",
+      "tags": [
+        "pola",
+        "narrative_ticks",
+        "experiment_design",
+        "trace_segmentation",
+        "predictive_stability",
+        "minimal_intervention",
+        "rgp_ns_prototype"
+      ],
+      "summary": "Pointer pulse: PoLA framed as closure over Narrative Ticks; see phi-mesh/main/dialogues/2026-01-11_pola-nt-closure.yml\n",
+      "papers": [],
+      "podcasts": [],
+      "source_path": "pulse/2026-01-11_pola-nt-closure.yml"
     }
   ]
 }
