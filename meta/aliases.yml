@@ -223,7 +223,6 @@ aliases:
     - "NT (Narrative_Tick)"
     - NT
     - NT_Narrative_Tick
-    - NT (Narrative_Tick)
     - NT_(Narrative_Tick)  # ← audit variant
     - Narrative Tick
     - Narrative_Tick
@@ -243,7 +242,6 @@ aliases:
 
   phi_harmonics:
     - "Φ-harmonics"
-    - "\u03A6-harmonics"
     - harmonics            # ← audit shorthand
 
   phi_invariant:
