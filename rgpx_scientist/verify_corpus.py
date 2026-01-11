@@ -33,7 +33,7 @@ MANIFEST_FILENAME = "foundational_papers_manifest.yml"
 @dataclass(frozen=True)
 class PaperIndexEntry:
     paper_id: str
-    repo_path: str  # path inside repo, e.g. "phi-mesh/foundational_rgp-papers/....pdf"
+    repo_path: str
 
 
 @dataclass(frozen=True)
@@ -47,25 +47,19 @@ class PaperManifestEntry:
 def _sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> str:
     h = hashlib.sha256()
     with path.open("rb") as f:
-        while True:
-            chunk = f.read(chunk_size)
-            if not chunk:
-                break
+        for chunk in iter(lambda: f.read(chunk_size), b""):
             h.update(chunk)
     return h.hexdigest()
 
 
 def _try_pdf_page_count(path: Path) -> Optional[int]:
-    # Optional dependency: pypdf or PyPDF2
     try:
         from pypdf import PdfReader  # type: ignore
-
         return len(PdfReader(str(path)).pages)
     except Exception:
         pass
     try:
         from PyPDF2 import PdfReader  # type: ignore
-
         return len(PdfReader(str(path)).pages)
     except Exception:
         return None
@@ -73,8 +67,7 @@ def _try_pdf_page_count(path: Path) -> Optional[int]:
 
 def _load_yaml(path: Path) -> Dict[str, Any]:
     try:
-        with path.open("r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
         if not isinstance(data, dict):
             raise ValueError("YAML root must be a mapping/dict.")
         return data
@@ -116,13 +109,9 @@ def _parse_manifest(data: Dict[str, Any]) -> Dict[str, PaperManifestEntry]:
         if not isinstance(pid, str) or not pid.strip():
             raise ValueError(f"Manifest entry #{i} missing/invalid `paper_id`.")
         if not isinstance(sha, str) or len(sha.strip()) != 64:
-            raise ValueError(
-                f"Manifest entry #{i} missing/invalid `sha256` (expect 64 hex chars)."
-            )
+            raise ValueError(f"Manifest entry #{i} missing/invalid `sha256` (expect 64 hex chars).")
         if not isinstance(bts, int) or bts <= 0:
-            raise ValueError(
-                f"Manifest entry #{i} missing/invalid `bytes` (expect positive int)."
-            )
+            raise ValueError(f"Manifest entry #{i} missing/invalid `bytes` (expect positive int).")
         if pgs is not None and (not isinstance(pgs, int) or pgs <= 0):
             raise ValueError(f"Manifest entry #{i} invalid `pages` (expect positive int).")
 
@@ -138,25 +127,46 @@ def _parse_manifest(data: Dict[str, Any]) -> Dict[str, PaperManifestEntry]:
     return out
 
 
-def _infer_repo_root(script_path: Path) -> Path:
-    # Expected location: <repo_root>/phi-mesh/rgpx_scientist/verify_corpus.py
-    # So repo_root = script_path.parents[2]
-    try:
-        repo_root = script_path.resolve().parents[2]
-    except Exception:
-        repo_root = Path.cwd().resolve()
-    return repo_root
+def _detect_layout(start: Path) -> Tuple[Path, Path]:
+    """
+    Returns (repo_root, project_root).
+
+    repo_root: top checkout root
+    project_root: either repo_root (Layout A) or repo_root/'phi-mesh' (Layout B)
+    """
+    start = start.resolve()
+    for cand in [start] + list(start.parents)[:8]:
+        # Layout A
+        if (cand / "rgpx_scientist" / INDEX_FILENAME).exists():
+            return cand, cand
+        # Layout B
+        if (cand / "phi-mesh" / "rgpx_scientist" / INDEX_FILENAME).exists():
+            return cand, cand / "phi-mesh"
+    raise RuntimeError("Could not detect project layout (no rgpx_scientist/foundational_papers_index.yml found).")
 
 
-def verify(repo_root: Path, strict_pages: bool = False) -> Tuple[bool, List[str], List[str]]:
+def _resolve_pdf(repo_root: Path, project_root: Path, repo_path: str) -> Optional[Path]:
     """
-    Returns: (ok, errors, warnings)
+    Try to resolve repo_path against repo_root first (recommended),
+    then against project_root (fallback for nested layouts).
     """
+    p = Path(repo_path)
+    candidates = [
+        (repo_root / p),
+        (project_root / p),
+    ]
+    for c in candidates:
+        if c.exists():
+            return c
+    return None
+
+
+def verify(repo_root: Path, project_root: Path, strict_pages: bool = False) -> Tuple[bool, List[str], List[str]]:
     errors: List[str] = []
     warnings: List[str] = []
 
-    index_path = repo_root / "phi-mesh" / "rgpx_scientist" / INDEX_FILENAME
-    manifest_path = repo_root / "phi-mesh" / "rgpx_scientist" / MANIFEST_FILENAME
+    index_path = project_root / "rgpx_scientist" / INDEX_FILENAME
+    manifest_path = project_root / "rgpx_scientist" / MANIFEST_FILENAME
 
     if not index_path.exists():
         errors.append(f"Missing index file: {index_path}")
@@ -165,13 +175,9 @@ def verify(repo_root: Path, strict_pages: bool = False) -> Tuple[bool, List[str]
         errors.append(f"Missing manifest file: {manifest_path}")
         return False, errors, warnings
 
-    index_data = _load_yaml(index_path)
-    manifest_data = _load_yaml(manifest_path)
+    index_entries = _parse_index(_load_yaml(index_path))
+    manifest_map = _parse_manifest(_load_yaml(manifest_path))
 
-    index_entries = _parse_index(index_data)
-    manifest_map = _parse_manifest(manifest_data)
-
-    # Cross-check: every index paper must be in manifest, and vice versa
     index_ids = {e.paper_id for e in index_entries}
     manifest_ids = set(manifest_map.keys())
 
@@ -183,45 +189,24 @@ def verify(repo_root: Path, strict_pages: bool = False) -> Tuple[bool, List[str]
     if extra_in_manifest:
         errors.append(f"Manifest contains paper_id(s) not present in index: {extra_in_manifest}")
 
-    # Determine whether we can page-check (kept for future use / debug probing).
-    can_page_check = False
-    if strict_pages:
-        can_page_check = True
-    else:
-        probe = None
-        for e in index_entries:
-            probe = repo_root / e.repo_path
-            if probe.exists():
-                break
-        if probe and probe.exists():
-            can_page_check = _try_pdf_page_count(probe) is not None
-
-    if strict_pages and not can_page_check:
-        warnings.append("Strict page checking requested, but PDF reader not available (install `pypdf`).")
-
     for e in index_entries:
         m = manifest_map.get(e.paper_id)
         if m is None:
-            # already reported in cross-check
             continue
 
-        pdf_path = repo_root / e.repo_path
-
-        if not pdf_path.exists():
+        pdf_path = _resolve_pdf(repo_root, project_root, e.repo_path)
+        if pdf_path is None:
             errors.append(f"[{e.paper_id}] Missing PDF at repo_path: {e.repo_path}")
             continue
 
-        # bytes
         actual_bytes = pdf_path.stat().st_size
         if actual_bytes != m.bytes:
             errors.append(f"[{e.paper_id}] bytes mismatch: manifest={m.bytes} actual={actual_bytes}")
 
-        # sha256
         actual_sha = _sha256_file(pdf_path)
         if actual_sha.lower() != m.sha256.lower():
             errors.append(f"[{e.paper_id}] sha256 mismatch: manifest={m.sha256} actual={actual_sha}")
 
-        # pages (optional)
         if m.pages is not None:
             page_count = _try_pdf_page_count(pdf_path)
             if page_count is None:
@@ -234,33 +219,29 @@ def verify(repo_root: Path, strict_pages: bool = False) -> Tuple[bool, List[str]
                 if page_count != m.pages:
                     errors.append(f"[{e.paper_id}] pages mismatch: manifest={m.pages} actual={page_count}")
 
-    ok = len(errors) == 0
-    return ok, errors, warnings
+    return len(errors) == 0, errors, warnings
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Verify RGPx Scientist frozen corpus integrity.")
-    ap.add_argument(
-        "--repo-root",
-        type=str,
-        default=None,
-        help="Path to repository root (default: infer from script location).",
-    )
-    ap.add_argument(
-        "--strict-pages",
-        action="store_true",
-        help="Fail if page count cannot be verified or does not match.",
-    )
+    ap.add_argument("--repo-root", type=str, default=None, help="Path to repository root (optional).")
+    ap.add_argument("--strict-pages", action="store_true", help="Fail if page count cannot be verified or does not match.")
     args = ap.parse_args()
 
-    script_path = Path(__file__)
-    repo_root = Path(args.repo_root).resolve() if args.repo_root else _infer_repo_root(script_path)
+    script_path = Path(__file__).resolve()
+    if args.repo_root:
+        repo_root = Path(args.repo_root).resolve()
+        # derive project root from that
+        _, project_root = _detect_layout(repo_root)
+    else:
+        repo_root, project_root = _detect_layout(script_path.parent)
 
-    ok, errors, warnings = verify(repo_root=repo_root, strict_pages=args.strict_pages)
+    ok, errors, warnings = verify(repo_root=repo_root, project_root=project_root, strict_pages=args.strict_pages)
 
-    print(f"Repo root: {repo_root}")
-    print(f"Index:     {repo_root / 'phi-mesh' / 'rgpx_scientist' / INDEX_FILENAME}")
-    print(f"Manifest:  {repo_root / 'phi-mesh' / 'rgpx_scientist' / MANIFEST_FILENAME}")
+    print(f"Repo root:    {repo_root}")
+    print(f"Project root: {project_root}")
+    print(f"Index:        {project_root / 'rgpx_scientist' / INDEX_FILENAME}")
+    print(f"Manifest:     {project_root / 'rgpx_scientist' / MANIFEST_FILENAME}")
     print("")
 
     for w in warnings:
