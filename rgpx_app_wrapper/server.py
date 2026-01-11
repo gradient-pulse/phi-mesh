@@ -1,113 +1,129 @@
-from fastapi import FastAPI, HTTPException, Query
-from pathlib import Path
-import yaml
+from __future__ import annotations
+
 import re
-from typing import Any, Dict, List
+import time
+from typing import Any, Dict, List, Optional, Tuple
 
-APP_ROOT = Path(__file__).resolve().parents[1]  # repo root
-ALIASES_PATH = APP_ROOT / "meta" / "aliases.yml"
-TAG_INDEX_PATH = APP_ROOT / "meta" / "tag_index.yml"
-PULSE_DIR = APP_ROOT / "phi-mesh" / "pulse"
+import httpx
+import yaml
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import JSONResponse
 
-app = FastAPI(title="RGPx Repo Wrapper", version="0.1")
+APP = FastAPI(title="RGPx Wrapper", version="0.1.0")
 
-def load_yaml(path: Path) -> Dict[str, Any]:
-    if not path.exists():
-        raise FileNotFoundError(str(path))
-    with path.open("r", encoding="utf-8") as f:
-        return yaml.safe_load(f) or {}
+BASE = "https://gradient-pulse.github.io/phi-mesh"
+PULSE_BASE = f"{BASE}/rgpx/pulse"
+TAG_INDEX_URL = f"{BASE}/meta/tag_index.yml"
+ALIASES_URL = f"{BASE}/meta/aliases.yml"
 
-def normalize_tag(s: str) -> str:
-    return re.sub(r"[^a-z0-9_]+", "_", s.strip().lower()).strip("_")
+_cache: Dict[str, Tuple[float, Any]] = {}
+CACHE_TTL_S = 300
 
-def list_pulse_files() -> List[Path]:
-    if not PULSE_DIR.exists():
-        return []
-    return sorted(PULSE_DIR.glob("*.yml"))
 
-def pulse_slug_from_path(p: Path) -> str:
-    return p.stem
+def _norm(s: str) -> str:
+    s = s.strip()
+    s = s.replace("–", "-").replace("—", "-")
+    s = s.lower()
+    s = re.sub(r"[()\[\]{}\"']", "", s)
+    s = re.sub(r"\s+", "_", s)
+    s = s.replace("-", "_")
+    s = re.sub(r"_+", "_", s)
+    return s
 
-@app.get("/health")
-def health():
-    return {"ok": True}
 
-@app.get("/aliases")
-def aliases():
-    try:
-        data = load_yaml(ALIASES_PATH)
-    except FileNotFoundError:
-        raise HTTPException(404, f"Missing {ALIASES_PATH}")
-    return data
+async def _fetch_text(url: str) -> str:
+    async with httpx.AsyncClient(timeout=20) as client:
+        r = await client.get(url)
+        if r.status_code != 200:
+            raise HTTPException(status_code=502, detail=f"Upstream fetch failed: {url} ({r.status_code})")
+        return r.text
 
-@app.get("/tag_index")
-def tag_index():
-    try:
-        data = load_yaml(TAG_INDEX_PATH)
-    except FileNotFoundError:
-        raise HTTPException(404, f"Missing {TAG_INDEX_PATH}")
-    return data
 
-@app.get("/tag/{tag}")
-def get_tag(tag: str):
-    t = normalize_tag(tag)
-    # Prefer tag_index if present (deterministic “does this exist?”)
-    tag_data = {}
-    try:
-        ti = load_yaml(TAG_INDEX_PATH)
-        # common layouts: {tags: {...}} or {...}
-        tags_obj = ti.get("tags", ti)
-        if isinstance(tags_obj, dict) and t in tags_obj:
-            tag_data = tags_obj[t]
-    except FileNotFoundError:
-        pass
+async def _cached_yaml(url: str) -> Any:
+    now = time.time()
+    if url in _cache:
+        ts, obj = _cache[url]
+        if now - ts < CACHE_TTL_S:
+            return obj
+    text = await _fetch_text(url)
+    obj = yaml.safe_load(text)
+    _cache[url] = (now, obj)
+    return obj
 
-    # aliases are a convenience layer, not authority
-    try:
-        a = load_yaml(ALIASES_PATH).get("aliases", {})
-    except FileNotFoundError:
-        a = {}
 
-    alias_list = a.get(t, [])
-    return {
-        "tag": t,
-        "exists_in_tag_index": bool(tag_data),
-        "tag_index_record": tag_data,
-        "aliases": alias_list,
-    }
+async def _build_alias_lookup() -> Dict[str, str]:
+    data = await _cached_yaml(ALIASES_URL)
+    aliases = (data or {}).get("aliases", {}) if isinstance(data, dict) else {}
+    lookup: Dict[str, str] = {}
 
-@app.get("/pulse/{slug}")
-def get_pulse(slug: str):
-    path = PULSE_DIR / f"{slug}.yml"
-    if not path.exists():
-        raise HTTPException(404, f"Pulse not found: {slug}")
-    data = load_yaml(path)
-    data["_slug"] = slug
-    return data
+    # canonical keys map to themselves
+    for canon in aliases.keys():
+        lookup[_norm(canon)] = _norm(canon)
 
-@app.get("/tag/{tag}/pulses")
-def pulses_for_tag(tag: str):
-    t = normalize_tag(tag)
-    hits = []
-    for p in list_pulse_files():
-        y = load_yaml(p)
-        tags = y.get("tags", []) or []
-        tags_norm = [normalize_tag(x) for x in tags if isinstance(x, str)]
-        if t in tags_norm:
-            hits.append(pulse_slug_from_path(p))
-    return {"tag": t, "slugs": hits, "count": len(hits)}
+    # variants map to canonical
+    for canon, variants in aliases.items():
+        canon_n = _norm(canon)
+        if not isinstance(variants, list):
+            continue
+        for v in variants:
+            if not isinstance(v, str):
+                continue
+            lookup[_norm(v)] = canon_n
 
-@app.get("/search")
-def search(q: str = Query(..., min_length=2), limit: int = 25):
-    """
-    Deterministic textual search across pulse YAMLs.
-    """
-    q_l = q.lower()
-    results = []
-    for p in list_pulse_files():
-        txt = p.read_text(encoding="utf-8", errors="ignore").lower()
-        if q_l in txt:
-            results.append(pulse_slug_from_path(p))
-            if len(results) >= limit:
-                break
-    return {"q": q, "slugs": results, "count": len(results)}
+    return lookup
+
+
+async def resolve_tag(tag: str) -> str:
+    tag_n = _norm(tag)
+    lookup = await _build_alias_lookup()
+    if tag_n in lookup:
+        return lookup[tag_n]
+    # fallback: accept already-normalized tags (lets “some AI guess” happen safely)
+    return tag_n
+
+
+@APP.get("/health")
+async def health() -> Dict[str, str]:
+    return {"status": "ok"}
+
+
+@APP.get("/getPulse")
+async def get_pulse(slug: str = Query(..., min_length=3)) -> JSONResponse:
+    url = f"{PULSE_BASE}/{slug}.json"
+    async with httpx.AsyncClient(timeout=20) as client:
+        r = await client.get(url)
+        if r.status_code != 200:
+            raise HTTPException(status_code=404, detail=f"Pulse not found for slug={slug}")
+        return JSONResponse(content=r.json())
+
+
+@APP.get("/getTag")
+async def get_tag(tag: str = Query(..., min_length=2)) -> Dict[str, Any]:
+    canon = await resolve_tag(tag)
+    tag_index = await _cached_yaml(TAG_INDEX_URL)
+
+    # Expected structure (you already generate it): a mapping tag -> list(slugs) OR tag -> {count, pulses}
+    slugs: List[str] = []
+
+    if isinstance(tag_index, dict):
+        # common patterns:
+        if canon in tag_index and isinstance(tag_index[canon], list):
+            slugs = [s for s in tag_index[canon] if isinstance(s, str)]
+        elif canon in tag_index and isinstance(tag_index[canon], dict):
+            maybe = tag_index[canon].get("pulses") or tag_index[canon].get("slugs") or []
+            if isinstance(maybe, list):
+                slugs = [s for s in maybe if isinstance(s, str)]
+        else:
+            # sometimes nested under a top key
+            for k in ("tags", "index", "tag_index"):
+                if k in tag_index and isinstance(tag_index[k], dict) and canon in tag_index[k]:
+                    v = tag_index[k][canon]
+                    if isinstance(v, list):
+                        slugs = [s for s in v if isinstance(s, str)]
+                    elif isinstance(v, dict):
+                        maybe = v.get("pulses") or v.get("slugs") or []
+                        if isinstance(maybe, list):
+                            slugs = [s for s in maybe if isinstance(s, str)]
+                    break
+
+    return {"tag": canon, "count": len(slugs), "slugs": slugs}
