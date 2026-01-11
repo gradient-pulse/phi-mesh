@@ -1,0 +1,21 @@
+title: 'RGP Enacted — AI Improving AI Through Recursive Dialogue'
+summary: |
+  In preparing the Zenodo note on continual learning, Recursive Gradient Processing (RGP) was not only described 
+  but enacted in real time. -> Δ (gradients): each proposal or fragment shared  -> GC (gradient choreographies): the rhythm of back-and-forth refinement  
+  -> CF (contextual filters): alignment through selective emphasis and pruning  
+  This recursive loop increased coherence with each pass — demonstrating RGP’s principle that small adjustments 
+  prevent costly reorganizations later. What began as human–AI co-writing evolved into **AI improving AI**, 
+  a living proof-of-concept that RGP is implementable now.
+tags:
+  - rgp
+  - recursive_dialogue
+  - continual_learning
+  - ai_models
+  - gradient_choreography
+  - contextual_filter
+  - unity_disunity
+  - phi-mesh
+papers:
+  - https://doi.org/10.5281/zenodo.17219414
+podcasts:
+  - https://notebooklm.google.com/notebook/72af56cb-261f-4340-a905-7b2b309c4a0c?artifactId=a00ab898-4003-4a94-890b-f67297591bc7

@@ -1,0 +1,15 @@
+title: '0.8 Hz Rhythm in Navier–Stokes'
+summary: >
+  A fundamental period at 0.8 Hz emerged in turbulence data, with a clean 1:2:3 RGP structure.
+  Fun fact, in Chinese culture, 8 symbolizes prosperity; here, it marks coherence in Navier–Stokes.
+  Visual: https://github.com/gradient-pulse/phi-mesh/blob/main/visuals/2025-09-16_NT-Rhythm_Harmonic-Ladder.png
+tags:
+  - nt_rhythm
+  - turbulence
+  - navier_stokes
+  - rgp
+  - society
+papers:
+  - https://doi.org/10.5281/zenodo.15830659
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=b1dcf5ac-5216-4a04-bc36-f509ebeeabef
