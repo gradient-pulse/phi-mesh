@@ -20,13 +20,11 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
-
 
 INDEX_FILENAME = "foundational_papers_index.yml"
 MANIFEST_FILENAME = "foundational_papers_manifest.yml"
@@ -61,11 +59,13 @@ def _try_pdf_page_count(path: Path) -> Optional[int]:
     # Optional dependency: pypdf or PyPDF2
     try:
         from pypdf import PdfReader  # type: ignore
+
         return len(PdfReader(str(path)).pages)
     except Exception:
         pass
     try:
         from PyPDF2 import PdfReader  # type: ignore
+
         return len(PdfReader(str(path)).pages)
     except Exception:
         return None
@@ -116,9 +116,13 @@ def _parse_manifest(data: Dict[str, Any]) -> Dict[str, PaperManifestEntry]:
         if not isinstance(pid, str) or not pid.strip():
             raise ValueError(f"Manifest entry #{i} missing/invalid `paper_id`.")
         if not isinstance(sha, str) or len(sha.strip()) != 64:
-            raise ValueError(f"Manifest entry #{i} missing/invalid `sha256` (expect 64 hex chars).")
+            raise ValueError(
+                f"Manifest entry #{i} missing/invalid `sha256` (expect 64 hex chars)."
+            )
         if not isinstance(bts, int) or bts <= 0:
-            raise ValueError(f"Manifest entry #{i} missing/invalid `bytes` (expect positive int).")
+            raise ValueError(
+                f"Manifest entry #{i} missing/invalid `bytes` (expect positive int)."
+            )
         if pgs is not None and (not isinstance(pgs, int) or pgs <= 0):
             raise ValueError(f"Manifest entry #{i} invalid `pages` (expect positive int).")
 
@@ -179,12 +183,11 @@ def verify(repo_root: Path, strict_pages: bool = False) -> Tuple[bool, List[str]
     if extra_in_manifest:
         errors.append(f"Manifest contains paper_id(s) not present in index: {extra_in_manifest}")
 
-    # Determine whether we can page-check
+    # Determine whether we can page-check (kept for future use / debug probing).
     can_page_check = False
     if strict_pages:
         can_page_check = True
     else:
-        # probe once
         probe = None
         for e in index_entries:
             probe = repo_root / e.repo_path
@@ -195,7 +198,6 @@ def verify(repo_root: Path, strict_pages: bool = False) -> Tuple[bool, List[str]
 
     if strict_pages and not can_page_check:
         warnings.append("Strict page checking requested, but PDF reader not available (install `pypdf`).")
-        # still continue; will fail per-file below if pages are required
 
     for e in index_entries:
         m = manifest_map.get(e.paper_id)
