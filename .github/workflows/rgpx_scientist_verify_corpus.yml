@@ -100,7 +100,7 @@ jobs:
         shell: bash
         working-directory: ${{ steps.project.outputs.dir }}
         run: |
-          python rgpx_scientist/verify_corpus.py
+          python rgpx_scientist/verify_corpus.py --repo-root .
 
       - name: Dump manifest (for debugging / regeneration)
         if: always()
