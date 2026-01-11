@@ -14,16 +14,19 @@ from typing import Any, Dict, List, Tuple
 import streamlit as st
 import yaml
 
-from pathlib import Path
-from typing import Optional
+# =============================================================================
+# Corpus status helpers (Option A)
+# =============================================================================
 
 def _load_yaml_file(path: Path) -> Dict[str, Any]:
     if not path.exists():
         return {}
     return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
 
-def _safe_list(x) -> List[Any]:
+
+def _safe_list(x: Any) -> List[Any]:
     return x if isinstance(x, list) else []
+
 
 def corpus_status(repo_root: str) -> Dict[str, Any]:
     """
@@ -31,6 +34,7 @@ def corpus_status(repo_root: str) -> Dict[str, Any]:
     Looks for:
       - <repo_root>/rgpx_scientist/foundational_papers_index.yml
       - <repo_root>/rgpx_scientist/foundational_papers_manifest.yml
+
     Paper PDFs are resolved via each index entry's repo_path relative to repo_root.
     """
     rr = Path(repo_root)
@@ -48,7 +52,7 @@ def corpus_status(repo_root: str) -> Dict[str, Any]:
     manifest_items = _safe_list(manifest.get("foundational_papers"))
 
     # Parse index list: require paper_id + repo_path
-    parsed_index = []
+    parsed_index: List[Dict[str, str]] = []
     for item in index_items:
         if not isinstance(item, dict):
             continue
@@ -62,7 +66,7 @@ def corpus_status(repo_root: str) -> Dict[str, Any]:
 
     # Resolve PDFs and detect missing
     present = 0
-    missing = []
+    missing: List[Dict[str, str]] = []
     for it in parsed_index:
         pdf_path = rr / it["repo_path"]
         if pdf_path.exists():
@@ -94,14 +98,16 @@ def corpus_status(repo_root: str) -> Dict[str, Any]:
         "extra_in_manifest": extra_in_manifest,
     }
 
-# --------- Paths / Config ----------
+
+# =============================================================================
+# Paths / Config
+# =============================================================================
+
 APP_DIR = Path(__file__).resolve().parent                 # .../phi-mesh/rgpx_scientist
 REPO_ROOT = APP_DIR.parent                               # .../phi-mesh
 PULSE_GLOB = str(REPO_ROOT / "pulse" / "*.yml")
 
 FOUNDATIONAL_INDEX = APP_DIR / "foundational_papers_index.yml"  # Option A
-# PDFs live here (relative to REPO_ROOT): foundational_rgp-papers/...
-# (repo_path in index should already point into foundational_rgp-papers/...)
 
 BACKGROUND_CHOICES = ["Natural sciences", "Social sciences", "Economics-business"]
 
@@ -113,7 +119,15 @@ to was we were what when where which who why will with you your
 """.split()
 )
 
-# --------- Text utils ----------
+# GitHub (for clickable PDF links in citations)
+GITHUB_REPO = "gradient-pulse/phi-mesh"
+GITHUB_BRANCH = "main"
+
+
+# =============================================================================
+# Text utils
+# =============================================================================
+
 def tokenize(text: str) -> List[str]:
     text = (text or "").lower()
     text = re.sub(r"[^a-z0-9\s_\-]+", " ", text)
@@ -126,7 +140,37 @@ def is_url(s: str) -> bool:
     return s.startswith("http://") or s.startswith("https://")
 
 
-# --------- Data models ----------
+def github_blob_url(repo_path: str) -> str:
+    p = (repo_path or "").lstrip("/")
+    return f"https://github.com/{GITHUB_REPO}/blob/{GITHUB_BRANCH}/{p}"
+
+
+def normalize_zenodo_key(url: str) -> str:
+    """
+    Normalize Zenodo-ish URLs into a comparable key.
+
+    Examples:
+      https://doi.org/10.5281/zenodo.1234567  -> 10.5281/zenodo.1234567
+      https://zenodo.org/records/1234567      -> 1234567
+      https://zenodo.org/record/1234567       -> 1234567
+    """
+    u = (url or "").strip()
+    u = u.replace("http://", "https://").strip()
+
+    if "doi.org/" in u:
+        return u.split("doi.org/", 1)[1].strip().lower()
+
+    m = re.search(r"zenodo\.org/(records|record)/(\d+)", u, re.IGNORECASE)
+    if m:
+        return m.group(2)
+
+    return u.lower()
+
+
+# =============================================================================
+# Data models
+# =============================================================================
+
 @dataclass
 class Pulse:
     title: str
@@ -146,16 +190,17 @@ class Paper:
     zenodo_doi_url: str
 
 
-# --------- IO ----------
+# =============================================================================
+# IO
+# =============================================================================
+
 def load_yaml(path: str | Path) -> Dict[str, Any]:
     p = Path(path)
     if not p.exists():
         return {}
     with p.open("r", encoding="utf-8") as f:
         data = yaml.safe_load(f) or {}
-    if not isinstance(data, dict):
-        return {}
-    return data
+    return data if isinstance(data, dict) else {}
 
 
 @st.cache_data(show_spinner=False)
@@ -229,9 +274,35 @@ def load_foundational_papers() -> Dict[str, Paper]:
     return out
 
 
-# --------- Scoring / selection ----------
+def build_zenodo_lookup(paper_map: Dict[str, Paper]) -> Dict[str, str]:
+    """
+    Returns:
+      { normalized_zenodo_key: paper_id }
+
+    This lets the app resolve "papers:" entries that are Zenodo URLs into a
+    known paper_id, without rewriting old pulses.
+    """
+    lookup: Dict[str, str] = {}
+    for pid, paper in paper_map.items():
+        doi = (paper.zenodo_doi_url or "").strip()
+        if not doi:
+            continue
+
+        lookup[normalize_zenodo_key(doi)] = pid
+
+        # If DOI contains zenodo.<id>, also map numeric id for robustness
+        m = re.search(r"zenodo\.(\d+)", doi, re.IGNORECASE)
+        if m:
+            lookup[m.group(1)] = pid
+
+    return lookup
+
+
+# =============================================================================
+# Scoring / selection
+# =============================================================================
+
 def score_pulse(query_tokens: List[str], pulse: Pulse) -> float:
-    # Simple lexical scoring: query overlap with title+summary+tags (weighted)
     hay = " ".join([pulse.title, pulse.summary, " ".join(pulse.tags)]).lower()
     score = 0.0
     title_l = pulse.title.lower()
@@ -248,7 +319,6 @@ def score_pulse(query_tokens: List[str], pulse: Pulse) -> float:
         if t in hay:
             score += 0.5
 
-    # slight boost for having papers/podcasts
     if pulse.papers:
         score += 0.3
     if pulse.podcasts:
@@ -257,7 +327,6 @@ def score_pulse(query_tokens: List[str], pulse: Pulse) -> float:
 
 
 def pick_driver_and_cluster(top_pulses: List[Pulse], query_tokens: List[str]) -> Tuple[str, List[str]]:
-    # Driver tag: most frequent tag among top pulses, with slight match preference to query tokens
     tag_counts = Counter()
     tag_match_bonus = Counter()
 
@@ -313,30 +382,46 @@ def render_links(pulses: List[Pulse]) -> Tuple[List[str], List[str]]:
     return dedup(papers), dedup(podcasts)
 
 
-def resolve_paper_ref(ref: str, paper_map: Dict[str, Paper]) -> Tuple[str, str, str, Path | None]:
+# =============================================================================
+# Paper reference resolution (supports BOTH: paper_id and Zenodo URL)
+# =============================================================================
+
+def resolve_paper_ref(ref: str, paper_map: Dict[str, Paper], zenodo_lookup: Dict[str, str]) -> Tuple[str, str, str]:
     """
-    Returns (kind, label, url, abs_path)
-      kind: "url" | "local" | "raw"
-      label: friendly label for display
-      url: zenodo/url if available
-      abs_path: local pdf path if local
+    Returns (label, pdf_url, zenodo_url)
+
+    - If ref is paper_id: uses index directly
+    - If ref is Zenodo URL and matches an indexed paper's zenodo_doi_url: resolves to that paper_id
+    - Otherwise:
+        - If ref is URL: returns it as zenodo_url only
+        - Else: returns label as raw string
     """
     ref = (ref or "").strip()
     if not ref:
-        return ("raw", "", "", None)
+        return ("", "", "")
 
-    if is_url(ref):
-        return ("url", ref, ref, None)
-
+    # paper_id direct
     if ref in paper_map:
         p = paper_map[ref]
-        abs_path = (REPO_ROOT / p.repo_path).resolve()
-        return ("local", p.title, p.zenodo_doi_url, abs_path)
+        return (p.title or ref, github_blob_url(p.repo_path), p.zenodo_doi_url or "")
 
-    return ("raw", ref, "", None)
+    # Zenodo URL in pulses
+    if is_url(ref):
+        key = normalize_zenodo_key(ref)
+        pid = zenodo_lookup.get(key)
+        if pid and pid in paper_map:
+            p = paper_map[pid]
+            return (p.title or pid, github_blob_url(p.repo_path), ref)  # keep the exact pulse URL
+        return (ref, "", ref)
+
+    # unknown string
+    return (ref, "", "")
 
 
-# --------- UI ----------
+# =============================================================================
+# UI
+# =============================================================================
+
 st.set_page_config(page_title="RGPx Scientist (V0)", layout="wide")
 
 st.title("RGPx Scientist (V0)")
@@ -344,7 +429,7 @@ st.caption("Reframe → Retrieve → Hypothesize → Minimal tests → Failure m
 
 # --------- Corpus panel (Option A) ----------
 with st.expander("Corpus (foundational papers) status", expanded=True):
-    cs = corpus_status(REPO_ROOT)
+    cs = corpus_status(str(REPO_ROOT))
 
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -393,6 +478,7 @@ if st.button("Generate (retrieval-first)"):
         st.stop()
 
     paper_map = load_foundational_papers()
+    zenodo_lookup = build_zenodo_lookup(paper_map)
 
     query_tokens = tokenize(q)
     scored = [(score_pulse(query_tokens, p), p) for p in pulses]
@@ -456,41 +542,42 @@ if st.button("Generate (retrieval-first)"):
             st.caption(os.path.relpath(p.path, str(REPO_ROOT)))
 
         st.subheader("Citations")
+
         if papers:
             st.write("**Papers**")
-            for i, ref in enumerate(papers[:10]):
-                kind, label, url, abs_path = resolve_paper_ref(ref, paper_map)
+            for ref in papers[:12]:
+                label, pdf_url, zenodo_url = resolve_paper_ref(ref, paper_map, zenodo_lookup)
 
-                if kind == "url":
-                    st.write(label)
+                if not label:
+                    continue
 
-                elif kind == "local":
-                    st.markdown(f"**{label}**")
-                    if url:
-                        st.write(url)
-
-                    if abs_path is not None and abs_path.exists():
-                        try:
-                            pdf_bytes = abs_path.read_bytes()
-                            st.download_button(
-                                label="Download PDF",
-                                data=pdf_bytes,
-                                file_name=abs_path.name,
-                                mime="application/pdf",
-                                key=f"dl_{i}_{abs_path.name}",
-                            )
-                        except Exception as e:
-                            st.warning(f"Could not read PDF: {abs_path} ({e})")
-                    else:
-                        st.warning(f"PDF not found at: {abs_path}")
-
+                # Prefer a GitHub PDF link if we can resolve
+                if pdf_url:
+                    st.markdown(f"- [{label}]({pdf_url})")
                 else:
-                    st.write(label)
+                    # If it's a URL, render clickable; else plain text
+                    if is_url(label):
+                        st.markdown(f"- [{label}]({label})")
+                    else:
+                        st.markdown(f"- {label}")
+
+                # If we have (or were given) a Zenodo URL, show it as secondary
+                if zenodo_url:
+                    if is_url(zenodo_url):
+                        st.markdown(f"  - Zenodo: [{zenodo_url}]({zenodo_url})")
+                    else:
+                        st.markdown(f"  - Zenodo: {zenodo_url}")
 
         if podcasts:
             st.write("**Podcasts**")
-            for link in podcasts[:10]:
-                st.write(link)
+            for link in podcasts[:12]:
+                link = (link or "").strip()
+                if not link:
+                    continue
+                if is_url(link):
+                    st.markdown(f"- [{link}]({link})")
+                else:
+                    st.markdown(f"- {link}")
 
         st.subheader("UD check")
         st.write("Did this increase coherence (Unity) or did it lose you (Disunity)?")
