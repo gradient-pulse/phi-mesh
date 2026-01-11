@@ -14,6 +14,86 @@ from typing import Any, Dict, List, Tuple
 import streamlit as st
 import yaml
 
+from pathlib import Path
+from typing import Optional
+
+def _load_yaml_file(path: Path) -> Dict[str, Any]:
+    if not path.exists():
+        return {}
+    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+
+def _safe_list(x) -> List[Any]:
+    return x if isinstance(x, list) else []
+
+def corpus_status(repo_root: str) -> Dict[str, Any]:
+    """
+    Option A corpus status.
+    Looks for:
+      - <repo_root>/rgpx_scientist/foundational_papers_index.yml
+      - <repo_root>/rgpx_scientist/foundational_papers_manifest.yml
+    Paper PDFs are resolved via each index entry's repo_path relative to repo_root.
+    """
+    rr = Path(repo_root)
+
+    index_path = rr / "rgpx_scientist" / "foundational_papers_index.yml"
+    manifest_path = rr / "rgpx_scientist" / "foundational_papers_manifest.yml"
+
+    index_ok = index_path.exists()
+    manifest_ok = manifest_path.exists()
+
+    index = _load_yaml_file(index_path) if index_ok else {}
+    manifest = _load_yaml_file(manifest_path) if manifest_ok else {}
+
+    index_items = _safe_list(index.get("foundational_papers"))
+    manifest_items = _safe_list(manifest.get("foundational_papers"))
+
+    # Parse index list: require paper_id + repo_path
+    parsed_index = []
+    for item in index_items:
+        if not isinstance(item, dict):
+            continue
+        pid = str(item.get("paper_id", "")).strip()
+        rpath = str(item.get("repo_path", "")).strip()
+        title = str(item.get("title", "")).strip()
+        if pid and rpath:
+            parsed_index.append({"paper_id": pid, "repo_path": rpath, "title": title})
+
+    indexed_count = len(parsed_index)
+
+    # Resolve PDFs and detect missing
+    present = 0
+    missing = []
+    for it in parsed_index:
+        pdf_path = rr / it["repo_path"]
+        if pdf_path.exists():
+            present += 1
+        else:
+            missing.append({"paper_id": it["paper_id"], "repo_path": it["repo_path"]})
+
+    # Cross-check IDs vs manifest (optional but helpful)
+    index_ids = {it["paper_id"] for it in parsed_index}
+    manifest_ids = set()
+    for item in manifest_items:
+        if isinstance(item, dict):
+            pid = str(item.get("paper_id", "")).strip()
+            if pid:
+                manifest_ids.add(pid)
+
+    missing_in_manifest = sorted(index_ids - manifest_ids) if manifest_ok else []
+    extra_in_manifest = sorted(manifest_ids - index_ids) if manifest_ok else []
+
+    return {
+        "index_path": str(index_path),
+        "manifest_path": str(manifest_path),
+        "index_ok": index_ok,
+        "manifest_ok": manifest_ok,
+        "indexed_count": indexed_count,
+        "pdf_present_count": present,
+        "pdf_missing": missing,
+        "missing_in_manifest": missing_in_manifest,
+        "extra_in_manifest": extra_in_manifest,
+    }
+
 # --------- Paths / Config ----------
 APP_DIR = Path(__file__).resolve().parent                 # .../phi-mesh/rgpx_scientist
 REPO_ROOT = APP_DIR.parent                               # .../phi-mesh
@@ -261,6 +341,43 @@ st.set_page_config(page_title="RGPx Scientist (V0)", layout="wide")
 
 st.title("RGPx Scientist (V0)")
 st.caption("Reframe → Retrieve → Hypothesize → Minimal tests → Failure modes → Citations (Mesh-grounded)")
+
+# --------- Corpus panel (Option A) ----------
+with st.expander("Corpus (foundational papers) status", expanded=True):
+    cs = corpus_status(REPO_ROOT)
+
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.write("Index file")
+        st.code(cs["index_path"])
+        st.write("Present ✅" if cs["index_ok"] else "Missing ❌")
+    with c2:
+        st.write("Manifest file")
+        st.code(cs["manifest_path"])
+        st.write("Present ✅" if cs["manifest_ok"] else "Missing ❌")
+    with c3:
+        st.metric("Indexed papers", cs["indexed_count"])
+        st.metric("PDFs present", cs["pdf_present_count"])
+
+    if not cs["index_ok"] or not cs["manifest_ok"]:
+        st.error("Corpus config missing. Add the missing file(s) above.")
+    else:
+        if cs["missing_in_manifest"]:
+            st.warning("Index contains paper_id(s) missing from manifest:")
+            st.code("\n".join(cs["missing_in_manifest"]))
+        if cs["extra_in_manifest"]:
+            st.info("Manifest contains paper_id(s) not present in index:")
+            st.code("\n".join(cs["extra_in_manifest"]))
+
+    if cs["pdf_missing"]:
+        st.error(f"Missing PDFs: {len(cs['pdf_missing'])}")
+        st.write("Fix list (paper_id → repo_path):")
+        st.code("\n".join([f"{m['paper_id']} -> {m['repo_path']}" for m in cs["pdf_missing"]]))
+    else:
+        if cs["indexed_count"] > 0:
+            st.success("All indexed PDFs are present.")
+        else:
+            st.warning("Index is present but contains 0 valid entries (paper_id + repo_path).")
 
 background = st.selectbox("Background", BACKGROUND_CHOICES, index=0)
 q = st.text_area(
