@@ -36,7 +36,9 @@ jobs:
         id: project
         shell: bash
         run: |
-          if [ -d "phi-mesh/rgpx_scientist" ]; then
+          if [ -d "rgpx_scientist" ]; then
+            echo "dir=." >> "$GITHUB_OUTPUT"
+          elif [ -d "phi-mesh/rgpx_scientist" ]; then
             echo "dir=phi-mesh" >> "$GITHUB_OUTPUT"
           else
             echo "dir=." >> "$GITHUB_OUTPUT"
