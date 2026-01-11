@@ -1,0 +1,30 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "RGPx Wrapper", "version": "0.1.0" },
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/getTag": {
+      "get": {
+        "operationId": "getTag",
+        "parameters": [
+          { "name": "tag", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Tag slice" } }
+      }
+    },
+    "/getPulse": {
+      "get": {
+        "operationId": "getPulse",
+        "parameters": [
+          { "name": "slug", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Pulse JSON" } }
+      }
+    }
+  }
+}
