@@ -313,10 +313,6 @@ aliases:
     - RGP (Recursive Gradient Processing)
     - rgp_core_loop
 
-  recursive_awakening:
-    - recursive-awakening
-    - recursive_awakening
-
   replication:
     - Replication
 
