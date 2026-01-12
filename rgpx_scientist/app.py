@@ -329,31 +329,110 @@ def load_tag_phase_overrides() -> Dict[str, str]:
     """
     Optional helper. If meta/tag_phase_overrides.yml exists, it can pin tags to Δ / GC / CF.
 
-    Supports likely schemas:
-      { tag: "Δ"|"GC"|"CF" } or { tag: {"phase":"CF"} } or {phases:{CF:[tags...]}}
+    Supported schemas (any of these):
+      1) Flat mapping:
+         my_tag: "Δ" | "GC" | "CF"
+         other_tag: {phase: "CF"}
+
+      2) phases:
+         phases:
+           Δ:  [tag1, tag2]
+           GC: [tag3]
+           CF: [tag4]
+
+      3) overrides (common alt-name):
+         overrides:
+           Δ:  [tag1, tag2]
+           GC: [tag3]
+           CF: [tag4]
+
+      4) cycle naming:
+         cycles:
+           cycle_1: [tag1, tag2]   # treated as Δ
+           cycle_2: [tag3]         # treated as GC
+           cycle_3: [tag4]         # treated as CF
+
+      5) direct keys:
+         delta: [tag1]
+         gc:    [tag2]
+         cf:    [tag3]
     """
     if not TAG_PHASE_OVERRIDES_PATH.exists():
         return {}
-    doc = yaml.safe_load(TAG_PHASE_OVERRIDES_PATH.read_text(encoding="utf-8")) or {}
-    out: Dict[str, str] = {}
-    if not isinstance(doc, dict):
-        return out
 
-    # flat mapping + dict mapping
+    doc = yaml.safe_load(TAG_PHASE_OVERRIDES_PATH.read_text(encoding="utf-8")) or {}
+    if not isinstance(doc, dict):
+        return {}
+
+    out: Dict[str, str] = {}
+
+    def _phase_norm(p: str) -> str:
+        p = (p or "").strip().lower()
+        if p in {"Δ", "delta", "d", "cycle1", "cycle_1", "cycle-1", "cycle 1", "c1"}:
+            return "Δ"
+        if p in {"gc", "cycle2", "cycle_2", "cycle-2", "cycle 2", "c2"}:
+            return "GC"
+        if p in {"cf", "cycle3", "cycle_3", "cycle-3", "cycle 3", "c3"}:
+            return "CF"
+        if "delta" in p:
+            return "Δ"
+        if "gc" in p:
+            return "GC"
+        if "cf" in p:
+            return "CF"
+        return ""
+
+    def _ingest_list(phase: str, tags: Any) -> None:
+        ph = _phase_norm(phase)
+        if not ph or not isinstance(tags, list):
+            return
+        for t in tags:
+            if isinstance(t, str) and t.strip():
+                out[t.strip()] = ph
+
+    # (1) flat mapping + dict mapping
     for k, v in doc.items():
         if isinstance(k, str) and isinstance(v, str) and v.strip():
-            out[k.strip()] = v.strip()
+            ph = _phase_norm(v)
+            if ph:
+                out[k.strip()] = ph
         if isinstance(k, str) and isinstance(v, dict) and isinstance(v.get("phase"), str):
-            out[k.strip()] = str(v.get("phase")).strip()
+            ph = _phase_norm(str(v.get("phase")))
+            if ph:
+                out[k.strip()] = ph
 
-    # nested phases block
-    phases = doc.get("phases")
-    if isinstance(phases, dict):
-        for phase, tags in phases.items():
-            if isinstance(phase, str) and isinstance(tags, list):
-                for t in tags:
-                    if isinstance(t, str):
-                        out[t.strip()] = phase.strip()
+    # helper to read nested blocks like doc["phases"] or doc["overrides"]
+    def _ingest_block(block: Any) -> None:
+        if not isinstance(block, dict):
+            return
+        for phase, tags in block.items():
+            if isinstance(phase, str):
+                _ingest_list(phase, tags)
+
+    # (2) phases:
+    _ingest_block(doc.get("phases"))
+
+    # (3) overrides:
+    _ingest_block(doc.get("overrides"))
+
+    # (4) cycles:
+    cycles = doc.get("cycles")
+    if isinstance(cycles, dict):
+        for cyc, tags in cycles.items():
+            if not isinstance(cyc, str):
+                continue
+            cyc_n = cyc.strip().lower().replace("-", "_").replace(" ", "_")
+            if cyc_n in {"cycle_1", "c1"}:
+                _ingest_list("Δ", tags)
+            elif cyc_n in {"cycle_2", "c2"}:
+                _ingest_list("GC", tags)
+            elif cyc_n in {"cycle_3", "c3"}:
+                _ingest_list("CF", tags)
+
+    # (5) direct keys: delta/gc/cf
+    for key in ("delta", "gc", "cf"):
+        if key in doc:
+            _ingest_list(key, doc.get(key))
 
     return out
 
