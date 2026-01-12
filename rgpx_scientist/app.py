@@ -18,6 +18,7 @@ import yaml
 # Corpus status helpers (Option A)
 # =============================================================================
 
+
 def _load_yaml_file(path: Path) -> Dict[str, Any]:
     if not path.exists():
         return {}
@@ -103,8 +104,8 @@ def corpus_status(repo_root: str) -> Dict[str, Any]:
 # Paths / Config
 # =============================================================================
 
-APP_DIR = Path(__file__).resolve().parent                 # .../phi-mesh/rgpx_scientist
-REPO_ROOT = APP_DIR.parent                               # .../phi-mesh
+APP_DIR = Path(__file__).resolve().parent  # .../phi-mesh/rgpx_scientist
+REPO_ROOT = APP_DIR.parent  # .../phi-mesh
 PULSE_GLOB = str(REPO_ROOT / "pulse" / "*.yml")
 
 FOUNDATIONAL_INDEX = APP_DIR / "foundational_papers_index.yml"  # Option A
@@ -123,10 +124,15 @@ to was we were what when where which who why will with you your
 GITHUB_REPO = "gradient-pulse/phi-mesh"
 GITHUB_BRANCH = "main"
 
+# Canonical tag definitions live here (NOT tag_index.yml)
+TAG_DESCRIPTIONS_PATH = REPO_ROOT / "meta" / "tag_descriptions.yml"
+TAG_PHASE_OVERRIDES_PATH = REPO_ROOT / "meta" / "tag_phase_overrides.yml"  # optional
+
 
 # =============================================================================
 # Text utils
 # =============================================================================
+
 
 def tokenize(text: str) -> List[str]:
     text = (text or "").lower()
@@ -171,6 +177,7 @@ def normalize_zenodo_key(url: str) -> str:
 # Data models
 # =============================================================================
 
+
 @dataclass
 class Pulse:
     title: str
@@ -186,13 +193,14 @@ class Pulse:
 class Paper:
     paper_id: str
     title: str
-    repo_path: str          # path relative to REPO_ROOT, e.g. "foundational_rgp-papers/2025-..."
+    repo_path: str  # path relative to REPO_ROOT, e.g. "foundational_rgp-papers/2025-..."
     zenodo_doi_url: str
 
 
 # =============================================================================
 # IO
 # =============================================================================
+
 
 def load_yaml(path: str | Path) -> Dict[str, Any]:
     p = Path(path)
@@ -298,9 +306,62 @@ def build_zenodo_lookup(paper_map: Dict[str, Paper]) -> Dict[str, str]:
     return lookup
 
 
+@st.cache_data(show_spinner=False)
+def load_tag_descriptions_local() -> Dict[str, str]:
+    """
+    Loads meta/tag_descriptions.yml
+    Expected schema: { tag_slug: "description string" }
+    """
+    if not TAG_DESCRIPTIONS_PATH.exists():
+        return {}
+    doc = yaml.safe_load(TAG_DESCRIPTIONS_PATH.read_text(encoding="utf-8")) or {}
+    if not isinstance(doc, dict):
+        return {}
+    out: Dict[str, str] = {}
+    for k, v in doc.items():
+        if isinstance(k, str) and isinstance(v, str):
+            out[k.strip()] = v.strip()
+    return out
+
+
+@st.cache_data(show_spinner=False)
+def load_tag_phase_overrides() -> Dict[str, str]:
+    """
+    Optional helper. If meta/tag_phase_overrides.yml exists, it can pin tags to Δ / GC / CF.
+
+    Supports likely schemas:
+      { tag: "Δ"|"GC"|"CF" } or { tag: {"phase":"CF"} } or {phases:{CF:[tags...]}}
+    """
+    if not TAG_PHASE_OVERRIDES_PATH.exists():
+        return {}
+    doc = yaml.safe_load(TAG_PHASE_OVERRIDES_PATH.read_text(encoding="utf-8")) or {}
+    out: Dict[str, str] = {}
+    if not isinstance(doc, dict):
+        return out
+
+    # flat mapping + dict mapping
+    for k, v in doc.items():
+        if isinstance(k, str) and isinstance(v, str) and v.strip():
+            out[k.strip()] = v.strip()
+        if isinstance(k, str) and isinstance(v, dict) and isinstance(v.get("phase"), str):
+            out[k.strip()] = str(v.get("phase")).strip()
+
+    # nested phases block
+    phases = doc.get("phases")
+    if isinstance(phases, dict):
+        for phase, tags in phases.items():
+            if isinstance(phase, str) and isinstance(tags, list):
+                for t in tags:
+                    if isinstance(t, str):
+                        out[t.strip()] = phase.strip()
+
+    return out
+
+
 # =============================================================================
 # Scoring / selection
 # =============================================================================
+
 
 def score_pulse(query_tokens: List[str], pulse: Pulse) -> float:
     hay = " ".join([pulse.title, pulse.summary, " ".join(pulse.tags)]).lower()
@@ -386,6 +447,7 @@ def render_links(pulses: List[Pulse]) -> Tuple[List[str], List[str]]:
 # Paper reference resolution (supports BOTH: paper_id and Zenodo URL)
 # =============================================================================
 
+
 def resolve_paper_ref(ref: str, paper_map: Dict[str, Paper], zenodo_lookup: Dict[str, str]) -> Tuple[str, str, str]:
     """
     Returns (label, pdf_url, zenodo_url)
@@ -419,13 +481,52 @@ def resolve_paper_ref(ref: str, paper_map: Dict[str, Paper], zenodo_lookup: Dict
 
 
 # =============================================================================
+# Δ / GC / CF helpers (visible structure)
+# =============================================================================
+
+
+def phase_of_tag(tag: str, overrides: Dict[str, str]) -> str:
+    """
+    Returns 'Δ', 'GC', 'CF'.
+    Uses overrides first; otherwise conservative heuristics.
+    """
+    if tag in overrides:
+        ph = overrides[tag].upper()
+        if "CF" in ph:
+            return "CF"
+        if "GC" in ph:
+            return "GC"
+        if "Δ" in ph or "DELTA" in ph:
+            return "Δ"
+
+    t = tag.lower()
+    if any(x in t for x in ["context", "filter", "boundary", "constraint", "selection", "phase", "regime"]):
+        return "CF"
+    if any(x in t for x in ["choreograph", "resonance", "rhythm", "feedback", "coupling", "loop", "oscillat"]):
+        return "GC"
+    return "Δ"
+
+
+def split_by_phase(tags: List[str], overrides: Dict[str, str]) -> Dict[str, List[str]]:
+    out = {"Δ": [], "GC": [], "CF": []}
+    for t in tags:
+        out[phase_of_tag(t, overrides)].append(t)
+    return out
+
+
+def tag_desc(tag: str, desc_map: Dict[str, str]) -> str:
+    d = desc_map.get(tag, "")
+    return d.strip() if d else "(No description found in meta/tag_descriptions.yml)"
+
+
+# =============================================================================
 # UI
 # =============================================================================
 
 st.set_page_config(page_title="RGPx Scientist (V0)", layout="wide")
 
 st.title("RGPx Scientist (V0)")
-st.caption("Reframe → Retrieve → Hypothesize → Minimal tests → Failure modes → Citations (Mesh-grounded)")
+st.caption("Reframe → Retrieve → Δ/GC/CF → Minimal tests → Citations (Mesh-grounded)")
 
 # --------- Corpus panel (Option A) ----------
 with st.expander("Corpus (foundational papers) status", expanded=True):
@@ -464,6 +565,13 @@ with st.expander("Corpus (foundational papers) status", expanded=True):
         else:
             st.warning("Index is present but contains 0 valid entries (paper_id + repo_path).")
 
+    # quick sanity check for tag_descriptions.yml
+    tag_desc_map = load_tag_descriptions_local()
+    if tag_desc_map:
+        st.success(f"Loaded tag definitions: {len(tag_desc_map)} tags (meta/tag_descriptions.yml)")
+    else:
+        st.warning("Tag definitions not loaded (meta/tag_descriptions.yml missing or unreadable).")
+
 background = st.selectbox("Background", BACKGROUND_CHOICES, index=0)
 q = st.text_area(
     "Research question",
@@ -480,6 +588,9 @@ if st.button("Generate (retrieval-first)"):
     paper_map = load_foundational_papers()
     zenodo_lookup = build_zenodo_lookup(paper_map)
 
+    tag_desc_map = load_tag_descriptions_local()
+    phase_overrides = load_tag_phase_overrides()
+
     query_tokens = tokenize(q)
     scored = [(score_pulse(query_tokens, p), p) for p in pulses]
     scored.sort(key=lambda x: x[0], reverse=True)
@@ -489,6 +600,8 @@ if st.button("Generate (retrieval-first)"):
         top = [p for _, p in scored[:5]]
 
     driver, cluster = pick_driver_and_cluster(top, query_tokens)
+    phased = split_by_phase(cluster, phase_overrides)
+
     hints = background_hints(background)
     papers, podcasts = render_links(top)
 
@@ -497,42 +610,72 @@ if st.button("Generate (retrieval-first)"):
     with col1:
         st.subheader("Problem restatement")
         st.write(q.strip() if q.strip() else "(No question provided.)")
-
-        st.subheader("Competing explanations (starter set)")
-        st.write(
-            "- Explanation A (mechanism): Identify the dominant feedback loop(s) and the constraint that makes the response non-linear.\n"
-            "- Explanation B (threshold/phase): Identify which parameter likely pushes the system across a regime boundary.\n"
-            "- Explanation C (context/filter): Identify which context/condition selects a different internal routine (or measurement interpretation)."
-        )
         st.caption(hints["style"] + " " + hints["examples"])
 
-        st.subheader("Discriminating tests (minimal experiments)")
+        st.subheader("Δ (what to measure next)")
+        deltas = phased["Δ"][:5] or cluster[:3]
+        for t in deltas:
+            d = tag_desc(t, tag_desc_map)
+            short = d[:220] + ("…" if len(d) > 220 else "")
+            st.markdown(f"- **{t}** — {short}")
+
+        st.subheader("GC (mode hypotheses)")
+        gcs = phased["GC"][:4]
+        if not gcs:
+            st.write("No explicit GC tags found in this slice; treat retrieved pulses as the source of coupled-mode hypotheses.")
+        for t in gcs:
+            d = tag_desc(t, tag_desc_map)
+            short = d[:220] + ("…" if len(d) > 220 else "")
+            st.markdown(f"- **{t}** — {short}")
+
+        st.subheader("CF (boundary / filter suspects)")
+        cfs = phased["CF"][:4]
+        if not cfs:
+            st.write("No explicit CF tags found in this slice; default CF suspects: environment / measurement pipeline / control-loop / hidden constraint.")
+        for t in cfs:
+            d = tag_desc(t, tag_desc_map)
+            short = d[:220] + ("…" if len(d) > 220 else "")
+            st.markdown(f"- **{t}** — {short}")
+
+        st.subheader("Φ-trace hook (plateau / transition marker)")
         st.write(
-            "1) Perturb one control parameter slightly and measure sensitivity/variance.\n"
-            "2) Hold context fixed; change representation/measurement; check invariance.\n"
-            "3) Stress the suspected boundary condition; look for discontinuity or hysteresis."
+            "Plot your key observable(s) against the smallest perturbation you changed (bias / timing / cable / ordering). "
+            "Look for plateaus, hysteresis, or sudden re-ordering of what dominates the outcome. "
+            "Goal: locate a transition boundary, not optimize inside one regime."
         )
 
-        st.subheader("Boundary conditions")
+        st.subheader("Smallest discriminating tests (binary)")
         st.write(
-            "- What must be true for the phenomenon to appear?\n"
-            "- What breaks it (limits, saturation, time-scale separation, measurement artifacts)?\n"
-            "- Which variables are confounded and need isolation?"
+            "1) **Freeze calibration**, vary measurement/analysis only → does the step-change persist?\n"
+            "2) **Freeze measurement pipeline**, vary calibration/order only → does the step-change persist?\n"
+            "3) **A/B revert one micro-change** (single cable/setting) 10–20 times → toggle probability?\n"
+            "4) **Reference injection / known signal** → invariant recovery across the step-change?\n"
+            "5) **Environmental sentinel logging** (temp / field proxy / vibration / timing) → coincident threshold?"
         )
 
-        st.subheader("Failure modes")
+        st.subheader("Failure modes (quick)")
         st.write(
-            "- Mis-specified observable (measuring a proxy that flips meaning across regimes).\n"
-            "- Hidden context shift (different conditions activate different dynamics).\n"
-            "- Overfitting to a regime (test plan doesn’t cross the suspected threshold)."
+            "- Mis-specified observable (proxy flips meaning across regimes).\n"
+            "- Hidden context shift (different conditions activate different internal routines).\n"
+            "- Overfitting to one regime (test plan never crosses the suspected boundary)."
         )
 
     with col2:
-        st.subheader("GC (tag cluster) → click-path suggestion")
+        st.subheader("Δ→GC→CF click-path suggestion")
         st.write("Driver tag:")
         st.code(driver)
+        if driver:
+            with st.expander("Driver definition", expanded=False):
+                st.write(tag_desc(driver, tag_desc_map))
+
         st.write("Cluster:")
         st.code(" → ".join(cluster))
+
+        with st.expander("Cluster definitions", expanded=False):
+            for t in cluster:
+                st.markdown(f"**{t}**")
+                st.write(tag_desc(t, tag_desc_map))
+                st.divider()
 
         st.subheader("CF (most relevant pulses)")
         for p in top[:5]:
@@ -580,6 +723,6 @@ if st.button("Generate (retrieval-first)"):
                     st.markdown(f"- {link}")
 
         st.subheader("UD check")
-        st.write("Did this increase coherence (Unity) or did it lose you (Disunity)?")
-        st.write("- If **Unity**: proceed by clicking the driver tag in the tag map and reading the top pulse.")
-        st.write("- If **Disunity**: switch background selector and re-run; if still Disunity, rephrase the question with one concrete observable.")
+        st.write("Did this move you toward a cleaner next experiment (Unity) or did it add noise (Disunity)?")
+        st.write("- If **Unity**: open the driver tag in the tag map and follow the top pulse.")
+        st.write("- If **Disunity**: rephrase with one concrete observable and one perturbation you can control; then re-run.")
