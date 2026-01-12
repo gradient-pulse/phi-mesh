@@ -658,6 +658,11 @@ st.caption("Reframe → Retrieve → Δ/GC/CF → Minimal tests → Citations (M
 # --------- Corpus panel (Option A) ----------
 with st.expander("Corpus (foundational papers) status", expanded=True):
     cs = corpus_status(str(REPO_ROOT))
+    alias_lookup = load_aliases()
+    if alias_lookup:
+        st.success(f"Loaded aliases: {len(alias_lookup)} mappings (meta/aliases.yml)")
+    else:
+        st.warning("No aliases loaded (meta/aliases.yml missing or empty).")
 
     c1, c2, c3 = st.columns(3)
     with c1:
