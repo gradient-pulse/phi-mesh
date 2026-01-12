@@ -50,5 +50,6 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Auto-build rgpx JSON index"
-            git push
+            git pull --rebase --autostash origin main
+            git push origin HEAD:main
           fi
