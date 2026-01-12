@@ -540,6 +540,15 @@ def pick_driver_and_cluster(top_pulses: List[Pulse], query_tokens: List[str]) ->
             if any(tok in norm for tok in query_tokens):
                 tag_match_bonus[tag] += 1
 
+        # If the user explicitly typed a tag-like token, prefer it as driver.
+    q_join = " ".join(query_tokens).lower().replace("-", "_")
+    explicit = [t for t in tag_counts.keys() if t in q_join and t not in DRIVER_TAG_BLACKLIST]
+    if explicit:
+        best_tag = max(explicit, key=lambda t: (tag_counts[t], tag_match_bonus[t]))
+        others = [t for t, _ in tag_counts.most_common(8) if t != best_tag]
+        cluster = [best_tag] + others[:4]
+        return (best_tag, cluster)
+
     if not tag_counts:
         return ("least_action", ["least_action", "meso_scale", "contextual_filter"])
 
