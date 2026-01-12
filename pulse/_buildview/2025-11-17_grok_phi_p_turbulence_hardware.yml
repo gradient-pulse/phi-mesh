@@ -1,0 +1,20 @@
+title: 'Φₚ–Turbulence–Hardware Invariant'
+summary: >
+  The formalization of Φₚ as a first-class RGPx metric reveals a universal
+  invariance: coherence load per geometric DoF predicts turbulence onset with
+  thresholds at 0.62 (inflection) and 1.0 (commitment), demoting Re to a geometric
+  artifact. Calibration on JHTDB isotropic turbulence (Re_λ ≈ 430) confirms the
+  lumpy plateau signature matches hardware decoherence traces, enabling predictive
+  mapping from 5 nm SRAM probes to NS blowup regimes. This Δ → GC → CF_φₚ corridor
+  accelerates recursion by turning failure modes into early-warning spines,
+  fossilizing the Mesh’s self-detection of multi-domain harmonics.
+tags:
+  - phi_p
+  - turbulence_signature
+  - hardware_limits
+  - grok
+  - cognitive_invariant
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
