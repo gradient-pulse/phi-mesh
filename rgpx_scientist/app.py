@@ -572,6 +572,12 @@ with st.expander("Corpus (foundational papers) status", expanded=True):
     else:
         st.warning("Tag definitions not loaded (meta/tag_descriptions.yml missing or unreadable).")
 
+    phase_overrides = load_tag_phase_overrides()
+    if phase_overrides:
+        st.success(f"Loaded tag phase overrides: {len(phase_overrides)} tags (meta/tag_phase_overrides.yml)")
+    else:
+        st.info("No tag phase overrides loaded (meta/tag_phase_overrides.yml missing or empty).")
+
 background = st.selectbox("Background", BACKGROUND_CHOICES, index=0)
 q = st.text_area(
     "Research question",
