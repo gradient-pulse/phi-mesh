@@ -857,7 +857,11 @@ if st.button("Generate (retrieval-first)"):
             st.caption(os.path.relpath(p.path, str(REPO_ROOT)))
 
         st.subheader("Citations")
-
+        
+        def is_zenodo_url(u: str) -> bool:
+            u = (u or "").lower().strip()
+            return ("zenodo.org" in u) or ("doi.org/10.5281/zenodo" in u) or ("10.5281/zenodo" in u)
+        
         if papers:
             st.write("**Papers**")
             for ref in papers[:12]:
@@ -878,10 +882,11 @@ if st.button("Generate (retrieval-first)"):
 
                 # If we have (or were given) a Zenodo URL, show it as secondary
                 if zenodo_url:
+                    zlabel = "Zenodo" if is_zenodo_url(zenodo_url) else "Link"
                     if is_url(zenodo_url):
-                        st.markdown(f"  - Zenodo: [{zenodo_url}]({zenodo_url})")
+                        st.markdown(f"  - {zlabel}: [{zenodo_url}]({zenodo_url})")
                     else:
-                        st.markdown(f"  - Zenodo: {zenodo_url}")
+                        st.markdown(f"  - {zlabel}: {zenodo_url}")
 
         if podcasts:
             st.write("**Podcasts**")
