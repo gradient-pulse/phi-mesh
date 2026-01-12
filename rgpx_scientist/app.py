@@ -141,6 +141,14 @@ def tokenize(text: str) -> List[str]:
     toks = [t for t in text.split() if t and t not in STOPWORDS and len(t) > 2]
     return toks
 
+def canon_tag(tag: str, alias_lookup: Dict[str, str]) -> str:
+    t = (tag or "").strip()
+    if not t:
+        return t
+    norm = t.lower().replace("-", "_")
+    norm = re.sub(r"\s+", "_", norm)
+    norm = re.sub(r"_+", "_", norm)
+    return alias_lookup.get(norm, norm)
 
 def is_url(s: str) -> bool:
     s = (s or "").strip().lower()
@@ -226,7 +234,9 @@ def load_pulses() -> List[Pulse]:
         papers_raw = data.get("papers", []) or []
         podcasts_raw = data.get("podcasts", []) or []
 
-        tags = [str(t).strip() for t in tags_raw if str(t).strip()] if isinstance(tags_raw, list) else []
+        alias_lookup = load_aliases()
+        tags = [canon_tag(str(t).strip(), alias_lookup) for t in tags_raw] if isinstance(tags_raw, list) else []
+        tags = [t for t in tags if t]
         papers = [str(p).strip() for p in papers_raw if str(p).strip()] if isinstance(papers_raw, list) else []
         podcasts = [str(p).strip() for p in podcasts_raw if str(p).strip()] if isinstance(podcasts_raw, list) else []
 
