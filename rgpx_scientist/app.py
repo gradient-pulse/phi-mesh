@@ -727,6 +727,7 @@ with st.expander("Corpus (foundational papers) status", expanded=True):
 
     # quick sanity check for tag_descriptions.yml
     tag_desc_map = load_tag_descriptions_local()
+    
     if tag_desc_map:
         st.success(f"Loaded tag definitions: {len(tag_desc_map)} tags (meta/tag_descriptions.yml)")
     else:
@@ -757,10 +758,32 @@ if st.button("Generate (retrieval-first)"):
     tag_desc_map = load_tag_descriptions_local()
     phase_overrides = load_tag_phase_overrides()
 
-    query_tokens = tokenize(q)
-    scored = [(score_pulse(query_tokens, p), p) for p in pulses]
-    scored.sort(key=lambda x: x[0], reverse=True)
+    alias_lookup = load_aliases()
 
+    q_raw = (q or "").strip()
+    requested_tag = None
+    
+    # tag:foo explicit mode
+    if q_raw.lower().startswith("tag:"):
+        requested_tag = canon_tag(q_raw.split(":", 1)[1].strip(), alias_lookup)
+    
+    # single-token implicit tag mode (e.g. "ud")
+    if not requested_tag:
+        toks = tokenize(q_raw)
+        if len(toks) == 1:
+            cand = canon_tag(toks[0], alias_lookup)
+            if cand in tag_desc_map:   # known tag in meta/tag_descriptions.yml
+                requested_tag = cand
+    
+    candidate_pulses = pulses
+    if requested_tag:
+        candidate_pulses = [p for p in pulses if requested_tag in set(p.tags)]
+        if not candidate_pulses:
+            candidate_pulses = pulses  # fallback if tag exists but no pulses carry it
+
+    query_tokens = tokenize(q_raw)
+    scored = [(score_pulse(query_tokens, p), p) for p in candidate_pulses]
+    scored.sort(key=lambda x: x[0], reverse=True)
     top = [p for s, p in scored if s > 0][:8]
     if not top:
         top = [p for _, p in scored[:5]]
@@ -770,8 +793,15 @@ if st.button("Generate (retrieval-first)"):
     q_join = " ".join(query_tokens).lower()
     if not any(t in q_join for t in ("phi_mesh", "mesh", "heartbeat", "invite", "o3", "gemini", "grok", "claude", "mistral", "deepseek", "kimi")):
         top = [p for p in top if not (set(p.tags) & META_TAGS)]
-
-    driver, cluster = pick_driver_and_cluster(top, query_tokens)
+    
+    if requested_tag and any(requested_tag in p.tags for p in top):
+        driver = requested_tag
+        counts = Counter(t for p in top for t in p.tags)
+        others = [t for t, _ in counts.most_common(12) if t != driver and t not in DRIVER_TAG_BLACKLIST]
+        cluster = [driver] + others[:4]
+    else:
+        driver, cluster = pick_driver_and_cluster(top, query_tokens)
+    
     phased = split_by_phase(cluster, phase_overrides)
 
     hints = background_hints(background)
