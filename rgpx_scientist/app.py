@@ -765,6 +765,12 @@ if st.button("Generate (retrieval-first)"):
     if not top:
         top = [p for _, p in scored[:5]]
 
+    # Default: suppress Mesh/meta pulses unless the user asks for them explicitly
+    META_TAGS = {"phi_mesh", "circle_pulse", "ai_cohort", "ai_collaboration", "ai_reflexivity", "gemini", "grok", "claude", "mistral", "deepseek", "kimi", "o3"}
+    q_join = " ".join(query_tokens).lower()
+    if not any(t in q_join for t in ("phi_mesh", "mesh", "heartbeat", "invite", "o3", "gemini", "grok", "claude", "mistral", "deepseek", "kimi")):
+        top = [p for p in top if not (set(p.tags) & META_TAGS)]
+
     driver, cluster = pick_driver_and_cluster(top, query_tokens)
     phased = split_by_phase(cluster, phase_overrides)
 
