@@ -127,6 +127,7 @@ GITHUB_BRANCH = "main"
 # Canonical tag definitions live here (NOT tag_index.yml)
 TAG_DESCRIPTIONS_PATH = REPO_ROOT / "meta" / "tag_descriptions.yml"
 TAG_PHASE_OVERRIDES_PATH = REPO_ROOT / "meta" / "tag_phase_overrides.yml"  # optional
+ALIASES_PATH = REPO_ROOT / "meta" / "aliases.yml"
 
 
 # =============================================================================
@@ -435,7 +436,44 @@ def load_tag_phase_overrides() -> Dict[str, str]:
             _ingest_list(key, doc.get(key))
 
     return out
+    
+@st.cache_data(show_spinner=False)
+def load_aliases() -> Dict[str, str]:
+    """
+    Loads meta/aliases.yml and returns lookup: variant -> canonical
+    Expected schema:
+      aliases:
+        canonical_tag:
+          - variant1
+          - variant2
+    """
+    if not ALIASES_PATH.exists():
+        return {}
+    doc = yaml.safe_load(ALIASES_PATH.read_text(encoding="utf-8")) or {}
+    aliases = doc.get("aliases", {}) if isinstance(doc, dict) else {}
+    if not isinstance(aliases, dict):
+        return {}
 
+    lookup: Dict[str, str] = {}
+
+    def _norm(s: str) -> str:
+        s = (s or "").strip().lower()
+        s = s.replace("-", "_")
+        s = re.sub(r"\s+", "_", s)
+        s = re.sub(r"_+", "_", s)
+        return s
+
+    for canon, variants in aliases.items():
+        if not isinstance(canon, str):
+            continue
+        canon_n = _norm(canon)
+        lookup[canon_n] = canon_n
+        if isinstance(variants, list):
+            for v in variants:
+                if isinstance(v, str):
+                    lookup[_norm(v)] = canon_n
+
+    return lookup
 
 # =============================================================================
 # Scoring / selection
