@@ -129,6 +129,21 @@ TAG_DESCRIPTIONS_PATH = REPO_ROOT / "meta" / "tag_descriptions.yml"
 TAG_PHASE_OVERRIDES_PATH = REPO_ROOT / "meta" / "tag_phase_overrides.yml"  # optional
 ALIASES_PATH = REPO_ROOT / "meta" / "aliases.yml"
 
+DRIVER_TAG_BLACKLIST = {
+    "phi_mesh",
+    "circle_pulse",
+    "cf",
+    "gemini",
+    "o3",
+    "grok",
+    "claude",
+    "mistral",
+    "deepseek",
+    "kimi",
+    "ai_cohort",
+    "ai_collaboration",
+    "ai_reflexivity",
+}
 
 # =============================================================================
 # Text utils
@@ -528,7 +543,11 @@ def pick_driver_and_cluster(top_pulses: List[Pulse], query_tokens: List[str]) ->
     if not tag_counts:
         return ("least_action", ["least_action", "meso_scale", "contextual_filter"])
 
-    best_tag = max(tag_counts.keys(), key=lambda t: (tag_counts[t], tag_match_bonus[t]))
+    candidates = [t for t in tag_counts.keys() if t not in DRIVER_TAG_BLACKLIST]
+    if not candidates:
+        candidates = list(tag_counts.keys())
+
+    best_tag = max(candidates, key=lambda t: (tag_counts[t], tag_match_bonus[t]))
     others = [t for t, _ in tag_counts.most_common(8) if t != best_tag]
     cluster = [best_tag] + others[:4]
     return (best_tag, cluster)
