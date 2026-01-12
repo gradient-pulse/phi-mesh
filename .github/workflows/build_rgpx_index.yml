@@ -45,11 +45,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+          # Bring runner up to date FIRST (prevents "fetch first" rejects)
+          git pull --rebase --autostash origin main
+      
           git add docs/rgpx
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git pull --rebase --autostash origin main
             git commit -m "Auto-build rgpx JSON index"
             git push
           fi
