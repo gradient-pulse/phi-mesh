@@ -14,12 +14,10 @@ PAPERS_INDEX_YML = REPO_ROOT / "rgpx_scientist" / "foundational_papers_index.yml
 PAPERS_MANIFEST_YML = REPO_ROOT / "rgpx_scientist" / "foundational_papers_manifest.yml"
 CLAIMS_INDEX_YML = REPO_ROOT / "rgpx_scientist" / "foundational_claims_index.yml"
 
-OUT_BASE = REPO_ROOT / "docs" / "rgpx_scientist"
-
+OUT_BASE = REPO_ROOT / "docs" / "phi-mesh" / "rgpx_scientist"
 OUT_PAPERS_INDEX_JSON = OUT_BASE / "papers" / "index.json"
-OUT_CLAIMS_PAPER_DIR  = OUT_BASE / "claims" / "paper"
-OUT_CLAIMS_SINGLE_DIR = OUT_BASE / "claims"  # /{paper_id}/{claim_id}.json
-
+OUT_CLAIMS_PAPER_DIR = OUT_BASE / "claims" / "paper"
+OUT_CLAIMS_SINGLE_DIR = OUT_BASE / "claims"
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -149,8 +147,8 @@ def main() -> None:
                     "claim_card": cc,
                 },
             )
-
-    print("OK: wrote papers + claims JSON into docs/rgpx_scientist/")
+            
+    print("OK: wrote papers + claims JSON into docs/phi-mesh/rgpx_scientist/")
 
 if __name__ == "__main__":
     main()
