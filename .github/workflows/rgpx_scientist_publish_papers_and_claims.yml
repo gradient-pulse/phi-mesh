@@ -34,13 +34,18 @@ jobs:
         run: |
           python rgpx_scientist/publish_rgpx_scientist_api.py
 
+      # Optional but useful once:
+      - name: Show outputs
+        run: |
+          ls -R docs/rgpx_scientist || true
+
       - name: Commit & push if changed
         run: |
           git status --porcelain
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add docs/phi-mesh/rgpx/papers/index.json docs/phi-mesh/rgpx/claims
+            git add docs/rgpx_scientist
             git commit -m "Publish RGPx Scientist papers/claims JSON"
             git push
           else
