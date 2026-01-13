@@ -1,0 +1,38 @@
+name: Auto Learning Ledger Pulse
+
+on:
+  push:
+    paths:
+      - "meta/**claims**index**.yml"
+      - "meta/**claims**index**.yaml"
+      - "meta/claims-index.yml"
+      - "meta/claims_index.yml"
+
+jobs:
+  build-ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate learning pulse
+        run: |
+          python tools/generate_learning_pulse.py
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "phi-mesh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add phi-mesh/pulse/*.yml
+          if git diff --cached --quiet; then
+            echo "No pulse changes."
+          else
+            git commit -m "auto: learning ledger pulse"
+            git push
+          fi
