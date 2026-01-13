@@ -14,7 +14,7 @@ PAPERS_INDEX_YML = REPO_ROOT / "rgpx_scientist" / "foundational_papers_index.yml
 PAPERS_MANIFEST_YML = REPO_ROOT / "rgpx_scientist" / "foundational_papers_manifest.yml"
 CLAIMS_INDEX_YML = REPO_ROOT / "rgpx_scientist" / "foundational_claims_index.yml"
 
-OUT_BASE = REPO_ROOT / "docs" / "rgpx_scientist"
+OUT_BASE = REPO_ROOT / "docs" / "rgpx"
 OUT_PAPERS_INDEX_JSON = OUT_BASE / "papers" / "index.json"
 OUT_CLAIMS_PAPER_DIR = OUT_BASE / "claims" / "paper"
 OUT_CLAIMS_SINGLE_DIR = OUT_BASE / "claims"  # /{paper_id}/{claim_id}.json
@@ -148,7 +148,7 @@ def main() -> None:
                 },
             )
             
-    print("OK: wrote papers + claims JSON into docs/phi-mesh/rgpx_scientist/")
+    print("OK: wrote papers + claims JSON into docs/rgpx/")
 
 if __name__ == "__main__":
     main()
