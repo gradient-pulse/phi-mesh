@@ -1,0 +1,22 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c15_postchecks_targets_for_physical_significance",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c15_postchecks_targets_for_physical_significance",
+    "claim": "Post-check targets are defined: 1–4 NTs per eddy time (cylinder wake Re≈100), ≥1% local energy change near NTs, and <5% NT-list change under λ±0.1.",
+    "claim_type": "validation_checks",
+    "test_hook": "Compute all three checks on a canonical dataset; reject runs failing thresholds.",
+    "thresholds": {
+      "nt_per_eddy_time": "1–4 (cylinder wake Re≈100)",
+      "energy_change": "ΔK/K ≥ 1%",
+      "reproducibility": "<5% NT list change for λ±0.1"
+    },
+    "evidence_excerpt": "NT list changes by less than 5% when λ is varied by ±0.1",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L43-L52",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L43-L52"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c09_training_vs_inference_distinction",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c09_training_vs_inference_distinction",
+    "claim": "Backpropagation is framed as explaining history (how weights were shaped), while RGP is framed as explaining the present (how coherence emerges during inference).",
+    "claim_type": "distinction",
+    "test_hook": "Hold weights constant; measure whether runtime dynamics (attention/activation patterns) show structured phase behavior aligned with the proposed cycle.",
+    "evidence_excerpt": "Backpropagation explains history (how weights were shaped), but RGP explains the present (how coherence emerges during inference).",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L34-L35",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L34-L35"
+    }
+  }
+}

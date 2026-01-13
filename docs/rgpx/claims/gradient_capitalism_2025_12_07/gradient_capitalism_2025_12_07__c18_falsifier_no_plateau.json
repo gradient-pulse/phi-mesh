@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c18_falsifier_no_plateau",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c18_falsifier_no_plateau",
+    "claim_type": "falsifiable_gate",
+    "claim": "If crashes consistently arrive from low-J, high-diffusion states with no plateau-like behavior in J beforehand, the saturation-horizon picture is likely wrong or incomplete.",
+    "falsifiable": true,
+    "test_hook": "Across multiple crises, test whether J shows plateau/overshoot; failure to observe it weakens or falsifies the mechanism.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p11 (IV.3 falsifier paragraph)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p11 (IV.3)"
+    }
+  }
+}

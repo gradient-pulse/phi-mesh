@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c13_predictive_hooks_high_phi_anomalies",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c13_predictive_hooks_high_phi_anomalies",
+    "claim": "The paper flags testable hooks: anomalies in high-Φ regimes (frame-dragging-like effects) and analog simulation via reaction–diffusion systems.",
+    "claim_type": "prediction",
+    "test_hook": "Propose one analog reaction–diffusion experiment and one astrophysical high-Φ observational signature; pre-register expected directionality.",
+    "evidence_excerpt": "Suggested testable predictions, such as frame-dragging-like anomalies in high-Φ regimes and analog simulation in reaction–diffusion systems.",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L496-L497",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L496-L497"
+    }
+  }
+}

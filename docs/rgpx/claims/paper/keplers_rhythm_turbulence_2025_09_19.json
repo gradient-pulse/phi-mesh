@@ -1,0 +1,151 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 12,
+  "claim_cards": [
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c01_conserved_123_harmonic",
+      "claim": "High-Re turbulence contains a conserved 1:2:3 harmonic structure detectable in data as a stable ratio pattern.",
+      "claim_type": "thesis",
+      "test_hook": "Run the NT-distance ratio extraction on independent turbulence datasets; verify the same ratio-peak structure persists.",
+      "evidence_excerpt": "a conserved 1:2:3 harmonic structure embedded in turbulence",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p1-L10-L10",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L10-L10"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c02_data_driven_extraction_jhtdb",
+      "claim": "The 1:2:3 structure is extracted directly from JHTDB turbulence data using a Narrative Tick event-sampling approach.",
+      "claim_type": "method_claim",
+      "test_hook": "Recompute NT timestamps and ratio histograms from JHTDB series; check stability across probes and windows.",
+      "evidence_excerpt": "Using the Johns Hopkins Turbulence Database (JHTDB)... We compute a time series of 'Narrative Ticks' (NTs)",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p1-L10-L11",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L10-L11"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c03_stable_across_probes_windows",
+      "claim": "The ratio structure is reported as stable across probes and time windows, suggesting it is not a sampling artifact.",
+      "claim_type": "robustness_claim",
+      "test_hook": "Vary probe locations and window sizes; confirm ratio structure remains (qualitatively and quantitatively).",
+      "evidence_excerpt": "stable across probes and time windows",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p1-L11-L12",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L11-L12"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c04_nt_definition_signflip_sigma",
+      "claim": "Narrative Ticks (NTs) are defined operationally as sign changes in the scalar signal derivative exceeding a sigma threshold.",
+      "claim_type": "definition_operational",
+      "test_hook": "Implement NT detection exactly; verify detected NTs change predictably under σ sweeps (not random blow-up).",
+      "evidence_excerpt": "an NT is detected as a sign change in the derivative of the scalar signal, exceeding a threshold σ",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p2-L13-L17",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L13-L17"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c05_distance_ratio_histogram_signature",
+      "claim": "The proposed signature is a histogram of ratios of consecutive NT distances; clustering indicates repeated physics.",
+      "claim_type": "measurement_definition",
+      "test_hook": "Compute NT distances d_i and ratios r_i=d_i/d_{i+1}; check whether histogram exhibits stable clusters.",
+      "evidence_excerpt": "we compute their distances d_i and form ratios r_i = d_i / d_{i+1}",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p2-L18-L20",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L18-L20"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c06_quantized_ratio_sets",
+      "claim": "NT distances appear in discrete ratio sets (quantized), rather than forming a continuous spectrum.",
+      "claim_type": "hypothesis",
+      "test_hook": "Test discreteness by comparing to shuffled-NT controls; quantify peak prominence vs null.",
+      "evidence_excerpt": "these NT distances cluster into discrete ratio sets",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p2-L21-L22",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L21-L22"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c07_kepler_analogy_ratio_prediction",
+      "claim": "A Kepler-style prediction is made: as harmonics stabilize, the NT-distance ratios should converge to conserved values.",
+      "claim_type": "prediction",
+      "test_hook": "Track ratio histograms over time; test whether peaks sharpen/stabilize as the flow enters stable shedding regimes.",
+      "evidence_excerpt": "the ratios between NT distances converge to conserved values",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p1-L34-L36",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L34-L36"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c08_pola_interpretation_of_ratios",
+      "claim": "The paper interprets stable ratio clusters as the Principle of Least Action expressing itself as a discrete rhythm in turbulence.",
+      "claim_type": "interpretation",
+      "test_hook": "Only apply this interpretation after demonstrating cross-run stability of the same ratio clusters.",
+      "evidence_excerpt": "PoLA is not just a principle of motion—it is a principle of rhythmic selection",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p3-L8-L12",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p3-L8-L12"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c09_scale_invariance_of_ratios",
+      "claim": "The ratio signature is asserted to be scale-invariant: ratios are conserved under scaling transformations.",
+      "claim_type": "invariance_claim",
+      "test_hook": "Rescale the scalar signal (or compare different unit scalings) and confirm the ratio histogram remains unchanged.",
+      "evidence_excerpt": "ratios are conserved under a scaling transformation",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p4-L8-L10",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p4-L8-L10"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c10_extractable_without_solving_pdes",
+      "claim": "The rhythm is positioned as directly extractable from measured data without solving Navier–Stokes PDEs.",
+      "claim_type": "framing",
+      "test_hook": "Demonstrate end-to-end extraction on measured / DNS data using only the scalar time series.",
+      "evidence_excerpt": "You don’t need to solve the PDE to see the law—you need to extract the ticks",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p3-L14-L16",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p3-L14-L16"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c11_not_a_replacement_for_ns",
+      "claim": "The approach is explicitly framed as complementing—not replacing—Navier–Stokes.",
+      "claim_type": "scope_limit",
+      "test_hook": "State benchmark comparisons as ‘added predictive signal’ rather than ‘replacement’; evaluate side-by-side.",
+      "evidence_excerpt": "This does not replace Navier–Stokes. It adds a missing layer",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p5-L13-L18",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p5-L13-L18"
+      }
+    },
+    {
+      "claim_id": "keplers_rhythm_turbulence_2025_09_19__c12_reproducibility_open_repo_data",
+      "claim": "Reproducibility is claimed via open tools and open datasets hosted with code on GitHub.",
+      "claim_type": "reproducibility",
+      "test_hook": "Clone repo + run the extraction pipeline; verify you can regenerate the ratio histogram from referenced datasets.",
+      "evidence_excerpt": "open tools and open datasets, hosted on GitHub",
+      "source": {
+        "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+        "locator": "p5-L32-L36",
+        "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p5-L32-L36"
+      }
+    }
+  ]
+}

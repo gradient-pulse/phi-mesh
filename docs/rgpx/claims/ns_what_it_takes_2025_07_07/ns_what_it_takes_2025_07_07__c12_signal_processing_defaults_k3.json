@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c12_signal_processing_defaults_k3",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c12_signal_processing_defaults_k3",
+    "claim": "Default NT preprocessing uses temporal smoothing via moving average with span k=3 timesteps.",
+    "claim_type": "default_parameter",
+    "test_hook": "Run k=3 baseline; evaluate sensitivity by varying k and tracking NT robustness metrics.",
+    "evidence_excerpt": "Apply a moving average with span k timesteps (default k = 3)",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L31-L33",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L31-L33"
+    }
+  }
+}

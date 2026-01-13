@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c12_saturation_horizons",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c12_saturation_horizons",
+    "claim_type": "hypothesis",
+    "claim": "There exist saturation horizons (J≈J*) in large connected economic structures (monopolies, systemic hubs, tightly coupled supply chains) beyond which further optimization increases fragility rather than resilience.",
+    "falsifiable": true,
+    "test_hook": "Estimate J* (or plateau) in candidate systems; test whether pushing beyond it predicts rising systemic fragility and crisis likelihood.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p8 (III.3); p9 (IV.1 Law 2)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8–p9"
+    }
+  }
+}

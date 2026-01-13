@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c01_ns_blindness_missing_variables",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c01_ns_blindness_missing_variables",
+    "claim": "The standard Navier–Stokes approach is fundamentally blind to turbulence causes due to omitted variables.",
+    "claim_type": "thesis",
+    "test_hook": "Operationalize as: compare explanatory lead indicators vs symptom-fit metrics on the same datasets.",
+    "evidence_excerpt": "This omission makes the standard approach fundamentally blind to the real causes of turbulence",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L1-L2",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L1-L2"
+    }
+  }
+}

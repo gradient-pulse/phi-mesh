@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c02_recursive_isochrone_sigma_definition",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c02_recursive_isochrone_sigma_definition",
+    "claim": "The ‘recursive isochrone’ Σ is defined as the zero-locus J′=0 cutting out a co-dimension-1 submanifold; trajectories confined to Σ satisfy the Φ-Bridge equality without invoking background spacetime.",
+    "claim_type": "definition_operational",
+    "test_hook": "Construct Σ explicitly in a low-dimensional surrogate system; test whether restricting dynamics to Σ enforces the stated equality conditions.",
+    "evidence_excerpt": "The zero locus J' = 0 cuts out ... Σ ... without referencing a background spacetime.",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L8-L18",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L8-L18"
+    }
+  }
+}

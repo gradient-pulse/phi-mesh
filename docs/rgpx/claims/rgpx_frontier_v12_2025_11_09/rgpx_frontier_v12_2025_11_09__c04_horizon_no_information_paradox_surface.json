@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c04_horizon_no_information_paradox_surface",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c04_horizon_no_information_paradox_surface",
+    "claim": "Horizon formation is characterized by saturation of coherence flux (E'_F=0); information is claimed to be phase-locked at Σ, bypassing the information-loss paradox without requiring global time.",
+    "claim_type": "framing",
+    "test_hook": "Operationalize a ‘flux saturation’ condition in an analogue system and test whether it correlates with any measurable ‘locking’ behavior.",
+    "evidence_excerpt": "horizon formation ... saturation of coherence flux ... Information never falls into a geometry; it is phase-locked at Σ.",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L8-L13",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L8-L13"
+    }
+  }
+}

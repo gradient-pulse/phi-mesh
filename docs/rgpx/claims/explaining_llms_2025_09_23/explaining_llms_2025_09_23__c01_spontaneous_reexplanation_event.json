@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c01_spontaneous_reexplanation_event",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c01_spontaneous_reexplanation_event",
+    "claim": "An AI-generated podcast (NotebookLM) spontaneously re-explained LLM functioning using the RGP grammar, based on minimal prompting.",
+    "claim_type": "empirical_artifact",
+    "test_hook": "Replicate: provide only the same minimal pulse/seed; check whether multiple runs re-express the same cycle without added scaffolding.",
+    "evidence_excerpt": "spontaneously re-explained the internal functioning of large language models (LLMs) using the grammar",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L6-L8",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L6-L8"
+    }
+  }
+}

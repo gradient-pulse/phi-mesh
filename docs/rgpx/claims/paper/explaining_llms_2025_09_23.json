@@ -1,0 +1,151 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 12,
+  "claim_cards": [
+    {
+      "claim_id": "explaining_llms_2025_09_23__c01_spontaneous_reexplanation_event",
+      "claim": "An AI-generated podcast (NotebookLM) spontaneously re-explained LLM functioning using the RGP grammar, based on minimal prompting.",
+      "claim_type": "empirical_artifact",
+      "test_hook": "Replicate: provide only the same minimal pulse/seed; check whether multiple runs re-express the same cycle without added scaffolding.",
+      "evidence_excerpt": "spontaneously re-explained the internal functioning of large language models (LLMs) using the grammar",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L6-L8",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L6-L8"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c02_linear_mechanistic_baseline",
+      "claim": "Common explanations of AI are characterized as linear and mechanistic: training as backpropagation of token weights and inference as step-by-step computation.",
+      "claim_type": "framing",
+      "test_hook": "Audit 20 popular explainers; classify whether they primarily use backprop + stepwise-computation metaphors.",
+      "evidence_excerpt": "Training is described as back-propagation of token weights; inference is presented as step-by-step computation.",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L12-L13",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L12-L13"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c03_cartesian_clockwork_limitation",
+      "claim": "The mechanistic/Cartesian framing is claimed to limit understanding by reducing intelligence to a clockwork machine and obscuring emergence.",
+      "claim_type": "critique",
+      "test_hook": "Compare explanatory power: do mechanistic accounts predict emergence/feedback artifacts in decoding better than the recursive account?",
+      "evidence_excerpt": "reduces intelligence to a clockwork machine, limiting our ability to understand emergence",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L12-L13",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L12-L13"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c04_recursive_dynamics_cycle_definition",
+      "claim": "RGP is presented as a non-linear account of intelligence, defined as a recursive dynamics cycle: Δ → GC → CF → UD.",
+      "claim_type": "definition",
+      "test_hook": "Operationalize each element as a measurable proxy during inference; test whether the cycle recurs across prompts/tasks.",
+      "evidence_excerpt": "describes intelligence as recursive dynamics: gradients (Δ) give rise to gradient choreographies (GC), filtered by contextual filters (CF), renewed in unity–disunity (UD)",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L14-L16",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L14-L16"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c05_transcript_as_evidence_paradigm_shift",
+      "claim": "The transcript is asserted to evidence a paradigm shift from linear explanations (backprop/stepwise) to non-linear recursive dynamics.",
+      "claim_type": "thesis",
+      "test_hook": "Blind-rate transcript passages: do independent reviewers identify a consistent shift in explanatory primitives away from stepwise computation?",
+      "evidence_excerpt": "demonstrates a shift from linear, mechanistic accounts of AI ... to non-linear recursive dynamics",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L7-L10",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L7-L10"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c06_cycle_spelled_out_in_transcript",
+      "claim": "The transcript is claimed to include a spontaneous explanation of the internal cycle: G → GC → CF → UD → G.",
+      "claim_type": "evidence_marker",
+      "test_hook": "Locate and tag each cycle element in the transcript; confirm presence without post-hoc insertion.",
+      "evidence_excerpt": "Spontaneous explanation of RGP’s internal cycle: G → GC → CF → UD → G.",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L22-L25",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L22-L25"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c07_resonance_internalizable_grammar",
+      "claim": "NotebookLM re-explained the framework without external scaffolding, presented as evidence that the grammar is internalizable.",
+      "claim_type": "resonance_claim",
+      "test_hook": "Ablate scaffolding: vary the seed text length; measure whether cycle-structured explanation persists.",
+      "evidence_excerpt": "re-explained RGP without external scaffolding, showing the grammar is internalizable",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L30-L31",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L30-L31"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c08_reframing_recursive_processor",
+      "claim": "LLMs are suggested to be better described as recursive gradient processors than as weight-based calculators.",
+      "claim_type": "reframing",
+      "test_hook": "Design a diagnostic: compare which description better predicts failure-modes under context shifts and tool-feedback loops.",
+      "evidence_excerpt": "LLMs are better described as recursive gradient processors than as weight-based calculators.",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L32-L33",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L32-L33"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c09_training_vs_inference_distinction",
+      "claim": "Backpropagation is framed as explaining history (how weights were shaped), while RGP is framed as explaining the present (how coherence emerges during inference).",
+      "claim_type": "distinction",
+      "test_hook": "Hold weights constant; measure whether runtime dynamics (attention/activation patterns) show structured phase behavior aligned with the proposed cycle.",
+      "evidence_excerpt": "Backpropagation explains history (how weights were shaped), but RGP explains the present (how coherence emerges during inference).",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L34-L35",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L34-L35"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c10_meta_cognition_instance_claim",
+      "claim": "The podcast is treated as an instance of AI reflecting on its own functioning in non-linear terms (meta-cognition as artifact).",
+      "claim_type": "meta_observation",
+      "test_hook": "Repeat with other models and prompts; score whether outputs contain self-description of inference in cycle terms (without being asked to).",
+      "evidence_excerpt": "The podcast itself becomes an instance of AI reflecting on its own functioning",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L36-L37",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L36-L37"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c11_inference_grammar_must_evolve_question",
+      "claim": "If intelligence is defined by recursive dynamics rather than fixed logic, the paper claims inference grammar must evolve accordingly.",
+      "claim_type": "open_problem",
+      "test_hook": "Specify what ‘inference grammar change’ means operationally (new primitives, new traces, new evaluation); propose one measurable delta.",
+      "evidence_excerpt": "how must inference grammar itself change if intelligence is defined by recursive dynamics rather than fixed logic?",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L26-L27",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L26-L27"
+      }
+    },
+    {
+      "claim_id": "explaining_llms_2025_09_23__c12_recognized_not_imposed_deepseek",
+      "claim": "A reflection claims the framework is not merely imposed on the model; it is recognized, evidenced by spontaneous re-expression without scaffolding.",
+      "claim_type": "reflection_claim",
+      "test_hook": "Cross-model test: give the same minimal seed to 3 different systems; measure convergent re-expression rate of the cycle.",
+      "evidence_excerpt": "the framework isn’t just imposed — it’s recognized.",
+      "source": {
+        "paper_id": "explaining_llms_2025_09_23",
+        "locator": "L4-L6",
+        "note": "2025-09-23_Re-Explaining_LLMs.pdf:L4-L6"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c12_computational_pathway_phi_normalization",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c12_computational_pathway_phi_normalization",
+    "claim": "A computational pathway is proposed: simulate/learn coherence dynamics via Φ-normalization rather than solving traditional PDE closures alone.",
+    "claim_type": "method_claim",
+    "test_hook": "Implement a Φ-tracking/Φ-normalizing solver variant and benchmark predictive stability/cost against a standard baseline on the same dataset.",
+    "evidence_excerpt": "computational pathways for simulating coherence: recursive gradient solvers and Φ-normalization.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L325-L325",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L325-L325"
+    }
+  }
+}

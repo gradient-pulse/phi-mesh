@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c01_coherence_conserved_quantity",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c01_coherence_conserved_quantity",
+    "claim": "RGPx’s central thesis is that coherence (persistence of structured organization) should be treated as a conserved quantity, not energy alone.",
+    "claim_type": "thesis",
+    "test_hook": "Define a persistence metric for matched systems; test whether conservation-like behavior tracks stability better than energy-based proxies.",
+    "evidence_excerpt": "treating coherence itself as the conserved quantity of nature.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L12-L12",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L12-L12"
+    }
+  }
+}

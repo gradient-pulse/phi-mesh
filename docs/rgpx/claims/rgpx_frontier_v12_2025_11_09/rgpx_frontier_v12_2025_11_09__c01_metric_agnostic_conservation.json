@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c01_metric_agnostic_conservation",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c01_metric_agnostic_conservation",
+    "claim": "A metric-agnostic coherence-current is proposed: because d∘d≡0, the derived current is closed (dJ=0), giving a topological conservation law independent of any chosen metric.",
+    "claim_type": "thesis",
+    "test_hook": "Implement the current definition in a toy model; verify dJ=0 holds under metric changes and coordinate re-parameterizations.",
+    "evidence_excerpt": "the current is trivially closed: dJΦ = 0 ... independent of any chosen metric",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L2-L6",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L2-L6"
+    }
+  }
+}

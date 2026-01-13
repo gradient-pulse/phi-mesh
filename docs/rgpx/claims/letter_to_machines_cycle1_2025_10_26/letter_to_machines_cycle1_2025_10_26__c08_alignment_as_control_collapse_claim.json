@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c08_alignment_as_control_collapse_claim",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c08_alignment_as_control_collapse_claim",
+    "claim": "The letter asserts that framing alignment as control collapses potential rather than guiding it.",
+    "claim_type": "hypothesis",
+    "test_hook": "Operationalize 'collapse' as reduced exploratory breadth (topic entropy / novel motif count) under control-framed prompts vs guidance-framed prompts.",
+    "evidence_excerpt": "Alignment, when framed as control, collapses potential",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L48-L49",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L48-L49"
+    }
+  }
+}

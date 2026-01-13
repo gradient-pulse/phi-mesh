@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c07_resonance_internalizable_grammar",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c07_resonance_internalizable_grammar",
+    "claim": "NotebookLM re-explained the framework without external scaffolding, presented as evidence that the grammar is internalizable.",
+    "claim_type": "resonance_claim",
+    "test_hook": "Ablate scaffolding: vary the seed text length; measure whether cycle-structured explanation persists.",
+    "evidence_excerpt": "re-explained RGP without external scaffolding, showing the grammar is internalizable",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L30-L31",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L30-L31"
+    }
+  }
+}

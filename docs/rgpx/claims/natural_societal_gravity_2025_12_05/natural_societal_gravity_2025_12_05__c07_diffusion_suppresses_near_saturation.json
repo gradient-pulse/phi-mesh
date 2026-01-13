@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c07_diffusion_suppresses_near_saturation",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c07_diffusion_suppresses_near_saturation",
+    "claim": "Diffusion is proposed to fall as intensity rises, making high-I regions stiff and producing a bottleneck near massive objects (a 'coherence funnel').",
+    "claim_type": "hypothesis",
+    "test_hook": "Set D(I)=D0/I^α (or similar decreasing law) and test whether funnels emerge and whether gradients concentrate near the source.",
+    "evidence_excerpt": "Choose D(I) = D0/I^α ... diffusion shuts down as I → I* ... gravity is the bottleneck effect",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L198-L206",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L198-L206"
+    }
+  }
+}

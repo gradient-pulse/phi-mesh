@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c09_conservation_alignment_work",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c09_conservation_alignment_work",
+    "claim": "A conservation law is asserted: ∇μ Φμν = 0, interpreted as conservation of alignment work rather than energy–momentum.",
+    "claim_type": "conservation_claim",
+    "test_hook": "Given Φ from S(x), evaluate ∇μ Φμν numerically; treat deviation as model error and test whether corrected λ(r) reduces divergence.",
+    "evidence_excerpt": "∇μ Φμν = 0 ... conservation of alignment work rather than just energy-momentum",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L240-L241",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L240-L241"
+    }
+  }
+}

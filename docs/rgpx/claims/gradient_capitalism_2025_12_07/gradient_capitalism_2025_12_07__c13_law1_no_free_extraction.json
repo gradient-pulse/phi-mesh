@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c13_law1_no_free_extraction",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c13_law1_no_free_extraction",
+    "claim_type": "principle",
+    "claim": "Law 1: Over meaningful horizons, sustainable accumulation requires non-negative net coherence change for the mesh; gains bought by coherence burn elsewhere eventually reappear as losses.",
+    "falsifiable": true,
+    "test_hook": "Build a mesh-level coherence balance proxy; test whether persistently negative balance predicts later crashes/social breakdown better than profit-only accounts.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p9 (IV.1 Law 1)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 (IV.1)"
+    }
+  }
+}

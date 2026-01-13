@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c05_black_holes_as_coherence_regulators",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c05_black_holes_as_coherence_regulators",
+    "claim": "Black holes are reframed as recursive coherence sinks/regulators; Hawking temperature is interpreted as residual coherence flux escaping due to finite recursive delay (not thermal randomness).",
+    "claim_type": "hypothesis",
+    "test_hook": "Map the proposed ‘recursive delay’ interpretation to a quantitative model; check whether it reproduces standard scaling relations while yielding new falsifiable signatures.",
+    "evidence_excerpt": "Hawking temperature ... residual coherence flux escaping due to finite recursive delay",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L3-L6",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L3-L6"
+    }
+  }
+}

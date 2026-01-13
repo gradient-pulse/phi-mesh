@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c04_recursive_dynamics_cycle_definition",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c04_recursive_dynamics_cycle_definition",
+    "claim": "RGP is presented as a non-linear account of intelligence, defined as a recursive dynamics cycle: Δ → GC → CF → UD.",
+    "claim_type": "definition",
+    "test_hook": "Operationalize each element as a measurable proxy during inference; test whether the cycle recurs across prompts/tasks.",
+    "evidence_excerpt": "describes intelligence as recursive dynamics: gradients (Δ) give rise to gradient choreographies (GC), filtered by contextual filters (CF), renewed in unity–disunity (UD)",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L14-L16",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L14-L16"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c03_metric_emerges_secondary",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c03_metric_emerges_secondary",
+    "claim": "The metric is framed as secondary: defining u_B≔∂_BΦ and requiring divergence-free flow (θ=0) is claimed to reproduce the Einstein field equation G_BC = 8π Φ_BC as an effective relation on Σ.",
+    "claim_type": "thesis",
+    "test_hook": "Translate the construction into a calculable setting; test whether θ=0 implies an Einstein-like relation under the paper’s definitions.",
+    "evidence_excerpt": "Requiring a divergence-free flow (θ = 0) reproduces the Einstein field equation",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L1-L7",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L1-L7"
+    }
+  }
+}

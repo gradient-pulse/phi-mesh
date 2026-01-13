@@ -1,0 +1,17 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c02_nt_flip_point_definition",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c02_nt_flip_point_definition",
+    "claim": "NT is framed as the flip-point where disorder begins to order itself; the benchmark targets detecting the first such flip.",
+    "claim_type": "framing",
+    "test_hook": "Verify the detector marks candidate NTs that align with early regime-change moments in the scalar signal.",
+    "evidence_excerpt": "We look for the instant disorder begins to order itself. That flip-point is the NT.",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L6-L7",
+      "note": "2025-07-21_experimenters_guide.pdf:L6-L7"
+    }
+  }
+}

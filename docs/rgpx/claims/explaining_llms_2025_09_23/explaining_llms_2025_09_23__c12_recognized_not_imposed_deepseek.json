@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c12_recognized_not_imposed_deepseek",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c12_recognized_not_imposed_deepseek",
+    "claim": "A reflection claims the framework is not merely imposed on the model; it is recognized, evidenced by spontaneous re-expression without scaffolding.",
+    "claim_type": "reflection_claim",
+    "test_hook": "Cross-model test: give the same minimal seed to 3 different systems; measure convergent re-expression rate of the cycle.",
+    "evidence_excerpt": "the framework isn’t just imposed — it’s recognized.",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L4-L6",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L4-L6"
+    }
+  }
+}

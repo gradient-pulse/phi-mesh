@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c12_phi_bridge_exchange_current",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c12_phi_bridge_exchange_current",
+    "claim": "The quantum–gravitational coupling is defined by a recursive exchange term J_Φ that measures bidirectional coherence current between the two domains.",
+    "claim_type": "definition_operational",
+    "test_hook": "Derive J_Φ in a concrete field model; test whether J_Φ→0 corresponds to measurable ‘phase-locking’ signatures.",
+    "evidence_excerpt": "Their coupling is defined by the recursive exchange term",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L30-L33",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L30-L33"
+    }
+  }
+}

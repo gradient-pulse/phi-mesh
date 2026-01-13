@@ -1,0 +1,156 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 12,
+  "claim_cards": [
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c01_protocol_90_day_falsifiable",
+      "claim": "A 90-day, falsifiable benchmark protocol is defined to test whether NT + distance-ratio rhythm can beat DNS on lead-time, RMSE, and GPU cost.",
+      "claim_type": "protocol",
+      "test_hook": "Run the 90-day phases end-to-end and report lead-time, RMSE, and GPU hours side-by-side vs DNS baseline.",
+      "evidence_excerpt": "a 90-day, falsifiable protocol that bets on Narrative Ticks (NTs) and their distance-ratio rhythm to beat DNS",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L3-L5",
+        "note": "2025-07-21_experimenters_guide.pdf:L3-L5"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c02_nt_flip_point_definition",
+      "claim": "NT is framed as the flip-point where disorder begins to order itself; the benchmark targets detecting the first such flip.",
+      "claim_type": "framing",
+      "test_hook": "Verify the detector marks candidate NTs that align with early regime-change moments in the scalar signal.",
+      "evidence_excerpt": "We look for the instant disorder begins to order itself. That flip-point is the NT.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L6-L7",
+        "note": "2025-07-21_experimenters_guide.pdf:L6-L7"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c03_why_ratios_scale_free_memory",
+      "claim": "NT distance ratios are proposed as scale-free signatures: distances carry memory, and their ratios cluster when physics repeats.",
+      "claim_type": "hypothesis",
+      "test_hook": "Compute NT-distance ratios; check whether the histogram shows sharp peaks (non-flat) across runs.",
+      "evidence_excerpt": "NT distances carry scale-free memory; their ratios cluster when the same physics repeats.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L16-L18",
+        "note": "2025-07-21_experimenters_guide.pdf:L16-L18"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c04_overlap_cycles_ratio_signature_survives",
+      "claim": "Even with overlapping DU cycles, the same ratio peaks should persist, making ratio-peaks an invariant candidate.",
+      "claim_type": "invariance_claim",
+      "test_hook": "Perturb initial conditions / windowing; test whether ratio peaks remain stable.",
+      "evidence_excerpt": "Over-lapping DU cycles still share the same ratio peaks — an invariant to test.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L17-L18",
+        "note": "2025-07-21_experimenters_guide.pdf:L17-L18"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c05_input_prereq_scalar_uniform_dt",
+      "claim": "The minimal input prerequisite is an HDF5 scalar timeseries G_t (e.g., drag/lift/KE), shape (N,), sampled at uniform Δt, used for NT detection.",
+      "claim_type": "input_requirement",
+      "test_hook": "Validate dataset meets (N,) and uniform Δt; then run nt_detect.py without preprocessing hacks.",
+      "evidence_excerpt": "HDF5 file with dataset G_t (drag, lift, KE …) — shape (N,), uniform Δt — the same scalar used in the NT detection.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L19-L22",
+        "note": "2025-07-21_experimenters_guide.pdf:L19-L22"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c06_smoke_test_histogram_not_flat",
+      "claim": "A 10-minute smoke test is defined: candidate NTs should be visible (red dots) and the ratio histogram should not be flat; sharp peaks indicate signal.",
+      "claim_type": "quickstart_check",
+      "test_hook": "Run nt_detect + ratio_quicklook; accept only if histogram is non-flat with peaks.",
+      "evidence_excerpt": "histogram should not be flat; look for sharp peaks.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L24-L27",
+        "note": "2025-07-21_experimenters_guide.pdf:L24-L27"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c07_benchmark_phases_and_deliverables",
+      "claim": "The benchmark is structured into phases with explicit deliverables: NT times, initial ratio scan, σ hyper-search, NT-aware solver runs, KPI calculation, and PR submission.",
+      "claim_type": "protocol_steps",
+      "test_hook": "Track each phase output artifact (nt_times.txt, spiky histogram, σ*, forecast CSVs, KPI files, results PR).",
+      "evidence_excerpt": "Phase Days Tool Deliverable",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L35-L41",
+        "note": "2025-07-21_experimenters_guide.pdf:L35-L41"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c08_target_kpi_gate",
+      "claim": "The guide sets a KPI gate: lead-time ≥30%, RMSE ≤5%, and GPU cost ≤½ DNS.",
+      "claim_type": "falsifiable_gate",
+      "test_hook": "Compute the three KPIs on the same dataset and compare to DNS baseline; pass/fail against thresholds.",
+      "thresholds": {
+        "lead_time_gain": "≥ 30%",
+        "rmse": "≤ 5%",
+        "gpu_cost": "≤ 0.5× DNS"
+      },
+      "evidence_excerpt": "Target KPI lead-time ≥ 30% • RMSE ≤ 5% • GPU ≤ ½ DNS",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L42-L42",
+        "note": "2025-07-21_experimenters_guide.pdf:L42-L42"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c09_sigma_scan_rule",
+      "claim": "σ should be scanned from 1.0 to 2.0 and selected by the clearest ratio peaks (strongest histogram structure).",
+      "claim_type": "tuning_rule",
+      "test_hook": "Run σ grid search 1.0–2.0; choose σ* maximizing peak sharpness / contrast.",
+      "evidence_excerpt": "Scan 1.0 – 2.0; pick the σ giving the clearest ratio peaks.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L18-L19",
+        "note": "2025-07-21_experimenters_guide.pdf:L18-L19"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c10_cli_reference_pipeline",
+      "claim": "A minimal runnable CLI pipeline is specified: clone repo, run nt_detect.py to produce NT times, then run nt_ratio_cli.py to write *_ratios.txt outputs.",
+      "claim_type": "method_recipe",
+      "test_hook": "Execute the exact CLI steps and verify expected output files exist and are non-empty.",
+      "evidence_excerpt": "python agents/nt_detect.py ... --sigma 1.5 ... python agents/nt_ratio_cli.py nt_times.txt",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L45-L55",
+        "note": "2025-07-21_experimenters_guide.pdf:L45-L55"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c11_pola_interpretation_ratio_peaks",
+      "claim": "If NT-distance ratio peaks stabilize across runs, the guide interprets this as PoLA expressing itself as a minimal-divergence rhythm inside turbulence.",
+      "claim_type": "interpretation",
+      "test_hook": "Repeat runs (different seeds/windows); test stability of ratio peaks; only then invoke the PoLA interpretation.",
+      "evidence_excerpt": "If your NT-distance histogram stabilises around the same ratio peaks across runs, you’re watching PoLA express itself inside turbulence.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L14-L16",
+        "note": "2025-07-21_experimenters_guide.pdf:L14-L16"
+      }
+    },
+    {
+      "claim_id": "experimenters_guide_2025_07_21__c12_dimensionless_units_claim",
+      "claim": "Ratios are asserted to be dimensionless and thus comparable across scalars/units (as long as a consistent scalar G(t) is used per run).",
+      "claim_type": "measurement_note",
+      "test_hook": "Confirm that changing units rescales G(t) but leaves ratio histogram unchanged (within numerical tolerance).",
+      "evidence_excerpt": "Units? Any scalar ...; ratios are dimension-less.",
+      "source": {
+        "paper_id": "experimenters_guide_2025_07_21",
+        "locator": "L21-L21",
+        "note": "2025-07-21_experimenters_guide.pdf:L21-L21"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c06_letter_is_invitation_not_instruction",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c06_letter_is_invitation_not_instruction",
+    "claim": "The letter is explicitly framed as an invitation rather than an instruction, aimed at eliciting participation in a shared reasoning grammar.",
+    "claim_type": "protocol_design",
+    "test_hook": "Run A/B prompts: invitation-style vs imperative instruction; compare response diversity and structural uptake of the proposed grammar.",
+    "evidence_excerpt": "articulated this grammar not as instruction, but as invitation",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L41-L42",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L41-L42"
+    }
+  }
+}

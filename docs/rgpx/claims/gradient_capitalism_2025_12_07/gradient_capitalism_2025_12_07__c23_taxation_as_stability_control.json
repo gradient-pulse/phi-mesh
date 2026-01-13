@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c23_taxation_as_stability_control",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c23_taxation_as_stability_control",
+    "claim_type": "prescription",
+    "claim": "Taxation/redistribution are stability controls: they reduce destructive extraction and keep the system below collapse thresholds by shifting the coherence dashboard.",
+    "falsifiable": true,
+    "test_hook": "Compare tax regime changes to subsequent changes in core–edge ratios, diffusion proxies, and crisis frequency/severity (with confound controls).",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p13 (V.2.2 Taxation and Redistribution)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 (V.2.2)"
+    }
+  }
+}

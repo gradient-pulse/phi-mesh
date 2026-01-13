@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c05_nt_definition_operational",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c05_nt_definition_operational",
+    "claim": "Narrative Tick (NT) is defined operationally as a discrete, entropy-increasing coherence-shift event detected by a sign change above a σ threshold.",
+    "claim_type": "definition_operational",
+    "test_hook": "Implement the NT detector and validate robustness checks (NT counts, energy-budget check, lambda sensitivity).",
+    "evidence_excerpt": "detected when the time-derivative of |𝛻𝜔|changes sign above a σ threshold",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L1-L3",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L1-L3"
+    }
+  }
+}

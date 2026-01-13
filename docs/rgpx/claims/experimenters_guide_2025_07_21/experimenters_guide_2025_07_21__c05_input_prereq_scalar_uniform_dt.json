@@ -1,0 +1,17 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c05_input_prereq_scalar_uniform_dt",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c05_input_prereq_scalar_uniform_dt",
+    "claim": "The minimal input prerequisite is an HDF5 scalar timeseries G_t (e.g., drag/lift/KE), shape (N,), sampled at uniform Δt, used for NT detection.",
+    "claim_type": "input_requirement",
+    "test_hook": "Validate dataset meets (N,) and uniform Δt; then run nt_detect.py without preprocessing hacks.",
+    "evidence_excerpt": "HDF5 file with dataset G_t (drag, lift, KE …) — shape (N,), uniform Δt — the same scalar used in the NT detection.",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L19-L22",
+      "note": "2025-07-21_experimenters_guide.pdf:L19-L22"
+    }
+  }
+}

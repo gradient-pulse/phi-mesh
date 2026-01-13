@@ -1,0 +1,312 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 24,
+  "claim_cards": [
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c01_thesis_claims_first",
+      "claim_type": "thesis",
+      "claim": "Gradient Capitalism reframes economics as a coherence-first system: price is secondary to system integrity, failure modes, and repair dynamics.",
+      "falsifiable": true,
+      "test_hook": "Compare predictive power of price-only indicators vs. coherence/repair indicators for crisis onset across episodes.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p2 (intro thesis framing)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p2"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c02_markets_as_lattices",
+      "claim_type": "framing",
+      "claim": "Markets behave like coupled structures where shocks propagate; crises manifest as avalanche-like reconfigurations rather than isolated price events.",
+      "falsifiable": true,
+      "test_hook": "Test for heavy-tailed event sizes and propagation signatures across sectors around crises; compare with null models.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p2 (intro shock/avalanche framing)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p2"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c03_trust_alignment_tensor",
+      "claim_type": "definition_operational",
+      "claim": "Define a trust/alignment tensor Ψ over an economic mesh capturing how relational architecture channels flows into aligned vs fragile dynamics.",
+      "falsifiable": "partially",
+      "test_hook": "Operationalize Ψ with network proxies (exposures, correlations/partial correlations, contract/default structure) and validate interpretability.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p7 (III.2 Trust/Alignment Tensor)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p7"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c04_scalar_intensity_J",
+      "claim_type": "definition_operational",
+      "claim": "Define a scalar coherence intensity J from Ψ (J = Ψ·Ψ) as a measurable summary of how aligned/loaded the local economic structure is.",
+      "falsifiable": true,
+      "test_hook": "Construct J proxies from correlation/exposure networks and test whether J improves instability forecasting vs conventional macro variables.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p7–p8 (III.3 Coherence Intensity J)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p7–p8"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c05_reaction_diffusion_dynamics",
+      "claim_type": "method_claim",
+      "claim": "Model Ψ evolution with a reaction–diffusion dynamic (diffusion/rewiring, alignment growth, leakage/extraction), enabling regime classification and intervention design.",
+      "falsifiable": true,
+      "test_hook": "Fit reaction–diffusion-style Ψ dynamics to network time series (credit/trade/exposure graphs) and validate out-of-sample around shocks.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p8 (III.4 Reaction–Diffusion Dynamics for Ψij)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8 (III.4)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c05b_diffusion_declines_near_plateau_avalanche",
+      "claim_type": "prediction",
+      "claim": "As J approaches a plateau J*, effective diffusion/rewiring capacity declines; if J is driven beyond J*, the system undergoes rapid Ψ reconfiguration (an avalanche-like regime event).",
+      "falsifiable": true,
+      "test_hook": "Using any J proxy family, test (i) diffusion proxies decline as J→J*, and (ii) crisis hazard rises sharply when J exceeds the estimated plateau.",
+      "depends_on": [
+        "gradient_capitalism_2025_12_07__c04_scalar_intensity_J",
+        "gradient_capitalism_2025_12_07__c05_reaction_diffusion_dynamics"
+      ],
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p8 (III.4 interpretation bullets); p9 (Law 2)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8–p9"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes",
+      "claim_type": "mapping_claim",
+      "claim": "Economic outcomes are driven by hidden gradients (information, trust, access) that become visible (or remain invisible) through contextual filters.",
+      "falsifiable": "partially",
+      "test_hook": "Test whether filter changes (platform rules, reporting conventions, regulation) precede measurable flow reconfiguration and newly measurable ‘previously hidden’ effects.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p5 (II.3 Contextual Filters: consequences 1–2)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 (II.3)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c07_filters_select_expressible_gradients",
+      "claim_type": "mechanism",
+      "claim": "Filters select which gradients can be expressed in official ledgers; blocked gradients persist but shift into informal/off-ledger channels.",
+      "falsifiable": "partially",
+      "test_hook": "When filters change (e.g., accounting standards, enforcement), test for displacement between on-ledger vs off-ledger proxies (shadow risk, unpaid externalities).",
+      "depends_on": [
+        "gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes"
+      ],
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p5 (II.3 consequence 1)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 (II.3)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c08_filters_define_measurement_target",
+      "claim_type": "mechanism",
+      "claim": "Filters define how coherence is measured; what is measured gets optimized, and what is not measured erodes.",
+      "falsifiable": "partially",
+      "test_hook": "Compare domains where policy/reporting emphasizes short horizons vs long horizons; test whether ‘unmeasured’ stability variables degrade faster.",
+      "depends_on": [
+        "gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes"
+      ],
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p5 (II.3 consequence 2)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 (II.3)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c09_policy_as_cf_operations",
+      "claim_type": "framing",
+      "claim": "Policy/regulation/institutional design are explicit CF operations: deliberate adjustments to which gradients can move, how they are measured, and how their contributions are weighted.",
+      "falsifiable": "partially",
+      "test_hook": "Classify policy actions as filter changes; test whether filter-shifts predict redistribution of flows plus changes in stability proxies.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p5 (II.3 final paragraph)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 (II.3)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c10_ud_cycles_as_system_phases",
+      "claim_type": "framing",
+      "claim": "Economies move through recognizable unity–saturation–disunity phases driven by J rising, plateauing near J*, and collapsing via reconfiguration events.",
+      "falsifiable": "partially",
+      "test_hook": "In historical episodes, test for phase signatures: rising J, plateau near J* while ‘headline’ indicators remain healthy, then breakdown and filter reconfiguration.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p6 (II.4 UD cycles + heuristic picture)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p6 (II.4)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c11_value_flow_potential_mesh",
+      "claim_type": "definition_operational",
+      "claim": "Define a value–flow potential V on a market mesh where differences in V encode directional pressure for value/information flows between nodes.",
+      "falsifiable": "partially",
+      "test_hook": "Construct V-like node potentials from network centrality + flow data; test whether ΔV predicts subsequent net flows and concentration changes.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p7 (III.1 Value–Flow Potential)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p7 (III.1)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c12_saturation_horizons",
+      "claim_type": "hypothesis",
+      "claim": "There exist saturation horizons (J≈J*) in large connected economic structures (monopolies, systemic hubs, tightly coupled supply chains) beyond which further optimization increases fragility rather than resilience.",
+      "falsifiable": true,
+      "test_hook": "Estimate J* (or plateau) in candidate systems; test whether pushing beyond it predicts rising systemic fragility and crisis likelihood.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p8 (III.3); p9 (IV.1 Law 2)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8–p9"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c13_law1_no_free_extraction",
+      "claim_type": "principle",
+      "claim": "Law 1: Over meaningful horizons, sustainable accumulation requires non-negative net coherence change for the mesh; gains bought by coherence burn elsewhere eventually reappear as losses.",
+      "falsifiable": true,
+      "test_hook": "Build a mesh-level coherence balance proxy; test whether persistently negative balance predicts later crashes/social breakdown better than profit-only accounts.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p9 (IV.1 Law 1)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 (IV.1)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c14_law2_saturation_horizons",
+      "claim_type": "principle",
+      "claim": "Law 2: In sufficiently connected meshes there exists a local plateau J*; as J→J*, diffusion collapses, marginal extraction lowers global coherence, and crash probability rises sharply.",
+      "falsifiable": true,
+      "test_hook": "Quantify diffusion proxies and crash hazard as functions of J; test for a threshold-like increase beyond estimated J*.",
+      "depends_on": [
+        "gradient_capitalism_2025_12_07__c05b_diffusion_declines_near_plateau_avalanche"
+      ],
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p9 (IV.1 Law 2)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 (IV.1)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c15_law3_phase_locked_governance",
+      "claim_type": "principle",
+      "claim": "Law 3: Long-run stability requires bounding the core–edge coherence ratio (Jcore/Jedge) below a regime threshold; otherwise the system reconfigures via crisis, policy, bypass, or redesign.",
+      "falsifiable": true,
+      "test_hook": "Construct core–edge coherence proxies; test whether instability rises when the ratio exceeds a threshold Γcrit.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p10 (IV.1 Law 3)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p10 (IV.1)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c16_proxies_for_J_and_diffusion",
+      "claim_type": "operational_metric",
+      "claim": "Direct Ψ estimation is impractical at global scale, but families of proxies (network covariances/correlations, exposures, trade/credit graphs) can approximate Ψ and J, alongside diffusion proxies D(J).",
+      "falsifiable": true,
+      "test_hook": "Define multiple proxy families; test whether they agree on qualitative signatures (rise→plateau, falling diffusion, higher fragility near plateau).",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p10–p11 (IV.2 Measuring Ψ and J)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p10–p11 (IV.2)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c17_precrash_signature_triad",
+      "claim_type": "prediction",
+      "claim": "Before major crises, expected signatures include: (i) J rises then flattens near J*, (ii) diffusion declines under record ‘efficiency’, and (iii) core–edge divergence increases toward Γcrit.",
+      "falsifiable": true,
+      "test_hook": "Event studies on 1929, dot-com, 2008, 2020: test whether the triad appears consistently and adds predictive power vs standard indicators.",
+      "depends_on": [
+        "gradient_capitalism_2025_12_07__c16_proxies_for_J_and_diffusion",
+        "gradient_capitalism_2025_12_07__c15_law3_phase_locked_governance"
+      ],
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p11 (IV.3 Expected signatures)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p11 (IV.3)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c18_falsifier_no_plateau",
+      "claim_type": "falsifiable_gate",
+      "claim": "If crashes consistently arrive from low-J, high-diffusion states with no plateau-like behavior in J beforehand, the saturation-horizon picture is likely wrong or incomplete.",
+      "falsifiable": true,
+      "test_hook": "Across multiple crises, test whether J shows plateau/overshoot; failure to observe it weakens or falsifies the mechanism.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p11 (IV.3 falsifier paragraph)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p11 (IV.3)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c19_contrasts_three_theories",
+      "claim_type": "falsifiable_contrast",
+      "claim": "Gradient Capitalism makes distinguishable predictions vs neoclassical equilibrium, behavioral bias narratives, and purely distributive accounts by focusing on J saturation and core–edge bounds as structural triggers.",
+      "falsifiable": true,
+      "test_hook": "Compare predictive performance and mechanistic fit across models: do J/J* and Jcore/Jedge add explanatory power beyond fundamentals/bias/exploitation metrics?",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p11–p12 (IV.4 Contrasts)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p11–p12 (IV.4)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c20_simulation_program",
+      "claim_type": "method_claim",
+      "claim": "A minimal simulation program (agent meshes with Ψ dynamics, historical replay, policy sandboxes) can test whether Ψ and J behave as claimed across abstraction levels.",
+      "falsifiable": true,
+      "test_hook": "Implement simplified Ψ dynamics; benchmark crisis signatures and intervention effects vs VAR/GARCH/stress-test baselines.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p12 (IV.5 Simulation Program)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p12 (IV.5)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c21_coherence_dashboard_replaces_scalar_targets",
+      "claim_type": "prescription",
+      "claim": "Policy should move from scalar targets (inflation/GDP/unemployment) toward coherence dashboards tracking J(t), diffusion proxies D(J), core–edge ratio Jcore/Jedge, and coherence pressure Πecon.",
+      "falsifiable": "partially",
+      "test_hook": "Pilot a dashboard regime (even retrospectively); test whether it provides earlier warning and better intervention timing than scalar-target monitoring.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p13 (V.1 From Scalar Targets to Coherence Dashboards)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 (V.1)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c22_antitrust_as_horizon_management",
+      "claim_type": "prescription",
+      "claim": "Antitrust is framed as managing saturation horizons: preventing regions where J≈J* and D(J)→0 from hardening into permanent extraction wells.",
+      "falsifiable": true,
+      "test_hook": "Before/after antitrust or structural separation, test whether diffusion proxies improve and crisis fragility indicators decline relative to controls.",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p13 (V.2.1 Antitrust and Competition Policy)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 (V.2.1)"
+      }
+    },
+    {
+      "claim_id": "gradient_capitalism_2025_12_07__c23_taxation_as_stability_control",
+      "claim_type": "prescription",
+      "claim": "Taxation/redistribution are stability controls: they reduce destructive extraction and keep the system below collapse thresholds by shifting the coherence dashboard.",
+      "falsifiable": true,
+      "test_hook": "Compare tax regime changes to subsequent changes in core–edge ratios, diffusion proxies, and crisis frequency/severity (with confound controls).",
+      "source": {
+        "paper_id": "gradient_capitalism_2025_12_07",
+        "locator": "p13 (V.2.2 Taxation and Redistribution)",
+        "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 (V.2.2)"
+      }
+    }
+  ]
+}

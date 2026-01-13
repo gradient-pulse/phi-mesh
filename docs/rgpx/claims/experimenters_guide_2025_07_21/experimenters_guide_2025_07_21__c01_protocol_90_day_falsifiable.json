@@ -1,0 +1,17 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c01_protocol_90_day_falsifiable",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c01_protocol_90_day_falsifiable",
+    "claim": "A 90-day, falsifiable benchmark protocol is defined to test whether NT + distance-ratio rhythm can beat DNS on lead-time, RMSE, and GPU cost.",
+    "claim_type": "protocol",
+    "test_hook": "Run the 90-day phases end-to-end and report lead-time, RMSE, and GPU hours side-by-side vs DNS baseline.",
+    "evidence_excerpt": "a 90-day, falsifiable protocol that bets on Narrative Ticks (NTs) and their distance-ratio rhythm to beat DNS",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L3-L5",
+      "note": "2025-07-21_experimenters_guide.pdf:L3-L5"
+    }
+  }
+}

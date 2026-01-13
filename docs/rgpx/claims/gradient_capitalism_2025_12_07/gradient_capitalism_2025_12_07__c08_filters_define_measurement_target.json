@@ -1,0 +1,20 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c08_filters_define_measurement_target",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c08_filters_define_measurement_target",
+    "claim_type": "mechanism",
+    "claim": "Filters define how coherence is measured; what is measured gets optimized, and what is not measured erodes.",
+    "falsifiable": "partially",
+    "test_hook": "Compare domains where policy/reporting emphasizes short horizons vs long horizons; test whether ‘unmeasured’ stability variables degrade faster.",
+    "depends_on": [
+      "gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes"
+    ],
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p5 (II.3 consequence 2)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 (II.3)"
+    }
+  }
+}

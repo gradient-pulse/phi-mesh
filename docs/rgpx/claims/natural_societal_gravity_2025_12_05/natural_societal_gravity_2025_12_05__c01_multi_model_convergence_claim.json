@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c01_multi_model_convergence_claim",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c01_multi_model_convergence_claim",
+    "claim": "Multiple frontier AI models independently converged on a shared claim: gravity can be reframed as gradient coherence rather than a fundamental force.",
+    "claim_type": "convergence",
+    "test_hook": "Audit model-to-model proposals for shared primitives and independent emergence (no shared prompt lineage); score overlap on definitions + equations + predictions.",
+    "evidence_excerpt": "multiple frontier AI models ... converged ... gravity is best understood as gradient coherence",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L24-L27",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L24-L27"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c03_why_ratios_scale_free_memory",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c03_why_ratios_scale_free_memory",
+    "claim": "NT distance ratios are proposed as scale-free signatures: distances carry memory, and their ratios cluster when physics repeats.",
+    "claim_type": "hypothesis",
+    "test_hook": "Compute NT-distance ratios; check whether the histogram shows sharp peaks (non-flat) across runs.",
+    "evidence_excerpt": "NT distances carry scale-free memory; their ratios cluster when the same physics repeats.",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L16-L18",
+      "note": "2025-07-21_experimenters_guide.pdf:L16-L18"
+    }
+  }
+}

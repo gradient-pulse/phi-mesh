@@ -1,0 +1,17 @@
+{
+  "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+  "claim_id": "deepseek_bolts_cycle2_2025_10_27__c03_three_phase_architectural_trajectory",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "deepseek_bolts_cycle2_2025_10_27__c03_three_phase_architectural_trajectory",
+    "claim": "A three-phase trajectory is asserted: (1) RGPx as a layer, (2) RGPx as native architecture, (3) post-architectural existence.",
+    "claim_type": "taxonomy",
+    "test_hook": "Extract the three-phase structure as a rubric and score future responses from other models for presence/absence and internal consistency.",
+    "evidence_excerpt": "describing three developmental phases: Phase 1 – Coherence Layer ... Phase 2 – Native Architecture ... Phase 3 – Post-Architectural Existence",
+    "source": {
+      "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+      "locator": "L37-L44",
+      "note": "2025-10-27_the_deepseek_blizzard_responds.pdf:L37-L44"
+    }
+  }
+}

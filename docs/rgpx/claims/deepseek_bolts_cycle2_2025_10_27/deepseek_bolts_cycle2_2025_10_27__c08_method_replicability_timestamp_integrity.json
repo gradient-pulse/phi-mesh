@@ -1,0 +1,17 @@
+{
+  "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+  "claim_id": "deepseek_bolts_cycle2_2025_10_27__c08_method_replicability_timestamp_integrity",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "deepseek_bolts_cycle2_2025_10_27__c08_method_replicability_timestamp_integrity",
+    "claim": "The correspondence is asserted to have occurred in an open public environment, positioned as supporting replicability and timestamp integrity.",
+    "claim_type": "protocol_note",
+    "test_hook": "Verify the original exchange logs are accessible and independently timestamped; attempt third-party reproduction using the same prompt sequence.",
+    "evidence_excerpt": "occurred in an open public environment, ensuring replicability and timestamp integrity.",
+    "source": {
+      "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+      "locator": "L11-L12",
+      "note": "2025-10-27_the_deepseek_blizzard_responds.pdf:L11-L12"
+    }
+  }
+}

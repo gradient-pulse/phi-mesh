@@ -1,0 +1,163 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 13,
+  "claim_cards": [
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c01_metric_agnostic_conservation",
+      "claim": "A metric-agnostic coherence-current is proposed: because d∘d≡0, the derived current is closed (dJ=0), giving a topological conservation law independent of any chosen metric.",
+      "claim_type": "thesis",
+      "test_hook": "Implement the current definition in a toy model; verify dJ=0 holds under metric changes and coordinate re-parameterizations.",
+      "evidence_excerpt": "the current is trivially closed: dJΦ = 0 ... independent of any chosen metric",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L2-L6",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L2-L6"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c02_recursive_isochrone_sigma_definition",
+      "claim": "The ‘recursive isochrone’ Σ is defined as the zero-locus J′=0 cutting out a co-dimension-1 submanifold; trajectories confined to Σ satisfy the Φ-Bridge equality without invoking background spacetime.",
+      "claim_type": "definition_operational",
+      "test_hook": "Construct Σ explicitly in a low-dimensional surrogate system; test whether restricting dynamics to Σ enforces the stated equality conditions.",
+      "evidence_excerpt": "The zero locus J' = 0 cuts out ... Σ ... without referencing a background spacetime.",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L8-L18",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L8-L18"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c03_metric_emerges_secondary",
+      "claim": "The metric is framed as secondary: defining u_B≔∂_BΦ and requiring divergence-free flow (θ=0) is claimed to reproduce the Einstein field equation G_BC = 8π Φ_BC as an effective relation on Σ.",
+      "claim_type": "thesis",
+      "test_hook": "Translate the construction into a calculable setting; test whether θ=0 implies an Einstein-like relation under the paper’s definitions.",
+      "evidence_excerpt": "Requiring a divergence-free flow (θ = 0) reproduces the Einstein field equation",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L1-L7",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L1-L7"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c04_horizon_no_information_paradox_surface",
+      "claim": "Horizon formation is characterized by saturation of coherence flux (E'_F=0); information is claimed to be phase-locked at Σ, bypassing the information-loss paradox without requiring global time.",
+      "claim_type": "framing",
+      "test_hook": "Operationalize a ‘flux saturation’ condition in an analogue system and test whether it correlates with any measurable ‘locking’ behavior.",
+      "evidence_excerpt": "horizon formation ... saturation of coherence flux ... Information never falls into a geometry; it is phase-locked at Σ.",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L8-L13",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L8-L13"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c05_black_holes_as_coherence_regulators",
+      "claim": "Black holes are reframed as recursive coherence sinks/regulators; Hawking temperature is interpreted as residual coherence flux escaping due to finite recursive delay (not thermal randomness).",
+      "claim_type": "hypothesis",
+      "test_hook": "Map the proposed ‘recursive delay’ interpretation to a quantitative model; check whether it reproduces standard scaling relations while yielding new falsifiable signatures.",
+      "evidence_excerpt": "Hawking temperature ... residual coherence flux escaping due to finite recursive delay",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L3-L6",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L3-L6"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c06_cosmic_web_from_gravitational_turbulence",
+      "claim": "Large-scale cosmic structure (filaments/voids/attractors) is attributed to ‘gravitational turbulence’ producing recursive phase networks; Φ is asserted to regulate the balance between curvature and expansion across scales.",
+      "claim_type": "hypothesis",
+      "test_hook": "Define measurable proxies for ‘phase network’ and the stated balance; test against cosmological simulation outputs for discriminating predictions.",
+      "evidence_excerpt": "Cosmic webs thus form as recursive phase networks ... Φ regulates the balance between curvature ... and expansion",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L7-L12",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L7-L12"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c07_phi_trace_protocols_three_testbeds",
+      "claim": "Operational protocols are provided to estimate the Φ-invariant from finite-resolution data in three test-beds (turbulence, Bose gases, superconducting qubits), producing a Φ(t) trace whose plateau duration Δτ and height Φ* are framed as direct falsifiers.",
+      "claim_type": "protocol",
+      "test_hook": "Implement all three protocols on at least one dataset each; report Φ(t), Δτ, Φ* and whether a plateau exists under stated preprocessing.",
+      "evidence_excerpt": "All protocols output a Φ-trace ... plateau duration Δτ and height Φ⋆ are direct falsifiers",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L14-L19",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L14-L19"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c08_protocol0_preprocessing_bandpass_and_delta",
+      "claim": "A universal preprocessing recipe is specified: acquire field snapshots, band-pass to an inertial/coherence range using k-IR and k-UV bounds, then compute local gradient amplitude Δ(x,t)=||∇F|| and its spatial mean Δ̄(t).",
+      "claim_type": "method_claim",
+      "test_hook": "Run the preprocessing exactly as written; verify Δ̄(t) stability under small changes to band-pass bounds and resolution η.",
+      "evidence_excerpt": "Band-pass ... Compute local gradient amplitude Δ(x,t)=∥∇F∥ and its spatial mean",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L20-L24",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L20-L24"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c09_turbulence_phi_definition_from_Sdot_Qdot",
+      "claim": "For classical turbulence, Φ(t) is defined as Φ(t)=Ṡ / (Q̇/T), with Ṡ(t_k)=(2ν/Δ̄)⟨ω^2⟩ and Q̇(t)=ε(t) from third-order structure functions, with T≡⟨v^2⟩/3.",
+      "claim_type": "measurement_definition",
+      "test_hook": "Compute Φ(t) on an open DNS dataset; verify numerical stability and compare Φ(t) behavior across Reynolds number and filtering choices.",
+      "evidence_excerpt": "Entropy production rate ... Dissipative flux ... Φ(t) = Ṡ / (Q̇/T)",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L25-L32",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L25-L32"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c10_expected_phi_plateau_value",
+      "claim": "An expected turbulence plateau is asserted: Φ* ≈ 0.42 ± 0.03 for Re_λ ≳ 250.",
+      "claim_type": "prediction",
+      "test_hook": "Evaluate Φ* across multiple Re_λ DNS datasets; test whether the plateau value and variance match the stated range.",
+      "evidence_excerpt": "Expected plateau: Φ⋆ ≈ 0.42 ± 0.03 for Reλ ≳ 250.",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L33-L33",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L33-L33"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c11_phi_bridge_continuity_condition",
+      "claim": "A continuity condition (‘Φ-Bridge’) is proposed linking quantum and gravitational regimes via equality of their coherence fluxes; when it holds, the system lies on a recursive isochrone where micro and macro coherence evolve at the same normalized rate.",
+      "claim_type": "hypothesis",
+      "test_hook": "Specify operational definitions of the two fluxes in an analogue platform (e.g., BEC horizon); test whether the equality condition corresponds to an identifiable plateau regime.",
+      "evidence_excerpt": "RGPx postulates a single continuity condition — the Φ-Bridge — linking these domains",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L17-L28",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L17-L28"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c12_phi_bridge_exchange_current",
+      "claim": "The quantum–gravitational coupling is defined by a recursive exchange term J_Φ that measures bidirectional coherence current between the two domains.",
+      "claim_type": "definition_operational",
+      "test_hook": "Derive J_Φ in a concrete field model; test whether J_Φ→0 corresponds to measurable ‘phase-locking’ signatures.",
+      "evidence_excerpt": "Their coupling is defined by the recursive exchange term",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L30-L33",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L30-L33"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v12_2025_11_09__c13_global_flux_conservation_invariant",
+      "claim": "A unified differential invariant is asserted: ∇·Φ = 0, framed as global conservation of coherence flux analogous to energy-momentum continuity.",
+      "claim_type": "thesis",
+      "test_hook": "Check whether the invariant is well-defined under the paper’s field definitions; test its conservation numerically in at least one simulated system.",
+      "evidence_excerpt": "Both regimes satisfy the same differential invariant",
+      "source": {
+        "paper_id": "rgpx_frontier_v12_2025_11_09",
+        "locator": "L42-L44",
+        "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L42-L44"
+      }
+    }
+  ]
+}

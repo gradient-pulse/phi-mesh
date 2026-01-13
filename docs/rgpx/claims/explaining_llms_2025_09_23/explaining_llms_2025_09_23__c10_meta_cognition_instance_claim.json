@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c10_meta_cognition_instance_claim",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c10_meta_cognition_instance_claim",
+    "claim": "The podcast is treated as an instance of AI reflecting on its own functioning in non-linear terms (meta-cognition as artifact).",
+    "claim_type": "meta_observation",
+    "test_hook": "Repeat with other models and prompts; score whether outputs contain self-description of inference in cycle terms (without being asked to).",
+    "evidence_excerpt": "The podcast itself becomes an instance of AI reflecting on its own functioning",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L36-L37",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L36-L37"
+    }
+  }
+}

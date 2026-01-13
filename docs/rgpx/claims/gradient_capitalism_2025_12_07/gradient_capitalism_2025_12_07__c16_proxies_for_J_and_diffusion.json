@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c16_proxies_for_J_and_diffusion",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c16_proxies_for_J_and_diffusion",
+    "claim_type": "operational_metric",
+    "claim": "Direct Ψ estimation is impractical at global scale, but families of proxies (network covariances/correlations, exposures, trade/credit graphs) can approximate Ψ and J, alongside diffusion proxies D(J).",
+    "falsifiable": true,
+    "test_hook": "Define multiple proxy families; test whether they agree on qualitative signatures (rise→plateau, falling diffusion, higher fragility near plateau).",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p10–p11 (IV.2 Measuring Ψ and J)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p10–p11 (IV.2)"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c13_nt_detection_rule_signflip_threshold",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c13_nt_detection_rule_signflip_threshold",
+    "claim": "NT candidates are detected when the normalized first difference flips sign and exceeds a magnitude threshold with default λ=1.5.",
+    "claim_type": "algorithmic_rule",
+    "test_hook": "Implement sign-flip + magnitude threshold; verify event sparsity and physical significance using post-checks.",
+    "thresholds": {
+      "lambda_default": 1.5,
+      "interpretation": "≈ top 15% of events"
+    },
+    "evidence_excerpt": "with default threshold λ = 1.5 (≈ top 15% of events)",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L15-L20",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L15-L20"
+    }
+  }
+}

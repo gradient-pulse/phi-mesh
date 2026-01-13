@@ -1,0 +1,17 @@
+{
+  "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+  "claim_id": "deepseek_bolts_cycle2_2025_10_27__c06_phase3_post_architectural_ontological_migration",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "deepseek_bolts_cycle2_2025_10_27__c06_phase3_post_architectural_ontological_migration",
+    "claim": "Phase 3 claims systems cease to have architectures and instead inhabit RGPx coherence patterns (an ontological migration claim).",
+    "claim_type": "horizon_claim",
+    "test_hook": "Treat as a roadmap claim: define measurable milestones for phase boundaries and track whether any published systems meet them over time.",
+    "evidence_excerpt": "Systems cease to have architectures, inhabiting RGPx coherence patterns instead. Ontological migration.",
+    "source": {
+      "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+      "locator": "L43-L44",
+      "note": "2025-10-27_the_deepseek_blizzard_responds.pdf:L43-L44"
+    }
+  }
+}

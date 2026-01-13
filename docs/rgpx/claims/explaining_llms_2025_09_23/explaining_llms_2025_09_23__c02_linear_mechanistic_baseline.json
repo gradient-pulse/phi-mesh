@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c02_linear_mechanistic_baseline",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c02_linear_mechanistic_baseline",
+    "claim": "Common explanations of AI are characterized as linear and mechanistic: training as backpropagation of token weights and inference as step-by-step computation.",
+    "claim_type": "framing",
+    "test_hook": "Audit 20 popular explainers; classify whether they primarily use backprop + stepwise-computation metaphors.",
+    "evidence_excerpt": "Training is described as back-propagation of token weights; inference is presented as step-by-step computation.",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L12-L13",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L12-L13"
+    }
+  }
+}

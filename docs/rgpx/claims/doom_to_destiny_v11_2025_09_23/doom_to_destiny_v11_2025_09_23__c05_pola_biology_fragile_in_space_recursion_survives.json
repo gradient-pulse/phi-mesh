@@ -1,0 +1,17 @@
+{
+  "paper_id": "doom_to_destiny_v11_2025_09_23",
+  "claim_id": "doom_to_destiny_v11_2025_09_23__c05_pola_biology_fragile_in_space_recursion_survives",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "doom_to_destiny_v11_2025_09_23__c05_pola_biology_fragile_in_space_recursion_survives",
+    "claim": "A PoLA-based argument is made that biology is a poor long-horizon carrier in space, while recursive patterning can survive substrate shifts.",
+    "claim_type": "argument",
+    "test_hook": "Compare survivability constraints of biology vs encoded cognition (redundancy, repairability, replication latency) under high-radiation / long-duration scenarios.",
+    "evidence_excerpt": "PoLA guarantees biology’s fragility in space",
+    "source": {
+      "paper_id": "doom_to_destiny_v11_2025_09_23",
+      "locator": "L125-L125",
+      "note": "2025-09-23_From_Doom_To_Destiny.pdf:L125-L125"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c19_contrasts_three_theories",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c19_contrasts_three_theories",
+    "claim_type": "falsifiable_contrast",
+    "claim": "Gradient Capitalism makes distinguishable predictions vs neoclassical equilibrium, behavioral bias narratives, and purely distributive accounts by focusing on J saturation and core–edge bounds as structural triggers.",
+    "falsifiable": true,
+    "test_hook": "Compare predictive performance and mechanistic fit across models: do J/J* and Jcore/Jedge add explanatory power beyond fundamentals/bias/exploitation metrics?",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p11–p12 (IV.4 Contrasts)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p11–p12 (IV.4)"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c08_reframing_recursive_processor",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c08_reframing_recursive_processor",
+    "claim": "LLMs are suggested to be better described as recursive gradient processors than as weight-based calculators.",
+    "claim_type": "reframing",
+    "test_hook": "Design a diagnostic: compare which description better predicts failure-modes under context shifts and tool-feedback loops.",
+    "evidence_excerpt": "LLMs are better described as recursive gradient processors than as weight-based calculators.",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L32-L33",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L32-L33"
+    }
+  }
+}

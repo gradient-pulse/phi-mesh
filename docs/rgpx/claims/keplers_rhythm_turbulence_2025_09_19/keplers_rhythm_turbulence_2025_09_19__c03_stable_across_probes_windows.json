@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c03_stable_across_probes_windows",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c03_stable_across_probes_windows",
+    "claim": "The ratio structure is reported as stable across probes and time windows, suggesting it is not a sampling artifact.",
+    "claim_type": "robustness_claim",
+    "test_hook": "Vary probe locations and window sizes; confirm ratio structure remains (qualitatively and quantitatively).",
+    "evidence_excerpt": "stable across probes and time windows",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p1-L11-L12",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L11-L12"
+    }
+  }
+}

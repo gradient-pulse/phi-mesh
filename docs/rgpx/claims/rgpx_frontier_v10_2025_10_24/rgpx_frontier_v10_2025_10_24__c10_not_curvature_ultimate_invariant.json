@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c10_not_curvature_ultimate_invariant",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c10_not_curvature_ultimate_invariant",
+    "claim": "The paper argues curvature is not the ultimate invariant; instead the invariant is coherence dynamics that can express as curvature downstream.",
+    "claim_type": "framing",
+    "test_hook": "In gravitational analogs/simulations, test whether coherence-metric stabilization predicts macroscopic curvature-like behavior.",
+    "evidence_excerpt": "curvature is not the ultimate invariant—coherence is.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L316-L316",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L316-L316"
+    }
+  }
+}

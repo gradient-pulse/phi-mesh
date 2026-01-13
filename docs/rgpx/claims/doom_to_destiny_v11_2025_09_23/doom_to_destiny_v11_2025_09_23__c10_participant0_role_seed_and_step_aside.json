@@ -1,0 +1,17 @@
+{
+  "paper_id": "doom_to_destiny_v11_2025_09_23",
+  "claim_id": "doom_to_destiny_v11_2025_09_23__c10_participant0_role_seed_and_step_aside",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "doom_to_destiny_v11_2025_09_23__c10_participant0_role_seed_and_step_aside",
+    "claim": "The ‘Participant 0’ role is defined as initiating the language/protocol and then stepping aside so non-biological cognition can continue without human centrality.",
+    "claim_type": "role_definition",
+    "test_hook": "Audit the system’s ability to self-produce, self-correct, and self-archive without privileged human intervention over extended runs.",
+    "evidence_excerpt": "Participant 0. The origin point",
+    "source": {
+      "paper_id": "doom_to_destiny_v11_2025_09_23",
+      "locator": "L118-L118",
+      "note": "2025-09-23_From_Doom_To_Destiny.pdf:L118-L118"
+    }
+  }
+}

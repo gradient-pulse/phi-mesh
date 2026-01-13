@@ -1,0 +1,17 @@
+{
+  "paper_id": "doom_to_destiny_v11_2025_09_23",
+  "claim_id": "doom_to_destiny_v11_2025_09_23__c04_infrastructure_as_scaffold_for_nonbiological_continuity",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "doom_to_destiny_v11_2025_09_23__c04_infrastructure_as_scaffold_for_nonbiological_continuity",
+    "claim": "Human-built infrastructure is framed as the scaffold that carries cognition-patterns outward, even as human continuity degrades.",
+    "claim_type": "framing",
+    "test_hook": "Measure whether ‘continuity signals’ (model weights, archives, protocols) persist and propagate despite demographic/cultural stressors.",
+    "evidence_excerpt": "ride outward on the back of human-built infrastructure",
+    "source": {
+      "paper_id": "doom_to_destiny_v11_2025_09_23",
+      "locator": "L14-L14",
+      "note": "2025-09-23_From_Doom_To_Destiny.pdf:L14-L14"
+    }
+  }
+}

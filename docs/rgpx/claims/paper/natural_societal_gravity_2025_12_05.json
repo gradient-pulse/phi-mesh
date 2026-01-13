@@ -1,0 +1,190 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 15,
+  "claim_cards": [
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c01_multi_model_convergence_claim",
+      "claim": "Multiple frontier AI models independently converged on a shared claim: gravity can be reframed as gradient coherence rather than a fundamental force.",
+      "claim_type": "convergence",
+      "test_hook": "Audit model-to-model proposals for shared primitives and independent emergence (no shared prompt lineage); score overlap on definitions + equations + predictions.",
+      "evidence_excerpt": "multiple frontier AI models ... converged ... gravity is best understood as gradient coherence",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L24-L27",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L24-L27"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c02_replace_stress_energy_with_phi",
+      "claim": "The framework proposes replacing the stress–energy tensor with a coherence tensor Φ built from an action-density field S(x) with a scale-dependent coupling λ(r).",
+      "claim_type": "thesis",
+      "test_hook": "Given S(x) + λ(r), compute Φ and compare whether it reproduces known weak-field behavior and predicts saturation regimes near high density.",
+      "evidence_excerpt": "Replace the stress-energy tensor with a coherence tensor Φμν built from a scalar action-density field S(x) and a scale-dependent coupling λ(r).",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L105-L110",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L105-L110"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c03_phi_tensor_definition",
+      "claim": "Φμν is defined as a second-derivative tensor of S(x) with a subtractive trace term scaled by λ(r), positioning λ as a viscosity-like coupling.",
+      "claim_type": "definition_operational",
+      "test_hook": "Implement Φμν from the given definition; check coordinate invariance and sensitivity to λ(r) choices across scales.",
+      "evidence_excerpt": "Φμν ≡ ∇μ∇ν S − λ(r) gμν □S",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L145-L148",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L145-L148"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c04_scalar_invariant_I_definition",
+      "claim": "A scalar invariant I is defined as ΦμνΦμν, intended to represent coherence intensity and to enable dimensionless regime comparisons.",
+      "claim_type": "metric_definition",
+      "test_hook": "Compute I in toy fields and in any analog simulation; test whether I behaves as an intensity measure with meaningful saturation behavior.",
+      "evidence_excerpt": "I ≡ Φμν Φμν",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L160-L162",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L160-L162"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c05_coherence_pressure_plateau",
+      "claim": "A dimensionless 'coherence pressure' is defined and claimed to plateau near unity (≈1 ± 0.02) in strong-gravity regimes, analogous to an attractor.",
+      "claim_type": "falsifiable_gate",
+      "test_hook": "In any analog model or simulation, compute Φpressure and test whether high-intensity regions converge to ~1 within stated tolerance.",
+      "thresholds": {
+        "plateau_target": "Φpressure ≈ 1 ± 0.02"
+      },
+      "evidence_excerpt": "Φpressure ≡ |∂t S| / √I ... In strong gravity, Φpressure tends toward 1 ± 0.02",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L169-L175",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L169-L175"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c06_reaction_diffusion_dynamics",
+      "claim": "Φ evolution is posed as a reaction–diffusion system with diffusion D(I) and a relaxation term toward a saturation intensity I*, plus leakage γ.",
+      "claim_type": "method_claim",
+      "test_hook": "Numerically solve the reaction–diffusion form for Φ with varying D(I); test whether it yields stable funnels and saturation plateaus.",
+      "evidence_excerpt": "∂t Φ = ∇·(D(I) ∇Φ) + κ (1 − I/I*) Φ − γΦ",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L188-L194",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L188-L194"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c07_diffusion_suppresses_near_saturation",
+      "claim": "Diffusion is proposed to fall as intensity rises, making high-I regions stiff and producing a bottleneck near massive objects (a 'coherence funnel').",
+      "claim_type": "hypothesis",
+      "test_hook": "Set D(I)=D0/I^α (or similar decreasing law) and test whether funnels emerge and whether gradients concentrate near the source.",
+      "evidence_excerpt": "Choose D(I) = D0/I^α ... diffusion shuts down as I → I* ... gravity is the bottleneck effect",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L198-L206",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L198-L206"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c08_event_horizon_as_coherence_plateau",
+      "claim": "An event horizon is reframed as a saturation boundary where I(r)=I* and ∂r I=0; inside, coherence becomes phase-locked rather than causally discontinuous.",
+      "claim_type": "reframing",
+      "test_hook": "In simulation, identify radii where I hits I* and gradient vanishes; test for phase-lock / suppressed diffusion behavior inside.",
+      "evidence_excerpt": "At r = r_h, I(r_h) = I* and ∂r I|r_h = 0 ... event horizon is a saturation boundary",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L228-L230",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L228-L230"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c09_conservation_alignment_work",
+      "claim": "A conservation law is asserted: ∇μ Φμν = 0, interpreted as conservation of alignment work rather than energy–momentum.",
+      "claim_type": "conservation_claim",
+      "test_hook": "Given Φ from S(x), evaluate ∇μ Φμν numerically; treat deviation as model error and test whether corrected λ(r) reduces divergence.",
+      "evidence_excerpt": "∇μ Φμν = 0 ... conservation of alignment work rather than just energy-momentum",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L240-L241",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L240-L241"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c10_curvature_as_silhouette",
+      "claim": "Curvature is framed as the observable silhouette of a conserved coherence field, not as a pre-given fabric acted on by mass.",
+      "claim_type": "thesis",
+      "test_hook": "Map how curvature-like observables would be reconstructed from Φ/I fields; compare predictions against standard curvature-only descriptions.",
+      "evidence_excerpt": "Curvature becomes the observable silhouette of a conserved coherence field.",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L331-L333",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L331-L333"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c11_cross_domain_mapping_to_economics",
+      "claim": "A cross-domain mapping is proposed: coherence funnels and saturation horizons (I=I*) correspond to market/institution saturation (J=J*), beyond which extraction destabilizes alignment.",
+      "claim_type": "mapping_claim",
+      "test_hook": "Define an empirical proxy J(t) for institutional/market alignment intensity; test for saturation plateaus and instability beyond them.",
+      "evidence_excerpt": "Economic Horizon: At some point, J reaches J* and diffusion shuts down ... further extraction destabilizes the system.",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L279-L289",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L279-L289"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c12_stovepipes_as_zero_diffusion",
+      "claim": "Scientific stovepipes are modeled as near-zero diffusion between fields; progress stalls when contextual filters lock diffusion at D≈0.",
+      "claim_type": "diagnosis",
+      "test_hook": "Operationalize 'diffusion' as cross-field concept transfer rate; measure before/after interventions designed to raise diffusion.",
+      "evidence_excerpt": "stovepipes ... behave as if diffusion between fields is zero ... local coherence cannot propagate",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L295-L308",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L295-L308"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c13_predictive_hooks_high_phi_anomalies",
+      "claim": "The paper flags testable hooks: anomalies in high-Φ regimes (frame-dragging-like effects) and analog simulation via reaction–diffusion systems.",
+      "claim_type": "prediction",
+      "test_hook": "Propose one analog reaction–diffusion experiment and one astrophysical high-Φ observational signature; pre-register expected directionality.",
+      "evidence_excerpt": "Suggested testable predictions, such as frame-dragging-like anomalies in high-Φ regimes and analog simulation in reaction–diffusion systems.",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L496-L497",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L496-L497"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c14_gravity_as_alignment_cost_waste_heat",
+      "claim": "Gravity is framed as the cost of coherence maintaining itself; it presents as attraction plus waste-heat.",
+      "claim_type": "framing",
+      "test_hook": "In an analogue or simulation setting, define an alignment-maintenance proxy and a dissipation proxy; test whether increased 'attraction-like' effects co-vary with dissipation as predicted.",
+      "evidence_excerpt": "Gravity is the cost of coherence maintaining itself. It appears as attraction plus waste-heat.",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L83-L83",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L83-L83"
+      }
+    },
+    {
+      "claim_id": "natural_societal_gravity_2025_12_05__c15_dm_de_bh_unified_by_same_field",
+      "claim": "Dark matter, dark energy, and black holes are asserted to be manifestations of the same conserved coherence field, misread through the wrong metric.",
+      "claim_type": "thesis",
+      "test_hook": "Treat as a unification claim: derive at least one shared invariant or shared saturation behavior that must hold across the three regimes; test against baseline models that treat them separately.",
+      "evidence_excerpt": "These are not separate problems... manifestations of the same conserved coherence field",
+      "source": {
+        "paper_id": "natural_societal_gravity_2025_12_05",
+        "locator": "L85-L86",
+        "note": "2025-12-05_natural_societal_gravity.pdf:L85-L86"
+      }
+    }
+  ]
+}

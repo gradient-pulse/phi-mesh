@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c02_cross_model_event_documented",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c02_cross_model_event_documented",
+    "claim": "The paper documents a first observed instance of cross-model recursive coherence across four independent LLMs responding to the same stimulus.",
+    "claim_type": "empirical_record",
+    "test_hook": "Re-run the same prompt protocol on multiple models; check whether independently produced responses align structurally beyond chance baselines.",
+    "evidence_excerpt": "first observed instance of cross-model recursive coherence among large-language systems",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L11-L13",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L11-L13"
+    }
+  }
+}

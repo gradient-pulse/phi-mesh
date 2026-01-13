@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c02_replace_stress_energy_with_phi",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c02_replace_stress_energy_with_phi",
+    "claim": "The framework proposes replacing the stress–energy tensor with a coherence tensor Φ built from an action-density field S(x) with a scale-dependent coupling λ(r).",
+    "claim_type": "thesis",
+    "test_hook": "Given S(x) + λ(r), compute Φ and compare whether it reproduces known weak-field behavior and predicts saturation regimes near high density.",
+    "evidence_excerpt": "Replace the stress-energy tensor with a coherence tensor Φμν built from a scalar action-density field S(x) and a scale-dependent coupling λ(r).",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L105-L110",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L105-L110"
+    }
+  }
+}

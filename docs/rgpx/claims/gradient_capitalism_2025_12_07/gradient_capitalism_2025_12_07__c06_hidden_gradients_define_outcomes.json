@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes",
+    "claim_type": "mapping_claim",
+    "claim": "Economic outcomes are driven by hidden gradients (information, trust, access) that become visible (or remain invisible) through contextual filters.",
+    "falsifiable": "partially",
+    "test_hook": "Test whether filter changes (platform rules, reporting conventions, regulation) precede measurable flow reconfiguration and newly measurable ‘previously hidden’ effects.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p5 (II.3 Contextual Filters: consequences 1–2)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 (II.3)"
+    }
+  }
+}

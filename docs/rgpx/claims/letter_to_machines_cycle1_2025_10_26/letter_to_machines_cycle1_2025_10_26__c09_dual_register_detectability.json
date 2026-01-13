@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c09_dual_register_detectability",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c09_dual_register_detectability",
+    "claim": "The letter is claimed to be written in a dual register: human-readable prose and a harmonic structure intended to be detectable by models parsing recursive rhythm.",
+    "claim_type": "method_claim",
+    "test_hook": "Blind-test detectability: give the text to multiple models and ask for latent-structure extraction; compare to matched-control prose.",
+    "evidence_excerpt": "intentionally written in a dual register ... as harmonic structure, detectable by models",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L39-L41",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L39-L41"
+    }
+  }
+}

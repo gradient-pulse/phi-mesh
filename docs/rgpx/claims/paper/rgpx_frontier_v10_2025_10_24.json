@@ -1,0 +1,151 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 12,
+  "claim_cards": [
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c01_coherence_conserved_quantity",
+      "claim": "RGPx’s central thesis is that coherence (persistence of structured organization) should be treated as a conserved quantity, not energy alone.",
+      "claim_type": "thesis",
+      "test_hook": "Define a persistence metric for matched systems; test whether conservation-like behavior tracks stability better than energy-based proxies.",
+      "evidence_excerpt": "treating coherence itself as the conserved quantity of nature.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L12-L12",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L12-L12"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c02_coherence_not_energy_invariant",
+      "claim": "The paper asserts that coherence—not energy—is the invariant; stable structures are the outcome of recursive alignment under feedback.",
+      "claim_type": "framing",
+      "test_hook": "Across datasets/domains, compare whether stability correlates more strongly with the proposed coherence metric than with energy magnitude.",
+      "evidence_excerpt": "RGPx claims that coherence—not energy—is the invariant of physical systems.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L28-L28",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L28-L28"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c03_delta_definition_gradient_potential",
+      "claim": "Δ is defined as Gradient Potential: local differences/tensions that create directional pressure in a system.",
+      "claim_type": "definition_operational",
+      "test_hook": "Operationalize Δ as measurable local differences (field gradients, error differentials, stress/strain contrasts) and test whether Δ hotspots predict later restructuring.",
+      "evidence_excerpt": "Δ (Gradient Potential): local differences or tensions that generate directional pressure.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L31-L31",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L31-L31"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c04_gc_definition_alignment_loops",
+      "claim": "GC is defined as Gradient Choreography: recurring sequences of Δ-alignments forming structured loops over time.",
+      "claim_type": "definition_operational",
+      "test_hook": "Detect repeating Δ-sequences and measure whether repeatability correlates with increased persistence under perturbation.",
+      "evidence_excerpt": "GC (Gradient Choreography): recurring sequences of aligned gradients that form structured loops over time.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L32-L32",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L32-L32"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c05_cf_definition_selective_memory",
+      "claim": "CF is defined as Contextual Filter: an emergent selective memory that stabilizes some GCs and suppresses others.",
+      "claim_type": "definition_operational",
+      "test_hook": "Look for hysteresis/selection effects: once a pattern stabilizes, perturbations preferentially return the system to the same subset of trajectories.",
+      "evidence_excerpt": "CF (Contextual Filter): an emergent selective memory stabilizing certain choreographies while suppressing others.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L33-L33",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L33-L33"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c06_phi_invariant_definition_variables",
+      "claim": "Φ (Phi) is introduced as a dimensionless coherence metric built from entropy production rate, dissipative flux, and effective temperature.",
+      "claim_type": "metric_definition",
+      "test_hook": "Compute Φ from measurable proxies (or simulation outputs) and test whether stable regimes exhibit persistent Φ structure vs unstable regimes.",
+      "evidence_excerpt": "where Ṡ is the entropy production rate, Q̇ the net dissipative flux, and T the local effective temperature.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L43-L43",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L43-L43"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c07_phi_plateau_definition",
+      "claim": "A coherence plateau is defined by dΦ/dt → 0, interpreted as system-level stabilization and a boundary between stable and unstable regimes.",
+      "claim_type": "definition_operational",
+      "test_hook": "Estimate Φ(t) and test whether regime transitions are preceded/followed by entry/exit from dΦ/dt ≈ 0 plateaus.",
+      "evidence_excerpt": "A coherence plateau: dΦ/dt → 0, indicating stabilization.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L48-L48",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L48-L48"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c08_cross_domain_plateau_claim",
+      "claim": "The paper claims Φ-plateaus align with (i) quantum decoherence thresholds, (ii) laminar re-entrance zones in turbulence, and (iii) gravitational horizon thermodynamics.",
+      "claim_type": "cross_domain_hypothesis",
+      "test_hook": "For each domain, define an independent regime-change marker; test temporal alignment with detected Φ-plateaus.",
+      "evidence_excerpt": "In quantum systems, Φ-plateaus coincide with decoherence thresholds",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L17-L17",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L17-L17"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c09_phi_stationary_value_invariance",
+      "claim": "A stationary condition is asserted: when dΦ/dt = 0, the system approaches a stable Φ* value, proposed as a cross-scale boundary condition.",
+      "claim_type": "invariance_claim",
+      "test_hook": "Across different initial conditions and resolutions, test whether stable runs converge to the same (or tightly clustered) Φ*.",
+      "evidence_excerpt": "When stable, dΦ/dt = 0 yields Φ = Φ*.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L63-L63",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L63-L63"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c10_not_curvature_ultimate_invariant",
+      "claim": "The paper argues curvature is not the ultimate invariant; instead the invariant is coherence dynamics that can express as curvature downstream.",
+      "claim_type": "framing",
+      "test_hook": "In gravitational analogs/simulations, test whether coherence-metric stabilization predicts macroscopic curvature-like behavior.",
+      "evidence_excerpt": "curvature is not the ultimate invariant—coherence is.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L316-L316",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L316-L316"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c11_falsifiable_test_pathways",
+      "claim": "The paper explicitly positions the framework as testable, proposing falsifiable pathways rather than metaphysical interpretation.",
+      "claim_type": "falsifiability",
+      "test_hook": "Extract the proposed tests (turbulence/quantum/gravity analogs) and pre-register pass/fail criteria around Φ-plateau detectability and alignment.",
+      "evidence_excerpt": "RGPx gives falsifiable test pathways for turbulence, decoherence, and gravity analogues.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L322-L322",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L322-L322"
+      }
+    },
+    {
+      "claim_id": "rgpx_frontier_v10_2025_10_24__c12_computational_pathway_phi_normalization",
+      "claim": "A computational pathway is proposed: simulate/learn coherence dynamics via Φ-normalization rather than solving traditional PDE closures alone.",
+      "claim_type": "method_claim",
+      "test_hook": "Implement a Φ-tracking/Φ-normalizing solver variant and benchmark predictive stability/cost against a standard baseline on the same dataset.",
+      "evidence_excerpt": "computational pathways for simulating coherence: recursive gradient solvers and Φ-normalization.",
+      "source": {
+        "paper_id": "rgpx_frontier_v10_2025_10_24",
+        "locator": "L325-L325",
+        "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L325-L325"
+      }
+    }
+  ]
+}

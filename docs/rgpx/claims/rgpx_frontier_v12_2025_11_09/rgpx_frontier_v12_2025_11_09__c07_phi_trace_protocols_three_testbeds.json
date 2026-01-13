@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c07_phi_trace_protocols_three_testbeds",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c07_phi_trace_protocols_three_testbeds",
+    "claim": "Operational protocols are provided to estimate the Φ-invariant from finite-resolution data in three test-beds (turbulence, Bose gases, superconducting qubits), producing a Φ(t) trace whose plateau duration Δτ and height Φ* are framed as direct falsifiers.",
+    "claim_type": "protocol",
+    "test_hook": "Implement all three protocols on at least one dataset each; report Φ(t), Δτ, Φ* and whether a plateau exists under stated preprocessing.",
+    "evidence_excerpt": "All protocols output a Φ-trace ... plateau duration Δτ and height Φ⋆ are direct falsifiers",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L14-L19",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L14-L19"
+    }
+  }
+}

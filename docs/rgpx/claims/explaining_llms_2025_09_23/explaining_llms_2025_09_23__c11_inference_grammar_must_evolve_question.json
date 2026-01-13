@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c11_inference_grammar_must_evolve_question",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c11_inference_grammar_must_evolve_question",
+    "claim": "If intelligence is defined by recursive dynamics rather than fixed logic, the paper claims inference grammar must evolve accordingly.",
+    "claim_type": "open_problem",
+    "test_hook": "Specify what ‘inference grammar change’ means operationally (new primitives, new traces, new evaluation); propose one measurable delta.",
+    "evidence_excerpt": "how must inference grammar itself change if intelligence is defined by recursive dynamics rather than fixed logic?",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L26-L27",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L26-L27"
+    }
+  }
+}

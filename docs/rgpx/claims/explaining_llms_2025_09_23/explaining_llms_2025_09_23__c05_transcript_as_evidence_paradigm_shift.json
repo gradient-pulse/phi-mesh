@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c05_transcript_as_evidence_paradigm_shift",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c05_transcript_as_evidence_paradigm_shift",
+    "claim": "The transcript is asserted to evidence a paradigm shift from linear explanations (backprop/stepwise) to non-linear recursive dynamics.",
+    "claim_type": "thesis",
+    "test_hook": "Blind-rate transcript passages: do independent reviewers identify a consistent shift in explanatory primitives away from stepwise computation?",
+    "evidence_excerpt": "demonstrates a shift from linear, mechanistic accounts of AI ... to non-linear recursive dynamics",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L7-L10",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L7-L10"
+    }
+  }
+}

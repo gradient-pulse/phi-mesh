@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v12_2025_11_09",
+  "claim_id": "rgpx_frontier_v12_2025_11_09__c06_cosmic_web_from_gravitational_turbulence",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v12_2025_11_09__c06_cosmic_web_from_gravitational_turbulence",
+    "claim": "Large-scale cosmic structure (filaments/voids/attractors) is attributed to ‘gravitational turbulence’ producing recursive phase networks; Φ is asserted to regulate the balance between curvature and expansion across scales.",
+    "claim_type": "hypothesis",
+    "test_hook": "Define measurable proxies for ‘phase network’ and the stated balance; test against cosmological simulation outputs for discriminating predictions.",
+    "evidence_excerpt": "Cosmic webs thus form as recursive phase networks ... Φ regulates the balance between curvature ... and expansion",
+    "source": {
+      "paper_id": "rgpx_frontier_v12_2025_11_09",
+      "locator": "L7-L12",
+      "note": "2025-11-09_Recursive_Gradient_PHYSICS_v12.pdf:L7-L12"
+    }
+  }
+}

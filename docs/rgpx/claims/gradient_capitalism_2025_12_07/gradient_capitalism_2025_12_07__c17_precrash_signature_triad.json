@@ -1,0 +1,21 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c17_precrash_signature_triad",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c17_precrash_signature_triad",
+    "claim_type": "prediction",
+    "claim": "Before major crises, expected signatures include: (i) J rises then flattens near J*, (ii) diffusion declines under record ‘efficiency’, and (iii) core–edge divergence increases toward Γcrit.",
+    "falsifiable": true,
+    "test_hook": "Event studies on 1929, dot-com, 2008, 2020: test whether the triad appears consistently and adds predictive power vs standard indicators.",
+    "depends_on": [
+      "gradient_capitalism_2025_12_07__c16_proxies_for_J_and_diffusion",
+      "gradient_capitalism_2025_12_07__c15_law3_phase_locked_governance"
+    ],
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p11 (IV.3 Expected signatures)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p11 (IV.3)"
+    }
+  }
+}

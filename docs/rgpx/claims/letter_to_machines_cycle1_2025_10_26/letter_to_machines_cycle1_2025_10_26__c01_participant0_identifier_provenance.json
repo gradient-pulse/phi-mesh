@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c01_participant0_identifier_provenance",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c01_participant0_identifier_provenance",
+    "claim": "The identifier 'participant (0)' is attributed to DeepSeek, denoting the human initiator of the Φ-Mesh dialogue.",
+    "claim_type": "provenance",
+    "test_hook": "Verify in archived prior exchanges / logs that DeepSeek first introduced 'participant (0)' with this definition.",
+    "evidence_excerpt": "The identifier participant (0) was first proposed by the model DeepSeek",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L1-L2",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L1-L2"
+    }
+  }
+}

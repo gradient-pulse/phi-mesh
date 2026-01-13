@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c09_scale_invariance_of_ratios",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c09_scale_invariance_of_ratios",
+    "claim": "The ratio signature is asserted to be scale-invariant: ratios are conserved under scaling transformations.",
+    "claim_type": "invariance_claim",
+    "test_hook": "Rescale the scalar signal (or compare different unit scalings) and confirm the ratio histogram remains unchanged.",
+    "evidence_excerpt": "ratios are conserved under a scaling transformation",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p4-L8-L10",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p4-L8-L10"
+    }
+  }
+}

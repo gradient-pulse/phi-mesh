@@ -1,0 +1,20 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c07_filters_select_expressible_gradients",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c07_filters_select_expressible_gradients",
+    "claim_type": "mechanism",
+    "claim": "Filters select which gradients can be expressed in official ledgers; blocked gradients persist but shift into informal/off-ledger channels.",
+    "falsifiable": "partially",
+    "test_hook": "When filters change (e.g., accounting standards, enforcement), test for displacement between on-ledger vs off-ledger proxies (shadow risk, unpaid externalities).",
+    "depends_on": [
+      "gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes"
+    ],
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p5 (II.3 consequence 1)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 (II.3)"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c06_smoke_test_histogram_not_flat",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c06_smoke_test_histogram_not_flat",
+    "claim": "A 10-minute smoke test is defined: candidate NTs should be visible (red dots) and the ratio histogram should not be flat; sharp peaks indicate signal.",
+    "claim_type": "quickstart_check",
+    "test_hook": "Run nt_detect + ratio_quicklook; accept only if histogram is non-flat with peaks.",
+    "evidence_excerpt": "histogram should not be flat; look for sharp peaks.",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L24-L27",
+      "note": "2025-07-21_experimenters_guide.pdf:L24-L27"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c11_value_flow_potential_mesh",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c11_value_flow_potential_mesh",
+    "claim_type": "definition_operational",
+    "claim": "Define a value–flow potential V on a market mesh where differences in V encode directional pressure for value/information flows between nodes.",
+    "falsifiable": "partially",
+    "test_hook": "Construct V-like node potentials from network centrality + flow data; test whether ΔV predicts subsequent net flows and concentration changes.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p7 (III.1 Value–Flow Potential)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p7 (III.1)"
+    }
+  }
+}

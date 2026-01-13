@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c05_distance_ratio_histogram_signature",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c05_distance_ratio_histogram_signature",
+    "claim": "The proposed signature is a histogram of ratios of consecutive NT distances; clustering indicates repeated physics.",
+    "claim_type": "measurement_definition",
+    "test_hook": "Compute NT distances d_i and ratios r_i=d_i/d_{i+1}; check whether histogram exhibits stable clusters.",
+    "evidence_excerpt": "we compute their distances d_i and form ratios r_i = d_i / d_{i+1}",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p2-L18-L20",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L18-L20"
+    }
+  }
+}

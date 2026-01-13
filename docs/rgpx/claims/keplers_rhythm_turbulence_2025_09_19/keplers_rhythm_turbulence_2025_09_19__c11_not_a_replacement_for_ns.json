@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c11_not_a_replacement_for_ns",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c11_not_a_replacement_for_ns",
+    "claim": "The approach is explicitly framed as complementing—not replacing—Navier–Stokes.",
+    "claim_type": "scope_limit",
+    "test_hook": "State benchmark comparisons as ‘added predictive signal’ rather than ‘replacement’; evaluate side-by-side.",
+    "evidence_excerpt": "This does not replace Navier–Stokes. It adds a missing layer",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p5-L13-L18",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p5-L13-L18"
+    }
+  }
+}

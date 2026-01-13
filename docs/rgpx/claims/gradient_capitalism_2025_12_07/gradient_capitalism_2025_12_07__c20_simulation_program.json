@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c20_simulation_program",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c20_simulation_program",
+    "claim_type": "method_claim",
+    "claim": "A minimal simulation program (agent meshes with Ψ dynamics, historical replay, policy sandboxes) can test whether Ψ and J behave as claimed across abstraction levels.",
+    "falsifiable": true,
+    "test_hook": "Implement simplified Ψ dynamics; benchmark crisis signatures and intervention effects vs VAR/GARCH/stress-test baselines.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p12 (IV.5 Simulation Program)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p12 (IV.5)"
+    }
+  }
+}

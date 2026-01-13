@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c03_trust_alignment_tensor",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c03_trust_alignment_tensor",
+    "claim_type": "definition_operational",
+    "claim": "Define a trust/alignment tensor Ψ over an economic mesh capturing how relational architecture channels flows into aligned vs fragile dynamics.",
+    "falsifiable": "partially",
+    "test_hook": "Operationalize Ψ with network proxies (exposures, correlations/partial correlations, contract/default structure) and validate interpretability.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p7 (III.2 Trust/Alignment Tensor)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p7"
+    }
+  }
+}

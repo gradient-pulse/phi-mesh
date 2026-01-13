@@ -1,0 +1,20 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c05_coherence_pressure_plateau",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c05_coherence_pressure_plateau",
+    "claim": "A dimensionless 'coherence pressure' is defined and claimed to plateau near unity (≈1 ± 0.02) in strong-gravity regimes, analogous to an attractor.",
+    "claim_type": "falsifiable_gate",
+    "test_hook": "In any analog model or simulation, compute Φpressure and test whether high-intensity regions converge to ~1 within stated tolerance.",
+    "thresholds": {
+      "plateau_target": "Φpressure ≈ 1 ± 0.02"
+    },
+    "evidence_excerpt": "Φpressure ≡ |∂t S| / √I ... In strong gravity, Φpressure tends toward 1 ± 0.02",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L169-L175",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L169-L175"
+    }
+  }
+}

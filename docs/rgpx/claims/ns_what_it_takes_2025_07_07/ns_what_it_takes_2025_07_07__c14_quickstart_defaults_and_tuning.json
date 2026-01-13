@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c14_quickstart_defaults_and_tuning",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c14_quickstart_defaults_and_tuning",
+    "claim": "Quick-start defaults are specified (including k=3, λ=1.5) with a tuning procedure adjusting λ in ±0.2 increments based on NT count realism.",
+    "claim_type": "operational_recipe",
+    "test_hook": "Run defaults once; inspect NT count per eddy time; adjust λ by ±0.2 until count is plausible.",
+    "evidence_excerpt": "Adjust λ by ±0.2 increments if NT count is unphysical",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L35-L39",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L35-L39"
+    }
+  }
+}

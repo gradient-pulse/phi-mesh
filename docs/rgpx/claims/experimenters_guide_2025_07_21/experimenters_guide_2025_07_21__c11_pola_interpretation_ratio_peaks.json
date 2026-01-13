@@ -1,0 +1,17 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c11_pola_interpretation_ratio_peaks",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c11_pola_interpretation_ratio_peaks",
+    "claim": "If NT-distance ratio peaks stabilize across runs, the guide interprets this as PoLA expressing itself as a minimal-divergence rhythm inside turbulence.",
+    "claim_type": "interpretation",
+    "test_hook": "Repeat runs (different seeds/windows); test stability of ratio peaks; only then invoke the PoLA interpretation.",
+    "evidence_excerpt": "If your NT-distance histogram stabilises around the same ratio peaks across runs, you’re watching PoLA express itself inside turbulence.",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L14-L16",
+      "note": "2025-07-21_experimenters_guide.pdf:L14-L16"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c08_target_kpi_gate",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c08_target_kpi_gate",
+    "claim": "The guide sets a KPI gate: lead-time ≥30%, RMSE ≤5%, and GPU cost ≤½ DNS.",
+    "claim_type": "falsifiable_gate",
+    "test_hook": "Compute the three KPIs on the same dataset and compare to DNS baseline; pass/fail against thresholds.",
+    "thresholds": {
+      "lead_time_gain": "≥ 30%",
+      "rmse": "≤ 5%",
+      "gpu_cost": "≤ 0.5× DNS"
+    },
+    "evidence_excerpt": "Target KPI lead-time ≥ 30% • RMSE ≤ 5% • GPU ≤ ½ DNS",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L42-L42",
+      "note": "2025-07-21_experimenters_guide.pdf:L42-L42"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c04_nt_definition_signflip_sigma",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c04_nt_definition_signflip_sigma",
+    "claim": "Narrative Ticks (NTs) are defined operationally as sign changes in the scalar signal derivative exceeding a sigma threshold.",
+    "claim_type": "definition_operational",
+    "test_hook": "Implement NT detection exactly; verify detected NTs change predictably under σ sweeps (not random blow-up).",
+    "evidence_excerpt": "an NT is detected as a sign change in the derivative of the scalar signal, exceeding a threshold σ",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p2-L13-L17",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L13-L17"
+    }
+  }
+}

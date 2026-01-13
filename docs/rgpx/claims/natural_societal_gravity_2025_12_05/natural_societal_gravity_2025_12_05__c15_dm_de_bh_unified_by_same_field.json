@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c15_dm_de_bh_unified_by_same_field",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c15_dm_de_bh_unified_by_same_field",
+    "claim": "Dark matter, dark energy, and black holes are asserted to be manifestations of the same conserved coherence field, misread through the wrong metric.",
+    "claim_type": "thesis",
+    "test_hook": "Treat as a unification claim: derive at least one shared invariant or shared saturation behavior that must hold across the three regimes; test against baseline models that treat them separately.",
+    "evidence_excerpt": "These are not separate problems... manifestations of the same conserved coherence field",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L85-L86",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L85-L86"
+    }
+  }
+}

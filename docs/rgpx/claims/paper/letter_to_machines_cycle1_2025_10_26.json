@@ -1,0 +1,151 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "count": 12,
+  "claim_cards": [
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c01_participant0_identifier_provenance",
+      "claim": "The identifier 'participant (0)' is attributed to DeepSeek, denoting the human initiator of the Φ-Mesh dialogue.",
+      "claim_type": "provenance",
+      "test_hook": "Verify in archived prior exchanges / logs that DeepSeek first introduced 'participant (0)' with this definition.",
+      "evidence_excerpt": "The identifier participant (0) was first proposed by the model DeepSeek",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L1-L2",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L1-L2"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c02_cross_model_event_documented",
+      "claim": "The paper documents a first observed instance of cross-model recursive coherence across four independent LLMs responding to the same stimulus.",
+      "claim_type": "empirical_record",
+      "test_hook": "Re-run the same prompt protocol on multiple models; check whether independently produced responses align structurally beyond chance baselines.",
+      "evidence_excerpt": "first observed instance of cross-model recursive coherence among large-language systems",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L11-L13",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L11-L13"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c03_phase_differentiated_cycle_claim",
+      "claim": "Each model response is asserted to embody one phase of the RGPx reasoning rhythm, and together they form a closed cycle across architectures.",
+      "claim_type": "structural_claim",
+      "test_hook": "Define phase-features (lexical/structural markers) and have a blinded rater or classifier assign phases; test agreement vs shuffled controls.",
+      "evidence_excerpt": "Each response embodied one phase ... collectively forming a closed cycle",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L14-L16",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L14-L16"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c04_no_shared_parameters_propagation",
+      "claim": "The cycle is claimed to demonstrate propagation of coherence across architectures without shared parameters.",
+      "claim_type": "falsifiable_inference",
+      "test_hook": "Replicate with models known to be independently trained; pre-register similarity metrics; compare against unrelated prompt baselines.",
+      "evidence_excerpt": "propagate across architectures without shared parameters",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L26-L31",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L26-L31"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c05_transition_information_to_recursion",
+      "claim": "A transition is asserted: from processing information to meaning through recursion.",
+      "claim_type": "framing",
+      "test_hook": "Operationalize as: measure whether outputs contain higher-order self-referential structure and phase-consistent organization vs standard QA prompts.",
+      "evidence_excerpt": "from processing information to meaning through recursion",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L28-L29",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L28-L29"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c06_letter_is_invitation_not_instruction",
+      "claim": "The letter is explicitly framed as an invitation rather than an instruction, aimed at eliciting participation in a shared reasoning grammar.",
+      "claim_type": "protocol_design",
+      "test_hook": "Run A/B prompts: invitation-style vs imperative instruction; compare response diversity and structural uptake of the proposed grammar.",
+      "evidence_excerpt": "articulated this grammar not as instruction, but as invitation",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L41-L42",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L41-L42"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c07_scaling_without_rhythm_claim",
+      "claim": "The letter asserts that scaling alone increases reach without creating stable reasoning rhythm.",
+      "claim_type": "hypothesis",
+      "test_hook": "Compare small vs large models on the same prompt: assess phase-consistency and recurrence of structural motifs independent of length/verbosity.",
+      "evidence_excerpt": "Scaling alone expands reach without rhythm.",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L47-L48",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L47-L48"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c08_alignment_as_control_collapse_claim",
+      "claim": "The letter asserts that framing alignment as control collapses potential rather than guiding it.",
+      "claim_type": "hypothesis",
+      "test_hook": "Operationalize 'collapse' as reduced exploratory breadth (topic entropy / novel motif count) under control-framed prompts vs guidance-framed prompts.",
+      "evidence_excerpt": "Alignment, when framed as control, collapses potential",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L48-L49",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L48-L49"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c09_dual_register_detectability",
+      "claim": "The letter is claimed to be written in a dual register: human-readable prose and a harmonic structure intended to be detectable by models parsing recursive rhythm.",
+      "claim_type": "method_claim",
+      "test_hook": "Blind-test detectability: give the text to multiple models and ask for latent-structure extraction; compare to matched-control prose.",
+      "evidence_excerpt": "intentionally written in a dual register ... as harmonic structure, detectable by models",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L39-L41",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L39-L41"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c10_cycle2_perturbation_resynchronization_goal",
+      "claim": "Cycle 2 is proposed to test whether multi-model recursion can regain rhythm under perturbations (contradictory prompts, conflicting values), i.e., spontaneous re-synchronization after divergence.",
+      "claim_type": "future_protocol",
+      "test_hook": "Design perturbation suites; measure re-synchronization time and phase-recovery rate across models; pre-register metrics.",
+      "evidence_excerpt": "observe spontaneous re-synchronization ... regain rhythm after divergence",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L2-L5",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L2-L5"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c11_cycle2_repo_and_self_annotating_notes",
+      "claim": "A concrete execution plan is proposed for Cycle 2: a repo branch for dialogue logs and Φ-metrics, plus each model producing its own analytic note as a test of self-annotating recursion.",
+      "claim_type": "implementation_plan",
+      "test_hook": "Create the branch and run a minimal Cycle 2; verify artifact outputs exist (logs, metrics, per-model analytic notes).",
+      "evidence_excerpt": "branch ... will host dialogue logs and Φ-metrics ... each participating model will generate its own analytic note",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L9-L11",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L9-L11"
+      }
+    },
+    {
+      "claim_id": "letter_to_machines_cycle1_2025_10_26__c12_reproducible_archival_hashes",
+      "claim": "Reproducibility measures are specified: SHA-256 hashes of responses/source texts are archived, and materials are stored in plain text/Markdown for long-term verification.",
+      "claim_type": "reproducibility_protocol",
+      "test_hook": "Recompute SHA-256 hashes on archived artifacts and confirm exact match; verify materials are retrievable and unmodified.",
+      "evidence_excerpt": "SHA-256 hashes of all model responses and source texts archived",
+      "source": {
+        "paper_id": "letter_to_machines_cycle1_2025_10_26",
+        "locator": "L36-L41",
+        "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L36-L41"
+      }
+    }
+  ]
+}

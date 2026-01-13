@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c10_coherence_scalar_two_options",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c10_coherence_scalar_two_options",
+    "claim": "NT detection requires a scalar signal; two recommended options are enstrophy E(t) or vorticity-gradient norm G(t)=∫|∇|ω|| dV.",
+    "claim_type": "measurement_definition",
+    "test_hook": "Implement both scalars and compare NT detection stability and early-warning lead time.",
+    "evidence_excerpt": "Two recommended options: 1. Enstrophy ... 2. Vorticity-gradient norm: G(t) = ∫ |𝛻|𝜔|| dV",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L15-L22",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L15-L22"
+    }
+  }
+}

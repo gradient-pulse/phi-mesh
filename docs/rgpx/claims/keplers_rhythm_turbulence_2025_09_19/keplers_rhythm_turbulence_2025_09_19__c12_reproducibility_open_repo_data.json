@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c12_reproducibility_open_repo_data",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c12_reproducibility_open_repo_data",
+    "claim": "Reproducibility is claimed via open tools and open datasets hosted with code on GitHub.",
+    "claim_type": "reproducibility",
+    "test_hook": "Clone repo + run the extraction pipeline; verify you can regenerate the ratio histogram from referenced datasets.",
+    "evidence_excerpt": "open tools and open datasets, hosted on GitHub",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p5-L32-L36",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p5-L32-L36"
+    }
+  }
+}

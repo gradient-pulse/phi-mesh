@@ -1,0 +1,17 @@
+{
+  "paper_id": "experimenters_guide_2025_07_21",
+  "claim_id": "experimenters_guide_2025_07_21__c10_cli_reference_pipeline",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "experimenters_guide_2025_07_21__c10_cli_reference_pipeline",
+    "claim": "A minimal runnable CLI pipeline is specified: clone repo, run nt_detect.py to produce NT times, then run nt_ratio_cli.py to write *_ratios.txt outputs.",
+    "claim_type": "method_recipe",
+    "test_hook": "Execute the exact CLI steps and verify expected output files exist and are non-empty.",
+    "evidence_excerpt": "python agents/nt_detect.py ... --sigma 1.5 ... python agents/nt_ratio_cli.py nt_times.txt",
+    "source": {
+      "paper_id": "experimenters_guide_2025_07_21",
+      "locator": "L45-L55",
+      "note": "2025-07-21_experimenters_guide.pdf:L45-L55"
+    }
+  }
+}

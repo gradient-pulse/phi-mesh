@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c09_phi_stationary_value_invariance",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c09_phi_stationary_value_invariance",
+    "claim": "A stationary condition is asserted: when dΦ/dt = 0, the system approaches a stable Φ* value, proposed as a cross-scale boundary condition.",
+    "claim_type": "invariance_claim",
+    "test_hook": "Across different initial conditions and resolutions, test whether stable runs converge to the same (or tightly clustered) Φ*.",
+    "evidence_excerpt": "When stable, dΦ/dt = 0 yields Φ = Φ*.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L63-L63",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L63-L63"
+    }
+  }
+}

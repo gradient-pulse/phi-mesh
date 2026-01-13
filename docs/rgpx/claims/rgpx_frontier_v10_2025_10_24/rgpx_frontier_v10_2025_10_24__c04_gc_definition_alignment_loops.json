@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c04_gc_definition_alignment_loops",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c04_gc_definition_alignment_loops",
+    "claim": "GC is defined as Gradient Choreography: recurring sequences of Δ-alignments forming structured loops over time.",
+    "claim_type": "definition_operational",
+    "test_hook": "Detect repeating Δ-sequences and measure whether repeatability correlates with increased persistence under perturbation.",
+    "evidence_excerpt": "GC (Gradient Choreography): recurring sequences of aligned gradients that form structured loops over time.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L32-L32",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L32-L32"
+    }
+  }
+}

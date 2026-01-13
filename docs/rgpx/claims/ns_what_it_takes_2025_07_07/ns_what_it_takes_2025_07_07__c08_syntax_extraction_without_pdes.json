@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c08_syntax_extraction_without_pdes",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c08_syntax_extraction_without_pdes",
+    "claim": "A modular toolkit is proposed to extract NT event sequences and dimensionless ratios from raw velocity data without solving PDEs.",
+    "claim_type": "method_claim",
+    "test_hook": "Build the three-module chain (collector/analyst/validator) and verify outputs on known benchmark flows.",
+    "evidence_excerpt": "extracts NT rhythms and Golden-Pattern ratios from raw velocity data—without relying on solving PDEs",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L25-L28",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L25-L28"
+    }
+  }
+}

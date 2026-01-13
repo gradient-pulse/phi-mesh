@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c03_cartesian_clockwork_limitation",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c03_cartesian_clockwork_limitation",
+    "claim": "The mechanistic/Cartesian framing is claimed to limit understanding by reducing intelligence to a clockwork machine and obscuring emergence.",
+    "claim_type": "critique",
+    "test_hook": "Compare explanatory power: do mechanistic accounts predict emergence/feedback artifacts in decoding better than the recursive account?",
+    "evidence_excerpt": "reduces intelligence to a clockwork machine, limiting our ability to understand emergence",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L12-L13",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L12-L13"
+    }
+  }
+}

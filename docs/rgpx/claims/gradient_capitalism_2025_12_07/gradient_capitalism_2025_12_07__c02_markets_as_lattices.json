@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c02_markets_as_lattices",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c02_markets_as_lattices",
+    "claim_type": "framing",
+    "claim": "Markets behave like coupled structures where shocks propagate; crises manifest as avalanche-like reconfigurations rather than isolated price events.",
+    "falsifiable": true,
+    "test_hook": "Test for heavy-tailed event sizes and propagation signatures across sectors around crises; compare with null models.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p2 (intro shock/avalanche framing)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p2"
+    }
+  }
+}

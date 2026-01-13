@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c03_delta_definition_gradient_potential",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c03_delta_definition_gradient_potential",
+    "claim": "Δ is defined as Gradient Potential: local differences/tensions that create directional pressure in a system.",
+    "claim_type": "definition_operational",
+    "test_hook": "Operationalize Δ as measurable local differences (field gradients, error differentials, stress/strain contrasts) and test whether Δ hotspots predict later restructuring.",
+    "evidence_excerpt": "Δ (Gradient Potential): local differences or tensions that generate directional pressure.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L31-L31",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L31-L31"
+    }
+  }
+}

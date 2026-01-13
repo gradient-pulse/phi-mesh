@@ -1,0 +1,22 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c04_one_sentence_litmus_validation_gate",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c04_one_sentence_litmus_validation_gate",
+    "claim": "A concrete validation gate is proposed: earlier vortex-shedding warning and cheaper accuracy vs standard LES.",
+    "claim_type": "falsifiable_gate",
+    "test_hook": "Run the two-part benchmark: lead-time gain vs Q-criterion; NT-aware LES vs Smagorinsky on RMSE+cost.",
+    "thresholds": {
+      "lead_time_gain": "≥ 30% earlier warning",
+      "accuracy": "≤ 5% RMSE",
+      "cost": "≤ 0.5× cost"
+    },
+    "evidence_excerpt": "If NT rhythms warn of vortex-shedding ≥ 30 % earlier and the NT-LES closes within 5 % RMSE",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L5-L7",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L5-L7"
+    }
+  }
+}

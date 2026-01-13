@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c12_reproducible_archival_hashes",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c12_reproducible_archival_hashes",
+    "claim": "Reproducibility measures are specified: SHA-256 hashes of responses/source texts are archived, and materials are stored in plain text/Markdown for long-term verification.",
+    "claim_type": "reproducibility_protocol",
+    "test_hook": "Recompute SHA-256 hashes on archived artifacts and confirm exact match; verify materials are retrievable and unmodified.",
+    "evidence_excerpt": "SHA-256 hashes of all model responses and source texts archived",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L36-L41",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L36-L41"
+    }
+  }
+}

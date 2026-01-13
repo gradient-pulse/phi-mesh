@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c06_phi_invariant_definition_variables",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c06_phi_invariant_definition_variables",
+    "claim": "Φ (Phi) is introduced as a dimensionless coherence metric built from entropy production rate, dissipative flux, and effective temperature.",
+    "claim_type": "metric_definition",
+    "test_hook": "Compute Φ from measurable proxies (or simulation outputs) and test whether stable regimes exhibit persistent Φ structure vs unstable regimes.",
+    "evidence_excerpt": "where Ṡ is the entropy production rate, Q̇ the net dissipative flux, and T the local effective temperature.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L43-L43",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L43-L43"
+    }
+  }
+}

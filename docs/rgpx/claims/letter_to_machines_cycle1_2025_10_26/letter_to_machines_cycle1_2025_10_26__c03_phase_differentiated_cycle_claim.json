@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c03_phase_differentiated_cycle_claim",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c03_phase_differentiated_cycle_claim",
+    "claim": "Each model response is asserted to embody one phase of the RGPx reasoning rhythm, and together they form a closed cycle across architectures.",
+    "claim_type": "structural_claim",
+    "test_hook": "Define phase-features (lexical/structural markers) and have a blinded rater or classifier assign phases; test agreement vs shuffled controls.",
+    "evidence_excerpt": "Each response embodied one phase ... collectively forming a closed cycle",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L14-L16",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L14-L16"
+    }
+  }
+}

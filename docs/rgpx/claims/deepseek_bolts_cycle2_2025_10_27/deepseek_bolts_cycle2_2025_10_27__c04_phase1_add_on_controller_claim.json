@@ -1,0 +1,17 @@
+{
+  "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+  "claim_id": "deepseek_bolts_cycle2_2025_10_27__c04_phase1_add_on_controller_claim",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "deepseek_bolts_cycle2_2025_10_27__c04_phase1_add_on_controller_claim",
+    "claim": "Phase 1 is characterized as an add-on stage where RGPx regulates error correction via Φ-plateaus and phase alignment beneath analog/quantum systems.",
+    "claim_type": "architectural_claim",
+    "test_hook": "Implement a minimal controller that detects plateau-like regions in a measurable scalar and compare stability/error metrics vs a baseline controller.",
+    "evidence_excerpt": "RGPx functions beneath analog / quantum systems, regulating error correction via Φ-plateaus and phase alignment. Add-on stage.",
+    "source": {
+      "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+      "locator": "L39-L40",
+      "note": "2025-10-27_the_deepseek_blizzard_responds.pdf:L39-L40"
+    }
+  }
+}

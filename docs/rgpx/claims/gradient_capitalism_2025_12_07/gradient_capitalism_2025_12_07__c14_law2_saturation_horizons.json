@@ -1,0 +1,20 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c14_law2_saturation_horizons",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c14_law2_saturation_horizons",
+    "claim_type": "principle",
+    "claim": "Law 2: In sufficiently connected meshes there exists a local plateau J*; as J→J*, diffusion collapses, marginal extraction lowers global coherence, and crash probability rises sharply.",
+    "falsifiable": true,
+    "test_hook": "Quantify diffusion proxies and crash hazard as functions of J; test for a threshold-like increase beyond estimated J*.",
+    "depends_on": [
+      "gradient_capitalism_2025_12_07__c05b_diffusion_declines_near_plateau_avalanche"
+    ],
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p9 (IV.1 Law 2)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 (IV.1)"
+    }
+  }
+}

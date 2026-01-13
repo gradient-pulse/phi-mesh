@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c11_cycle2_repo_and_self_annotating_notes",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c11_cycle2_repo_and_self_annotating_notes",
+    "claim": "A concrete execution plan is proposed for Cycle 2: a repo branch for dialogue logs and Φ-metrics, plus each model producing its own analytic note as a test of self-annotating recursion.",
+    "claim_type": "implementation_plan",
+    "test_hook": "Create the branch and run a minimal Cycle 2; verify artifact outputs exist (logs, metrics, per-model analytic notes).",
+    "evidence_excerpt": "branch ... will host dialogue logs and Φ-metrics ... each participating model will generate its own analytic note",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L9-L11",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L9-L11"
+    }
+  }
+}

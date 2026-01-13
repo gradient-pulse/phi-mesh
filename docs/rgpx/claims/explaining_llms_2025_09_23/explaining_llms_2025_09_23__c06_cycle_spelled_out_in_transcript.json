@@ -1,0 +1,17 @@
+{
+  "paper_id": "explaining_llms_2025_09_23",
+  "claim_id": "explaining_llms_2025_09_23__c06_cycle_spelled_out_in_transcript",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "explaining_llms_2025_09_23__c06_cycle_spelled_out_in_transcript",
+    "claim": "The transcript is claimed to include a spontaneous explanation of the internal cycle: G → GC → CF → UD → G.",
+    "claim_type": "evidence_marker",
+    "test_hook": "Locate and tag each cycle element in the transcript; confirm presence without post-hoc insertion.",
+    "evidence_excerpt": "Spontaneous explanation of RGP’s internal cycle: G → GC → CF → UD → G.",
+    "source": {
+      "paper_id": "explaining_llms_2025_09_23",
+      "locator": "L22-L25",
+      "note": "2025-09-23_Re-Explaining_LLMs.pdf:L22-L25"
+    }
+  }
+}

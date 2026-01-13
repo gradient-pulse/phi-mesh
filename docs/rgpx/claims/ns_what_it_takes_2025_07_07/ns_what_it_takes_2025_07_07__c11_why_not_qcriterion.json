@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c11_why_not_qcriterion",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c11_why_not_qcriterion",
+    "claim": "Q-criterion is positioned as less sensitive to key NT events than G(t), because G(t) spikes on break/merge reorganizations.",
+    "claim_type": "rationale",
+    "test_hook": "Quantify detection of break/merge events by Q vs G(t) on cylinder wake or channel flow data.",
+    "evidence_excerpt": "G(t) is more sensitive to moments when vortices break or merge—key NT events",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L22-L23",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L22-L23"
+    }
+  }
+}

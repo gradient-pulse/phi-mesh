@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c11_cross_domain_mapping_to_economics",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c11_cross_domain_mapping_to_economics",
+    "claim": "A cross-domain mapping is proposed: coherence funnels and saturation horizons (I=I*) correspond to market/institution saturation (J=J*), beyond which extraction destabilizes alignment.",
+    "claim_type": "mapping_claim",
+    "test_hook": "Define an empirical proxy J(t) for institutional/market alignment intensity; test for saturation plateaus and instability beyond them.",
+    "evidence_excerpt": "Economic Horizon: At some point, J reaches J* and diffusion shuts down ... further extraction destabilizes the system.",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L279-L289",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L279-L289"
+    }
+  }
+}

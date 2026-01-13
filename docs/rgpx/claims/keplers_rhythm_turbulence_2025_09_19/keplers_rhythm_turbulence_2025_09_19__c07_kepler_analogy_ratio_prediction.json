@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c07_kepler_analogy_ratio_prediction",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c07_kepler_analogy_ratio_prediction",
+    "claim": "A Kepler-style prediction is made: as harmonics stabilize, the NT-distance ratios should converge to conserved values.",
+    "claim_type": "prediction",
+    "test_hook": "Track ratio histograms over time; test whether peaks sharpen/stabilize as the flow enters stable shedding regimes.",
+    "evidence_excerpt": "the ratios between NT distances converge to conserved values",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p1-L34-L36",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p1-L34-L36"
+    }
+  }
+}

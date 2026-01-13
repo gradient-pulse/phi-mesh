@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c22_antitrust_as_horizon_management",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c22_antitrust_as_horizon_management",
+    "claim_type": "prescription",
+    "claim": "Antitrust is framed as managing saturation horizons: preventing regions where J≈J* and D(J)→0 from hardening into permanent extraction wells.",
+    "falsifiable": true,
+    "test_hook": "Before/after antitrust or structural separation, test whether diffusion proxies improve and crisis fragility indicators decline relative to controls.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p13 (V.2.1 Antitrust and Competition Policy)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 (V.2.1)"
+    }
+  }
+}

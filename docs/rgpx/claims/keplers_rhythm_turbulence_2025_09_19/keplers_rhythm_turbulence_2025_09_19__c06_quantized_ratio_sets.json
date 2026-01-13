@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c06_quantized_ratio_sets",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c06_quantized_ratio_sets",
+    "claim": "NT distances appear in discrete ratio sets (quantized), rather than forming a continuous spectrum.",
+    "claim_type": "hypothesis",
+    "test_hook": "Test discreteness by comparing to shuffled-NT controls; quantify peak prominence vs null.",
+    "evidence_excerpt": "these NT distances cluster into discrete ratio sets",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p2-L21-L22",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p2-L21-L22"
+    }
+  }
+}

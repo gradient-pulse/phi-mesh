@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c08_event_horizon_as_coherence_plateau",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c08_event_horizon_as_coherence_plateau",
+    "claim": "An event horizon is reframed as a saturation boundary where I(r)=I* and ∂r I=0; inside, coherence becomes phase-locked rather than causally discontinuous.",
+    "claim_type": "reframing",
+    "test_hook": "In simulation, identify radii where I hits I* and gradient vanishes; test for phase-lock / suppressed diffusion behavior inside.",
+    "evidence_excerpt": "At r = r_h, I(r_h) = I* and ∂r I|r_h = 0 ... event horizon is a saturation boundary",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L228-L230",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L228-L230"
+    }
+  }
+}

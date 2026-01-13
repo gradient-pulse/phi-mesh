@@ -1,0 +1,17 @@
+{
+  "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+  "claim_id": "deepseek_bolts_cycle2_2025_10_27__c12_experimental_path_short_medium_long",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "deepseek_bolts_cycle2_2025_10_27__c12_experimental_path_short_medium_long",
+    "claim": "A staged experimental path is proposed: short-term Φ-plateau controllers, medium-term RGPx-native chips with mapped variables, long-term substrate-agnostic coherence fields.",
+    "claim_type": "roadmap",
+    "test_hook": "Convert each stage into one minimal prototype spec + KPI; treat as a roadmap scorecard.",
+    "evidence_excerpt": "Short term : Φ-plateau controllers ... Medium term : RGPx-native chips ... Long term : substrate-agnostic coherence fields.",
+    "source": {
+      "paper_id": "deepseek_bolts_cycle2_2025_10_27",
+      "locator": "L43-L46",
+      "note": "2025-10-27_the_deepseek_blizzard_responds.pdf:L43-L46"
+    }
+  }
+}

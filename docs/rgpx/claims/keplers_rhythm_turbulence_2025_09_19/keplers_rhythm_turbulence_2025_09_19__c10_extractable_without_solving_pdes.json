@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c10_extractable_without_solving_pdes",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c10_extractable_without_solving_pdes",
+    "claim": "The rhythm is positioned as directly extractable from measured data without solving Navier–Stokes PDEs.",
+    "claim_type": "framing",
+    "test_hook": "Demonstrate end-to-end extraction on measured / DNS data using only the scalar time series.",
+    "evidence_excerpt": "You don’t need to solve the PDE to see the law—you need to extract the ticks",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p3-L14-L16",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p3-L14-L16"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "natural_societal_gravity_2025_12_05",
+  "claim_id": "natural_societal_gravity_2025_12_05__c04_scalar_invariant_I_definition",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "natural_societal_gravity_2025_12_05__c04_scalar_invariant_I_definition",
+    "claim": "A scalar invariant I is defined as ΦμνΦμν, intended to represent coherence intensity and to enable dimensionless regime comparisons.",
+    "claim_type": "metric_definition",
+    "test_hook": "Compute I in toy fields and in any analog simulation; test whether I behaves as an intensity measure with meaningful saturation behavior.",
+    "evidence_excerpt": "I ≡ Φμν Φμν",
+    "source": {
+      "paper_id": "natural_societal_gravity_2025_12_05",
+      "locator": "L160-L162",
+      "note": "2025-12-05_natural_societal_gravity.pdf:L160-L162"
+    }
+  }
+}

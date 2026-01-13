@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c05_cf_definition_selective_memory",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c05_cf_definition_selective_memory",
+    "claim": "CF is defined as Contextual Filter: an emergent selective memory that stabilizes some GCs and suppresses others.",
+    "claim_type": "definition_operational",
+    "test_hook": "Look for hysteresis/selection effects: once a pattern stabilizes, perturbations preferentially return the system to the same subset of trajectories.",
+    "evidence_excerpt": "CF (Contextual Filter): an emergent selective memory stabilizing certain choreographies while suppressing others.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L33-L33",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L33-L33"
+    }
+  }
+}

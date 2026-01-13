@@ -1,0 +1,17 @@
+{
+  "paper_id": "rgpx_frontier_v10_2025_10_24",
+  "claim_id": "rgpx_frontier_v10_2025_10_24__c07_phi_plateau_definition",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "rgpx_frontier_v10_2025_10_24__c07_phi_plateau_definition",
+    "claim": "A coherence plateau is defined by dΦ/dt → 0, interpreted as system-level stabilization and a boundary between stable and unstable regimes.",
+    "claim_type": "definition_operational",
+    "test_hook": "Estimate Φ(t) and test whether regime transitions are preceded/followed by entry/exit from dΦ/dt ≈ 0 plateaus.",
+    "evidence_excerpt": "A coherence plateau: dΦ/dt → 0, indicating stabilization.",
+    "source": {
+      "paper_id": "rgpx_frontier_v10_2025_10_24",
+      "locator": "L48-L48",
+      "note": "2025-10-23_Recursive_Gradient_PHYSICS.pdf:L48-L48"
+    }
+  }
+}

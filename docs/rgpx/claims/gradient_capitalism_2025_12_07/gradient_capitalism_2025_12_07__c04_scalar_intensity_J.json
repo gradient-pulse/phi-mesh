@@ -1,0 +1,17 @@
+{
+  "paper_id": "gradient_capitalism_2025_12_07",
+  "claim_id": "gradient_capitalism_2025_12_07__c04_scalar_intensity_J",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "gradient_capitalism_2025_12_07__c04_scalar_intensity_J",
+    "claim_type": "definition_operational",
+    "claim": "Define a scalar coherence intensity J from Ψ (J = Ψ·Ψ) as a measurable summary of how aligned/loaded the local economic structure is.",
+    "falsifiable": true,
+    "test_hook": "Construct J proxies from correlation/exposure networks and test whether J improves instability forecasting vs conventional macro variables.",
+    "source": {
+      "paper_id": "gradient_capitalism_2025_12_07",
+      "locator": "p7–p8 (III.3 Coherence Intensity J)",
+      "note": "2025-12-07_gradient_capitalism_inevitable_rise.pdf p7–p8"
+    }
+  }
+}

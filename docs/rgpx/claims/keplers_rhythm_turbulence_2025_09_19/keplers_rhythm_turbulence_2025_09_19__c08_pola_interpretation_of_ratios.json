@@ -1,0 +1,17 @@
+{
+  "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+  "claim_id": "keplers_rhythm_turbulence_2025_09_19__c08_pola_interpretation_of_ratios",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "keplers_rhythm_turbulence_2025_09_19__c08_pola_interpretation_of_ratios",
+    "claim": "The paper interprets stable ratio clusters as the Principle of Least Action expressing itself as a discrete rhythm in turbulence.",
+    "claim_type": "interpretation",
+    "test_hook": "Only apply this interpretation after demonstrating cross-run stability of the same ratio clusters.",
+    "evidence_excerpt": "PoLA is not just a principle of motion—it is a principle of rhythmic selection",
+    "source": {
+      "paper_id": "keplers_rhythm_turbulence_2025_09_19",
+      "locator": "p3-L8-L12",
+      "note": "2025-09-19_Keplers_Rhythm_in_Turbulence.pdf:p3-L8-L12"
+    }
+  }
+}

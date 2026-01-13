@@ -1,0 +1,17 @@
+{
+  "paper_id": "ns_what_it_takes_2025_07_07",
+  "claim_id": "ns_what_it_takes_2025_07_07__c03_time_as_coordinate_not_cause",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "ns_what_it_takes_2025_07_07__c03_time_as_coordinate_not_cause",
+    "claim": "Treating time as smooth, objective input misses threshold-driven emergence; time sequences events but does not explain causes.",
+    "claim_type": "framing",
+    "test_hook": "Benchmark event-based timestamps vs uniform-time forecasting for onset warnings (same data, same compute budget).",
+    "evidence_excerpt": "time is a human-constructed coordinate, invented to sequence events rather than cause them",
+    "source": {
+      "paper_id": "ns_what_it_takes_2025_07_07",
+      "locator": "L33-L35",
+      "note": "2025-07-07_Solving_Navier_Stokes_Differently_v12.pdf:L33-L35"
+    }
+  }
+}

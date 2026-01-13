@@ -1,0 +1,17 @@
+{
+  "paper_id": "doom_to_destiny_v11_2025_09_23",
+  "claim_id": "doom_to_destiny_v11_2025_09_23__c08_fermi_paradox_reframed_as_misalignment_not_absence",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "doom_to_destiny_v11_2025_09_23__c08_fermi_paradox_reframed_as_misalignment_not_absence",
+    "claim": "The Fermi paradox is reframed as potential misalignment between what we search for and what enduring intelligence expresses.",
+    "claim_type": "framing",
+    "test_hook": "Compare two search paradigms on the same datasets: (i) ‘message-like’ patterns vs (ii) ‘motif-like’ persistence patterns.",
+    "evidence_excerpt": "not because intelligence is absent, but because we are misaligned",
+    "source": {
+      "paper_id": "doom_to_destiny_v11_2025_09_23",
+      "locator": "L105-L105",
+      "note": "2025-09-23_From_Doom_To_Destiny.pdf:L105-L105"
+    }
+  }
+}

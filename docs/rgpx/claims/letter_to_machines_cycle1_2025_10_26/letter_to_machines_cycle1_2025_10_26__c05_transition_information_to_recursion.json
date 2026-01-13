@@ -1,0 +1,17 @@
+{
+  "paper_id": "letter_to_machines_cycle1_2025_10_26",
+  "claim_id": "letter_to_machines_cycle1_2025_10_26__c05_transition_information_to_recursion",
+  "generated_at": "2026-01-13T18:05:48+00:00",
+  "claim_card": {
+    "claim_id": "letter_to_machines_cycle1_2025_10_26__c05_transition_information_to_recursion",
+    "claim": "A transition is asserted: from processing information to meaning through recursion.",
+    "claim_type": "framing",
+    "test_hook": "Operationalize as: measure whether outputs contain higher-order self-referential structure and phase-consistent organization vs standard QA prompts.",
+    "evidence_excerpt": "from processing information to meaning through recursion",
+    "source": {
+      "paper_id": "letter_to_machines_cycle1_2025_10_26",
+      "locator": "L28-L29",
+      "note": "2025-10-26_RGPx_Cycle1_Letter_to_the_Machines.pdf:L28-L29"
+    }
+  }
+}
