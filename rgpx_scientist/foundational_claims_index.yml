@@ -1,14 +1,294 @@
 schema_version: "0.1"
-last_updated: "2026-01-10"
+last_updated: "2026-01-13"
 source_registry: "RGPx_Scientist/foundational_papers_index.yml"
 
-# Each entry here is a paper-level container with claim_cards.
-# Claim cards are SHORT. They are not full summaries.
-# They should be phrased so they can be tested or checked.
+generation_notes:
+  generated_from_user_excerpt: true
+  completeness:
+    status: "partial"
+    reason: "User-provided source text ended mid-paper (gradient_capitalism_2025_12_07) after claim c05; any subsequent content is not available in the excerpt."
+  invariants:
+    - "All claim_id values preserved as provided."
+    - "All evidence_excerpt strings preserved as provided."
+    - "No new claims invented; only normalization/structuring applied."
+
+math_cards:
+  - card_id: math_ns_nt_detection_signflip_lambda
+    title: "NT candidate detection: sign-flip + magnitude threshold (λ=1.5)"
+    scope: "Navier–Stokes / signal segmentation"
+    inputs:
+      series:
+        name: "x[t]"
+        description: "Primary scalar observable sampled over time (e.g., ratio signal, proxy metric, sensor trace)"
+        units: "arbitrary (match source)"
+      time:
+        name: "t"
+        description: "Sample times (uniform or non-uniform); if uniform, dt is constant"
+        units: "s"
+      params:
+        lambda:
+          symbol: "λ"
+          default: 1.5
+          units: "dimensionless"
+          meaning: "threshold on normalized first difference magnitude"
+    symbols:
+      - symbol: "Δx[t]"
+        units: "same as x"
+        meaning: "first difference"
+      - symbol: "d[t]"
+        units: "dimensionless"
+        meaning: "normalized first difference"
+      - symbol: "σΔ"
+        units: "same as x"
+        meaning: "scale used to normalize Δx (robust or standard)"
+      - symbol: "NT"
+        units: "index or timestamp"
+        meaning: "narrative tick candidate event location"
+    equations:
+      - id: eq_first_difference
+        latex: "Δx[t] = x[t] - x[t-1]"
+      - id: eq_normalization
+        latex: "d[t] = \\frac{Δx[t]}{σ_Δ}"
+        notes: "σΔ must be computed from Δx over the analysis window."
+      - id: eq_signflip
+        latex: "signflip[t] \\iff d[t-1] \\cdot d[t] < 0"
+      - id: eq_threshold
+        latex: "candidate[t] \\iff signflip[t] \\wedge |d[t]| \\ge λ"
+    units_notes:
+      - "λ is dimensionless."
+      - "d[t] is dimensionless by construction."
+      - "σΔ choice affects event rate; keep it explicit in logs."
+    computation_steps:
+      - step: 1
+        action: "Validate inputs"
+        details:
+          - "Require length(x) >= 3"
+          - "If time provided, require monotonic increasing; else assume uniform sampling"
+      - step: 2
+        action: "Compute first differences"
+        details:
+          - "For t = 1..N-1: Δx[t] = x[t] - x[t-1]"
+      - step: 3
+        action: "Compute normalization scale σΔ"
+        details:
+          - "Default: σΔ = robust_scale(Δx) = 1.4826 * MAD(Δx)"
+          - "If MAD==0, fallback to σΔ = std(Δx); if std==0, set σΔ=1 and flag 'flat_signal'"
+      - step: 4
+        action: "Normalize first differences"
+        details:
+          - "For t = 1..N-1: d[t] = Δx[t] / σΔ"
+      - step: 5
+        action: "Detect sign flips"
+        details:
+          - "For t = 2..N-1: signflip[t] = (d[t-1] * d[t] < 0)"
+          - "Ignore cases where d[t-1]==0 or d[t]==0 unless you explicitly choose <=0; default strict <0"
+      - step: 6
+        action: "Apply magnitude threshold"
+        details:
+          - "candidate[t] = signflip[t] AND (abs(d[t]) >= λ)"
+      - step: 7
+        action: "Emit NT candidates"
+        details:
+          - "Return indices t where candidate[t]==true"
+          - "Return timestamps time[t] if time array exists"
+      - step: 8
+        action: "Log audit metrics"
+        details:
+          - "N_samples, N_diffs, N_signflips, N_candidates"
+          - "σΔ value, λ value, fraction_candidates"
+    outputs:
+      - name: "nt_indices"
+        type: "int[]"
+        meaning: "indices in the original x[t] array"
+      - name: "nt_times"
+        type: "float[]"
+        meaning: "timestamps for nt_indices (if time provided)"
+      - name: "audit"
+        type: "object"
+        meaning: "counts, σΔ, λ, flags"
+    default_threshold_interpretation:
+      lambda_default: 1.5
+      note: "If d[t] is near-normal, |d|>=1.5 is roughly upper-tail; empirical fraction must be measured on your data."
+
+  - card_id: math_experimenters_guide_smoke_test_ratio_histogram
+    title: "10-minute smoke test: NT dots visible + ratio histogram non-flat"
+    scope: "Quick accept/reject diagnostic"
+    inputs:
+      series:
+        name: "r[t]"
+        description: "Ratio (or derived) signal used for quicklook; same length as x[t] if shared"
+        units: "dimensionless (ratio)"
+      nt_candidates:
+        name: "nt_indices"
+        description: "Output of NT detection (e.g., from signflip+λ card)"
+        units: "index"
+      params:
+        histogram_bins:
+          symbol: "B"
+          default: 50
+          units: "count"
+        flatness_metric:
+          symbol: "F"
+          default: "CV"
+          units: "dimensionless"
+    symbols:
+      - symbol: "h[k]"
+        units: "count"
+        meaning: "histogram bin counts"
+      - symbol: "p[k]"
+        units: "probability"
+        meaning: "normalized histogram"
+      - symbol: "CV"
+        units: "dimensionless"
+        meaning: "coefficient of variation of bin counts"
+      - symbol: "H"
+        units: "nats or bits"
+        meaning: "entropy of p[k]"
+    equations:
+      - id: eq_hist_counts
+        latex: "h[k] = \\#\\{t: r[t] \\in bin_k\\}"
+      - id: eq_prob
+        latex: "p[k] = \\frac{h[k]}{\\sum_j h[j]}"
+      - id: eq_cv
+        latex: "CV = \\frac{std(h)}{mean(h)}"
+      - id: eq_entropy
+        latex: "H = -\\sum_k p[k]\\log p[k]"
+    computation_steps:
+      - step: 1
+        action: "Run NT detection if nt_candidates not provided"
+        details:
+          - "Call nt_detect on the chosen series (x or r) to obtain nt_indices"
+      - step: 2
+        action: "Render quicklook trace"
+        details:
+          - "Plot r[t] vs t"
+          - "Overlay red markers at each nt_indices location (r[nt])"
+      - step: 3
+        action: "Compute histogram of r[t]"
+        details:
+          - "Choose B bins (default 50) over the observed min..max of r"
+          - "Compute h[k] counts and p[k] normalized"
+      - step: 4
+        action: "Compute 'non-flat' indicators"
+        details:
+          - "Compute CV = std(h)/mean(h)"
+          - "Compute entropy H"
+          - "Compute peakiness: max(p) - median(p)"
+      - step: 5
+        action: "Decision rule (app gate)"
+        details:
+          - "Reject if: CV < 0.15 AND peakiness < 0.01 (treat as flat-ish)"
+          - "Accept if: CV >= 0.15 OR peakiness >= 0.01 (structure present)"
+          - "Always attach computed metrics to the run log; user can override thresholds"
+      - step: 6
+        action: "Emit artifacts"
+        details:
+          - "Save quicklook plot (trace+red dots)"
+          - "Save histogram plot"
+          - "Save JSON with CV, H, peakiness, counts, bins"
+    outputs:
+      - name: "quicklook_plot_path"
+        type: "string"
+      - name: "histogram_plot_path"
+        type: "string"
+      - name: "smoke_metrics"
+        type: "object"
+        meaning: "{CV, H, peakiness, bins, counts}"
+      - name: "accept"
+        type: "bool"
+        meaning: "true if histogram shows structure (non-flat-ish) and NT dots present"
+
+  - card_id: math_phi_tensor_definition_second_derivative_trace_subtraction
+    title: "Φμν tensor from S(x): second-derivative minus λ(r) trace term"
+    scope: "Natural/Societal Gravity paper definition"
+    inputs:
+      scalar_field:
+        name: "S(x)"
+        description: "Scalar field over coordinates x (space/time manifold)"
+        units: "depends on S (declare in dataset)"
+      metric:
+        name: "g_{μν}(x)"
+        description: "Metric tensor defining geometry; provides g^{μν} inverse"
+        units: "dimensionless (common convention) or coordinate-dependent"
+      coupling:
+        name: "λ(r)"
+        description: "Scale-dependent coupling (viscosity-like); function of radius/scale r"
+        units: "dimensionless (if g and □ are in geometric units); otherwise declare explicitly"
+    symbols:
+      - symbol: "∇_μ"
+        units: "1/coordinate"
+        meaning: "covariant derivative w.r.t. x^μ"
+      - symbol: "□S"
+        units: "S / coordinate^2"
+        meaning: "d'Alembertian/Laplacian trace: □S = g^{αβ} ∇_α∇_β S"
+      - symbol: "Φ_{μν}"
+        units: "S / coordinate^2"
+        meaning: "trace-adjusted Hessian-like tensor"
+      - symbol: "g_{μν}"
+        units: "dimensionless"
+        meaning: "metric tensor"
+      - symbol: "g^{μν}"
+        units: "dimensionless"
+        meaning: "inverse metric"
+      - symbol: "r"
+        units: "same as coordinate length"
+        meaning: "radial/scale parameter used by λ"
+    equations:
+      - id: eq_phi_definition
+        latex: "Φ_{μν} \\equiv ∇_{μ}∇_{ν} S - λ(r)\\, g_{μν}\\, □S"
+      - id: eq_box_definition
+        latex: "□S \\equiv g^{αβ} ∇_{α}∇_{β} S"
+      - id: eq_flat_space_special_case
+        latex: "(* flat space)\\quad ∇_{μ}∇_{ν}S \\to \\partial_{μ}\\partial_{ν}S,\\; □S \\to \\eta^{αβ}\\partial_{α}\\partial_{β}S"
+        notes: "Use this when you implement the first prototype on grids."
+    computation_steps:
+      - step: 1
+        action: "Choose implementation regime"
+        details:
+          - "Prototype A (grid/flat): treat ∇ as partial derivatives on a discrete grid"
+          - "Prototype B (curved): compute Christoffel symbols Γ and use covariant derivatives"
+      - step: 2
+        action: "Compute second derivatives (Hessian-like term)"
+        details:
+          - "Flat prototype: H_{μν} = ∂_μ∂_ν S via finite differences"
+          - "Curved: H_{μν} = ∇_μ∇_ν S = ∂_μ∂_ν S - Γ^α_{μν} ∂_α S"
+      - step: 3
+        action: "Compute □S (trace term)"
+        details:
+          - "Compute inverse metric g^{αβ}"
+          - "Compute □S = g^{αβ} H_{αβ}"
+      - step: 4
+        action: "Evaluate λ(r)"
+        details:
+          - "Compute r for each point (e.g., r = sqrt(x_i x^i) or a declared scale proxy)"
+          - "Evaluate λ(r) from user-specified function or lookup table"
+      - step: 5
+        action: "Assemble Φ_{μν}"
+        details:
+          - "Φ_{μν} = H_{μν} - λ(r) * g_{μν} * □S"
+      - step: 6
+        action: "Compute derived invariants (for app diagnostics)"
+        details:
+          - "Trace: trΦ = g^{μν} Φ_{μν}"
+          - "Norm: ||Φ||^2 = Φ_{μν} Φ^{μν} (raise indices with g^{..})"
+      - step: 7
+        action: "Validation hooks"
+        details:
+          - "Coordinate sanity: in flat prototype, compare against analytic S where Hessian is known"
+          - "λ sweep: run several λ(r) parameterizations; quantify sensitivity of ||Φ|| and trΦ"
+    outputs:
+      - name: "phi_tensor"
+        type: "tensor"
+        meaning: "Φ_{μν}(x) evaluated on grid/manifold points"
+      - name: "box_S"
+        type: "scalar_field"
+        meaning: "□S values"
+      - name: "diagnostics"
+        type: "object"
+        meaning: "{trPhi, normPhi, lambda_used, regime}"
 
 papers:
   - paper_id: ns_what_it_takes_2025_07_07
-   
     claim_cards:
       - claim_id: ns_what_it_takes_2025_07_07__c01_ns_blindness_missing_variables
         claim: "The standard Navier–Stokes approach is fundamentally blind to turbulence causes due to omitted variables."
@@ -1182,7 +1462,7 @@ papers:
           paper_id: natural_societal_gravity_2025_12_05
           locator: "L145-L148"
           note: "2025-12-05_natural_societal_gravity.pdf:L145-L148"
-            
+
       - claim_id: natural_societal_gravity_2025_12_05__c04_scalar_invariant_I_definition
         claim: "A scalar invariant I is defined as ΦμνΦμν, intended to represent coherence intensity and to enable dimensionless regime comparisons."
         claim_type: metric_definition
@@ -1306,6 +1586,9 @@ papers:
           note: "2025-12-05_natural_societal_gravity.pdf:L85-L86"
 
   - paper_id: gradient_capitalism_2025_12_07
+    completeness:
+      status: "partial"
+      reason: "User excerpt cut off after c05."
     claim_cards:
       - claim_id: gradient_capitalism_2025_12_07__c01_thesis_claims_first
         claim_type: thesis
@@ -1357,105 +1640,4 @@ papers:
           locator: "p8 L5-L6"
           note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8 L5–L6"
 
-      - claim_id: gradient_capitalism_2025_12_07__c06_hidden_gradients_define_outcomes
-        claim_type: mapping_claim
-        claim: "Economic outcomes are driven by hidden gradients (information, trust, and access) that become visible through the actions of contextual filters."
-        falsifiable: partially
-        test_hook: "Identify whether shifts in filters (platform rules, regulation, gatekeeping) precede measurable reconfiguration of flows."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p5 L15-L22"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 L15–L22"
-
-      - claim_id: gradient_capitalism_2025_12_07__c07_law1_coherence_accumulates
-        claim_type: principle
-        claim: "Law 1: Coherence accumulates — capital is stored coherence; coherent systems compound faster."
-        falsifiable: true
-        test_hook: "Test whether high-trust/high-reliability regions show superlinear compounding vs. low-trust regions, controlling for inputs."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p8 L50-L53"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p8 L50–L53"
-
-      - claim_id: gradient_capitalism_2025_12_07__c08_law2_extraction_collapses
-        claim_type: principle
-        claim: "Law 2: Extraction collapses — extreme extraction concentrates coherence and triggers systemic collapse dynamics."
-        falsifiable: true
-        test_hook: "Quantify extraction concentration vs. crisis frequency/severity; test for thresholds and hysteresis."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p9 L18-L24"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 L18–L24"
-
-      - claim_id: gradient_capitalism_2025_12_07__c09_law3_diffusion_is_growth
-        claim_type: principle
-        claim: "Law 3: Diffusion is growth — long-run growth depends on healthy diffusion across edges, not only core accumulation."
-        falsifiable: true
-        test_hook: "Measure diffusion (access, mobility, opportunity spread) and test whether it predicts sustained growth better than core-only metrics."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p9 L36-L39"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p9 L36–L39"
-
-      - claim_id: gradient_capitalism_2025_12_07__c10_inequality_as_phase_transition
-        claim_type: falsifiable_gate
-        claim: "Inequality behaves like a phase-transition trigger: once coherence drops below a threshold, shocks convert to fragmentation rather than recovery."
-        falsifiable: true
-        test_hook: "Estimate thresholds where recovery time diverges and propagation becomes unstable as inequality increases."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p12 L3-L8"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p12 L3–L8"
-
-      - claim_id: gradient_capitalism_2025_12_07__c11_diffusion_proxies
-        claim_type: operational_metric
-        claim: "Diffusion can be proxied empirically (social mobility, opportunity dispersion, knowledge access), giving measurable targets for policy."
-        falsifiable: true
-        test_hook: "Define diffusion proxies and test interventions that increase them for downstream stability improvements."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p13 L2-L4"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 L2–L4"
-
-      - claim_id: gradient_capitalism_2025_12_07__c12_policy_as_cf_operations
-        claim_type: framing
-        claim: "Policy is not metaphor here: it is explicitly ‘CF operations’—i.e., shaping which gradients are amplified/suppressed and how stability is maintained."
-        falsifiable: partially
-        test_hook: "Classify policy moves as filter changes; test whether filter-shifts predict redistribution of flows and stability metrics."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p5 L24-L30"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p5 L24–L30"
-
-      - claim_id: gradient_capitalism_2025_12_07__c13_antitrust_as_diffusion_repair
-        claim_type: prescription
-        claim: "Antitrust is framed as diffusion repair: enforce competition to prevent coherence collapse into monopolistic funnels."
-        falsifiable: true
-        test_hook: "Compare diffusion metrics and shock resilience in markets before/after antitrust enforcement."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p13 L25-L29"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 L25–L29"
-
-      - claim_id: gradient_capitalism_2025_12_07__c14_taxation_as_stability_control
-        claim_type: prescription
-        claim: "Taxation is treated as stability control that can reduce destructive extraction and keep the system above collapse thresholds."
-        falsifiable: true
-        test_hook: "Test whether tax structures that reduce extraction improve resilience metrics vs. those that don’t, controlling for confounders."
-        source:
-          paper_id: gradient_capitalism_2025_12_07
-          locator: "p13 L31-L33"
-          note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 L31–L33"
-
-# Claim card schema (reference)
-# - claim_id: <unique within paper>
-#   claim: "<1–2 sentence testable statement>"
-#   type: one of [definition, hypothesis, method, empirical_result, prediction, metric, warning]
-#   confidence: one of [low, medium, high]   # your internal rating
-#   tags: [rgpx, ...]                        # reuse Mesh tags where possible
-#   anchors:
-#     - kind: one of [section, figure, table, equation, page]
-#       ref: "<e.g., 'Section 3.2', 'Fig. 4', 'Eq. (7)', 'p. 12'>"
-#   excerpt: "<optional ≤40 words verbatim if you want a quotable snippet>"
-#   depends_on: [<optional other claim_ids>]
-#   notes: "<optional: what would falsify / what data needed>"
+      
