@@ -73,8 +73,19 @@ jobs:
           git add docs/data.js
           git commit -m "auto: rebuild docs/data.js from pulses"
 
-          # Bring this local clone up to date with remote main
-          git pull --rebase origin main
+          # Rebase+push with retries to survive concurrent updates to main
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main || (git rebase --abort && true)
 
-          # Push our rebased commit back to main
-          git push origin HEAD:main
+            if git push origin HEAD:main; then
+              echo "Pushed successfully."
+              exit 0
+            fi
+
+            echo "Push rejected (main moved). Retrying… ($i/5)"
+            sleep $((i*3))
+          done
+
+          echo "ERROR: push failed after retries" >&2
+          exit 1
