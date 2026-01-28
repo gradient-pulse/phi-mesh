@@ -24,7 +24,9 @@ Start with the **RGPxScientist One-Page Brief** (forwardable PDF), then use the 
 
 [![RGPx Scientist (ChatGPT App)](https://img.shields.io/badge/RGPx%20Scientist-ChatGPT%20App-10a37f?style=for-the-badge&logo=openai&logoColor=white)](https://chatgpt.com/g/g-695e7b3d7344819190ac67772d4452f6-rgpx-scientist-3-1) 
 [![RGP Tag Map](https://img.shields.io/badge/RGP%20Tag%20Map-ONLINE-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)  
-[![RGP Gradient Map](https://img.shields.io/badge/Pulse%20Evolution%20Map-ONLINE-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)  
+
+[![RGP Gradient Map](https://img.shields.io/badge/Pulse%20Evolution%20Map-ONLINE-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html) 
+
 [![Tag Taxonomy](https://img.shields.io/badge/Tag%20Taxonomy-RGPx%20Phases-0b8?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_taxonomy.html)  
 ---
 
