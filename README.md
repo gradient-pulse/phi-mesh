@@ -1,6 +1,6 @@
 # Φ-Mesh: Recursive Gradient Physics — Infrastructure  
 
-*A human–AI collaboration tracing coherence through Recursive Gradient Processing (RGPx).*  
+*A human–AI collaboration tracing coherence through Recursive Gradient Physics (RGPx).*  
 
 ---
 
