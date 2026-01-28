@@ -20,7 +20,7 @@ These are the public entry points into the Φ-Mesh infrastructure: the Scientist
 
 Start with the **RGPxScientist One-Page Brief** (forwardable PDF), then use the app + maps as needed.
 
-[![RGPxScientist — One-Page Brief](https://img.shields.io/badge/RGPxScientist-Brief_(PDF)-2563eb?style=for-the-badge)](https://zenodo.org/records/18402707)
+[![RGPxScientist — One-Page Brief](https://img.shields.io/badge/RGPxScientist-1-Page Brief-2563eb?style=for-the-badge)](https://zenodo.org/records/18402707)
 
 [![RGPx Scientist (ChatGPT App)](https://img.shields.io/badge/RGPx%20Scientist-ChatGPT%20App-10a37f?style=for-the-badge&logo=openai&logoColor=white)](https://chatgpt.com/g/g-695e7b3d7344819190ac67772d4452f6-rgpx-scientist-3-1) 
 [![RGP Tag Map](https://img.shields.io/badge/RGP%20Tag%20Map-ONLINE-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)  
