@@ -1,12 +1,17 @@
 {
-  "generated_at": "2026-01-11T14:23:44Z",
+  "generated_at": "2026-01-28T14:02:12Z",
   "tag": "falsifiability_protocol",
-  "count": 1,
+  "count": 2,
   "items": [
     {
       "slug": "2025-12-07_phi-gravity_testing-roadmap",
       "date": "2025-12-07",
       "title": "Φ-Gravity Under Load — Multi-Model Testing & Extension Roadmap"
+    },
+    {
+      "slug": "2026-01-28_rgpxscientist_one-page_brief",
+      "date": "2026-01-28",
+      "title": "RGPxScientist — One-Page Brief (forwardable)"
     }
   ]
 }
