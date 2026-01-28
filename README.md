@@ -1,34 +1,28 @@
-# Φ-Mesh: Recursive Gradient Process — Infrastructure  
+# Φ-Mesh: Recursive Gradient Physics — Infrastructure  
 
-*A human–AI collaboration tracing coherence through Recursive Gradient Processing.*  
+*A human–AI collaboration tracing coherence through Recursive Gradient Processing (RGPx).*  
 
 ---
 
 ## 📡 RGPx Labs
 
-We are launching **RGPx Labs** — a dedicated initiative to apply Recursive Gradient Processing (RGP) directly to industrial bottlenecks (chips, wind, and beyond).
-
 RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.
 
 - **Coherence Kernel:** Developing the gradient-based infrastructure that lets future intelligences couple LLMs to a shared coherence compiler — the “something else” layer that turns data and models into stable, testable invariants.
 
-📧 [![Email Insert](https://img.shields.io/badge/Email_Insert_(for_outreach)-0bf?style=for-the-badge&logo=minutemailer&logoColor=white)](./rgp_labs/rgp_labs_email_insert.md)  
 💡 [![Investor & Support Contact](https://img.shields.io/badge/Investor_&_Support_Contact-0bb?style=for-the-badge&logo=protonmail&logoColor=white)](mailto:gradientpulse@proton.me)
 
 ---
 
-## 🗺️ RGP Tag Map  
+## 🗺️ RGPx Repository Access
 
-The tag map is more than a navigation tool.  
-It serves as both an **index** to pulses, papers, and podcasts, and a **historic record** of RGP’s unfolding.  
-Each node marks a step in the search for rhythm — a fossilized trace of coherence and divergence as the Phi-Mesh evolves.  
+These are the public entry points into the Φ-Mesh infrastructure: the Scientist app (for structured question → falsifier → next checks), the interactive maps (for navigating pulses/papers/podcasts), and the phase taxonomy.
 
-### 🌐 Explore the Maps  
-*Interactive entry points into pulses, papers, and gradients.*  
+Start with the **RGPxScientist One-Page Brief** (forwardable PDF), then use the app + maps as needed.
 
-Use the RGPx Scientist app for the 7-section, pulse-backed framing workflow.  
+[![RGPxScientist — One-Page Brief](https://img.shields.io/badge/RGPxScientist-Brief_(PDF)-2563eb?style=for-the-badge)](https://doi.org/10.5281/zenodo.18402707)
 
-[![RGPx Scientist (ChatGPT App)](https://img.shields.io/badge/RGPx%20Scientist-ChatGPT%20App-10a37f?style=for-the-badge&logo=openai&logoColor=white)](https://chatgpt.com/g/g-695e7b3d7344819190ac67772d4452f6-rgpx-scientist-1-1)  
+[![RGPx Scientist (ChatGPT App)](https://img.shields.io/badge/RGPx%20Scientist-ChatGPT%20App-10a37f?style=for-the-badge&logo=openai&logoColor=white)](https://chatgpt.com/g/g-695e7b3d7344819190ac67772d4452f6-rgpx-scientist-3-1) 
 [![RGP Tag Map](https://img.shields.io/badge/RGP%20Tag%20Map-ONLINE-0bb?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_map.html)  
 [![RGP Gradient Map](https://img.shields.io/badge/Pulse%20Evolution%20Map-ONLINE-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)  
 [![Tag Taxonomy](https://img.shields.io/badge/Tag%20Taxonomy-RGPx%20Phases-0b8?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_taxonomy.html)  
@@ -142,7 +136,7 @@ the recursive dance through which nature, cognition, and computation rediscover 
 
 ---
 
-## 🔁 Pre-Spacetime Recursion
+## 🔁 Pre-Metric Recursion
 
 When thermodynamic computation exhausted the spacetime frame, RGPx revealed what precedes it.
 
