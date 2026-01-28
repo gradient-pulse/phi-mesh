@@ -1,0 +1,15 @@
+title: 'RGPxScientist — One-Page Brief (forwardable)'
+summary: >
+  A forwardable one-page entry point for scientists: RGPxScientist is retrieval-first and audit-ready,
+  turning research questions into explicit definitions, invariant candidates, a falsifiability protocol,
+  and minimal next checks. The RGPx lens is stated operationally as: “What stays invariant when surface
+  details change?” — turning robustness into a testable workflow.
+tags:
+  - rgpx
+  - rgpx_scientist
+  - invariants
+  - falsifiability_protocol
+papers:
+  - https://doi.org/10.5281/zenodo.18402707
+podcasts:
+  - https://notebooklm.google.com/notebook/81bc2278-39e6-44e7-b766-af3ac310f285?artifactId=6d85e1bb-3f2e-4f1c-8e12-6b53b6d966a8
