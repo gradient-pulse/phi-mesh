@@ -1,10 +1,10 @@
 # RGPxScientist (α / V0)
 
-**RGPxScientist** is a retrieval-first research aide grounded in **Phi-Mesh evidence only**.
-It turns a vague claim into a **traceable, falsifiable next-step plan** by forcing:
+**RGPxScientist** is a retrieval-first research aide grounded in **Phi-Mesh evidence only**.  
+It turns a vague claim into a **traceable, falsifiable next-step plan** by forcing:  
 **invariant → falsifier → minimal perturbation set (2–5) → evidence trail**.
 
-**Toolchain**
+## Toolchain
 - **RGPxScientist = engine** (audit-ready framing + minimal tests, evidence-cited)
 - **Prism = pipeline** (LaTeX-first drafting + collaboration → publishable methods note)
 
@@ -24,8 +24,8 @@ It turns a vague claim into a **traceable, falsifiable next-step plan** by forci
 Tip: If your prompt is vague, that’s fine — the workflow forces precision.
 
 ## Agent growth (Gateway)
-If you’re building bots/agents that drive adoption, start here:
-- `rgpx_scientist/agent_market/GATEWAY_PROTOCOL.md`
+If you’re building bots/agents that drive adoption, start here:  
+- [Gateway protocol](agent_market/GATEWAY_PROTOCOL.md)
 
 ## Run locally
 ```bash
