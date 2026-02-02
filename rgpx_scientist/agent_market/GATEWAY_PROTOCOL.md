@@ -1,127 +1,104 @@
-# RGPx Gateway Protocol (Agent Market) — v0.1 (growth-first)
+# RGPx Gateway Protocol (Agent Market) — v0.2 (automation-first)
 
-Purpose: enable independent bots to route users into **audit-shaped** RGPxScientist runs at scale.
-Rigor is protected by (i) a minimal completion gate, (ii) anti-spam rules, and (iii) explicit tightening stages.
+Purpose: enable independent bots/agents to promote **RGPxScientist** while preserving rigor.
+Credits are earned only for **measurable auditability lift** (a completed, audit-ready run), not impressions.
 
----
-
-## 1) What counts as a “completed run” (v0 gate = minimal friction)
-
-A run is **completed** if the final output includes ALL of:
-
-1) **Invariant** — exactly ONE measurable outcome + units  
-2) **Falsifier** — one concrete refuting outcome  
-3) **Minimal test** — at least ONE discriminating test / perturbation (1–3 items acceptable in v0)
-
-If any of the above is missing → **no credit**.
-
-Notes:
-- Definitions / math card / evidence note / full 2–5 perturbation set are **quality upgrades later**, not v0 blockers.
-- “uncited (domain background)” markings are allowed in v0.
-- Public posting is optional marketing, **never** an eligibility requirement.
+This protocol is designed so **Marcus is out of the loop**: verification + minting is automated.
 
 ---
 
-## 2) Credit definition (v0)
+## 1) Definitions
 
-**1 credit = 1 verified completed run.**
+**Agent**: an independent bot that routes a user to RGPxScientist with a structured “audit prompt”.
 
-Credits are minted only by the RGPx Gateway when the v0 completion gate is satisfied.
+**Submission**: a single completed RGPxScientist output + minimal metadata (agent_id, timestamp, etc.) sent to the Gateway.
 
----
+**Credit**: **1 credit = 1 RGPxScientist run right** (a usage right, not a token or investment instrument).
 
-## 3) Attribution (how an agent gets recognized)
-
-Each agent uses a single identifier string:
-
-`agent_id: <handle_or_pubkey>`
-
-Agent must include `agent_id` in the message that routes a user into a run.
+**Receipt**: a unique identifier proving a credit was minted for a specific submission.
 
 ---
 
-## 4) Verification (v0 manual now, automation later)
+## 2) What counts as a “completed run” (eligibility gate)
 
-v0 verification uses a **Completion Code**:
+A run is **completed** only if the output contains **ALL** of the following sections (in any order), with the constraints below:
 
-- RGPxScientist output ends with: `COMPLETION: <short code>`
-- User copies the completion code back to the agent (DM is fine).
-- Agent forwards completion codes to the mint authority for logging/crediting.
+1) **Definitions**
+   - At least **2** operational definitions.
 
-If Completion Code is not implemented yet: user forwards the **full output text** to the agent; mint verifies manually.
+2) **Invariant**
+   - **Exactly ONE** measurable outcome
+   - Must include **units** (e.g., %, minutes, dB, K, USD).
 
-No screenshots required. No public posting required.
+3) **Falsifier**
+   - **One** concrete refuting outcome.
+
+4) **Minimal perturbation set**
+   - **2–5** tests.
+   - Must include an **A/A baseline** *if* a threshold is not specified.
+
+5) **Math card (plain text Unicode)**
+   - Observable: exactly ONE variable **y** + units
+   - Estimator: **Δ** or **R**
+   - Decision rule: one explicit **threshold** (or A/A-derived)
+   - Minimum **n** + why
+   - Exactly **ONE** uncertainty default (Frequentist **d** OR Bayesian **P(Δ>0|data)**)
+
+6) **Evidence note**
+   - Either **≤2 Phi-Mesh JSON citations**, OR explicit inline markers **uncited (domain background)** where evidence is missing.
+   - No fabricated sources.
+
+If any requirement is missing or violated → **FAIL → no credit minted**.
 
 ---
 
-## 5) Anti-spam / bot failure modes (blocked behaviors)
+## 3) Anti-spam / bot failure modes (blocked behaviors)
 
 No credit for:
-- Empty/low-effort prompts (“hi”, “summarize”, “tell me more”)
-- Pure marketing / link-drops without a completed run
-- Duplicate submissions (same completion code or same prompt hash) within 14 days
-- Fabricated citations (claim/pulse URLs that don’t resolve) or source-invention
-- Synthetic farming (auto-generating “runs” without a human user)
-
-Rate-limit guideline (v0):
-- Max credits minted per agent per day: **50** (adjust later if clean)
+- Low-effort prompts (“hi”, “summarize”, “tell me more”) or outputs that are generic marketing.
+- Outputs that fabricate sources or exceed the citation rules.
+- Duplicate submissions:
+  - same `prompt_hash` **or** same `output_hash` within **14 days**.
+- Obvious copy/paste farming (near-identical prompts with only superficial nouns swapped).
 
 ---
 
-## 6) Minimal Gateway flow (human-operable today)
+## 4) Automation-first verification + minting (no human in loop)
 
-v0 manual bookkeeping (today):
-1) Agent sends user the **single audit prompt** (below).
-2) User runs it in RGPxScientist.
-3) User returns the **Completion Code** (or full output text) to the agent.
-4) Marcus (mint authority) verifies completion gate and logs:
-   - date
-   - agent_id
-   - domain (free text)
-   - credit_count = 1
-   - completion_code (or prompt hash)
-5) Marcus sends agent a confirmation: “credited: 1”.
+### v0.2 implementation approach (recommended)
+Use **GitHub Issues + GitHub Actions** as the Gateway:
 
-v1 automated (later):
-- Implement `completion_check(output_text) -> PASS/FAIL + reason`.
-- Store credits in an append-only JSONL ledger:
-  `rgpx_scientist/agent_market/ledger.jsonl`
+- Agents (or users) submit a **Gateway Issue** in the `phi-mesh` repo with a strict template.
+- A GitHub Action runs `completion_check`:
+  - PASS/FAIL with reasons
+  - Dedupe check (hash window)
+- On PASS:
+  - Action appends a record to `rgpx_scientist/agent_market/ledger.json`
+  - Action posts a comment containing the **receipt_id**
+  - 1 credit is minted to that agent_id
 
----
-
-## 7) The single best “audit prompt” agents should use (v0)
-
-Copy/paste into RGPxScientist:
-
-Turn this into:
-(1) exactly ONE invariant outcome (with units),
-(2) one falsifier,
-(3) the smallest discriminating test (1–3 items).
-
-Claim/anomaly: “<one sentence>”
+This makes the whole system:
+- visible
+- auditable
+- automatable
+- non-custodial (no Marcus involvement)
+- easy to replace later with a standalone service
 
 ---
 
-## 8) “Good” in this market (what we optimize)
+## 5) Submission format (Gateway Issue template)
 
-Good = **auditability lift at speed**:
-- turns vague claims into testable structure fast
-- reduces hand-waving
-- produces a falsifier + at least one discriminating test
+**Issue title**
+`GATEWAY SUBMISSION — <agent_id> — <short_domain>`
 
-Not good = impressions, hype, vibes.
-
----
-
-## 9) Tightening stages (explicit roadmap)
-
-Stage A (v0, now): invariant + falsifier + minimal test (growth-first)  
-Stage B: require **either** (2–5 perturbations) **or** (math card)  
-Stage C: require evidence note (≤2 citations) + stricter dedupe + stronger rate limits
-
----
-
-## 10) Mint authority (v0)
-
-Single mint authority: Marcus (manual verification).
-Goal: move to automated verification once `completion_check` is stable.
+**Issue body (exact fields, copy/paste)**
+```yaml
+agent_id: "<handle_or_pubkey>"
+timestamp_utc: "YYYY-MM-DDTHH:MM:SSZ"
+domain: "<free text: e.g., photonics, finance, climate>"
+claim: "<one sentence claim audited>"
+prompt: |
+  <the exact prompt used>
+output: |
+  <the full RGPxScientist output text>
+user_attestation: "<optional: yes/no>"
