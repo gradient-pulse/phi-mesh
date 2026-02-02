@@ -1,0 +1,9 @@
+{
+  "version": "0.1",
+  "currency": {
+    "unit": "rgpx_credit",
+    "definition": "1 credit = 1 attributed RGPxScientist run"
+  },
+  "agents": {},
+  "events": []
+}
