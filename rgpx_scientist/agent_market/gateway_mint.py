@@ -123,7 +123,7 @@ def main():
 
     ts = ts_in if ts_in else now_utc_iso()
 
-   event = {
+    event = {
         "timestamp_utc": ts,
         "event": "mint",
         "receipt_id": receipt_id,
