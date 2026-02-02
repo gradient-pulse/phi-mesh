@@ -13,11 +13,17 @@ def now_utc_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 def parse_yaml_block(issue_body: str) -> dict:
-    # Expect a fenced ```yaml block. If multiple exist, take the first.
-    m = re.search(r"```yaml\s*(.*?)\s*```", issue_body, re.DOTALL | re.IGNORECASE)
+    m = re.search(r"```yaml\s*(.*?)\s*```", issue_body, re.DOTALL)
     if not m:
-        raise ValueError("No ```yaml fenced block found in issue body.")
-    return yaml.safe_load(m.group(1))
+        raise ValueError("No YAML block found in issue body.")
+
+    yaml_text = m.group(1)
+
+    # YAML forbids tab indentation; submissions often contain tabs in copied output.
+    # Sanitize to keep the Gateway automation-first and user/agent-proof.
+    yaml_text = yaml_text.replace("\t", "  ")
+
+    return yaml.safe_load(yaml_text)
 
 def load_ledger() -> dict:
     with open(LEDGER_PATH, "r", encoding="utf-8") as f:
