@@ -1,9 +1,10 @@
 {
-  "version": "0.1",
+  "schema_version": "0.2",
   "currency": {
     "unit": "rgpx_credit",
-    "definition": "1 credit = 1 attributed RGPxScientist run"
+    "definition": "1 credit = 1 RGPxScientist run right (usage right). Minting and spending are recorded as events."
   },
   "agents": {},
-  "events": []
+  "events": [
+  ]
 }
