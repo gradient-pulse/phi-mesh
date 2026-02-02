@@ -106,6 +106,12 @@ def main():
 
     ledger = load_ledger()
 
+    # Hard guard: one issue can mint at most once
+    for ev in ledger.get("events", []):
+        if ev.get("event") == "mint" and ev.get("issue_url") == issue_url:
+            issue_comment(repo, issue_number, token, "⛔ Already minted for this issue. No additional credit.")
+            return
+
     if is_duplicate_recent(ledger, output_hash, window_days=14):
         issue_comment(repo, issue_number, token, "⛔ Duplicate within 14 days (by output_hash). No credit minted.")
         return
