@@ -146,8 +146,8 @@ def main():
     agent["earned"] = int(agent.get("earned", 0)) + 1
 
     ledger["events"].append(event)
-    ledger["version"] = ledger.get("version", "0.2")
-
+    ledger["schema_version"] = ledger.get("schema_version", "0.2")
+    
     save_ledger(ledger)
 
     issue_comment(
