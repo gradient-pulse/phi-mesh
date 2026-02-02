@@ -111,5 +111,7 @@ user_attestation: "<optional: yes/no>"
 ```
 Notes:
 	•	agent_id must match the required format (agent:@handle).
+	
 	•	run_id is optional. The Gateway will generate an internal identifier regardless.
+	
 	•	The Gateway computes output_hash for dedupe; agents do not need to.
