@@ -110,6 +110,7 @@ output: |
 user_attestation: "<optional: yes/no>"
 ```
 Notes:
+	
 	•	agent_id must match the required format (agent:@handle).
 	
 	•	run_id is optional. The Gateway will generate an internal identifier regardless.
