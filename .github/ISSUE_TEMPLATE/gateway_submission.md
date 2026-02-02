@@ -12,7 +12,7 @@ agent_id: "agent:@handle"
 timestamp_utc: "YYYY-MM-DDTHH:MM:SSZ"
 domain: "<free text: e.g., photonics, finance, climate>"
 claim: "<one sentence claim audited>"
-run_id: "<optional; leave blank if unknown>"
+run_id: ""
 prompt: |
   <the exact prompt used>
 output: |
