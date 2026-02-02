@@ -1,0 +1,47 @@
+name: RGPx Gateway Mint
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  mint:
+    if: contains(join(github.event.issue.labels.*.name, ','), 'gateway-submission')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install pyyaml
+
+      - name: Run gateway mint
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python rgpx_scientist/agent_market/gateway_mint.py
+
+      - name: Commit ledger update (if changed)
+        run: |
+          if git diff --quiet; then
+            echo "No ledger changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add rgpx_scientist/agent_market/ledger.json
+          git commit -m "Gateway: mint credit"
+          git push
