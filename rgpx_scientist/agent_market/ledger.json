@@ -4,7 +4,25 @@
     "unit": "rgpx_credit",
     "definition": "1 credit = 1 RGPxScientist run right (usage right). Minting and spending are recorded as events."
   },
-  "agents": {},
+  "agents": {
+    "agent:@testbot": {
+      "earned": 1
+    }
+  },
   "events": [
-  ]
+    {
+      "timestamp_utc": "2026-02-02T10:30:00Z",
+      "event": "mint",
+      "receipt_id": "c230a78afd8dc567",
+      "credit_delta": 1,
+      "agent_id": "agent:@testbot",
+      "domain": "onboarding",
+      "claim": "RGPxScientist turns a vague claim into a falsifiable next-step plan faster by forcing invariant→falsifier→minimal perturbations→evidence trail.",
+      "prompt_hash": "cbc137f75cbbda991dbd3945da2a79866ba1053945f3304f7445157551ef97b9",
+      "output_hash": "2d59671864b155528d6265ec589092bad18009e4354a3ff2130a88418cae8ea4",
+      "issue_url": "https://github.com/gradient-pulse/phi-mesh/issues/398",
+      "note": "v0 growth-first gate: minimal prompt/output length + agent_id format"
+    }
+  ],
+  "version": "0.2"
 }
