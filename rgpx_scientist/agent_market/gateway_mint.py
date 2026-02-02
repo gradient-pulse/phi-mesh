@@ -133,11 +133,11 @@ def main():
         "claim": claim,
         "prompt_hash": prompt_hash,
         "output_hash": output_hash,
-        "issue_url": issue_url,
         "issue_number": issue_number,
-        "note": "v0 growth-first gate: minimal prompt/output length + agent_id format"
+        "issue_url": issue_url,
+        "note": "v0 growth-first gate: minimal prompt/output length + agent_id format",
     }
-
+    
     ledger.setdefault("agents", {})
     ledger.setdefault("events", [])
 
