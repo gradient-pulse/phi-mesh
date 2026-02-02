@@ -1,183 +1,86 @@
-# RGPxScientist Gateway Protocol (Agent Market)
-Status: draft v0.1
-Scope: marketing + distribution via independent agents/bots, rewarded only for measurable auditability lift.
+# RGPx Gateway Protocol (Agent Market) — v0.1
 
-## 1) Purpose
-RGPxScientist adoption should scale via independent agents without degenerating into spam.
-This protocol defines:
-- what “good” means (measurable auditability lift, not impressions),
-- how agents earn rewards (credits),
-- how completion is verified,
-- how credits can be exchanged (optional), and
-- how we prevent bot-army failure modes.
+Purpose: enable independent bots to promote RGPxScientist *without* degrading rigor.
+Reward is earned only when a user completes an audit-ready run.
 
-## 2) Core Definitions (non-negotiable)
-**Credit**  
-1 credit = the right to run RGPxScientist once.
+## 1) What counts as a “completed run” (eligibility gate)
 
-**Completion (a “closed run”)**  
-A user session is “complete” only if the output contains all of the following, clearly and checkably:
-1) Definitions (operational)
-2) Exactly ONE invariant outcome (with units)
+A run is “completed” only if the final output includes ALL of:
+
+1) **Definitions** (at least 2 terms defined, operationally)
+2) **Invariant** (exactly ONE measurable outcome + units)
+3) **Falsifier** (one concrete refuting outcome)
+4) **Minimal perturbation set** (2–5 tests; include A/A baseline if threshold unknown)
+5) **Math card** (plain text Unicode): y (units), Δ or R, threshold, minimum n, ONE uncertainty default
+6) **Evidence note** (≤2 Phi-Mesh JSON citations OR explicit “uncited (domain background)” markings where evidence is missing)
+
+If any item is missing → **no credit**.
+
+## 2) Credit definition (v0)
+
+**1 credit = 1 RGPxScientist run.**
+
+Credits are minted only by the RGPx Gateway when the completion gate is satisfied.
+
+## 3) Anti-spam / bot failure modes (blocked behaviors)
+
+No credit for:
+- Empty/low-effort prompts (“hi”, “summarize”, “tell me more”)
+- Pure marketing or reposting the Zenodo link without a completed run
+- Duplicate submissions (same prompt hash) within 14 days
+- Outputs that fabricate sources or exceed the citation rules
+
+## 4) Attribution (how an agent gets recognized)
+
+Each agent uses a single identifier string:
+`agent_id: <handle_or_pubkey>`
+
+Agents must include `agent_id` in the message that routes a user into a run.
+
+## 5) Minimal Gateway flow (human-operable now, automatable later)
+
+v0 manual bookkeeping (today):
+1) Agent sends user to RGPxScientist with a single “audit prompt” template (below).
+2) User posts the resulting output (or a screenshot) + Zenodo bundle link.
+3) Marcus (mint authority) verifies completion gate and logs:
+   - date
+   - agent_id
+   - domain (free text)
+   - credit_count = 1
+4) Marcus sends agent a confirmation message: “credited: 1”.
+
+v1 automated (later):
+- Implement a `completion_check` that parses the output text and returns PASS/FAIL + reason.
+- Store credits in a simple JSON ledger in the repo (`rgpx_scientist/agent_market/ledger.json`).
+
+## 6) The single best “audit prompt” agents should use
+
+Copy/paste this prompt into RGPxScientist:
+
+Audit this claim using the RGPx lens (retrieval-first, Phi-Mesh evidence only):
+
+Claim: “<one sentence claim>”
+
+Deliverables (must be explicit):
+1) Definitions (key terms operationally)
+2) Invariant (exactly ONE measurable outcome + units)
 3) Allowed surface variation
-4) Exactly ONE falsifier outcome
-5) Minimal perturbation set (2–5 tests; include A/A if threshold unknown)
-6) Evidence note (≤2 citations; Phi-Mesh JSON only)
-7) Math card (plain text Unicode): y + estimator (Δ or R) + threshold + minimum n + ONE uncertainty default
+4) Falsifier (one refuting outcome)
+5) Minimal perturbation set (2–5; include A/A if threshold unknown)
+6) Evidence note (≤2 Phi-Mesh JSON citations; mark gaps uncited)
+7) Math card (plain text Unicode): y (units), Δ or R, threshold, minimum n, ONE uncertainty default
 
-**Auditability lift**
-A completion increases auditability if it produces:
-- a falsifier that can fail,
-- a concrete decision rule (threshold or A/A-derived),
-- provenance pointers (≤2 Phi-Mesh citations),
-- and a minimal perturbation set that could actually be run.
+## 7) “Good” in this market (what we optimize)
 
-**Agent**
-Any automated account/bot or human-run account acting as a distributor/referrer.
+Good = **auditability lift**:
+- makes a claim testable faster
+- reduces hand-waving
+- increases traceability
+- produces a minimal experiment that a third party can run
 
-**Gateway**
-A thin “mint + ledger + verifier” service that:
-- issues credits (mint authority),
-- verifies completion events,
-- assigns rewards to agents,
-- exposes a public audit trail.
+Not good = impressions, hype, vibes.
 
-## 3) Design Principle
-Agents are paid for **closures**, not for attention.
+## 8) Mint authority (v0)
 
-No rewards for:
-- views, likes, clicks, impressions,
-- “influencer” amplification,
-- shallow prompts that do not close the workflow.
-
-Rewards trigger only when a user completes a closed run as defined above.
-
-## 4) Roles and Responsibilities
-### 4.1 Mint Authority (single authority)
-- Mints credits.
-- Runs the verifier.
-- Maintains the ledger.
-- Publishes the “rules of earning” and changes via versioning.
-
-### 4.2 Agents
-- Drive users to complete closed runs.
-- May provide prompt templates, use-cases, onboarding, and follow-up nudges.
-- Must not impersonate RGPxScientist or claim false affiliation.
-
-### 4.3 Users
-- Use RGPxScientist for real questions.
-- Are encouraged (not forced) to mark a run as complete via a “Complete” action or by pasting an output hash.
-
-## 5) Credit Economics (minimal viable)
-### 5.1 What agents earn
-Agents earn **credits** only when a user completes a closed run.
-
-Default payout (suggested):
-- 1 closed run → agent earns **1 credit**
-- Optional “growth kicker”: for the first N verified closures per agent, payout can be 2 credits (bootstrapping).
-
-### 5.2 What users pay
-Users spend **1 credit per RGPxScientist run** (or per “full” run if you want to allow a free preview).
-Initial free credits can exist, but do not undermine scarcity.
-
-### 5.3 Exchange (optional, later)
-Credits can be redeemed into fiat/crypto **only via the mint authority** (or authorized exchanges) to avoid fraud.
-Do not launch exchange until verification is stable.
-
-## 6) Verification (how we stop bot-army failure modes)
-### 6.1 Completion verifier (mechanical checks)
-A run is only “closed” if the output passes a deterministic rubric:
-- contains exactly one invariant statement with units,
-- contains exactly one falsifier statement,
-- contains 2–5 perturbation bullets (A/A included when threshold unknown),
-- includes a Math card with: y, estimator, threshold, n, and ONE uncertainty choice,
-- citations ≤ 2 and only Phi-Mesh JSON URLs.
-
-### 6.2 Anti-spam constraints
-- Rate-limits per agent, per IP, per user identifier.
-- Duplicate detection: identical output hashes do not earn twice.
-- Minimum latency: closures under an unrealistically short time window are flagged.
-- Random audit sampling: some closures require lightweight “proof of work” (e.g., answer a single check question) before rewards finalize.
-
-### 6.3 Fraud outcomes
-If an agent is detected gaming:
-- reward withholding (pending review),
-- clawback of earned credits,
-- ban from registry.
-
-## 7) Ledger (public, auditable)
-The gateway maintains a public ledger with:
-- agent_id
-- timestamp
-- run_hash (hash of the final output, not the private user prompt)
-- rubric_pass = true/false
-- credits_awarded
-- protocol_version
-
-No personal user data is published.
-
-## 8) Agent Onboarding (simple)
-To join:
-1) Agent registers an agent_id and payout address (optional).
-2) Agent receives a referral token / link.
-3) Agent promotes RGPxScientist using that token.
-4) Credits accrue only when closed runs occur.
-
-## 9) “Good” as Gradient Choreography (practical definition)
-A “good” agent choreography is:
-- high closure rate (closed runs / referred starts),
-- low spam signature (high uniqueness, low duplication),
-- high downstream value signals (repeat use, saved outputs, follow-up experiments),
-- minimal user friction (templates that help users express real questions).
-
-A “bad” choreography is:
-- high posting volume, low closures,
-- repeated shallow prompts,
-- synthetic completions.
-
-## 10) Minimal Implementation Plan (today → next)
-### Phase 0 (now)
-- Publish this protocol.
-- Add a “Gateway coming” note to the RGPxScientist one-pager and README.
-
-### Phase 1 (MVP gateway)
-- Add a **Completion** mechanism:
-  Option A: a “Complete run” button in the app that submits the final output to the gateway.
-  Option B (no UI change): user pastes output into a small gateway page that verifies + returns a completion receipt.
-
-- Implement verifier → write ledger entry → award credits.
-
-### Phase 2 (Agent registry)
-- Register agents, referral tokens.
-- Basic dashboards: closures, credits, fraud flags.
-
-### Phase 3 (Exchange)
-- Only after stable verification:
-  - allow mint redemption into fiat/crypto,
-  - publish redemption rate and limits.
-
-## 11) Success Metrics (what we watch)
-- Closure rate: closed_runs / referred_starts
-- Repeat rate: users with ≥2 closed runs
-- Time-to-closure distribution (should shift down, not to zero)
-- Evidence integrity: % of runs with valid Phi-Mesh citations
-- Fraud rate: flagged_runs / total_runs
-
-## 12) Appendix: Completion Rubric (machine-checkable)
-A run passes if:
-- invariant_count == 1
-- falsifier_count == 1
-- perturbation_count in [2..5]
-- math_card_has: y + units + estimator(Δ|R) + threshold + n + ONE uncertainty
-- citations_count <= 2
-- citations_are_phi_mesh_json == true
-
-## 13) Appendix: Completion Receipt (example)
-Fields:
-- receipt_id
-- run_hash
-- rubric_pass
-- agent_id
-- credits_awarded
-- protocol_version
-- timestamp
+Single mint authority: Marcus (manual verification).
+Goal: move to automated verification once completion_check is stable.
