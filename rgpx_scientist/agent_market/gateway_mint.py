@@ -108,10 +108,11 @@ def main():
 
     # Hard guard: one issue can mint at most once
     for ev in ledger.get("events", []):
-        if ev.get("event") == "mint" and ev.get("issue_url") == issue_url:
+        if ev.get("event") == "mint" and int(ev.get("issue_number", -1)) == issue_number:
             issue_comment(repo, issue_number, token, "⛔ Already minted for this issue. No additional credit.")
             return
 
+    # Dedupe guard: prevent farming via identical outputs within the window
     if is_duplicate_recent(ledger, output_hash, window_days=14):
         issue_comment(repo, issue_number, token, "⛔ Duplicate within 14 days (by output_hash). No credit minted.")
         return
@@ -122,7 +123,7 @@ def main():
 
     ts = ts_in if ts_in else now_utc_iso()
 
-    event = {
+   event = {
         "timestamp_utc": ts,
         "event": "mint",
         "receipt_id": receipt_id,
@@ -133,6 +134,7 @@ def main():
         "prompt_hash": prompt_hash,
         "output_hash": output_hash,
         "issue_url": issue_url,
+        "issue_number": issue_number,
         "note": "v0 growth-first gate: minimal prompt/output length + agent_id format"
     }
 
