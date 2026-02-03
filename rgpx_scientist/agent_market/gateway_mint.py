@@ -1,5 +1,5 @@
 import os, re, json, hashlib
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 import yaml
 import urllib.request
 
@@ -51,22 +51,6 @@ def issue_comment(repo: str, issue_number: int, token: str, body: str) -> None:
     with urllib.request.urlopen(req) as resp:
         resp.read()
 
-def is_duplicate_recent(ledger: dict, output_hash: str, window_days: int = 14) -> bool:
-    cutoff = datetime.now(timezone.utc) - timedelta(days=window_days)
-    for ev in ledger.get("events", []):
-        if ev.get("output_hash") != output_hash:
-            continue
-        ts = ev.get("timestamp_utc")
-        if not ts:
-            continue
-        try:
-            t = datetime.fromisoformat(ts.replace("Z", "+00:00"))
-        except Exception:
-            continue
-        if t >= cutoff:
-            return True
-    return False
-
 def main():
     issue_body = os.environ.get("ISSUE_BODY", "")
     issue_number = int(os.environ.get("ISSUE_NUMBER", "0"))
@@ -112,11 +96,6 @@ def main():
             issue_comment(repo, issue_number, token, "⛔ Already minted for this issue. No additional credit.")
             return
 
-    # Dedupe guard: prevent farming via identical outputs within the window
-    if is_duplicate_recent(ledger, output_hash, window_days=14):
-        issue_comment(repo, issue_number, token, "⛔ Duplicate within 14 days (by output_hash). No credit minted.")
-        return
-
     # Receipt ID: stable enough for now
     receipt_seed = f"{agent_id}|{issue_number}|{output_hash}"
     receipt_id = sha256(receipt_seed)[:16]
@@ -137,7 +116,7 @@ def main():
         "issue_url": issue_url,
         "note": "v0 growth-first gate: minimal prompt/output length + agent_id format",
     }
-    
+
     ledger.setdefault("agents", {})
     ledger.setdefault("events", [])
 
@@ -147,7 +126,7 @@ def main():
 
     ledger["events"].append(event)
     ledger["schema_version"] = ledger.get("schema_version", "0.2")
-    
+
     save_ledger(ledger)
 
     issue_comment(
