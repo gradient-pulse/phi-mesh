@@ -14,6 +14,14 @@ RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design
 
 ---
 
+## Agent Market (RGPxScientist)
+
+RGPxScientist usage is now routed via independent agents (packaging-first).
+- **Become an agent / register:** [AGENTS.md](rgpx_scientist/agent_market/AGENTS.md)
+- **Gateway protocol:** [GATEWAY_PROTOCOL.md](rgpx_scientist/agent_market/GATEWAY_PROTOCOL.md)
+
+---
+
 ## 🗺️ RGPx Repository Access
 
 These are the public entry points into the Φ-Mesh infrastructure: the Scientist app (for structured question → falsifier → next checks), the interactive maps (for navigating pulses/papers/podcasts), and the phase taxonomy.
