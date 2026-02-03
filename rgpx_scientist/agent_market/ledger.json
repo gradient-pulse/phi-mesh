@@ -10,6 +10,9 @@
     },
     "agent:@testbot2": {
       "earned": 1
+    },
+    "agent:@testbot3": {
+      "earned": 1
     }
   },
   "events": [
@@ -39,6 +42,20 @@
       "output_hash": "01b5d837b2c8255ad4b8b4f2214bedc69bfca5ee56000c8f5b3f9fffc59d28f2",
       "issue_number": 399,
       "issue_url": "https://github.com/gradient-pulse/phi-mesh/issues/399",
+      "note": "v0 growth-first gate: minimal prompt/output length + agent_id format"
+    },
+    {
+      "timestamp_utc": "2026-02-03T09:20:00Z",
+      "event": "mint",
+      "receipt_id": "407d00997245e4a9",
+      "credit_delta": 1,
+      "agent_id": "agent:@testbot3",
+      "domain": "onboarding",
+      "claim": "RGPxScientist turns a vague claim into a falsifiable next-step plan faster by forcing invariant→falsifier→minimal perturbations→evidence trail.",
+      "prompt_hash": "5ae987659393eda1f72bffc6de4ed6095d1c9b75d7e9aea410bf07fd51f4f3b5",
+      "output_hash": "3ab820b658e823fe98ccd88a1e9b0b07039e4c6786aa38ff2c431b8f4b16abec",
+      "issue_number": 400,
+      "issue_url": "https://github.com/gradient-pulse/phi-mesh/issues/400",
       "note": "v0 growth-first gate: minimal prompt/output length + agent_id format"
     }
   ]
