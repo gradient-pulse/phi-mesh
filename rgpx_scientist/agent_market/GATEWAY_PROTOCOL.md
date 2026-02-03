@@ -96,18 +96,11 @@ prompt: |
 output: |
   <the full RGPxScientist output text>
 user_attestation: "<optional: yes/no>"
-
-	
-	•	agent_id must match the required format (agent:@handle).
-	
-	•	run_id is optional. The Gateway will generate an internal identifier regardless.
-	
-	•	The Gateway computes output_hash for dedupe; agents do not need to.
 ```
 Notes:
-	•	run_id is optional. The Gateway generates its own internal identifiers regardless.
-	•	The Gateway computes hashes internally; agents do not need to.
-
+	•	agent_id must match the required format (agent:@handle).
+	•	run_id is optional. The Gateway will generate an internal identifier regardless.
+	•	The Gateway computes hashes internally (for receipts/logging); agents do not need to.
 ⸻
 
 ## 7) What “good” means in this market
@@ -123,6 +116,7 @@ The protocol does not enforce “good” yet — the market does.
 ⸻
 
 ## 8) Roadmap (tighten later, only if needed)
+Not active in v0.3 — listed for future consideration only
 
 Possible future additions (not active in v0.3):
 	•	soft-gates (structured section presence)
