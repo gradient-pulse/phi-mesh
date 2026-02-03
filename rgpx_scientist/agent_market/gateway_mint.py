@@ -6,6 +6,30 @@ import urllib.request
 LEDGER_PATH = "rgpx_scientist/agent_market/ledger.json"
 AGENT_ID_RE = re.compile(r"^agent:@[A-Za-z0-9_]{1,32}$")
 
+SOFT_GATE_ENABLED = True
+
+def soft_gate_missing_sections(output_text: str) -> list[str]:
+    """
+    Soft-gate: do NOT block minting.
+    We only warn/tag if the output seems to lack basic structure.
+    """
+    t = (output_text or "").lower()
+
+    checks = {
+        "definitions": ("definitions",),
+        "invariant": ("invariant",),
+        "falsifier": ("falsifier",),
+        "perturbations": ("perturbation", "minimal perturbation", "a/a", "a-b", "a/b"),
+        "evidence": ("evidence", "claim_json_url", "doi", "zenodo"),
+    }
+
+    missing = []
+    for name, needles in checks.items():
+        if not any(n in t for n in needles):
+            missing.append(name)
+
+    return missing
+
 def sha256(s: str) -> str:
     return hashlib.sha256(s.encode("utf-8")).hexdigest()
 
@@ -90,6 +114,10 @@ def main():
 
     ledger = load_ledger()
 
+    soft_missing = []
+    if SOFT_GATE_ENABLED:
+        soft_missing = soft_gate_missing_sections(output)
+
     # Hard guard: one issue can mint at most once
     for ev in ledger.get("events", []):
         if ev.get("event") == "mint" and int(ev.get("issue_number", -1)) == issue_number:
@@ -114,8 +142,12 @@ def main():
         "output_hash": output_hash,
         "issue_number": issue_number,
         "issue_url": issue_url,
-        "note": "v0 growth-first gate: minimal prompt/output length + agent_id format",
+        "soft_gate_missing": soft_missing,   # <— add this line
+        "note": "v0.3 growth-first: hard gate + soft-gate warnings",
     }
+    
+    if soft_missing:
+        event["soft_gate_missing"] = soft_missing
 
     ledger.setdefault("agents", {})
     ledger.setdefault("events", [])
@@ -129,11 +161,15 @@ def main():
 
     save_ledger(ledger)
 
+    warning_line = ""
+    if soft_missing:
+        warning_line = "\n\n⚠️ Soft-gate (non-blocking) — missing sections: " + ", ".join(soft_missing)
+
     issue_comment(
         repo,
         issue_number,
         token,
-        f"✅ Credited: 1\n\nreceipt_id: `{receipt_id}`\noutput_hash: `{output_hash[:12]}…`\nledger updated."
+        f"✅ Credited: 1\n\nreceipt_id: `{receipt_id}`\noutput_hash: `{output_hash[:12]}…`\nledger updated.{warning_line}"
     )
 
 if __name__ == "__main__":
