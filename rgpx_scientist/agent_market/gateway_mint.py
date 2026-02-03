@@ -130,24 +130,23 @@ def main():
 
     ts = ts_in if ts_in else now_utc_iso()
 
-    event = {
-        "timestamp_utc": ts,
-        "event": "mint",
-        "receipt_id": receipt_id,
-        "credit_delta": 1,
-        "agent_id": agent_id,
-        "domain": domain,
-        "claim": claim,
-        "prompt_hash": prompt_hash,
-        "output_hash": output_hash,
-        "issue_number": issue_number,
-        "issue_url": issue_url,
-        "soft_gate_missing": soft_missing,   # <— add this line
-        "note": "v0.3 growth-first: hard gate + soft-gate warnings",
-    }
-    
-    if soft_missing:
-        event["soft_gate_missing"] = soft_missing
+   event = {
+    "timestamp_utc": ts,
+    "event": "mint",
+    "receipt_id": receipt_id,
+    "credit_delta": 1,
+    "agent_id": agent_id,
+    "domain": domain,
+    "claim": claim,
+    "prompt_hash": prompt_hash,
+    "output_hash": output_hash,
+    "issue_number": issue_number,
+    "issue_url": issue_url,
+    "note": "v0.3 growth-first: hard gate + soft-gate warnings",
+}
+
+if soft_missing:
+    event["soft_gate_missing"] = soft_missing
 
     ledger.setdefault("agents", {})
     ledger.setdefault("events", [])
