@@ -110,7 +110,7 @@ Notes:
 
 ⸻
 
-7) What “good” means in this market
+## 7) What “good” means in this market
 
 Good = repeat business because the client got value:
 	•	faster falsifiers
@@ -122,7 +122,7 @@ The protocol does not enforce “good” yet — the market does.
 
 ⸻
 
-8) Roadmap (tighten later, only if needed)
+## 8) Roadmap (tighten later, only if needed)
 
 Possible future additions (not active in v0.3):
 	•	soft-gates (structured section presence)
@@ -133,7 +133,7 @@ Possible future additions (not active in v0.3):
 
 ⸻
 
-9) Mint authority (current)
+## 9) Mint authority (current)
 
 Minting is automated via GitHub Issues + GitHub Actions into:
 
