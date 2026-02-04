@@ -17,4 +17,4 @@ This schema defines the outreach target list for academic acquisition of RGPxSci
 - `notes`: Free-text notes and context.
 
 ## File
-- CSV lives at `outreach_operator/targets_schema.csv`.
+- CSV lives at `outreach_operator/targets.csv`.

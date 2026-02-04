@@ -31,6 +31,6 @@ Acquire academic users for RGPxScientist by offering a fast, high-signal “firs
 - Secondary: reply rate, first-win delivery rate, internal champion referrals.
 
 ## Data Hygiene
-- Maintain a single source of truth in `outreach_operator/targets_schema.csv`.
+- Maintain a single source of truth in `outreach_operator/targets.csv`.
 - Log every outreach attempt in `outreach_operator/outreach_log.csv`.
 - Update `status` and `next_followup` after each touch.
