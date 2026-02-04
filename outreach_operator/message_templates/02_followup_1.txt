@@ -1,0 +1,13 @@
+Subject: Quick follow-up: first-win memo for {lab_or_group}
+
+Hi {name},
+
+Quick follow-up on the offer to deliver a free 1-page first-win memo tailored to {lab_or_group}. If you share a single research question or target area, I’ll run RGPxScientist and send the memo.
+
+Brief: https://zenodo.org/records/18402707
+Repo: https://github.com/gradient-pulse/phi-mesh
+
+If you prefer I don’t follow up, just reply “opt out.”
+
+Best,
+{sender}

@@ -1,0 +1,16 @@
+Subject: First-win memo for {lab_or_group}
+
+Hi {name},
+
+Attached is the 1-page first-win memo for {lab_or_group}. It includes: (1) target question, (2) relevant prior work, (3) method tags, and (4) a concrete next step.
+
+Next action: if this is useful, could you forward it to the right internal champion or collaborator? I’m happy to iterate or run a deeper pass.
+
+Repo: https://github.com/gradient-pulse/phi-mesh
+Tag map: https://gradient-pulse.github.io/phi-mesh/tag_map.html
+RGPxScientist app: https://chatgpt.com/g/g-695e7b3d7344819190ac67772d452f6-rgpx-scientist-3-1
+
+If you prefer I don’t follow up, just reply “opt out.”
+
+Best,
+{sender}

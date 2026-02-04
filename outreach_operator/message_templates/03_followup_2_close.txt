@@ -1,0 +1,12 @@
+Subject: Closing the loop
+
+Hi {name},
+
+I don’t want to be a pest. If now isn’t the right time, no worries. If you want a free 1-page first-win memo for {lab_or_group}, I can still do it this week.
+
+Brief: https://zenodo.org/records/18402707
+
+If you prefer I don’t follow up, just reply “opt out.”
+
+Best,
+{sender}

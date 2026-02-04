@@ -1,0 +1,12 @@
+Subject: Who should lead this internally?
+
+Hi {name},
+
+Thanks for the reply. To move fast, who would be the best internal champion to review a 1-page first-win memo for {lab_or_group}? I can send it directly or you can forward.
+
+Brief: https://zenodo.org/records/18402707
+
+If you prefer I don’t follow up, just reply “opt out.”
+
+Best,
+{sender}

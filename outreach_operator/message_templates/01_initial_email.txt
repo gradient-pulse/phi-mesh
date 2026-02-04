@@ -1,0 +1,15 @@
+Subject: Fast first-win memo for {lab_or_group}
+
+Hi {name},
+
+I’m reaching out because {specific_relevance}. We built RGPxScientist to rapidly map a research question to the most relevant methods, prior work, and tags, then package a short memo your lab can act on quickly.
+
+If helpful, I can run a free first-win pass for {lab_or_group} and send a 1-page memo this week. Here’s the brief: https://zenodo.org/records/18402707
+
+Repo: https://github.com/gradient-pulse/phi-mesh
+Tag map: https://gradient-pulse.github.io/phi-mesh/tag_map.html
+
+If you prefer I don’t follow up, just reply “opt out.”
+
+Best,
+{sender}
