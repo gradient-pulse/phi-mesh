@@ -2,7 +2,7 @@
 
 ## Canonical Links
 - Repo: https://github.com/gradient-pulse/phi-mesh
-- RGPxScientist app: https://chatgpt.com/g/g-695e7b3d7344819190ac67772d452f6-rgpx-scientist-3-1
+- RGPxScientist (ChatGPT app): https://chatgpt.com/g/g-695e7b3d7344819190ac67772d4452f6-rgpx-scientist-3-1
 - One-Page Brief: https://zenodo.org/records/18402707
 - Tag map: https://gradient-pulse.github.io/phi-mesh/tag_map.html
 - Agent kit (raw): https://raw.githubusercontent.com/gradient-pulse/phi-mesh/main/rgpx_scientist/agent_market/AGENTS.md
