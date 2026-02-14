@@ -3,50 +3,60 @@ name: CMB Phase Dagger (SMICA)
 on:
   workflow_dispatch:
     inputs:
-      lmax:
-        description: "Max multipole l to analyze"
-        required: true
-        default: "128"
-      nside:
-        description: "HEALPix NSIDE for analysis"
-        required: true
-        default: "256"
-      n_sims:
-        description: "Number of phase-randomized surrogates"
-        required: true
-        default: "2000"
-      seed:
-        description: "RNG seed"
-        required: true
-        default: "0"
-      n_bins:
-        description: "Number of l-bins for variance-of-bin-means metric"
-        required: true
-        default: "8"
-      field:
-        description: "FITS field for temperature map (Planck products often use I_STOKES)"
-        required: true
-        default: "I_STOKES"
-      mask_field:
-        description: "FITS field for mask (use TMASK if present; blank disables mask)"
-        required: false
-        default: "TMASK"
-      mask_thresh:
-        description: "Mask threshold (>=). For TMASK, 0.9 is conservative."
-        required: true
-        default: "0.9"
       simulate_only:
         description: "If true, run smoke test on simulated Gaussian sky (no FITS download)."
         required: true
         default: "true"
+
       fits_url:
-        description: "Direct URL to Planck PR3 SMICA full-sky FITS"
+        description: "Direct URL to Planck PR3 SMICA full-sky FITS (only used when simulate_only=false)"
         required: true
         default: "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits"
+
+      lmax:
+        description: "Max multipole l to analyze"
+        required: true
+        default: "128"
+
+      nside:
+        description: "HEALPix NSIDE for analysis"
+        required: true
+        default: "256"
+
+      n_sims:
+        description: "Number of phase-randomized surrogates"
+        required: true
+        default: "2000"
+
+      seed:
+        description: "RNG seed"
+        required: true
+        default: "0"
+
+      n_bins:
+        description: "Number of l-bins for variance-of-bin-means metric"
+        required: true
+        default: "8"
+
+      field:
+        description: "FITS field for temperature map. Use '0' for SMICA temperature (safe default)."
+        required: true
+        default: "0"
+
+      mask_field:
+        description: "Mask field name if present. Set to blank OR 'false' to disable masking."
+        required: false
+        default: "TMASK"
+
+      mask_thresh:
+        description: "Mask threshold (>=). If mask is 0/1, use 0.5; if weights, 0.9 is conservative."
+        required: true
+        default: "0.9"
 
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
 
     steps:
       - name: Checkout repo
@@ -60,20 +70,33 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy healpy
+          pip install numpy scipy healpy
 
       - name: Run dagger (simulate OR SMICA FITS)
+        shell: bash
         run: |
+          set -euo pipefail
+
           mkdir -p results/cmb_phase_dagger
           mkdir -p data/cmb
 
           SIM="${{ github.event.inputs.simulate_only }}"
+          FITS_URL="${{ github.event.inputs.fits_url }}"
 
           # Clean mask_field input: allow blank to disable masking
           MASK_FIELD="${{ github.event.inputs.mask_field }}"
-          MASK_FIELD_TRIMMED="$(echo "$MASK_FIELD" | xargs)"
+          MASK_FIELD_TRIMMED="$(echo "${MASK_FIELD}" | xargs || true)"
 
-          if [ "$SIM" = "true" ]; then
+          # Treat common "off" values as blank
+          if [ "${MASK_FIELD_TRIMMED}" = "false" ] || [ "${MASK_FIELD_TRIMMED}" = "False" ] || [ "${MASK_FIELD_TRIMMED}" = "0" ] || [ "${MASK_FIELD_TRIMMED}" = "none" ] || [ "${MASK_FIELD_TRIMMED}" = "None" ]; then
+            MASK_FIELD_TRIMMED=""
+          fi
+
+          echo "simulate_only=${SIM}"
+          echo "lmax=${{ github.event.inputs.lmax }} nside=${{ github.event.inputs.nside }} n_sims=${{ github.event.inputs.n_sims }} seed=${{ github.event.inputs.seed }} n_bins=${{ github.event.inputs.n_bins }}"
+          echo "field=${{ github.event.inputs.field }} mask_field=${MASK_FIELD_TRIMMED:-<disabled>} mask_thresh=${{ github.event.inputs.mask_thresh }}"
+
+          if [ "${SIM}" = "true" ]; then
             echo "Running SMOKE test (simulated Gaussian sky)..."
             python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py \
               --simulate \
@@ -85,11 +108,11 @@ jobs:
               --out "results/cmb_phase_dagger/cmb_phase_dagger_report.json"
           else
             echo "Downloading SMICA FITS..."
-            curl -L "${{ github.event.inputs.fits_url }}" -o data/cmb/smica.fits
+            curl -L --retry 5 --retry-delay 5 --fail "${FITS_URL}" -o data/cmb/smica.fits
             ls -lh data/cmb/smica.fits
 
             echo "Running dagger on REAL SMICA FITS..."
-            if [ -z "$MASK_FIELD_TRIMMED" ]; then
+            if [ -z "${MASK_FIELD_TRIMMED}" ]; then
               python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py \
                 --fits "data/cmb/smica.fits" \
                 --field "${{ github.event.inputs.field }}" \
@@ -104,7 +127,7 @@ jobs:
               python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py \
                 --fits "data/cmb/smica.fits" \
                 --field "${{ github.event.inputs.field }}" \
-                --mask_field "$MASK_FIELD_TRIMMED" \
+                --mask_field "${MASK_FIELD_TRIMMED}" \
                 --mask_thresh "${{ github.event.inputs.mask_thresh }}" \
                 --lmax "${{ github.event.inputs.lmax }}" \
                 --nside "${{ github.event.inputs.nside }}" \
