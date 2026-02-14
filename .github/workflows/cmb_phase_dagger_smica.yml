@@ -1,0 +1,84 @@
+name: CMB Phase Dagger (SMICA)
+
+on:
+  workflow_dispatch:
+    inputs:
+      lmax:
+        description: "Max multipole l to analyze"
+        required: true
+        default: "128"
+      nside:
+        description: "HEALPix NSIDE for analysis"
+        required: true
+        default: "256"
+      n_sims:
+        description: "Number of phase-randomized surrogates"
+        required: true
+        default: "2000"
+      seed:
+        description: "RNG seed"
+        required: true
+        default: "0"
+      n_bins:
+        description: "Number of l-bins for variance-of-bin-means metric"
+        required: true
+        default: "8"
+      field:
+        description: "FITS field for temperature map (Planck products often use I_STOKES)"
+        required: true
+        default: "I_STOKES"
+      mask_field:
+        description: "FITS field for mask (use TMASK if present; blank disables mask)"
+        required: false
+        default: "TMASK"
+      mask_thresh:
+        description: "Mask threshold (>=). For TMASK, 0.9 is conservative."
+        required: true
+        default: "0.9"
+      simulate_only:
+        description: "If true, run smoke test on simulated Gaussian sky (no FITS download)."
+        required: true
+        default: "true"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy healpy
+
+      - name: Run dagger
+        run: |
+          mkdir -p results/cmb_phase_dagger
+          SIM="${{ github.event.inputs.simulate_only }}"
+          if [ "$SIM" = "true" ]; then
+            python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py \
+              --simulate \
+              --lmax "${{ github.event.inputs.lmax }}" \
+              --nside "${{ github.event.inputs.nside }}" \
+              --n_sims "${{ github.event.inputs.n_sims }}" \
+              --seed "${{ github.event.inputs.seed }}" \
+              --n_bins "${{ github.event.inputs.n_bins }}" \
+              --out "results/cmb_phase_dagger/cmb_phase_dagger_report.json"
+          else
+            echo "simulate_only=false: you must set a direct Planck FITS URL in the script arguments."
+            echo "For now, keep simulate_only=true until we add a stable direct-download URL."
+            exit 1
+          fi
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmb_phase_dagger_report
+          path: results/cmb_phase_dagger/cmb_phase_dagger_report.json
