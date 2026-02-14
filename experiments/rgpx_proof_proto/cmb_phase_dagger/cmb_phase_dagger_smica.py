@@ -252,6 +252,9 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--n_bins", type=int, default=8)
     ap.add_argument("--out", default="cmb_phase_dagger_report.json")
+    ap.add_argument("--fits_url", default="", help="Source URL for the FITS used (for provenance).")
+    ap.add_argument("--fits_sha256", default="", help="SHA256 of the FITS file used (for provenance).")
+    ap.add_argument("--fits_bytes", default="", help="Byte size of the FITS file used (for provenance).")
 
     args = ap.parse_args()
 
@@ -284,6 +287,14 @@ def main() -> None:
             "seed": args.seed,
             "n_bins": args.n_bins,
         },
+   
+        "fits_provenance": {
+            "fits_basename": os.path.basename(args.fits) if args.fits else "",
+            "fits_url": args.fits_url or "",
+            "fits_sha256": args.fits_sha256 or "",
+            "fits_bytes": int(args.fits_bytes) if str(args.fits_bytes).strip().isdigit() else None,
+        },
+
         "observed_metric": rep.observed_metric,
         "null_summary": rep.extras_null_summary,
         "p_value_one_sided_high": rep.p_value,
