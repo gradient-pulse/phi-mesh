@@ -1,0 +1,33 @@
+name: CMB Phase Dagger (smoke test)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/rgpx_proof_proto/cmb_phase_dagger/**"
+      - ".github/workflows/cmb_phase_dagger_smoke.yml"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy healpy scipy
+
+      - name: Syntax check
+        run: |
+          python -m py_compile experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py
+
+      - name: Help output (ensures CLI is intact)
+        run: |
+          python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py --help
