@@ -112,12 +112,12 @@ jobs:
             ls -lh data/cmb/smica.fits
 
             echo "Computing provenance..."
-            BYTES=$(wc -c < data/cmb/smica.fits | tr -d ' ')
-            SHA=$(sha256sum data/cmb/smica.fits | awk '{print $1}')
-            echo "FITS_URL=${{ github.event.inputs.fits_url }}" >> $GITHUB_ENV
-            echo "FITS_BYTES=$BYTES" >> $GITHUB_ENV
-            echo "FITS_SHA256=$SHA" >> $GITHUB_ENV
-            echo "Provenance: ${{ github.event.inputs.fits_url }} | bytes=$BYTES | sha256=$SHA"
+            BYTES="$(wc -c < data/cmb/smica.fits | tr -d ' ')"
+            SHA="$(sha256sum data/cmb/smica.fits | awk '{print $1}')"
+            echo "FITS_URL=${FITS_URL}" >> "$GITHUB_ENV"
+            echo "FITS_BYTES=${BYTES}" >> "$GITHUB_ENV"
+            echo "FITS_SHA256=${SHA}" >> "$GITHUB_ENV"
+            echo "Provenance: ${FITS_URL} | bytes=${BYTES} | sha256=${SHA}"
 
             echo "Running dagger on REAL SMICA FITS..."
             if [ -z "${MASK_FIELD_TRIMMED}" ]; then
@@ -130,6 +130,9 @@ jobs:
                 --n_sims "${{ github.event.inputs.n_sims }}" \
                 --seed "${{ github.event.inputs.seed }}" \
                 --n_bins "${{ github.event.inputs.n_bins }}" \
+                --fits_url "${FITS_URL}" \
+                --fits_sha256 "${SHA}" \
+                --fits_bytes "${BYTES}" \
                 --out "results/cmb_phase_dagger/cmb_phase_dagger_report.json"
             else
               python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py \
@@ -142,6 +145,9 @@ jobs:
                 --n_sims "${{ github.event.inputs.n_sims }}" \
                 --seed "${{ github.event.inputs.seed }}" \
                 --n_bins "${{ github.event.inputs.n_bins }}" \
+                --fits_url "${FITS_URL}" \
+                --fits_sha256 "${SHA}" \
+                --fits_bytes "${BYTES}" \
                 --out "results/cmb_phase_dagger/cmb_phase_dagger_report.json"
             fi
           fi
