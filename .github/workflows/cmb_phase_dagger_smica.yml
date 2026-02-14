@@ -111,6 +111,14 @@ jobs:
             curl -L --retry 5 --retry-delay 5 --fail "${FITS_URL}" -o data/cmb/smica.fits
             ls -lh data/cmb/smica.fits
 
+            echo "Computing provenance..."
+            BYTES=$(wc -c < data/cmb/smica.fits | tr -d ' ')
+            SHA=$(sha256sum data/cmb/smica.fits | awk '{print $1}')
+            echo "FITS_URL=${{ github.event.inputs.fits_url }}" >> $GITHUB_ENV
+            echo "FITS_BYTES=$BYTES" >> $GITHUB_ENV
+            echo "FITS_SHA256=$SHA" >> $GITHUB_ENV
+            echo "Provenance: ${{ github.event.inputs.fits_url }} | bytes=$BYTES | sha256=$SHA"
+
             echo "Running dagger on REAL SMICA FITS..."
             if [ -z "${MASK_FIELD_TRIMMED}" ]; then
               python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_smica.py \
