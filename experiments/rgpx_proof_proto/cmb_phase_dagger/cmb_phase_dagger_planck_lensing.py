@@ -5,10 +5,7 @@ import healpy as hp
 
 
 def truncate_alm(alm, lmax_target):
-    """
-    Return a new alm array truncated (or identity-copied) to lmax_target.
-    healpy alms are stored for m>=0 only, size = hp.Alm.getsize(lmax).
-    """
+    """Truncate healpy alm array (m>=0 storage) to lmax_target."""
     lmax_src = hp.Alm.getlmax(len(alm))
     if lmax_src == lmax_target:
         return np.asarray(alm, dtype=np.complex128)
@@ -23,8 +20,8 @@ def truncate_alm(alm, lmax_target):
     return out
 
 
-def extract_phases(alm, lmax):
-    # Keep only m>0 phases to avoid m=0 real-mode quirks
+def extract_phases_mgt0(alm, lmax):
+    """Keep only m>0 phases to avoid m=0 real-mode quirks."""
     phases = []
     for ell in range(1, lmax + 1):
         for m in range(1, ell + 1):
@@ -34,7 +31,7 @@ def extract_phases(alm, lmax):
 
 
 def circ_var(phases):
-    # Circular variance in [0,1]
+    """Circular variance in [0,1]. Lower => more phase alignment."""
     if phases.size == 0:
         return float("nan")
     R = np.abs(np.mean(np.exp(1j * phases)))
@@ -42,27 +39,27 @@ def circ_var(phases):
 
 
 def alm_imag_diagnostics(alm, eps=1e-12):
-    """
-    Quick sanity check that we're actually holding complex alms.
-    """
+    """Quick sanity check that alms are actually complex-valued."""
     im = np.imag(alm)
     imag_max = float(np.max(np.abs(im))) if alm.size else 0.0
     imag_frac_nonzero = float(np.mean(np.abs(im) > eps)) if alm.size else 0.0
     return imag_max, imag_frac_nonzero
 
 
-def surrogate_score_phase_randomize(alm, lmax, n_sims, seed):
+def surrogate_scores_phase_randomize(alm, lmax, n_sims, seed):
     """
-    Proper null for phase structure:
+    Null for phase structure:
       - keep amplitudes |a_lm|
       - randomize phases ~ Uniform(-pi, pi) for m>0
-      - keep m=0 real (phase 0) to respect real-field convention
+      - keep m=0 real (positive amplitude)
     Metric: circular variance of m>0 phase angles.
+
+    Returns:
+      obs, mu, sd, z, p_low, p_high, p_two
     """
     rng = np.random.default_rng(seed)
 
-    # Observed score
-    phases_obs = extract_phases(alm, lmax)
+    phases_obs = extract_phases_mgt0(alm, lmax)
     obs = circ_var(phases_obs)
 
     amps = np.abs(alm).astype(float)
@@ -71,27 +68,30 @@ def surrogate_score_phase_randomize(alm, lmax, n_sims, seed):
     for i in range(n_sims):
         alm_s = np.empty_like(alm)
 
-        # m=0: keep real, positive amplitude (sign doesn't matter for our m>0 metric)
+        # m=0 modes: real, positive amplitude
         for ell in range(0, lmax + 1):
             idx0 = hp.Alm.getidx(lmax, ell, 0)
             alm_s[idx0] = amps[idx0] + 0j
 
-        # m>0: random phases
-        # (We only ever evaluate m>0 phases, so this is the relevant part.)
-        # Use independent phases per (ell,m).
-        rand_phase = rng.uniform(-np.pi, np.pi, size=alm.size)
+        # m>0 modes: independent random phases
         for ell in range(1, lmax + 1):
             for m in range(1, ell + 1):
                 idx = hp.Alm.getidx(lmax, ell, m)
-                alm_s[idx] = amps[idx] * np.exp(1j * rand_phase[idx])
+                phi = rng.uniform(-np.pi, np.pi)
+                alm_s[idx] = amps[idx] * np.exp(1j * phi)
 
-        sims[i] = circ_var(extract_phases(alm_s, lmax))
+        sims[i] = circ_var(extract_phases_mgt0(alm_s, lmax))
 
     mu = float(np.mean(sims))
     sd = float(np.std(sims, ddof=1)) if n_sims > 1 else float("nan")
     z = float((obs - mu) / sd) if (sd and sd > 0) else float("nan")
-    p = float((np.sum(sims >= obs) + 1.0) / (n_sims + 1.0))  # one-sided
-    return obs, mu, sd, z, p
+
+    # Tail probabilities with +1 smoothing
+    p_high = float((np.sum(sims >= obs) + 1.0) / (n_sims + 1.0))  # upper tail
+    p_low  = float((np.sum(sims <= obs) + 1.0) / (n_sims + 1.0))  # lower tail
+    p_two  = float(min(1.0, 2.0 * min(p_low, p_high)))            # two-sided
+
+    return obs, mu, sd, z, p_low, p_high, p_two
 
 
 def main():
@@ -106,30 +106,26 @@ def main():
     ap.add_argument("--mf_url", default="")
     args = ap.parse_args()
 
-    # Read alms; healpy returns complex alm array with inferred lmax
     dat = hp.read_alm(args.dat_klm)
     mf  = hp.read_alm(args.mf_klm)
 
     lmax = int(args.lmax)
-
-    # Ensure both are consistently truncated to lmax
     dat = truncate_alm(dat, lmax)
     mf  = truncate_alm(mf,  lmax)
 
-    # Corrected phi_lm (MV) as in Planck lensing products
+    # Corrected phi_lm
     alm = dat - mf
 
-    # Diagnostics: are alms actually complex?
     imag_max, imag_frac = alm_imag_diagnostics(alm)
 
-    obs, mu, sd, z, p = surrogate_score_phase_randomize(
+    obs, mu, sd, z, p_low, p_high, p_two = surrogate_scores_phase_randomize(
         alm=alm,
         lmax=lmax,
         n_sims=int(args.n_sims),
         seed=int(args.seed),
     )
 
-    phases = extract_phases(alm, lmax)
+    phases = extract_phases_mgt0(alm, lmax)
 
     report = {
         "kind": "planck_pr3_lensing_phi_alm_phase_dagger",
@@ -142,7 +138,9 @@ def main():
         "surrogate_mean": float(mu),
         "surrogate_std": float(sd),
         "z_score": float(z),
-        "p_one_sided": float(p),
+        "p_low": float(p_low),              # alignment / structure tail
+        "p_high": float(p_high),
+        "p_two_sided": float(p_two),
         "diagnostics": {
             "imag_max_abs": float(imag_max),
             "imag_frac_nonzero_eps1e-12": float(imag_frac),
@@ -151,7 +149,11 @@ def main():
             "dat_url": args.dat_url,
             "mf_url": args.mf_url,
         },
-        "hint": "Null is random phases (uniform) with observed amplitudes. If phases show non-random structure, observed should sit in an extreme tail vs these surrogates."
+        "hint": (
+            "Null: random m>0 phases (uniform) with observed amplitudes. "
+            "Lower circular variance => more phase alignment. "
+            "Use p_low for 'structure' evidence."
+        ),
     }
 
     with open(args.out, "w", encoding="utf-8") as f:
