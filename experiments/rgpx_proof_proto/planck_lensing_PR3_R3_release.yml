@@ -1,0 +1,14 @@
+source: Planck Legacy Archive PR3 / R3.00 (lensing)
+release_tag: data-2026-02-15-planck-lensing-R3
+assets:
+  mask:
+    url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mask.fits.gz
+  dat_klm:
+    url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits
+  mf_klm:
+    url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits
+  nlkk:
+    url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_nlkk.dat
+notes:
+  - "dat_klm is the MV lensing potential estimate (phi_lm); mf_klm is the mean-field to subtract."
+  - "Phase-only tests are invariant under real positive scaling (kappa vs phi doesn’t change phases)."
