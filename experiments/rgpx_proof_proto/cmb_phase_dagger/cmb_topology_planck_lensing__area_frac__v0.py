@@ -80,7 +80,6 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--dat_url", default="")
     ap.add_argument("--mf_url", default="")
-    # NEW: null-calibration option (observed map becomes a phase-random surrogate)
     ap.add_argument(
         "--selftest_observed_surrogate_seed",
         type=int,
@@ -92,6 +91,7 @@ def main():
     lmax = int(args.lmax)
     nside = int(args.nside)
     n_sims = int(args.n_sims)
+
     rng = np.random.default_rng(int(args.seed))
 
     dat = hp.read_alm(args.dat_klm)
@@ -100,14 +100,16 @@ def main():
     dat = truncate_alm(dat, lmax)
     mf = truncate_alm(mf, lmax)
 
-    alm_obs = dat - mf  # corrected phi_lm (observed)
+    baseline_alm = dat - mf  # corrected phi_lm (baseline for null surrogates)
 
-    imag_max, imag_frac = alm_imag_diagnostics(alm_obs)
+    imag_max, imag_frac = alm_imag_diagnostics(baseline_alm)
 
-    # Optional null-calibration: replace observed alm by a phase-randomized surrogate
-    if args.selftest_observed_surrogate_seed is not None:
+    # Observed alm: either baseline, or a single phase-randomized surrogate for selftest
+    if args.selftest_observed_surrogate_seed is None:
+        alm_obs = baseline_alm
+    else:
         rng_obs = np.random.default_rng(int(args.selftest_observed_surrogate_seed))
-        alm_obs = surrogate_alm_phase_randomize(alm_obs, lmax, rng_obs)
+        alm_obs = surrogate_alm_phase_randomize(baseline_alm, lmax, rng_obs)
 
     # Observed map + standardized field
     m_obs = hp.alm2map(alm_obs, nside=nside, lmax=lmax, verbose=False)
@@ -116,21 +118,11 @@ def main():
     nus = np.linspace(float(args.nu_min), float(args.nu_max), int(args.n_nu))
     v0_obs = v0_area_fraction_curve(x_obs, nus)
 
-    # Surrogates: curves + a single scalar deviation statistic
+    # Surrogates: curves + scalar deviation statistic
     v0_sims = np.empty((n_sims, len(nus)), dtype=np.float64)
     D_sims = np.empty(n_sims, dtype=np.float64)
 
-    # We compare each sim curve to the *mean* sim curve, so we need 2-pass
-    for i in range(n_sims):
-        alm_s = surrogate_alm_phase_randomize(alm_obs if args.selftest_observed_surrogate_seed is not None else (dat - mf), lmax, rng)
-        # NOTE: For consistency, surrogates should be drawn from the same baseline alm as the reported "observed".
-        # If selftest is enabled, we still want the surrogate ensemble drawn from the original baseline (dat - mf),
-        # not from the already-randomized alm_obs.
-        # We therefore explicitly draw from (dat - mf) below.
-
-    # Re-do surrogate loop correctly with fixed baseline:
-    baseline_alm = (dat - mf)
-    v0_sims = np.empty((n_sims, len(nus)), dtype=np.float64)
+    # Build surrogate curves (always from the same baseline_alm)
     for i in range(n_sims):
         alm_s = surrogate_alm_phase_randomize(baseline_alm, lmax, rng)
         m_s = hp.alm2map(alm_s, nside=nside, lmax=lmax, verbose=False)
