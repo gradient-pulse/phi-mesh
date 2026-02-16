@@ -38,7 +38,6 @@ def standardize_map(m):
 
 def v0_area_fraction_curve(x, nus):
     """V0(nu) = fraction of pixels above threshold nu."""
-    # Vectorized: for each nu, compute mean(x > nu)
     return [float(np.mean(x > nu)) for nu in nus]
 
 
@@ -77,10 +76,17 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--n_nu", type=int, default=61)   # thresholds count
     ap.add_argument("--nu_min", type=float, default=-3.0)
-    ap.add_argument("--nu_max", type=float, default= 3.0)
+    ap.add_argument("--nu_max", type=float, default=3.0)
     ap.add_argument("--out", required=True)
     ap.add_argument("--dat_url", default="")
     ap.add_argument("--mf_url", default="")
+    # NEW: null-calibration option (observed map becomes a phase-random surrogate)
+    ap.add_argument(
+        "--selftest_observed_surrogate_seed",
+        type=int,
+        default=None,
+        help="If set, replace the observed alm by a single phase-randomized surrogate (for null calibration).",
+    )
     args = ap.parse_args()
 
     lmax = int(args.lmax)
@@ -89,17 +95,22 @@ def main():
     rng = np.random.default_rng(int(args.seed))
 
     dat = hp.read_alm(args.dat_klm)
-    mf  = hp.read_alm(args.mf_klm)
+    mf = hp.read_alm(args.mf_klm)
 
     dat = truncate_alm(dat, lmax)
-    mf  = truncate_alm(mf,  lmax)
+    mf = truncate_alm(mf, lmax)
 
-    alm = dat - mf  # corrected phi_lm
+    alm_obs = dat - mf  # corrected phi_lm (observed)
 
-    imag_max, imag_frac = alm_imag_diagnostics(alm)
+    imag_max, imag_frac = alm_imag_diagnostics(alm_obs)
+
+    # Optional null-calibration: replace observed alm by a phase-randomized surrogate
+    if args.selftest_observed_surrogate_seed is not None:
+        rng_obs = np.random.default_rng(int(args.selftest_observed_surrogate_seed))
+        alm_obs = surrogate_alm_phase_randomize(alm_obs, lmax, rng_obs)
 
     # Observed map + standardized field
-    m_obs = hp.alm2map(alm, nside=nside, lmax=lmax, verbose=False)
+    m_obs = hp.alm2map(alm_obs, nside=nside, lmax=lmax, verbose=False)
     x_obs, mu_obs, sd_obs = standardize_map(m_obs)
 
     nus = np.linspace(float(args.nu_min), float(args.nu_max), int(args.n_nu))
@@ -107,17 +118,27 @@ def main():
 
     # Surrogates: curves + a single scalar deviation statistic
     v0_sims = np.empty((n_sims, len(nus)), dtype=np.float64)
-    D_sims  = np.empty(n_sims, dtype=np.float64)
+    D_sims = np.empty(n_sims, dtype=np.float64)
 
     # We compare each sim curve to the *mean* sim curve, so we need 2-pass
     for i in range(n_sims):
-        alm_s = surrogate_alm_phase_randomize(alm, lmax, rng)
-        m_s   = hp.alm2map(alm_s, nside=nside, lmax=lmax, verbose=False)
+        alm_s = surrogate_alm_phase_randomize(alm_obs if args.selftest_observed_surrogate_seed is not None else (dat - mf), lmax, rng)
+        # NOTE: For consistency, surrogates should be drawn from the same baseline alm as the reported "observed".
+        # If selftest is enabled, we still want the surrogate ensemble drawn from the original baseline (dat - mf),
+        # not from the already-randomized alm_obs.
+        # We therefore explicitly draw from (dat - mf) below.
+
+    # Re-do surrogate loop correctly with fixed baseline:
+    baseline_alm = (dat - mf)
+    v0_sims = np.empty((n_sims, len(nus)), dtype=np.float64)
+    for i in range(n_sims):
+        alm_s = surrogate_alm_phase_randomize(baseline_alm, lmax, rng)
+        m_s = hp.alm2map(alm_s, nside=nside, lmax=lmax, verbose=False)
         x_s, _, _ = standardize_map(m_s)
         v0_sims[i, :] = v0_area_fraction_curve(x_s, nus)
 
     v0_mean = np.mean(v0_sims, axis=0)
-    v0_std  = np.std(v0_sims, axis=0, ddof=1) if n_sims > 1 else np.zeros_like(v0_mean)
+    v0_std = np.std(v0_sims, axis=0, ddof=1) if n_sims > 1 else np.zeros_like(v0_mean)
 
     # L2 distance from the surrogate mean curve
     v0_obs_arr = np.asarray(v0_obs, dtype=np.float64)
@@ -128,8 +149,15 @@ def main():
 
     # p-values (with +1 smoothing)
     p_high = float((np.sum(D_sims >= D_obs) + 1.0) / (n_sims + 1.0))  # "more deviant than null"
-    p_low  = float((np.sum(D_sims <= D_obs) + 1.0) / (n_sims + 1.0))  # "more null-like than null"
-    p_two  = float(min(1.0, 2.0 * min(p_low, p_high)))
+    p_low = float((np.sum(D_sims <= D_obs) + 1.0) / (n_sims + 1.0))    # "more null-like than null"
+    p_two = float(min(1.0, 2.0 * min(p_low, p_high)))
+
+    provenance = {
+        "dat_url": args.dat_url,
+        "mf_url": args.mf_url,
+    }
+    if args.selftest_observed_surrogate_seed is not None:
+        provenance["selftest_observed_surrogate_seed"] = int(args.selftest_observed_surrogate_seed)
 
     report = {
         "kind": "planck_pr3_lensing_phi_topology_area_fraction_v0",
@@ -152,9 +180,9 @@ def main():
         },
         "surrogate": {
             "v0_mean_curve": [float(x) for x in v0_mean],
-            "v0_std_curve":  [float(x) for x in v0_std],
+            "v0_std_curve": [float(x) for x in v0_std],
             "D_mean": float(np.mean(D_sims)),
-            "D_std":  float(np.std(D_sims, ddof=1)) if n_sims > 1 else float("nan"),
+            "D_std": float(np.std(D_sims, ddof=1)) if n_sims > 1 else float("nan"),
         },
         "p_high": p_high,
         "p_low": p_low,
@@ -163,10 +191,7 @@ def main():
             "imag_max_abs": float(imag_max),
             "imag_frac_nonzero_eps1e-12": float(imag_frac),
         },
-        "provenance": {
-            "dat_url": args.dat_url,
-            "mf_url": args.mf_url,
-        },
+        "provenance": provenance,
         "hint": (
             "Topology v0: compare observed excursion-set area fraction curve V0(nu) "
             "against phase-randomized surrogates (preserve |a_lm|, randomize phases). "
