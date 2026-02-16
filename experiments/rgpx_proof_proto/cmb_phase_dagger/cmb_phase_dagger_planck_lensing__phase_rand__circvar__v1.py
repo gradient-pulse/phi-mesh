@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-import argparse, json
+import argparse
+import json
+import math
+import os
+from datetime import datetime, timezone
+
 import numpy as np
 import healpy as hp
 
@@ -28,107 +33,86 @@ def alm_imag_diagnostics(alm, eps=1e-12):
     return imag_max, imag_frac_nonzero
 
 
-def build_mgt0_indices(lmax):
-    """Return numpy array of Alm indices for all (ell,m) with ell>=1 and 1<=m<=ell."""
-    idxs = []
+def phases_mgt0(alm, lmax, amp_eps=0.0):
+    """
+    Return phase angles for m>0 modes.
+    If amp_eps > 0, exclude (ell,m) with |a_lm| <= amp_eps.
+    """
+    ph = []
     for ell in range(1, lmax + 1):
-        # m = 1..ell
         for m in range(1, ell + 1):
-            idxs.append(hp.Alm.getidx(lmax, ell, m))
-    return np.asarray(idxs, dtype=np.int64)
+            idx = hp.Alm.getidx(lmax, ell, m)
+            z = alm[idx]
+            if amp_eps > 0.0 and (np.abs(z) <= amp_eps):
+                continue
+            ph.append(np.angle(z))
+    return np.asarray(ph, dtype=float)
 
 
-def circ_var_from_unit_phasors(u):
-    """
-    Circular variance for angles whose unit phasors are u = exp(i*theta).
-    V = 1 - |mean(u)|
-    """
-    if u.size == 0:
+def circ_var_from_phases(phases):
+    """Circular variance in [0,1]. Lower => more phase alignment."""
+    if phases.size == 0:
         return float("nan")
-    R = np.abs(np.mean(u))
+    R = np.abs(np.mean(np.exp(1j * phases)))
     return float(1.0 - R)
 
 
-def surrogate_scores_phase_randomize(alm, lmax, n_sims, seed, batch_size=256):
+def monte_carlo_circvar_null(n, n_sims, seed, batch_size=256):
     """
-    Null for phase structure:
-      - m>0 phases ~ Uniform(-pi, pi), independent
-      - amplitudes conceptually preserved, but the chosen metric uses phases only
-    Metric: circular variance of m>0 phase angles.
+    Null: phases are i.i.d Uniform(-pi, pi).
+    Metric: circular variance of phases => 1 - |mean(exp(i phi))|.
 
-    Returns:
-      obs, mu, sd, z, p_low, p_high, p_two, n_phases_used
+    Implementation note:
+      The circ-var depends only on phases, not amplitudes.
+      So the null depends only on the number of included phases, n.
     """
     rng = np.random.default_rng(seed)
 
-    # m>0 indices
-    idx_mgt0 = build_mgt0_indices(lmax)
+    sims = np.empty(n_sims, dtype=np.float64)
+    done = 0
+    batch_size = max(1, int(batch_size))
 
-    # Observed unit phasors u = z/|z| (exclude exact zeros to avoid 0/0)
-    z = alm[idx_mgt0]
-    amps = np.abs(z)
-    good = amps > 0.0
-    z = z[good]
-    amps = amps[good]
-    n_phases_used = int(z.size)
+    while done < n_sims:
+        b = min(batch_size, n_sims - done)
 
-    u_obs = z / amps  # complex unit phasors
-    obs = circ_var_from_unit_phasors(u_obs)
+        # Generate random phases [b, n], then unit phasors exp(i phi)
+        phi = rng.uniform(-math.pi, math.pi, size=(b, n))
+        u = np.exp(1j * phi)
 
-    # Simulated circular variance under uniform phases:
-    # for each sim: u_sim = exp(i*phi), phi ~ U(-pi, pi)
-    sims = np.empty(int(n_sims), dtype=np.float64)
+        # R = |mean(u, axis=1)| ; circvar = 1 - R
+        R = np.abs(np.mean(u, axis=1))
+        sims[done:done + b] = 1.0 - R
+        done += b
 
-    remaining = int(n_sims)
-    out_i = 0
-    N = n_phases_used
+    return sims
 
-    # Chunked to control memory
-    while remaining > 0:
-        b = min(batch_size, remaining)
 
-        # random phases: shape (b, N)
-        phi = rng.uniform(-np.pi, np.pi, size=(b, N)).astype(np.float32, copy=False)
-
-        # unit phasors: exp(i*phi) -> complex64
-        u = np.exp(1j * phi).astype(np.complex64, copy=False)
-
-        # mean phasor length per sim
-        R = np.abs(np.mean(u, axis=1)).astype(np.float64, copy=False)
-
-        sims[out_i:out_i + b] = 1.0 - R  # circular variance
-        out_i += b
-        remaining -= b
-
-    mu = float(np.mean(sims))
-    sd = float(np.std(sims, ddof=1)) if n_sims > 1 else float("nan")
-    zscore = float((obs - mu) / sd) if (sd and sd > 0) else float("nan")
-
-    # Tail probabilities with +1 smoothing (works for one- and two-sided)
-    n = float(n_sims)
-    p_high = float((np.sum(sims >= obs) + 1.0) / (n + 1.0))  # upper tail
-    p_low  = float((np.sum(sims <= obs) + 1.0) / (n + 1.0))  # lower tail
+def tail_ps(sims, obs):
+    """Return p_low, p_high, p_two with +1 smoothing."""
+    n = sims.size
+    p_high = float((np.sum(sims >= obs) + 1.0) / (n + 1.0))
+    p_low  = float((np.sum(sims <= obs) + 1.0) / (n + 1.0))
     p_two  = float(min(1.0, 2.0 * min(p_low, p_high)))
-
-    return obs, mu, sd, zscore, p_low, p_high, p_two, n_phases_used
+    return p_low, p_high, p_two
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dat_klm", required=True, help="MV dat_klm alm FITS")
     ap.add_argument("--mf_klm", required=True, help="MV mean-field alm FITS")
-    ap.add_argument("--lmax", type=int, default=128)
-    ap.add_argument("--n_sims", type=int, default=2000)
-    ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--lmax", type=int, default=256)
+    ap.add_argument("--n_sims", type=int, default=30000)
+    ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--batch_size", type=int, default=256, help="Monte Carlo batch size (memory vs speed)")
+    ap.add_argument("--amp_eps", type=float, default=0.0, help="Exclude m>0 modes with |alm|<=amp_eps (default keeps all)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--dat_url", default="")
     ap.add_argument("--mf_url", default="")
-    ap.add_argument("--batch_size", type=int, default=256, help="Monte Carlo batch size (memory vs speed)")
     args = ap.parse_args()
 
+    # Load and align
     dat = hp.read_alm(args.dat_klm)
     mf  = hp.read_alm(args.mf_klm)
-
     lmax = int(args.lmax)
     dat = truncate_alm(dat, lmax)
     mf  = truncate_alm(mf,  lmax)
@@ -136,54 +120,8 @@ def main():
     # Corrected phi_lm
     alm = dat - mf
 
+    # Diagnostics: are alms complex?
     imag_max, imag_frac = alm_imag_diagnostics(alm)
 
-    obs, mu, sd, zscore, p_low, p_high, p_two, n_used = surrogate_scores_phase_randomize(
-        alm=alm,
-        lmax=lmax,
-        n_sims=int(args.n_sims),
-        seed=int(args.seed),
-        batch_size=int(args.batch_size),
-    )
-
-    report = {
-        "kind": "planck_pr3_lensing_phi_alm_phase_dagger",
-        "lmax": lmax,
-        "n_phases": int(n_used),
-        "n_sims": int(args.n_sims),
-        "seed": int(args.seed),
-        "metric": "circular_variance(m>0 phase angles)",
-        "observed": float(obs),
-        "surrogate_mean": float(mu),
-        "surrogate_std": float(sd),
-        "z_score": float(zscore),
-        "p_low": float(p_low),              # alignment / structure tail
-        "p_high": float(p_high),
-        "p_two_sided": float(p_two),
-        "diagnostics": {
-            "imag_max_abs": float(imag_max),
-            "imag_frac_nonzero_eps1e-12": float(imag_frac),
-        },
-        "provenance": {
-            "dat_url": args.dat_url,
-            "mf_url": args.mf_url,
-        },
-        "hint": (
-            "Null: random m>0 phases (uniform) with observed amplitudes. "
-            "Lower circular variance => more phase alignment. "
-            "Use p_low for 'structure' evidence."
-        ),
-        "notes": (
-            "Implementation detail: the metric depends only on phases, so surrogate generation "
-            "uses random unit phasors exp(i*phi). Zero-amplitude observed modes (rare) are excluded."
-        ),
-    }
-
-    with open(args.out, "w", encoding="utf-8") as f:
-        json.dump(report, f, indent=2, sort_keys=True)
-
-    print(json.dumps(report, indent=2))
-
-
-if __name__ == "__main__":
-    main()
+    # Observed phases (m>0)
+    ph = phases_mgt0(alm, l
