@@ -40,6 +40,10 @@ on:
         required: true
         default: "3.0"
 
+# Required so the workflow can commit + push into the repo
+permissions:
+  contents: write
+
 concurrency:
   group: topology-area-frac-v0-archive
   cancel-in-progress: false
