@@ -31,14 +31,21 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: phase-rand-circvar-v1-archive
+  cancel-in-progress: false
+
 jobs:
-  compute:
+  run:
     runs-on: ubuntu-latest
     timeout-minutes: 240
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -61,7 +68,7 @@ jobs:
       - name: Run PhaseRand CircVar v1
         run: |
           set -euo pipefail
-          OUT="results/cmb_phase_dagger_phase_rand_circvar_v1/planck_lensing_phi_report__lmax${{ github.event.inputs.lmax }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}.json"
+          OUT="results/cmb_phase_dagger_phase_rand_circvar_v1/planck_lensing_phi_report__lmax${{ github.event.inputs.lmax }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}.json"
           python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_planck_lensing__phase_rand__circvar__v1.py \
             --dat_klm data/planck_lensing/dat_klm.fits \
             --mf_klm  data/planck_lensing/mf_klm.fits \
@@ -78,45 +85,26 @@ jobs:
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
         with:
-          name: phase_rand_circvar_v1_result
+          name: planck_lensing_phi_report__phase_rand_circvar_v1__lmax${{ github.event.inputs.lmax }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}
           path: results/cmb_phase_dagger_phase_rand_circvar_v1/*.json
           retention-days: 90
 
-  archive:
-    needs: compute
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-
-    # This serializes ONLY the archive-to-main operation across parallel workflow runs
-    concurrency:
-      group: cmb-phase-dagger-archive-phase-rand-circvar-v1
-      cancel-in-progress: false
-
-    steps:
-      - name: Checkout repo (full history)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Download artifact from compute job
-        uses: actions/download-artifact@v4
-        with:
-          name: phase_rand_circvar_v1_result
-          path: _artifact
-
-      - name: Copy into repo run-history folder
+      - name: Archive result into repo (run history)
         run: |
           set -euo pipefail
           RUN_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/phase_rand_circvar_v1"
           mkdir -p "$RUN_DIR"
-          cp -v _artifact/*.json "$RUN_DIR/"
+          cp -v results/cmb_phase_dagger_phase_rand_circvar_v1/*.json "$RUN_DIR/"
           ls -lh "$RUN_DIR"
 
-      - name: Commit & push (serialized)
+      - name: Commit archived result (if changed) and push safely
         run: |
           set -euo pipefail
           git config user.name "phi-pulse-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Always integrate latest main first (prevents non-fast-forward + lock issues)
+          git pull --rebase origin main
 
           git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/phase_rand_circvar_v1/*.json
 
@@ -127,6 +115,16 @@ jobs:
 
           git commit -m "Archive Planck lensing phase-rand circvar v1 result (run ${{ github.run_id }})"
 
-          # One last rebase in case main moved while we queued (should be rare with concurrency)
-          git pull --rebase origin main
-          git push
+          # Retry push in case another run landed between pull and push
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "Pushed successfully."
+              exit 0
+            fi
+            echo "Push failed (attempt $i). Sleeping 10s, rebasing, retrying..."
+            sleep 10
+            git pull --rebase origin main
+          done
+
+          echo "Push failed after retries."
+          exit 1
