@@ -1,0 +1,78 @@
+name: CMB Phase Dagger (Planck PR3 Lensing φ_lm) — PhaseRand CircVar v1
+
+on:
+  workflow_dispatch:
+    inputs:
+      dat_url:
+        description: "Release asset URL for dat_klm (phi_lm MV estimate)"
+        required: true
+        default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits"
+      mf_url:
+        description: "Release asset URL for mf_klm (mean-field correction)"
+        required: true
+        default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits"
+      lmax:
+        description: "Max multipole l to analyze"
+        required: true
+        default: "256"
+      n_sims:
+        description: "Number of surrogates"
+        required: true
+        default: "30000"
+      seed:
+        description: "RNG seed"
+        required: true
+        default: "1"
+      batch_size:
+        description: "Monte Carlo batch size (memory vs speed)"
+        required: true
+        default: "256"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy healpy
+
+      - name: Download release assets
+        run: |
+          set -euo pipefail
+          mkdir -p data/planck_lensing results/cmb_phase_dagger_phase_rand_circvar_v1
+          curl -L --retry 5 --retry-delay 5 --fail "${{ github.event.inputs.dat_url }}" -o data/planck_lensing/dat_klm.fits
+          curl -L --retry 5 --retry-delay 5 --fail "${{ github.event.inputs.mf_url }}"  -o data/planck_lensing/mf_klm.fits
+          ls -lh data/planck_lensing
+
+      - name: Run PhaseRand CircVar v1
+        run: |
+          OUT="results/cmb_phase_dagger_phase_rand_circvar_v1/planck_lensing_phi_report__lmax${{ github.event.inputs.lmax }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}.json"
+          python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_planck_lensing__phase_rand__circvar__v1.py \
+            --dat_klm data/planck_lensing/dat_klm.fits \
+            --mf_klm  data/planck_lensing/mf_klm.fits \
+            --lmax "${{ github.event.inputs.lmax }}" \
+            --n_sims "${{ github.event.inputs.n_sims }}" \
+            --seed "${{ github.event.inputs.seed }}" \
+            --batch_size "${{ github.event.inputs.batch_size }}" \
+            --dat_url "${{ github.event.inputs.dat_url }}" \
+            --mf_url "${{ github.event.inputs.mf_url }}" \
+            --out "$OUT"
+          echo "Wrote $OUT"
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: planck_lensing_phi_report__phase_rand_circvar_v1__lmax${{ github.event.inputs.lmax }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}
+          path: results/cmb_phase_dagger_phase_rand_circvar_v1/*.json
+          retention-days: 90
