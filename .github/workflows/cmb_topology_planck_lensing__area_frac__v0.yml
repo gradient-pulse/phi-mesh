@@ -79,7 +79,12 @@ jobs:
       - name: Run Topology AreaFrac V0
         run: |
           set -euo pipefail
-          OUT="results/cmb_topology_area_frac_v0/planck_lensing_topology_area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}.json"
+
+          OUT_DIR="results/cmb_topology_area_frac_v0"
+          mkdir -p "$OUT_DIR"
+
+          OUT="$OUT_DIR/planck_lensing_topology_area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}.json"
+
           python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__area_frac__v0.py \
             --dat_klm data/planck_lensing/dat_klm.fits \
             --mf_klm  data/planck_lensing/mf_klm.fits \
@@ -93,14 +98,19 @@ jobs:
             --dat_url "${{ github.event.inputs.dat_url }}" \
             --mf_url "${{ github.event.inputs.mf_url }}" \
             --out "$OUT"
+
           echo "Wrote $OUT"
-          ls -lh results/cmb_topology_area_frac_v0
+          test -f "$OUT"
+          ls -lh "$OUT_DIR"
+
+          # Persist OUT for later steps (no glob ambiguity)
+          echo "OUT=$OUT" >> "$GITHUB_ENV"
 
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
         with:
           name: planck_lensing_topology_area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}
-          path: results/cmb_topology_area_frac_v0/*.json
+          path: ${{ env.OUT }}
           retention-days: 90
 
       - name: Archive result into repo (run history)
@@ -108,16 +118,26 @@ jobs:
           set -euo pipefail
           RUN_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
           mkdir -p "$RUN_DIR"
-          cp -v results/cmb_topology_area_frac_v0/*.json "$RUN_DIR/"
+
+          echo "Archiving: $OUT"
+          test -f "$OUT"
+
+          cp -v "$OUT" "$RUN_DIR/"
           ls -lh "$RUN_DIR"
 
       - name: Commit archived result (if changed) and push safely
         run: |
           set -euo pipefail
+          RUN_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
+          ARCHIVED="$RUN_DIR/$(basename "$OUT")"
+
+          test -f "$ARCHIVED"
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0/*.json
+          # Add exactly the file we just archived (no glob ambiguity)
+          git add "$ARCHIVED"
 
           if git diff --cached --quiet; then
             echo "No new result JSON to commit."
