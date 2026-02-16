@@ -9,7 +9,7 @@
   "metric": "circular_variance(m>0 phase angles)",
   "n_phases": 32896,
   "n_sims": 30000,
-  "notes": "Implementation detail: the metric depends only on phases, so surrogate generation uses random unit phasors exp(i*phi). Zero-amplitude observed modes (rare) are excluded.",
+  "notes": "Implementation detail: the metric depends only on phases, so surrogate generation samples random phases directly (unit phasors exp(i*phi)). Zero-amplitude observed modes (rare) are excluded.",
   "observed": 0.9902769482745537,
   "p_high": 0.9555014832838905,
   "p_low": 0.04453184893836872,
@@ -19,7 +19,7 @@
     "mf_url": "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits"
   },
   "seed": 3,
-  "surrogate_mean": 0.9951212097971814,
-  "surrogate_std": 0.002554995644865962,
-  "z_score": -1.8959959999782587
+  "surrogate_mean": 0.995121209796981,
+  "surrogate_std": 0.002554995642828092,
+  "z_score": -1.8959960014120762
 }
