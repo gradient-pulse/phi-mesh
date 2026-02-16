@@ -52,6 +52,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 240
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -80,10 +81,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          OUT_DIR="results/cmb_topology_area_frac_v0"
-          mkdir -p "$OUT_DIR"
-
-          OUT="$OUT_DIR/planck_lensing_topology_area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}.json"
+          # Include run_id in filename so repeated parameter runs never overwrite each other
+          OUT="results/cmb_topology_area_frac_v0/planck_lensing_topology_area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}.json"
 
           python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__area_frac__v0.py \
             --dat_klm data/planck_lensing/dat_klm.fits \
@@ -100,60 +99,66 @@ jobs:
             --out "$OUT"
 
           echo "Wrote $OUT"
-          test -f "$OUT"
-          ls -lh "$OUT_DIR"
-
-          # Persist OUT for later steps (no glob ambiguity)
-          echo "OUT=$OUT" >> "$GITHUB_ENV"
+          ls -lh results/cmb_topology_area_frac_v0
 
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
         with:
           name: planck_lensing_topology_area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}
-          path: ${{ env.OUT }}
+          path: results/cmb_topology_area_frac_v0/*.json
           retention-days: 90
 
       - name: Archive result into repo (run history)
         run: |
           set -euo pipefail
-          RUN_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
+
+          BASE_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
+          RUN_DIR="${BASE_DIR}/runs/${{ github.run_id }}"
           mkdir -p "$RUN_DIR"
 
-          echo "Archiving: $OUT"
-          test -f "$OUT"
+          cp -v results/cmb_topology_area_frac_v0/*.json "$RUN_DIR/"
 
-          cp -v "$OUT" "$RUN_DIR/"
+          # Optional: write a tiny run manifest for quick browsing
+          cat > "${RUN_DIR}/manifest.txt" <<EOF
+          run_id: ${{ github.run_id }}
+          workflow: ${{ github.workflow }}
+          ref: ${{ github.ref }}
+          sha: ${{ github.sha }}
+          lmax: ${{ github.event.inputs.lmax }}
+          nside: ${{ github.event.inputs.nside }}
+          n_sims: ${{ github.event.inputs.n_sims }}
+          seed: ${{ github.event.inputs.seed }}
+          dat_url: ${{ github.event.inputs.dat_url }}
+          mf_url: ${{ github.event.inputs.mf_url }}
+          EOF
+
           ls -lh "$RUN_DIR"
 
       - name: Commit archived result (if changed) and push safely
         run: |
           set -euo pipefail
-          RUN_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
-          ARCHIVED="$RUN_DIR/$(basename "$OUT")"
-
-          test -f "$ARCHIVED"
-
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add exactly the file we just archived (no glob ambiguity)
-          git add "$ARCHIVED"
+          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0/runs/${{ github.run_id }}/
 
           if git diff --cached --quiet; then
-            echo "No new result JSON to commit."
+            echo "No new archived files to commit."
             exit 0
           fi
 
-          git commit -m "Archive Planck lensing topology area-frac v0 result (run ${{ github.run_id }})"
+          git commit -m "Archive Planck lensing topology area-frac v0 (run ${{ github.run_id }})"
 
-          # Push with a couple of rebase-retry attempts to avoid lock/race issues
+          # Rebase-retry push
           for i in 1 2 3; do
             git fetch origin main
             git rebase origin/main || (git rebase --abort && exit 1)
+
             if git push; then
               echo "Push succeeded."
               exit 0
             fi
+
             echo "Push failed (attempt $i). Retrying after short delay..."
             sleep 3
           done
