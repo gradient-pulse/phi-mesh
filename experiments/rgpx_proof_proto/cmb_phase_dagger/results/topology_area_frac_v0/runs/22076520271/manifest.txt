@@ -1,0 +1,10 @@
+run_id: 22076520271
+workflow: CMB Topology (Planck PR3 Lensing φ_lm) — AreaFrac V0
+ref: refs/heads/main
+sha: 47b55d14245086de828f8c18034716e4f227fdce
+lmax: 256
+nside: 256
+n_sims: 10000
+seed: 731
+dat_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits
+mf_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits
