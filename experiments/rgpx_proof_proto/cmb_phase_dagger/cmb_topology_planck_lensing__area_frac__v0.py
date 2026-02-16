@@ -46,18 +46,18 @@ def surrogate_alm_phase_randomize(alm, lmax, rng):
     """
     Phase-randomized surrogate:
       - preserve amplitudes |a_lm|
-      - randomize phases for m>0
-      - keep m=0 real positive amplitude
+      - randomize phases for m>0 ONLY
+      - keep m=0 coefficients EXACTLY as observed (do NOT force positive)
     """
     amps = np.abs(alm).astype(float)
     out = np.empty_like(alm)
 
-    # m=0: real positive
+    # m=0: keep exactly (these are real in theory, but keep as-is)
     for ell in range(0, lmax + 1):
         idx0 = hp.Alm.getidx(lmax, ell, 0)
-        out[idx0] = amps[idx0] + 0j
+        out[idx0] = alm[idx0]
 
-    # m>0: random phases
+    # m>0: preserve amplitude, randomize phase
     for ell in range(1, lmax + 1):
         for m in range(1, ell + 1):
             idx = hp.Alm.getidx(lmax, ell, m)
