@@ -1,0 +1,25 @@
+{
+  "diagnostics": {
+    "imag_frac_nonzero_eps1e-12": 0.9922480620155039,
+    "imag_max_abs": 0.0050463026842661445
+  },
+  "hint": "Null: random m>0 phases (uniform) with observed amplitudes. Lower circular variance => more phase alignment. Use p_low for 'structure' evidence.",
+  "kind": "planck_pr3_lensing_phi_alm_phase_dagger",
+  "lmax": 256,
+  "metric": "circular_variance(m>0 phase angles)",
+  "n_phases": 32896,
+  "n_sims": 30000,
+  "notes": "Implementation detail: the metric depends only on phases, so surrogate generation uses random unit phasors exp(i*phi). Zero-amplitude observed modes (rare) are excluded.",
+  "observed": 0.9902769482745537,
+  "p_high": 0.9571680943968535,
+  "p_low": 0.04286523782540582,
+  "p_two_sided": 0.08573047565081164,
+  "provenance": {
+    "dat_url": "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits",
+    "mf_url": "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits"
+  },
+  "seed": 1,
+  "surrogate_mean": 0.995131397215494,
+  "surrogate_std": 0.002543894748951725,
+  "z_score": -1.9082742880540686
+}
