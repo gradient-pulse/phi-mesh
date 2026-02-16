@@ -36,6 +36,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -57,6 +59,7 @@ jobs:
 
       - name: Run PhaseRand CircVar v1
         run: |
+          set -euo pipefail
           OUT="results/cmb_phase_dagger_phase_rand_circvar_v1/planck_lensing_phi_report__lmax${{ github.event.inputs.lmax }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}.json"
           python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_phase_dagger_planck_lensing__phase_rand__circvar__v1.py \
             --dat_klm data/planck_lensing/dat_klm.fits \
@@ -69,6 +72,7 @@ jobs:
             --mf_url "${{ github.event.inputs.mf_url }}" \
             --out "$OUT"
           echo "Wrote $OUT"
+          ls -lh results/cmb_phase_dagger_phase_rand_circvar_v1
 
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
@@ -76,3 +80,27 @@ jobs:
           name: planck_lensing_phi_report__phase_rand_circvar_v1__lmax${{ github.event.inputs.lmax }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}
           path: results/cmb_phase_dagger_phase_rand_circvar_v1/*.json
           retention-days: 90
+
+      - name: Archive result into repo (run history)
+        run: |
+          set -euo pipefail
+          RUN_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/phase_rand_circvar_v1"
+          mkdir -p "$RUN_DIR"
+          cp -v results/cmb_phase_dagger_phase_rand_circvar_v1/*.json "$RUN_DIR/"
+          ls -lh "$RUN_DIR"
+
+      - name: Commit archived result (if changed)
+        run: |
+          set -euo pipefail
+          git config user.name "phi-pulse-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/phase_rand_circvar_v1/*.json
+
+          if git diff --cached --quiet; then
+            echo "No new result JSON to commit."
+            exit 0
+          fi
+
+          git commit -m "Archive Planck lensing phase-rand circvar v1 result (run ${{ github.run_id }})"
+          git push
