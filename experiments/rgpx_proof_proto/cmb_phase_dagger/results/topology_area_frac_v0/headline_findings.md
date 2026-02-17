@@ -19,12 +19,17 @@ We will treat “new physics” as admissible only if:
 
 (Controls 1–3 separate “expected lensing non-Gaussianity / pipeline systematics” from a genuine generative mismatch.)
 
-Status:
-- ✅ Gate (1) PASSED (Gaussian control): run **22093008970**  
-  File: [`gaussian_control__area_frac_v0__lmax256__nside256__nsims2000__seed900__gauss901__run22093008970.json`](controls/gaussian/runs/22093008970/gaussian_control__area_frac_v0__lmax256__nside256__nsims2000__seed900__gauss901__run22093008970.json)  
-  D_L2=4.7930e-05; p_two_sided=0.5437 (p_high=0.7286; p_low=0.2719) → no anomaly; consistent with phase-random baseline.
-- ⏳ Gate (2) pending (ΛCDM forward sims + reconstruction).
-- ⏳ Gate (3) pending (splits / masks / estimator variants).
+## Decision gate status (controls)
+
+### Gate 1 — Gaussian Cℓ-matched φ control (PASS)
+Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme high-D tail.
+- Run 22093008970: D_L2=4.7930e-05; p_high=0.7286; p_two_sided=0.5437  
+- Files: [controls/gaussian/runs/22093008970/](./controls/gaussian/runs/22093008970/)
+
+### Gate 2A — ΛCDM φ forward sims (PASS; preliminary)
+ΛCDM φ forward draws (no reconstruction pipeline) yield D in the ~1e−5 range:
+- Run 22094597786: n_lcdm_sims=20; D_mean=8.9426e-06; D_std=1.0949e-05  
+- Files: [controls/lcdm_forward/runs/22094597786/](./controls/lcdm_forward/runs/22094597786/)  <!-- use your actual folder name -->
 
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
