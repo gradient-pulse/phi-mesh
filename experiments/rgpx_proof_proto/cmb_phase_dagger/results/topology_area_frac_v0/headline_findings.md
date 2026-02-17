@@ -19,20 +19,18 @@ We will treat “new physics” as admissible only if:
 
 (Controls 1–3 separate “expected lensing non-Gaussianity / pipeline systematics” from a genuine generative mismatch.)
 
+Status:
+- ✅ Gate (1) PASSED (Gaussian control): run **22093008970** (lmax=256, nside=256, n_sims=2000, seed=900, gauss_seed=901)  
+  D_L2=4.7930e-05; p_two_sided=0.5437 (no anomaly; consistent with phase-random baseline).
+- ⏳ Gate (2) pending (ΛCDM forward sims + reconstruction).
+- ⏳ Gate (3) pending (splits / masks / estimator variants).
+
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
 - Run **22076520271** (n_sims=10000, seed=731): D_L2=0.1161945390; p_high=9.99900e-05 (two-sided 1.99980e-04)
 
 Notes:
 - **p_high** = fraction of surrogates with D ≥ D_obs (one-sided “high-D tail”).
-
-## Interpretation guardrail
-This is a strong detection of **non-random phase structure / higher-order morphology** relative to a phase-randomized null.  
-Such deviations can arise from **expected lensing non-Gaussianity**, from **estimator/pipeline imprint**, or from other systematics; the follow-ups below are meant to separate these.
-
-It is **not yet** evidence for “new physics” by itself. Next discriminators:
-- add topology V1/V2 (boundary length, Euler characteristic) under same surrogate scheme
-- run controls (Gaussian φ with same power spectrum, or ΛCDM lensing simulations) to separate “expected lensing non-Gaussianity” from pipeline/systematic effects.
 
 ---
 
