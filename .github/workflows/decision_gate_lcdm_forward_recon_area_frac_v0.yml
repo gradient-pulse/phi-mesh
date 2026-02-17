@@ -1,51 +1,59 @@
-name: "Decision gate (2): ΛCDM forward sims + QE reconstruction — AreaFrac V0"
+name: "Decision gate (2A): ΛCDM φ_lm forward sims (CAMB C_L^{φφ}) — AreaFrac V0"
 
 on:
   workflow_dispatch:
     inputs:
-      obs_run_id:
-        description: "Observed run_id folder under results/topology_area_frac_v0/runs/ (to read D_obs)"
-        required: true
-        default: "22076484564"
-
       lmax:
-        description: "Max multipole l to analyze / reconstruct"
+        description: "Max multipole L for phi_lm"
         required: true
         default: "256"
       nside:
-        description: "HEALPix nside used by the topology pipeline"
+        description: "HEALPix nside for topology"
         required: true
         default: "256"
-
       n_lcdm_sims:
-        description: "Number of ΛCDM forward sims (each produces one reconstructed phi_hat)"
+        description: "Number of ΛCDM forward phi draws"
         required: true
-        default: "8"
-
+        default: "20"
       n_phase_sims:
-        description: "Number of phase-random surrogates used by AreaFrac V0 per forward sim"
+        description: "Phase-random surrogates per forward phi draw"
         required: true
-        default: "500"
-
+        default: "2000"
       seed0:
         description: "Base RNG seed for forward sims"
         required: true
-        default: "1100"
-
-      beam_fwhm_arcmin:
-        description: "Gaussian beam FWHM [arcmin] applied to lensed T"
+        default: "1200"
+      # CAMB cosmology (defaults are Planck-like)
+      H0:
+        description: "H0"
         required: true
-        default: "5.0"
-      noise_uKarcmin:
-        description: "White noise level [uK-arcmin] added to lensed T"
+        default: "67.4"
+      ombh2:
+        description: "Omega_b h^2"
         required: true
-        default: "45.0"
+        default: "0.0224"
+      omch2:
+        description: "Omega_c h^2"
+        required: true
+        default: "0.120"
+      tau:
+        description: "tau"
+        required: true
+        default: "0.054"
+      As:
+        description: "As"
+        required: true
+        default: "2.1e-9"
+      ns:
+        description: "ns"
+        required: true
+        default: "0.965"
 
 permissions:
   contents: write
 
 concurrency:
-  group: decision-gate-lcdm-forward-recon-v0
+  group: decision-gate-lcdm-phi-forward-v0
   cancel-in-progress: false
 
 jobs:
@@ -64,112 +72,67 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dependencies (pip-safe)
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          pip install numpy scipy healpy
-          pip install camb pixell lenspyx plancklens
+          pip install numpy scipy healpy camb
 
-      - name: Run ΛCDM forward sims + QE + AreaFrac V0 on reconstructed φ̂
+      - name: Run ΛCDM phi forward sims + AreaFrac V0
         run: |
           set -euo pipefail
-          mkdir -p results/cmb_topology_area_frac_v0
+          mkdir -p results/cmb_topology_area_frac_v0 data/lcdm_phi
 
           python - <<'PY'
-          import os, json, math, glob
+          import os, json, glob
           import numpy as np
           import healpy as hp
+          import camb
 
-          obs_run_id = int("${{ github.event.inputs.obs_run_id }}")
           lmax = int("${{ github.event.inputs.lmax }}")
           nside = int("${{ github.event.inputs.nside }}")
           n_lcdm_sims = int("${{ github.event.inputs.n_lcdm_sims }}")
           n_phase_sims = int("${{ github.event.inputs.n_phase_sims }}")
           seed0 = int("${{ github.event.inputs.seed0 }}")
 
-          beam_fwhm_arcmin = float("${{ github.event.inputs.beam_fwhm_arcmin }}")
-          noise_uKarcmin = float("${{ github.event.inputs.noise_uKarcmin }}")
+          H0 = float("${{ github.event.inputs.H0 }}")
+          ombh2 = float("${{ github.event.inputs.ombh2 }}")
+          omch2 = float("${{ github.event.inputs.omch2 }}")
+          tau = float("${{ github.event.inputs.tau }}")
+          As = float("${{ github.event.inputs.As }}")
+          ns = float("${{ github.event.inputs.ns }}")
 
-          base = "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
-          obs_dir = os.path.join(base, "runs", str(obs_run_id))
-          obs_jsons = glob.glob(os.path.join(obs_dir, "*.json"))
-          if not obs_jsons:
-            raise RuntimeError(f"Could not find observed json in {obs_dir}/")
-          obs_path = obs_jsons[0]
-
-          with open(obs_path, "r") as f:
-            obs = json.load(f)
-          D_obs = float(obs["observed"]["D_L2"])
-
-          import camb
+          # CAMB setup for lensing potential power spectrum
           pars = camb.CAMBparams()
-          pars.set_cosmology(H0=67.4, ombh2=0.0224, omch2=0.120, mnu=0.06, omk=0, tau=0.054)
-          pars.InitPower.set_params(As=2.1e-9, ns=0.965, r=0)
+          pars.set_cosmology(H0=H0, ombh2=ombh2, omch2=omch2, mnu=0.06, omk=0, tau=tau)
+          pars.InitPower.set_params(As=As, ns=ns, r=0)
           pars.set_for_lmax(lmax, lens_potential_accuracy=1)
           results = camb.get_results(pars)
 
-          cls = results.get_cmb_power_spectra(pars, lmax=lmax, CMB_unit="muK")
-          cltt = np.array(cls["unlensed_scalar"][:lmax+1, 0], dtype=float)
-          cltt[0:2] = 0.0
-
+          # CAMB returns [L(L+1)]^2 C_L^{phi phi} / (2pi) etc internally;
+          # get_lens_potential_cls gives C_L^{phi phi} in the conventional normalization expected by synalm.
           clpp = np.array(results.get_lens_potential_cls(lmax=lmax)[:lmax+1, 0], dtype=float)
           clpp[0:2] = 0.0
-
-          fwhm_rad = (beam_fwhm_arcmin / 60.0) * (math.pi/180.0)
-          bl = hp.gauss_beam(fwhm=fwhm_rad, lmax=lmax)
-
-          pix_area_sr = hp.nside2pixarea(nside)
-          pix_area_arcmin2 = pix_area_sr * (180/math.pi)**2 * (60**2)
-          sigma_uK = noise_uKarcmin / math.sqrt(pix_area_arcmin2)
-
-          from pixell import enmap, curvedsky, lensing
-          from plancklens import qresp, qest
-
-          res_rad = hp.nside2resol(nside)
-          shape, wcs = enmap.fullsky_geometry(res=res_rad, proj="car")
-
-          theory = {"tt": cltt}
-          R = qresp.get_response("ptt", lmax, theory, theory, gmv=False)
-          R = np.where(R == 0, np.inf, R)
 
           out_dir = "results/cmb_topology_area_frac_v0"
           sim_records = []
 
           for i in range(n_lcdm_sims):
             sim_seed = seed0 + i
-            rng = np.random.default_rng(sim_seed)
             np.random.seed(sim_seed)
 
-            almT = hp.synalm(cltt, lmax=lmax, new=True, verbose=False)
-            almphi = hp.synalm(clpp, lmax=lmax, new=True, verbose=False)
+            alm_phi = hp.synalm(clpp, lmax=lmax, new=True, verbose=False)
+            alm_zero = np.zeros_like(alm_phi)
 
-            T_unl = curvedsky.alm2map(almT, enmap.empty(shape, wcs))
-            phi_map = curvedsky.alm2map(almphi, enmap.empty(shape, wcs))
+            dat_tmp = f"data/lcdm_phi/lcdm_phi_dat__sim{i:03d}.fits"
+            mf_tmp  = f"data/lcdm_phi/lcdm_phi_mf__sim{i:03d}.fits"
 
-            T_len = lensing.lens_map(T_unl, phi_map, order=3)
-
-            alm_len = curvedsky.map2alm(T_len, lmax=lmax)
-            alm_len = hp.almxfl(alm_len, bl)
-            T_beam = curvedsky.alm2map(alm_len, enmap.empty(shape, wcs))
-
-            noise = rng.normal(loc=0.0, scale=sigma_uK, size=T_beam.shape)
-            T_obs = T_beam + noise
-
-            alm_obs = curvedsky.map2alm(T_obs, lmax=lmax)
-            maps = {"t": alm_obs}
-
-            alm_phi_hat_raw = qest.qe_eval("ptt", lmax, theory, maps, maps)
-            alm_phi_hat = hp.almxfl(alm_phi_hat_raw, 1.0 / R)
-
-            dat_tmp = "data_phi_hat_tmp.fits"
-            mf_tmp  = "mf_zero_tmp.fits"
-            hp.write_alm(dat_tmp, alm_phi_hat, overwrite=True)
-            hp.write_alm(mf_tmp,  np.zeros_like(alm_phi_hat), overwrite=True)
+            hp.write_alm(dat_tmp, alm_phi, overwrite=True)
+            hp.write_alm(mf_tmp,  alm_zero, overwrite=True)
 
             out_json = os.path.join(
               out_dir,
-              f"lcdm_forward_qe_phi_hat__sim{i:03d}__lmax{lmax}__nside{nside}__phase{n_phase_sims}__seed{sim_seed}__run${{ github.run_id }}.json"
+              f"lcdm_phi_forward__area_frac_v0__sim{i:03d}__lmax{lmax}__nside{nside}__phasesims{n_phase_sims}__seed{sim_seed}__run${{ github.run_id }}.json"
             )
 
             cmd = (
@@ -177,7 +140,7 @@ jobs:
               f"--dat_klm {dat_tmp} --mf_klm {mf_tmp} "
               f"--lmax {lmax} --nside {nside} --n_sims {n_phase_sims} --seed {sim_seed} "
               f"--n_nu 61 --nu_min -3.0 --nu_max 3.0 "
-              f"--dat_url LCDM_FWD_QE_SIM --mf_url MF_ZERO "
+              f"--dat_url LCDM_PHI_FORWARD_CAMB --mf_url MF_ZERO "
               f"--out {out_json}"
             )
             rc = os.system(cmd)
@@ -190,39 +153,25 @@ jobs:
             Dj = float(simj["observed"]["D_L2"])
             sim_records.append({"sim": i, "seed": sim_seed, "D_L2": Dj, "out_json": out_json})
 
-            for p in [dat_tmp, mf_tmp]:
-              try: os.remove(p)
-              except: pass
-
-          Ds = np.array([r["D_L2"] for r in sim_records], dtype=float)
-          p_ge = float(np.mean(Ds >= D_obs)) if len(Ds) else None
-
           summary = {
-            "kind": "decision_gate_lcdm_forward_qe_area_frac_v0",
+            "kind": "decision_gate_lcdm_phi_forward_area_frac_v0",
             "run_id": int("${{ github.run_id }}"),
             "inputs": {
-              "obs_run_id": obs_run_id,
-              "obs_json": obs_path,
               "lmax": lmax,
               "nside": nside,
               "n_lcdm_sims": n_lcdm_sims,
               "n_phase_sims": n_phase_sims,
               "seed0": seed0,
-              "beam_fwhm_arcmin": beam_fwhm_arcmin,
-              "noise_uKarcmin": noise_uKarcmin,
+              "cosmology": {"H0": H0, "ombh2": ombh2, "omch2": omch2, "tau": tau, "As": As, "ns": ns},
             },
-            "observed": {"D_L2": D_obs},
-            "lcdm_forward_qe": {
-              "D_list": Ds.tolist(),
-              "D_mean": float(Ds.mean()) if len(Ds) else None,
-              "D_std": float(Ds.std(ddof=1)) if len(Ds) > 1 else None,
-              "p_D_ge_Dobs": p_ge,
-              "n": int(len(Ds)),
+            "per_sim": sim_records,
+            "D_stats": {
+              "D_mean": float(np.mean([r["D_L2"] for r in sim_records])),
+              "D_std": float(np.std([r["D_L2"] for r in sim_records], ddof=1)) if len(sim_records) > 1 else None,
             },
-            "per_sim": sim_records
           }
 
-          sum_path = os.path.join(out_dir, f"summary__lcdm_forward_qe__lmax{lmax}__nside{nside}__nsim{n_lcdm_sims}__run${{ github.run_id }}.json")
+          sum_path = os.path.join(out_dir, f"summary__lcdm_phi_forward__lmax{lmax}__nside{nside}__nsim{n_lcdm_sims}__run${{ github.run_id }}.json")
           with open(sum_path, "w") as f:
             json.dump(summary, f, indent=2)
 
@@ -234,16 +183,16 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: decision_gate_lcdm_forward_qe_area_frac_v0__run${{ github.run_id }}
+          name: decision_gate_lcdm_phi_forward_area_frac_v0__run${{ github.run_id }}
           path: results/cmb_topology_area_frac_v0/*.json
           retention-days: 90
 
-      - name: Archive results into repo (controls/lcdm)
+      - name: Archive results into repo (controls/lcdm_phi_forward)
         run: |
           set -euo pipefail
 
           BASE_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
-          RUN_DIR="${BASE_DIR}/controls/lcdm/runs/${{ github.run_id }}"
+          RUN_DIR="${BASE_DIR}/controls/lcdm_phi_forward/runs/${{ github.run_id }}"
           mkdir -p "$RUN_DIR"
 
           cp -v results/cmb_topology_area_frac_v0/*.json "$RUN_DIR/"
@@ -253,41 +202,36 @@ jobs:
           workflow: ${{ github.workflow }}
           ref: ${{ github.ref }}
           sha: ${{ github.sha }}
-          control: lcdm_forward_sim_plus_qe_reconstruction
-          obs_run_id: ${{ github.event.inputs.obs_run_id }}
+          control: lcdm_phi_forward_camb_synalm
           lmax: ${{ github.event.inputs.lmax }}
           nside: ${{ github.event.inputs.nside }}
           n_lcdm_sims: ${{ github.event.inputs.n_lcdm_sims }}
           n_phase_sims: ${{ github.event.inputs.n_phase_sims }}
           seed0: ${{ github.event.inputs.seed0 }}
-          beam_fwhm_arcmin: ${{ github.event.inputs.beam_fwhm_arcmin }}
-          noise_uKarcmin: ${{ github.event.inputs.noise_uKarcmin }}
           EOF
 
-      - name: Commit archived control result (if changed) and push safely
+      - name: Commit archived results (if changed) and push safely
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0/controls/lcdm/runs/${{ github.run_id }}/
+          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0/controls/lcdm_phi_forward/runs/${{ github.run_id }}/
 
           if git diff --cached --quiet; then
             echo "No new archived control files to commit."
             exit 0
           fi
 
-          git commit -m "Decision gate: ΛCDM forward+QE control (AreaFrac v0) (run ${{ github.run_id }})"
+          git commit -m "Decision gate: ΛCDM phi forward control (AreaFrac v0) (run ${{ github.run_id }})"
 
           for i in 1 2 3; do
             git fetch origin main
             git rebase origin/main || (git rebase --abort && exit 1)
-
             if git push; then
               echo "Push succeeded."
               exit 0
             fi
-
             echo "Push failed (attempt $i). Retrying..."
             sleep 3
           done
