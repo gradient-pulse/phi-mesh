@@ -21,8 +21,10 @@ We will treat “new physics” as admissible only if:
 
 Status:
 - ✅ Gate (1) PASSED (Gaussian control): run **22093008970**  
-  File: `experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0/controls/gaussian/runs/22093008970/gaussian_control__area_frac_v0__lmax256__nside256__nsims2000__seed900__gauss901__run22093008970.json`  
-  D_L2=4.7930e-05; p_two_sided=0.5437 (p_high=0.7286; p_low=0.2719) → **no anomaly**; consistent with phase-random baseline.
+  File: [`gaussian_control__area_frac_v0__lmax256__nside256__nsims2000__seed900__gauss901__run22093008970.json`](controls/gaussian/runs/22093008970/gaussian_control__area_frac_v0__lmax256__nside256__nsims2000__seed900__gauss901__run22093008970.json)  
+  Path: `experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0/controls/gaussian/runs/22093008970/gaussian_control__area_frac_v0__lmax256__nside256__nsims2000__seed900__gauss901__run22093008970.json`  
+  D_L2=4.7930e-05; p_two_sided=0.5437 (p_high=0.7286; p_low=0.2719) → no anomaly; consistent with phase-random baseline.
+  Run folder: [`controls/gaussian/runs/22093008970/`](controls/gaussian/runs/22093008970/)
 - ⏳ Gate (2) pending (ΛCDM forward sims + reconstruction).
 - ⏳ Gate (3) pending (splits / masks / estimator variants).
 
