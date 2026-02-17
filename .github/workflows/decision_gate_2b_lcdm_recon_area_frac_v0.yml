@@ -6,7 +6,7 @@ on:
       recon_sims_url:
         description: "Release asset URL: tar.gz containing reconstructed sims (dat_klm.fits + mf_klm.fits per sim)"
         required: true
-        default: "https://github.com/gradient-pulse/phi-mesh/releases/download/REPLACE_ME/lcdm_recon_sims__lmax256__nside256__v0.tar.gz"
+        default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/lcdm_recon_inputs.tar.gz"
       lmax:
         description: "Max multipole l to analyze"
         required: true
