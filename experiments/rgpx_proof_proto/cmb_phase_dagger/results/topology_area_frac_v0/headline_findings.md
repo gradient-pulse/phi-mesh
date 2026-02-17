@@ -1,10 +1,21 @@
 # Headline findings — Planck PR3 lensing φₗₘ topology (AreaFrac V0)
 
 ## Headline summary
-We tested whether the observed Planck PR3 lensing potential spherical-harmonic field φₗₘ shows **non-null morphology** beyond what is preserved under **phase randomization** (|aₗₘ| fixed, phases randomized).  
-Topology v0 uses the **excursion-set area fraction curve V0(ν)** and the statistic **D = L2 distance** between the observed V0(ν) curve and the **surrogate-mean** curve. Large D indicates morphology not explained by amplitude-only structure.
+We test whether Planck PR3 lensing φₗₘ contains **morphology beyond amplitude-only structure** by comparing the observed **excursion-set area fraction curve V0(ν)** to **phase-randomized surrogates** (|aₗₘ| fixed, phases randomized). The statistic is **D = L2 distance** between V0_obs(ν) and the surrogate-mean V0̄(ν); large D implies non-random phase structure.
 
-Result: two independent runs (different seeds, different N) both show a **highly significant deviation** from the phase-random surrogate baseline at lmax=256, nside=256.
+Two independent runs (different seeds, different N) show a **highly significant** deviation from the phase-random baseline at lmax=256, nside=256.
+
+## Interpretation guardrail
+This is evidence for **non-random phase structure / higher-order morphology** relative to the phase-random null, but **not** a “new physics” claim: it can arise from expected lensing non-Gaussianity, estimator/pipeline imprint, or other systematics. Next discriminators: add V1/V2 (boundary length, Euler characteristic) and run controls (Gaussian φ with same Cℓ, and/or ΛCDM lensing simulations).
+
+## What is at stake (if controls confirm)
+If the effect persists under ΛCDM-forward simulations (including reconstruction pipeline) and under Gaussian controls with matched Cℓ, then the remaining explanation is **a mismatch in the assumed generative model** for φ: either (i) missing physics in the lensing potential statistics, or (ii) a non-standard coherence constraint not captured by the usual amplitude-based description. In that case, this becomes evidence for a **model-class failure** — i.e., the type of opening where “new physics” becomes a legitimate scientific hypothesis rather than rhetoric.
+
+## Decision gate
+We will treat “new physics” as admissible only if:
+1) Gaussian φ with matched Cℓ fails to reproduce D at comparable rate, and
+2) ΛCDM lensing simulations + the same reconstruction pipeline fail to reproduce D, and
+3) the signal replicates across alternative estimators / masks / data splits.
 
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
