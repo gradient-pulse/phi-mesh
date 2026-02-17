@@ -115,6 +115,10 @@ jobs:
           dat_full = hp.read_alm(dat_path, hdu=1)
           mf_full  = hp.read_alm(mf_path,  hdu=1)
 
+          print("Input dat alm size:", dat_full.size, "=> lmax_in:", hp.Alm.getlmax(dat_full.size))
+          print("Input mf  alm size:", mf_full.size,  "=> lmax_in:", hp.Alm.getlmax(mf_full.size))
+          print("Requested lmax_target:", lmax_target)
+
           # Truncate safely to requested lmax
           dat = truncate_alm(dat_full, lmax_target)
           mf  = truncate_alm(mf_full,  lmax_target)
