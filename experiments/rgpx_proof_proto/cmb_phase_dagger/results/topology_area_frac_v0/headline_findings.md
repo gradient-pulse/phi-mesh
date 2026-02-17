@@ -17,6 +17,8 @@ We will treat “new physics” as admissible only if:
 2) ΛCDM lensing simulations + the same reconstruction pipeline fail to reproduce D, and
 3) the signal replicates across alternative estimators / masks / data splits.
 
+(Controls 1–3 separate “expected lensing non-Gaussianity / pipeline systematics” from a genuine generative mismatch.)
+
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
 - Run **22076520271** (n_sims=10000, seed=731): D_L2=0.1161945390; p_high=9.99900e-05 (two-sided 1.99980e-04)
