@@ -90,22 +90,43 @@ jobs:
           dat_path = "data/planck_lensing/dat_klm.fits"
           mf_path  = "data/planck_lensing/mf_klm.fits"
 
-          lmax = int("${{ github.event.inputs.lmax }}")
+          lmax_target = int("${{ github.event.inputs.lmax }}")
           gauss_seed = int("${{ github.event.inputs.gauss_seed }}")
 
-          # Read alms (truncate to lmax via lmax=)
-          dat = hp.read_alm(dat_path, hdu=1, lmax=lmax)
-          mf  = hp.read_alm(mf_path,  hdu=1, lmax=lmax)
+          def truncate_alm(alm_in, lmax_out):
+            """
+            Truncate a healpy alm array to lmax_out (and mmax_out=lmax_out).
+            Copies (l,m) coefficients into a new, smaller alm buffer.
+            """
+            # Infer input lmax
+            lmax_in = hp.Alm.getlmax(alm_in.size)
+            if lmax_out >= lmax_in:
+              return alm_in
+
+            alm_out = np.zeros(hp.Alm.getsize(lmax_out), dtype=alm_in.dtype)
+            for l in range(lmax_out + 1):
+              for m in range(l + 1):
+                idx_in  = hp.Alm.getidx(lmax_in, l, m)
+                idx_out = hp.Alm.getidx(lmax_out, l, m)
+                alm_out[idx_out] = alm_in[idx_in]
+            return alm_out
+
+          # Read full alms (healpy.read_alm does NOT support lmax=)
+          dat_full = hp.read_alm(dat_path, hdu=1)
+          mf_full  = hp.read_alm(mf_path,  hdu=1)
+
+          # Truncate safely to requested lmax
+          dat = truncate_alm(dat_full, lmax_target)
+          mf  = truncate_alm(mf_full,  lmax_target)
 
           # Cleaned alm used to estimate C_ell
           alm_clean = dat - mf
-          cl = hp.alm2cl(alm_clean, lmax=lmax)
+          cl = hp.alm2cl(alm_clean, lmax=lmax_target)
 
-          rng = np.random.default_rng(gauss_seed)
-          # healpy uses global RNG; seed numpy and also set legacy seed for safety
+          # Seed synalm (healpy uses numpy's global RNG)
           np.random.seed(gauss_seed)
 
-          alm_gauss = hp.synalm(cl, lmax=lmax, new=True, verbose=False)
+          alm_gauss = hp.synalm(cl, lmax=lmax_target, new=True, verbose=False)
 
           # Mean-field for the Gaussian control is set to zero (same shape)
           alm_zero = np.zeros_like(alm_gauss)
@@ -116,8 +137,8 @@ jobs:
           hp.write_alm(out_dat, alm_gauss, overwrite=True)
           hp.write_alm(out_mf,  alm_zero,  overwrite=True)
 
-          print("Wrote:", out_dat)
-          print("Wrote:", out_mf)
+          print("Wrote:", out_dat, "size:", alm_gauss.size)
+          print("Wrote:", out_mf,  "size:", alm_zero.size)
           PY
           ls -lh data/planck_lensing | sed -n '1,200p'
 
