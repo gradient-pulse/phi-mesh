@@ -31,6 +31,12 @@ Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme 
 - Run 22094597786: n_lcdm_sims=20; D_mean=8.9426e-06; D_std=1.0949e-05
 - Files: [controls/lcdm_phi_forward/runs/22094597786/](./controls/lcdm_phi_forward/runs/22094597786/)
 
+### Gate 2B — ΛCDM φ sims + reconstruction pipeline (KILLS anomaly)
+ΛCDM reconstructed products yield **D ~ 0.10–0.12**, overlapping the observed-data D≈0.116.
+- Run 22104227390: n_lcdm_sims=3; D_mean=0.10638; D_std=0.00780; D_max=0.11621
+- Files: [controls/lcdm_recon/runs/22104227390/](./controls/lcdm_recon/runs/22104227390/)
+
+
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
 - Run **22076520271** (n_sims=10000, seed=731): D_L2=0.1161945390; p_high=9.99900e-05 (two-sided 1.99980e-04)
