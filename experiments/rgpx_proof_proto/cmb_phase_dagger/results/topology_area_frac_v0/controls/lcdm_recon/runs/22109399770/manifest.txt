@@ -1,0 +1,11 @@
+run_id: 22109399770
+workflow: Decision gate 2B — ΛCDM forward sims + reconstruction (AreaFrac V0)
+ref: refs/heads/main
+sha: 05504871e62eef35c9467048d78adf07d7f27a5b
+control: lcdm_recon_sims_plus_phase_random_null
+lmax: 256
+nside: 256
+n_lcdm_sims: 20
+n_phase_sims: 2000
+seed0: 1400
+recon_sims_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/lcdm_recon_sims__layout_sims.tar.gz
