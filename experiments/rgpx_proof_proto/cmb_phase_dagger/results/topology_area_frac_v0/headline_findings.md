@@ -4,14 +4,19 @@
 We tested whether the observed Planck PR3 lensing potential spherical-harmonic field φₗₘ shows **non-null morphology** beyond what is preserved under **phase randomization** (|aₗₘ| fixed, phases randomized).  
 Topology v0 uses the **excursion-set area fraction curve V0(ν)** and the statistic **D = L2 distance** between the observed V0(ν) curve and the **surrogate-mean** curve. Large D indicates morphology not explained by amplitude-only structure.
 
-Result: two independent runs (different seeds, different N) both show **extreme rejection** of the phase-random surrogate baseline at lmax=256, nside=256.
+Result: two independent runs (different seeds, different N) both show a **highly significant deviation** from the phase-random surrogate baseline at lmax=256, nside=256.
 
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
 - Run **22076520271** (n_sims=10000, seed=731): D_L2=0.1161945390; p_high=9.99900e-05 (two-sided 1.99980e-04)
 
+Notes:
+- **p_high** = fraction of surrogates with D ≥ D_obs (one-sided “high-D tail”).
+
 ## Interpretation guardrail
-This is a strong detection of **phase-coupling / higher-order structure** relative to a phase-randomized null.  
+This is a strong detection of **non-random phase structure / higher-order morphology** relative to a phase-randomized null.  
+Such deviations can arise from **expected lensing non-Gaussianity**, from **estimator/pipeline imprint**, or from other systematics; the follow-ups below are meant to separate these.
+
 It is **not yet** evidence for “new physics” by itself. Next discriminators:
 - add topology V1/V2 (boundary length, Euler characteristic) under same surrogate scheme
 - run controls (Gaussian φ with same power spectrum, or ΛCDM lensing simulations) to separate “expected lensing non-Gaussianity” from pipeline/systematic effects.
