@@ -110,15 +110,3 @@ Related Dialogues
 
 Unedited reactions from participating AIs are archived under:
 /main/dialogues/rgpx_reactions/
-
----
-
-### Two small notes (based on what you showed)
-
-1) Your `headline_findings.md` living under  
-`.../cmb_phase_dagger/results/topology_area_frac_v0/`  
-is exactly right. Keep it there.
-
-2) Moving the older flat JSONs into `legacy_flat_json/` is fine — **as long as** the `runs/<run_id>/` structure remains the canonical record going forward.
-
-When you’re ready to continue the Decision gate tests, tell me which control you want first (Gaussian control vs ΛCDM lensing sims), and I’ll give you the exact next workflow/run parameters + what to record.
