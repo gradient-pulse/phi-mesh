@@ -39,6 +39,9 @@ Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme 
 Interpretation update (what Gate 2B implies):
 Gate 2B shows that the same high-D behavior appears in ΛCDM reconstructed φ products (D≈0.10–0.12). Therefore the “high D vs phase-random” signal is not unique to the observed sky; it is consistent with ΛCDM + reconstruction/estimator imprint (plus expected non-Gaussian structure carried through the pipeline). At lmax=256, nside=256, AreaFrac V0(D) does not discriminate “new physics”; it instead functions as a reconstruction-/pipeline-sensitive morphology diagnostic.
 
+**Resolution (after controls):** 
+Phase-random surrogates show a highly significant deviation in V0(ν) (D ≈ 0.116), but the effect is reproduced by ΛCDM forward simulations including the reconstruction pipeline (D_mean ≈ 0.106 ± 0.008). Therefore the morphology is consistent with quadratic-estimator imprint rather than a generative mismatch in φₗₘ.
+
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
 - Run **22076520271** (n_sims=10000, seed=731): D_L2=0.1161945390; p_high=9.99900e-05 (two-sided 1.99980e-04)
