@@ -29,7 +29,7 @@ Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme 
 ### Gate 2A — ΛCDM φ forward sims (PASS; preliminary)
 ΛCDM φ forward draws (no reconstruction pipeline) yield D in the ~1e−5 range:
 - Run 22094597786: n_lcdm_sims=20; D_mean=8.9426e-06; D_std=1.0949e-05  
-- Files: [controls/lcdm_forward/runs/22094597786/](./controls/lcdm_forward/runs/22094597786/)  <!-- use your actual folder name -->
+- Files: [controls/lcdm_forward/runs/22094597786/](./controls/lcdm_phi_forward/runs/22094597786)  <!-- use your actual folder name -->
 
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
