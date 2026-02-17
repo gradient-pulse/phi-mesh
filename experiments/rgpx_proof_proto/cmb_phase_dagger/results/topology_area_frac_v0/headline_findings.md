@@ -6,18 +6,20 @@ We test whether Planck PR3 lensing φₗₘ contains **morphology beyond amplitu
 Two independent runs (different seeds, different N) show a **highly significant** deviation from the phase-random baseline at lmax=256, nside=256.
 
 ## Interpretation guardrail
-This is evidence for **non-random phase structure / higher-order morphology** relative to the phase-random null, but **not** a “new physics” claim: it can arise from expected lensing non-Gaussianity, estimator/pipeline imprint, or other systematics. Next discriminators: add V1/V2 (boundary length, Euler characteristic) and run controls (Gaussian φ with same Cℓ, and/or ΛCDM lensing simulations).
+This is evidence for **non-random phase structure / higher-order morphology** relative to the phase-random null, but it is **not** a “new physics” claim by itself. The V0(D) statistic is phase-sensitive and can be driven by:
+- expected lensing non-Gaussianity,
+- reconstruction / quadratic-estimator mode-coupling,
+- masking, filtering, noise, or other pipeline effects.
 
-## What is at stake (if controls confirm)
-If the effect persists under ΛCDM-forward simulations (including reconstruction pipeline) and under Gaussian controls with matched Cℓ, then the remaining explanation is **a mismatch in the assumed generative model** for φ: either (i) missing physics in the lensing potential statistics, or (ii) a non-standard coherence constraint not captured by the usual amplitude-based description. In that case, this becomes evidence for a **model-class failure** — i.e., the type of opening where “new physics” becomes a legitimate scientific hypothesis rather than rhetoric.
+Accordingly, we treat V0(D) as a **morphology diagnostic** and require simulation-based controls before any generative-model inference.
 
 ## Decision gate
 We will treat “new physics” as admissible only if:
-1) Gaussian φ with matched Cℓ fails to reproduce D at comparable rate, and
-2) ΛCDM lensing simulations + the same reconstruction pipeline fail to reproduce D, and
+1) Gaussian φ with matched Cℓ fails to reproduce D at comparable rate, and  
+2) ΛCDM simulations passed through the **same reconstruction pipeline** fail to reproduce D, and  
 3) the signal replicates across alternative estimators / masks / data splits.
 
-(Controls 1–3 separate “expected lensing non-Gaussianity / pipeline systematics” from a genuine generative mismatch.)
+(These controls separate “expected non-Gaussianity / pipeline imprint” from a genuine generative mismatch.)
 
 ## Decision gate status (controls)
 
@@ -31,16 +33,13 @@ Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme 
 - Run 22094597786: n_lcdm_sims=20; D_mean=8.9426e-06; D_std=1.0949e-05
 - Files: [controls/lcdm_phi_forward/runs/22094597786/](./controls/lcdm_phi_forward/runs/22094597786/)
 
-### Gate 2B — ΛCDM φ sims + reconstruction pipeline (KILLS anomaly)
+### Gate 2B — ΛCDM φ sims + reconstruction pipeline (RESOLVES anomaly)
 ΛCDM reconstructed products yield **D ~ 0.10–0.12**, overlapping the observed-data D≈0.116.
 - Run 22104227390: n_lcdm_sims=3; D_mean=0.10638; D_std=0.00780; D_max=0.11621
 - Files: [controls/lcdm_recon/runs/22104227390/](./controls/lcdm_recon/runs/22104227390/)
 
-Interpretation update (what Gate 2B implies):
-Gate 2B shows that the same high-D behavior appears in ΛCDM reconstructed φ products (D≈0.10–0.12). Therefore the “high D vs phase-random” signal is not unique to the observed sky; it is consistent with ΛCDM + reconstruction/estimator imprint (plus expected non-Gaussian structure carried through the pipeline). At lmax=256, nside=256, AreaFrac V0(D) does not discriminate “new physics”; it instead functions as a reconstruction-/pipeline-sensitive morphology diagnostic.
-
-**Resolution (after controls):** 
-Phase-random surrogates show a highly significant deviation in V0(ν) (D ≈ 0.116), but the effect is reproduced by ΛCDM forward simulations including the reconstruction pipeline (D_mean ≈ 0.106 ± 0.008). Therefore the morphology is consistent with quadratic-estimator imprint rather than a generative mismatch in φₗₘ.
+**Interpretation update (what Gate 2B implies):**  
+Phase-random surrogates show a highly significant deviation in V0(ν) (D ≈ 0.116), but the same high-D behavior is reproduced by ΛCDM simulations when the reconstruction pipeline is included (D_mean ≈ 0.106 ± 0.008). Therefore the morphology is consistent with quadratic-estimator / pipeline imprint rather than a generative mismatch in φₗₘ. At lmax=256, nside=256, AreaFrac V0(D) does not discriminate “new physics”; it instead functions as a reconstruction-/pipeline-sensitive morphology diagnostic. Next discriminators: extend to V1/V2 and rerun Gate 2B with larger n_lcdm_sims to tighten the overlap.
 
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
