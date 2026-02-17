@@ -36,6 +36,8 @@ Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme 
 - Run 22104227390: n_lcdm_sims=3; D_mean=0.10638; D_std=0.00780; D_max=0.11621
 - Files: [controls/lcdm_recon/runs/22104227390/](./controls/lcdm_recon/runs/22104227390/)
 
+Interpretation update (what Gate 2B implies):
+Gate 2B shows that the same high-D behavior appears in ΛCDM reconstructed φ products (D≈0.10–0.12). Therefore the “high D vs phase-random” signal is not unique to the observed sky; it is consistent with ΛCDM + reconstruction/estimator imprint (plus expected non-Gaussian structure carried through the pipeline). At lmax=256, nside=256, AreaFrac V0(D) does not discriminate “new physics”; it instead functions as a reconstruction-/pipeline-sensitive morphology diagnostic.
 
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
