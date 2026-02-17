@@ -39,7 +39,9 @@ Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme 
 - Files: [controls/lcdm_recon/runs/22104227390/](./controls/lcdm_recon/runs/22104227390/)
 
 **Interpretation update (what Gate 2B implies):**  
-Phase-random surrogates show a highly significant deviation in V0(ν) (D ≈ 0.116), but the same high-D behavior is reproduced by ΛCDM simulations when the reconstruction pipeline is included (D_mean ≈ 0.106 ± 0.008). Therefore the morphology is consistent with quadratic-estimator / pipeline imprint rather than a generative mismatch in φₗₘ. At lmax=256, nside=256, AreaFrac V0(D) does not discriminate “new physics”; it instead functions as a reconstruction-/pipeline-sensitive morphology diagnostic. Next discriminators: extend to V1/V2 and rerun Gate 2B with larger n_lcdm_sims to tighten the overlap.
+Phase-random surrogates show a highly significant deviation in V0(ν) (D ≈ 0.116), but the same high-D behavior is reproduced by ΛCDM simulations when the reconstruction pipeline is included (D_mean ≈ 0.106 ± 0.008). Therefore the morphology is consistent with quadratic-estimator / pipeline imprint rather than a generative mismatch in φₗₘ. At lmax=256, nside=256, AreaFrac V0(D) does not discriminate “new physics”; it instead functions as a reconstruction-/pipeline-sensitive morphology diagnostic. 
+
+Next discriminators: extend to V1/V2 and rerun Gate 2B with larger n_lcdm_sims to tighten the overlap.
 
 ## Key results (replicated)
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
