@@ -1,0 +1,145 @@
+{
+  "kind": "decision_gate_lcdm_phi_forward_area_frac_v0",
+  "run_id": 22094597786,
+  "inputs": {
+    "lmax": 256,
+    "nside": 256,
+    "n_lcdm_sims": 20,
+    "n_phase_sims": 2000,
+    "seed0": 1200,
+    "cosmology": {
+      "H0": 67.4,
+      "ombh2": 0.0224,
+      "omch2": 0.12,
+      "tau": 0.054,
+      "As": 2.1e-09,
+      "ns": 0.965
+    }
+  },
+  "per_sim": [
+    {
+      "sim": 0,
+      "seed": 1200,
+      "D_L2": 1.642836003702661e-05,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim000__lmax256__nside256__phasesims2000__seed1200__run22094597786.json"
+    },
+    {
+      "sim": 1,
+      "seed": 1201,
+      "D_L2": 2.721939275222321e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim001__lmax256__nside256__phasesims2000__seed1201__run22094597786.json"
+    },
+    {
+      "sim": 2,
+      "seed": 1202,
+      "D_L2": 5.574044161927408e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim002__lmax256__nside256__phasesims2000__seed1202__run22094597786.json"
+    },
+    {
+      "sim": 3,
+      "seed": 1203,
+      "D_L2": 6.974505415820302e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim003__lmax256__nside256__phasesims2000__seed1203__run22094597786.json"
+    },
+    {
+      "sim": 4,
+      "seed": 1204,
+      "D_L2": 3.0210736887094376e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim004__lmax256__nside256__phasesims2000__seed1204__run22094597786.json"
+    },
+    {
+      "sim": 5,
+      "seed": 1205,
+      "D_L2": 1.5076655454280198e-05,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim005__lmax256__nside256__phasesims2000__seed1205__run22094597786.json"
+    },
+    {
+      "sim": 6,
+      "seed": 1206,
+      "D_L2": 3.5218354293019244e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim006__lmax256__nside256__phasesims2000__seed1206__run22094597786.json"
+    },
+    {
+      "sim": 7,
+      "seed": 1207,
+      "D_L2": 4.4732867957372664e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim007__lmax256__nside256__phasesims2000__seed1207__run22094597786.json"
+    },
+    {
+      "sim": 8,
+      "seed": 1208,
+      "D_L2": 3.3591970073414333e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim008__lmax256__nside256__phasesims2000__seed1208__run22094597786.json"
+    },
+    {
+      "sim": 9,
+      "seed": 1209,
+      "D_L2": 1.9441994723122755e-05,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim009__lmax256__nside256__phasesims2000__seed1209__run22094597786.json"
+    },
+    {
+      "sim": 10,
+      "seed": 1210,
+      "D_L2": 8.083489843601827e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim010__lmax256__nside256__phasesims2000__seed1210__run22094597786.json"
+    },
+    {
+      "sim": 11,
+      "seed": 1211,
+      "D_L2": 3.6034021653482764e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim011__lmax256__nside256__phasesims2000__seed1211__run22094597786.json"
+    },
+    {
+      "sim": 12,
+      "seed": 1212,
+      "D_L2": 3.2316597181540902e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim012__lmax256__nside256__phasesims2000__seed1212__run22094597786.json"
+    },
+    {
+      "sim": 13,
+      "seed": 1213,
+      "D_L2": 8.728896425859229e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim013__lmax256__nside256__phasesims2000__seed1213__run22094597786.json"
+    },
+    {
+      "sim": 14,
+      "seed": 1214,
+      "D_L2": 6.971720813130213e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim014__lmax256__nside256__phasesims2000__seed1214__run22094597786.json"
+    },
+    {
+      "sim": 15,
+      "seed": 1215,
+      "D_L2": 3.2949543779085824e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim015__lmax256__nside256__phasesims2000__seed1215__run22094597786.json"
+    },
+    {
+      "sim": 16,
+      "seed": 1216,
+      "D_L2": 4.133934827121041e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim016__lmax256__nside256__phasesims2000__seed1216__run22094597786.json"
+    },
+    {
+      "sim": 17,
+      "seed": 1217,
+      "D_L2": 6.699117938315954e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim017__lmax256__nside256__phasesims2000__seed1217__run22094597786.json"
+    },
+    {
+      "sim": 18,
+      "seed": 1218,
+      "D_L2": 2.8435985507506976e-06,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim018__lmax256__nside256__phasesims2000__seed1218__run22094597786.json"
+    },
+    {
+      "sim": 19,
+      "seed": 1219,
+      "D_L2": 5.066891950251892e-05,
+      "out_json": "results/cmb_topology_area_frac_v0/lcdm_phi_forward__area_frac_v0__sim019__lmax256__nside256__phasesims2000__seed1219__run22094597786.json"
+    }
+  ],
+  "D_stats": {
+    "D_mean": 8.942629307559925e-06,
+    "D_std": 1.0948544565123913e-05
+  }
+}

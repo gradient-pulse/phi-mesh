@@ -1,0 +1,10 @@
+run_id: 22094597786
+workflow: Decision gate (2A): ΛCDM φ_lm forward sims (CAMB C_L^{φφ}) — AreaFrac V0
+ref: refs/heads/main
+sha: 671ff3d39f370a328893f1f38fe709ac9f93986a
+control: lcdm_phi_forward_camb_synalm
+lmax: 256
+nside: 256
+n_lcdm_sims: 20
+n_phase_sims: 2000
+seed0: 1200
