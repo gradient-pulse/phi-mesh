@@ -1,15 +1,13 @@
-name: Decision gate (2): ΛCDM forward sims + QE reconstruction — AreaFrac V0
+name: "Decision gate (2): ΛCDM forward sims + QE reconstruction — AreaFrac V0"
 
 on:
   workflow_dispatch:
     inputs:
-      # Observed reference (from your real Planck φ_lm run archive)
       obs_run_id:
         description: "Observed run_id folder under results/topology_area_frac_v0/runs/ (to read D_obs)"
         required: true
         default: "22076484564"
 
-      # Low-res settings (keep modest to avoid pain)
       lmax:
         description: "Max multipole l to analyze / reconstruct"
         required: true
@@ -19,25 +17,21 @@ on:
         required: true
         default: "256"
 
-      # Forward-sim Monte Carlo (start modest; scale later)
       n_lcdm_sims:
         description: "Number of ΛCDM forward sims (each produces one reconstructed phi_hat)"
         required: true
         default: "8"
 
-      # Within each sim: phase-random surrogate count for the topology test on phi_hat
       n_phase_sims:
         description: "Number of phase-random surrogates used by AreaFrac V0 per forward sim"
         required: true
         default: "500"
 
-      # RNG seeds
       seed0:
         description: "Base RNG seed for forward sims"
         required: true
         default: "1100"
 
-      # Simple instrument model (approximate; keep consistent across sims)
       beam_fwhm_arcmin:
         description: "Gaussian beam FWHM [arcmin] applied to lensed T"
         required: true
@@ -74,15 +68,12 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # Core
           pip install numpy scipy healpy
-          # Forward-sim + QE stack
           pip install camb pixell lenspyx plancklens
 
       - name: Run ΛCDM forward sims + QE + AreaFrac V0 on reconstructed φ̂
         run: |
           set -euo pipefail
-
           mkdir -p results/cmb_topology_area_frac_v0
 
           python - <<'PY'
@@ -90,7 +81,6 @@ jobs:
           import numpy as np
           import healpy as hp
 
-          # ---------- Inputs ----------
           obs_run_id = int("${{ github.event.inputs.obs_run_id }}")
           lmax = int("${{ github.event.inputs.lmax }}")
           nside = int("${{ github.event.inputs.nside }}")
@@ -101,69 +91,46 @@ jobs:
           beam_fwhm_arcmin = float("${{ github.event.inputs.beam_fwhm_arcmin }}")
           noise_uKarcmin = float("${{ github.event.inputs.noise_uKarcmin }}")
 
-          # Paths
           base = "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
           obs_dir = os.path.join(base, "runs", str(obs_run_id))
           obs_jsons = glob.glob(os.path.join(obs_dir, "*.json"))
           if not obs_jsons:
-            raise RuntimeError(f"Could not find observed json in {obs_dir}/. Did you archive runs correctly?")
+            raise RuntimeError(f"Could not find observed json in {obs_dir}/")
           obs_path = obs_jsons[0]
 
           with open(obs_path, "r") as f:
             obs = json.load(f)
           D_obs = float(obs["observed"]["D_L2"])
 
-          # ---------- ΛCDM theory ----------
-          # Use CAMB to generate unlensed TT and lens potential (pp) spectra at low lmax.
           import camb
           pars = camb.CAMBparams()
-          # Planck-like baseline (reasonable defaults; not claiming exact PR3 pipeline match)
           pars.set_cosmology(H0=67.4, ombh2=0.0224, omch2=0.120, mnu=0.06, omk=0, tau=0.054)
           pars.InitPower.set_params(As=2.1e-9, ns=0.965, r=0)
           pars.set_for_lmax(lmax, lens_potential_accuracy=1)
-
           results = camb.get_results(pars)
 
-          # Unlensed scalar CMB spectra in uK^2 (TT at [:,0])
           cls = results.get_cmb_power_spectra(pars, lmax=lmax, CMB_unit="muK")
           cltt = np.array(cls["unlensed_scalar"][:lmax+1, 0], dtype=float)
           cltt[0:2] = 0.0
 
-          # Lens potential C_l^{phi phi}
-          # CAMB returns an array with columns [pp, pt, tt] for lens potential related spectra.
-          # We take the first column as C_l^{phi phi}.
           clpp = np.array(results.get_lens_potential_cls(lmax=lmax)[:lmax+1, 0], dtype=float)
           clpp[0:2] = 0.0
 
-          # Beam + noise model (rough but consistent)
           fwhm_rad = (beam_fwhm_arcmin / 60.0) * (math.pi/180.0)
           bl = hp.gauss_beam(fwhm=fwhm_rad, lmax=lmax)
 
-          # Convert noise uK-arcmin to map rms in uK per pixel (approx)
-          # sigma_map ~ noise_uKarcmin / (sqrt(pixel_area) in arcmin)
           pix_area_sr = hp.nside2pixarea(nside)
           pix_area_arcmin2 = pix_area_sr * (180/math.pi)**2 * (60**2)
           sigma_uK = noise_uKarcmin / math.sqrt(pix_area_arcmin2)
 
-          # ---------- Forward-sim + QE stack ----------
-          # Use pixell + plancklens to do a standard TT quadratic estimator reconstruction of phi.
           from pixell import enmap, curvedsky, lensing
           from plancklens import qresp, qest
 
-          # Full-sky CAR geometry for convenience (low-res)
-          # pixell resolution: set ~ nside pixel size
           res_rad = hp.nside2resol(nside)
           shape, wcs = enmap.fullsky_geometry(res=res_rad, proj="car")
 
-          # Precompute QE responses (TT only) at low lmax
-          # Note: This is a minimal TT-QE implementation at low resolution; it is a *decision-gate* test, not PR3 reproduction.
-          # Build response helper
-          # qresp uses theory Cls; qest does actual reconstruction from maps.
           theory = {"tt": cltt}
-          # For TT QE, plancklens expects dictionaries with fields; keep minimal.
-          # Compute response (normalization) for TT estimator
-          R = qresp.get_response("ptt", lmax, theory, theory, gmv=False)  # phi response for TT
-          # Avoid divide-by-zero
+          R = qresp.get_response("ptt", lmax, theory, theory, gmv=False)
           R = np.where(R == 0, np.inf, R)
 
           out_dir = "results/cmb_topology_area_frac_v0"
@@ -174,48 +141,37 @@ jobs:
             rng = np.random.default_rng(sim_seed)
             np.random.seed(sim_seed)
 
-            # Draw unlensed T alm and phi alm
             almT = hp.synalm(cltt, lmax=lmax, new=True, verbose=False)
             almphi = hp.synalm(clpp, lmax=lmax, new=True, verbose=False)
 
-            # Convert to pixell maps
             T_unl = curvedsky.alm2map(almT, enmap.empty(shape, wcs))
             phi_map = curvedsky.alm2map(almphi, enmap.empty(shape, wcs))
 
-            # Lens T by phi
             T_len = lensing.lens_map(T_unl, phi_map, order=3)
 
-            # Apply beam (in harmonic space) + add white noise
             alm_len = curvedsky.map2alm(T_len, lmax=lmax)
             alm_len = hp.almxfl(alm_len, bl)
             T_beam = curvedsky.alm2map(alm_len, enmap.empty(shape, wcs))
+
             noise = rng.normal(loc=0.0, scale=sigma_uK, size=T_beam.shape)
             T_obs = T_beam + noise
 
-            # TT Quadratic estimator reconstruction of phi (raw)
-            # qest expects Fourier-space / harmonic-based inputs; use helper that works with enmap
-            # We'll reconstruct in alm space directly using plancklens qest with pixell curvedsky transforms.
             alm_obs = curvedsky.map2alm(T_obs, lmax=lmax)
-
-            # Build minimal 'maps' dict expected by qest
             maps = {"t": alm_obs}
 
-            # Raw phi estimate (alm)
-            # "ptt" = phi from TT estimator
             alm_phi_hat_raw = qest.qe_eval("ptt", lmax, theory, maps, maps)
-
-            # Normalize by response
             alm_phi_hat = hp.almxfl(alm_phi_hat_raw, 1.0 / R)
 
-            # Write temporary FITS inputs for your existing topology script
-            dat_tmp = os.path.join("data_phi_hat_tmp.fits")
-            mf_tmp  = os.path.join("mf_zero_tmp.fits")
+            dat_tmp = "data_phi_hat_tmp.fits"
+            mf_tmp  = "mf_zero_tmp.fits"
             hp.write_alm(dat_tmp, alm_phi_hat, overwrite=True)
             hp.write_alm(mf_tmp,  np.zeros_like(alm_phi_hat), overwrite=True)
 
-            out_json = os.path.join(out_dir, f"lcdm_forward_qe_phi_hat__sim{i:03d}__lmax{lmax}__nside{nside}__phase{n_phase_sims}__seed{sim_seed}__run${{ github.run_id }}.json")
+            out_json = os.path.join(
+              out_dir,
+              f"lcdm_forward_qe_phi_hat__sim{i:03d}__lmax{lmax}__nside{nside}__phase{n_phase_sims}__seed{sim_seed}__run${{ github.run_id }}.json"
+            )
 
-            # Call your existing AreaFrac V0 pipeline on reconstructed phi_hat
             cmd = (
               "python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__area_frac__v0.py "
               f"--dat_klm {dat_tmp} --mf_klm {mf_tmp} "
@@ -226,7 +182,7 @@ jobs:
             )
             rc = os.system(cmd)
             if rc != 0:
-              raise RuntimeError(f"AreaFrac V0 pipeline failed on sim {i} (seed={sim_seed}).")
+              raise RuntimeError(f"AreaFrac V0 failed on sim {i} (seed={sim_seed}).")
 
             with open(out_json, "r") as f:
               simj = json.load(f)
@@ -234,14 +190,12 @@ jobs:
             Dj = float(simj["observed"]["D_L2"])
             sim_records.append({"sim": i, "seed": sim_seed, "D_L2": Dj, "out_json": out_json})
 
-            # Clean temp
             for p in [dat_tmp, mf_tmp]:
               try: os.remove(p)
               except: pass
 
-          # Compute gate p-value: how often LCDM+QE produces D >= observed
           Ds = np.array([r["D_L2"] for r in sim_records], dtype=float)
-          p_ge = float(np.mean(Ds >= D_obs))
+          p_ge = float(np.mean(Ds >= D_obs)) if len(Ds) else None
 
           summary = {
             "kind": "decision_gate_lcdm_forward_qe_area_frac_v0",
@@ -271,8 +225,8 @@ jobs:
           sum_path = os.path.join(out_dir, f"summary__lcdm_forward_qe__lmax{lmax}__nside{nside}__nsim{n_lcdm_sims}__run${{ github.run_id }}.json")
           with open(sum_path, "w") as f:
             json.dump(summary, f, indent=2)
-          print("Wrote summary:", sum_path)
 
+          print("Wrote summary:", sum_path)
           PY
 
           ls -lh results/cmb_topology_area_frac_v0 | sed -n '1,200p'
@@ -309,8 +263,6 @@ jobs:
           beam_fwhm_arcmin: ${{ github.event.inputs.beam_fwhm_arcmin }}
           noise_uKarcmin: ${{ github.event.inputs.noise_uKarcmin }}
           EOF
-
-          ls -lh "$RUN_DIR"
 
       - name: Commit archived control result (if changed) and push safely
         run: |
