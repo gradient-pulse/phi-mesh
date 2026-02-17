@@ -1,6 +1,6 @@
 # RGPx Proto-Proof (Φ-Trace Validation + CMB Phase-Dagger)
 
-This directory is the proto-proof ledger for RGPx-style tests: small, reproducible pipelines that take an open dataset, define a null model, and compute a statistic that can decisively fail (or survive) controls.
+This directory is the **proto-proof ledger** for RGPx-style tests: small, reproducible pipelines that take an open dataset, define a null model, and compute a statistic that can decisively **fail** (or survive) controls.
 
 It currently contains two tracks:
 
@@ -10,7 +10,9 @@ It currently contains two tracks:
 ---
 
 ## Purpose
-Establish a reproducible, open framework for testing coherence structure using:
+
+Establish a reproducible, open framework for testing **coherence structure** using:
+
 - explicit **null models** (what is preserved vs randomized),
 - clear **summary statistics**,
 - archived **run manifests + outputs**,
@@ -25,6 +27,7 @@ Establish a reproducible, open framework for testing coherence structure using:
 ├── readme.md
 ├── cmb_phase_dagger/
 │   ├── cmb_topology_planck_lensing__area_frac__v0.py
+│   ├── notes/
 │   └── results/
 │       └── topology_area_frac_v0/
 │           ├── headline_findings.md
@@ -71,11 +74,11 @@ Topology AreaFrac V0 (excursion-set area fraction)
 
 Where to read results
 	•	Headline findings (human summary):
-cmb_phase_dagger/results/topology_area_frac_v0/headline_findings.md￼
+headline_findings.md￼
 	•	Observed-data run archive:
-cmb_phase_dagger/results/topology_area_frac_v0/runs/￼
+runs/￼
 	•	Controls archive:
-cmb_phase_dagger/results/topology_area_frac_v0/controls/￼
+controls/￼
 
 Workflow behavior (important)
 
@@ -96,8 +99,9 @@ Any anomaly must pass controls before escalation.
 Gate (1): Gaussian control (matched Cℓ)
 Generate a Gaussian φ map with matched power spectrum → run identical topology pipeline.
 
-Gate (2): ΛCDM forward sims (+ reconstruction, when available)
-Compare against ΛCDM-generated φ realizations; then include the reconstruction pipeline to isolate estimator imprint.
+Gate (2): ΛCDM simulations
+2A) φ forward draws (no reconstruction) → establishes expected morphology scale under ΛCDM φ itself.
+2B) ΛCDM forward sims + reconstruction pipeline → isolates estimator/pipeline imprint (the decisive “balloon knife”).
 
 Gate (3): Pipeline/systematics checks
 Masks, apodization, l-range variation, splits, mean-field handling, map-space artifacts, estimator variants.
@@ -109,4 +113,4 @@ If the anomaly survives Gates 1–3, treat it as a genuine model-class mismatch 
 Related dialogues
 
 Unedited reactions from participating AIs are archived under:
-/main/dialogues/rgpx_reactions/￼
+/main/dialogues/rgpx_reactions/
