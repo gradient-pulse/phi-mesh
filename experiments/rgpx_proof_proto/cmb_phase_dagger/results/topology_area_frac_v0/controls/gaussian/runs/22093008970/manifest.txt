@@ -1,0 +1,12 @@
+run_id: 22093008970
+workflow: CMB Topology (Gaussian control from Planck PR3 lensing φ_lm) — AreaFrac V0
+ref: refs/heads/main
+sha: b998c2bda250d4fe899738a1dce61e672d1e8d5f
+control: gaussian_synalm_from_dat_minus_mf
+lmax: 256
+nside: 256
+n_sims: 2000
+seed: 900
+gauss_seed: 901
+source_dat_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits
+source_mf_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits
