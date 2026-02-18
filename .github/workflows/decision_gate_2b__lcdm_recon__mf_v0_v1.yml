@@ -1,0 +1,318 @@
+name: Decision gate 2B — ΛCDM forward sims + reconstruction (MF v0+v1)
+
+on:
+  workflow_dispatch:
+    inputs:
+      recon_sims_url:
+        description: "Release asset URL: tar.gz containing reconstructed sims (dat_klm.fits + mf_klm.fits per sim)"
+        required: true
+        default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/lcdm_recon_sims__layout_sims.tar.gz"
+      lmax:
+        description: "Max multipole l to analyze"
+        required: true
+        default: "256"
+      nside:
+        description: "HEALPix nside for map-space topology"
+        required: true
+        default: "256"
+      n_lcdm_sims:
+        description: "How many reconstructed sims to process (must be available in tarball; workflow fails if fewer exist)"
+        required: true
+        default: "20"
+      n_phase_sims:
+        description: "Number of phase-randomized surrogates per sim (null draws)"
+        required: true
+        default: "2000"
+      seed0:
+        description: "Base RNG seed; sim i uses seed0+i"
+        required: true
+        default: "1400"
+      n_nu:
+        description: "Number of thresholds between nu_min and nu_max"
+        required: true
+        default: "61"
+      nu_min:
+        description: "Min threshold (in sigma units after standardization)"
+        required: true
+        default: "-3.0"
+      nu_max:
+        description: "Max threshold (in sigma units after standardization)"
+        required: true
+        default: "3.0"
+      archive_prefix:
+        description: "Filename prefix for outputs"
+        required: true
+        default: "lcdm_recon"
+      strict_layout:
+        description: "If true, require sims to be in sims/<sim_id>/{dat_klm.fits,mf_klm.fits}"
+        required: true
+        default: "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: decision-gate-2b-lcdm-recon-mf-v0-v1
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install numpy scipy healpy
+
+      - name: Download reconstructed ΛCDM sim products (tar.gz)
+        run: |
+          set -euo pipefail
+          mkdir -p data/lcdm_recon_sims
+          echo "Fetching: ${{ github.event.inputs.recon_sims_url }}"
+          curl -L --retry 5 --retry-delay 5 --fail "${{ github.event.inputs.recon_sims_url }}" -o data/lcdm_recon_sims/recon_sims.tar.gz
+          ls -lh data/lcdm_recon_sims
+
+      - name: Extract sim bundle
+        run: |
+          set -euo pipefail
+          mkdir -p data/lcdm_recon_sims/extracted
+          tar -xzf data/lcdm_recon_sims/recon_sims.tar.gz -C data/lcdm_recon_sims/extracted
+          echo "Top-level extracted:"
+          ls -lah data/lcdm_recon_sims/extracted | sed -n '1,200p'
+          echo "First 200 file paths:"
+          find data/lcdm_recon_sims/extracted -maxdepth 5 -type f | sed -n '1,200p'
+
+      - name: Run Gate 2B (per-sim topology + aggregate stats)
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os, json, glob
+          from pathlib import Path
+          import numpy as np
+          import subprocess
+
+          RUN_ID = os.environ["GITHUB_RUN_ID"]
+          LMAX = int("${{ github.event.inputs.lmax }}")
+          NSIDE = int("${{ github.event.inputs.nside }}")
+          N_LCDM_REQ = int("${{ github.event.inputs.n_lcdm_sims }}")
+          N_PHASE = int("${{ github.event.inputs.n_phase_sims }}")
+          SEED0 = int("${{ github.event.inputs.seed0 }}")
+          N_NU = int("${{ github.event.inputs.n_nu }}")
+          NU_MIN = float("${{ github.event.inputs.nu_min }}")
+          NU_MAX = float("${{ github.event.inputs.nu_max }}")
+          PREFIX = str("${{ github.event.inputs.archive_prefix }}").strip()
+          STRICT = str("${{ github.event.inputs.strict_layout }}").lower() in ("true","1","yes","y")
+
+          # New MF v0+v1 script (must exist in repo)
+          TOPO_SCRIPT = "experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py"
+
+          BASE = Path("data/lcdm_recon_sims/extracted")
+
+          # --- Discover sim folders
+          sim_pairs = []
+          if STRICT:
+              cand = sorted(glob.glob(str(BASE / "sims" / "*" / "dat_klm.fits")))
+              for dat in cand:
+                  simdir = Path(dat).parent
+                  mf = simdir / "mf_klm.fits"
+                  if mf.exists():
+                      sim_pairs.append((simdir.name, str(simdir / "dat_klm.fits"), str(mf)))
+          else:
+              dats = sorted(glob.glob(str(BASE / "**/dat_klm.fits"), recursive=True))
+              for dat in dats:
+                  simdir = Path(dat).parent
+                  mf = simdir / "mf_klm.fits"
+                  if mf.exists():
+                      sim_pairs.append((simdir.name, str(simdir / "dat_klm.fits"), str(mf)))
+
+          if not sim_pairs:
+              raise SystemExit("No sims discovered. Expected sims/<id>/{dat_klm.fits,mf_klm.fits} inside tarball.")
+
+          n_found = len(sim_pairs)
+          if n_found < N_LCDM_REQ:
+              raise SystemExit(
+                  f"Requested n_lcdm_sims={N_LCDM_REQ}, but only found {n_found} sims in the tarball. "
+                  "Repack/upload more sims or lower n_lcdm_sims."
+              )
+
+          sim_pairs = sim_pairs[:N_LCDM_REQ]
+
+          out_dir = Path("results/cmb_topology_mf_v0_v1")
+          out_dir.mkdir(parents=True, exist_ok=True)
+
+          per_sim = []
+          D0s, D1s = [], []
+
+          for i, (sim_id, dat_path, mf_path) in enumerate(sim_pairs):
+              seed = SEED0 + i
+              out_json = out_dir / (
+                  f"{PREFIX}__mf_v0_v1__sim{i:03d}__{sim_id}__lmax{LMAX}__nside{NSIDE}"
+                  f"__phasesims{N_PHASE}__seed{seed}__run{RUN_ID}.json"
+              )
+
+              cmd = [
+                  "python", TOPO_SCRIPT,
+                  "--dat_klm", dat_path,
+                  "--mf_klm",  mf_path,
+                  "--lmax", str(LMAX),
+                  "--nside", str(NSIDE),
+                  "--n_sims", str(N_PHASE),
+                  "--seed", str(seed),
+                  "--n_nu", str(N_NU),
+                  "--nu_min", str(NU_MIN),
+                  "--nu_max", str(NU_MAX),
+                  "--dat_url", f"LCDM_RECON_SIM_TARBALL:{os.environ.get('RECON_URL','')}",
+                  "--mf_url",  f"LCDM_RECON_SIM_TARBALL:{os.environ.get('RECON_URL','')}",
+                  "--out", str(out_json),
+              ]
+
+              subprocess.run(cmd, check=True)
+
+              with open(out_json, "r") as f:
+                  jj = json.load(f)
+
+              # Expect both D metrics to be present in observed
+              D0 = float(jj["observed"]["D0_L2"])
+              D1 = float(jj["observed"]["D1_L2"])
+              D0s.append(D0)
+              D1s.append(D1)
+
+              per_sim.append({
+                  "sim": i,
+                  "sim_id": sim_id,
+                  "seed": seed,
+                  "D0_L2": D0,
+                  "D1_L2": D1,
+                  "out_json": str(out_json),
+                  "dat_klm": dat_path,
+                  "mf_klm": mf_path,
+              })
+
+              print(f"[sim {i:03d}] sim_id={sim_id} D0_L2={D0:.6e} D1_L2={D1:.6e}")
+
+          D0s = np.array(D0s, dtype=float)
+          D1s = np.array(D1s, dtype=float)
+
+          summary = {
+              "kind": "decision_gate_lcdm_recon_mf_v0_v1",
+              "run_id": int(RUN_ID),
+              "inputs": {
+                  "lmax": LMAX,
+                  "nside": NSIDE,
+                  "n_lcdm_sims_requested": N_LCDM_REQ,
+                  "n_lcdm_sims_used": len(per_sim),
+                  "n_phase_sims": N_PHASE,
+                  "seed0": SEED0,
+                  "n_nu": N_NU,
+                  "nu_min": NU_MIN,
+                  "nu_max": NU_MAX,
+                  "strict_layout": STRICT,
+                  "recon_sims_url": os.environ.get("RECON_URL",""),
+              },
+              "D0_stats": {
+                  "D_mean": float(D0s.mean()),
+                  "D_std": float(D0s.std(ddof=0)),
+                  "D_min": float(D0s.min()),
+                  "D_max": float(D0s.max()),
+              },
+              "D1_stats": {
+                  "D_mean": float(D1s.mean()),
+                  "D_std": float(D1s.std(ddof=0)),
+                  "D_min": float(D1s.min()),
+                  "D_max": float(D1s.max()),
+              },
+              "per_sim": per_sim,
+          }
+
+          summary_path = out_dir / (
+              f"{PREFIX}__mf_v0_v1__aggregate__lmax{LMAX}__nside{NSIDE}"
+              f"__nsims{len(per_sim)}__phasesims{N_PHASE}__seed{SEED0}__run{RUN_ID}.json"
+          )
+          with open(summary_path, "w") as f:
+              json.dump(summary, f, indent=2)
+
+          print("Wrote aggregate:", summary_path)
+          PY
+        env:
+          RECON_URL: ${{ github.event.inputs.recon_sims_url }}
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate2b_lcdm_recon_mf_v0_v1__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_lcdm_sims }}__phasesims${{ github.event.inputs.n_phase_sims }}__run${{ github.run_id }}
+          path: results/cmb_topology_mf_v0_v1/*.json
+          retention-days: 90
+
+      - name: Archive Gate 2B results into repo (control suite)
+        run: |
+          set -euo pipefail
+
+          BASE_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1"
+          RUN_DIR="${BASE_DIR}/controls/lcdm_recon/runs/${{ github.run_id }}"
+          mkdir -p "$RUN_DIR"
+
+          cp -v results/cmb_topology_mf_v0_v1/*.json "$RUN_DIR/"
+
+          cat > "${RUN_DIR}/manifest.txt" <<EOF
+          run_id: ${{ github.run_id }}
+          workflow: ${{ github.workflow }}
+          ref: ${{ github.ref }}
+          sha: ${{ github.sha }}
+          control: lcdm_recon_sims_plus_phase_random_null
+          lmax: ${{ github.event.inputs.lmax }}
+          nside: ${{ github.event.inputs.nside }}
+          n_lcdm_sims: ${{ github.event.inputs.n_lcdm_sims }}
+          n_phase_sims: ${{ github.event.inputs.n_phase_sims }}
+          seed0: ${{ github.event.inputs.seed0 }}
+          n_nu: ${{ github.event.inputs.n_nu }}
+          nu_min: ${{ github.event.inputs.nu_min }}
+          nu_max: ${{ github.event.inputs.nu_max }}
+          strict_layout: ${{ github.event.inputs.strict_layout }}
+          recon_sims_url: ${{ github.event.inputs.recon_sims_url }}
+          EOF
+
+          ls -lh "$RUN_DIR"
+
+      - name: Commit archived Gate 2B result (if changed) and push safely
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/${{ github.run_id }}/
+
+          if git diff --cached --quiet; then
+            echo "No new Gate 2B files to commit."
+            exit 0
+          fi
+
+          git commit -m "Decision gate 2B: ΛCDM recon control (MF v0+v1) (run ${{ github.run_id }})"
+
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main || (git rebase --abort && exit 1)
+
+            if git push; then
+              echo "Push succeeded."
+              exit 0
+            fi
+
+            echo "Push failed (attempt $i). Retrying after short delay..."
+            sleep 3
+          done
+
+          echo "Push failed after retries."
+          exit 1
