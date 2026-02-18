@@ -27,6 +27,10 @@ on:
         description: "RNG seed"
         required: true
         default: "731"
+      selftest_observed_surrogate_seed:
+        description: "Optional: replace observed alm by a single phase-random surrogate (null sanity check). Leave blank for normal run."
+        required: false
+        default: ""
       n_nu:
         description: "Number of thresholds between nu_min and nu_max"
         required: true
@@ -83,6 +87,11 @@ jobs:
 
           OUT="results/cmb_topology_mf_v0_v1/planck_lensing_topology_mf_v0_v1__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}.json"
 
+          EXTRA=""
+          if [ -n "${{ github.event.inputs.selftest_observed_surrogate_seed }}" ]; then
+            EXTRA="--selftest_observed_surrogate_seed ${{ github.event.inputs.selftest_observed_surrogate_seed }}"
+          fi
+
           python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py \
             --dat_klm data/planck_lensing/dat_klm.fits \
             --mf_klm  data/planck_lensing/mf_klm.fits \
@@ -95,6 +104,7 @@ jobs:
             --nu_max "${{ github.event.inputs.nu_max }}" \
             --dat_url "${{ github.event.inputs.dat_url }}" \
             --mf_url "${{ github.event.inputs.mf_url }}" \
+            $EXTRA \
             --out "$OUT"
 
           echo "Wrote $OUT"
@@ -126,6 +136,7 @@ jobs:
           nside: ${{ github.event.inputs.nside }}
           n_sims: ${{ github.event.inputs.n_sims }}
           seed: ${{ github.event.inputs.seed }}
+          selftest_observed_surrogate_seed: ${{ github.event.inputs.selftest_observed_surrogate_seed }}
           dat_url: ${{ github.event.inputs.dat_url }}
           mf_url: ${{ github.event.inputs.mf_url }}
           EOF
