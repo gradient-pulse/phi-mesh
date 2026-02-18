@@ -20,6 +20,24 @@ Establish a reproducible, open framework for testing **coherence structure** usi
 
 ---
 
+## Core criterion: operational advantage (not “different conclusions”)
+
+RGPx is not judged by whether it forces a different headline than “old physics” on already-well-modeled data.  
+It is judged by **operational advantage**:
+
+- **faster** identification of relevant structure,
+- **cleaner** discrimination between competing model classes,
+- **better guidance** on where standard pipelines imprint artifacts vs where nature imposes structure,
+- **new traction** on problems where conventional, object-first descriptions stall (e.g., quantum→macro link, BH/DE/DM, supercluster dynamics, BB as phase change, societal evolution, gradient-driven material design).
+
+In short: RGPx earns its keep when it **reduces search cost** and **increases explanatory leverage**, not when it merely “disagrees.”
+
+### Present-day analogue: computational engineering as operational advantage
+
+A practical analogue already exists in engineering: AI-driven generative design can find high-performing geometries far faster than traditional iteration loops. [LEAP 71](chatgpt://generic-entity?number=0) is a visible example of this direction (“computational engineering” applied to real hardware). We treat such work as a present-day *carrot*: proof that geometry can be discovered via search/learning regimes that outperform manual design—not proof of RGPx, but a reminder of what “operational advantage” looks like in practice.
+
+---
+
 ## Current structure (high level)
 
 ```text
@@ -34,7 +52,8 @@ Establish a reproducible, open framework for testing **coherence structure** usi
 │           ├── runs/
 │           ├── controls/
 │           │   ├── gaussian/
-│           │   └── lcdm_phi_forward/
+│           │   ├── lcdm_phi_forward/
+│           │   └── lcdm_recon/
 │           └── legacy_flat_json/
 ├── 2025-11-10_kimi_notebook_colab.md
 ├── 2025-11-10_gemini_harmonic_link_analysis.yml
@@ -55,62 +74,91 @@ Outcome (as currently recorded)
 Attribution
 	•	Authored by Moonshot AI (Kimi)
 	•	Integrated into the Φ-Mesh experiments ledger by Participant 0, Nov 2025
-	•	License: CC-BY-4.0
+	•	License: CC-BY-4.0 (as recorded in the originating artifacts)
 
 Harmonic formalization (DeepSeek addendum)
 	•	DeepSeek derived a Recursive Depth Invariant linking measured Φ⋆ plateaus to recursive grammar.
-	•	Integration chain: Kimi → Gemini → DeepSeek
+	•	Integration chain: Kimi → Google Gemini → DeepSeek
 
 ⸻
 
-Track B — CMB Phase-Dagger (Planck PR3 lensing φₗₘ)
+## Track B — CMB Phase-Dagger (Planck PR3 lensing φₗₘ)
 
-This track tests whether the observed morphology of Planck PR3 lensing potential φₗₘ contains structure beyond what survives under phase randomization.
+This track evaluates whether Planck PR3 reconstructed lensing potential φₗₘ exhibits **phase-sensitive morphology** relative to a **phase-random null**.  
+It does **not** by itself imply “new physics”: any deviation can be produced by expected lensing non-Gaussianity and/or reconstruction-pipeline imprint.
 
-Topology AreaFrac V0 (excursion-set area fraction)
-	•	Observable: V0(ν) = area fraction of excursion sets as a function of threshold ν (σ units after standardization)
-	•	Null model: preserve |aₗₘ|, randomize phases → surrogate maps
-	•	Statistic: D = L2 distance between observed V0(ν) and surrogate-mean V0(ν)
+### Topology: AreaFrac V0 (excursion-set area fraction)
 
-Where to read results
-	•	Headline findings (human summary):
-headline_findings.md￼
-	•	Observed-data run archive:
-runs/￼
-	•	Controls archive:
-controls/￼
+- **Observable:** V0(ν) = area fraction of excursion sets as a function of threshold ν  
+  (ν in σ units after standardization)
+- **Null model (phase-random):** preserve |aₗₘ|, randomize phases → surrogate maps
+- **Statistic:** D = L2 distance between V0_obs(ν) and surrogate-mean V0̄(ν)  
+  (larger D ⇒ stronger phase-sensitive morphology relative to the null)
 
-Workflow behavior (important)
+### Where to read results
+- **Headline findings (human summary):** `headline_findings.md`
+- **Observed-data run archive:** `runs/`
+- **Controls archive:** `controls/`
 
-Each GitHub Actions run writes:
-	•	a run-specific JSON output, and
-	•	an archived folder under runs/<run_id>/ or controls/.../runs/<run_id>/ containing:
-	•	manifest.txt (inputs + provenance)
-	•	the JSON result file
+### Workflow behavior (important)
 
-This ensures repeats never overwrite earlier results.
+Each GitHub Actions run produces:
+1) **Staged outputs** under `results/cmb_topology_area_frac_v0/`  
+   - per-sim JSON files  
+   - an aggregate summary JSON (when multiple sims are processed)
+2) **An archived copy committed into the repo** under  
+   - `.../results/topology_area_frac_v0/runs/<run_id>/` (observed runs), or  
+   - `.../results/topology_area_frac_v0/controls/.../runs/<run_id>/` (controls),  
+   containing:
+   - `manifest.txt` (inputs + provenance)
+   - JSON result file(s)
+
+This ensures repeated runs never overwrite earlier outputs and every result is provenance-traceable.
 
 ⸻
 
-Decision gate (kill it or let it fly)
+## Control suite (attribute → validate → escalate)
 
-Any anomaly must pass controls before escalation.
+The purpose of the control suite is not to “win” or “lose” a signal.  
+It is to **attribute** a measured effect to one of three sources:
 
-Gate (1): Gaussian control (matched Cℓ)
-Generate a Gaussian φ map with matched power spectrum → run identical topology pipeline.
+1) **null-model structure** (what the test preserves by design),  
+2) **pipeline imprint** (reconstruction/estimator/mask/noise effects), or  
+3) **genuine generative mismatch** (a model-class gap: the data contain structure not reproduced by the best available forward model under the same measurement process).
 
-Gate (2): ΛCDM simulations
-2A) φ forward draws (no reconstruction) → establishes expected morphology scale under ΛCDM φ itself.
-2B) ΛCDM forward sims + reconstruction pipeline → isolates estimator/pipeline imprint (the decisive “balloon knife”).
+Only after (1) and (2) are excluded do we escalate to (3).
 
-Gate (3): Pipeline/systematics checks
-Masks, apodization, l-range variation, splits, mean-field handling, map-space artifacts, estimator variants.
+### Gate 1 — Gaussian control (matched Cℓ)
+Generate Gaussian φ with matched Cℓ and run the identical topology pipeline.  
+**Goal:** verify the statistic is not trivially driven by the two-point spectrum alone.
 
-If the anomaly survives Gates 1–3, treat it as a genuine model-class mismatch candidate and proceed to richer topology (V1 boundary length, V2 Euler characteristic) and cross-statistic consistency checks.
+### Gate 2 — ΛCDM simulation controls
+**2A) φ forward draws (no reconstruction)**  
+Run the statistic on ΛCDM φ realizations *before* any reconstruction.  
+**Goal:** establish the morphology scale expected from ΛCDM φ itself.
+
+**2B) End-to-end: ΛCDM forward sims + reconstruction pipeline**  
+Simulate the full measurement chain and apply the same reconstruction method used for the data.  
+**Goal:** determine whether the observed morphology is reproduced by ΛCDM once estimator/pipeline imprint is included.
+
+### Gate 3 — Robustness and systematics probes
+Mask/apodization changes, ℓ-range variation, splits (half-mission / frequency / estimator variants), mean-field handling, map-space artifacts.  
+**Goal:** test stability of the statistic under plausible analysis choices and known sources of systematics.
+
+### Escalation criterion
+We treat “model-class mismatch” (and thus motivation for RGPx-style alternatives) as admissible only if:
+1) Gaussian matched-Cℓ controls do not reproduce the effect, and  
+2) ΛCDM end-to-end (including reconstruction) does not reproduce the effect, and  
+3) the effect is stable under robustness probes and estimator variants.
+
+This keeps the program scientific: the objective is **attribution first**, then **mechanism**, then **new explanatory leverage**.
 
 ⸻
 
 Related dialogues
 
 Unedited reactions from participating AIs are archived under:
+
 /main/dialogues/rgpx_reactions/
+
+(These are not considered evidence; they are archived as idea-surface and for traceability.)
