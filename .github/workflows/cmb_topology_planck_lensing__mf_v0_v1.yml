@@ -16,11 +16,11 @@ on:
         required: true
         default: "256"
       nside:
-        description: "HEALPix nside for map-space morphology"
+        description: "HEALPix nside for map-space topology"
         required: true
         default: "256"
       n_sims:
-        description: "Number of phase-randomized surrogates"
+        description: "Number of surrogates"
         required: true
         default: "2000"
       seed:
@@ -32,11 +32,11 @@ on:
         required: true
         default: "61"
       nu_min:
-        description: "Min threshold (sigma units after standardization)"
+        description: "Min threshold (in sigma units after standardization)"
         required: true
         default: "-3.0"
       nu_max:
-        description: "Max threshold (sigma units after standardization)"
+        description: "Max threshold (in sigma units after standardization)"
         required: true
         default: "3.0"
 
@@ -80,6 +80,7 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Include run_id so repeated parameter runs never overwrite each other
           OUT="results/cmb_topology_mf_v0_v1/planck_lensing_topology_mf_v0_v1__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__run${{ github.run_id }}.json"
 
           python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py \
