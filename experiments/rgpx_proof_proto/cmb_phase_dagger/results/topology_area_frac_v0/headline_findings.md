@@ -26,6 +26,8 @@ A “generative mismatch” (and only then, a “new physics” hypothesis) beco
 
 (Controls 1–3 separate “expected non-Gaussianity / pipeline imprint” from a genuine model-class mismatch.)
 
+Method note: This workflow is not aimed at forcing a preferred interpretation. We measure operational advantage: which topology statistics remain informative after phase-random nulls and end-to-end ΛCDM+reconstruction controls.
+
 ## Decision gate status (controls)
 
 ### Gate 1 — Gaussian Cℓ-matched φ control (PASS)
