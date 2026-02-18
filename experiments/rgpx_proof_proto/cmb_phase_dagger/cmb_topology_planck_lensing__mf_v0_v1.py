@@ -74,13 +74,12 @@ def v1_perimeter_curve_from_alm(alm, nside, lmax, nus):
     Returns (v1_curve, diag_dict).
     """
     # Field + derivatives wrt theta, phi
-    # NOTE: hp.alm2map_der1 does NOT accept verbose= in some healpy versions.
     m, dth, dph = hp.alm2map_der1(alm, nside=nside, lmax=lmax)
 
     # Standardize field x = (m-mu)/sd
     x, mu, sd = standardize_map(m)
     if sd == 0:
-        return [0.0 for _ in nus], {"map_mean": float(mu), "map_std": float(sd)}
+        return [0.0 for _ in nus], {"map_mean": float(mu), "map_std": float(sd), "dnu": float("nan")}
 
     # Derivatives of standardized field
     dx_dth = dth / sd
@@ -111,10 +110,69 @@ def v1_perimeter_curve_from_alm(alm, nside, lmax, nus):
     return v1, {"map_mean": float(mu), "map_std": float(sd), "dnu": float(dnu)}
 
 
-def l2_curve_distance(curve, mean_curve):
+# --- Distance helpers ---------------------------------------------------------
+
+def l2_curve_distance_sum_sq(curve, mean_curve):
+    """
+    Legacy distance: sum of squares (NO sqrt, NO dnu weighting).
+    Keeping this for backward comparison in diagnostics.
+    """
     a = np.asarray(curve, dtype=np.float64)
     b = np.asarray(mean_curve, dtype=np.float64)
     return float(np.sum((a - b) ** 2))
+
+
+def l2_curve_distance(curve, mean_curve, nus=None):
+    """
+    Proper L2 distance between curves sampled on a uniform nu grid:
+      D = sqrt( sum (a-b)^2 * dnu )
+    If nus is None, uses dnu=1.0 (still sqrt of sum squares).
+    """
+    a = np.asarray(curve, dtype=np.float64)
+    b = np.asarray(mean_curve, dtype=np.float64)
+    if nus is None or len(nus) < 2:
+        dnu = 1.0
+    else:
+        nus = np.asarray(nus, dtype=np.float64)
+        dnu = float(nus[1] - nus[0])
+    return float(np.sqrt(np.sum((a - b) ** 2) * dnu))
+
+
+def verify_l2_from_curves(v0_obs, v1_obs, v0_mean, v1_mean, nus, reported_D0, reported_D1, tol_rel=1e-10, tol_abs=1e-12):
+    """
+    Recompute the L2 distances directly from the stored curves (the exact snippet you asked for),
+    and return a diagnostic dict comparing recomputed vs reported.
+
+    This catches:
+      - missing sqrt
+      - missing dnu weighting
+      - accidental rescaling between stored curve and distance computation
+    """
+    nu = np.asarray(nus, dtype=float)
+    dnu = float(nu[1] - nu[0]) if nu.size >= 2 else 1.0
+
+    v0o = np.asarray(v0_obs, dtype=float)
+    v1o = np.asarray(v1_obs, dtype=float)
+    v0m = np.asarray(v0_mean, dtype=float)
+    v1m = np.asarray(v1_mean, dtype=float)
+
+    D0_re = float(np.sqrt(np.sum((v0o - v0m) ** 2) * dnu))
+    D1_re = float(np.sqrt(np.sum((v1o - v1m) ** 2) * dnu))
+
+    ok0 = bool(np.isclose(D0_re, reported_D0, rtol=tol_rel, atol=tol_abs))
+    ok1 = bool(np.isclose(D1_re, reported_D1, rtol=tol_rel, atol=tol_abs))
+
+    return {
+        "verify_dnu": dnu,
+        "D0_recomputed": D0_re,
+        "D1_recomputed": D1_re,
+        "D0_reported": float(reported_D0),
+        "D1_reported": float(reported_D1),
+        "D0_match": ok0,
+        "D1_match": ok1,
+        "tol_rel": float(tol_rel),
+        "tol_abs": float(tol_abs),
+    }
 
 
 def pvals_from_null(null_vals, obs_val):
@@ -148,6 +206,16 @@ def main():
         type=int,
         default=None,
         help="If set, replace the observed alm by a single phase-randomized surrogate (for null calibration).",
+    )
+    ap.add_argument(
+        "--print_verify",
+        action="store_true",
+        help="Print the recomputed-vs-reported L2 verification block to stdout.",
+    )
+    ap.add_argument(
+        "--strict_verify",
+        action="store_true",
+        help="If set, exit nonzero if recomputed distances do not match reported distances.",
     )
     args = ap.parse_args()
 
@@ -207,20 +275,57 @@ def main():
     v1_mean = np.mean(v1_sims, axis=0)
     v1_std = np.std(v1_sims, axis=0, ddof=1) if n_sims > 1 else np.zeros_like(v1_mean)
 
-    # Distances to surrogate mean curves
-    D0_obs = l2_curve_distance(v0_obs, v0_mean)
-    D1_obs = l2_curve_distance(v1_obs, v1_mean)
+    # --- Distances to surrogate mean curves ----------------------------------
+    # Proper L2 (sqrt + dnu), used as the primary reported distances:
+    D0_obs = l2_curve_distance(v0_obs, v0_mean, nus=nus)
+    D1_obs = l2_curve_distance(v1_obs, v1_mean, nus=nus)
 
-    D0_sims = np.sum((v0_sims - v0_mean) ** 2, axis=1).astype(np.float64)
-    D1_sims = np.sum((v1_sims - v1_mean) ** 2, axis=1).astype(np.float64)
+    # Legacy sumsq distances (no sqrt/dnu) kept for diagnostics:
+    D0_obs_sumsq = l2_curve_distance_sum_sq(v0_obs, v0_mean)
+    D1_obs_sumsq = l2_curve_distance_sum_sq(v1_obs, v1_mean)
+
+    # For nulls, compute proper L2 by sqrt(sum((curve-mean)^2)*dnu)
+    dnu = float(nus[1] - nus[0]) if len(nus) >= 2 else 1.0
+    D0_sims = np.sqrt(np.sum((v0_sims - v0_mean) ** 2, axis=1) * dnu).astype(np.float64)
+    D1_sims = np.sqrt(np.sum((v1_sims - v1_mean) ** 2, axis=1) * dnu).astype(np.float64)
 
     # Combined score (transparent; no weights)
     Dmf_obs = float(np.sqrt(D0_obs**2 + D1_obs**2))
     Dmf_sims = np.sqrt(D0_sims**2 + D1_sims**2)
 
+    # Optional: z-normalized combined score (scale-free)
+    D0_mu = float(np.mean(D0_sims))
+    D0_sd = float(np.std(D0_sims, ddof=1)) if n_sims > 1 else float("nan")
+    D1_mu = float(np.mean(D1_sims))
+    D1_sd = float(np.std(D1_sims, ddof=1)) if n_sims > 1 else float("nan")
+
+    z0 = float((D0_obs - D0_mu) / D0_sd) if np.isfinite(D0_sd) and D0_sd > 0 else float("nan")
+    z1 = float((D1_obs - D1_mu) / D1_sd) if np.isfinite(D1_sd) and D1_sd > 0 else float("nan")
+    Z_mf = float(np.sqrt(z0**2 + z1**2)) if np.isfinite(z0) and np.isfinite(z1) else float("nan")
+
     # p-values (with +1 smoothing)
     p_high, p_low, p_two = pvals_from_null(D0_sims, D0_obs)
     p_high_mf, p_low_mf, p_two_mf = pvals_from_null(Dmf_sims, Dmf_obs)
+
+    # --- Verification snippet included (recompute from curves) ----------------
+    verify = verify_l2_from_curves(
+        v0_obs=v0_obs,
+        v1_obs=v1_obs,
+        v0_mean=v0_mean,
+        v1_mean=v1_mean,
+        nus=nus,
+        reported_D0=D0_obs,
+        reported_D1=D1_obs,
+    )
+
+    if args.print_verify:
+        # This prints the same “recompute from curves” check, in-run.
+        print("\n=== VERIFY L2 FROM STORED CURVES (snippet) ===")
+        print(json.dumps(verify, indent=2, sort_keys=True))
+        print("============================================\n")
+
+    if args.strict_verify and (not verify["D0_match"] or not verify["D1_match"]):
+        raise SystemExit("STRICT VERIFY FAILED: recomputed distances do not match reported distances.")
 
     provenance = {
         "dat_url": args.dat_url,
@@ -247,19 +352,28 @@ def main():
             "map_std": float(sd_obs),
             "v0_curve": v0_obs,
             "v1_curve": v1_obs,
+            # Primary (correct) distances:
             "D0_L2": float(D0_obs),
             "D1_L2": float(D1_obs),
             "D_mf": float(Dmf_obs),
+            # Helpful scale-free score:
+            "Z0": z0,
+            "Z1": z1,
+            "Z_mf": Z_mf,
+            # Legacy for comparison (what previously inflated values):
+            "D0_sum_sq_legacy": float(D0_obs_sumsq),
+            "D1_sum_sq_legacy": float(D1_obs_sumsq),
         },
         "surrogate": {
             "v0_mean_curve": [float(x) for x in v0_mean],
             "v0_std_curve": [float(x) for x in v0_std],
             "v1_mean_curve": [float(x) for x in v1_mean],
             "v1_std_curve": [float(x) for x in v1_std],
-            "D0_mean": float(np.mean(D0_sims)),
-            "D0_std": float(np.std(D0_sims, ddof=1)) if n_sims > 1 else float("nan"),
-            "D1_mean": float(np.mean(D1_sims)),
-            "D1_std": float(np.std(D1_sims, ddof=1)) if n_sims > 1 else float("nan"),
+            # Proper-distance null stats:
+            "D0_mean": D0_mu,
+            "D0_std": D0_sd,
+            "D1_mean": D1_mu,
+            "D1_std": D1_sd,
             "D_mf_mean": float(np.mean(Dmf_sims)),
             "D_mf_std": float(np.std(Dmf_sims, ddof=1)) if n_sims > 1 else float("nan"),
         },
@@ -273,12 +387,14 @@ def main():
             "imag_max_abs": float(imag_max),
             "imag_frac_nonzero_eps1e-12": float(imag_frac),
             "v1_delta_bandwidth_dnu": float(v1_obs_diag.get("dnu", float("nan"))),
+            "verify_l2_from_curves": verify,
         },
         "provenance": provenance,
         "hint": (
             "This script compares observed morphology against phase-randomized surrogates that preserve |a_lm|. "
             "V0(nu) is excursion-set area fraction; V1(nu) is a perimeter proxy estimated from |∇x| in a nu-band. "
-            "Distances D0 and D1 are L2 distances to surrogate-mean curves. D_mf combines them as sqrt(D0^2 + D1^2)."
+            "Distances D0 and D1 are L2 distances (sqrt(sum((a-b)^2)*dnu)) to surrogate-mean curves. "
+            "D_mf combines them as sqrt(D0^2 + D1^2). Z_mf is the scale-free combined z-distance."
         ),
     }
 
