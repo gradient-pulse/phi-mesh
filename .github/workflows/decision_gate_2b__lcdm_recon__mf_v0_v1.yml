@@ -18,7 +18,7 @@ on:
       n_lcdm_sims:
         description: "How many reconstructed sims to process (require at least this many in bundle)"
         required: true
-        default: "20"
+        default: "3"
       n_phase_sims:
         description: "Number of phase-randomized surrogates per sim (null draws)"
         required: true
@@ -140,7 +140,7 @@ jobs:
           if discovered == 0:
             raise SystemExit("No sims discovered. Expected sims/<id>/{dat_klm.fits,mf_klm.fits} inside tarball.")
 
-          # IMPORTANT: fail fast if the tarball doesn't actually contain the requested number of sims.
+          # Fail fast if tarball doesn't contain requested number of sims
           if discovered < N_LCDM_REQ:
             raise SystemExit(
               f"Requested n_lcdm_sims={N_LCDM_REQ} but only discovered {discovered} sims in the tarball. "
@@ -266,6 +266,10 @@ jobs:
 
           cp -v results/cmb_topology_mf_v0_v1/*.json "$RUN_DIR/"
 
+          # Record discovered/used counts in a reproducible way
+          DISCOVERED="$(find data/lcdm_recon_sims/extracted/sims -maxdepth 2 -type f -name dat_klm.fits | wc -l | tr -d ' ')"
+          USED="$(ls -1 results/cmb_topology_mf_v0_v1/*__sim*.json 2>/dev/null | wc -l | tr -d ' ')"
+
           cat > "${RUN_DIR}/manifest.txt" <<EOF
           run_id: ${{ github.run_id }}
           workflow: ${{ github.workflow }}
@@ -274,7 +278,9 @@ jobs:
           control: lcdm_recon_sims_plus_phase_random_null__mf_v0_v1
           lmax: ${{ github.event.inputs.lmax }}
           nside: ${{ github.event.inputs.nside }}
-          n_lcdm_sims: ${{ github.event.inputs.n_lcdm_sims }}
+          n_lcdm_sims_requested: ${{ github.event.inputs.n_lcdm_sims }}
+          n_lcdm_sims_discovered: ${DISCOVERED}
+          n_lcdm_sims_used: ${USED}
           n_phase_sims: ${{ github.event.inputs.n_phase_sims }}
           seed0: ${{ github.event.inputs.seed0 }}
           recon_sims_url: ${{ github.event.inputs.recon_sims_url }}
