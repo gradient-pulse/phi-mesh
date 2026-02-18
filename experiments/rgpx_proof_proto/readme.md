@@ -7,6 +7,16 @@ It currently contains two tracks:
 1) **Φ-Trace Proto-Proof (Kimi)** — cross-domain plateau detection in open datasets  
 2) **CMB Phase-Dagger** — topology tests on Planck PR3 lensing potential φₗₘ using phase-randomized surrogates
 
+## Horizon: why phase-aware gradient tests matter
+
+RGPx is evaluated here by **operational advantage**: does a gradient-/phase-aware description expose structure, constraints, or design degrees-of-freedom faster or more reliably than amplitude-only / metric-first summaries?
+
+This matters beyond cosmology. Many successful modern breakthroughs already look “gradient-based” in practice (optimization landscapes, field coherence, flow control, learned surrogates). The next step—still under-explored in mainstream tooling—is **gradient-phase-based** design: treating phase relationships as first-class structure rather than residual detail.
+
+A present-day engineering indicator is **[Leap 71](chatgpt://generic-entity?number=0)**, where machine learning discovers high-performance designs rapidly compared to traditional iteration-heavy pipelines. This repo’s purpose is to build the *measurement and control* side of that direction: rigorous null-model tests and small pipelines that can validate (or falsify) when phase structure carries actionable information.
+
+In physics terms, the long-horizon claim RGPx aims to stress-test is whether **conservation of gradient coherence** provides a useful organizing principle in regimes where conventional approaches remain fragmented (quantum–macro links, black holes, dark sector, supercluster dynamics, and early-universe phase behavior). Individual gates (like the [Planck](chatgpt://generic-entity?number=1) lensing workflow) are not “make-or-break” for the framework; they are probes for where operational advantage does—and does not—appear.
+
 ---
 
 ## Purpose
