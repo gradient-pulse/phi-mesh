@@ -21,6 +21,8 @@ In physics terms, the long-horizon claim RGPx aims to stress-test is whether **c
 
 ## Purpose
 
+Method note: We are not “trying to make the CMB confirm RGPx.” We measure operational advantage: which statistics remain informative after the strongest end-to-end controls.
+
 Establish a reproducible, open framework for testing **coherence structure** using:
 
 - explicit **null models** (what is preserved vs randomized),
