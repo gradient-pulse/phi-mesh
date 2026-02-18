@@ -60,7 +60,7 @@ A practical analogue already exists in engineering: AI-driven generative design 
 ├── 2025-11-10_deepseek_harmonic_invariant.yml
 └── results_summary.yml
 ```
-Track A — Φ-Trace Proto-Proof (Kimi)
+## Track A — Φ-Trace Proto-Proof (Kimi)
 
 Contents
 	•	Proto-proof notebook and scripts for extracting Φ⋆ plateaus
