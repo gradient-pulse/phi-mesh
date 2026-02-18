@@ -74,7 +74,8 @@ def v1_perimeter_curve_from_alm(alm, nside, lmax, nus):
     Returns (v1_curve, diag_dict).
     """
     # Field + derivatives wrt theta, phi
-    m, dth, dph = hp.alm2map_der1(alm, nside=nside, lmax=lmax, verbose=False)
+    # NOTE: hp.alm2map_der1 does NOT accept verbose= in some healpy versions.
+    m, dth, dph = hp.alm2map_der1(alm, nside=nside, lmax=lmax)
 
     # Standardize field x = (m-mu)/sd
     x, mu, sd = standardize_map(m)
@@ -95,10 +96,7 @@ def v1_perimeter_curve_from_alm(alm, nside, lmax, nus):
     grad = np.sqrt(dx_dth**2 + (dx_dph / sinth)**2)
 
     nus = np.asarray(nus, dtype=np.float64)
-    if len(nus) >= 2:
-        dnu = float(nus[1] - nus[0])
-    else:
-        dnu = 1.0
+    dnu = float(nus[1] - nus[0]) if len(nus) >= 2 else 1.0
 
     pix_area = 4.0 * np.pi / float(npix)
     half = 0.5 * dnu
@@ -179,7 +177,7 @@ def main():
     nus = np.linspace(float(args.nu_min), float(args.nu_max), int(args.n_nu))
 
     # Observed V0 from standardized map
-    m_obs = hp.alm2map(alm_obs, nside=nside, lmax=lmax, verbose=False)
+    m_obs = hp.alm2map(alm_obs, nside=nside, lmax=lmax)
     x_obs, mu_obs, sd_obs = standardize_map(m_obs)
     v0_obs = v0_area_fraction_curve(x_obs, nus)
 
@@ -195,7 +193,7 @@ def main():
         alm_s = surrogate_alm_phase_randomize(baseline_alm, lmax, rng)
 
         # V0
-        m_s = hp.alm2map(alm_s, nside=nside, lmax=lmax, verbose=False)
+        m_s = hp.alm2map(alm_s, nside=nside, lmax=lmax)
         x_s, _, _ = standardize_map(m_s)
         v0_sims[i, :] = v0_area_fraction_curve(x_s, nus)
 
