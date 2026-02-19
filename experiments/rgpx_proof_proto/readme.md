@@ -165,6 +165,33 @@ We treat “model-class mismatch” (and thus motivation for RGPx-style alternat
 
 This keeps the program scientific: the objective is **attribution first**, then **mechanism**, then **new explanatory leverage**.
 
+---
+
+## Status: Planck PR3 lensing φ_lm topology test (MF V0+V1)
+
+We now have a **sanity-checked pipeline** for the morphology test:
+
+- **Distance metric corrected**: report uses proper L2 distance  
+  \( D = \sqrt{\sum_\nu (C_{\rm obs}(\nu)-\bar{C}(\nu))^2 \, d\nu} \)  
+  Legacy “sum of squares” distances are retained only for backward comparison as `*_sum_sq_legacy`.
+
+- **Internal verification added**: the output includes a `verify_l2_from_curves` block that recomputes D0/D1 from the stored curves and checks exact agreement.
+
+### Gates (current)
+- **Gate 2B (pipeline validity / distance correctness): PASS**  
+  Verified by `verify_l2_from_curves` and a self-test run where the “observed” map is replaced by a phase-random surrogate; results land near surrogate means with non-significant p-values.
+
+- **Gate 3 (null adequacy / scientific comparability): OPEN**  
+  The observed Planck PR3 lensing φ_lm morphology is highly deviant **relative to the phase-only surrogate null** (surrogates preserve |a_lm| but randomize phases for m>0, keeping m=0 fixed).  
+  Distribution diagnostics suggest the deviation is **not** driven by skew/heavy tails:
+  - `v1_symmetry_corr ≈ 0.994`
+  - `skew_x_obs ≈ 0.029`
+  - `excess_kurt_x_obs ≈ -0.103`
+
+### Reproducible runs (lmax=256, nside=256, n_sims=2000, seed=731)
+- Observed (no selftest): run_id `22174563334` (p_two_sided_mf ≈ 0.001)
+- Self-test (selftest_observed_surrogate_seed=123): run_id `22175256542` (p_two_sided_mf ≈ 0.788)
+
 ⸻
 
 Related dialogues
