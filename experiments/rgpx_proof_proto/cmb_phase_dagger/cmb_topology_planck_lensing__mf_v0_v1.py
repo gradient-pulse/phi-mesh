@@ -140,13 +140,8 @@ def l2_curve_distance(curve, mean_curve, nus=None):
 
 def verify_l2_from_curves(v0_obs, v1_obs, v0_mean, v1_mean, nus, reported_D0, reported_D1, tol_rel=1e-10, tol_abs=1e-12):
     """
-    Recompute the L2 distances directly from the stored curves (the exact snippet you asked for),
+    Recompute the L2 distances directly from the stored curves,
     and return a diagnostic dict comparing recomputed vs reported.
-
-    This catches:
-      - missing sqrt
-      - missing dnu weighting
-      - accidental rescaling between stored curve and distance computation
     """
     nu = np.asarray(nus, dtype=float)
     dnu = float(nu[1] - nu[0]) if nu.size >= 2 else 1.0
@@ -185,6 +180,49 @@ def pvals_from_null(null_vals, obs_val):
     p_low = float((np.sum(null_vals <= obs_val) + 1.0) / (n + 1.0))
     p_two = float(min(1.0, 2.0 * min(p_low, p_high)))
     return p_high, p_low, p_two
+
+
+# --- Tiny diagnostics (new) ---------------------------------------------------
+
+def moments_and_v1_symmetry(x_obs, nus, v1_curve):
+    """
+    Cheap scalars that explain 'why the V1 curve looks skewed':
+      - skew_x_obs = E[x^3]
+      - excess_kurt_x_obs = E[x^4] - 3
+      - v1_symmetry_corr = corr( V1(nu), V1(-nu) ) on matched +/- nu pairs
+    """
+    x = np.asarray(x_obs, dtype=np.float64).ravel()
+    if x.size == 0:
+        skew = float("nan")
+        exkurt = float("nan")
+    else:
+        skew = float(np.mean(x**3))
+        exkurt = float(np.mean(x**4) - 3.0)
+
+    nu = np.asarray(nus, dtype=np.float64)
+    v1 = np.asarray(v1_curve, dtype=np.float64)
+
+    # Build matched +/- pairs by index symmetry around center (works for uniform linspace).
+    # If n is odd, center index maps to itself and is excluded from correlation.
+    n = nu.size
+    if n < 4:
+        corr = float("nan")
+    else:
+        i = np.arange(n)
+        j = (n - 1) - i
+        mask = i < j  # strict pairs only
+        a = v1[i[mask]]
+        b = v1[j[mask]]
+        if a.size < 2 or np.std(a) == 0 or np.std(b) == 0:
+            corr = float("nan")
+        else:
+            corr = float(np.corrcoef(a, b)[0, 1])
+
+    return {
+        "skew_x_obs": skew,
+        "excess_kurt_x_obs": exkurt,
+        "v1_symmetry_corr": corr,
+    }
 
 
 def main():
@@ -251,6 +289,9 @@ def main():
 
     # Observed V1 from gradient estimator
     v1_obs, v1_obs_diag = v1_perimeter_curve_from_alm(alm_obs, nside=nside, lmax=lmax, nus=nus)
+
+    # New: cheap diagnostics explaining skew / asymmetry
+    extra_diags = moments_and_v1_symmetry(x_obs=x_obs, nus=nus, v1_curve=v1_obs)
 
     # Surrogates: curves + scalar deviation statistics
     v0_sims = np.empty((n_sims, len(nus)), dtype=np.float64)
@@ -319,7 +360,6 @@ def main():
     )
 
     if args.print_verify:
-        # This prints the same “recompute from curves” check, in-run.
         print("\n=== VERIFY L2 FROM STORED CURVES (snippet) ===")
         print(json.dumps(verify, indent=2, sort_keys=True))
         print("============================================\n")
@@ -352,15 +392,12 @@ def main():
             "map_std": float(sd_obs),
             "v0_curve": v0_obs,
             "v1_curve": v1_obs,
-            # Primary (correct) distances:
             "D0_L2": float(D0_obs),
             "D1_L2": float(D1_obs),
             "D_mf": float(Dmf_obs),
-            # Helpful scale-free score:
             "Z0": z0,
             "Z1": z1,
             "Z_mf": Z_mf,
-            # Legacy for comparison (what previously inflated values):
             "D0_sum_sq_legacy": float(D0_obs_sumsq),
             "D1_sum_sq_legacy": float(D1_obs_sumsq),
         },
@@ -369,7 +406,6 @@ def main():
             "v0_std_curve": [float(x) for x in v0_std],
             "v1_mean_curve": [float(x) for x in v1_mean],
             "v1_std_curve": [float(x) for x in v1_std],
-            # Proper-distance null stats:
             "D0_mean": D0_mu,
             "D0_std": D0_sd,
             "D1_mean": D1_mu,
@@ -388,6 +424,9 @@ def main():
             "imag_frac_nonzero_eps1e-12": float(imag_frac),
             "v1_delta_bandwidth_dnu": float(v1_obs_diag.get("dnu", float("nan"))),
             "verify_l2_from_curves": verify,
+
+            # New (tiny) scalars:
+            **extra_diags,
         },
         "provenance": provenance,
         "hint": (
