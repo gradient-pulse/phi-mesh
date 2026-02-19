@@ -43,12 +43,17 @@ on:
         description: "Optional: if set (e.g., 123), observed alm is replaced by one phase-random surrogate for null calibration. Leave blank for normal run."
         required: false
         default: ""
+      run_note:
+        description: "Optional: short note for this run (e.g., lmax sweep 128; mask test; etc.)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
 
 concurrency:
-  group: topology-mf-v0-v1-archive
+  # Allow parallel runs for different (lmax,nside); identical parameter pairs still serialize.
+  group: topology-mf-v0-v1-archive-lmax${{ github.event.inputs.lmax }}-nside${{ github.event.inputs.nside }}
   cancel-in-progress: false
 
 jobs:
@@ -121,6 +126,7 @@ jobs:
           retention-days: 90
 
       - name: Archive result into repo (run history)
+        shell: bash
         run: |
           set -euo pipefail
 
@@ -139,7 +145,11 @@ jobs:
           nside: ${{ github.event.inputs.nside }}
           n_sims: ${{ github.event.inputs.n_sims }}
           seed: ${{ github.event.inputs.seed }}
+          n_nu: ${{ github.event.inputs.n_nu }}
+          nu_min: ${{ github.event.inputs.nu_min }}
+          nu_max: ${{ github.event.inputs.nu_max }}
           selftest_observed_surrogate_seed: ${{ github.event.inputs.selftest_observed_surrogate_seed }}
+          run_note: ${{ github.event.inputs.run_note }}
           dat_url: ${{ github.event.inputs.dat_url }}
           mf_url: ${{ github.event.inputs.mf_url }}
           EOF
@@ -147,6 +157,7 @@ jobs:
           ls -lh "$RUN_DIR"
 
       - name: Commit archived result (if changed) and push safely
+        shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
