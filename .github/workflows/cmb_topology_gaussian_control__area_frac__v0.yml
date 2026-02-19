@@ -1,4 +1,4 @@
-name: CMB Topology (Gaussian control from Planck PR3 lensing φ_lm) — AreaFrac V0
+name: CMB Topology (Gaussian control from Planck PR3 lensing φ_lm) — MF V0+V1
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ on:
         required: true
         default: "256"
       nside:
-        description: "HEALPix nside for map-space topology"
+        description: "HEALPix nside for map-space morphology"
         required: true
         default: "256"
       n_sims:
@@ -43,12 +43,16 @@ on:
         description: "Max threshold (in sigma units after standardization)"
         required: true
         default: "3.0"
+      run_note:
+        description: "Optional note for this run (e.g., 'gaussian control lmax=256 baseline')"
+        required: false
+        default: ""
 
 permissions:
   contents: write
 
 concurrency:
-  group: topology-area-frac-v0-gaussian-control
+  group: topology-mf-v0-v1-gaussian-control
   cancel-in-progress: false
 
 jobs:
@@ -75,12 +79,13 @@ jobs:
       - name: Download Planck release assets
         run: |
           set -euo pipefail
-          mkdir -p data/planck_lensing results/cmb_topology_area_frac_v0
+          mkdir -p data/planck_lensing results/cmb_topology_mf_v0_v1
           curl -L --retry 5 --retry-delay 5 --fail "${{ github.event.inputs.dat_url }}" -o data/planck_lensing/dat_klm.fits
           curl -L --retry 5 --retry-delay 5 --fail "${{ github.event.inputs.mf_url }}"  -o data/planck_lensing/mf_klm.fits
           ls -lh data/planck_lensing
 
       - name: Synthesize Gaussian φ_lm control (match C_ell of dat-mf)
+        shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -94,45 +99,37 @@ jobs:
           gauss_seed = int("${{ github.event.inputs.gauss_seed }}")
 
           def truncate_alm(alm_in, lmax_out):
-            """
-            Truncate a healpy alm array to lmax_out (and mmax_out=lmax_out).
-            Copies (l,m) coefficients into a new, smaller alm buffer.
-            """
-            # Infer input lmax
-            lmax_in = hp.Alm.getlmax(alm_in.size)
-            if lmax_out >= lmax_in:
-              return alm_in
+              lmax_in = hp.Alm.getlmax(alm_in.size)
+              if lmax_out >= lmax_in:
+                  return np.asarray(alm_in)
+              alm_out = np.zeros(hp.Alm.getsize(lmax_out), dtype=alm_in.dtype)
+              for l in range(lmax_out + 1):
+                  for m in range(l + 1):
+                      alm_out[hp.Alm.getidx(lmax_out, l, m)] = alm_in[hp.Alm.getidx(lmax_in, l, m)]
+              return alm_out
 
-            alm_out = np.zeros(hp.Alm.getsize(lmax_out), dtype=alm_in.dtype)
-            for l in range(lmax_out + 1):
-              for m in range(l + 1):
-                idx_in  = hp.Alm.getidx(lmax_in, l, m)
-                idx_out = hp.Alm.getidx(lmax_out, l, m)
-                alm_out[idx_out] = alm_in[idx_in]
-            return alm_out
+          # Read full alms (healpy.read_alm does not reliably support lmax= across versions)
+          dat_full = hp.read_alm(dat_path)
+          mf_full  = hp.read_alm(mf_path)
 
-          # Read full alms (healpy.read_alm does NOT support lmax=)
-          dat_full = hp.read_alm(dat_path, hdu=1)
-          mf_full  = hp.read_alm(mf_path,  hdu=1)
-
-          print("Input dat alm size:", dat_full.size, "=> lmax_in:", hp.Alm.getlmax(dat_full.size))
-          print("Input mf  alm size:", mf_full.size,  "=> lmax_in:", hp.Alm.getlmax(mf_full.size))
+          lmax_dat = hp.Alm.getlmax(dat_full.size)
+          lmax_mf  = hp.Alm.getlmax(mf_full.size)
+          print("Input dat alm size:", dat_full.size, "=> lmax_in:", lmax_dat)
+          print("Input mf  alm size:", mf_full.size,  "=> lmax_in:", lmax_mf)
           print("Requested lmax_target:", lmax_target)
 
-          # Truncate safely to requested lmax
           dat = truncate_alm(dat_full, lmax_target)
           mf  = truncate_alm(mf_full,  lmax_target)
 
-          # Cleaned alm used to estimate C_ell
+          # Estimate C_ell from cleaned alm
           alm_clean = dat - mf
           cl = hp.alm2cl(alm_clean, lmax=lmax_target)
 
-          # Seed synalm (healpy uses numpy's global RNG)
+          # hp.synalm uses numpy global RNG
           np.random.seed(gauss_seed)
+          alm_gauss = hp.synalm(cl, lmax=lmax_target, new=True)
 
-          alm_gauss = hp.synalm(cl, lmax=lmax_target, new=True, verbose=False)
-
-          # Mean-field for the Gaussian control is set to zero (same shape)
+          # Mean-field for Gaussian control: zero alm (same shape)
           alm_zero = np.zeros_like(alm_gauss)
 
           out_dat = "data/planck_lensing/gaussian_control_dat_klm.fits"
@@ -141,18 +138,19 @@ jobs:
           hp.write_alm(out_dat, alm_gauss, overwrite=True)
           hp.write_alm(out_mf,  alm_zero,  overwrite=True)
 
-          print("Wrote:", out_dat, "size:", alm_gauss.size)
-          print("Wrote:", out_mf,  "size:", alm_zero.size)
+          print("Wrote:", out_dat, "size:", alm_gauss.size, "=> lmax:", hp.Alm.getlmax(alm_gauss.size))
+          print("Wrote:", out_mf,  "size:", alm_zero.size,  "=> lmax:", hp.Alm.getlmax(alm_zero.size))
           PY
           ls -lh data/planck_lensing | sed -n '1,200p'
 
-      - name: Run Topology AreaFrac V0 on Gaussian control
+      - name: Run Topology MF V0+V1 on Gaussian control
+        shell: bash
         run: |
           set -euo pipefail
 
-          OUT="results/cmb_topology_area_frac_v0/gaussian_control__area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__gauss${{ github.event.inputs.gauss_seed }}__run${{ github.run_id }}.json"
+          OUT="results/cmb_topology_mf_v0_v1/gaussian_control__mf_v0_v1__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__gauss${{ github.event.inputs.gauss_seed }}__run${{ github.run_id }}.json"
 
-          python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__area_frac__v0.py \
+          python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py \
             --dat_klm data/planck_lensing/gaussian_control_dat_klm.fits \
             --mf_klm  data/planck_lensing/gaussian_control_mf_klm.fits \
             --lmax "${{ github.event.inputs.lmax }}" \
@@ -167,36 +165,41 @@ jobs:
             --out "$OUT"
 
           echo "Wrote $OUT"
-          ls -lh results/cmb_topology_area_frac_v0
+          ls -lh results/cmb_topology_mf_v0_v1
 
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gaussian_control_area_frac_v0__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__gauss${{ github.event.inputs.gauss_seed }}__run${{ github.run_id }}
-          path: results/cmb_topology_area_frac_v0/*.json
+          name: gaussian_control_mf_v0_v1__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__gauss${{ github.event.inputs.gauss_seed }}__run${{ github.run_id }}
+          path: results/cmb_topology_mf_v0_v1/*.json
           retention-days: 90
 
       - name: Archive result into repo (control suite)
+        shell: bash
         run: |
           set -euo pipefail
 
-          BASE_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0"
+          BASE_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1"
           RUN_DIR="${BASE_DIR}/controls/gaussian/runs/${{ github.run_id }}"
           mkdir -p "$RUN_DIR"
 
-          cp -v results/cmb_topology_area_frac_v0/*.json "$RUN_DIR/"
+          cp -v results/cmb_topology_mf_v0_v1/*.json "$RUN_DIR/"
 
           cat > "${RUN_DIR}/manifest.txt" <<EOF
           run_id: ${{ github.run_id }}
           workflow: ${{ github.workflow }}
           ref: ${{ github.ref }}
           sha: ${{ github.sha }}
-          control: gaussian_synalm_from_dat_minus_mf
+          control: gaussian_synalm_from_(dat_minus_mf)_cl
           lmax: ${{ github.event.inputs.lmax }}
           nside: ${{ github.event.inputs.nside }}
           n_sims: ${{ github.event.inputs.n_sims }}
           seed: ${{ github.event.inputs.seed }}
           gauss_seed: ${{ github.event.inputs.gauss_seed }}
+          n_nu: ${{ github.event.inputs.n_nu }}
+          nu_min: ${{ github.event.inputs.nu_min }}
+          nu_max: ${{ github.event.inputs.nu_max }}
+          run_note: ${{ github.event.inputs.run_note }}
           source_dat_url: ${{ github.event.inputs.dat_url }}
           source_mf_url: ${{ github.event.inputs.mf_url }}
           EOF
@@ -204,19 +207,20 @@ jobs:
           ls -lh "$RUN_DIR"
 
       - name: Commit archived control result (if changed) and push safely
+        shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_area_frac_v0/controls/gaussian/runs/${{ github.run_id }}/
+          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/gaussian/runs/${{ github.run_id }}/
 
           if git diff --cached --quiet; then
             echo "No new archived control files to commit."
             exit 0
           fi
 
-          git commit -m "Decision gate: Gaussian control (AreaFrac v0) (run ${{ github.run_id }})"
+          git commit -m "Decision gate: Gaussian control (MF v0+v1) (run ${{ github.run_id }})"
 
           for i in 1 2 3; do
             git fetch origin main
