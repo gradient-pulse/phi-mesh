@@ -57,16 +57,20 @@ A practical analogue already exists in engineering: AI-driven generative design 
 ├── readme.md
 ├── cmb_phase_dagger/
 │   ├── cmb_topology_planck_lensing__area_frac__v0.py
+│   ├── cmb_topology_planck_lensing__mf_v0_v1.py
 │   ├── notes/
 │   └── results/
-│       └── topology_area_frac_v0/
-│           ├── headline_findings.md
+│       ├── headline_findings.md
+│       ├── topology_area_frac_v0/
+│       │   ├── runs/
+│       │   ├── controls/
+│       │   │   ├── gaussian/
+│       │   │   ├── lcdm_phi_forward/
+│       │   │   └── lcdm_recon/
+│       │   └── legacy_flat_json/
+│       └── topology_mf_v0_v1/
 │           ├── runs/
-│           ├── controls/
-│           │   ├── gaussian/
-│           │   ├── lcdm_phi_forward/
-│           │   └── lcdm_recon/
-│           └── legacy_flat_json/
+│           └── controls/
 ├── 2025-11-10_kimi_notebook_colab.md
 ├── 2025-11-10_gemini_harmonic_link_analysis.yml
 ├── 2025-11-10_deepseek_harmonic_invariant.yml
