@@ -254,3 +254,12 @@ Notes:
   - verify_l2_from_curves: D0_match=true, D1_match=true
 - files:
   - `results/topology_mf_v0_v1/runs/22175256542/`
+
+### Pipeline sanity: PASS (self-test suite).
+We replace the observed φ field by a single phase-random surrogate (selftest_observed_surrogate_seed) and rerun the full MF V0+V1 pipeline. Across an ℓmax sweep the results behave like null draws, and the internal verify_l2_from_curves block matches reported distances exactly in every run. Therefore, the earlier extreme deviations seen in the real Planck reconstruction relative to the phase-scramble null are not a distance-definition or implementation artifact; they are specific to the observed/reconstructed field under the chosen null.
+
+Self-test run registry (nside=256, n_sims=2000, seed=731):
+	•	lmax=128: run 22182665943, p_two_sided_mf=0.08696
+	•	lmax=192: run 22182697253, p_two_sided_mf=0.59870
+	•	lmax=256: run 22175256542, p_two_sided_mf=0.78761
+	•	lmax=320: run 22182720612, p_two_sided_mf≈0.67066
