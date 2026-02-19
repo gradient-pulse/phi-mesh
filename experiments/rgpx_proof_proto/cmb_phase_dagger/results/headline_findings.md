@@ -98,168 +98,139 @@ Legacy “sum of squares” values (no √, no dν) are retained only for backwa
 - The output now includes `verify_l2_from_curves`, which **recomputes D0/D1 directly from the stored curves** and checks exact agreement.
 - The pipeline also supports a self-test mode where **observed := one phase-random surrogate**, which should land near surrogate means with non-significant p-values.
 
+---
+
 ## Gate status (MF V0+V1)
-### Gate 2B (pipeline validity / distance correctness): PASS
+
+### Sanity S1 — distance correctness + self-test behavior: PASS
 This is a *mechanical validity* gate: “does the test behave normally and compute what it claims?”
 - PASS is supported by:
   - `verify_l2_from_curves` (exact match)
-  - self-test run behaving normally (non-significant p-values)
+  - self-test runs behaving as null draws (non-significant p-values across ℓmax sweep)
 
-### Gate 3 (null adequacy / scientific comparability): OPEN
-The **observed Planck PR3 lensing φ_lm** is highly deviant **relative to the phase-only surrogate null** under MF V0+V1.
-This does **not** yet establish generative mismatch; it establishes “anomaly relative to this null,” which must be attributed via robustness probes + end-to-end ΛCDM recon controls.
+### Gate 1 (MF) — Gaussian Cℓ-matched φ control: PASS
+Gaussian synalm control derived from (dat−mf) Cℓ behaves like a null draw under MF V0+V1 across an ℓmax sweep (no extreme tails; p-values non-significant).
 
-## Current findings (MF V0+V1)
+### Gate 2B (MF) — ΛCDM end-to-end recon control: NOT RUN YET
+This is the MF V0+V1 analogue of the AreaFrac Gate 2B result, and it is the next responsible step.
+- Question: does **ΛCDM + reconstruction** reproduce the high D1 (and its ℓmax scaling) seen relative to the phase-only surrogate null?
 
-### Self-test (observed := phase-random surrogate): behaves normally
-- run_id: **22175256542** (selftest_observed_surrogate_seed=123)
-- observed:
-  - D0_L2 ≈ 0.001400
-  - D1_L2 ≈ 15.902
-  - D_mf ≈ 15.902
-  - Z_mf ≈ 0.339
-- surrogate:
-  - D0_mean ≈ 0.001247 ± 0.000561
-  - D1_mean ≈ 15.462 ± 2.192
-  - D_mf_mean ≈ 15.462 ± 2.192
-- p-values (expected non-significant under self-test):
-  - p_two_sided_mf ≈ **0.788**
-- verification:
-  - `verify_l2_from_curves`: D0_match=true, D1_match=true
-
-**Conclusion:** pipeline can behave normally; distance computation and curve bookkeeping are consistent.
-
-### Observed vs phase-only null: strong deviation (OPEN, attribution pending)
-- run_id: **22174563334** (no selftest)
-- observed:
-  - D0_L2 ≈ **0.107809**
-  - D1_L2 ≈ **198.280**
-  - D_mf ≈ **198.280**
-  - Z_mf ≈ **207.358**
-  - legacy (for comparison only):
-    - D0_sum_sq_legacy ≈ 0.116227
-    - D1_sum_sq_legacy ≈ 393150.847
-- surrogate (proper-distance null stats):
-  - D0_mean ≈ 0.001247 ± 0.000561
-  - D1_mean ≈ 15.462 ± 2.192
-  - D_mf_mean ≈ 15.462 ± 2.192
-- p-values (relative to the phase-only surrogate null):
-  - p_two_sided_mf ≈ **0.001**
-
-**Interpretation at this stage:**  
-The deviation is real **relative to this null**. The next work is **attribution**, not celebration:
-- does the deviation persist across masks / ℓ-range / splits / estimator variants?
-- does it reproduce under **ΛCDM + end-to-end reconstruction** (the MF V0+V1 analogue of the AreaFrac Gate 2B result)?
-- do alternative nulls (beyond phase-only) narrow or remove the effect?
-
-## Shape diagnostics (rules out “weird tails” as a primary explanation)
-For the observed run (no selftest), distribution diagnostics are consistent with a fairly normal standardized field:
-- v1_symmetry_corr ≈ **0.994**
-- skew_x_obs ≈ **0.029**
-- excess_kurt_x_obs ≈ **−0.103**
-
-(These support “structure is not simply due to extreme non-Gaussian one-point tails.”)
-
-Notes:
-- **p_high** = fraction of surrogates with D ≥ D_obs (one-sided high-D tail).
+### Gate 3 (MF) — null adequacy / scientific comparability: OPEN
+Observed Planck PR3 lensing φ_lm is highly deviant relative to the phase-only surrogate null under MF V0+V1. This establishes “anomaly relative to this null,” not yet a generative mismatch.
 
 ---
 
-## Run registry (exact numbers)
+## Current findings (MF V0+V1)
 
-### AreaFrac V0 — Run 22076484564 (seed=730, n_sims=20000)
-- lmax: 256
-- nside: 256
-- observed:
-  - D_L2: 0.11624176944070091
-- p-values:
-  - p_high: 4.999750012499375e-05
-  - p_two_sided: 9.99950002499875e-05
-- surrogate:
-  - D_mean: 1.8770730181455052e-05
-  - D_std: 1.7766532204559555e-05
-- diagnostics:
-  - imag_frac_nonzero_eps1e-12: 0.9922480620155039
-  - imag_max_abs: 0.0050463026842661445
-- files:
-  - `results/topology_area_frac_v0/runs/22076484564/`
+### Observed vs phase-only null: strong deviation (OPEN, attribution pending)
+Observed Planck PR3 lensing φ_lm deviates strongly from the phase-only surrogate null.
 
-### AreaFrac V0 — Run 22076520271 (seed=731, n_sims=10000)
-- lmax: 256
-- nside: 256
+**Reference observed run (lmax=256):**
+- run_id: **22174563334** (no selftest)
 - observed:
-  - D_L2: 0.11619453896167453
-- p-values:
-  - p_high: 9.999000099990002e-05
-  - p_two_sided: 0.00019998000199980003
+  - D0_L2 = 0.1078087878671455
+  - D1_L2 = 198.28031845916624
+  - D_mf  = 198.28034776801033
+  - Z_mf  = 207.3579443423922
+  - legacy (for comparison only):
+    - D0_sum_sq_legacy = 0.11622734741383169
+    - D1_sum_sq_legacy = 393150.84688268346
 - surrogate:
-  - D_mean: 1.8555717293941015e-05
-  - D_std: 1.753036134601288e-05
+  - D0_mean = 0.0012467536925318814 ± 0.000561297835466085
+  - D1_mean = 15.462245091363764 ± 2.19222428513228
+  - D_mf_mean = 15.462245151312246 ± 2.192224288650166
+- p-values (relative to the phase-only surrogate null):
+  - p_two_sided_mf = 0.0009995002498750624
 - diagnostics:
-  - imag_frac_nonzero_eps1e-12: 0.9922480620155039
-  - imag_max_abs: 0.0050463026842661445
-- files:
-  - `results/topology_area_frac_v0/runs/22076520271/`
-
-### MF V0+V1 — Observed run (no selftest): Run 22174563334
-- lmax: 256
-- nside: 256
-- n_sims: 2000
-- seed: 731
-- observed:
-  - D0_L2: 0.1078087878671455
-  - D1_L2: 198.28031845916624
-  - D_mf: 198.28034776801033
-  - Z_mf: 207.3579443423922
-  - legacy:
-    - D0_sum_sq_legacy: 0.11622734741383169
-    - D1_sum_sq_legacy: 393150.84688268346
-- surrogate:
-  - D0_mean: 0.0012467536925318814
-  - D0_std: 0.000561297835466085
-  - D1_mean: 15.462245091363764
-  - D1_std: 2.19222428513228
-  - D_mf_mean: 15.462245151312246
-  - D_mf_std: 2.192224288650166
-- p-values:
-  - p_two_sided_mf: 0.0009995002498750624
-- diagnostics:
-  - v1_symmetry_corr: 0.993952448783282
-  - skew_x_obs: 0.02927515204060797
-  - excess_kurt_x_obs: -0.10344702155894003
+  - v1_symmetry_corr = 0.993952448783282
+  - skew_x_obs = 0.02927515204060797
+  - excess_kurt_x_obs = -0.10344702155894003
   - verify_l2_from_curves: D0_match=true, D1_match=true
 - files:
   - `results/topology_mf_v0_v1/runs/22174563334/`
 
-### MF V0+V1 — Self-test run: Run 22175256542 (selftest_observed_surrogate_seed=123)
-- lmax: 256
-- nside: 256
-- n_sims: 2000
-- seed: 731
-- observed:
-  - D0_L2: 0.001400331684752949
-  - D1_L2: 15.902350364715872
-  - D_mf: 15.902350426371187
-  - Z_mf: 0.33936297606930727
-- surrogate:
-  - D0_mean: 0.0012467536925318814
-  - D0_std: 0.000561297835466085
-  - D1_mean: 15.462245091363764
-  - D1_std: 2.19222428513228
-  - D_mf_mean: 15.462245151312246
-  - D_mf_std: 2.192224288650166
-- p-values:
-  - p_two_sided_mf: 0.7876061969015492
-- verification:
-  - verify_l2_from_curves: D0_match=true, D1_match=true
-- files:
-  - `results/topology_mf_v0_v1/runs/22175256542/`
+**Interpretation at this stage:**  
+The deviation is real relative to the phase-only surrogate null. The next work is attribution:
+- does the deviation persist across masks / ℓ-range / splits / estimator variants?
+- does it reproduce under **ΛCDM + end-to-end reconstruction** (MF Gate 2B analogue)?
+- do alternative nulls (beyond phase-only) narrow or remove the effect?
 
-### Pipeline sanity: PASS (self-test suite).
-We replace the observed φ field by a single phase-random surrogate (selftest_observed_surrogate_seed) and rerun the full MF V0+V1 pipeline. Across an ℓmax sweep the results behave like null draws, and the internal verify_l2_from_curves block matches reported distances exactly in every run. Therefore, the earlier extreme deviations seen in the real Planck reconstruction relative to the phase-scramble null are not a distance-definition or implementation artifact; they are specific to the observed/reconstructed field under the chosen null.
+---
 
-Self-test run registry (nside=256, n_sims=2000, seed=731):
-	•	lmax=128: run 22182665943, p_two_sided_mf=0.08696
-	•	lmax=192: run 22182697253, p_two_sided_mf=0.59870
-	•	lmax=256: run 22175256542, p_two_sided_mf=0.78761
-	•	lmax=320: run 22182720612, p_two_sided_mf≈0.67066
+## ℓmax sweep — observed vs phase-only null (same nside/n_sims/seed)
+Across an ℓmax sweep, the MF deviation strengthens with increasing ℓmax under the same phase-only surrogate null (all runs show an extreme p_two_sided_mf tail at n_sims=2000).
+
+Common settings: nside=256, n_sims=2000, seed=731, ν grid: n_nu=61, ν∈[-3,3].
+
+- lmax=128: run **22177285559**
+  - D0_L2 = 0.09346837140279923
+  - D1_L2 = 99.63703649454285
+  - D_mf  = 99.63708033534161
+  - p_two_sided_mf = 0.0009995002498750624
+- lmax=192: run **22177351720**
+  - D0_L2 = 0.10370041719920363
+  - D1_L2 = 144.14466790672424
+  - D_mf  = 144.14470520874622
+  - p_two_sided_mf = 0.0009995002498750624
+- lmax=256: run **22177371714**
+  - D0_L2 = 0.1078087878671455
+  - D1_L2 = 198.28031845916624
+  - D_mf  = 198.28034776801033
+  - p_two_sided_mf = 0.0009995002498750624
+- lmax=320: run **22177393266**
+  - D0_L2 = 0.10845876900224662
+  - D1_L2 = 267.0867968828012
+  - D_mf  = 267.08681890430177
+  - p_two_sided_mf = 0.0009995002498750624
+
+**Note:** with n_sims=2000, the smallest achievable two-sided p-value is ~1/1000 ≈ 0.001, which is what is observed here. Increasing n_sims will sharpen the tail estimate.
+
+---
+
+## Self-test suite — observed := phase-random surrogate (PASS)
+We replace the observed φ field by a single phase-random surrogate (selftest_observed_surrogate_seed) and rerun the full MF V0+V1 pipeline. Across an ℓmax sweep, these runs behave like null draws (non-significant p-values), and the internal `verify_l2_from_curves` block matches reported distances exactly in every run. Therefore, the extreme deviations seen in the real Planck reconstruction relative to the phase-scramble null are not a distance-definition or implementation artifact; they are specific to the observed/reconstructed field under the chosen null.
+
+Common settings: nside=256, n_sims=2000, seed=731.
+
+- lmax=128: run **22182665943**, p_two_sided_mf = 0.08695652173913043
+  - D0_L2 = 0.004218095623942724
+  - D1_L2 = 5.426374495355203
+- lmax=192: run **22182697253**, p_two_sided_mf = 0.5987006496751625
+  - D0_L2 = 0.0032177503436146672
+  - D1_L2 = 10.054108902406368
+- lmax=256: run **22175256542** (selftest_observed_surrogate_seed=123), p_two_sided_mf = 0.7876061969015492
+  - D0_L2 = 0.001400331684752949
+  - D1_L2 = 15.902350364715872
+- lmax=320: run **22182720612**, p_two_sided_mf ≈ 0.670664667666167
+  - D0_L2 = 0.0005891780357202247
+  - D1_L2 = 19.220602086834322
+
+---
+
+## Gaussian control — MF V0+V1 (PASS)
+Gaussian synalm controls (matched to Cℓ of (dat−mf), with mf set to zero) behave as null draws under MF V0+V1 (no extreme tails; p-values non-significant) across an ℓmax sweep.
+
+Common settings: nside=256, n_sims=2000, seed=731, gauss_seed=901.
+
+- lmax=128: run **22181165496**, p_two_sided_mf = 0.8085957021489255
+  - D0_L2 = 0.01587829006387474
+  - D1_L2 = 20.86379903083497
+- lmax=192: run **22182466399**, p_two_sided_mf = 0.6866566716641679
+  - D0_L2 = 0.003821828230447542
+  - D1_L2 = 18.85066752931705
+- lmax=256: run **22181076396**, p_two_sided_mf = 0.11794102948525736
+  - D0_L2 = 0.00224199010816852
+  - D1_L2 = 13.984100227469769
+- lmax=320: run **22182497771**, p_two_sided_mf = 0.656671664167916
+  - D0_L2 = 0.001548388386815504
+  - D1_L2 = 22.28465625595231
+
+**Interpretation update:**  
+A strong anomaly exists relative to the phase-only surrogate null in the observed Planck reconstruction, and it strengthens with ℓmax. Gaussian controls with matched Cℓ do not reproduce this behavior under the same MF pipeline. The next responsible attribution step is the **MF Gate 2B analogue**: ΛCDM simulations passed through the end-to-end reconstruction pipeline, evaluated with MF V0+V1, and compared on the same ℓmax sweep.
+
+---
+
+## Notes and definitions
+- **p_high**: fraction of surrogates with D ≥ D_obs (one-sided high-D tail).
+- **p_two_sided**: two-sided tail probability relative to the surrogate distribution.
+- MF runs report both the **proper L2 distances** and legacy “sum-of-squares” distances retained only for backward comparison.
