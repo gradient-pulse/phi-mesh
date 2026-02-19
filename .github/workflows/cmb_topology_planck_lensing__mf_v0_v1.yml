@@ -27,10 +27,6 @@ on:
         description: "RNG seed"
         required: true
         default: "731"
-      selftest_observed_surrogate_seed:
-        description: "Optional: replace observed alm by a single phase-random surrogate (null sanity check). Leave blank for normal run."
-        required: false
-        default: ""
       n_nu:
         description: "Number of thresholds between nu_min and nu_max"
         required: true
@@ -43,12 +39,15 @@ on:
         description: "Max threshold (sigma units after standardization)"
         required: true
         default: "3.0"
+      selftest_observed_surrogate_seed:
+        description: "Optional: if set (e.g., 123), observed alm is replaced by one phase-random surrogate for null calibration. Leave blank for normal run."
+        required: false
+        default: ""
 
 permissions:
   contents: write
 
 concurrency:
-  # Keep this distinct from the AreaFrac-only workflow so they don't block each other.
   group: topology-mf-v0-v1-archive
   cancel-in-progress: false
 
@@ -82,6 +81,7 @@ jobs:
           ls -lh data/planck_lensing
 
       - name: Run Topology MF V0+V1
+        shell: bash
         run: |
           set -euo pipefail
 
@@ -90,6 +90,9 @@ jobs:
           EXTRA=""
           if [ -n "${{ github.event.inputs.selftest_observed_surrogate_seed }}" ]; then
             EXTRA="--selftest_observed_surrogate_seed ${{ github.event.inputs.selftest_observed_surrogate_seed }}"
+            echo "Self-test enabled: ${EXTRA}"
+          else
+            echo "Self-test disabled (normal run)."
           fi
 
           python experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py \
