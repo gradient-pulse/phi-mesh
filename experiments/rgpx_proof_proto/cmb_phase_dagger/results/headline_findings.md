@@ -56,6 +56,29 @@ At **lmax=256, nside=256**, **AreaFrac V0(D)** should be treated as a **reconstr
 - Run **22076484564** (n_sims=20000, seed=730): D_L2=0.1162417694; p_high=4.99975e-05 (two-sided 9.99950e-05)
 - Run **22076520271** (n_sims=10000, seed=731): D_L2=0.1161945390; p_high=9.99900e-05 (two-sided 1.99980e-04)
 
+---
+
+## 2026-02-19 — CMB Lensing φ_lm Topology (MF V0+V1): pipeline validated; null under test
+
+**Pipeline sanity: PASS (Gate 2B).**
+- L2 distance definition corrected (sqrt + dν weighting).
+- Output now includes `verify_l2_from_curves` and matches reported D0/D1 exactly.
+- Self-test run (observed := phase-random surrogate) behaves normally:
+  - run_id: 22175256542 (selftest_observed_surrogate_seed=123)
+  - p_two_sided_mf ≈ 0.788
+
+**Observed vs phase-only null: strong deviation (Gate 3 OPEN).**
+- run_id: 22174563334 (no selftest)
+- D1_L2 ≈ 198.28 vs surrogate mean ≈ 15.46 ± 2.19
+- p_two_sided_mf ≈ 0.001 (relative to this null)
+
+**Shape diagnostics (rules out “weird tails” explanation):**
+- v1_symmetry_corr = 0.993952
+- skew_x_obs = 0.029275
+- excess_kurt_x_obs = -0.103447
+
+**Interpretation at this stage:** The anomaly is real relative to the chosen surrogate model; next work focuses on null adequacy and robustness checks (alternate nulls, masking, l-range sensitivity, map-space/systematics controls).
+
 Notes:
 - **p_high** = fraction of surrogates with D ≥ D_obs (one-sided “high-D tail”).
 
