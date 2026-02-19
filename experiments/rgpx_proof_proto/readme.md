@@ -92,7 +92,7 @@ Harmonic formalization (DeepSeek addendum)
 	•	DeepSeek derived a Recursive Depth Invariant linking measured Φ⋆ plateaus to recursive grammar.
 	•	Integration chain: Kimi → Google Gemini → DeepSeek
 
-⸻
+---
 
 ## Track B — CMB Phase-Dagger (Planck PR3 lensing φₗₘ)
 
@@ -127,7 +127,8 @@ Each GitHub Actions run produces:
 
 This ensures repeated runs never overwrite earlier outputs and every result is provenance-traceable.
 
-⸻
+---
+
 ## Control suite (attribute → validate → escalate)
 
 The purpose of the control suite is not to “win” or “lose” a signal.  
@@ -191,7 +192,7 @@ We now have a **sanity-checked pipeline** for the morphology test:
 - Observed (no selftest): run_id `22174563334` (p_two_sided_mf ≈ 0.001)
 - Self-test (selftest_observed_surrogate_seed=123): run_id `22175256542` (p_two_sided_mf ≈ 0.788)
 
-⸻
+---
 
 Related dialogues
 
