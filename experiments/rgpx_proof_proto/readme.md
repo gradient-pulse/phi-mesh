@@ -128,7 +128,6 @@ Each GitHub Actions run produces:
 This ensures repeated runs never overwrite earlier outputs and every result is provenance-traceable.
 
 ⸻
-
 ## Control suite (attribute → validate → escalate)
 
 The purpose of the control suite is not to “win” or “lose” a signal.  
