@@ -21,7 +21,6 @@ In physics terms, the long-horizon claim RGPx aims to stress-test is whether **c
 
 ---
 
-```
 ## Operational Advantage Memo — Planck PR3 φₗₘ Topology via RGPx Grammar (Δ → GC → CF → UD)
 
 **Objective:** Demonstrate operational advantage of RGPx grammar (Δ → GC → CF → UD) on CMB lensing φₗₘ morphology, while keeping attribution falsifiable under end-to-end ΛCDM controls.
@@ -49,7 +48,6 @@ In physics terms, the long-horizon claim RGPx aims to stress-test is whether **c
 2) Run MF Gate 2B with N≥20 at ℓmax sweep (128/192/256/320).
 3) Compare observed vs sim envelope on GC features, not just D_mf.
 
-```
 ## Collaboration Protocol (how we work)
 
 This repo is the traceable premise. Chat is used to draft hypotheses, interpret deltas, and propose the *next minimal falsification step* — but conclusions only “count” once they are written into versioned artifacts here.
