@@ -1,4 +1,4 @@
-name: Decision gate 2B — ΛCDM recon control (MF V0+V1)
+name: Decision Gate 2B — ΛCDM Recon (MF V0+V1)
 
 on:
   workflow_dispatch:
@@ -92,14 +92,18 @@ jobs:
           tar -xzf data/lcdm_recon_sims/recon_sims.tar.gz -C data/lcdm_recon_sims/extracted
           echo "Top-level extracted:"
           ls -lah data/lcdm_recon_sims/extracted | sed -n '1,200p'
-          echo "First 200 paths:"
-          find data/lcdm_recon_sims/extracted -maxdepth 5 -type f | sed -n '1,200p'
+          echo "Does extracted/sims exist?"
+          ls -lah data/lcdm_recon_sims/extracted/sims 2>/dev/null || true
+          echo "First 200 file paths:"
+          find data/lcdm_recon_sims/extracted -maxdepth 6 -type f | sed -n '1,200p'
 
       - name: Run Gate 2B (per-sim MF(V0,V1) + aggregate stats)
+        env:
+          RECON_URL: ${{ github.event.inputs.recon_sims_url }}
         run: |
           set -euo pipefail
           python - <<'PY'
-          import os, json, glob
+          import os, json, glob, re
           from pathlib import Path
           import numpy as np
           import subprocess
@@ -118,6 +122,11 @@ jobs:
 
           TOPO_SCRIPT = "experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py"
           BASE = Path("data/lcdm_recon_sims/extracted")
+
+          def sort_key(sim_id: str):
+            # Prefer numeric ordering if sim_id contains digits; fall back to lexicographic.
+            m = re.search(r"(\d+)", sim_id)
+            return (int(m.group(1)) if m else 10**18, sim_id)
 
           # --- Discover sim folders
           sim_pairs = []
@@ -140,7 +149,9 @@ jobs:
           if discovered == 0:
             raise SystemExit("No sims discovered. Expected sims/<id>/{dat_klm.fits,mf_klm.fits} inside tarball.")
 
-          # Fail fast if tarball doesn't contain requested number of sims
+          # Deterministic ordering
+          sim_pairs = sorted(sim_pairs, key=lambda t: sort_key(t[0]))
+
           if discovered < N_LCDM_REQ:
             raise SystemExit(
               f"Requested n_lcdm_sims={N_LCDM_REQ} but only discovered {discovered} sims in the tarball. "
@@ -148,6 +159,7 @@ jobs:
             )
 
           sim_pairs = sim_pairs[:N_LCDM_REQ]
+          sims_used = [sid for sid, _, _ in sim_pairs]
 
           out_dir = Path("results/cmb_topology_mf_v0_v1")
           out_dir.mkdir(parents=True, exist_ok=True)
@@ -207,7 +219,7 @@ jobs:
           Dmfs = np.array(Dmfs, dtype=float)
 
           summary = {
-            "kind": "decision_gate_lcdm_recon_mf_v0_v1",
+            "kind": "decision_gate_2b__lcdm_recon__mf_v0_v1",
             "run_id": int(RUN_ID),
             "inputs": {
               "lmax": LMAX,
@@ -215,6 +227,7 @@ jobs:
               "n_lcdm_sims_requested": N_LCDM_REQ,
               "n_lcdm_sims_discovered": discovered,
               "n_lcdm_sims_used": len(per_sim),
+              "sims_used": sims_used,
               "n_phase_sims": N_PHASE,
               "seed0": SEED0,
               "n_nu": N_NU,
@@ -222,6 +235,7 @@ jobs:
               "nu_max": NU_MAX,
               "strict_layout": STRICT,
               "recon_sims_url": recon_url,
+              "topology_script": TOPO_SCRIPT,
             },
             "D_stats": {
               "D0_mean": float(D0s.mean()),
@@ -244,10 +258,15 @@ jobs:
           with open(summary_path, "w", encoding="utf-8") as f:
             json.dump(summary, f, indent=2)
 
+          # Also write sims_used.txt for convenience
+          sims_used_txt = out_dir / f"{PREFIX}__sims_used__run{RUN_ID}.txt"
+          with open(sims_used_txt, "w", encoding="utf-8") as f:
+            for sid in sims_used:
+              f.write(str(sid) + "\n")
+
           print("Wrote aggregate:", summary_path)
+          print("Wrote sims list:", sims_used_txt)
           PY
-        env:
-          RECON_URL: ${{ github.event.inputs.recon_sims_url }}
 
       - name: Upload result artifact
         uses: actions/upload-artifact@v4
@@ -266,16 +285,18 @@ jobs:
 
           cp -v results/cmb_topology_mf_v0_v1/*.json "$RUN_DIR/"
 
-          # Record discovered/used counts in a reproducible way
-          DISCOVERED="$(find data/lcdm_recon_sims/extracted/sims -maxdepth 2 -type f -name dat_klm.fits | wc -l | tr -d ' ')"
+          DISCOVERED="$(find data/lcdm_recon_sims/extracted -type f -name dat_klm.fits | wc -l | tr -d ' ')"
           USED="$(ls -1 results/cmb_topology_mf_v0_v1/*__sim*.json 2>/dev/null | wc -l | tr -d ' ')"
+
+          # Capture sim ids used (from sims_used.txt if present)
+          SIMS_USED_FILE="$(ls -1 results/cmb_topology_mf_v0_v1/*__sims_used__run${{ github.run_id }}.txt 2>/dev/null || true)"
 
           cat > "${RUN_DIR}/manifest.txt" <<EOF
           run_id: ${{ github.run_id }}
           workflow: ${{ github.workflow }}
           ref: ${{ github.ref }}
           sha: ${{ github.sha }}
-          control: lcdm_recon_sims_plus_phase_random_null__mf_v0_v1
+          control: decision_gate_2b__lcdm_recon__mf_v0_v1
           lmax: ${{ github.event.inputs.lmax }}
           nside: ${{ github.event.inputs.nside }}
           n_lcdm_sims_requested: ${{ github.event.inputs.n_lcdm_sims }}
@@ -286,6 +307,10 @@ jobs:
           recon_sims_url: ${{ github.event.inputs.recon_sims_url }}
           strict_layout: ${{ github.event.inputs.strict_layout }}
           EOF
+
+          if [ -n "${SIMS_USED_FILE}" ]; then
+            cp -v "${SIMS_USED_FILE}" "${RUN_DIR}/sims_used.txt"
+          fi
 
           ls -lh "$RUN_DIR"
 
@@ -302,7 +327,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Decision gate 2B: ΛCDM recon control (MF V0+V1) (run ${{ github.run_id }})"
+          git commit -m "Decision Gate 2B: ΛCDM recon (MF V0+V1) (run ${{ github.run_id }})"
 
           for i in 1 2 3; do
             git fetch origin main
