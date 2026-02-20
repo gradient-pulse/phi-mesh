@@ -1,0 +1,73 @@
+{
+  "kind": "decision_gate_2b__lcdm_recon__mf_v0_v1",
+  "run_id": 22222586023,
+  "inputs": {
+    "lmax": 128,
+    "nside": 256,
+    "n_lcdm_sims_requested": 3,
+    "n_lcdm_sims_discovered": 3,
+    "n_lcdm_sims_used": 3,
+    "sims_used": [
+      "000",
+      "001",
+      "002"
+    ],
+    "n_phase_sims": 2000,
+    "seed0": 2400,
+    "n_nu": 61,
+    "nu_min": -3.0,
+    "nu_max": 3.0,
+    "strict_layout": true,
+    "recon_sims_url": "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/lcdm_recon_sims__layout_sims.tar.gz",
+    "topology_script": "experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1__engine_v1.py"
+  },
+  "D_stats": {
+    "D0_mean": 0.09603697197041433,
+    "D0_std": 0.007141872497545809,
+    "D0_min": 0.08884731601729827,
+    "D0_max": 0.10577518253425022,
+    "D1_mean": 107.00102588504497,
+    "D1_std": 8.45955720773156,
+    "D1_min": 99.48887390756009,
+    "D1_max": 118.82071407469972,
+    "D_mf_mean": 107.00106903167476,
+    "D_mf_std": 8.459559609580547,
+    "D_mf_min": 99.48891783248308,
+    "D_mf_max": 118.82076115566163
+  },
+  "per_sim": [
+    {
+      "sim": 0,
+      "sim_id": "000",
+      "seed": 2400,
+      "D0_L2": 0.09348841735969447,
+      "D1_L2": 99.48887390756009,
+      "D_mf": 99.48891783248308,
+      "out_json": "results/cmb_topology_mf_v0_v1/lcdm_recon__mf_v0_v1__sim000__000__lmax128__nside256__phasesims2000__seed2400__run22222586023.json",
+      "dat_klm": "data/lcdm_recon_sims/extracted/sims/000/dat_klm.fits",
+      "mf_klm": "data/lcdm_recon_sims/extracted/sims/000/mf_klm.fits"
+    },
+    {
+      "sim": 1,
+      "sim_id": "001",
+      "seed": 2401,
+      "D0_L2": 0.10577518253425022,
+      "D1_L2": 118.82071407469972,
+      "D_mf": 118.82076115566163,
+      "out_json": "results/cmb_topology_mf_v0_v1/lcdm_recon__mf_v0_v1__sim001__001__lmax128__nside256__phasesims2000__seed2401__run22222586023.json",
+      "dat_klm": "data/lcdm_recon_sims/extracted/sims/001/dat_klm.fits",
+      "mf_klm": "data/lcdm_recon_sims/extracted/sims/001/mf_klm.fits"
+    },
+    {
+      "sim": 2,
+      "sim_id": "002",
+      "seed": 2402,
+      "D0_L2": 0.08884731601729827,
+      "D1_L2": 102.69348967287507,
+      "D_mf": 102.69352810687955,
+      "out_json": "results/cmb_topology_mf_v0_v1/lcdm_recon__mf_v0_v1__sim002__002__lmax128__nside256__phasesims2000__seed2402__run22222586023.json",
+      "dat_klm": "data/lcdm_recon_sims/extracted/sims/002/dat_klm.fits",
+      "mf_klm": "data/lcdm_recon_sims/extracted/sims/002/mf_klm.fits"
+    }
+  ]
+}
