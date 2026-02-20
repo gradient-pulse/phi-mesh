@@ -120,7 +120,7 @@ jobs:
           PREFIX = str("${{ github.event.inputs.archive_prefix }}").strip()
           STRICT = str("${{ github.event.inputs.strict_layout }}").lower() in ("true","1","yes","y")
 
-          TOPO_SCRIPT = "experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py"
+          TOPO_SCRIPT = "experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1__engine_v1.py"
           BASE = Path("data/lcdm_recon_sims/extracted")
 
           def sort_key(sim_id: str):
