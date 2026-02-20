@@ -1,4 +1,4 @@
-name: Decision Gate 2B — ΛCDM Recon (MF V0+V1)
+name: Decision gate 2B — ΛCDM recon control (MF V0+V1)  
 
 on:
   workflow_dispatch:
