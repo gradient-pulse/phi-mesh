@@ -111,22 +111,26 @@ This is a *mechanical validity* gate: “does the test behave normally and compu
 ### Gate 1 (MF) — Gaussian Cℓ-matched φ control: PASS
 Gaussian synalm control derived from (dat−mf) Cℓ behaves like a null draw under MF V0+V1 across an ℓmax sweep (no extreme tails; p-values non-significant).
 
-### Gate 2B (MF) — ΛCDM end-to-end recon control: RUN (preliminary; N=3)
+Gate 2B (MF) — ΛCDM end-to-end recon control: PASS (preliminary; N=3)
 
-This is the MF V0+V1 analogue of the AreaFrac Gate 2B result.
+This is the MF V0+V1 analogue of the AreaFrac Gate 2B test.
 
-**Question:** does **ΛCDM + reconstruction** reproduce the large MF deviation seen relative to the phase-only surrogate null?
+Question: does ΛCDM + the full reconstruction pipeline reproduce the large MF deviation seen relative to the phase-only surrogate null?
 
-**Result (PASS; preliminary due to low N):** Yes. Using reconstructed ΛCDM sim products (3 sims: 000–002; n_phase_sims=2000; lmax=256; nside=256), the MF distances are in the same high range as the observed Planck reconstruction run.
+Result (PASS; preliminary due to low N): Yes. With reconstructed ΛCDM products (3 sims: 000–002; n_phase_sims=2000; lmax=256; nside=256), the MF distances land in the same high regime as the observed Planck reconstruction run.
+	•	Run: 22216941911
+	•	D0_mean ≈ 0.1031 ± 0.0038 (min 0.0986, max 0.1078)
+	•	D1_mean ≈ 218.18 ± 25.52 (min 198.23, max 254.20)
+	•	D_mf_mean ≈ 218.18 ± 25.52
 
-- Run: **22216941911**
-- D0_mean ≈ **0.1031 ± 0.0038** (min 0.0986, max 0.1078)
-- D1_mean ≈ **218.18 ± 25.52** (min 198.23, max 254.20)
-- D_mf_mean ≈ **218.18 ± 25.52**
+What this means (and what it does not mean):
+	•	This does not rule out useful structure; it shows the MF signal at this setting is not uniquely tied to the real sky once the measurement chain is included.
+	•	Interpreted conservatively, MF V0+V1 at (lmax=256, nside=256) is reconstruction-/estimator-consistent rather than an immediate model-class discriminator.
+  •	Only if a residual persists after higher-N end-to-end controls and Gate 3 robustness do we treat it as evidence for generative mismatch.
 
-**Interpretation update:** The MF “anomaly” vs the phase-only surrogate null is **not sky-unique** at this resolution. It is **consistent with pipeline/estimator-typical morphology** that is reproduced by ΛCDM once the reconstruction products are used. Therefore MF V0+V1 is currently a **reconstruction-/pipeline-sensitive morphology diagnostic**, not a standalone discriminator of generative mismatch.
-
-**Next step:** proceed to **Gate 3 robustness probes** (ℓmax/nside sweeps; estimator variants TT/MV/PP; mask/apodization choices), and expand Gate 2B to **N≥20** once a larger recon sim bundle is available.
+Next objective: upgrade from “consistent at low N” to “attributed and stable” by:
+	1.	increasing ΛCDM recon sims (target N ≥ 20), and
+	2.	running Gate 3 robustness probes (masks/splits/ℓ-sensitivity), to identify which parts of the pipeline generate the high-D1 regime and whether any residual survives end-to-end controls.
 
 ### Gate 3 (MF) — null adequacy / scientific comparability: OPEN
 Observed Planck PR3 lensing φ_lm is highly deviant relative to the phase-only surrogate null under MF V0+V1. This establishes “anomaly relative to this null,” not yet a generative mismatch.
