@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
 """
-Gate 2B (MF V0+V1) postprocess:
+gate2b_mf_postprocess.py
 
-- Robustly discovers run folders by searching for manifest.txt under --runs_dir.
-- Optionally filters runs by 'control: <control_name>' found in manifest.txt.
-- For each run:
-  * Extracts lmax/nside/n_phase_sims/seed0/sims_used from manifest (preferred) or aggregate JSON.
-  * Extracts D_stats from aggregate JSON.
-  * Extracts per-sim V1 peak statistics from per-sim JSONs (v1_curve).
-- Writes:
-  * gate2b_mf_v0_v1__lmax_sweep.(md|csv|json)
-  * gate2b_mf_v0_v1__v1_peaks.(md|csv|json)
+Gate 2B postprocess for MF V0+V1:
+- discovers archived runs under --runs_dir by searching for manifest.txt
+  containing: "control: <control_name>"
+- extracts key MF metrics into a sweep table (csv + md)
+- extracts V1 peak info (csv + md)
+- extracts GC features from curves (csv)
+
+Expected JSON schema (confirmed by your example):
+  thresholds.nus
+  observed.v0_curve, observed.v1_curve
+  surrogate.v0_mean_curve, surrogate.v1_mean_curve
+  plus scalar metrics in observed / surrogate blocks
+
+Usage:
+  python gate2b_mf_postprocess.py \
+    --runs_dir experiments/.../controls/lcdm_recon/runs \
+    --control_name decision_gate_2b__lcdm_recon__mf_v0_v1 \
+    --out_dir experiments/.../controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1
 """
 
 from __future__ import annotations
@@ -18,596 +27,459 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import re
+import math
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 
-# -----------------------------
-# Utilities
-# -----------------------------
-def load_json(p: Path) -> dict:
-    with p.open("r", encoding="utf-8") as f:
-        return json.load(f)
+# ----------------------------
+# Small utilities
+# ----------------------------
+
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="replace")
 
 
-def dump_json(p: Path, obj: Any) -> None:
-    p.parent.mkdir(parents=True, exist_ok=True)
-    with p.open("w", encoding="utf-8") as f:
-        json.dump(obj, f, indent=2, sort_keys=False)
+def safe_get(d: Dict[str, Any], path: str, default=None):
+    """path like 'observed.D1_L2'."""
+    cur: Any = d
+    for part in path.split("."):
+        if not isinstance(cur, dict) or part not in cur:
+            return default
+        cur = cur[part]
+    return cur
 
 
-def linspace(a: float, b: float, n: int) -> List[float]:
-    if n <= 1:
-        return [a]
-    step = (b - a) / (n - 1)
-    return [a + i * step for i in range(n)]
+def ensure_dir(p: Path) -> None:
+    p.mkdir(parents=True, exist_ok=True)
 
 
-def fmt(x: Any, nd: int = 4) -> str:
+def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
+    ensure_dir(path.parent)
+    if not rows:
+        raise RuntimeError(f"No rows to write: {path}")
+    # union of keys
+    keys = set()
+    for r in rows:
+        keys.update(r.keys())
+    fieldnames = sorted(keys)
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fieldnames)
+        w.writeheader()
+        w.writerows(rows)
+
+
+def fmt(x: Any, nd: int = 6) -> str:
     if x is None:
         return ""
-    try:
-        return f"{float(x):.{nd}f}"
-    except Exception:
-        return str(x)
+    if isinstance(x, float):
+        if math.isnan(x):
+            return "nan"
+        return f"{x:.{nd}g}"
+    return str(x)
 
 
-def safe_int(x: Any) -> Optional[int]:
-    try:
-        return int(x)
-    except Exception:
-        return None
+def write_md_table(path: Path, rows: List[Dict[str, Any]], columns: List[str], title: str) -> None:
+    ensure_dir(path.parent)
+    with path.open("w", encoding="utf-8") as f:
+        f.write(f"# {title}\n\n")
+        if not rows:
+            f.write("_No rows._\n")
+            return
+        # header
+        f.write("| " + " | ".join(columns) + " |\n")
+        f.write("| " + " | ".join(["---"] * len(columns)) + " |\n")
+        for r in rows:
+            f.write("| " + " | ".join(fmt(r.get(c, "")) for c in columns) + " |\n")
+        f.write("\n")
 
 
-def safe_float(x: Any) -> Optional[float]:
-    try:
-        return float(x)
-    except Exception:
-        return None
+# ----------------------------
+# Run discovery
+# ----------------------------
+
+def iter_manifest_paths(runs_dir: Path) -> Iterable[Path]:
+    yield from runs_dir.rglob("manifest.txt")
 
 
-# -----------------------------
-# Manifest parsing
-# -----------------------------
-_MANIFEST_KV_RE = re.compile(r"^\s*([A-Za-z0-9_]+)\s*:\s*(.*)\s*$")
+def manifest_has_control(manifest_text: str, control_name: str) -> bool:
+    needle = f"control: {control_name}"
+    return needle in manifest_text
 
 
-def parse_manifest(manifest_path: Path) -> Dict[str, str]:
+def derive_run_id_from_path(p: Path) -> str:
+    # typical .../runs/<run_id>/manifest.txt
+    for part in reversed(p.parts):
+        if part.isdigit():
+            return part
+    # fallback
+    return p.parent.name
+
+
+def find_json_for_run(run_dir: Path) -> List[Path]:
     """
-    Parses a simple 'key: value' manifest.txt into a dict[str,str].
-    Ignores lines that don't match the pattern.
+    Prefer MF V0+V1 aggregate json; otherwise take any .json.
     """
-    out: Dict[str, str] = {}
-    try:
-        lines = manifest_path.read_text(encoding="utf-8").splitlines()
-    except Exception:
-        return out
+    j = sorted(run_dir.glob("*.json"))
+    if not j:
+        # sometimes nested
+        j = sorted(run_dir.rglob("*.json"))
+    # prefer mf_v0_v1 aggregate naming convention if present
+    preferred = [p for p in j if ("mf_v0_v1" in p.name and "aggregate" in p.name)]
+    if preferred:
+        return preferred
+    preferred2 = [p for p in j if ("mf_v0_v1" in p.name)]
+    return preferred2 if preferred2 else j
 
-    for line in lines:
-        m = _MANIFEST_KV_RE.match(line)
-        if not m:
+
+def load_json(path: Path) -> Dict[str, Any]:
+    return json.loads(read_text(path))
+
+
+# ----------------------------
+# V1 peak extraction
+# ----------------------------
+
+@dataclass
+class PeakInfo:
+    peak_idx: int
+    nu_peak: float
+    peak_height: float
+
+
+def peak_info(nu: List[float], y: List[float]) -> PeakInfo:
+    if len(nu) != len(y) or len(nu) < 3:
+        raise ValueError("nu/y mismatch or too short for peak extraction")
+    i = max(range(len(y)), key=lambda k: y[k])
+    return PeakInfo(peak_idx=i, nu_peak=float(nu[i]), peak_height=float(y[i]))
+
+
+# ----------------------------
+# GC features (Option B)
+# ----------------------------
+
+def _count_local_maxima(y: List[float]) -> int:
+    c = 0
+    for i in range(1, len(y) - 1):
+        if y[i] > y[i - 1] and y[i] > y[i + 1]:
+            c += 1
+    return c
+
+
+def _finite_diff(x: List[float], y: List[float]) -> List[float]:
+    n = len(x)
+    if n < 2:
+        return [0.0] * n
+    dy = [0.0] * n
+    for i in range(1, n - 1):
+        dx = x[i + 1] - x[i - 1]
+        dy[i] = (y[i + 1] - y[i - 1]) / dx if dx != 0 else 0.0
+    dy[0] = (y[1] - y[0]) / (x[1] - x[0]) if (x[1] - x[0]) != 0 else 0.0
+    dy[-1] = (y[-1] - y[-2]) / (x[-1] - x[-2]) if (x[-1] - x[-2]) != 0 else 0.0
+    return dy
+
+
+def _count_sign_changes(arr: List[float], eps: float = 1e-12) -> int:
+    sgn = []
+    for v in arr:
+        if abs(v) <= eps:
             continue
-        k = m.group(1).strip()
-        v = m.group(2).strip()
-        out[k] = v
+        sgn.append(1 if v > 0 else -1)
+    if len(sgn) < 2:
+        return 0
+    changes = 0
+    for a, b in zip(sgn, sgn[1:]):
+        if a != b:
+            changes += 1
+    return changes
+
+
+def _fwhm(nu: List[float], y: List[float], peak_idx: int) -> float:
+    peak = y[peak_idx]
+    if peak <= 0:
+        return 0.0
+    half = 0.5 * peak
+
+    left = peak_idx
+    while left > 0 and y[left] >= half:
+        left -= 1
+    right = peak_idx
+    while right < len(y) - 1 and y[right] >= half:
+        right += 1
+
+    return float(nu[right] - nu[left])
+
+
+def _curve_energy(nu: List[float], y: List[float]) -> float:
+    if len(nu) < 2:
+        return float("nan")
+    dnu = abs(nu[1] - nu[0])
+    return math.sqrt(sum(v * v for v in y) * dnu)
+
+
+def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Extract GC features from your MF V0+V1 JSON schema.
+
+    Confirmed locations:
+      thresholds.nus
+      observed.v0_curve, observed.v1_curve
+      surrogate.v0_mean_curve, surrogate.v1_mean_curve
+    """
+    nu = safe_get(obj, "thresholds.nus")
+    if not isinstance(nu, list) or not nu:
+        raise ValueError("Missing thresholds.nus")
+    nu = [float(v) for v in nu]
+
+    obs = obj.get("observed", {}) if isinstance(obj.get("observed"), dict) else {}
+    sur = obj.get("surrogate", {}) if isinstance(obj.get("surrogate"), dict) else {}
+
+    v1_obs = obs.get("v1_curve")
+    v0_obs = obs.get("v0_curve")
+    v1_mean = sur.get("v1_mean_curve")
+    v0_mean = sur.get("v0_mean_curve")
+
+    out: Dict[str, Any] = {}
+
+    def add(prefix: str, y_raw: Any):
+        if not isinstance(y_raw, list) or not y_raw:
+            return
+        y = [float(v) for v in y_raw]
+        if len(y) != len(nu):
+            raise ValueError(f"{prefix}: curve length mismatch vs nu grid")
+        pk = peak_info(nu, y)
+        out[f"{prefix}_nu_peak"] = pk.nu_peak
+        out[f"{prefix}_peak_height"] = pk.peak_height
+        out[f"{prefix}_fwhm"] = _fwhm(nu, y, pk.peak_idx)
+        out[f"{prefix}_bump_count"] = int(_count_local_maxima(y))
+        d2 = _finite_diff(nu, _finite_diff(nu, y))
+        out[f"{prefix}_d2_sign_changes"] = int(_count_sign_changes(d2))
+        out[f"{prefix}_shape_energy"] = float(_curve_energy(nu, y))
+
+    # Primary: V1 observed + mean, Secondary: V0 observed + mean
+    add("gc_v1_obs", v1_obs)
+    add("gc_v1_mean", v1_mean)
+    add("gc_v0_obs", v0_obs)
+    add("gc_v0_mean", v0_mean)
+
     return out
 
 
-def manifest_contains_control(manifest_path: Path, control_name: str) -> bool:
-    try:
-        txt = manifest_path.read_text(encoding="utf-8")
-    except Exception:
-        return False
-    return f"control: {control_name}" in txt
+# ----------------------------
+# Main extraction per run
+# ----------------------------
 
-
-# -----------------------------
-# Run discovery
-# -----------------------------
-def discover_run_folders(search_root: Path) -> List[Path]:
+def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
     """
-    Discover run folders by finding manifest.txt, then taking its parent folder.
-    Expected shape: .../<run_id>/manifest.txt
+    Returns:
+      sweep_row, peak_row, gc_row
     """
-    if not search_root.exists():
-        raise SystemExit(f"Not found: {search_root}")
+    obj = load_json(json_path)
 
-    manifests = sorted(search_root.rglob("manifest.txt"))
-    run_folders = sorted({m.parent for m in manifests if m.parent.is_dir()})
-    return run_folders
+    # common metadata
+    lmax = obj.get("lmax")
+    nside = obj.get("nside")
+    n_sims = obj.get("n_sims")
+    seed = obj.get("seed")
+    kind = obj.get("kind")
 
+    # observed scalars
+    D0 = safe_get(obj, "observed.D0_L2")
+    D1 = safe_get(obj, "observed.D1_L2")
+    Dmf = safe_get(obj, "observed.D_mf")
+    Zmf = safe_get(obj, "observed.Z_mf")
+    p2 = obj.get("p_two_sided_mf", obj.get("p_two_sided"))
 
-# -----------------------------
-# JSON discovery inside a run
-# -----------------------------
-def find_aggregate_json(run_folder: Path) -> Optional[Path]:
-    """
-    Prefer an aggregate json if present; otherwise detect json containing
-    keys: D_stats + inputs + per_sim
-    """
-    # Common case: file includes "aggregate" in name
-    cands = sorted(run_folder.glob("*aggregate*.json"))
-    if cands:
-        return cands[0]
+    # surrogate scalars
+    D0m = safe_get(obj, "surrogate.D0_mean")
+    D0s = safe_get(obj, "surrogate.D0_std")
+    D1m = safe_get(obj, "surrogate.D1_mean")
+    D1s = safe_get(obj, "surrogate.D1_std")
+    Dmfm = safe_get(obj, "surrogate.D_mf_mean")
+    Dmfs = safe_get(obj, "surrogate.D_mf_std")
 
-    # Fallback: detect by content
-    for p in sorted(run_folder.glob("*.json")):
-        try:
-            d = load_json(p)
-        except Exception:
-            continue
-        if isinstance(d, dict) and ("D_stats" in d) and ("inputs" in d) and ("per_sim" in d):
-            return p
-    return None
+    # curves + peaks
+    nu = safe_get(obj, "thresholds.nus")
+    nu = [float(v) for v in nu] if isinstance(nu, list) else None
 
+    v1_obs = safe_get(obj, "observed.v1_curve")
+    v1_mean = safe_get(obj, "surrogate.v1_mean_curve")
 
-def iter_per_sim_jsons(run_folder: Path) -> Iterable[Tuple[Path, Dict[str, Any]]]:
-    """
-    Per-sim result jsons usually contain observed curves:
-      - d["observed"]["v1_curve"] OR d["v1_curve"]
-    Avoid aggregate-like records.
-    """
-    for p in sorted(run_folder.glob("*.json")):
-        try:
-            d = load_json(p)
-        except Exception:
-            continue
-        if not isinstance(d, dict):
-            continue
-
-        # Skip aggregate-like jsons
-        if ("D_stats" in d) and ("per_sim" in d):
-            continue
-
-        obs = d.get("observed")
-        if isinstance(obs, dict) and (isinstance(obs.get("v1_curve"), list) or isinstance(obs.get("v0_curve"), list)):
-            yield p, d
-            continue
-
-        if isinstance(d.get("v1_curve"), list) or isinstance(d.get("v0_curve"), list):
-            yield p, d
-            continue
-
-
-def get_v1_curve(d: Dict[str, Any]) -> Optional[List[float]]:
-    if isinstance(d.get("v1_curve"), list):
-        return d["v1_curve"]  # type: ignore[return-value]
-    obs = d.get("observed")
-    if isinstance(obs, dict) and isinstance(obs.get("v1_curve"), list):
-        return obs["v1_curve"]  # type: ignore[return-value]
-    return None
-
-
-def infer_sim_id(d: Dict[str, Any], filename: str) -> str:
-    for k in ("sim_id", "sim", "simIdx"):
-        if k in d:
-            s = str(d[k])
-            return s.zfill(3) if s.isdigit() else s
-
-    # Try patterns like "__sim000__" or "sim000"
-    m = re.search(r"sim(\d{3})", filename)
-    if m:
-        return m.group(1)
-    return "unknown"
-
-
-def peak_stats(v1_curve: List[float], nus: List[float]) -> Tuple[float, int, Optional[float]]:
-    peak_val = max(v1_curve)
-    peak_idx = v1_curve.index(peak_val)
-    nu_at_peak = nus[peak_idx] if 0 <= peak_idx < len(nus) else None
-    return peak_val, peak_idx, nu_at_peak
-
-
-# -----------------------------
-# Data structures
-# -----------------------------
-@dataclass
-class SweepRow:
-    lmax: int
-    run_id: str
-    seed0: Optional[int]
-    nside: Optional[int]
-    n_phase_sims: Optional[int]
-    sims_used: str
-
-    D0_mean: Optional[float]
-    D0_std: Optional[float]
-    D0_min: Optional[float]
-    D0_max: Optional[float]
-
-    D1_mean: Optional[float]
-    D1_std: Optional[float]
-    D1_min: Optional[float]
-    D1_max: Optional[float]
-
-    Dmf_mean: Optional[float]
-    Dmf_std: Optional[float]
-    Dmf_min: Optional[float]
-    Dmf_max: Optional[float]
-
-
-@dataclass
-class PeakSimRow:
-    lmax: int
-    run_id: str
-    sim_id: str
-    v1_peak: float
-    peak_idx: int
-    nu_at_peak: Optional[float]
-    source_json: str
-
-
-@dataclass
-class PeakRunRow:
-    lmax: int
-    run_id: str
-    peak_mean: Optional[float]
-    peak_min: Optional[float]
-    peak_max: Optional[float]
-    mode_idx: Optional[int]
-    mode_nu: Optional[float]
-
-
-# -----------------------------
-# Extraction per run
-# -----------------------------
-def extract_run_meta(run_folder: Path, agg: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-    """
-    Returns a dict with best-effort:
-      run_id, lmax, nside, n_phase_sims, seed0, sims_used, n_nu, nu_min, nu_max
-    Preference order:
-      1) manifest.txt keys if present
-      2) agg["inputs"] if present
-    """
-    meta: Dict[str, Any] = {}
-
-    manifest_path = run_folder / "manifest.txt"
-    m = parse_manifest(manifest_path) if manifest_path.exists() else {}
-
-    # run_id
-    meta["run_id"] = m.get("run_id", run_folder.name)
-
-    # numeric fields
-    for k in ("lmax", "nside", "n_sims", "seed", "n_nu", "nu_min", "nu_max"):
-        if k in m:
-            meta[k] = m[k]
-
-    # control-specific manifest includes seed0 / n_phase_sims / sims_used sometimes
-    if "seed0" in m:
-        meta["seed0"] = m["seed0"]
-
-    if "n_phase_sims" in m:
-        meta["n_phase_sims"] = m["n_phase_sims"]
-
-    # sims_used often not present; fall back to agg inputs
-    if "sims_used" in m:
-        meta["sims_used"] = m["sims_used"]
-
-    # fallback to aggregate inputs
-    if agg and isinstance(agg.get("inputs"), dict):
-        inp = agg["inputs"]
-        meta.setdefault("lmax", inp.get("lmax"))
-        meta.setdefault("nside", inp.get("nside"))
-        meta.setdefault("seed0", inp.get("seed0"))
-        meta.setdefault("n_phase_sims", inp.get("n_phase_sims"))
-        meta.setdefault("n_nu", inp.get("n_nu", inp.get("n_nu", 61)))
-        meta.setdefault("nu_min", inp.get("nu_min", -3.0))
-        meta.setdefault("nu_max", inp.get("nu_max", 3.0))
-        if "sims_used" not in meta:
-            sims = inp.get("sims_used", [])
-            if isinstance(sims, list):
-                meta["sims_used"] = ",".join([str(x) for x in sims])
-            else:
-                meta["sims_used"] = str(sims)
-
-    # Normalize types
-    meta["lmax"] = safe_int(meta.get("lmax"))
-    meta["nside"] = safe_int(meta.get("nside"))
-    # manifest calls it n_sims, aggregate calls it n_phase_sims
-    meta["n_phase_sims"] = safe_int(meta.get("n_phase_sims", meta.get("n_sims")))
-    meta["seed0"] = safe_int(meta.get("seed0", meta.get("seed")))
-    meta["n_nu"] = safe_int(meta.get("n_nu", 61)) or 61
-    meta["nu_min"] = safe_float(meta.get("nu_min", -3.0)) or -3.0
-    meta["nu_max"] = safe_float(meta.get("nu_max", 3.0)) or 3.0
-    meta["sims_used"] = str(meta.get("sims_used", "") or "")
-
-    return meta
-
-
-def extract_d_stats(agg: Dict[str, Any]) -> Dict[str, Optional[float]]:
-    ds = agg.get("D_stats", {}) if isinstance(agg, dict) else {}
-    def g(k: str) -> Optional[float]:
-        return safe_float(ds.get(k))
-    return {
-        "D0_mean": g("D0_mean"),
-        "D0_std": g("D0_std"),
-        "D0_min": g("D0_min"),
-        "D0_max": g("D0_max"),
-        "D1_mean": g("D1_mean"),
-        "D1_std": g("D1_std"),
-        "D1_min": g("D1_min"),
-        "D1_max": g("D1_max"),
-        "Dmf_mean": g("D_mf_mean"),
-        "Dmf_std": g("D_mf_std"),
-        "Dmf_min": g("D_mf_min"),
-        "Dmf_max": g("D_mf_max"),
+    peak_row: Dict[str, Any] = {
+        "control": control_name,
+        "run_id": run_id,
+        "json": str(json_path),
+        "lmax": lmax,
+        "nside": nside,
+        "n_sims": n_sims,
+        "seed": seed,
     }
 
+    if nu and isinstance(v1_obs, list) and len(v1_obs) == len(nu):
+        pk = peak_info(nu, [float(v) for v in v1_obs])
+        peak_row.update({
+            "v1_obs_peak_idx": pk.peak_idx,
+            "v1_obs_nu_peak": pk.nu_peak,
+            "v1_obs_peak_height": pk.peak_height,
+        })
+    if nu and isinstance(v1_mean, list) and len(v1_mean) == len(nu):
+        pk = peak_info(nu, [float(v) for v in v1_mean])
+        peak_row.update({
+            "v1_mean_peak_idx": pk.peak_idx,
+            "v1_mean_nu_peak": pk.nu_peak,
+            "v1_mean_peak_height": pk.peak_height,
+        })
 
-# -----------------------------
-# Output writers
-# -----------------------------
-def write_csv(path: Path, rows: List[Dict[str, Any]], fieldnames: List[str]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=fieldnames)
-        w.writeheader()
-        for r in rows:
-            w.writerow(r)
+    # sweep row
+    sweep_row: Dict[str, Any] = {
+        "control": control_name,
+        "run_id": run_id,
+        "json": str(json_path),
+        "kind": kind,
+        "lmax": lmax,
+        "nside": nside,
+        "n_sims": n_sims,
+        "seed": seed,
+        "p_two_sided_mf": p2,
+        "D0_L2": D0,
+        "D1_L2": D1,
+        "D_mf": Dmf,
+        "Z_mf": Zmf,
+        "D0_mean": D0m,
+        "D0_std": D0s,
+        "D1_mean": D1m,
+        "D1_std": D1s,
+        "D_mf_mean": Dmfm,
+        "D_mf_std": Dmfs,
+    }
+
+    # gc row
+    gc_row: Dict[str, Any] = {
+        "control": control_name,
+        "run_id": run_id,
+        "json": str(json_path),
+        "kind": kind,
+        "lmax": lmax,
+        "nside": nside,
+        "n_sims": n_sims,
+        "seed": seed,
+        "p_two_sided_mf": p2,
+    }
+    try:
+        gc_row.update(gc_features_from_mf_json(obj))
+    except Exception as e:
+        gc_row["gc_error"] = str(e)
+
+    return sweep_row, peak_row, gc_row
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--runs_dir", required=True,
-                    help="Root folder to search under for run folders (manifest.txt). Can be broad.")
-    ap.add_argument("--out_dir", required=True,
-                    help="Output directory for postprocess artifacts.")
-    ap.add_argument("--control_name", default="",
-                    help="If set, only include runs whose manifest.txt contains 'control: <control_name>'.")
+    ap.add_argument("--runs_dir", required=True, help="Root folder that contains archived runs (will be searched recursively).")
+    ap.add_argument("--control_name", required=True, help="Control name string as written in manifest.txt (control: ...).")
+    ap.add_argument("--out_dir", required=True, help="Output directory for generated tables.")
     args = ap.parse_args()
 
-    runs_root = Path(args.runs_dir).expanduser().resolve()
-    out_dir = Path(args.out_dir).expanduser().resolve()
-    out_dir.mkdir(parents=True, exist_ok=True)
+    runs_dir = Path(args.runs_dir)
+    out_dir = Path(args.out_dir)
+    control = args.control_name
 
-    run_folders = discover_run_folders(runs_root)
-    if not run_folders:
-        raise SystemExit(f"No run folders found under: {runs_root}")
+    if not runs_dir.exists():
+        raise SystemExit(f"ERROR: runs_dir not found: {runs_dir}")
 
-    # Filter by control_name if provided
-    if args.control_name:
-        filtered: List[Path] = []
-        for rf in run_folders:
-            mp = rf / "manifest.txt"
-            if mp.exists() and manifest_contains_control(mp, args.control_name):
-                filtered.append(rf)
-        run_folders = filtered
-        if not run_folders:
-            raise SystemExit(f"No runs matched control_name='{args.control_name}' under: {runs_root}")
+    ensure_dir(out_dir)
 
-    sweep: List[SweepRow] = []
-    peak_run_rows: List[PeakRunRow] = []
-    peak_sim_rows: List[PeakSimRow] = []
+    # discover run folders by manifest match
+    matched_run_dirs: List[Path] = []
+    for mp in iter_manifest_paths(runs_dir):
+        txt = read_text(mp)
+        if manifest_has_control(txt, control):
+            # manifest.txt is in .../<run_id>/manifest.txt
+            matched_run_dirs.append(mp.parent)
 
-    # Process each run folder
-    for rf in sorted(run_folders):
-        agg_path = find_aggregate_json(rf)
-        agg = load_json(agg_path) if agg_path else None
-        meta = extract_run_meta(rf, agg)
+    matched_run_dirs = sorted(set(matched_run_dirs))
+    if not matched_run_dirs:
+        raise SystemExit(f"ERROR: No manifests in {runs_dir} contained: control: {control}")
 
-        lmax = meta.get("lmax")
-        if lmax is None:
-            # cannot place in sweep without lmax
+    sweep_rows: List[Dict[str, Any]] = []
+    peak_rows: List[Dict[str, Any]] = []
+    gc_rows: List[Dict[str, Any]] = []
+
+    for run_dir in matched_run_dirs:
+        run_id = derive_run_id_from_path(run_dir)
+        json_files = find_json_for_run(run_dir)
+        if not json_files:
+            sweep_rows.append({
+                "control": control,
+                "run_id": run_id,
+                "error": "No JSON files found in run directory",
+                "run_dir": str(run_dir),
+            })
             continue
 
-        run_id = str(meta.get("run_id", rf.name))
+        # if multiple json files, process each (safe), but usually it's 1
+        for jf in json_files:
+            try:
+                srow, prow, grow = summarize_mf_run(jf, run_id, control)
+                sweep_rows.append(srow)
+                peak_rows.append(prow)
+                gc_rows.append(grow)
+            except Exception as e:
+                sweep_rows.append({
+                    "control": control,
+                    "run_id": run_id,
+                    "json": str(jf),
+                    "error": str(e),
+                })
 
-        # D_stats (from aggregate only)
-        d_stats = extract_d_stats(agg) if isinstance(agg, dict) else {k: None for k in [
-            "D0_mean","D0_std","D0_min","D0_max",
-            "D1_mean","D1_std","D1_min","D1_max",
-            "Dmf_mean","Dmf_std","Dmf_min","Dmf_max"
-        ]}
+    # Sort for readability
+    def sort_key(r: Dict[str, Any]):
+        try:
+            return (int(r.get("lmax", 0) or 0), str(r.get("run_id", "")))
+        except Exception:
+            return (0, str(r.get("run_id", "")))
 
-        sweep.append(SweepRow(
-            lmax=lmax,
-            run_id=run_id,
-            seed0=meta.get("seed0"),
-            nside=meta.get("nside"),
-            n_phase_sims=meta.get("n_phase_sims"),
-            sims_used=meta.get("sims_used", ""),
-            D0_mean=d_stats["D0_mean"],
-            D0_std=d_stats["D0_std"],
-            D0_min=d_stats["D0_min"],
-            D0_max=d_stats["D0_max"],
-            D1_mean=d_stats["D1_mean"],
-            D1_std=d_stats["D1_std"],
-            D1_min=d_stats["D1_min"],
-            D1_max=d_stats["D1_max"],
-            Dmf_mean=d_stats["Dmf_mean"],
-            Dmf_std=d_stats["Dmf_std"],
-            Dmf_min=d_stats["Dmf_min"],
-            Dmf_max=d_stats["Dmf_max"],
-        ))
+    sweep_rows = sorted(sweep_rows, key=sort_key)
+    peak_rows = sorted(peak_rows, key=sort_key)
+    gc_rows = sorted(gc_rows, key=sort_key)
 
-        # Peaks config
-        n_nu = int(meta.get("n_nu", 61))
-        nu_min = float(meta.get("nu_min", -3.0))
-        nu_max = float(meta.get("nu_max", 3.0))
-        nus = linspace(nu_min, nu_max, n_nu)
+    # Write outputs
+    sweep_csv = out_dir / "mf_sweep_table.csv"
+    peaks_csv = out_dir / "v1_peak_table.csv"
+    gc_csv = out_dir / "gc_features_table.csv"
 
-        per_sim_peaks: List[Tuple[str, float, int, Optional[float], str]] = []
+    write_csv(sweep_csv, sweep_rows)
+    write_csv(peaks_csv, peak_rows)
+    write_csv(gc_csv, gc_rows)
 
-        for p, d in iter_per_sim_jsons(rf):
-            v1 = get_v1_curve(d)
-            if not v1:
-                continue
-            sim_id = infer_sim_id(d, p.name)
-            pv, pi, pnu = peak_stats(v1, nus)
-            per_sim_peaks.append((sim_id, pv, pi, pnu, p.name))
-            peak_sim_rows.append(PeakSimRow(
-                lmax=lmax,
-                run_id=run_id,
-                sim_id=sim_id,
-                v1_peak=pv,
-                peak_idx=pi,
-                nu_at_peak=pnu,
-                source_json=p.name
-            ))
+    # Markdown tables (minimal, human scan)
+    sweep_md = out_dir / "mf_sweep_table.md"
+    peaks_md = out_dir / "v1_peak_table.md"
 
-        # Per-run summary of peaks
-        if per_sim_peaks:
-            vals = [x[1] for x in per_sim_peaks]
-            idxs = [x[2] for x in per_sim_peaks]
-            # mode index (tie-break to smallest idx)
-            counts: Dict[int, int] = {}
-            for idx in idxs:
-                counts[idx] = counts.get(idx, 0) + 1
-            mode_idx = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
-            mode_nu = nus[mode_idx] if 0 <= mode_idx < len(nus) else None
+    sweep_cols = [
+        "lmax", "nside", "n_sims", "seed", "run_id",
+        "D0_L2", "D1_L2", "D_mf", "Z_mf", "p_two_sided_mf",
+        "D0_mean", "D0_std", "D1_mean", "D1_std", "D_mf_mean", "D_mf_std",
+        "json"
+    ]
+    peak_cols = [
+        "lmax", "nside", "n_sims", "seed", "run_id",
+        "v1_obs_nu_peak", "v1_obs_peak_height",
+        "v1_mean_nu_peak", "v1_mean_peak_height",
+        "json"
+    ]
 
-            peak_run_rows.append(PeakRunRow(
-                lmax=lmax,
-                run_id=run_id,
-                peak_mean=sum(vals) / len(vals),
-                peak_min=min(vals),
-                peak_max=max(vals),
-                mode_idx=mode_idx,
-                mode_nu=mode_nu
-            ))
-        else:
-            peak_run_rows.append(PeakRunRow(
-                lmax=lmax,
-                run_id=run_id,
-                peak_mean=None,
-                peak_min=None,
-                peak_max=None,
-                mode_idx=None,
-                mode_nu=None
-            ))
+    write_md_table(sweep_md, sweep_rows, sweep_cols, "Gate 2B — MF V0+V1 Sweep Table")
+    write_md_table(peaks_md, peak_rows, peak_cols, "Gate 2B — V1 Peak Table")
 
-    # Sort by lmax (ascending)
-    sweep.sort(key=lambda r: r.lmax)
-    peak_run_rows.sort(key=lambda r: r.lmax)
-    peak_sim_rows.sort(key=lambda r: (r.lmax, r.run_id, r.sim_id))
-
-    # -----------------------------
-    # Write SWEEP outputs
-    # -----------------------------
-    sweep_md_lines: List[str] = []
-    sweep_md_lines.append("# Gate 2B — ΛCDM recon control (MF V0+V1): ℓmax sweep\n")
-    sweep_md_lines.append(f"- Search root: `{runs_root}`")
-    if args.control_name:
-        sweep_md_lines.append(f"- Control filter: `{args.control_name}`")
-    sweep_md_lines.append(f"- Runs found: **{len(sweep)}**\n")
-
-    sweep_md_lines.append("| lmax | run_id | seed0 | sims_used | D1_mean ± std | D1_min..max | Dmf_mean ± std | Dmf_min..max | D0_mean ± std |")
-    sweep_md_lines.append("|---:|---:|---:|---|---|---|---|---|---|")
-
-    for r in sweep:
-        sweep_md_lines.append(
-            f"| {r.lmax} | {r.run_id} | {r.seed0 if r.seed0 is not None else ''} | {r.sims_used} | "
-            f"{fmt(r.D1_mean)} ± {fmt(r.D1_std)} | {fmt(r.D1_min)}..{fmt(r.D1_max)} | "
-            f"{fmt(r.Dmf_mean)} ± {fmt(r.Dmf_std)} | {fmt(r.Dmf_min)}..{fmt(r.Dmf_max)} | "
-            f"{fmt(r.D0_mean, 6)} ± {fmt(r.D0_std, 6)} |"
-        )
-
-    sweep_md_lines.append("\n## Derived ratios\n")
-    for r in sweep:
-        if r.D1_mean is not None:
-            sweep_md_lines.append(f"- D1_mean / lmax @ lmax={r.lmax}: {(r.D1_mean / r.lmax):.3f}")
-
-    out_sweep_md = out_dir / "gate2b_mf_v0_v1__lmax_sweep.md"
-    out_sweep_md.write_text("\n".join(sweep_md_lines) + "\n", encoding="utf-8")
-
-    sweep_rows_for_csv = [{
-        "lmax": r.lmax,
-        "run_id": r.run_id,
-        "seed0": r.seed0,
-        "nside": r.nside,
-        "n_phase_sims": r.n_phase_sims,
-        "sims_used": r.sims_used,
-        "D0_mean": r.D0_mean,
-        "D0_std": r.D0_std,
-        "D0_min": r.D0_min,
-        "D0_max": r.D0_max,
-        "D1_mean": r.D1_mean,
-        "D1_std": r.D1_std,
-        "D1_min": r.D1_min,
-        "D1_max": r.D1_max,
-        "Dmf_mean": r.Dmf_mean,
-        "Dmf_std": r.Dmf_std,
-        "Dmf_min": r.Dmf_min,
-        "Dmf_max": r.Dmf_max,
-    } for r in sweep]
-
-    out_sweep_csv = out_dir / "gate2b_mf_v0_v1__lmax_sweep.csv"
-    write_csv(out_sweep_csv, sweep_rows_for_csv, list(sweep_rows_for_csv[0].keys()) if sweep_rows_for_csv else [])
-
-    out_sweep_json = out_dir / "gate2b_mf_v0_v1__lmax_sweep.json"
-    dump_json(out_sweep_json, sweep_rows_for_csv)
-
-    # -----------------------------
-    # Write PEAK outputs
-    # -----------------------------
-    peaks_md_lines: List[str] = []
-    peaks_md_lines.append("# Gate 2B — MF V0+V1: V1 peak summary\n")
-    peaks_md_lines.append(f"- Search root: `{runs_root}`")
-    if args.control_name:
-        peaks_md_lines.append(f"- Control filter: `{args.control_name}`")
-    peaks_md_lines.append(f"- Runs found: **{len(peak_run_rows)}**\n")
-
-    peaks_md_lines.append("## Per-run summary\n")
-    peaks_md_lines.append("| lmax | run_id | peak(V1) mean | peak(V1) min..max | peak idx (mode) | ν at peak (mode) |")
-    peaks_md_lines.append("|---:|---:|---:|---:|---:|---:|")
-
-    for r in peak_run_rows:
-        peaks_md_lines.append(
-            f"| {r.lmax} | {r.run_id} | {fmt(r.peak_mean,3)} | {fmt(r.peak_min,3)}..{fmt(r.peak_max,3)} | "
-            f"{'' if r.mode_idx is None else r.mode_idx} | {fmt(r.mode_nu,3)} |"
-        )
-
-    peaks_md_lines.append("\n## Per-sim detail\n")
-    last_key = None
-    for ps in peak_sim_rows:
-        key = (ps.lmax, ps.run_id)
-        if key != last_key:
-            peaks_md_lines.append(f"\n### lmax={ps.lmax} (run {ps.run_id})\n")
-            peaks_md_lines.append("| sim_id | v1_peak | peak_idx | ν_at_peak | source_json |")
-            peaks_md_lines.append("|---:|---:|---:|---:|---|")
-            last_key = key
-        peaks_md_lines.append(
-            f"| {ps.sim_id} | {ps.v1_peak:.3f} | {ps.peak_idx} | {fmt(ps.nu_at_peak,3)} | `{ps.source_json}` |"
-        )
-
-    out_peaks_md = out_dir / "gate2b_mf_v0_v1__v1_peaks.md"
-    out_peaks_md.write_text("\n".join(peaks_md_lines) + "\n", encoding="utf-8")
-
-    peaks_run_for_csv = [{
-        "lmax": r.lmax,
-        "run_id": r.run_id,
-        "peak_mean": r.peak_mean,
-        "peak_min": r.peak_min,
-        "peak_max": r.peak_max,
-        "mode_idx": r.mode_idx,
-        "mode_nu": r.mode_nu,
-    } for r in peak_run_rows]
-
-    out_peaks_run_csv = out_dir / "gate2b_mf_v0_v1__v1_peaks__per_run.csv"
-    write_csv(out_peaks_run_csv, peaks_run_for_csv, list(peaks_run_for_csv[0].keys()) if peaks_run_for_csv else [])
-
-    peaks_sim_for_csv = [{
-        "lmax": r.lmax,
-        "run_id": r.run_id,
-        "sim_id": r.sim_id,
-        "v1_peak": r.v1_peak,
-        "peak_idx": r.peak_idx,
-        "nu_at_peak": r.nu_at_peak,
-        "source_json": r.source_json,
-    } for r in peak_sim_rows]
-
-    out_peaks_sim_csv = out_dir / "gate2b_mf_v0_v1__v1_peaks__per_sim.csv"
-    write_csv(out_peaks_sim_csv, peaks_sim_for_csv, list(peaks_sim_for_csv[0].keys()) if peaks_sim_for_csv else [])
-
-    out_peaks_json = out_dir / "gate2b_mf_v0_v1__v1_peaks.json"
-    dump_json(out_peaks_json, {
-        "per_run": peaks_run_for_csv,
-        "per_sim": peaks_sim_for_csv,
-    })
-
-    print(f"Wrote:\n- {out_sweep_md}\n- {out_sweep_csv}\n- {out_sweep_json}\n- {out_peaks_md}\n- {out_peaks_run_csv}\n- {out_peaks_sim_csv}\n- {out_peaks_json}")
+    print("Wrote:")
+    print(f"  {sweep_csv}")
+    print(f"  {sweep_md}")
+    print(f"  {peaks_csv}")
+    print(f"  {peaks_md}")
+    print(f"  {gc_csv}")
 
 
 if __name__ == "__main__":
