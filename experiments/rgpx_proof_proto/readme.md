@@ -50,7 +50,17 @@ In physics terms, the long-horizon claim RGPx aims to stress-test is whether **c
 3) Compare observed vs sim envelope on GC features, not just D_mf.
 
 ```
+## Collaboration Protocol (how we work)
 
+This repo is the traceable premise. Chat is used to draft hypotheses, interpret deltas, and propose the *next minimal falsification step* — but conclusions only “count” once they are written into versioned artifacts here.
+
+Operating rules:
+1) **Run Cards only:** each new run is summarized as a compact Run Card in `cmb_phase_dagger/notes/` (run_id, settings, gate, outputs, paths).
+2) **One-change steps:** each iteration changes *one* control knob (mask / ℓ-range / estimator / sim list / null) so attribution stays clean.
+3) **Curves → GC features:** we prioritize curve-shape descriptors (ν_peak, width, bump count, ℓmax drift) over single scalar distances when deciding Gate 3.
+4) **Manifest-driven sims:** end-to-end ΛCDM recon controls are driven by explicit manifests (`data/.../manifest.txt`) committed to the repo.
+5) **Memo stays current:** `notes/ops_advantage_memo.md` is updated when a gate changes state (PASS/FAIL/OPEN).
+	
 ---
 
 ## Purpose
