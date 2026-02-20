@@ -56,7 +56,7 @@ jobs:
             pip install numpy
           fi
 
-      - name: Discover Gate 2B runs directory
+      - name: Discover Gate 2B runs root
         id: discover
         shell: bash
         run: |
@@ -73,8 +73,7 @@ jobs:
             exit 1
           fi
 
-          # Find manifest files that mention the control
-          # manifests are typically: .../runs/<run_id>/manifest.txt
+          # Find manifest files that mention the control (anywhere under ROOT)
           mapfile -t hits < <(grep -Rsl "control: ${CONTROL}" "${ROOT}" || true)
 
           if [ "${#hits[@]}" -eq 0 ]; then
@@ -86,28 +85,30 @@ jobs:
           echo "Found ${#hits[@]} matching manifests."
           echo "Example hit: ${hits[0]}"
 
-          # Convert manifest path -> runs directory (two levels up from manifest.txt)
-          # .../runs/<run_id>/manifest.txt  -> .../runs
-          runs_dir="$(dirname "$(dirname "${hits[0]}")")"
+          # hits[0] looks like:
+          #   .../controls/<control>/runs/<run_id>/manifest.txt
+          # We want:
+          #   .../controls/<control>/runs
+          runs_root="$(dirname "$(dirname "$(dirname "${hits[0]}")")")"
 
-          if [ ! -d "${runs_dir}" ]; then
-            echo "ERROR: Derived runs_dir does not exist: ${runs_dir}"
+          if [ ! -d "${runs_root}" ]; then
+            echo "ERROR: Derived runs_root does not exist: ${runs_root}"
             exit 1
           fi
 
-          echo "RUNS_DIR=${runs_dir}" | tee -a "$GITHUB_OUTPUT"
+          echo "RUNS_ROOT=${runs_root}" | tee -a "$GITHUB_OUTPUT"
 
       - name: Run postprocess
         shell: bash
         run: |
           set -euo pipefail
 
-          RUNS_DIR="${{ steps.discover.outputs.RUNS_DIR }}"
+          RUNS_ROOT="${{ steps.discover.outputs.RUNS_ROOT }}"
           OUT_DIR="${{ inputs.out_dir }}"
           CONTROL="${{ inputs.control_name }}"
           TOOL="${{ inputs.postprocess_script }}"
 
-          echo "RUNS_DIR=${RUNS_DIR}"
+          echo "RUNS_ROOT=${RUNS_ROOT}"
           echo "OUT_DIR=${OUT_DIR}/${CONTROL}"
           echo "TOOL=${TOOL}"
 
@@ -115,12 +116,12 @@ jobs:
 
           if [ ! -f "${TOOL}" ]; then
             echo "ERROR: postprocess script not found: ${TOOL}"
-            echo "Say: 'regenerate gate2b_mf_postprocess.py' and I’ll paste it."
             exit 1
           fi
 
           python "${TOOL}" \
-            --runs_dir "${RUNS_DIR}" \
+            --runs_dir "${RUNS_ROOT}" \
+            --control_name "${CONTROL}" \
             --out_dir "${OUT_DIR}/${CONTROL}"
 
           echo "Postprocess outputs:"
