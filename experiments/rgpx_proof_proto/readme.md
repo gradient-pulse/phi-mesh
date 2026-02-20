@@ -219,10 +219,11 @@ Pipeline validity: PASS
 	•	A self-test mode exists: observed := one phase-random surrogate, expected to yield non-significant p-values.
 
 Current gate status (MF V0+V1)
-	•	Sanity (distance correctness + self-test behavior): PASS
-	•	Gaussian Cℓ-matched control: PASS (non-extreme p-values across an ℓmax sweep)
-	•	ΛCDM end-to-end recon control (MF analogue of AreaFrac Gate 2B): NOT RUN YET
-	•	Attribution: OPEN (strong deviation vs phase-only surrogate null is real, but its source is not yet attributed)
+	•	Gate 0 — Mechanical sanity (L2 correctness + self-test): PASS
+	•	Gate 1 — Gaussian Cℓ-matched control: PASS (non-extreme p-values across an ℓmax sweep)
+	•	Gate 2B — ΛCDM end-to-end recon control (MF analogue of AreaFrac Gate 2B): PASS (preliminary; N=3)
+	•	Gate 3 — Robustness / null adequacy / splits / masks / ℓ-sensitivity: OPEN
+	•	Attribution: pipeline-/reconstruction-consistent at lmax=256, nside=256 (N=3); robustness + larger N pending
 
 The exact run registry and interpretation state live in:
 	•	cmb_phase_dagger/results/headline_findings.md
