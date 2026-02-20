@@ -1,0 +1,42 @@
+name: Extract GC Features
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/**"
+      - "experiments/rgpx_proof_proto/cmb_phase_dagger/extract_gc_features.py"
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run GC feature extraction
+        run: |
+          python experiments/rgpx_proof_proto/cmb_phase_dagger/extract_gc_features.py \
+            --root experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1 \
+            --out  experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/gc_features.csv \
+            --include-v0
+
+      - name: Commit updated gc_features.csv (if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/gc_features.csv
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Update GC feature summary (auto)"
+          git push
