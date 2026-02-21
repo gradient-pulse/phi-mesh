@@ -1,0 +1,156 @@
+name: "Gate 2B Analysis — MF V0+V1 (cohort compare)"
+
+# This workflow is intended to be run AFTER:
+#   - gate2b_postprocess_mf_v0_v1.yml  (your postprocess workflow)
+#
+# Optionally you can auto-trigger it after postprocess completes by enabling the
+# workflow_run block below and setting `workflows:` to the exact postprocess workflow name.
+#
+# on:
+#   workflow_run:
+#     workflows: ["Gate 2B Postprocess — MF V0+V1 (sweep table + V1 peak)"]
+#     types: [completed]
+
+on:
+  workflow_dispatch:
+    inputs:
+      analysis_script:
+        description: "Path to analysis python script"
+        required: true
+        default: "experiments/rgpx_proof_proto/cmb_phase_dagger/tools/gate2b_mf_analysis_v1.py"
+      out_dir:
+        description: "Output folder for analysis artifacts (relative path)"
+        required: true
+        default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/mf_v0_v1"
+      observed_post_dir:
+        description: "Postprocess folder for observed cohort"
+        required: true
+        default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/observed_planck_pr3__mf_v0_v1"
+      gaussian_post_dir:
+        description: "Postprocess folder for gaussian cohort"
+        required: true
+        default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl"
+      lcdm_post_dir:
+        description: "Postprocess folder for lcdm recon cohort"
+        required: true
+        default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1"
+      commit_message:
+        description: "Commit message"
+        required: true
+        default: "Gate 2B (MF V0+V1): analysis cohort summary"
+
+concurrency:
+  group: "gate2b-analysis-mf-v0v1"
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps (minimal)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          # analysis script uses stdlib only; numpy not required
+          true
+
+      - name: Preflight — require postprocess outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OBS_DIR="${{ inputs.observed_post_dir }}"
+          GAU_DIR="${{ inputs.gaussian_post_dir }}"
+          LCDM_DIR="${{ inputs.lcdm_post_dir }}"
+
+          echo "Checking postprocess dirs exist..."
+          for d in "$OBS_DIR" "$GAU_DIR" "$LCDM_DIR"; do
+            if [ ! -d "$d" ]; then
+              echo "ERROR: Missing postprocess directory: $d"
+              echo "Run the postprocess workflow first."
+              exit 1
+            fi
+          done
+
+          echo "Checking required files..."
+          req=("gc_features_table.csv" "mf_sweep_table.csv")
+          for d in "$OBS_DIR" "$GAU_DIR" "$LCDM_DIR"; do
+            for f in "${req[@]}"; do
+              if [ ! -f "$d/$f" ]; then
+                echo "ERROR: Missing required file: $d/$f"
+                echo "Run the postprocess workflow first (or ensure it wrote this file)."
+                exit 1
+              fi
+            done
+          done
+
+          echo "OK: postprocess outputs found."
+
+      - name: Run analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TOOL="${{ inputs.analysis_script }}"
+          OUT="${{ inputs.out_dir }}"
+
+          OBS_GC="${{ inputs.observed_post_dir }}/gc_features_table.csv"
+          GAU_GC="${{ inputs.gaussian_post_dir }}/gc_features_table.csv"
+          LCDM_GC="${{ inputs.lcdm_post_dir }}/gc_features_table.csv"
+
+          echo "TOOL=$TOOL"
+          echo "OUT=$OUT"
+          echo "OBS_GC=$OBS_GC"
+          echo "GAU_GC=$GAU_GC"
+          echo "LCDM_GC=$LCDM_GC"
+
+          if [ ! -f "$TOOL" ]; then
+            echo "ERROR: analysis script not found: $TOOL"
+            exit 1
+          fi
+
+          mkdir -p "$OUT"
+
+          python "$TOOL" \
+            --out_dir "$OUT" \
+            --observed_gc "$OBS_GC" \
+            --gaussian_gc "$GAU_GC" \
+            --lcdm_gc "$LCDM_GC" \
+            --dedupe newest
+
+          echo "Analysis outputs:"
+          find "$OUT" -maxdepth 2 -type f -print
+
+      - name: Commit analysis outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OUT="${{ inputs.out_dir }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "$OUT" || true
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "${{ inputs.commit_message }}"
+          git push
