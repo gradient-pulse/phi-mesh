@@ -15,6 +15,12 @@ Expected JSON schema (confirmed by your example):
   surrogate.v0_mean_curve, surrogate.v1_mean_curve
   plus scalar metrics in observed / surrogate blocks
 
+This version intentionally produces ONLY these canonical outputs:
+  mf_sweep_table.csv/.md
+  v1_peak_table.csv/.md
+  gc_features_table.csv
+and does NOT emit legacy gate2b_mf_v0_v1__* files.
+
 Usage:
   python gate2b_mf_postprocess.py \
     --runs_dir experiments/.../controls/lcdm_recon/runs \
@@ -28,10 +34,9 @@ import argparse
 import csv
 import json
 import math
-import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Tuple
 
 
 # ----------------------------
@@ -52,6 +57,24 @@ def safe_get(d: Dict[str, Any], path: str, default=None):
     return cur
 
 
+def to_float(x: Any):
+    try:
+        if x is None:
+            return None
+        return float(x)
+    except Exception:
+        return None
+
+
+def to_int(x: Any):
+    try:
+        if x is None:
+            return None
+        return int(x)
+    except Exception:
+        return None
+
+
 def ensure_dir(p: Path) -> None:
     p.mkdir(parents=True, exist_ok=True)
 
@@ -60,7 +83,6 @@ def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
     ensure_dir(path.parent)
     if not rows:
         raise RuntimeError(f"No rows to write: {path}")
-    # union of keys
     keys = set()
     for r in rows:
         keys.update(r.keys())
@@ -88,7 +110,6 @@ def write_md_table(path: Path, rows: List[Dict[str, Any]], columns: List[str], t
         if not rows:
             f.write("_No rows._\n")
             return
-        # header
         f.write("| " + " | ".join(columns) + " |\n")
         f.write("| " + " | ".join(["---"] * len(columns)) + " |\n")
         for r in rows:
@@ -110,32 +131,41 @@ def manifest_has_control(manifest_text: str, control_name: str) -> bool:
 
 
 def derive_run_id_from_path(p: Path) -> str:
-    # typical .../runs/<run_id>/manifest.txt
     for part in reversed(p.parts):
         if part.isdigit():
             return part
-    # fallback
     return p.parent.name
 
 
 def find_json_for_run(run_dir: Path) -> List[Path]:
     """
-    Prefer MF V0+V1 aggregate json; otherwise take any .json.
+    Only accept MF V0+V1 aggregate JSONs (tight filter).
+    This prevents accidental ingestion of unrelated JSON files.
     """
-    j = sorted(run_dir.glob("*.json"))
-    if not j:
-        # sometimes nested
-        j = sorted(run_dir.rglob("*.json"))
-    # prefer mf_v0_v1 aggregate naming convention if present
+    j = sorted(run_dir.rglob("*.json"))
     preferred = [p for p in j if ("mf_v0_v1" in p.name and "aggregate" in p.name)]
-    if preferred:
-        return preferred
-    preferred2 = [p for p in j if ("mf_v0_v1" in p.name)]
-    return preferred2 if preferred2 else j
+    return preferred
 
 
 def load_json(path: Path) -> Dict[str, Any]:
     return json.loads(read_text(path))
+
+
+def looks_like_mf_json(obj: Dict[str, Any]) -> bool:
+    """
+    Quick schema gate: ensure this is a MF V0+V1 JSON output.
+    """
+    if not isinstance(obj, dict):
+        return False
+    if not isinstance(obj.get("observed"), dict):
+        return False
+    thr = obj.get("thresholds")
+    if not isinstance(thr, dict):
+        return False
+    nus = thr.get("nus")
+    if not isinstance(nus, list) or len(nus) < 10:
+        return False
+    return True
 
 
 # ----------------------------
@@ -220,14 +250,6 @@ def _curve_energy(nu: List[float], y: List[float]) -> float:
 
 
 def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Extract GC features from your MF V0+V1 JSON schema.
-
-    Confirmed locations:
-      thresholds.nus
-      observed.v0_curve, observed.v1_curve
-      surrogate.v0_mean_curve, surrogate.v1_mean_curve
-    """
     nu = safe_get(obj, "thresholds.nus")
     if not isinstance(nu, list) or not nu:
         raise ValueError("Missing thresholds.nus")
@@ -258,7 +280,6 @@ def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
         out[f"{prefix}_d2_sign_changes"] = int(_count_sign_changes(d2))
         out[f"{prefix}_shape_energy"] = float(_curve_energy(nu, y))
 
-    # Primary: V1 observed + mean, Secondary: V0 observed + mean
     add("gc_v1_obs", v1_obs)
     add("gc_v1_mean", v1_mean)
     add("gc_v0_obs", v0_obs)
@@ -272,35 +293,31 @@ def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
 # ----------------------------
 
 def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
-    """
-    Returns:
-      sweep_row, peak_row, gc_row
-    """
     obj = load_json(json_path)
+    if not looks_like_mf_json(obj):
+        raise ValueError("JSON does not match MF schema (missing observed/thresholds.nus)")
 
-    # common metadata
-    lmax = obj.get("lmax")
-    nside = obj.get("nside")
-    n_sims = obj.get("n_sims")
-    seed = obj.get("seed")
+    lmax = to_int(obj.get("lmax"))
+    nside = to_int(obj.get("nside"))
+    n_sims = to_int(obj.get("n_sims"))
+    seed = to_int(obj.get("seed"))
     kind = obj.get("kind")
 
     # observed scalars
-    D0 = safe_get(obj, "observed.D0_L2")
-    D1 = safe_get(obj, "observed.D1_L2")
-    Dmf = safe_get(obj, "observed.D_mf")
-    Zmf = safe_get(obj, "observed.Z_mf")
-    p2 = obj.get("p_two_sided_mf", obj.get("p_two_sided"))
+    D0 = to_float(safe_get(obj, "observed.D0_L2"))
+    D1 = to_float(safe_get(obj, "observed.D1_L2"))
+    Dmf = to_float(safe_get(obj, "observed.D_mf"))
+    Zmf = to_float(safe_get(obj, "observed.Z_mf"))
+    p2 = to_float(obj.get("p_two_sided_mf", obj.get("p_two_sided")))
 
     # surrogate scalars
-    D0m = safe_get(obj, "surrogate.D0_mean")
-    D0s = safe_get(obj, "surrogate.D0_std")
-    D1m = safe_get(obj, "surrogate.D1_mean")
-    D1s = safe_get(obj, "surrogate.D1_std")
-    Dmfm = safe_get(obj, "surrogate.D_mf_mean")
-    Dmfs = safe_get(obj, "surrogate.D_mf_std")
+    D0m = to_float(safe_get(obj, "surrogate.D0_mean"))
+    D0s = to_float(safe_get(obj, "surrogate.D0_std"))
+    D1m = to_float(safe_get(obj, "surrogate.D1_mean"))
+    D1s = to_float(safe_get(obj, "surrogate.D1_std"))
+    Dmfm = to_float(safe_get(obj, "surrogate.D_mf_mean"))
+    Dmfs = to_float(safe_get(obj, "surrogate.D_mf_std"))
 
-    # curves + peaks
     nu = safe_get(obj, "thresholds.nus")
     nu = [float(v) for v in nu] if isinstance(nu, list) else None
 
@@ -320,19 +337,16 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
     if nu and isinstance(v1_obs, list) and len(v1_obs) == len(nu):
         pk = peak_info(nu, [float(v) for v in v1_obs])
         peak_row.update({
-            "v1_obs_peak_idx": pk.peak_idx,
             "v1_obs_nu_peak": pk.nu_peak,
             "v1_obs_peak_height": pk.peak_height,
         })
     if nu and isinstance(v1_mean, list) and len(v1_mean) == len(nu):
         pk = peak_info(nu, [float(v) for v in v1_mean])
         peak_row.update({
-            "v1_mean_peak_idx": pk.peak_idx,
             "v1_mean_nu_peak": pk.nu_peak,
             "v1_mean_peak_height": pk.peak_height,
         })
 
-    # sweep row
     sweep_row: Dict[str, Any] = {
         "control": control_name,
         "run_id": run_id,
@@ -355,7 +369,6 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
         "D_mf_std": Dmfs,
     }
 
-    # gc row
     gc_row: Dict[str, Any] = {
         "control": control_name,
         "run_id": run_id,
@@ -391,12 +404,10 @@ def main() -> None:
 
     ensure_dir(out_dir)
 
-    # discover run folders by manifest match
     matched_run_dirs: List[Path] = []
     for mp in iter_manifest_paths(runs_dir):
         txt = read_text(mp)
         if manifest_has_control(txt, control):
-            # manifest.txt is in .../<run_id>/manifest.txt
             matched_run_dirs.append(mp.parent)
 
     matched_run_dirs = sorted(set(matched_run_dirs))
@@ -410,16 +421,16 @@ def main() -> None:
     for run_dir in matched_run_dirs:
         run_id = derive_run_id_from_path(run_dir)
         json_files = find_json_for_run(run_dir)
+
         if not json_files:
             sweep_rows.append({
                 "control": control,
                 "run_id": run_id,
-                "error": "No JSON files found in run directory",
+                "error": "No MF aggregate JSON found (expected *mf_v0_v1*aggregate*.json)",
                 "run_dir": str(run_dir),
             })
             continue
 
-        # if multiple json files, process each (safe), but usually it's 1
         for jf in json_files:
             try:
                 srow, prow, grow = summarize_mf_run(jf, run_id, control)
@@ -434,18 +445,13 @@ def main() -> None:
                     "error": str(e),
                 })
 
-    # Sort for readability
     def sort_key(r: Dict[str, Any]):
-        try:
-            return (int(r.get("lmax", 0) or 0), str(r.get("run_id", "")))
-        except Exception:
-            return (0, str(r.get("run_id", "")))
+        return (r.get("lmax") or 0, str(r.get("run_id", "")))
 
     sweep_rows = sorted(sweep_rows, key=sort_key)
     peak_rows = sorted(peak_rows, key=sort_key)
     gc_rows = sorted(gc_rows, key=sort_key)
 
-    # Write outputs
     sweep_csv = out_dir / "mf_sweep_table.csv"
     peaks_csv = out_dir / "v1_peak_table.csv"
     gc_csv = out_dir / "gc_features_table.csv"
@@ -454,7 +460,6 @@ def main() -> None:
     write_csv(peaks_csv, peak_rows)
     write_csv(gc_csv, gc_rows)
 
-    # Markdown tables (minimal, human scan)
     sweep_md = out_dir / "mf_sweep_table.md"
     peaks_md = out_dir / "v1_peak_table.md"
 
