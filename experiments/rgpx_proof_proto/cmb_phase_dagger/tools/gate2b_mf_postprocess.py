@@ -518,9 +518,12 @@ def main() -> None:
         manifest_text = read_text(manifest_path) if manifest_path.exists() else ""
         run_role = parse_run_role_from_manifest(manifest_text, args.mode)
 
-        # Fail-safe: if any JSON path points into /controls/, never label as observed/selftest.
-        if any("/controls/" in normalize_path_str(p) for p in json_files):
-            run_role = "control_like"
+        # Fail-safe:
+        # - ONLY in observed mode, /controls/ means leakage => force control_like
+        # - In control mode, /controls/ is expected => do NOT relabel
+        if args.mode == "observed":
+            if any("/controls/" in normalize_path_str(p) for p in json_files):
+                run_role = "control_like"
 
         if not json_files:
             sweep_rows_all.append({
