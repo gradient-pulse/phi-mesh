@@ -13,7 +13,6 @@ Robust:
 - guards sweep distances: only accept D0_L2/D1_L2 if verify_l2_from_curves is present and matches
 - observed mode filters ONLY true observed Planck run directories (no /controls leakage)
 - fail-safe run_role override if a JSON path points into /controls
-- selftest role is set ONLY if selftest_observed_surrogate_seed has a non-empty value in manifest
 
 Supports two modes:
 - mode=control  : filter run folders by manifest line "control: <control_name>"
@@ -181,18 +180,20 @@ def parse_run_role_from_manifest(manifest_text: str, mode: str) -> str:
     """
     Conservative role classifier.
 
-    - Mark selftest ONLY if the manifest line 'selftest_observed_surrogate_seed:' has a non-empty value.
-      (Some manifests include the key but leave it blank; those are NOT selftests.)
-    - Else if mode=observed -> observed
-    - Else -> control
-    """
-    for line in manifest_text.splitlines():
-        if line.strip().startswith("selftest_observed_surrogate_seed:"):
-            val = line.split(":", 1)[1].strip()
-            if val != "":
-                return "selftest"
-            break  # key present but empty => not a selftest
+    Selftest is ONLY when the manifest has a line like:
+        selftest_observed_surrogate_seed: <NON-EMPTY VALUE>
 
+    If line exists but value is blank, it is NOT selftest.
+    """
+    seed_val = None
+    for raw in manifest_text.splitlines():
+        line = raw.strip()
+        if line.startswith("selftest_observed_surrogate_seed:"):
+            seed_val = line.split(":", 1)[1].strip()
+            break
+
+    if seed_val:
+        return "selftest"
     if mode == "observed":
         return "observed"
     return "control"
@@ -328,7 +329,6 @@ def summarize_mf_run(
     seed = to_int(obj.get("seed"))
     kind = obj.get("kind")
 
-    # Verify-L2 guard: ONLY accept distances if verify_l2_from_curves exists and matches.
     verify_ok, verify_tag = has_verify_l2_ok(obj)
     has_verify = bool(safe_get(obj, "diagnostics.verify_l2_from_curves") is not None)
 
@@ -346,7 +346,7 @@ def summarize_mf_run(
     Dmfm = to_float(safe_get(obj, "surrogate.D_mf_mean")) if verify_ok else None
     Dmfs = to_float(safe_get(obj, "surrogate.D_mf_std")) if verify_ok else None
 
-    # peaks (curve-based; independent of verify_l2)
+    # peaks (curve-based)
     nu = [float(v) for v in safe_get(obj, "thresholds.nus")]
     v1_obs = [float(v) for v in safe_get(obj, "observed.v1_curve")]
     v1_mean = safe_get(obj, "surrogate.v1_mean_curve")
@@ -372,7 +372,6 @@ def summarize_mf_run(
             "v1_mean_peak_height": pk2.peak_height,
         })
 
-    # sweep row (guarded)
     sweep_row: Dict[str, Any] = {
         "control": control_name,
         "run_role": run_role,
@@ -400,7 +399,6 @@ def summarize_mf_run(
     if verify_tag:
         sweep_row["error"] = verify_tag
 
-    # gc row (curve-based; independent)
     gc_row: Dict[str, Any] = {
         "control": control_name,
         "run_role": run_role,
@@ -459,7 +457,6 @@ def main() -> None:
         control_label = "observed_planck_pr3__mf_v0_v1"
         candidates = [p for p in runs_dir.iterdir() if p.is_dir()]
 
-        # Only keep dirs that contain an observed Planck MF output JSON
         matched_run_dirs = []
         for d in candidates:
             js = sorted(d.glob("*.json"))
@@ -467,7 +464,6 @@ def main() -> None:
                 matched_run_dirs.append(d)
 
         matched_run_dirs = sorted(matched_run_dirs)
-
         if not matched_run_dirs:
             raise SystemExit(
                 f"ERROR: No observed Planck run dirs found under: {runs_dir} "
@@ -486,7 +482,7 @@ def main() -> None:
         manifest_text = read_text(manifest_path) if manifest_path.exists() else ""
         run_role = parse_run_role_from_manifest(manifest_text, args.mode)
 
-        # Fail-safe: if any JSON path points into /controls/, do not label as observed.
+        # Fail-safe: if any JSON path points into /controls/, never label as observed/selftest.
         if any("/controls/" in str(p).replace("\\", "/") for p in json_files):
             run_role = "control_like"
 
