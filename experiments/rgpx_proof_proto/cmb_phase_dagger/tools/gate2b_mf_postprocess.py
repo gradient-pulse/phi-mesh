@@ -2,10 +2,15 @@
 """
 gate2b_mf_postprocess.py — canonical postprocess for MF V0+V1
 
-Produces ONLY:
+Produces (base):
   mf_sweep_table.csv/.md
   v1_peak_table.csv/.md
   gc_features_table.csv
+
+Observed-mode extra outputs (debug):
+  mf_sweep_table_all_roles.csv/.md
+  v1_peak_table_all_roles.csv/.md
+  gc_features_table_all_roles.csv
 
 Robust:
 - never fails due to empty tables (writes diagnostic rows instead)
@@ -13,6 +18,7 @@ Robust:
 - guards sweep distances: only accept D0_L2/D1_L2 if verify_l2_from_curves is present and matches
 - observed mode filters ONLY true observed Planck run directories (no /controls leakage)
 - fail-safe run_role override if a JSON path points into /controls
+- selftest role is set ONLY if selftest_observed_surrogate_seed has a non-empty value in manifest
 
 Supports two modes:
 - mode=control  : filter run folders by manifest line "control: <control_name>"
@@ -101,6 +107,10 @@ def write_md_table(path: Path, rows: List[Dict[str, Any]], columns: List[str], t
         for r in rows:
             f.write("| " + " | ".join(fmt(r.get(c, "")) for c in columns) + " |\n")
         f.write("\n")
+
+
+def normalize_path_str(p: Path) -> str:
+    return str(p).replace("\\", "/")
 
 
 # ----------------------------
@@ -470,9 +480,9 @@ def main() -> None:
                 f"(expected JSON names containing 'planck_lensing_topology_mf_v0_v1')."
             )
 
-    sweep_rows: List[Dict[str, Any]] = []
-    peak_rows: List[Dict[str, Any]] = []
-    gc_rows: List[Dict[str, Any]] = []
+    sweep_rows_all: List[Dict[str, Any]] = []
+    peak_rows_all: List[Dict[str, Any]] = []
+    gc_rows_all: List[Dict[str, Any]] = []
 
     for run_dir in matched_run_dirs:
         run_id = derive_run_id_from_path(run_dir)
@@ -483,11 +493,11 @@ def main() -> None:
         run_role = parse_run_role_from_manifest(manifest_text, args.mode)
 
         # Fail-safe: if any JSON path points into /controls/, never label as observed/selftest.
-        if any("/controls/" in str(p).replace("\\", "/") for p in json_files):
+        if any("/controls/" in normalize_path_str(p) for p in json_files):
             run_role = "control_like"
 
         if not json_files:
-            sweep_rows.append({
+            sweep_rows_all.append({
                 "control": control_label,
                 "run_role": run_role,
                 "run_id": run_id,
@@ -501,15 +511,15 @@ def main() -> None:
         for jf in json_files:
             try:
                 srow, prow, grow = summarize_mf_run(jf, run_id, control_label, run_role)
-                sweep_rows.append(srow)
-                peak_rows.append(prow)
-                gc_rows.append(grow)
+                sweep_rows_all.append(srow)
+                peak_rows_all.append(prow)
+                gc_rows_all.append(grow)
                 ok = True
             except Exception as e:
                 last_err = str(e)
 
         if not ok:
-            sweep_rows.append({
+            sweep_rows_all.append({
                 "control": control_label,
                 "run_role": run_role,
                 "run_id": run_id,
@@ -521,17 +531,28 @@ def main() -> None:
     def sort_key(r: Dict[str, Any]):
         return (r.get("lmax") or 0, str(r.get("run_id", "")))
 
-    sweep_rows = sorted(sweep_rows, key=sort_key)
-    peak_rows = sorted(peak_rows, key=sort_key)
-    gc_rows = sorted(gc_rows, key=sort_key)
+    sweep_rows_all = sorted(sweep_rows_all, key=sort_key)
+    peak_rows_all = sorted(peak_rows_all, key=sort_key)
+    gc_rows_all = sorted(gc_rows_all, key=sort_key)
 
+    # Published rows (observed-mode only): keep ONLY run_role == "observed"
+    if args.mode == "observed":
+        sweep_rows_pub = [r for r in sweep_rows_all if r.get("run_role") == "observed"]
+        peak_rows_pub = [r for r in peak_rows_all if r.get("run_role") == "observed"]
+        gc_rows_pub = [r for r in gc_rows_all if r.get("run_role") == "observed"]
+    else:
+        sweep_rows_pub = sweep_rows_all
+        peak_rows_pub = peak_rows_all
+        gc_rows_pub = gc_rows_all
+
+    # Output paths (published)
     sweep_csv = out_dir / "mf_sweep_table.csv"
     peaks_csv = out_dir / "v1_peak_table.csv"
     gc_csv = out_dir / "gc_features_table.csv"
 
-    write_csv_allow_empty(sweep_csv, sweep_rows, "No sweep rows produced.")
-    write_csv_allow_empty(peaks_csv, peak_rows, "No peak rows produced (no MF JSON matched schema).")
-    write_csv_allow_empty(gc_csv, gc_rows, "No GC rows produced (no MF JSON matched schema).")
+    write_csv_allow_empty(sweep_csv, sweep_rows_pub, "No sweep rows produced.")
+    write_csv_allow_empty(peaks_csv, peak_rows_pub, "No peak rows produced (no MF JSON matched schema).")
+    write_csv_allow_empty(gc_csv, gc_rows_pub, "No GC rows produced (no MF JSON matched schema).")
 
     sweep_md = out_dir / "mf_sweep_table.md"
     peaks_md = out_dir / "v1_peak_table.md"
@@ -551,15 +572,37 @@ def main() -> None:
         "json"
     ]
 
-    write_md_table(sweep_md, sweep_rows, sweep_cols, "Gate 2B — MF V0+V1 Sweep Table")
-    write_md_table(peaks_md, peak_rows, peak_cols, "Gate 2B — V1 Peak Table")
+    write_md_table(sweep_md, sweep_rows_pub, sweep_cols, "Gate 2B — MF V0+V1 Sweep Table")
+    write_md_table(peaks_md, peak_rows_pub, peak_cols, "Gate 2B — V1 Peak Table")
 
-    print("Wrote:")
+    # Observed-mode debug tables (all roles)
+    if args.mode == "observed":
+        sweep_csv_all = out_dir / "mf_sweep_table_all_roles.csv"
+        peaks_csv_all = out_dir / "v1_peak_table_all_roles.csv"
+        gc_csv_all = out_dir / "gc_features_table_all_roles.csv"
+        sweep_md_all = out_dir / "mf_sweep_table_all_roles.md"
+        peaks_md_all = out_dir / "v1_peak_table_all_roles.md"
+
+        write_csv_allow_empty(sweep_csv_all, sweep_rows_all, "No sweep rows produced.")
+        write_csv_allow_empty(peaks_csv_all, peak_rows_all, "No peak rows produced.")
+        write_csv_allow_empty(gc_csv_all, gc_rows_all, "No GC rows produced.")
+
+        write_md_table(sweep_md_all, sweep_rows_all, sweep_cols, "Gate 2B — MF V0+V1 Sweep Table (ALL ROLES)")
+        write_md_table(peaks_md_all, peak_rows_all, peak_cols, "Gate 2B — V1 Peak Table (ALL ROLES)")
+
+    print("Wrote (published):")
     print(f"  {sweep_csv}")
     print(f"  {sweep_md}")
     print(f"  {peaks_csv}")
     print(f"  {peaks_md}")
     print(f"  {gc_csv}")
+    if args.mode == "observed":
+        print("Wrote (debug, all roles):")
+        print(f"  {out_dir / 'mf_sweep_table_all_roles.csv'}")
+        print(f"  {out_dir / 'mf_sweep_table_all_roles.md'}")
+        print(f"  {out_dir / 'v1_peak_table_all_roles.csv'}")
+        print(f"  {out_dir / 'v1_peak_table_all_roles.md'}")
+        print(f"  {out_dir / 'gc_features_table_all_roles.csv'}")
 
 
 if __name__ == "__main__":
