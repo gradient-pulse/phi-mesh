@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-gate2b_mf_postprocess.py — canonical Gate 2B postprocess for MF V0+V1
+gate2b_mf_postprocess.py — canonical postprocess for MF V0+V1
 
 Produces ONLY:
   mf_sweep_table.csv/.md
@@ -8,8 +8,12 @@ Produces ONLY:
   gc_features_table.csv
 
 Robust:
-- never fails the workflow due to empty tables (writes diagnostic rows instead)
+- never fails due to empty tables (writes diagnostic rows instead)
 - selects the correct MF result JSON per run directory via filename signatures
+
+Supports two modes:
+- mode=control  : filter run folders by manifest line "control: <control_name>"
+- mode=observed : scan all immediate subfolders under runs_dir (no manifest control required)
 """
 
 from __future__ import annotations
@@ -358,29 +362,46 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
     return sweep_row, peak_row, gc_row
 
 
+# ----------------------------
+# main
+# ----------------------------
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs_dir", required=True)
-    ap.add_argument("--control_name", required=True)
+    ap.add_argument("--control_name", default="", help="Used only in mode=control (matches manifest 'control: ...').")
     ap.add_argument("--out_dir", required=True)
+    ap.add_argument("--mode", default="control", choices=["control", "observed"],
+                    help="control = filter by manifest control line; observed = scan all run dirs")
     args = ap.parse_args()
 
     runs_dir = Path(args.runs_dir)
     out_dir = Path(args.out_dir)
-    control = args.control_name
 
     if not runs_dir.exists():
         raise SystemExit(f"ERROR: runs_dir not found: {runs_dir}")
     ensure_dir(out_dir)
 
     matched_run_dirs: List[Path] = []
-    for mp in iter_manifest_paths(runs_dir):
-        if manifest_has_control(read_text(mp), control):
-            matched_run_dirs.append(mp.parent)
+    control_label: str
 
-    matched_run_dirs = sorted(set(matched_run_dirs))
-    if not matched_run_dirs:
-        raise SystemExit(f"ERROR: No manifests in {runs_dir} contained: control: {control}")
+    if args.mode == "control":
+        if not args.control_name:
+            raise SystemExit("ERROR: mode=control requires --control_name")
+        control_label = args.control_name
+        for mp in iter_manifest_paths(runs_dir):
+            if manifest_has_control(read_text(mp), control_label):
+                matched_run_dirs.append(mp.parent)
+        matched_run_dirs = sorted(set(matched_run_dirs))
+        if not matched_run_dirs:
+            raise SystemExit(f"ERROR: No manifests in {runs_dir} contained: control: {control_label}")
+
+    else:
+        # observed mode: scan all immediate subfolders under runs_dir
+        control_label = "observed_planck_pr3__mf_v0_v1"
+        matched_run_dirs = sorted([p for p in runs_dir.iterdir() if p.is_dir()])
+        if not matched_run_dirs:
+            raise SystemExit(f"ERROR: No run directories found under: {runs_dir}")
 
     sweep_rows: List[Dict[str, Any]] = []
     peak_rows: List[Dict[str, Any]] = []
@@ -389,9 +410,10 @@ def main() -> None:
     for run_dir in matched_run_dirs:
         run_id = derive_run_id_from_path(run_dir)
         json_files = find_json_for_run(run_dir)
+
         if not json_files:
             sweep_rows.append({
-                "control": control,
+                "control": control_label,
                 "run_id": run_id,
                 "run_dir": str(run_dir),
                 "error": "No MF result JSON found (expected filename containing topology_mf_v0_v1 OR mf_v0_v1+run)",
@@ -402,7 +424,7 @@ def main() -> None:
         ok = False
         for jf in json_files:
             try:
-                srow, prow, grow = summarize_mf_run(jf, run_id, control)
+                srow, prow, grow = summarize_mf_run(jf, run_id, control_label)
                 sweep_rows.append(srow)
                 peak_rows.append(prow)
                 gc_rows.append(grow)
@@ -412,7 +434,7 @@ def main() -> None:
 
         if not ok:
             sweep_rows.append({
-                "control": control,
+                "control": control_label,
                 "run_id": run_id,
                 "run_dir": str(run_dir),
                 "error": f"Found JSON candidates but none matched schema; last_error={last_err}",
