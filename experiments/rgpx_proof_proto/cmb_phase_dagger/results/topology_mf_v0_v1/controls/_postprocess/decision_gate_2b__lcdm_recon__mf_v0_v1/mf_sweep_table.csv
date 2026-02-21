@@ -1,0 +1,4 @@
+control,error,run_dir,run_id
+decision_gate_2b__lcdm_recon__mf_v0_v1,No usable MF JSON in candidates; last_error=JSON does not match MF schema,experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22216941911,22216941911
+decision_gate_2b__lcdm_recon__mf_v0_v1,No usable MF JSON in candidates; last_error=JSON does not match MF schema,experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22220616512,22220616512
+decision_gate_2b__lcdm_recon__mf_v0_v1,No usable MF JSON in candidates; last_error=JSON does not match MF schema,experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22222586023,22222586023
