@@ -9,23 +9,15 @@ Gate 2B postprocess for MF V0+V1:
 - extracts V1 peak info (csv + md)
 - extracts GC features from curves (csv)
 
+Robust behavior:
+- will not hard-fail if some runs are missing expected JSONs
+- will still write outputs with diagnostic rows so GitHub Actions can commit them
+
 Expected JSON schema (confirmed by your example):
   thresholds.nus
   observed.v0_curve, observed.v1_curve
   surrogate.v0_mean_curve, surrogate.v1_mean_curve
   plus scalar metrics in observed / surrogate blocks
-
-This version intentionally produces ONLY these canonical outputs:
-  mf_sweep_table.csv/.md
-  v1_peak_table.csv/.md
-  gc_features_table.csv
-and does NOT emit legacy gate2b_mf_v0_v1__* files.
-
-Usage:
-  python gate2b_mf_postprocess.py \
-    --runs_dir experiments/.../controls/lcdm_recon/runs \
-    --control_name decision_gate_2b__lcdm_recon__mf_v0_v1 \
-    --out_dir experiments/.../controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1
 """
 
 from __future__ import annotations
@@ -48,7 +40,6 @@ def read_text(path: Path) -> str:
 
 
 def safe_get(d: Dict[str, Any], path: str, default=None):
-    """path like 'observed.D1_L2'."""
     cur: Any = d
     for part in path.split("."):
         if not isinstance(cur, dict) or part not in cur:
@@ -79,10 +70,13 @@ def ensure_dir(p: Path) -> None:
     p.mkdir(parents=True, exist_ok=True)
 
 
-def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
+def write_csv_allow_empty(path: Path, rows: List[Dict[str, Any]], empty_note: str) -> None:
+    """
+    Always writes a CSV. If rows is empty, writes a one-row diagnostic.
+    """
     ensure_dir(path.parent)
     if not rows:
-        raise RuntimeError(f"No rows to write: {path}")
+        rows = [{"note": empty_note}]
     keys = set()
     for r in rows:
         keys.update(r.keys())
@@ -126,8 +120,7 @@ def iter_manifest_paths(runs_dir: Path) -> Iterable[Path]:
 
 
 def manifest_has_control(manifest_text: str, control_name: str) -> bool:
-    needle = f"control: {control_name}"
-    return needle in manifest_text
+    return f"control: {control_name}" in manifest_text
 
 
 def derive_run_id_from_path(p: Path) -> str:
@@ -139,12 +132,24 @@ def derive_run_id_from_path(p: Path) -> str:
 
 def find_json_for_run(run_dir: Path) -> List[Path]:
     """
-    Only accept MF V0+V1 aggregate JSONs (tight filter).
-    This prevents accidental ingestion of unrelated JSON files.
+    Robust JSON selection:
+      1) prefer *aggregate*.json
+      2) else any *mf_v0_v1*.json
+      3) else any .json (last resort)
     """
-    j = sorted(run_dir.rglob("*.json"))
-    preferred = [p for p in j if ("mf_v0_v1" in p.name and "aggregate" in p.name)]
-    return preferred
+    all_json = sorted(run_dir.rglob("*.json"))
+    if not all_json:
+        return []
+
+    agg = [p for p in all_json if ("aggregate" in p.name and "mf_v0_v1" in p.name)]
+    if agg:
+        return agg
+
+    mf = [p for p in all_json if ("mf_v0_v1" in p.name)]
+    if mf:
+        return mf
+
+    return all_json
 
 
 def load_json(path: Path) -> Dict[str, Any]:
@@ -152,9 +157,6 @@ def load_json(path: Path) -> Dict[str, Any]:
 
 
 def looks_like_mf_json(obj: Dict[str, Any]) -> bool:
-    """
-    Quick schema gate: ensure this is a MF V0+V1 JSON output.
-    """
     if not isinstance(obj, dict):
         return False
     if not isinstance(obj.get("observed"), dict):
@@ -164,6 +166,9 @@ def looks_like_mf_json(obj: Dict[str, Any]) -> bool:
         return False
     nus = thr.get("nus")
     if not isinstance(nus, list) or len(nus) < 10:
+        return False
+    # require v1_curve to exist (key diagnostic for MF)
+    if not isinstance(safe_get(obj, "observed.v1_curve"), list):
         return False
     return True
 
@@ -187,7 +192,7 @@ def peak_info(nu: List[float], y: List[float]) -> PeakInfo:
 
 
 # ----------------------------
-# GC features (Option B)
+# GC features
 # ----------------------------
 
 def _count_local_maxima(y: List[float]) -> int:
@@ -231,14 +236,12 @@ def _fwhm(nu: List[float], y: List[float], peak_idx: int) -> float:
     if peak <= 0:
         return 0.0
     half = 0.5 * peak
-
     left = peak_idx
     while left > 0 and y[left] >= half:
         left -= 1
     right = peak_idx
     while right < len(y) - 1 and y[right] >= half:
         right += 1
-
     return float(nu[right] - nu[left])
 
 
@@ -251,12 +254,10 @@ def _curve_energy(nu: List[float], y: List[float]) -> float:
 
 def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
     nu = safe_get(obj, "thresholds.nus")
-    if not isinstance(nu, list) or not nu:
-        raise ValueError("Missing thresholds.nus")
     nu = [float(v) for v in nu]
 
-    obs = obj.get("observed", {}) if isinstance(obj.get("observed"), dict) else {}
-    sur = obj.get("surrogate", {}) if isinstance(obj.get("surrogate"), dict) else {}
+    obs = obj.get("observed", {})
+    sur = obj.get("surrogate", {})
 
     v1_obs = obs.get("v1_curve")
     v0_obs = obs.get("v0_curve")
@@ -289,13 +290,13 @@ def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
 
 
 # ----------------------------
-# Main extraction per run
+# Per-run summarization
 # ----------------------------
 
 def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
     obj = load_json(json_path)
     if not looks_like_mf_json(obj):
-        raise ValueError("JSON does not match MF schema (missing observed/thresholds.nus)")
+        raise ValueError("JSON does not match MF schema")
 
     lmax = to_int(obj.get("lmax"))
     nside = to_int(obj.get("nside"))
@@ -303,14 +304,12 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
     seed = to_int(obj.get("seed"))
     kind = obj.get("kind")
 
-    # observed scalars
     D0 = to_float(safe_get(obj, "observed.D0_L2"))
     D1 = to_float(safe_get(obj, "observed.D1_L2"))
     Dmf = to_float(safe_get(obj, "observed.D_mf"))
     Zmf = to_float(safe_get(obj, "observed.Z_mf"))
     p2 = to_float(obj.get("p_two_sided_mf", obj.get("p_two_sided")))
 
-    # surrogate scalars
     D0m = to_float(safe_get(obj, "surrogate.D0_mean"))
     D0s = to_float(safe_get(obj, "surrogate.D0_std"))
     D1m = to_float(safe_get(obj, "surrogate.D1_mean"))
@@ -318,12 +317,12 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
     Dmfm = to_float(safe_get(obj, "surrogate.D_mf_mean"))
     Dmfs = to_float(safe_get(obj, "surrogate.D_mf_std"))
 
-    nu = safe_get(obj, "thresholds.nus")
-    nu = [float(v) for v in nu] if isinstance(nu, list) else None
-
-    v1_obs = safe_get(obj, "observed.v1_curve")
+    nu = [float(v) for v in safe_get(obj, "thresholds.nus")]
+    v1_obs = [float(v) for v in safe_get(obj, "observed.v1_curve")]
     v1_mean = safe_get(obj, "surrogate.v1_mean_curve")
+    v1_mean = [float(v) for v in v1_mean] if isinstance(v1_mean, list) else None
 
+    # peak row
     peak_row: Dict[str, Any] = {
         "control": control_name,
         "run_id": run_id,
@@ -333,20 +332,19 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
         "n_sims": n_sims,
         "seed": seed,
     }
-
-    if nu and isinstance(v1_obs, list) and len(v1_obs) == len(nu):
-        pk = peak_info(nu, [float(v) for v in v1_obs])
+    pk = peak_info(nu, v1_obs)
+    peak_row.update({
+        "v1_obs_nu_peak": pk.nu_peak,
+        "v1_obs_peak_height": pk.peak_height,
+    })
+    if v1_mean and len(v1_mean) == len(nu):
+        pk2 = peak_info(nu, v1_mean)
         peak_row.update({
-            "v1_obs_nu_peak": pk.nu_peak,
-            "v1_obs_peak_height": pk.peak_height,
-        })
-    if nu and isinstance(v1_mean, list) and len(v1_mean) == len(nu):
-        pk = peak_info(nu, [float(v) for v in v1_mean])
-        peak_row.update({
-            "v1_mean_nu_peak": pk.nu_peak,
-            "v1_mean_peak_height": pk.peak_height,
+            "v1_mean_nu_peak": pk2.nu_peak,
+            "v1_mean_peak_height": pk2.peak_height,
         })
 
+    # sweep row
     sweep_row: Dict[str, Any] = {
         "control": control_name,
         "run_id": run_id,
@@ -369,6 +367,7 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
         "D_mf_std": Dmfs,
     }
 
+    # gc row
     gc_row: Dict[str, Any] = {
         "control": control_name,
         "run_id": run_id,
@@ -388,11 +387,16 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
     return sweep_row, peak_row, gc_row
 
 
+# ----------------------------
+# Main
+# ----------------------------
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--runs_dir", required=True, help="Root folder that contains archived runs (will be searched recursively).")
-    ap.add_argument("--control_name", required=True, help="Control name string as written in manifest.txt (control: ...).")
-    ap.add_argument("--out_dir", required=True, help="Output directory for generated tables.")
+    ap.add_argument("--runs_dir", required=True)
+    ap.add_argument("--control_name", required=True)
+    ap.add_argument("--out_dir", required=True)
+    ap.add_argument("--strict", action="store_true", help="Fail if peak/sweep/gc tables are empty.")
     args = ap.parse_args()
 
     runs_dir = Path(args.runs_dir)
@@ -401,13 +405,11 @@ def main() -> None:
 
     if not runs_dir.exists():
         raise SystemExit(f"ERROR: runs_dir not found: {runs_dir}")
-
     ensure_dir(out_dir)
 
     matched_run_dirs: List[Path] = []
     for mp in iter_manifest_paths(runs_dir):
-        txt = read_text(mp)
-        if manifest_has_control(txt, control):
+        if manifest_has_control(read_text(mp), control):
             matched_run_dirs.append(mp.parent)
 
     matched_run_dirs = sorted(set(matched_run_dirs))
@@ -421,29 +423,35 @@ def main() -> None:
     for run_dir in matched_run_dirs:
         run_id = derive_run_id_from_path(run_dir)
         json_files = find_json_for_run(run_dir)
-
         if not json_files:
             sweep_rows.append({
                 "control": control,
                 "run_id": run_id,
-                "error": "No MF aggregate JSON found (expected *mf_v0_v1*aggregate*.json)",
                 "run_dir": str(run_dir),
+                "error": "No JSON files found under run dir",
             })
             continue
 
+        # process all candidate jsons; keep the ones that match schema
+        any_success = False
+        last_err = None
         for jf in json_files:
             try:
                 srow, prow, grow = summarize_mf_run(jf, run_id, control)
                 sweep_rows.append(srow)
                 peak_rows.append(prow)
                 gc_rows.append(grow)
+                any_success = True
             except Exception as e:
-                sweep_rows.append({
-                    "control": control,
-                    "run_id": run_id,
-                    "json": str(jf),
-                    "error": str(e),
-                })
+                last_err = str(e)
+
+        if not any_success:
+            sweep_rows.append({
+                "control": control,
+                "run_id": run_id,
+                "run_dir": str(run_dir),
+                "error": f"No usable MF JSON in candidates; last_error={last_err}",
+            })
 
     def sort_key(r: Dict[str, Any]):
         return (r.get("lmax") or 0, str(r.get("run_id", "")))
@@ -456,10 +464,12 @@ def main() -> None:
     peaks_csv = out_dir / "v1_peak_table.csv"
     gc_csv = out_dir / "gc_features_table.csv"
 
-    write_csv(sweep_csv, sweep_rows)
-    write_csv(peaks_csv, peak_rows)
-    write_csv(gc_csv, gc_rows)
+    # always write outputs (diagnostic rows if empty)
+    write_csv_allow_empty(sweep_csv, sweep_rows, "No sweep rows produced (unexpected).")
+    write_csv_allow_empty(peaks_csv, peak_rows, "No peak rows produced. Likely no MF JSON matched schema or v1_curve missing.")
+    write_csv_allow_empty(gc_csv, gc_rows, "No GC rows produced. Likely no MF JSON matched schema.")
 
+    # md tables only if we have real rows
     sweep_md = out_dir / "mf_sweep_table.md"
     peaks_md = out_dir / "v1_peak_table.md"
 
@@ -467,17 +477,21 @@ def main() -> None:
         "lmax", "nside", "n_sims", "seed", "run_id",
         "D0_L2", "D1_L2", "D_mf", "Z_mf", "p_two_sided_mf",
         "D0_mean", "D0_std", "D1_mean", "D1_std", "D_mf_mean", "D_mf_std",
-        "json"
+        "json", "error"
     ]
     peak_cols = [
         "lmax", "nside", "n_sims", "seed", "run_id",
         "v1_obs_nu_peak", "v1_obs_peak_height",
         "v1_mean_nu_peak", "v1_mean_peak_height",
-        "json"
+        "json", "error"
     ]
 
-    write_md_table(sweep_md, sweep_rows, sweep_cols, "Gate 2B — MF V0+V1 Sweep Table")
-    write_md_table(peaks_md, peak_rows, peak_cols, "Gate 2B — V1 Peak Table")
+    # for MD, only include rows that have lmax (real rows), else show the diagnostic row
+    write_md_table(sweep_md, sweep_rows if sweep_rows else [{"error": "No rows"}], sweep_cols, "Gate 2B — MF V0+V1 Sweep Table")
+    write_md_table(peaks_md, peak_rows if peak_rows else [{"error": "No rows"}], peak_cols, "Gate 2B — V1 Peak Table")
+
+    if args.strict and (not sweep_rows or not peak_rows or not gc_rows):
+        raise SystemExit("STRICT mode: one or more tables were empty.")
 
     print("Wrote:")
     print(f"  {sweep_csv}")
