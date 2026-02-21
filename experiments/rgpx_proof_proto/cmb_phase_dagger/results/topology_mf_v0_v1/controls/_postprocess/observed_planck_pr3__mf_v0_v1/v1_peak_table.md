@@ -14,5 +14,6 @@
 | 256 | 256 | 2000 | 731 | 22174563334 | observed | 0.3 | 851.696 | 0.1 | 926.032 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/runs/22174563334/planck_lensing_topology_mf_v0_v1__lmax256__nside256__nsims2000__seed731__run22174563334.json |
 | 256 | 256 | 2000 | 731 | 22177371714 | observed | 0.3 | 851.696 | 0.1 | 926.032 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/runs/22177371714/planck_lensing_topology_mf_v0_v1__lmax256__nside256__nsims2000__seed731__run22177371714.json |
 | 256 | 256 | 2000 | 2400 | 22221615597 | observed | 0.3 | 851.696 | 0.1 | 926.21 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/runs/22221615597/planck_lensing_topology_mf_v0_v1__lmax256__nside256__nsims2000__seed2400__run22221615597.json |
+| 256 | 256 | 2000 | 731 | 22259312168 | observed | 0.3 | 851.696 | 0.1 | 926.032 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/runs/22259312168/planck_lensing_topology_mf_v0_v1__lmax256__nside256__nsims2000__seed731__run22259312168.json |
 | 320 | 256 | 2000 | 731 | 22177393266 | observed | -0.6 | 1090.74 | 0.1 | 1259.5 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/runs/22177393266/planck_lensing_topology_mf_v0_v1__lmax320__nside256__nsims2000__seed731__run22177393266.json |
 
