@@ -3,12 +3,16 @@ name: "Gate 2B Postprocess — MF V0+V1 (sweep table + V1 peak)"
 on:
   workflow_dispatch:
     inputs:
+      mode:
+        description: "control = filter by manifest control line; observed = scan all run dirs under search_root"
+        required: true
+        default: "control"
       control_name:
-        description: "Control name as written into manifest.txt (control: ...)"
+        description: "Control name as written into manifest.txt (control: ...). Ignored in mode=observed."
         required: true
         default: "decision_gate_2b__lcdm_recon__mf_v0_v1"
       search_root:
-        description: "Where to search for archived manifests (relative path)"
+        description: "Where to search (relative path). In mode=observed, this should point to .../results/topology_mf_v0_v1/runs"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1"
       out_dir:
@@ -56,15 +60,17 @@ jobs:
             pip install numpy
           fi
 
-      - name: Discover Gate 2B runs root
+      - name: Discover runs root
         id: discover
         shell: bash
         run: |
           set -euo pipefail
 
+          MODE="${{ inputs.mode }}"
           CONTROL="${{ inputs.control_name }}"
           ROOT="${{ inputs.search_root }}"
 
+          echo "MODE=${MODE}"
           echo "CONTROL=${CONTROL}"
           echo "SEARCH_ROOT=${ROOT}"
 
@@ -73,7 +79,14 @@ jobs:
             exit 1
           fi
 
-          # Find manifest files that mention the control (anywhere under ROOT)
+          if [ "${MODE}" = "observed" ]; then
+            # In observed mode, postprocess scans all immediate subfolders under runs_dir.
+            # Therefore runs_dir should be the observed runs folder.
+            echo "RUNS_ROOT=${ROOT}" | tee -a "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # control mode: Find manifest files that mention the control (anywhere under ROOT)
           mapfile -t hits < <(grep -Rsl "control: ${CONTROL}" "${ROOT}" || true)
 
           if [ "${#hits[@]}" -eq 0 ]; then
@@ -103,16 +116,27 @@ jobs:
         run: |
           set -euo pipefail
 
+          MODE="${{ inputs.mode }}"
           RUNS_ROOT="${{ steps.discover.outputs.RUNS_ROOT }}"
           OUT_DIR="${{ inputs.out_dir }}"
           CONTROL="${{ inputs.control_name }}"
           TOOL="${{ inputs.postprocess_script }}"
 
+          # Separate output folders:
+          # - control mode => OUT_DIR/<CONTROL>
+          # - observed mode => OUT_DIR/observed_planck_pr3__mf_v0_v1
+          if [ "${MODE}" = "observed" ]; then
+            LABEL="observed_planck_pr3__mf_v0_v1"
+          else
+            LABEL="${CONTROL}"
+          fi
+
+          echo "MODE=${MODE}"
           echo "RUNS_ROOT=${RUNS_ROOT}"
-          echo "OUT_DIR=${OUT_DIR}/${CONTROL}"
+          echo "OUT_DIR=${OUT_DIR}/${LABEL}"
           echo "TOOL=${TOOL}"
 
-          mkdir -p "${OUT_DIR}/${CONTROL}"
+          mkdir -p "${OUT_DIR}/${LABEL}"
 
           if [ ! -f "${TOOL}" ]; then
             echo "ERROR: postprocess script not found: ${TOOL}"
@@ -122,19 +146,30 @@ jobs:
           python "${TOOL}" \
             --runs_dir "${RUNS_ROOT}" \
             --control_name "${CONTROL}" \
-            --out_dir "${OUT_DIR}/${CONTROL}"
+            --out_dir "${OUT_DIR}/${LABEL}" \
+            --mode "${MODE}"
 
           echo "Postprocess outputs:"
-          find "${OUT_DIR}/${CONTROL}" -maxdepth 2 -type f -print
+          find "${OUT_DIR}/${LABEL}" -maxdepth 2 -type f -print
 
       - name: Commit outputs
         shell: bash
         run: |
           set -euo pipefail
+          MODE="${{ inputs.mode }}"
+          OUT_DIR="${{ inputs.out_dir }}"
+          CONTROL="${{ inputs.control_name }}"
+
+          if [ "${MODE}" = "observed" ]; then
+            LABEL="observed_planck_pr3__mf_v0_v1"
+          else
+            LABEL="${CONTROL}"
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add "${{ inputs.out_dir }}/${{ inputs.control_name }}" || true
+          git add "${OUT_DIR}/${LABEL}" || true
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
