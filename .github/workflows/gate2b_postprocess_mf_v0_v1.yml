@@ -7,12 +7,16 @@ on:
         description: "control = filter by manifest control line; observed = scan all run dirs under search_root"
         required: true
         default: "control"
+        type: choice
+        options:
+          - control
+          - observed
       control_name:
         description: "Control name as written into manifest.txt (control: ...). Ignored in mode=observed."
         required: true
         default: "decision_gate_2b__lcdm_recon__mf_v0_v1"
       search_root:
-        description: "Where to search (relative path). In mode=observed, this should point to .../results/topology_mf_v0_v1/runs"
+        description: "Where to search (relative path). In mode=observed, you may set parent (.../topology_mf_v0_v1) or the runs folder (.../topology_mf_v0_v1/runs)."
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1"
       out_dir:
@@ -80,9 +84,23 @@ jobs:
           fi
 
           if [ "${MODE}" = "observed" ]; then
-            # In observed mode, postprocess scans all immediate subfolders under runs_dir.
-            # Therefore runs_dir should be the observed runs folder.
-            echo "RUNS_ROOT=${ROOT}" | tee -a "$GITHUB_OUTPUT"
+            # Observed mode expects runs_dir to be the folder whose immediate children are run_id dirs.
+            # Users may pass either:
+            #   .../topology_mf_v0_v1
+            # or:
+            #   .../topology_mf_v0_v1/runs
+            if [ -d "${ROOT}/runs" ]; then
+              runs_root="${ROOT}/runs"
+            else
+              runs_root="${ROOT}"
+            fi
+
+            if [ ! -d "${runs_root}" ]; then
+              echo "ERROR: Derived runs_root does not exist: ${runs_root}"
+              exit 1
+            fi
+
+            echo "RUNS_ROOT=${runs_root}" | tee -a "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -99,9 +117,9 @@ jobs:
           echo "Example hit: ${hits[0]}"
 
           # hits[0] looks like:
-          #   .../controls/<control>/runs/<run_id>/manifest.txt
+          #   .../controls/<suite>/runs/<run_id>/manifest.txt
           # We want:
-          #   .../controls/<control>/runs
+          #   .../controls/<suite>/runs
           runs_root="$(dirname "$(dirname "$(dirname "${hits[0]}")")")"
 
           if [ ! -d "${runs_root}" ]; then
@@ -156,6 +174,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
           MODE="${{ inputs.mode }}"
           OUT_DIR="${{ inputs.out_dir }}"
           CONTROL="${{ inputs.control_name }}"
