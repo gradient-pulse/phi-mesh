@@ -1,0 +1,14 @@
+run_id: 22257679188
+workflow: Decision gate 2B — ΛCDM recon control (MF V0+V1)
+ref: refs/heads/main
+sha: a43bdb4176a06cdf93efd334c5d74078306f14eb
+control: decision_gate_2b__lcdm_recon__mf_v0_v1
+lmax: 320
+nside: 256
+n_lcdm_sims_requested: 3
+n_lcdm_sims_discovered: 3
+n_lcdm_sims_used: 3
+n_phase_sims: 2000
+seed0: 1400
+recon_sims_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/lcdm_recon_sims__layout_sims.tar.gz
+strict_layout: true
