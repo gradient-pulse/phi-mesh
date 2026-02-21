@@ -11,10 +11,12 @@ Robust:
 - never fails due to empty tables (writes diagnostic rows instead)
 - selects the correct MF result JSON per run directory via filename signatures
 - guards sweep distances: only accept D0_L2/D1_L2 if verify_l2_from_curves is present and matches
+- observed mode filters ONLY true observed Planck run directories (no /controls leakage)
+- fail-safe run_role override if a JSON path points into /controls
 
 Supports two modes:
 - mode=control  : filter run folders by manifest line "control: <control_name>"
-- mode=observed : scan all immediate subfolders under runs_dir (no manifest control required)
+- mode=observed : scan immediate subfolders under runs_dir that contain observed Planck MF JSONs
 """
 
 from __future__ import annotations
@@ -177,12 +179,11 @@ def looks_like_mf_json(obj: Dict[str, Any]) -> bool:
 def parse_run_role_from_manifest(manifest_text: str, mode: str) -> str:
     """
     Conservative role classifier.
-    - If manifest mentions selftest_observed_surrogate_seed with a value -> selftest
+    - If manifest mentions selftest_observed_surrogate_seed -> selftest
     - Else if mode=observed -> observed
     - Else -> control
     """
     if "selftest_observed_surrogate_seed" in manifest_text:
-        # treat as selftest even if empty; it's a strong hint
         return "selftest"
     if mode == "observed":
         return "observed"
@@ -323,7 +324,7 @@ def summarize_mf_run(
     verify_ok, verify_tag = has_verify_l2_ok(obj)
     has_verify = bool(safe_get(obj, "diagnostics.verify_l2_from_curves") is not None)
 
-    # scalar metrics
+    # scalar metrics (guarded)
     D0 = to_float(safe_get(obj, "observed.D0_L2")) if verify_ok else None
     D1 = to_float(safe_get(obj, "observed.D1_L2")) if verify_ok else None
     Dmf = to_float(safe_get(obj, "observed.D_mf")) if verify_ok else None
@@ -337,7 +338,7 @@ def summarize_mf_run(
     Dmfm = to_float(safe_get(obj, "surrogate.D_mf_mean")) if verify_ok else None
     Dmfs = to_float(safe_get(obj, "surrogate.D_mf_std")) if verify_ok else None
 
-    # peaks need curves (independent of verify_l2 block)
+    # peaks (curve-based; independent of verify_l2)
     nu = [float(v) for v in safe_get(obj, "thresholds.nus")]
     v1_obs = [float(v) for v in safe_get(obj, "observed.v1_curve")]
     v1_mean = safe_get(obj, "surrogate.v1_mean_curve")
@@ -391,7 +392,7 @@ def summarize_mf_run(
     if verify_tag:
         sweep_row["error"] = verify_tag
 
-    # gc row (curves-based; independent)
+    # gc row (curve-based; independent)
     gc_row: Dict[str, Any] = {
         "control": control_name,
         "run_role": run_role,
@@ -422,7 +423,7 @@ def main() -> None:
     ap.add_argument("--control_name", default="", help="Used only in mode=control (matches manifest 'control: ...').")
     ap.add_argument("--out_dir", required=True)
     ap.add_argument("--mode", default="control", choices=["control", "observed"],
-                    help="control = filter by manifest control line; observed = scan all run dirs")
+                    help="control = filter by manifest control line; observed = scan observed Planck run dirs")
     args = ap.parse_args()
 
     runs_dir = Path(args.runs_dir)
@@ -448,9 +449,22 @@ def main() -> None:
 
     else:
         control_label = "observed_planck_pr3__mf_v0_v1"
-        matched_run_dirs = sorted([p for p in runs_dir.iterdir() if p.is_dir()])
+        candidates = [p for p in runs_dir.iterdir() if p.is_dir()]
+
+        # Only keep dirs that contain an observed Planck MF output JSON
+        matched_run_dirs = []
+        for d in candidates:
+            js = sorted(d.glob("*.json"))
+            if any("planck_lensing_topology_mf_v0_v1" in p.name for p in js):
+                matched_run_dirs.append(d)
+
+        matched_run_dirs = sorted(matched_run_dirs)
+
         if not matched_run_dirs:
-            raise SystemExit(f"ERROR: No run directories found under: {runs_dir}")
+            raise SystemExit(
+                f"ERROR: No observed Planck run dirs found under: {runs_dir} "
+                f"(expected JSON names containing 'planck_lensing_topology_mf_v0_v1')."
+            )
 
     sweep_rows: List[Dict[str, Any]] = []
     peak_rows: List[Dict[str, Any]] = []
@@ -463,6 +477,10 @@ def main() -> None:
         manifest_path = run_dir / "manifest.txt"
         manifest_text = read_text(manifest_path) if manifest_path.exists() else ""
         run_role = parse_run_role_from_manifest(manifest_text, args.mode)
+
+        # Fail-safe: if any JSON path points into /controls/, do not label as observed.
+        if any("/controls/" in str(p).replace("\\", "/") for p in json_files):
+            run_role = "control_like"
 
         if not json_files:
             sweep_rows.append({
