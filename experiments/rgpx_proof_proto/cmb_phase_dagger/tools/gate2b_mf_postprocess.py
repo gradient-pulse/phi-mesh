@@ -19,6 +19,11 @@ Robust:
 - observed mode filters ONLY true observed Planck run directories (no /controls leakage)
 - fail-safe run_role override if a JSON path points into /controls
 - selftest role is set ONLY if selftest_observed_surrogate_seed has a non-empty value in manifest
+- observed mode publishes ONLY run_role == "observed" rows (debug tables keep all roles)
+- adds two GC-derived helpers to support "scale vs shape" reading:
+    v1_energy_ratio = gc_v1_obs_shape_energy / gc_v1_mean_shape_energy
+    v1_peak_shift   = gc_v1_obs_nu_peak - gc_v1_mean_nu_peak
+  (computed only when both operands exist and denominator != 0)
 
 Supports two modes:
 - mode=control  : filter run folders by manifest line "control: <control_name>"
@@ -111,6 +116,21 @@ def write_md_table(path: Path, rows: List[Dict[str, Any]], columns: List[str], t
 
 def normalize_path_str(p: Path) -> str:
     return str(p).replace("\\", "/")
+
+
+def is_probably_observed_run_dir(d: Path) -> bool:
+    """
+    Observed-mode run_dir selector.
+
+    Must contain at least one JSON with:
+      - name contains 'planck_lensing_topology_mf_v0_v1'
+    AND must not be under a /controls/ subtree (extra paranoia).
+    """
+    dn = normalize_path_str(d)
+    if "/controls/" in dn:
+        return False
+    js = list(d.glob("*.json"))
+    return any("planck_lensing_topology_mf_v0_v1" in p.name for p in js)
 
 
 # ----------------------------
@@ -320,6 +340,18 @@ def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
     add("gc_v1_mean", v1_mean)
     add("gc_v0_obs", v0_obs)
     add("gc_v0_mean", v0_mean)
+
+    # Derived helpers (scale vs shape)
+    e_obs = out.get("gc_v1_obs_shape_energy")
+    e_mean = out.get("gc_v1_mean_shape_energy")
+    if isinstance(e_obs, (int, float)) and isinstance(e_mean, (int, float)) and e_mean != 0:
+        out["v1_energy_ratio"] = float(e_obs) / float(e_mean)
+
+    nu_obs = out.get("gc_v1_obs_nu_peak")
+    nu_mean = out.get("gc_v1_mean_nu_peak")
+    if isinstance(nu_obs, (int, float)) and isinstance(nu_mean, (int, float)):
+        out["v1_peak_shift"] = float(nu_obs) - float(nu_mean)
+
     return out
 
 
@@ -466,14 +498,8 @@ def main() -> None:
     else:
         control_label = "observed_planck_pr3__mf_v0_v1"
         candidates = [p for p in runs_dir.iterdir() if p.is_dir()]
+        matched_run_dirs = sorted([d for d in candidates if is_probably_observed_run_dir(d)])
 
-        matched_run_dirs = []
-        for d in candidates:
-            js = sorted(d.glob("*.json"))
-            if any("planck_lensing_topology_mf_v0_v1" in p.name for p in js):
-                matched_run_dirs.append(d)
-
-        matched_run_dirs = sorted(matched_run_dirs)
         if not matched_run_dirs:
             raise SystemExit(
                 f"ERROR: No observed Planck run dirs found under: {runs_dir} "
