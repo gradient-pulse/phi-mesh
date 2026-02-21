@@ -13,6 +13,7 @@ Robust:
 - guards sweep distances: only accept D0_L2/D1_L2 if verify_l2_from_curves is present and matches
 - observed mode filters ONLY true observed Planck run directories (no /controls leakage)
 - fail-safe run_role override if a JSON path points into /controls
+- selftest role is set ONLY if selftest_observed_surrogate_seed has a non-empty value in manifest
 
 Supports two modes:
 - mode=control  : filter run folders by manifest line "control: <control_name>"
@@ -179,12 +180,19 @@ def looks_like_mf_json(obj: Dict[str, Any]) -> bool:
 def parse_run_role_from_manifest(manifest_text: str, mode: str) -> str:
     """
     Conservative role classifier.
-    - If manifest mentions selftest_observed_surrogate_seed -> selftest
+
+    - Mark selftest ONLY if the manifest line 'selftest_observed_surrogate_seed:' has a non-empty value.
+      (Some manifests include the key but leave it blank; those are NOT selftests.)
     - Else if mode=observed -> observed
     - Else -> control
     """
-    if "selftest_observed_surrogate_seed" in manifest_text:
-        return "selftest"
+    for line in manifest_text.splitlines():
+        if line.strip().startswith("selftest_observed_surrogate_seed:"):
+            val = line.split(":", 1)[1].strip()
+            if val != "":
+                return "selftest"
+            break  # key present but empty => not a selftest
+
     if mode == "observed":
         return "observed"
     return "control"
