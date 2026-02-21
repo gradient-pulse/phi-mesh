@@ -10,6 +10,7 @@ Produces ONLY:
 Robust:
 - never fails due to empty tables (writes diagnostic rows instead)
 - selects the correct MF result JSON per run directory via filename signatures
+- guards sweep distances: only accept D0_L2/D1_L2 if verify_l2_from_curves is present and matches
 
 Supports two modes:
 - mode=control  : filter run folders by manifest line "control: <control_name>"
@@ -149,8 +150,7 @@ def find_json_for_run(run_dir: Path) -> List[Path]:
             return True
         return False
 
-    preferred = [p for p in all_json if accept(p)]
-    return preferred
+    return [p for p in all_json if accept(p)]
 
 
 def load_json(path: Path) -> Dict[str, Any]:
@@ -172,6 +172,36 @@ def looks_like_mf_json(obj: Dict[str, Any]) -> bool:
     if not isinstance(v1, list) or len(v1) < 10:
         return False
     return True
+
+
+def parse_run_role_from_manifest(manifest_text: str, mode: str) -> str:
+    """
+    Conservative role classifier.
+    - If manifest mentions selftest_observed_surrogate_seed with a value -> selftest
+    - Else if mode=observed -> observed
+    - Else -> control
+    """
+    if "selftest_observed_surrogate_seed" in manifest_text:
+        # treat as selftest even if empty; it's a strong hint
+        return "selftest"
+    if mode == "observed":
+        return "observed"
+    return "control"
+
+
+def has_verify_l2_ok(obj: Dict[str, Any]) -> Tuple[bool, str]:
+    """
+    Returns (ok, reason_tag).
+    ok only if diagnostics.verify_l2_from_curves exists AND D0_match & D1_match are true.
+    """
+    v = safe_get(obj, "diagnostics.verify_l2_from_curves")
+    if not isinstance(v, dict):
+        return False, "missing_verify_l2"
+    d0m = v.get("D0_match")
+    d1m = v.get("D1_match")
+    if d0m is True and d1m is True:
+        return True, ""
+    return False, "verify_l2_failed"
 
 
 # ----------------------------
@@ -273,7 +303,12 @@ def gc_features_from_mf_json(obj: Dict[str, Any]) -> Dict[str, Any]:
     return out
 
 
-def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
+def summarize_mf_run(
+    json_path: Path,
+    run_id: str,
+    control_name: str,
+    run_role: str,
+) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
     obj = load_json(json_path)
     if not looks_like_mf_json(obj):
         raise ValueError("JSON does not match MF schema")
@@ -284,19 +319,25 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
     seed = to_int(obj.get("seed"))
     kind = obj.get("kind")
 
-    D0 = to_float(safe_get(obj, "observed.D0_L2"))
-    D1 = to_float(safe_get(obj, "observed.D1_L2"))
-    Dmf = to_float(safe_get(obj, "observed.D_mf"))
-    Zmf = to_float(safe_get(obj, "observed.Z_mf"))
+    # Verify-L2 guard: ONLY accept distances if verify_l2_from_curves exists and matches.
+    verify_ok, verify_tag = has_verify_l2_ok(obj)
+    has_verify = bool(safe_get(obj, "diagnostics.verify_l2_from_curves") is not None)
+
+    # scalar metrics
+    D0 = to_float(safe_get(obj, "observed.D0_L2")) if verify_ok else None
+    D1 = to_float(safe_get(obj, "observed.D1_L2")) if verify_ok else None
+    Dmf = to_float(safe_get(obj, "observed.D_mf")) if verify_ok else None
+    Zmf = to_float(safe_get(obj, "observed.Z_mf")) if verify_ok else None
     p2 = to_float(obj.get("p_two_sided_mf", obj.get("p_two_sided")))
 
-    D0m = to_float(safe_get(obj, "surrogate.D0_mean"))
-    D0s = to_float(safe_get(obj, "surrogate.D0_std"))
-    D1m = to_float(safe_get(obj, "surrogate.D1_mean"))
-    D1s = to_float(safe_get(obj, "surrogate.D1_std"))
-    Dmfm = to_float(safe_get(obj, "surrogate.D_mf_mean"))
-    Dmfs = to_float(safe_get(obj, "surrogate.D_mf_std"))
+    D0m = to_float(safe_get(obj, "surrogate.D0_mean")) if verify_ok else None
+    D0s = to_float(safe_get(obj, "surrogate.D0_std")) if verify_ok else None
+    D1m = to_float(safe_get(obj, "surrogate.D1_mean")) if verify_ok else None
+    D1s = to_float(safe_get(obj, "surrogate.D1_std")) if verify_ok else None
+    Dmfm = to_float(safe_get(obj, "surrogate.D_mf_mean")) if verify_ok else None
+    Dmfs = to_float(safe_get(obj, "surrogate.D_mf_std")) if verify_ok else None
 
+    # peaks need curves (independent of verify_l2 block)
     nu = [float(v) for v in safe_get(obj, "thresholds.nus")]
     v1_obs = [float(v) for v in safe_get(obj, "observed.v1_curve")]
     v1_mean = safe_get(obj, "surrogate.v1_mean_curve")
@@ -305,6 +346,7 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
     pk = peak_info(nu, v1_obs)
     peak_row: Dict[str, Any] = {
         "control": control_name,
+        "run_role": run_role,
         "run_id": run_id,
         "json": str(json_path),
         "lmax": lmax,
@@ -321,8 +363,10 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
             "v1_mean_peak_height": pk2.peak_height,
         })
 
+    # sweep row (guarded)
     sweep_row: Dict[str, Any] = {
         "control": control_name,
+        "run_role": run_role,
         "run_id": run_id,
         "json": str(json_path),
         "kind": kind,
@@ -331,6 +375,8 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
         "n_sims": n_sims,
         "seed": seed,
         "p_two_sided_mf": p2,
+        "has_verify_l2": has_verify,
+        "verify_l2_ok": verify_ok,
         "D0_L2": D0,
         "D1_L2": D1,
         "D_mf": Dmf,
@@ -342,9 +388,13 @@ def summarize_mf_run(json_path: Path, run_id: str, control_name: str) -> Tuple[D
         "D_mf_mean": Dmfm,
         "D_mf_std": Dmfs,
     }
+    if verify_tag:
+        sweep_row["error"] = verify_tag
 
+    # gc row (curves-based; independent)
     gc_row: Dict[str, Any] = {
         "control": control_name,
+        "run_role": run_role,
         "run_id": run_id,
         "json": str(json_path),
         "kind": kind,
@@ -397,7 +447,6 @@ def main() -> None:
             raise SystemExit(f"ERROR: No manifests in {runs_dir} contained: control: {control_label}")
 
     else:
-        # observed mode: scan all immediate subfolders under runs_dir
         control_label = "observed_planck_pr3__mf_v0_v1"
         matched_run_dirs = sorted([p for p in runs_dir.iterdir() if p.is_dir()])
         if not matched_run_dirs:
@@ -411,9 +460,14 @@ def main() -> None:
         run_id = derive_run_id_from_path(run_dir)
         json_files = find_json_for_run(run_dir)
 
+        manifest_path = run_dir / "manifest.txt"
+        manifest_text = read_text(manifest_path) if manifest_path.exists() else ""
+        run_role = parse_run_role_from_manifest(manifest_text, args.mode)
+
         if not json_files:
             sweep_rows.append({
                 "control": control_label,
+                "run_role": run_role,
                 "run_id": run_id,
                 "run_dir": str(run_dir),
                 "error": "No MF result JSON found (expected filename containing topology_mf_v0_v1 OR mf_v0_v1+run)",
@@ -424,7 +478,7 @@ def main() -> None:
         ok = False
         for jf in json_files:
             try:
-                srow, prow, grow = summarize_mf_run(jf, run_id, control_label)
+                srow, prow, grow = summarize_mf_run(jf, run_id, control_label, run_role)
                 sweep_rows.append(srow)
                 peak_rows.append(prow)
                 gc_rows.append(grow)
@@ -435,6 +489,7 @@ def main() -> None:
         if not ok:
             sweep_rows.append({
                 "control": control_label,
+                "run_role": run_role,
                 "run_id": run_id,
                 "run_dir": str(run_dir),
                 "error": f"Found JSON candidates but none matched schema; last_error={last_err}",
@@ -461,15 +516,17 @@ def main() -> None:
 
     sweep_cols = [
         "lmax", "nside", "n_sims", "seed", "run_id",
+        "run_role", "has_verify_l2", "verify_l2_ok",
         "D0_L2", "D1_L2", "D_mf", "Z_mf", "p_two_sided_mf",
         "D0_mean", "D0_std", "D1_mean", "D1_std", "D_mf_mean", "D_mf_std",
         "json", "error"
     ]
     peak_cols = [
         "lmax", "nside", "n_sims", "seed", "run_id",
+        "run_role",
         "v1_obs_nu_peak", "v1_obs_peak_height",
         "v1_mean_nu_peak", "v1_mean_peak_height",
-        "json", "error"
+        "json"
     ]
 
     write_md_table(sweep_md, sweep_rows, sweep_cols, "Gate 2B — MF V0+V1 Sweep Table")
