@@ -2,5 +2,13 @@
 
 | lmax | nside | n_sims | seed | run_id | v1_obs_nu_peak | v1_obs_peak_height | v1_mean_nu_peak | v1_mean_peak_height | json | error |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |  |  |  |  |  | No rows |
+| 128 | 256 | 2000 | 2400 | 22222586023 | 0.5 | 399.789 | 0.4 | 346.129 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22222586023/lcdm_recon__mf_v0_v1__sim000__000__lmax128__nside256__phasesims2000__seed2400__run22222586023.json |  |
+| 128 | 256 | 2000 | 2401 | 22222586023 | 0.7 | 392.868 | 0.5 | 291.555 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22222586023/lcdm_recon__mf_v0_v1__sim001__001__lmax128__nside256__phasesims2000__seed2401__run22222586023.json |  |
+| 128 | 256 | 2000 | 2402 | 22222586023 | 0.2 | 558.169 | 0 | 539.561 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22222586023/lcdm_recon__mf_v0_v1__sim002__002__lmax128__nside256__phasesims2000__seed2402__run22222586023.json |  |
+| 192 | 256 | 2000 | 2400 | 22220616512 | 0.5 | 609.931 | 0.2 | 608.216 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22220616512/lcdm_recon__mf_v0_v1__sim000__000__lmax192__nside256__phasesims2000__seed2400__run22220616512.json |  |
+| 192 | 256 | 2000 | 2401 | 22220616512 | 0.5 | 600.345 | 0.4 | 515.352 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22220616512/lcdm_recon__mf_v0_v1__sim001__001__lmax192__nside256__phasesims2000__seed2401__run22220616512.json |  |
+| 192 | 256 | 2000 | 2402 | 22220616512 | 0.1 | 879.278 | 0 | 843.416 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22220616512/lcdm_recon__mf_v0_v1__sim002__002__lmax192__nside256__phasesims2000__seed2402__run22220616512.json |  |
+| 256 | 256 | 2000 | 1400 | 22216941911 | 0.3 | 851.696 | 0.1 | 925.931 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22216941911/lcdm_recon__mf_v0_v1__sim000__000__lmax256__nside256__phasesims2000__seed1400__run22216941911.json |  |
+| 256 | 256 | 2000 | 1401 | 22216941911 | 0.5 | 811.566 | 0.3 | 789.353 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22216941911/lcdm_recon__mf_v0_v1__sim001__001__lmax256__nside256__phasesims2000__seed1401__run22216941911.json |  |
+| 256 | 256 | 2000 | 1402 | 22216941911 | 0.1 | 1209.5 | 0 | 1170.67 | experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/lcdm_recon/runs/22216941911/lcdm_recon__mf_v0_v1__sim002__002__lmax256__nside256__phasesims2000__seed1402__run22216941911.json |  |
 
