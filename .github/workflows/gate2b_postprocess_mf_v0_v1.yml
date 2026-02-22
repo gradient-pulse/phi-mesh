@@ -4,29 +4,32 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "control = filter by manifest control line; observed = scan all run dirs under search_root"
+        description: "control = filter by manifest control line; observed = scan observed run dirs under search_root(/runs)"
         required: true
         default: "control"
         type: choice
-        options:
-          - control
-          - observed
+        options: [control, observed]
+
       control_name:
         description: "Control name as written into manifest.txt (control: ...). Ignored in mode=observed."
         required: true
         default: "decision_gate_2b__lcdm_recon__mf_v0_v1"
+
       search_root:
-        description: "Where to search (relative path). In mode=observed, you may set parent (.../topology_mf_v0_v1) or the runs folder (.../topology_mf_v0_v1/runs). In mode=control, you may set either the parent folder or the exact .../runs folder."
+        description: "Where to search (relative path). You may pass a parent folder OR an explicit .../runs folder."
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1"
+
       out_dir:
         description: "Output folder for generated tables (relative path)"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess"
+
       postprocess_script:
         description: "Path to postprocess python script (relative path)"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/tools/gate2b_mf_postprocess.py"
+
       commit_message:
         description: "Commit message"
         required: true
@@ -83,8 +86,15 @@ jobs:
             exit 1
           fi
 
-          # ---- observed mode: accept either .../topology_mf_v0_v1 or .../topology_mf_v0_v1/runs
+          # Helper: if ROOT already looks like a runs folder (has */manifest.txt), use it directly.
+          if find "${ROOT}" -maxdepth 2 -type f -name manifest.txt | grep -q .; then
+            echo "Detected manifest.txt under SEARCH_ROOT; using SEARCH_ROOT as RUNS_ROOT."
+            echo "RUNS_ROOT=${ROOT}" | tee -a "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           if [ "${MODE}" = "observed" ]; then
+            # observed mode expects RUNS_ROOT to be .../runs with run_id subfolders
             if [ -d "${ROOT}/runs" ]; then
               runs_root="${ROOT}/runs"
             else
@@ -100,28 +110,21 @@ jobs:
             exit 0
           fi
 
-          # ---- control mode hardening: if ROOT already *is* a runs folder, trust it.
-          if [ "$(basename "${ROOT}")" = "runs" ]; then
-            echo "RUNS_ROOT=${ROOT}" | tee -a "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          # control mode: Find manifest files that mention the control (anywhere under ROOT)
+          # control mode: find manifests mentioning the control (anywhere under ROOT)
           mapfile -t hits < <(grep -Rsl "control: ${CONTROL}" "${ROOT}" || true)
 
           if [ "${#hits[@]}" -eq 0 ]; then
             echo "ERROR: No manifest.txt files found containing: control: ${CONTROL}"
-            echo "Tip: confirm the exact control line in a manifest (case/spaces)."
+            echo "Tip: if you're postprocessing Gaussian, set control_name=gaussian_synalm_from_(dat_minus_mf)_cl"
+            echo "Tip: or point search_root directly at the intended .../runs folder for that control suite."
             exit 1
           fi
 
           echo "Found ${#hits[@]} matching manifests."
           echo "Example hit: ${hits[0]}"
 
-          # hits[0] looks like:
-          #   .../controls/<suite>/runs/<run_id>/manifest.txt
-          # We want:
-          #   .../controls/<suite>/runs
+          # hits[0] looks like: .../controls/<suite>/runs/<run_id>/manifest.txt
+          # we want:             .../controls/<suite>/runs
           runs_root="$(dirname "$(dirname "$(dirname "${hits[0]}")")")"
 
           if [ ! -d "${runs_root}" ]; then
@@ -142,9 +145,6 @@ jobs:
           CONTROL="${{ inputs.control_name }}"
           TOOL="${{ inputs.postprocess_script }}"
 
-          # Separate output folders:
-          # - control mode => OUT_DIR/<CONTROL>
-          # - observed mode => OUT_DIR/observed_planck_pr3__mf_v0_v1
           if [ "${MODE}" = "observed" ]; then
             LABEL="observed_planck_pr3__mf_v0_v1"
           else
