@@ -31,6 +31,11 @@ Key behavior
 - Merges gc_features with mf_sweep on (run_id, lmax, seed) when sweep exists.
 - Produces per-lmax summaries and simple z-scores of OBSERVED vs control means.
 
+Numerical nuance (important)
+----------------------------
+- If a control std is ~0, z-scores can explode (e.g., peak_shift).
+  We suppress z-scores when std < 1e-6.
+
 Notes
 -----
 - Missing/blank values are handled gracefully.
@@ -123,18 +128,15 @@ def mean_std(vals: List[float]) -> Tuple[Optional[float], Optional[float]]:
     var = sum((v - m) ** 2 for v in vals) / (len(vals) - 1)
     return m, math.sqrt(var)
 
-def safe_z(obs: Optional[float], mu: Optional[float], sd: Optional[float]) -> Optional[float]:
+def safe_z(obs: Optional[float], mu: Optional[float], sd: Optional[float], eps: float = 1e-6) -> Optional[float]:
     if obs is None or mu is None or sd is None:
         return None
-    if sd == 0:
+    if sd == 0 or abs(sd) < eps:
         return None
     return (obs - mu) / sd
 
 def infer_sweep_path(gc_csv: Path) -> Path:
     return gc_csv.parent / "mf_sweep_table.csv"
-
-def infer_label_from_path(p: Path) -> str:
-    return p.parent.name
 
 def extract_gauss_seed(row: Dict[str, str]) -> Optional[int]:
     """
@@ -271,7 +273,12 @@ def main() -> None:
     ap.add_argument("--gaussian_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv")
     ap.add_argument("--lcdm_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv")
 
-    ap.add_argument("--dedupe", default="newest", choices=["newest", "none"], help="Deduplicate within cohort keeping newest run_id. Gaussian uses (lmax, gauss_seed). Others use (lmax, seed).")
+    ap.add_argument(
+        "--dedupe",
+        default="newest",
+        choices=["newest", "none"],
+        help="Deduplicate within cohort keeping newest run_id. Gaussian uses (lmax, gauss_seed). Others use (lmax, seed)."
+    )
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir)
