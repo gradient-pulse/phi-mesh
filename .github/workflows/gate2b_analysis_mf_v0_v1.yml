@@ -1,10 +1,9 @@
 name: "Gate 2B Analysis — MF V0+V1 (cohort compare)"
 
-# This workflow is intended to be run AFTER:
-#   - gate2b_postprocess_mf_v0_v1.yml  (your postprocess workflow)
+# Intended to be run AFTER:
+#   - gate2b_postprocess_mf_v0_v1.yml  (postprocess workflow)
 #
-# Optionally you can auto-trigger it after postprocess completes by enabling the
-# workflow_run block below and setting `workflows:` to the exact postprocess workflow name.
+# Optional auto-trigger (leave commented unless you want it):
 #
 # on:
 #   workflow_run:
@@ -37,7 +36,7 @@ on:
       commit_message:
         description: "Commit message"
         required: true
-        default: "Gate 2B (MF V0+V1): analysis cohort summary"
+        default: "Gate 2B (MF V0+V1): analysis cohort summary (include all runs)"
 
 concurrency:
   group: "gate2b-analysis-mf-v0v1"
@@ -100,7 +99,7 @@ jobs:
 
           echo "OK: postprocess outputs found."
 
-      - name: Run analysis
+      - name: Run analysis (include all runs)
         shell: bash
         run: |
           set -euo pipefail
@@ -125,12 +124,15 @@ jobs:
 
           mkdir -p "$OUT"
 
+          # IMPORTANT: include ALL runs for now -> do NOT dedupe.
+          # If your analysis script supports --dedupe, we explicitly set "none".
+          # If it does not, the workflow will fail and we can remove this flag.
           python "$TOOL" \
             --out_dir "$OUT" \
             --observed_gc "$OBS_GC" \
             --gaussian_gc "$GAU_GC" \
             --lcdm_gc "$LCDM_GC" \
-            --dedupe newest
+            --dedupe none
 
           echo "Analysis outputs:"
           find "$OUT" -maxdepth 2 -type f -print
