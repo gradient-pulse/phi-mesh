@@ -1,7 +1,7 @@
 name: "Gate 2B Analysis — MF V0+V1 (cohort compare)"
 
 # Intended to be run AFTER:
-#   - gate2b_postprocess_mf_v0_v1.yml  (postprocess workflow)
+#   - "Gate 2B Postprocess — MF V0+V1 (sweep table + V1 peak)"
 #
 # Optional auto-trigger (leave commented unless you want it):
 #
@@ -33,10 +33,18 @@ on:
         description: "Postprocess folder for lcdm recon cohort"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1"
+      dedupe:
+        description: "Deduplication mode inside analysis script (newest = preferred; none = include everything)"
+        required: true
+        type: choice
+        default: "newest"
+        options:
+          - newest
+          - none
       commit_message:
         description: "Commit message"
         required: true
-        default: "Gate 2B (MF V0+V1): analysis cohort summary (include all runs)"
+        default: "Gate 2B (MF V0+V1): analysis cohort summary"
 
 concurrency:
   group: "gate2b-analysis-mf-v0v1"
@@ -99,7 +107,7 @@ jobs:
 
           echo "OK: postprocess outputs found."
 
-      - name: Run analysis (include all runs)
+      - name: Run analysis
         shell: bash
         run: |
           set -euo pipefail
@@ -111,11 +119,14 @@ jobs:
           GAU_GC="${{ inputs.gaussian_post_dir }}/gc_features_table.csv"
           LCDM_GC="${{ inputs.lcdm_post_dir }}/gc_features_table.csv"
 
+          DEDUPE="${{ inputs.dedupe }}"
+
           echo "TOOL=$TOOL"
           echo "OUT=$OUT"
           echo "OBS_GC=$OBS_GC"
           echo "GAU_GC=$GAU_GC"
           echo "LCDM_GC=$LCDM_GC"
+          echo "DEDUPE=$DEDUPE"
 
           if [ ! -f "$TOOL" ]; then
             echo "ERROR: analysis script not found: $TOOL"
@@ -124,15 +135,12 @@ jobs:
 
           mkdir -p "$OUT"
 
-          # IMPORTANT: include ALL runs for now -> do NOT dedupe.
-          # If your analysis script supports --dedupe, we explicitly set "none".
-          # If it does not, the workflow will fail and we can remove this flag.
           python "$TOOL" \
             --out_dir "$OUT" \
             --observed_gc "$OBS_GC" \
             --gaussian_gc "$GAU_GC" \
             --lcdm_gc "$LCDM_GC" \
-            --dedupe none
+            --dedupe "$DEDUPE"
 
           echo "Analysis outputs:"
           find "$OUT" -maxdepth 2 -type f -print
