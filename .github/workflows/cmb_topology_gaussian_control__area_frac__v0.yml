@@ -1,4 +1,4 @@
-name: CMB Topology (Gaussian control from Planck PR3 lensing φ_lm) — MF V0+V1
+name: CMB Topology (Gaussian control from Planck PR3 lensing φ_lm) — AreaFrac V0
 
 on:
   workflow_dispatch:
