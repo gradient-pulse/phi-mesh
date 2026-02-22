@@ -283,10 +283,18 @@ def main() -> None:
     ap.add_argument("--gaussian_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv")
     ap.add_argument("--lcdm_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv")
 
-    ap.add_argument("--dedupe", default="newest", choices=["newest", "none"],
-                    help="Deduplicate within cohort keeping newest run_id. Gaussian uses (lmax, gauss_seed). Others use (lmax, seed).")
-    ap.add_argument("--z_min_std", type=float, default=1e-6,
-                    help="If control std < this threshold, z-score is blank (prevents numerical blowups).")
+    ap.add_argument(
+        "--dedupe",
+        default="newest",
+        choices=["newest", "none"],
+        help="Deduplicate within cohort keeping newest run_id. Gaussian uses (lmax, gauss_seed). Others use (lmax, seed).",
+    )
+    ap.add_argument(
+        "--z_min_std",
+        type=float,
+        default=1e-6,
+        help="If control std < this threshold, z-score is blank (prevents numerical blowups).",
+    )
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir)
@@ -324,8 +332,8 @@ def main() -> None:
 
     # Per-lmax stats
     stats_obs = cohort_per_lmax_stats(cohort_rows["observed"], "observed")
-    stats_g   = cohort_per_lmax_stats(cohort_rows["gaussian"], "gaussian")
-    stats_l   = cohort_per_lmax_stats(cohort_rows["lcdm_recon"], "lcdm_recon")
+    stats_g = cohort_per_lmax_stats(cohort_rows["gaussian"], "gaussian")
+    stats_l = cohort_per_lmax_stats(cohort_rows["lcdm_recon"], "lcdm_recon")
 
     # Comparison summary
     summary_rows: List[Dict[str, Any]] = []
@@ -369,14 +377,26 @@ def main() -> None:
 
     md_cols = ["lmax", "n_obs", "n_gauss", "n_lcdm"]
     headline = [
-        "obs_D1_L2", "gauss_D1_L2_mean", "lcdm_D1_L2_mean",
-        "z_obs_vs_gauss_D1_L2", "z_obs_vs_lcdm_D1_L2",
-        "obs_Z_mf", "gauss_Z_mf_mean", "lcdm_Z_mf_mean",
-        "z_obs_vs_gauss_Z_mf", "z_obs_vs_lcdm_Z_mf",
-        "obs_v1_energy_ratio", "gauss_v1_energy_ratio_mean", "lcdm_v1_energy_ratio_mean",
-        "z_obs_vs_gauss_v1_energy_ratio", "z_obs_vs_lcdm_v1_energy_ratio",
-        "obs_v1_peak_shift", "gauss_v1_peak_shift_mean", "lcdm_v1_peak_shift_mean",
-        "z_obs_vs_gauss_v1_peak_shift", "z_obs_vs_lcdm_v1_peak_shift",
+        "obs_D1_L2",
+        "gauss_D1_L2_mean",
+        "lcdm_D1_L2_mean",
+        "z_obs_vs_gauss_D1_L2",
+        "z_obs_vs_lcdm_D1_L2",
+        "obs_Z_mf",
+        "gauss_Z_mf_mean",
+        "lcdm_Z_mf_mean",
+        "z_obs_vs_gauss_Z_mf",
+        "z_obs_vs_lcdm_Z_mf",
+        "obs_v1_energy_ratio",
+        "gauss_v1_energy_ratio_mean",
+        "lcdm_v1_energy_ratio_mean",
+        "z_obs_vs_gauss_v1_energy_ratio",
+        "z_obs_vs_lcdm_v1_energy_ratio",
+        "obs_v1_peak_shift",
+        "gauss_v1_peak_shift_mean",
+        "lcdm_v1_peak_shift_mean",
+        "z_obs_vs_gauss_v1_peak_shift",
+        "z_obs_vs_lcdm_v1_peak_shift",
     ]
     md_cols.extend(headline)
 
