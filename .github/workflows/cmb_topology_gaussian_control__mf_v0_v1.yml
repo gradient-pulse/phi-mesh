@@ -1,0 +1,263 @@
+name: CMB Topology (Gaussian control from Planck PR3 lensing φ_lm) — MF V0+V1
+
+on:
+  workflow_dispatch:
+    inputs:
+      dat_url:
+        description: "Release asset URL for dat_klm (Planck φ_lm MV estimate)"
+        required: true
+        default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits"
+      mf_url:
+        description: "Release asset URL for mf_klm (mean-field correction)"
+        required: true
+        default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits"
+
+      lmax:
+        description: "Max multipole l to analyze"
+        required: true
+        default: "256"
+      nside:
+        description: "HEALPix nside for map-space morphology"
+        required: true
+        default: "256"
+
+      n_sims:
+        description: "Number of phase-randomized surrogates (null draws)"
+        required: true
+        default: "2000"
+      seed:
+        description: "RNG seed (used by the topology pipeline / surrogate RNG)"
+        required: true
+        default: "731"
+
+      gauss_seed:
+        description: "RNG seed used to synthesize the Gaussian φ_lm control draw"
+        required: true
+        default: "901"
+
+      n_nu:
+        description: "Number of thresholds between nu_min and nu_max"
+        required: true
+        default: "61"
+      nu_min:
+        description: "Min threshold (in sigma units after standardization)"
+        required: true
+        default: "-3.0"
+      nu_max:
+        description: "Max threshold (in sigma units after standardization)"
+        required: true
+        default: "3.0"
+
+      run_note:
+        description: "Optional run note (e.g., 'lmax sweep 128')"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  # Allow parallel runs; prevent same (lmax,gauss_seed) from colliding.
+  group: topology-gaussian-mf-v0-v1-${{ github.event.inputs.lmax }}-${{ github.event.inputs.gauss_seed }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install numpy scipy healpy
+
+      - name: Download Planck release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p data/planck_lensing results/cmb_topology_gaussian_mf_v0_v1
+          echo "Fetching dat_url: ${{ github.event.inputs.dat_url }}"
+          echo "Fetching mf_url : ${{ github.event.inputs.mf_url }}"
+          curl -L --retry 5 --retry-delay 5 --fail "${{ github.event.inputs.dat_url }}" -o data/planck_lensing/dat_klm.fits
+          curl -L --retry 5 --retry-delay 5 --fail "${{ github.event.inputs.mf_url }}"  -o data/planck_lensing/mf_klm.fits
+          ls -lh data/planck_lensing
+
+      - name: Synthesize Gaussian φ_lm control (match C_ell of dat-mf)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import numpy as np
+          import healpy as hp
+
+          dat_path = "data/planck_lensing/dat_klm.fits"
+          mf_path  = "data/planck_lensing/mf_klm.fits"
+
+          lmax_target = int("${{ github.event.inputs.lmax }}")
+          gauss_seed = int("${{ github.event.inputs.gauss_seed }}")
+
+          def truncate_alm(alm_in, lmax_out):
+              lmax_in = hp.Alm.getlmax(alm_in.size)
+              if lmax_out >= lmax_in:
+                  return alm_in
+              alm_out = np.zeros(hp.Alm.getsize(lmax_out), dtype=alm_in.dtype)
+              for ell in range(lmax_out + 1):
+                  for m in range(ell + 1):
+                      alm_out[hp.Alm.getidx(lmax_out, ell, m)] = alm_in[hp.Alm.getidx(lmax_in, ell, m)]
+              return alm_out
+
+          # Read full alms (healpy.read_alm does NOT support lmax=)
+          dat_full = hp.read_alm(dat_path)
+          mf_full  = hp.read_alm(mf_path)
+
+          lmax_in_dat = hp.Alm.getlmax(dat_full.size)
+          lmax_in_mf  = hp.Alm.getlmax(mf_full.size)
+          print("Input dat lmax_in:", lmax_in_dat, "size:", dat_full.size)
+          print("Input mf  lmax_in:", lmax_in_mf,  "size:", mf_full.size)
+          print("Requested lmax_target:", lmax_target)
+
+          dat = truncate_alm(dat_full, lmax_target)
+          mf  = truncate_alm(mf_full,  lmax_target)
+
+          alm_clean = dat - mf
+          cl = hp.alm2cl(alm_clean, lmax=lmax_target)
+
+          # Seed synalm (healpy uses numpy's global RNG)
+          np.random.seed(gauss_seed)
+          alm_gauss = hp.synalm(cl, lmax=lmax_target, new=True, verbose=False)
+
+          # Mean-field for the Gaussian control is set to zero
+          alm_zero = np.zeros_like(alm_gauss)
+
+          out_dat = "data/planck_lensing/gaussian_control_dat_klm.fits"
+          out_mf  = "data/planck_lensing/gaussian_control_mf_klm.fits"
+
+          hp.write_alm(out_dat, alm_gauss, overwrite=True)
+          hp.write_alm(out_mf,  alm_zero,  overwrite=True)
+
+          print("Wrote:", out_dat, "size:", alm_gauss.size, "lmax:", hp.Alm.getlmax(alm_gauss.size))
+          print("Wrote:", out_mf,  "size:", alm_zero.size,  "lmax:", hp.Alm.getlmax(alm_zero.size))
+          PY
+          ls -lh data/planck_lensing | sed -n '1,200p'
+
+      - name: Run Topology MF V0+V1 on Gaussian control
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OUT="results/cmb_topology_gaussian_mf_v0_v1/gaussian_control__mf_v0_v1__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__gauss${{ github.event.inputs.gauss_seed }}__run${{ github.run_id }}.json"
+
+          # Prefer engine_v1 if present (canonical). Fall back to legacy name if needed.
+          if [ -f "experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1__engine_v1.py" ]; then
+            TOOL="experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1__engine_v1.py"
+          else
+            TOOL="experiments/rgpx_proof_proto/cmb_phase_dagger/cmb_topology_planck_lensing__mf_v0_v1.py"
+          fi
+
+          echo "Using topology tool: $TOOL"
+
+          python "$TOOL" \
+            --dat_klm data/planck_lensing/gaussian_control_dat_klm.fits \
+            --mf_klm  data/planck_lensing/gaussian_control_mf_klm.fits \
+            --lmax "${{ github.event.inputs.lmax }}" \
+            --nside "${{ github.event.inputs.nside }}" \
+            --n_sims "${{ github.event.inputs.n_sims }}" \
+            --seed "${{ github.event.inputs.seed }}" \
+            --n_nu "${{ github.event.inputs.n_nu }}" \
+            --nu_min "${{ github.event.inputs.nu_min }}" \
+            --nu_max "${{ github.event.inputs.nu_max }}" \
+            --dat_url "GAUSSIAN_CONTROL_FROM: ${{ github.event.inputs.dat_url }}" \
+            --mf_url  "GAUSSIAN_CONTROL_MF_ZERO_FROM: ${{ github.event.inputs.mf_url }}" \
+            --out "$OUT"
+
+          echo "Wrote $OUT"
+          ls -lh results/cmb_topology_gaussian_mf_v0_v1
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaussian_control_mf_v0_v1__lmax${{ github.event.inputs.lmax }}__nside${{ github.event.inputs.nside }}__nsims${{ github.event.inputs.n_sims }}__seed${{ github.event.inputs.seed }}__gauss${{ github.event.inputs.gauss_seed }}__run${{ github.run_id }}
+          path: results/cmb_topology_gaussian_mf_v0_v1/*.json
+          retention-days: 90
+
+      - name: Archive result into repo (control suite)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BASE_DIR="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1"
+          RUN_DIR="${BASE_DIR}/controls/gaussian/runs/${{ github.run_id }}"
+          mkdir -p "$RUN_DIR"
+
+          cp -v results/cmb_topology_gaussian_mf_v0_v1/*.json "$RUN_DIR/"
+
+          cat > "${RUN_DIR}/manifest.txt" <<EOF
+          run_id: ${{ github.run_id }}
+          workflow: ${{ github.workflow }}
+          ref: ${{ github.ref }}
+          sha: ${{ github.sha }}
+          control: gaussian_synalm_from_(dat_minus_mf)_cl
+          lmax: ${{ github.event.inputs.lmax }}
+          nside: ${{ github.event.inputs.nside }}
+          n_sims: ${{ github.event.inputs.n_sims }}
+          seed: ${{ github.event.inputs.seed }}
+          gauss_seed: ${{ github.event.inputs.gauss_seed }}
+          n_nu: ${{ github.event.inputs.n_nu }}
+          nu_min: ${{ github.event.inputs.nu_min }}
+          nu_max: ${{ github.event.inputs.nu_max }}
+          run_note: ${{ github.event.inputs.run_note }}
+          source_dat_url: ${{ github.event.inputs.dat_url }}
+          source_mf_url: ${{ github.event.inputs.mf_url }}
+          EOF
+
+          ls -lh "$RUN_DIR"
+
+      - name: Commit archived control result (if changed) and push safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/gaussian/runs/${{ github.run_id }}/
+
+          if git diff --cached --quiet; then
+            echo "No new archived control files to commit."
+            exit 0
+          fi
+
+          MSG="Decision gate: Gaussian control (MF v0+v1) (run ${{ github.run_id }})"
+          if [ -n "${{ github.event.inputs.run_note }}" ]; then
+            MSG="${MSG} — ${{ github.event.inputs.run_note }}"
+          fi
+
+          git commit -m "$MSG"
+
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main || (git rebase --abort && exit 1)
+
+            if git push; then
+              echo "Push succeeded."
+              exit 0
+            fi
+
+            echo "Push failed (attempt $i). Retrying after short delay..."
+            sleep 3
+          done
+
+          echo "Push failed after retries."
+          exit 1
