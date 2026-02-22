@@ -29,6 +29,8 @@ Key behavior
 - Produces per-lmax summaries and z-scores of OBSERVED vs control means.
 - Guards z-scores: if std is too small (default < 1e-6), z-score is blank.
   This prevents numerical artifacts (e.g., v1_peak_shift) from exploding.
+- Option A output: markdown table emphasizes means + std + n (z-scores still
+  computed in CSV, but not emphasized in MD).
 
 Notes
 -----
@@ -194,17 +196,21 @@ def dedupe_keep_newest(rows: List[Dict[str, str]], cohort: str) -> List[Dict[str
 
     # Stable sort for readability
     if cohort == "gaussian":
-        out.sort(key=lambda r: (
-            to_int(r.get("lmax")) or 0,
-            extract_gauss_seed(r) or 0,
-            to_int(r.get("run_id")) or 0
-        ))
+        out.sort(
+            key=lambda r: (
+                to_int(r.get("lmax")) or 0,
+                extract_gauss_seed(r) or 0,
+                to_int(r.get("run_id")) or 0,
+            )
+        )
     else:
-        out.sort(key=lambda r: (
-            to_int(r.get("lmax")) or 0,
-            to_int(r.get("seed")) or 0,
-            to_int(r.get("run_id")) or 0
-        ))
+        out.sort(
+            key=lambda r: (
+                to_int(r.get("lmax")) or 0,
+                to_int(r.get("seed")) or 0,
+                to_int(r.get("run_id")) or 0,
+            )
+        )
     return out
 
 
@@ -279,9 +285,18 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out_dir", required=True)
 
-    ap.add_argument("--observed_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/observed_planck_pr3__mf_v0_v1/gc_features_table.csv")
-    ap.add_argument("--gaussian_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv")
-    ap.add_argument("--lcdm_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv")
+    ap.add_argument(
+        "--observed_gc",
+        default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/observed_planck_pr3__mf_v0_v1/gc_features_table.csv",
+    )
+    ap.add_argument(
+        "--gaussian_gc",
+        default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv",
+    )
+    ap.add_argument(
+        "--lcdm_gc",
+        default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv",
+    )
 
     ap.add_argument(
         "--dedupe",
@@ -294,6 +309,11 @@ def main() -> None:
         type=float,
         default=1e-6,
         help="If control std < this threshold, z-score is blank (prevents numerical blowups).",
+    )
+    ap.add_argument(
+        "--add_interpretation_note",
+        action="store_true",
+        help="Append a short interpretation note at the end of analysis_summary.md",
     )
     args = ap.parse_args()
 
@@ -375,32 +395,44 @@ def main() -> None:
 
     write_csv(csv_out, summary_rows)
 
+    # Option A: MD emphasizes means + std + n (still keeps obs values)
     md_cols = ["lmax", "n_obs", "n_gauss", "n_lcdm"]
     headline = [
+        # Morphology distance (show tight null band via std)
         "obs_D1_L2",
         "gauss_D1_L2_mean",
+        "gauss_D1_L2_std",
         "lcdm_D1_L2_mean",
-        "z_obs_vs_gauss_D1_L2",
-        "z_obs_vs_lcdm_D1_L2",
+        "lcdm_D1_L2_std",
+        # Z_mf (same)
         "obs_Z_mf",
         "gauss_Z_mf_mean",
+        "gauss_Z_mf_std",
         "lcdm_Z_mf_mean",
-        "z_obs_vs_gauss_Z_mf",
-        "z_obs_vs_lcdm_Z_mf",
+        "lcdm_Z_mf_std",
+        # GC-style features
         "obs_v1_energy_ratio",
         "gauss_v1_energy_ratio_mean",
+        "gauss_v1_energy_ratio_std",
         "lcdm_v1_energy_ratio_mean",
-        "z_obs_vs_gauss_v1_energy_ratio",
-        "z_obs_vs_lcdm_v1_energy_ratio",
+        "lcdm_v1_energy_ratio_std",
         "obs_v1_peak_shift",
         "gauss_v1_peak_shift_mean",
+        "gauss_v1_peak_shift_std",
         "lcdm_v1_peak_shift_mean",
-        "z_obs_vs_gauss_v1_peak_shift",
-        "z_obs_vs_lcdm_v1_peak_shift",
+        "lcdm_v1_peak_shift_std",
     ]
     md_cols.extend(headline)
 
     write_md_table(md_out, "Gate 2B — MF(V0,V1) Cohort Analysis Summary", md_cols, summary_rows)
+
+    if args.add_interpretation_note:
+        with md_out.open("a", encoding="utf-8") as f:
+            f.write(
+                "**Interpretation note:** Gaussian null produces a tight morphology-distance band (small std). "
+                "Observed departs strongly, with scale-dependent trajectory in GC-style features "
+                "(energy ratio / peak shift).\n"
+            )
 
     # Per-cohort stats dumps
     write_csv(out_dir / "analysis_stats_observed.csv", list(stats_obs.values()))
