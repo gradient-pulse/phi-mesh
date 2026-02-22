@@ -18,11 +18,16 @@ Outputs (written to --out_dir)
 ------------------------------
 - analysis_summary.csv
 - analysis_summary.md
+- analysis_stats_observed.csv
+- analysis_stats_gaussian.csv
+- analysis_stats_lcdm_recon.csv
 
 Key behavior
 ------------
-- Dedup within each cohort by (lmax, seed) keeping the newest run_id (max numeric).
-  This handles occasional duplicate lmax entries (e.g., Gaussian 320 twice).
+- Dedup within each cohort keeping the newest run_id (max numeric).
+  * For observed + lcdm_recon: dedupe key = (lmax, seed)
+  * For gaussian:            dedupe key = (lmax, gauss_seed)  [parsed from json path]
+    This prevents duplicate gauss901 runs at the same lmax from inflating n_rows.
 - Merges gc_features with mf_sweep on (run_id, lmax, seed) when sweep exists.
 - Produces per-lmax summaries and simple z-scores of OBSERVED vs control means.
 
@@ -38,6 +43,7 @@ from __future__ import annotations
 import argparse
 import csv
 import math
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -45,6 +51,8 @@ from typing import Any, Dict, List, Optional, Tuple
 # -----------------------------
 # helpers
 # -----------------------------
+
+GAUSS_SEED_RE = re.compile(r"__gauss(\d+)__")
 
 def to_float(x: Any) -> Optional[float]:
     try:
@@ -123,35 +131,69 @@ def safe_z(obs: Optional[float], mu: Optional[float], sd: Optional[float]) -> Op
     return (obs - mu) / sd
 
 def infer_sweep_path(gc_csv: Path) -> Path:
-    # same folder; different filename
     return gc_csv.parent / "mf_sweep_table.csv"
 
 def infer_label_from_path(p: Path) -> str:
     return p.parent.name
 
-def key_run(row: Dict[str, str]) -> Tuple[int, int, int]:
-    # (lmax, seed, run_id) for dedupe; run_id used as tiebreaker max
-    lmax = to_int(row.get("lmax")) or -1
-    seed = to_int(row.get("seed")) or -1
-    run_id = to_int(row.get("run_id")) or -1
-    return (lmax, seed, run_id)
+def extract_gauss_seed(row: Dict[str, str]) -> Optional[int]:
+    """
+    Extract gauss seed from json filename like:
+      ...__gauss901__run<id>.json
+    Returns int or None if not found.
+    """
+    j = (row.get("json") or "").strip()
+    if not j:
+        return None
+    m = GAUSS_SEED_RE.search(j)
+    if not m:
+        return None
+    try:
+        return int(m.group(1))
+    except Exception:
+        return None
 
-def dedupe_keep_newest(rows: List[Dict[str, str]]) -> List[Dict[str, str]]:
-    # keep newest by (lmax, seed) using max run_id
+def dedupe_keep_newest(rows: List[Dict[str, str]], cohort: str) -> List[Dict[str, str]]:
+    """
+    Keep newest by cohort-specific key using max run_id.
+      - gaussian: (lmax, gauss_seed)
+      - others:   (lmax, seed)
+    """
     best: Dict[Tuple[int, int], Dict[str, str]] = {}
     for r in rows:
         lmax = to_int(r.get("lmax")) or -1
-        seed = to_int(r.get("seed")) or -1
         rid = to_int(r.get("run_id")) or -1
-        k = (lmax, seed)
+
+        if cohort == "gaussian":
+            gseed = extract_gauss_seed(r)
+            k2 = gseed if gseed is not None else -1
+            k = (lmax, k2)
+        else:
+            seed = to_int(r.get("seed")) or -1
+            k = (lmax, seed)
+
         if k not in best:
             best[k] = r
         else:
             rid2 = to_int(best[k].get("run_id")) or -1
             if rid > rid2:
                 best[k] = r
+
     out = list(best.values())
-    out.sort(key=lambda r: (to_int(r.get("lmax")) or 0, to_int(r.get("seed")) or 0, to_int(r.get("run_id")) or 0))
+
+    # Stable sort for readability
+    if cohort == "gaussian":
+        out.sort(key=lambda r: (
+            to_int(r.get("lmax")) or 0,
+            extract_gauss_seed(r) or 0,
+            to_int(r.get("run_id")) or 0
+        ))
+    else:
+        out.sort(key=lambda r: (
+            to_int(r.get("lmax")) or 0,
+            to_int(r.get("seed")) or 0,
+            to_int(r.get("run_id")) or 0
+        ))
     return out
 
 def merge_gc_with_sweep(gc_rows: List[Dict[str, str]], sweep_rows: List[Dict[str, str]]) -> List[Dict[str, Any]]:
@@ -229,7 +271,7 @@ def main() -> None:
     ap.add_argument("--gaussian_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv")
     ap.add_argument("--lcdm_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv")
 
-    ap.add_argument("--dedupe", default="newest", choices=["newest", "none"], help="Deduplicate within cohort by (lmax, seed) keeping newest run_id.")
+    ap.add_argument("--dedupe", default="newest", choices=["newest", "none"], help="Deduplicate within cohort keeping newest run_id. Gaussian uses (lmax, gauss_seed). Others use (lmax, seed).")
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir)
@@ -250,13 +292,13 @@ def main() -> None:
 
         gc_raw = read_csv_dicts(gc_path)
         if args.dedupe == "newest":
-            gc_raw = dedupe_keep_newest(gc_raw)
+            gc_raw = dedupe_keep_newest(gc_raw, cohort=name)
 
         sweep_path = infer_sweep_path(gc_path)
         if sweep_path.exists():
             sweep_raw = read_csv_dicts(sweep_path)
             if args.dedupe == "newest":
-                sweep_raw = dedupe_keep_newest(sweep_raw)
+                sweep_raw = dedupe_keep_newest(sweep_raw, cohort=name)
             merged = merge_gc_with_sweep(gc_raw, sweep_raw)
         else:
             merged = [dict(r) for r in gc_raw]
