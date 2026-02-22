@@ -16,7 +16,7 @@ on:
         required: true
         default: "decision_gate_2b__lcdm_recon__mf_v0_v1"
       search_root:
-        description: "Where to search (relative path). In mode=observed, you may set parent (.../topology_mf_v0_v1) or the runs folder (.../topology_mf_v0_v1/runs)."
+        description: "Where to search (relative path). In mode=observed, you may set parent (.../topology_mf_v0_v1) or the runs folder (.../topology_mf_v0_v1/runs). In mode=control, you may set either the parent folder or the exact .../runs folder."
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1"
       out_dir:
@@ -83,12 +83,8 @@ jobs:
             exit 1
           fi
 
+          # ---- observed mode: accept either .../topology_mf_v0_v1 or .../topology_mf_v0_v1/runs
           if [ "${MODE}" = "observed" ]; then
-            # Observed mode expects runs_dir to be the folder whose immediate children are run_id dirs.
-            # Users may pass either:
-            #   .../topology_mf_v0_v1
-            # or:
-            #   .../topology_mf_v0_v1/runs
             if [ -d "${ROOT}/runs" ]; then
               runs_root="${ROOT}/runs"
             else
@@ -101,6 +97,12 @@ jobs:
             fi
 
             echo "RUNS_ROOT=${runs_root}" | tee -a "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # ---- control mode hardening: if ROOT already *is* a runs folder, trust it.
+          if [ "$(basename "${ROOT}")" = "runs" ]; then
+            echo "RUNS_ROOT=${ROOT}" | tee -a "$GITHUB_OUTPUT"
             exit 0
           fi
 
