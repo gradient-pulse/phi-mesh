@@ -12,8 +12,6 @@ Inputs (per cohort)
 - gc_features_table.csv   (required)
 - mf_sweep_table.csv      (optional but recommended; auto-detected next to gc csv)
 
-By default, this script uses your repo's canonical locations.
-
 Outputs (written to --out_dir)
 ------------------------------
 - analysis_summary.csv
@@ -25,16 +23,12 @@ Outputs (written to --out_dir)
 Key behavior
 ------------
 - Dedup within each cohort keeping the newest run_id (max numeric).
-  * For observed + lcdm_recon: dedupe key = (lmax, seed)
-  * For gaussian:            dedupe key = (lmax, gauss_seed)  [parsed from json path]
-    This prevents duplicate gauss901 runs at the same lmax from inflating n_rows.
+  * observed + lcdm_recon: dedupe key = (lmax, seed)
+  * gaussian:             dedupe key = (lmax, gauss_seed)  [parsed from json path]
 - Merges gc_features with mf_sweep on (run_id, lmax, seed) when sweep exists.
-- Produces per-lmax summaries and simple z-scores of OBSERVED vs control means.
-
-Numerical nuance (important)
-----------------------------
-- If a control std is ~0, z-scores can explode (e.g., peak_shift).
-  We suppress z-scores when std < 1e-6.
+- Produces per-lmax summaries and z-scores of OBSERVED vs control means.
+- Guards z-scores: if std is too small (default < 1e-6), z-score is blank.
+  This prevents numerical artifacts (e.g., v1_peak_shift) from exploding.
 
 Notes
 -----
@@ -59,6 +53,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 GAUSS_SEED_RE = re.compile(r"__gauss(\d+)__")
 
+
 def to_float(x: Any) -> Optional[float]:
     try:
         if x is None:
@@ -69,6 +64,7 @@ def to_float(x: Any) -> Optional[float]:
         return float(s)
     except Exception:
         return None
+
 
 def to_int(x: Any) -> Optional[int]:
     try:
@@ -81,9 +77,11 @@ def to_int(x: Any) -> Optional[int]:
     except Exception:
         return None
 
+
 def read_csv_dicts(path: Path) -> List[Dict[str, str]]:
     with path.open("r", encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f))
+
 
 def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -96,6 +94,7 @@ def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
         for r in rows:
             w.writerow({k: r.get(k, "") for k in keys})
 
+
 def fmt(x: Any, nd: int = 6) -> str:
     if x is None:
         return ""
@@ -104,6 +103,7 @@ def fmt(x: Any, nd: int = 6) -> str:
             return "nan"
         return f"{x:.{nd}g}"
     return str(x)
+
 
 def write_md_table(path: Path, title: str, columns: List[str], rows: List[Dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -118,6 +118,7 @@ def write_md_table(path: Path, title: str, columns: List[str], rows: List[Dict[s
             f.write("| " + " | ".join(fmt(r.get(c)) for c in columns) + " |\n")
         f.write("\n")
 
+
 def mean_std(vals: List[float]) -> Tuple[Optional[float], Optional[float]]:
     vals = [v for v in vals if v is not None and not math.isnan(v)]
     if not vals:
@@ -128,15 +129,21 @@ def mean_std(vals: List[float]) -> Tuple[Optional[float], Optional[float]]:
     var = sum((v - m) ** 2 for v in vals) / (len(vals) - 1)
     return m, math.sqrt(var)
 
-def safe_z(obs: Optional[float], mu: Optional[float], sd: Optional[float], eps: float = 1e-6) -> Optional[float]:
+
+def safe_z(obs: Optional[float], mu: Optional[float], sd: Optional[float], *, z_min_std: float) -> Optional[float]:
+    """
+    Guard z-score against tiny sd. If sd < z_min_std, return None (blank in tables).
+    """
     if obs is None or mu is None or sd is None:
         return None
-    if sd == 0 or abs(sd) < eps:
+    if sd < z_min_std:
         return None
     return (obs - mu) / sd
 
+
 def infer_sweep_path(gc_csv: Path) -> Path:
     return gc_csv.parent / "mf_sweep_table.csv"
+
 
 def extract_gauss_seed(row: Dict[str, str]) -> Optional[int]:
     """
@@ -155,6 +162,7 @@ def extract_gauss_seed(row: Dict[str, str]) -> Optional[int]:
     except Exception:
         return None
 
+
 def dedupe_keep_newest(rows: List[Dict[str, str]], cohort: str) -> List[Dict[str, str]]:
     """
     Keep newest by cohort-specific key using max run_id.
@@ -162,6 +170,7 @@ def dedupe_keep_newest(rows: List[Dict[str, str]], cohort: str) -> List[Dict[str
       - others:   (lmax, seed)
     """
     best: Dict[Tuple[int, int], Dict[str, str]] = {}
+
     for r in rows:
         lmax = to_int(r.get("lmax")) or -1
         rid = to_int(r.get("run_id")) or -1
@@ -198,8 +207,9 @@ def dedupe_keep_newest(rows: List[Dict[str, str]], cohort: str) -> List[Dict[str
         ))
     return out
 
+
 def merge_gc_with_sweep(gc_rows: List[Dict[str, str]], sweep_rows: List[Dict[str, str]]) -> List[Dict[str, Any]]:
-    # build index for sweep by (run_id, lmax, seed)
+    # index sweep by (run_id, lmax, seed)
     idx: Dict[Tuple[int, int, int], Dict[str, str]] = {}
     for s in sweep_rows:
         k = (to_int(s.get("run_id")) or -1, to_int(s.get("lmax")) or -1, to_int(s.get("seed")) or -1)
@@ -273,12 +283,10 @@ def main() -> None:
     ap.add_argument("--gaussian_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv")
     ap.add_argument("--lcdm_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv")
 
-    ap.add_argument(
-        "--dedupe",
-        default="newest",
-        choices=["newest", "none"],
-        help="Deduplicate within cohort keeping newest run_id. Gaussian uses (lmax, gauss_seed). Others use (lmax, seed)."
-    )
+    ap.add_argument("--dedupe", default="newest", choices=["newest", "none"],
+                    help="Deduplicate within cohort keeping newest run_id. Gaussian uses (lmax, gauss_seed). Others use (lmax, seed).")
+    ap.add_argument("--z_min_std", type=float, default=1e-6,
+                    help="If control std < this threshold, z-score is blank (prevents numerical blowups).")
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir)
@@ -290,7 +298,6 @@ def main() -> None:
         ("lcdm_recon", Path(args.lcdm_gc)),
     ]
 
-    # Load + merge each cohort
     cohort_rows: Dict[str, List[Dict[str, Any]]] = {}
 
     for name, gc_path in cohorts:
@@ -310,7 +317,6 @@ def main() -> None:
         else:
             merged = [dict(r) for r in gc_raw]
 
-        # normalize cohort name in rows for convenience
         for r in merged:
             r["cohort"] = name
 
@@ -321,10 +327,10 @@ def main() -> None:
     stats_g   = cohort_per_lmax_stats(cohort_rows["gaussian"], "gaussian")
     stats_l   = cohort_per_lmax_stats(cohort_rows["lcdm_recon"], "lcdm_recon")
 
-    # Build comparison summary: observed vs gaussian and observed vs lcdm
+    # Comparison summary
     summary_rows: List[Dict[str, Any]] = []
-
     lmaxs = sorted(set(stats_obs.keys()) | set(stats_g.keys()) | set(stats_l.keys()))
+
     for lmax in lmaxs:
         row: Dict[str, Any] = {"lmax": lmax}
 
@@ -347,11 +353,11 @@ def main() -> None:
 
             row[f"gauss_{label}_mean"] = g_m
             row[f"gauss_{label}_std"] = g_s
-            row[f"z_obs_vs_gauss_{label}"] = safe_z(o_m, g_m, g_s)
+            row[f"z_obs_vs_gauss_{label}"] = safe_z(o_m, g_m, g_s, z_min_std=args.z_min_std)
 
             row[f"lcdm_{label}_mean"] = c_m
             row[f"lcdm_{label}_std"] = c_s
-            row[f"z_obs_vs_lcdm_{label}"] = safe_z(o_m, c_m, c_s)
+            row[f"z_obs_vs_lcdm_{label}"] = safe_z(o_m, c_m, c_s, z_min_std=args.z_min_std)
 
         summary_rows.append(row)
 
@@ -361,10 +367,7 @@ def main() -> None:
 
     write_csv(csv_out, summary_rows)
 
-    # A readable MD subset (not every column)
     md_cols = ["lmax", "n_obs", "n_gauss", "n_lcdm"]
-
-    # keep the most useful “headline” metrics near term
     headline = [
         "obs_D1_L2", "gauss_D1_L2_mean", "lcdm_D1_L2_mean",
         "z_obs_vs_gauss_D1_L2", "z_obs_vs_lcdm_D1_L2",
@@ -379,7 +382,7 @@ def main() -> None:
 
     write_md_table(md_out, "Gate 2B — MF(V0,V1) Cohort Analysis Summary", md_cols, summary_rows)
 
-    # Also dump “per cohort per lmax” raw stats for debugging
+    # Per-cohort stats dumps
     write_csv(out_dir / "analysis_stats_observed.csv", list(stats_obs.values()))
     write_csv(out_dir / "analysis_stats_gaussian.csv", list(stats_g.values()))
     write_csv(out_dir / "analysis_stats_lcdm_recon.csv", list(stats_l.values()))
