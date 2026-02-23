@@ -8,13 +8,11 @@ on:
         required: true
         default: "cmb_topology_gaussian_control__mf_v0_v1.yml"
 
-      # lmax sweep (comma-separated). Example: 128,192,256,320
       lmax_list:
-        description: "Comma-separated lmax values to dispatch"
+        description: "Comma-separated lmax values to dispatch (e.g. 128,192,256,320)"
         required: true
         default: "128,192,256,320"
 
-      # gauss seed range (inclusive)
       gauss_seed_min:
         description: "Min gauss_seed (inclusive)"
         required: true
@@ -24,13 +22,12 @@ on:
         required: true
         default: "989"
 
-      # Common inputs forwarded to the target workflow
       dat_url:
-        description: "Release asset URL for dat_klm (Planck φ_lm MV estimate)"
+        description: "Release asset URL for dat_klm"
         required: true
         default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits"
       mf_url:
-        description: "Release asset URL for mf_klm (mean-field correction)"
+        description: "Release asset URL for mf_klm"
         required: true
         default: "https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits"
 
@@ -38,7 +35,6 @@ on:
         description: "HEALPix nside"
         required: true
         default: "256"
-
       n_sims:
         description: "Number of surrogates (null draws)"
         required: true
@@ -66,7 +62,6 @@ on:
         required: false
         default: "batch"
 
-      # Throttle between dispatch calls (seconds)
       throttle_seconds:
         description: "Seconds to sleep between dispatches (prevents API dropping calls)"
         required: true
@@ -87,21 +82,21 @@ jobs:
 
     steps:
       - name: Dispatch batch
+        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           REF: ${{ github.ref_name }}
 
           TARGET_WORKFLOW_FILE: ${{ inputs.target_workflow_file }}
-
           LMAX_LIST: ${{ inputs.lmax_list }}
           GAUSS_MIN: ${{ inputs.gauss_seed_min }}
           GAUSS_MAX: ${{ inputs.gauss_seed_max }}
 
           DAT_URL: ${{ inputs.dat_url }}
           MF_URL: ${{ inputs.mf_url }}
-          NSIDE: ${{ inputs.nside }}
 
+          NSIDE: ${{ inputs.nside }}
           N_SIMS: ${{ inputs.n_sims }}
           SEED: ${{ inputs.seed }}
 
@@ -111,105 +106,101 @@ jobs:
 
           RUN_NOTE_PREFIX: ${{ inputs.run_note_prefix }}
           THROTTLE: ${{ inputs.throttle_seconds }}
-        shell: bash
         run: |
           set -euo pipefail
 
+          is_int() { [[ "$1" =~ ^-?[0-9]+$ ]]; }
+
           echo "Repo: $REPO"
           echo "Ref : $REF"
-          echo "Target workflow file: $TARGET_WORKFLOW_FILE"
+          echo "Target workflow: $TARGET_WORKFLOW_FILE"
           echo "LMAX list: $LMAX_LIST"
-          echo "Gauss seed range: [$GAUSS_MIN, $GAUSS_MAX]"
+          echo "Gauss seeds: [$GAUSS_MIN, $GAUSS_MAX]"
           echo "Throttle seconds: $THROTTLE"
 
-          # Split lmax_list by comma into array
+          if ! is_int "$GAUSS_MIN" || ! is_int "$GAUSS_MAX"; then
+            echo "ERROR: gauss_seed_min/max must be integers."
+            exit 1
+          fi
+          if ! is_int "$THROTTLE"; then
+            echo "ERROR: throttle_seconds must be an integer."
+            exit 1
+          fi
+
+          GAUSS_MIN_INT="$GAUSS_MIN"
+          GAUSS_MAX_INT="$GAUSS_MAX"
+          THROTTLE_INT="$THROTTLE"
+
+          if (( GAUSS_MAX_INT < GAUSS_MIN_INT )); then
+            echo "ERROR: gauss_seed_max must be >= gauss_seed_min."
+            exit 1
+          fi
+          if (( THROTTLE_INT < 0 )); then THROTTLE_INT=0; fi
+
           IFS=',' read -ra LMAX_ARR <<< "$LMAX_LIST"
-
-          # Validate ints
-          GAUSS_MIN_INT=$(python - <<'PY'
-          import os
-          print(int(os.environ["GAUSS_MIN"]))
-          PY
-          )
-          GAUSS_MAX_INT=$(python - <<'PY'
-          import os
-          print(int(os.environ["GAUSS_MAX"]))
-          PY
-          )
-
-          THROTTLE_INT=$(python - <<'PY'
-          import os
-          v = int(float(os.environ["THROTTLE"]))
-          print(max(0, v))
-          PY
-          )
 
           total=0
           failed=0
 
           for raw_l in "${LMAX_ARR[@]}"; do
             lmax="$(echo "$raw_l" | xargs)"
-            if [[ -z "$lmax" ]]; then
-              continue
+            [[ -z "$lmax" ]] && continue
+
+            if ! is_int "$lmax"; then
+              echo "ERROR: lmax value is not an integer: '$lmax'"
+              exit 1
             fi
-            # sanity check numeric
-            python - <<PY
-          int("$lmax")
-          PY
 
             for ((gs=GAUSS_MIN_INT; gs<=GAUSS_MAX_INT; gs++)); do
               note="${RUN_NOTE_PREFIX} lmax=${lmax} gauss_seed=${gs}"
 
               payload=$(cat <<JSON
           {
-            "ref": "$REF",
+            "ref": "${REF}",
             "inputs": {
-              "dat_url": "$DAT_URL",
-              "mf_url": "$MF_URL",
-              "lmax": "$lmax",
-              "nside": "$NSIDE",
-              "n_sims": "$N_SIMS",
-              "seed": "$SEED",
-              "gauss_seed": "$gs",
-              "n_nu": "$N_NU",
-              "nu_min": "$NU_MIN",
-              "nu_max": "$NU_MAX",
-              "run_note": "$note"
+              "dat_url": "${DAT_URL}",
+              "mf_url": "${MF_URL}",
+              "lmax": "${lmax}",
+              "nside": "${NSIDE}",
+              "n_sims": "${N_SIMS}",
+              "seed": "${SEED}",
+              "gauss_seed": "${gs}",
+              "n_nu": "${N_NU}",
+              "nu_min": "${NU_MIN}",
+              "nu_max": "${NU_MAX}",
+              "run_note": "${note}"
             }
           }
 JSON
-          )
+              )
 
-              echo "Dispatching: lmax=$lmax gauss_seed=$gs"
-              # Call GitHub Actions workflow_dispatch API
+              echo "Dispatching: lmax=${lmax} gauss_seed=${gs}"
               http_code=$(curl -sS -o /tmp/resp.txt -w "%{http_code}" \
                 -X POST \
                 -H "Accept: application/vnd.github+json" \
-                -H "Authorization: Bearer $GH_TOKEN" \
-                "https://api.github.com/repos/$REPO/actions/workflows/$TARGET_WORKFLOW_FILE/dispatches" \
-                -d "$payload" || true)
+                -H "Authorization: Bearer ${GH_TOKEN}" \
+                "https://api.github.com/repos/${REPO}/actions/workflows/${TARGET_WORKFLOW_FILE}/dispatches" \
+                -d "${payload}" || true)
 
-              if [[ "$http_code" != "204" ]]; then
-                echo "!! Dispatch failed (HTTP $http_code) for lmax=$lmax gauss_seed=$gs"
+              if [[ "${http_code}" != "204" ]]; then
+                echo "!! Dispatch failed (HTTP ${http_code}) for lmax=${lmax} gauss_seed=${gs}"
                 echo "Response:"
                 cat /tmp/resp.txt || true
                 failed=$((failed+1))
               fi
 
               total=$((total+1))
-              if [[ "$THROTTLE_INT" -gt 0 ]]; then
-                sleep "$THROTTLE_INT"
+              if (( THROTTLE_INT > 0 )); then
+                sleep "${THROTTLE_INT}"
               fi
             done
           done
 
           echo "----------------------------------"
-          echo "Dispatch complete. Total attempts: $total"
-          echo "Failed dispatches: $failed"
-          echo "If failed > 0, rerun this dispatcher with only the missing seed range."
+          echo "Dispatch complete. Total attempts: ${total}"
+          echo "Failed dispatches: ${failed}"
           echo "----------------------------------"
 
-          # Fail job if any dispatches failed (forces visibility)
-          if [[ "$failed" -gt 0 ]]; then
+          if (( failed > 0 )); then
             exit 1
           fi
