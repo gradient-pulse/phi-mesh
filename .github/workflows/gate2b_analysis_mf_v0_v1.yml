@@ -1,15 +1,5 @@
 name: "Gate 2B Analysis — MF V0+V1 (cohort compare)"
 
-# Intended to be run AFTER:
-#   - "Gate 2B Postprocess — MF V0+V1 (sweep table + V1 peak)"
-#
-# Optional auto-trigger (leave commented unless you want it):
-#
-# on:
-#   workflow_run:
-#     workflows: ["Gate 2B Postprocess — MF V0+V1 (sweep table + V1 peak)"]
-#     types: [completed]
-
 on:
   workflow_dispatch:
     inputs:
@@ -47,20 +37,22 @@ on:
           - newest
           - none
 
+      z_min_std:
+        description: "Guard z-scores: if control std < this threshold, z-score is blank"
+        required: false
+        default: "1e-6"
+
+      # Hygiene filter applied ONLY to the Gaussian cohort tables *before* analysis runs.
+      # Leave blank to disable filtering.
       gauss_seed_min:
-        description: "Gaussian cohort hygiene: keep only rows with gauss_seed >= this (blank disables filtering)"
+        description: "Gaussian hygiene: keep only rows with gauss_seed >= this (blank disables)"
         required: false
         default: "910"
 
       gauss_seed_max:
-        description: "Gaussian cohort hygiene: keep only rows with gauss_seed <= this (blank disables filtering)"
+        description: "Gaussian hygiene: keep only rows with gauss_seed <= this (blank disables)"
         required: false
         default: "949"
-
-      z_min_std:
-        description: "Guard z-scores: if control std < this threshold, z-score is blank (prevents numerical blowups)"
-        required: false
-        default: "1e-6"
 
       commit_message:
         description: "Commit message"
@@ -88,12 +80,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps (minimal)
+      - name: Install deps (stdlib only)
         shell: bash
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # analysis script uses stdlib only; numpy not required
           true
 
       - name: Preflight — require postprocess outputs
@@ -109,7 +100,6 @@ jobs:
           for d in "$OBS_DIR" "$GAU_DIR" "$LCDM_DIR"; do
             if [ ! -d "$d" ]; then
               echo "ERROR: Missing postprocess directory: $d"
-              echo "Run the postprocess workflow first."
               exit 1
             fi
           done
@@ -120,13 +110,116 @@ jobs:
             for f in "${req[@]}"; do
               if [ ! -f "$d/$f" ]; then
                 echo "ERROR: Missing required file: $d/$f"
-                echo "Run the postprocess workflow first (or ensure it wrote this file)."
                 exit 1
               fi
             done
           done
 
           echo "OK: postprocess outputs found."
+
+      - name: Gaussian hygiene — filter to seed band (optional)
+        id: gauss_filter
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          GAU_DIR="${{ inputs.gaussian_post_dir }}"
+          MIN="${{ inputs.gauss_seed_min }}"
+          MAX="${{ inputs.gauss_seed_max }}"
+
+          # If both are blank, we pass through original files.
+          if [ -z "$MIN" ] && [ -z "$MAX" ]; then
+            echo "No gauss seed filtering requested; using original Gaussian tables."
+            echo "GAU_GC_PATH=${GAU_DIR}/gc_features_table.csv" | tee -a "$GITHUB_OUTPUT"
+            echo "GAU_SWEEP_PATH=${GAU_DIR}/mf_sweep_table.csv" | tee -a "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Default bounds if only one side provided
+          if [ -z "$MIN" ]; then MIN="0"; fi
+          if [ -z "$MAX" ]; then MAX="999999"; fi
+
+          echo "Filtering Gaussian tables to gauss_seed in [$MIN, $MAX]..."
+
+          mkdir -p "${GAU_DIR}/_filtered"
+
+          python - <<'PY'
+          import csv, os, re, sys
+
+          gau_dir = os.environ["GAU_DIR"]
+          out_dir = os.path.join(gau_dir, "_filtered")
+          os.makedirs(out_dir, exist_ok=True)
+
+          min_seed = int(os.environ["MIN"])
+          max_seed = int(os.environ["MAX"])
+
+          gauss_re = re.compile(r"__gauss(\d+)__")
+
+          def extract_gauss_seed(json_path: str):
+            if not json_path:
+              return None
+            m = gauss_re.search(json_path)
+            if not m:
+              return None
+            try:
+              return int(m.group(1))
+            except Exception:
+              return None
+
+          def filter_csv(in_path: str, out_path: str):
+            with open(in_path, "r", encoding="utf-8", newline="") as f:
+              r = csv.DictReader(f)
+              rows = list(r)
+              fieldnames = r.fieldnames or []
+            kept = []
+            dropped = 0
+            for row in rows:
+              gs = extract_gauss_seed((row.get("json") or "").strip())
+              if gs is None:
+                # Keep rows without gauss seed only if they *also* look like gaussian cohort label
+                # (safe default: drop, so hygiene is strict/clean).
+                dropped += 1
+                continue
+              if min_seed <= gs <= max_seed:
+                kept.append(row)
+              else:
+                dropped += 1
+
+            with open(out_path, "w", encoding="utf-8", newline="") as f:
+              w = csv.DictWriter(f, fieldnames=fieldnames)
+              w.writeheader()
+              w.writerows(kept)
+
+            print(f"{os.path.basename(in_path)}: kept={len(kept)} dropped={dropped}")
+
+          filter_csv(os.path.join(gau_dir, "gc_features_table.csv"), os.path.join(out_dir, "gc_features_table.csv"))
+          filter_csv(os.path.join(gau_dir, "mf_sweep_table.csv"), os.path.join(out_dir, "mf_sweep_table.csv"))
+
+          v1 = os.path.join(gau_dir, "v1_peak_table.csv")
+          if os.path.exists(v1):
+            filter_csv(v1, os.path.join(out_dir, "v1_peak_table.csv"))
+          PY
+          PY
+        env:
+          GAU_DIR: ${{ inputs.gaussian_post_dir }}
+          MIN: ${{ inputs.gauss_seed_min }}
+          MAX: ${{ inputs.gauss_seed_max }}
+
+      - name: Set Gaussian input paths for analysis
+        id: gauss_paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          GAU_DIR="${{ inputs.gaussian_post_dir }}"
+          if [ -d "${GAU_DIR}/_filtered" ]; then
+            echo "Using filtered Gaussian tables."
+            echo "GAU_GC_PATH=${GAU_DIR}/_filtered/gc_features_table.csv" | tee -a "$GITHUB_OUTPUT"
+            echo "GAU_SWEEP_PATH=${GAU_DIR}/_filtered/mf_sweep_table.csv" | tee -a "$GITHUB_OUTPUT"
+          else
+            echo "Using original Gaussian tables."
+            echo "GAU_GC_PATH=${GAU_DIR}/gc_features_table.csv" | tee -a "$GITHUB_OUTPUT"
+            echo "GAU_SWEEP_PATH=${GAU_DIR}/mf_sweep_table.csv" | tee -a "$GITHUB_OUTPUT"
+          fi
 
       - name: Run analysis
         shell: bash
@@ -137,14 +230,12 @@ jobs:
           OUT="${{ inputs.out_dir }}"
 
           OBS_GC="${{ inputs.observed_post_dir }}/gc_features_table.csv"
-          GAU_GC="${{ inputs.gaussian_post_dir }}/gc_features_table.csv"
           LCDM_GC="${{ inputs.lcdm_post_dir }}/gc_features_table.csv"
+
+          GAU_GC="${{ steps.gauss_paths.outputs.GAU_GC_PATH }}"
 
           DEDUPE="${{ inputs.dedupe }}"
           Z_MIN_STD="${{ inputs.z_min_std }}"
-
-          GAUSS_MIN="${{ inputs.gauss_seed_min }}"
-          GAUSS_MAX="${{ inputs.gauss_seed_max }}"
 
           echo "TOOL=$TOOL"
           echo "OUT=$OUT"
@@ -153,8 +244,6 @@ jobs:
           echo "LCDM_GC=$LCDM_GC"
           echo "DEDUPE=$DEDUPE"
           echo "Z_MIN_STD=$Z_MIN_STD"
-          echo "GAUSS_SEED_MIN=$GAUSS_MIN"
-          echo "GAUSS_SEED_MAX=$GAUSS_MAX"
 
           if [ ! -f "$TOOL" ]; then
             echo "ERROR: analysis script not found: $TOOL"
@@ -163,22 +252,13 @@ jobs:
 
           mkdir -p "$OUT"
 
-          EXTRA_GAUSS_ARGS=()
-          if [ -n "$GAUSS_MIN" ]; then
-            EXTRA_GAUSS_ARGS+=(--gauss_seed_min "$GAUSS_MIN")
-          fi
-          if [ -n "$GAUSS_MAX" ]; then
-            EXTRA_GAUSS_ARGS+=(--gauss_seed_max "$GAUSS_MAX")
-          fi
-
           python "$TOOL" \
             --out_dir "$OUT" \
             --observed_gc "$OBS_GC" \
             --gaussian_gc "$GAU_GC" \
             --lcdm_gc "$LCDM_GC" \
             --dedupe "$DEDUPE" \
-            --z_min_std "$Z_MIN_STD" \
-            "${EXTRA_GAUSS_ARGS[@]}"
+            --z_min_std "$Z_MIN_STD"
 
           echo "Analysis outputs:"
           find "$OUT" -maxdepth 2 -type f -print
@@ -187,7 +267,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
           OUT="${{ inputs.out_dir }}"
 
           git config user.name "github-actions[bot]"
