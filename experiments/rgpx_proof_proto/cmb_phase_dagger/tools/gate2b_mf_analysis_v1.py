@@ -20,6 +20,11 @@ Outputs (written to --out_dir)
 - analysis_stats_gaussian.csv
 - analysis_stats_lcdm_recon.csv
 
+Decision block (GitHub screenshot-friendly)
+------------------------------------------
+- decision_block/decision_block.md
+- decision_block/decision_block_transposed.md
+
 Key behavior
 ------------
 - Dedup within each cohort keeping the newest run_id (max numeric).
@@ -28,9 +33,7 @@ Key behavior
 - Merges gc_features with mf_sweep on (run_id, lmax, seed) when sweep exists.
 - Produces per-lmax summaries and z-scores of OBSERVED vs control means.
 - Guards z-scores: if std is too small (default < 1e-6), z-score is blank.
-  This prevents numerical artifacts (e.g., v1_peak_shift) from exploding.
-- Option A output: markdown table emphasizes means + std + n (z-scores still
-  computed in CSV, but not emphasized in MD).
+  This prevents numerical artifacts (e.g., peak-shift) from exploding.
 
 Notes
 -----
@@ -196,21 +199,17 @@ def dedupe_keep_newest(rows: List[Dict[str, str]], cohort: str) -> List[Dict[str
 
     # Stable sort for readability
     if cohort == "gaussian":
-        out.sort(
-            key=lambda r: (
-                to_int(r.get("lmax")) or 0,
-                extract_gauss_seed(r) or 0,
-                to_int(r.get("run_id")) or 0,
-            )
-        )
+        out.sort(key=lambda r: (
+            to_int(r.get("lmax")) or 0,
+            extract_gauss_seed(r) or 0,
+            to_int(r.get("run_id")) or 0
+        ))
     else:
-        out.sort(
-            key=lambda r: (
-                to_int(r.get("lmax")) or 0,
-                to_int(r.get("seed")) or 0,
-                to_int(r.get("run_id")) or 0,
-            )
-        )
+        out.sort(key=lambda r: (
+            to_int(r.get("lmax")) or 0,
+            to_int(r.get("seed")) or 0,
+            to_int(r.get("run_id")) or 0
+        ))
     return out
 
 
@@ -249,10 +248,6 @@ METRICS = [
     # From gc
     ("v1_energy_ratio", "v1_energy_ratio"),
     ("v1_peak_shift", "v1_peak_shift"),
-    ("gc_v1_obs_peak_height", "gc_v1_obs_peak_height"),
-    ("gc_v1_mean_peak_height", "gc_v1_mean_peak_height"),
-    ("gc_v1_obs_bump_count", "gc_v1_obs_bump_count"),
-    ("gc_v1_mean_bump_count", "gc_v1_mean_bump_count"),
 ]
 
 
@@ -281,22 +276,113 @@ def cohort_per_lmax_stats(rows: List[Dict[str, Any]], cohort: str) -> Dict[int, 
     return out
 
 
+# -----------------------------
+# decision block writers
+# -----------------------------
+
+DECISION_METRICS = [
+    ("D1_L2", "obs_D1_L2", "gauss_D1_L2_mean", "gauss_D1_L2_std", "lcdm_D1_L2_mean", "lcdm_D1_L2_std"),
+    ("Z_mf", "obs_Z_mf", "gauss_Z_mf_mean", "gauss_Z_mf_std", "lcdm_Z_mf_mean", "lcdm_Z_mf_std"),
+    ("v1_energy_ratio", "obs_v1_energy_ratio", "gauss_v1_energy_ratio_mean", "gauss_v1_energy_ratio_std",
+     "lcdm_v1_energy_ratio_mean", "lcdm_v1_energy_ratio_std"),
+    ("v1_peak_shift", "obs_v1_peak_shift", "gauss_v1_peak_shift_mean", "gauss_v1_peak_shift_std",
+     "lcdm_v1_peak_shift_mean", "lcdm_v1_peak_shift_std"),
+]
+
+
+def write_decision_block(out_dir: Path, summary_rows: List[Dict[str, Any]]) -> None:
+    """
+    Writes two MD files under out_dir/decision_block:
+      - decision_block.md                 (wide, like analysis_summary but fewer cols)
+      - decision_block_transposed.md      (narrow, screenshot-friendly)
+    """
+    ddir = out_dir / "decision_block"
+    ddir.mkdir(parents=True, exist_ok=True)
+
+    # 1) decision_block.md (compact wide)
+    cols = [
+        "lmax", "n_obs", "n_gauss", "n_lcdm",
+        "obs_D1_L2", "gauss_D1_L2_mean", "gauss_D1_L2_std", "lcdm_D1_L2_mean", "lcdm_D1_L2_std",
+        "obs_Z_mf", "gauss_Z_mf_mean", "gauss_Z_mf_std", "lcdm_Z_mf_mean", "lcdm_Z_mf_std",
+        "obs_v1_energy_ratio", "gauss_v1_energy_ratio_mean", "gauss_v1_energy_ratio_std", "lcdm_v1_energy_ratio_mean", "lcdm_v1_energy_ratio_std",
+        "obs_v1_peak_shift", "gauss_v1_peak_shift_mean", "gauss_v1_peak_shift_std", "lcdm_v1_peak_shift_mean", "lcdm_v1_peak_shift_std",
+    ]
+    write_md_table(
+        ddir / "decision_block.md",
+        "Gate 2B — MF(V0,V1) Decision Block (means ± std)",
+        cols,
+        summary_rows,
+    )
+
+    # 2) decision_block_transposed.md (metrics as rows; lmax as columns)
+    # build list of lmax values in order
+    lmaxs = [to_int(r.get("lmax")) for r in summary_rows]
+    lmaxs = [x for x in lmaxs if x is not None]
+    lmaxs = sorted(lmaxs)
+
+    # index by lmax
+    by_l: Dict[int, Dict[str, Any]] = {to_int(r.get("lmax")): r for r in summary_rows if to_int(r.get("lmax")) is not None}
+
+    # header columns
+    tcols = ["metric", "cohort"] + [str(l) for l in lmaxs]
+
+    trows: List[Dict[str, Any]] = []
+
+    # include counts row first
+    for cohort_key, label in [("n_obs", "n_obs"), ("n_gauss", "n_gauss"), ("n_lcdm", "n_lcdm")]:
+        rr: Dict[str, Any] = {"metric": "n", "cohort": label}
+        for l in lmaxs:
+            rr[str(l)] = by_l.get(l, {}).get(cohort_key)
+        trows.append(rr)
+
+    # then metric blocks with mean±std where relevant
+    def cell_mean_std(l: int, mean_key: str, std_key: str) -> str:
+        r = by_l.get(l, {})
+        m = r.get(mean_key)
+        s = r.get(std_key)
+        if m is None and s is None:
+            return ""
+        if s is None:
+            return fmt(m)
+        return f"{fmt(m)} ± {fmt(s)}"
+
+    def cell_val(l: int, key: str) -> str:
+        return fmt(by_l.get(l, {}).get(key))
+
+    for metric_name, obs_key, g_mean, g_std, c_mean, c_std in DECISION_METRICS:
+        # observed row (single value)
+        rr_obs: Dict[str, Any] = {"metric": metric_name, "cohort": "observed"}
+        for l in lmaxs:
+            rr_obs[str(l)] = cell_val(l, obs_key)
+        trows.append(rr_obs)
+
+        # gaussian row (mean±std)
+        rr_g: Dict[str, Any] = {"metric": metric_name, "cohort": "gaussian (mean±std)"}
+        for l in lmaxs:
+            rr_g[str(l)] = cell_mean_std(l, g_mean, g_std)
+        trows.append(rr_g)
+
+        # lcdm row (mean±std)
+        rr_c: Dict[str, Any] = {"metric": metric_name, "cohort": "lcdm_recon (mean±std)"}
+        for l in lmaxs:
+            rr_c[str(l)] = cell_mean_std(l, c_mean, c_std)
+        trows.append(rr_c)
+
+    write_md_table(
+        ddir / "decision_block_transposed.md",
+        "Gate 2B — MF(V0,V1) Decision Block (transposed)",
+        tcols,
+        trows,
+    )
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out_dir", required=True)
 
-    ap.add_argument(
-        "--observed_gc",
-        default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/observed_planck_pr3__mf_v0_v1/gc_features_table.csv",
-    )
-    ap.add_argument(
-        "--gaussian_gc",
-        default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv",
-    )
-    ap.add_argument(
-        "--lcdm_gc",
-        default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv",
-    )
+    ap.add_argument("--observed_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/observed_planck_pr3__mf_v0_v1/gc_features_table.csv")
+    ap.add_argument("--gaussian_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl/gc_features_table.csv")
+    ap.add_argument("--lcdm_gc", default="experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1/gc_features_table.csv")
 
     ap.add_argument(
         "--dedupe",
@@ -309,11 +395,6 @@ def main() -> None:
         type=float,
         default=1e-6,
         help="If control std < this threshold, z-score is blank (prevents numerical blowups).",
-    )
-    ap.add_argument(
-        "--add_interpretation_note",
-        action="store_true",
-        help="Append a short interpretation note at the end of analysis_summary.md",
     )
     args = ap.parse_args()
 
@@ -370,6 +451,7 @@ def main() -> None:
         row["n_gauss"] = g.get("n_rows")
         row["n_lcdm"] = c.get("n_rows")
 
+        # Expand full summary columns used by analysis_summary.md and decision block
         for label, _col in METRICS:
             o_m = o.get(f"{label}_mean")
             g_m = g.get(f"{label}_mean")
@@ -381,11 +463,9 @@ def main() -> None:
 
             row[f"gauss_{label}_mean"] = g_m
             row[f"gauss_{label}_std"] = g_s
-            row[f"z_obs_vs_gauss_{label}"] = safe_z(o_m, g_m, g_s, z_min_std=args.z_min_std)
 
             row[f"lcdm_{label}_mean"] = c_m
             row[f"lcdm_{label}_std"] = c_s
-            row[f"z_obs_vs_lcdm_{label}"] = safe_z(o_m, c_m, c_s, z_min_std=args.z_min_std)
 
         summary_rows.append(row)
 
@@ -395,49 +475,23 @@ def main() -> None:
 
     write_csv(csv_out, summary_rows)
 
-    # Option A: MD emphasizes means + std + n (still keeps obs values)
-    md_cols = ["lmax", "n_obs", "n_gauss", "n_lcdm"]
-    headline = [
-        # Morphology distance (show tight null band via std)
-        "obs_D1_L2",
-        "gauss_D1_L2_mean",
-        "gauss_D1_L2_std",
-        "lcdm_D1_L2_mean",
-        "lcdm_D1_L2_std",
-        # Z_mf (same)
-        "obs_Z_mf",
-        "gauss_Z_mf_mean",
-        "gauss_Z_mf_std",
-        "lcdm_Z_mf_mean",
-        "lcdm_Z_mf_std",
-        # GC-style features
-        "obs_v1_energy_ratio",
-        "gauss_v1_energy_ratio_mean",
-        "gauss_v1_energy_ratio_std",
-        "lcdm_v1_energy_ratio_mean",
-        "lcdm_v1_energy_ratio_std",
-        "obs_v1_peak_shift",
-        "gauss_v1_peak_shift_mean",
-        "gauss_v1_peak_shift_std",
-        "lcdm_v1_peak_shift_mean",
-        "lcdm_v1_peak_shift_std",
+    md_cols = [
+        "lmax", "n_obs", "n_gauss", "n_lcdm",
+        "obs_D1_L2", "gauss_D1_L2_mean", "gauss_D1_L2_std", "lcdm_D1_L2_mean", "lcdm_D1_L2_std",
+        "obs_Z_mf", "gauss_Z_mf_mean", "gauss_Z_mf_std", "lcdm_Z_mf_mean", "lcdm_Z_mf_std",
+        "obs_v1_energy_ratio", "gauss_v1_energy_ratio_mean", "gauss_v1_energy_ratio_std", "lcdm_v1_energy_ratio_mean", "lcdm_v1_energy_ratio_std",
+        "obs_v1_peak_shift", "gauss_v1_peak_shift_mean", "gauss_v1_peak_shift_std", "lcdm_v1_peak_shift_mean", "lcdm_v1_peak_shift_std",
     ]
-    md_cols.extend(headline)
 
     write_md_table(md_out, "Gate 2B — MF(V0,V1) Cohort Analysis Summary", md_cols, summary_rows)
-
-    if args.add_interpretation_note:
-        with md_out.open("a", encoding="utf-8") as f:
-            f.write(
-                "**Interpretation note:** Gaussian null produces a tight morphology-distance band (small std). "
-                "Observed departs strongly, with scale-dependent trajectory in GC-style features "
-                "(energy ratio / peak shift).\n"
-            )
 
     # Per-cohort stats dumps
     write_csv(out_dir / "analysis_stats_observed.csv", list(stats_obs.values()))
     write_csv(out_dir / "analysis_stats_gaussian.csv", list(stats_g.values()))
     write_csv(out_dir / "analysis_stats_lcdm_recon.csv", list(stats_l.values()))
+
+    # Decision block outputs (GitHub screenshot-friendly)
+    write_decision_block(out_dir, summary_rows)
 
     print("Wrote:")
     print(f"  {csv_out}")
@@ -445,6 +499,8 @@ def main() -> None:
     print(f"  {out_dir / 'analysis_stats_observed.csv'}")
     print(f"  {out_dir / 'analysis_stats_gaussian.csv'}")
     print(f"  {out_dir / 'analysis_stats_lcdm_recon.csv'}")
+    print(f"  {out_dir / 'decision_block/decision_block.md'}")
+    print(f"  {out_dir / 'decision_block/decision_block_transposed.md'}")
 
 
 if __name__ == "__main__":
