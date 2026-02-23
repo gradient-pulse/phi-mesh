@@ -1,0 +1,16 @@
+run_id: 22305760115
+workflow: CMB Topology (Gaussian control from Planck PR3 lensing φ_lm) — MF V0+V1
+ref: refs/heads/main
+sha: 4b38b9ce277e408632329b75bd0786c640cb57cd
+control: gaussian_synalm_from_(dat_minus_mf)_cl
+lmax: 192
+nside: 256
+n_sims: 2000
+seed: 731
+gauss_seed: 980
+n_nu: 61
+nu_min: -3.0
+nu_max: 3.0
+run_note: batch lmax=192 gauss_seed=980
+source_dat_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_dat_klm.fits
+source_mf_url: https://github.com/gradient-pulse/phi-mesh/releases/download/data-2026-02-15-planck-lensing-R3/planck_pr3_lensing_mv_mf_klm.fits
