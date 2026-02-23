@@ -9,7 +9,7 @@ on:
         default: "cmb_topology_gaussian_control__mf_v0_v1.yml"
 
       lmax_list:
-        description: "Comma-separated lmax values to dispatch (e.g. 128,192,256,320)"
+        description: "Comma-separated lmax values (e.g. 128,192,256,320)"
         required: true
         default: "128,192,256,320"
 
@@ -36,7 +36,7 @@ on:
         required: true
         default: "256"
       n_sims:
-        description: "Number of surrogates (null draws)"
+        description: "Number of surrogates"
         required: true
         default: "2000"
       seed:
@@ -58,12 +58,12 @@ on:
         default: "3.0"
 
       run_note_prefix:
-        description: "Optional prefix for run_note"
+        description: "Prefix for run_note"
         required: false
         default: "batch"
 
       throttle_seconds:
-        description: "Seconds to sleep between dispatches (prevents API dropping calls)"
+        description: "Sleep between dispatches (helps GitHub not drop calls)"
         required: true
         default: "2"
 
@@ -111,13 +111,6 @@ jobs:
 
           is_int() { [[ "$1" =~ ^-?[0-9]+$ ]]; }
 
-          echo "Repo: $REPO"
-          echo "Ref : $REF"
-          echo "Target workflow: $TARGET_WORKFLOW_FILE"
-          echo "LMAX list: $LMAX_LIST"
-          echo "Gauss seeds: [$GAUSS_MIN, $GAUSS_MAX]"
-          echo "Throttle seconds: $THROTTLE"
-
           if ! is_int "$GAUSS_MIN" || ! is_int "$GAUSS_MAX"; then
             echo "ERROR: gauss_seed_min/max must be integers."
             exit 1
@@ -147,31 +140,31 @@ jobs:
             [[ -z "$lmax" ]] && continue
 
             if ! is_int "$lmax"; then
-              echo "ERROR: lmax value is not an integer: '$lmax'"
+              echo "ERROR: lmax is not an integer: '$lmax'"
               exit 1
             fi
 
             for ((gs=GAUSS_MIN_INT; gs<=GAUSS_MAX_INT; gs++)); do
               note="${RUN_NOTE_PREFIX} lmax=${lmax} gauss_seed=${gs}"
 
-              payload=$(cat <<JSON
-          {
-            "ref": "${REF}",
-            "inputs": {
-              "dat_url": "${DAT_URL}",
-              "mf_url": "${MF_URL}",
-              "lmax": "${lmax}",
-              "nside": "${NSIDE}",
-              "n_sims": "${N_SIMS}",
-              "seed": "${SEED}",
-              "gauss_seed": "${gs}",
-              "n_nu": "${N_NU}",
-              "nu_min": "${NU_MIN}",
-              "nu_max": "${NU_MAX}",
-              "run_note": "${note}"
-            }
-          }
-JSON
+              # Build JSON safely without heredocs (avoids YAML indentation pitfalls)
+              payload=$(
+                python -c "import json,sys; print(json.dumps({
+                  'ref': '${REF}',
+                  'inputs': {
+                    'dat_url': '${DAT_URL}',
+                    'mf_url': '${MF_URL}',
+                    'lmax': str(${lmax}),
+                    'nside': '${NSIDE}',
+                    'n_sims': '${N_SIMS}',
+                    'seed': '${SEED}',
+                    'gauss_seed': str(${gs}),
+                    'n_nu': '${N_NU}',
+                    'nu_min': '${NU_MIN}',
+                    'nu_max': '${NU_MAX}',
+                    'run_note': '${note}'
+                  }
+                }))"
               )
 
               echo "Dispatching: lmax=${lmax} gauss_seed=${gs}"
