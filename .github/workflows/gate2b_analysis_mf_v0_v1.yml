@@ -17,22 +17,27 @@ on:
         description: "Path to analysis python script"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/tools/gate2b_mf_analysis_v1.py"
+
       out_dir:
         description: "Output folder for analysis artifacts (relative path)"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/mf_v0_v1"
+
       observed_post_dir:
         description: "Postprocess folder for observed cohort"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/observed_planck_pr3__mf_v0_v1"
+
       gaussian_post_dir:
         description: "Postprocess folder for gaussian cohort"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/gaussian_synalm_from_(dat_minus_mf)_cl"
+
       lcdm_post_dir:
         description: "Postprocess folder for lcdm recon cohort"
         required: true
         default: "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_postprocess/decision_gate_2b__lcdm_recon__mf_v0_v1"
+
       dedupe:
         description: "Deduplication mode inside analysis script (newest = preferred; none = include everything)"
         required: true
@@ -41,6 +46,22 @@ on:
         options:
           - newest
           - none
+
+      gauss_seed_min:
+        description: "Gaussian cohort hygiene: keep only rows with gauss_seed >= this (blank disables filtering)"
+        required: false
+        default: "910"
+
+      gauss_seed_max:
+        description: "Gaussian cohort hygiene: keep only rows with gauss_seed <= this (blank disables filtering)"
+        required: false
+        default: "949"
+
+      z_min_std:
+        description: "Guard z-scores: if control std < this threshold, z-score is blank (prevents numerical blowups)"
+        required: false
+        default: "1e-6"
+
       commit_message:
         description: "Commit message"
         required: true
@@ -120,6 +141,10 @@ jobs:
           LCDM_GC="${{ inputs.lcdm_post_dir }}/gc_features_table.csv"
 
           DEDUPE="${{ inputs.dedupe }}"
+          Z_MIN_STD="${{ inputs.z_min_std }}"
+
+          GAUSS_MIN="${{ inputs.gauss_seed_min }}"
+          GAUSS_MAX="${{ inputs.gauss_seed_max }}"
 
           echo "TOOL=$TOOL"
           echo "OUT=$OUT"
@@ -127,6 +152,9 @@ jobs:
           echo "GAU_GC=$GAU_GC"
           echo "LCDM_GC=$LCDM_GC"
           echo "DEDUPE=$DEDUPE"
+          echo "Z_MIN_STD=$Z_MIN_STD"
+          echo "GAUSS_SEED_MIN=$GAUSS_MIN"
+          echo "GAUSS_SEED_MAX=$GAUSS_MAX"
 
           if [ ! -f "$TOOL" ]; then
             echo "ERROR: analysis script not found: $TOOL"
@@ -135,12 +163,22 @@ jobs:
 
           mkdir -p "$OUT"
 
+          EXTRA_GAUSS_ARGS=()
+          if [ -n "$GAUSS_MIN" ]; then
+            EXTRA_GAUSS_ARGS+=(--gauss_seed_min "$GAUSS_MIN")
+          fi
+          if [ -n "$GAUSS_MAX" ]; then
+            EXTRA_GAUSS_ARGS+=(--gauss_seed_max "$GAUSS_MAX")
+          fi
+
           python "$TOOL" \
             --out_dir "$OUT" \
             --observed_gc "$OBS_GC" \
             --gaussian_gc "$GAU_GC" \
             --lcdm_gc "$LCDM_GC" \
-            --dedupe "$DEDUPE"
+            --dedupe "$DEDUPE" \
+            --z_min_std "$Z_MIN_STD" \
+            "${EXTRA_GAUSS_ARGS[@]}"
 
           echo "Analysis outputs:"
           find "$OUT" -maxdepth 2 -type f -print
