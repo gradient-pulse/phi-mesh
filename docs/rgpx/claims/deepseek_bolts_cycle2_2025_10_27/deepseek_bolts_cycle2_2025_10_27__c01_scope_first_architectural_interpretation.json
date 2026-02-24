@@ -1,7 +1,7 @@
 {
   "paper_id": "deepseek_bolts_cycle2_2025_10_27",
   "claim_id": "deepseek_bolts_cycle2_2025_10_27__c01_scope_first_architectural_interpretation",
-  "generated_at": "2026-01-13T18:05:48+00:00",
+  "generated_at": "2026-02-24T16:36:15+00:00",
   "claim_card": {
     "claim_id": "deepseek_bolts_cycle2_2025_10_27__c01_scope_first_architectural_interpretation",
     "claim": "The paper documents and analyzes an AI (DeepSeek) producing a computational-architectural interpretation of RGPx in response to whether RGPx is a layer or a replacement.",

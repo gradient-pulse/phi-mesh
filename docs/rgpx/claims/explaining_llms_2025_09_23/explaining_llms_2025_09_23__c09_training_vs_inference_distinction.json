@@ -1,7 +1,7 @@
 {
   "paper_id": "explaining_llms_2025_09_23",
   "claim_id": "explaining_llms_2025_09_23__c09_training_vs_inference_distinction",
-  "generated_at": "2026-01-13T18:05:48+00:00",
+  "generated_at": "2026-02-24T16:36:15+00:00",
   "claim_card": {
     "claim_id": "explaining_llms_2025_09_23__c09_training_vs_inference_distinction",
     "claim": "Backpropagation is framed as explaining history (how weights were shaped), while RGP is framed as explaining the present (how coherence emerges during inference).",

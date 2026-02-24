@@ -1,7 +1,7 @@
 {
   "paper_id": "ns_what_it_takes_2025_07_07",
   "claim_id": "ns_what_it_takes_2025_07_07__c13_nt_detection_rule_signflip_threshold",
-  "generated_at": "2026-01-13T18:05:48+00:00",
+  "generated_at": "2026-02-24T16:36:15+00:00",
   "claim_card": {
     "claim_id": "ns_what_it_takes_2025_07_07__c13_nt_detection_rule_signflip_threshold",
     "claim": "NT candidates are detected when the normalized first difference flips sign and exceeds a magnitude threshold with default λ=1.5.",

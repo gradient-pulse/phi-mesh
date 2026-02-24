@@ -1,7 +1,7 @@
 {
   "paper_id": "rgpx_frontier_v12_2025_11_09",
   "claim_id": "rgpx_frontier_v12_2025_11_09__c08_protocol0_preprocessing_bandpass_and_delta",
-  "generated_at": "2026-01-13T18:05:48+00:00",
+  "generated_at": "2026-02-24T16:36:15+00:00",
   "claim_card": {
     "claim_id": "rgpx_frontier_v12_2025_11_09__c08_protocol0_preprocessing_bandpass_and_delta",
     "claim": "A universal preprocessing recipe is specified: acquire field snapshots, band-pass to an inertial/coherence range using k-IR and k-UV bounds, then compute local gradient amplitude Δ(x,t)=||∇F|| and its spatial mean Δ̄(t).",

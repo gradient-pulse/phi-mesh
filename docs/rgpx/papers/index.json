@@ -1,7 +1,14 @@
 {
-  "generated_at": "2026-01-13T18:05:48+00:00",
-  "count": 12,
+  "generated_at": "2026-02-24T16:36:15+00:00",
+  "count": 13,
   "items": [
+    {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "title": "CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics",
+      "date": "",
+      "pdf_url": "",
+      "claims_url": "https://gradient-pulse.github.io/phi-mesh/rgpx/claims/paper/cmb_pre_metric_2026_02_24.json"
+    },
     {
       "paper_id": "deepseek_bolts_cycle2_2025_10_27",
       "title": "DeepSeek Bolts — Computational Architecture Interpretation of Recursive Gradient Physics (RGPx_Cycle2)",

@@ -1,7 +1,7 @@
 {
   "paper_id": "rgpx_frontier_v12_2025_11_09",
   "claim_id": "rgpx_frontier_v12_2025_11_09__c13_global_flux_conservation_invariant",
-  "generated_at": "2026-01-13T18:05:48+00:00",
+  "generated_at": "2026-02-24T16:36:15+00:00",
   "claim_card": {
     "claim_id": "rgpx_frontier_v12_2025_11_09__c13_global_flux_conservation_invariant",
     "claim": "A unified differential invariant is asserted: ∇·Φ = 0, framed as global conservation of coherence flux analogous to energy-momentum continuity.",
