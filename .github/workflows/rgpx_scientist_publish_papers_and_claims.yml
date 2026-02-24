@@ -26,26 +26,35 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps
+        shell: bash
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          pip install pyyaml
+          pip install pyyaml pypdf
 
       - name: Build papers/claims JSON
+        shell: bash
         run: |
+          set -euo pipefail
           python rgpx_scientist/publish_rgpx_scientist_api.py
 
-      # Optional but useful once:
       - name: Show outputs
+        shell: bash
         run: |
+          set -euo pipefail
           ls -R docs/rgpx_scientist || true
+          ls -R docs/rgpx || true
 
       - name: Commit & push if changed
+        shell: bash
         run: |
+          set -euo pipefail
           git status --porcelain
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add docs/rgpx/papers/index.json docs/rgpx/claims
+            git add docs/rgpx/papers/index.json docs/rgpx/claims || true
+            git add docs/rgpx_scientist || true
             git commit -m "Publish RGPx Scientist papers/claims JSON"
             git push
           else
