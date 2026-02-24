@@ -8,7 +8,7 @@ Goal:
 
 Exit codes:
   0 = ok (YAML emitted)
-  2 = index missing / load error
+  2 = index missing / load error / yaml unavailable
   3 = one or more PDFs missing (YAML still emitted for the ones found)
 """
 
@@ -16,13 +16,46 @@ from __future__ import annotations
 
 import hashlib
 import io
+import os
+import subprocess
 import sys
 import warnings
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from typing import Any
 
-import yaml
+# ---- PyYAML bootstrap (self-heal in CI if missing) -------------------------
+def _import_yaml_with_bootstrap():
+    try:
+        import yaml  # type: ignore
+        return yaml
+    except ModuleNotFoundError:
+        print(
+            "PyYAML not found; attempting to install pyyaml for manifest generation...",
+            file=sys.stderr,
+        )
+        try:
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "pyyaml"],
+                stdout=sys.stderr,
+                stderr=sys.stderr,
+            )
+        except Exception as e:
+            print(
+                f"ERROR: Failed to install pyyaml automatically: {e}\n"
+                "Fix workflow deps by adding `pip install pyyaml` before running dump_manifest.py.",
+                file=sys.stderr,
+            )
+            return None
+        try:
+            import yaml  # type: ignore
+            return yaml
+        except Exception as e:
+            print(f"ERROR: pyyaml install appeared to succeed but import still failed: {e}", file=sys.stderr)
+            return None
+
+
+yaml = _import_yaml_with_bootstrap()
 
 try:
     from pypdf import PdfReader  # type: ignore
@@ -72,6 +105,8 @@ def safe_page_count(path: Path) -> int | None:
 
 
 def _load_yaml_mapping(path: Path) -> dict[str, Any]:
+    if yaml is None:
+        raise RuntimeError("PyYAML unavailable (import/install failed).")
     try:
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
     except Exception as e:
@@ -111,6 +146,14 @@ def find_repo_root_and_index(script_path: Path) -> tuple[Path, Path]:
 
 
 def main() -> int:
+    if yaml is None:
+        print(
+            "ERROR: PyYAML is required for dump_manifest.py.\n"
+            "Please add `pip install pyyaml` to the workflow if auto-install is not allowed.",
+            file=sys.stderr,
+        )
+        return 2
+
     script_path = Path(__file__)
     try:
         repo_root, index_path = find_repo_root_and_index(script_path)
