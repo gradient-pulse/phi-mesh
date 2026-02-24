@@ -89,17 +89,19 @@ jobs:
         shell: bash
         working-directory: ${{ steps.project.outputs.dir }}
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           if [ -f "rgpx_scientist/requirements.txt" ]; then
             pip install -r rgpx_scientist/requirements.txt
           fi
-          # Enables page counting (recommended)
-          pip install pypdf
+          # Needed by verify_corpus.py and dump_manifest.py
+          pip install pypdf pyyaml
 
       - name: Verify corpus (sha256 + bytes; pages if available)
         shell: bash
         working-directory: ${{ steps.project.outputs.dir }}
         run: |
+          set -euo pipefail
           python rgpx_scientist/verify_corpus.py --repo-root .
 
       - name: Dump manifest (for debugging / regeneration)
@@ -107,6 +109,7 @@ jobs:
         shell: bash
         working-directory: ${{ steps.project.outputs.dir }}
         run: |
+          set -euo pipefail
           if [ -f "rgpx_scientist/dump_manifest.py" ]; then
             echo "----- BEGIN regenerated foundational_papers_manifest.yml -----"
             python rgpx_scientist/dump_manifest.py
