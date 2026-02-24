@@ -1,4 +1,8 @@
 foundational_papers:
+- paper_id: cmb_pre_metric_2026_02_24
+  sha256: d8b6fc1dffcaf72ce7b5a8131dab0bb0eca024303075131cd30e6798b603191b
+  bytes: 501331
+  pages: 10
 - paper_id: gradient_capitalism_2025_12_07
   sha256: 83bdda33e2096926ce69eb44ad5330bbc27c5126e026b11a9e5a6a16a13ac298
   bytes: 506822
