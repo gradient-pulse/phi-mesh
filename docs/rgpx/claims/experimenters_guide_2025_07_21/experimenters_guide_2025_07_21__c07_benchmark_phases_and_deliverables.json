@@ -1,7 +1,7 @@
 {
   "paper_id": "experimenters_guide_2025_07_21",
   "claim_id": "experimenters_guide_2025_07_21__c07_benchmark_phases_and_deliverables",
-  "generated_at": "2026-02-24T16:36:15+00:00",
+  "generated_at": "2026-02-24T16:42:20+00:00",
   "claim_card": {
     "claim_id": "experimenters_guide_2025_07_21__c07_benchmark_phases_and_deliverables",
     "claim": "The benchmark is structured into phases with explicit deliverables: NT times, initial ratio scan, σ hyper-search, NT-aware solver runs, KPI calculation, and PR submission.",

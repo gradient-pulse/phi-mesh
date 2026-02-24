@@ -1,7 +1,7 @@
 {
   "paper_id": "deepseek_bolts_cycle2_2025_10_27",
   "claim_id": "deepseek_bolts_cycle2_2025_10_27__c10_empirical_observation_reexpression_claim",
-  "generated_at": "2026-02-24T16:36:15+00:00",
+  "generated_at": "2026-02-24T16:42:20+00:00",
   "claim_card": {
     "claim_id": "deepseek_bolts_cycle2_2025_10_27__c10_empirical_observation_reexpression_claim",
     "claim": "An empirical observation claim is made: RGPx was not described to DeepSeek but re-expressed by DeepSeek, framed as cross-architectural recursive recognition.",

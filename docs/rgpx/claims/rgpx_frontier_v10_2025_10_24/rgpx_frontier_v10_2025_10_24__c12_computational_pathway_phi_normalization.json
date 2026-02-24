@@ -1,7 +1,7 @@
 {
   "paper_id": "rgpx_frontier_v10_2025_10_24",
   "claim_id": "rgpx_frontier_v10_2025_10_24__c12_computational_pathway_phi_normalization",
-  "generated_at": "2026-02-24T16:36:15+00:00",
+  "generated_at": "2026-02-24T16:42:20+00:00",
   "claim_card": {
     "claim_id": "rgpx_frontier_v10_2025_10_24__c12_computational_pathway_phi_normalization",
     "claim": "A computational pathway is proposed: simulate/learn coherence dynamics via Φ-normalization rather than solving traditional PDE closures alone.",

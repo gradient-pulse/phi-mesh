@@ -1,7 +1,7 @@
 {
   "paper_id": "deepseek_bolts_cycle2_2025_10_27",
   "claim_id": "deepseek_bolts_cycle2_2025_10_27__c07_operational_correlates_mapping",
-  "generated_at": "2026-02-24T16:36:15+00:00",
+  "generated_at": "2026-02-24T16:42:20+00:00",
   "claim_card": {
     "claim_id": "deepseek_bolts_cycle2_2025_10_27__c07_operational_correlates_mapping",
     "claim": "Operational correlates are proposed mapping Δ/GC/CF/UD to physical implementation variables: differential current flows, coupled oscillator patterns, phase-dependent gate tuning, rhythmic power cycling.",

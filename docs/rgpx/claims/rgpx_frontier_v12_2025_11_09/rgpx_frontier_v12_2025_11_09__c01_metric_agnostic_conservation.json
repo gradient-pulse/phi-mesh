@@ -1,7 +1,7 @@
 {
   "paper_id": "rgpx_frontier_v12_2025_11_09",
   "claim_id": "rgpx_frontier_v12_2025_11_09__c01_metric_agnostic_conservation",
-  "generated_at": "2026-02-24T16:36:15+00:00",
+  "generated_at": "2026-02-24T16:42:20+00:00",
   "claim_card": {
     "claim_id": "rgpx_frontier_v12_2025_11_09__c01_metric_agnostic_conservation",
     "claim": "A metric-agnostic coherence-current is proposed: because d∘d≡0, the derived current is closed (dJ=0), giving a topological conservation law independent of any chosen metric.",
