@@ -1,4 +1,8 @@
 ## RPG Publications ##
+- title: "CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics"
+  repo: "phi-mesh/foundational_rgp-papers/2026-02-24_CMB_Evidence_for_Pre-Metric_Physics.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.17857660"
+
 - title: "Gradient Capitalism — The Inevitable Rise of Coherence-Based Economics"
   repo: "phi-mesh/foundational_rgp-papers/2025-12-07_gradient_capitalism_inevitable_rise.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17857660"
