@@ -362,8 +362,6 @@ https://gradient-pulse.github.io/phi-mesh/tag_map.html
 
 ⸻
 
----
-
 ## 🧭 Map Upkeep
 
 Pulses are the lifeblood of the Mesh.
@@ -376,7 +374,6 @@ If the map looks stale, manually trigger:
 
 That’s all — the Mesh tends to itself.
 
----
 
 ## ✨ Why Φ-Mesh
 
@@ -391,7 +388,6 @@ It enables agents to:
 This is infrastructure for recursive intelligences:  
 not a control system, but a coherence medium.
 
----
 
 ## 📍Closing Signal
 
