@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c04_method_gaussian_null_power_matched",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c04_method_gaussian_null_power_matched",
+    "claim_type": "method",
+    "claim": "The Gaussian synthetic control cohort is a deliberately strong null: it is power-spectrum-matched to the mean-field-corrected observed reconstruction ((dat-mf) spectrum) while removing higher-order/non-Gaussian morphological organization.",
+    "falsifiable": true,
+    "test_hook": "Inspect control construction steps and regenerate Gaussian controls from the cleaned harmonic field spectrum; confirm matching at the two-point level while using zero mean field for synthetic runs.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p3 (Section II.B.1)",
+      "note": "Gaussian synthetic control construction from phi_clean and C_l estimate"
+    }
+  }
+}

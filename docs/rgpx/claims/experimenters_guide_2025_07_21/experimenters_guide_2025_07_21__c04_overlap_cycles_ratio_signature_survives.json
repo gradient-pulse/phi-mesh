@@ -1,7 +1,7 @@
 {
   "paper_id": "experimenters_guide_2025_07_21",
   "claim_id": "experimenters_guide_2025_07_21__c04_overlap_cycles_ratio_signature_survives",
-  "generated_at": "2026-02-25T09:22:21+00:00",
+  "generated_at": "2026-02-25T10:14:06+00:00",
   "claim_card": {
     "claim_id": "experimenters_guide_2025_07_21__c04_overlap_cycles_ratio_signature_survives",
     "claim": "Even with overlapping DU cycles, the same ratio peaks should persist, making ratio-peaks an invariant candidate.",

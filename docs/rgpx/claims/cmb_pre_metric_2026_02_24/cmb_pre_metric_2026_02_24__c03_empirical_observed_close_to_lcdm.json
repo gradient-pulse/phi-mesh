@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c03_empirical_observed_close_to_lcdm",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c03_empirical_observed_close_to_lcdm",
+    "claim_type": "empirical",
+    "claim": "On the same morphology-sensitive diagnostics (D1_L2 and Z_mf), the observed cohort remains comparatively close to the ΛCDM reconstruction cohort while remaining far from the Gaussian synthetic controls.",
+    "falsifiable": true,
+    "test_hook": "Compare observed, Gaussian, and ΛCDM cohort summaries for D1_L2 and Z_mf; verify the qualitative ranking Observed ≈ ΛCDM and both far from Gaussian.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p1 Abstract; p3 (role of ΛCDM cohort); p5–8 Results; Table 1 (p7)",
+      "note": "Structured-reference cohort comparison supports morphology-sensitive interpretation"
+    }
+  }
+}

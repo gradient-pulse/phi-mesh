@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c02_empirical_primary_separation_d1l2_zmf",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c02_empirical_primary_separation_d1l2_zmf",
+    "claim_type": "empirical",
+    "claim": "The strongest and most persistent observed-vs-Gaussian cohort separation appears in the morphology-sensitive diagnostics D1_L2 and Z_mf across lmax ∈ {128, 192, 256, 320}.",
+    "falsifiable": true,
+    "test_hook": "Recompute D1_L2 and Z_mf across the same lmax sweep using the published pipeline and verify that observed values remain strongly separated from Gaussian control cohort means.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p1 Abstract; p5–8 Results; Table 1 (p7)",
+      "note": "Decision-block comparison and narrative results sections"
+    }
+  }
+}

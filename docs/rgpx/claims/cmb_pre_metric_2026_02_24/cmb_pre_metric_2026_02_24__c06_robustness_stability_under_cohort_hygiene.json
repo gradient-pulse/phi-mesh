@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c06_robustness_stability_under_cohort_hygiene",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c06_robustness_stability_under_cohort_hygiene",
+    "claim_type": "empirical",
+    "claim": "The primary morphology-sensitive separation (D1_L2 and Z_mf) remains stable after expanding the Gaussian cohort to n=40 per lmax and applying Gaussian seed-band cohort hygiene filtering.",
+    "falsifiable": true,
+    "test_hook": "Repeat aggregation with expanded Gaussian controls and seed-band filtering; verify unchanged qualitative cohort ranking and persistent separation on D1_L2 and Z_mf.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p1 Abstract; p4 (cohort hygiene design); p5–6 (expanded cohort + hygiene stability); p8",
+      "note": "Robustness claim against mixed-seed cohort composition artifacts"
+    }
+  }
+}

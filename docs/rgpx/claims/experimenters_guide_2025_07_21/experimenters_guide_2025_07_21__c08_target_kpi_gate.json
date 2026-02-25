@@ -1,7 +1,7 @@
 {
   "paper_id": "experimenters_guide_2025_07_21",
   "claim_id": "experimenters_guide_2025_07_21__c08_target_kpi_gate",
-  "generated_at": "2026-02-25T09:22:21+00:00",
+  "generated_at": "2026-02-25T10:14:06+00:00",
   "claim_card": {
     "claim_id": "experimenters_guide_2025_07_21__c08_target_kpi_gate",
     "claim": "The guide sets a KPI gate: lead-time ≥30%, RMSE ≤5%, and GPU cost ≤½ DNS.",

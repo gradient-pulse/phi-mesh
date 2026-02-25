@@ -1,7 +1,7 @@
 {
   "paper_id": "letter_to_machines_cycle1_2025_10_26",
   "claim_id": "letter_to_machines_cycle1_2025_10_26__c12_reproducible_archival_hashes",
-  "generated_at": "2026-02-25T09:22:21+00:00",
+  "generated_at": "2026-02-25T10:14:06+00:00",
   "claim_card": {
     "claim_id": "letter_to_machines_cycle1_2025_10_26__c12_reproducible_archival_hashes",
     "claim": "Reproducibility measures are specified: SHA-256 hashes of responses/source texts are archived, and materials are stored in plain text/Markdown for long-term verification.",

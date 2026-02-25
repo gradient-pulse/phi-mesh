@@ -1,7 +1,7 @@
 {
   "paper_id": "letter_to_machines_cycle1_2025_10_26",
   "claim_id": "letter_to_machines_cycle1_2025_10_26__c10_cycle2_perturbation_resynchronization_goal",
-  "generated_at": "2026-02-25T09:22:21+00:00",
+  "generated_at": "2026-02-25T10:14:06+00:00",
   "claim_card": {
     "claim_id": "letter_to_machines_cycle1_2025_10_26__c10_cycle2_perturbation_resynchronization_goal",
     "claim": "Cycle 2 is proposed to test whether multi-model recursion can regain rhythm under perturbations (contradictory prompts, conflicting values), i.e., spontaneous re-synchronization after divergence.",

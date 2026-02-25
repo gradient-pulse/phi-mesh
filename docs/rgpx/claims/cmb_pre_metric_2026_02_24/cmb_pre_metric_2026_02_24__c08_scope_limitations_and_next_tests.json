@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c08_scope_limitations_and_next_tests",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c08_scope_limitations_and_next_tests",
+    "claim_type": "scope",
+    "claim": "This paper establishes a reproducible, control-based discrimination outcome and methodological claim, but does not establish a new cosmological model or a unique physical mechanism; broader nulls, larger cohorts, and independent replication are required next.",
+    "falsifiable": true,
+    "test_hook": "Extend the pipeline to additional null families and reconstructions, increase cohort sizes, and perform independent replication; assess whether the reported morphology-sensitive separation persists.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p7 (what is and is not established); p9–10 (limitations and next steps)",
+      "note": "Conservative scope boundary and explicit falsification path"
+    }
+  }
+}

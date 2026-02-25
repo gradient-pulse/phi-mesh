@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c01_thesis_operational_advantage",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c01_thesis_operational_advantage",
+    "claim_type": "thesis",
+    "claim": "In this Planck PR3 CMB lensing workflow, extending metric analysis with morphology-sensitive observables provides an operational advantage for cohort discrimination.",
+    "falsifiable": true,
+    "test_hook": "Run the same cohort comparison with and without morphology-sensitive diagnostics and compare observed-vs-Gaussian discrimination quality under fixed controls.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p1 Abstract; p8 (central claim restatement); p9–10 Conclusion",
+      "note": "2026-02-24_CMB_Evidence_for_Pre-Metric_Physics.pdf"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c05_method_aux_metrics_secondary_not_headline",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c05_method_aux_metrics_secondary_not_headline",
+    "claim_type": "empirical",
+    "claim": "The auxiliary v1 metrics (v1_energy_ratio, v1_peak_shift) act as secondary qualifiers of regime/stability and do not carry the primary observed-vs-Gaussian separation signal in this pipeline.",
+    "falsifiable": true,
+    "test_hook": "Evaluate cohort separation using only v1_energy_ratio and v1_peak_shift; compare their discriminative consistency to D1_L2 and Z_mf across the same lmax sweep.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p4 (Section II.C.2); p5–6 and p8 (Results on auxiliary v1 qualifiers); p9 Conclusion",
+      "note": "Selective separation is concentrated in morphology-sensitive channels"
+    }
+  }
+}

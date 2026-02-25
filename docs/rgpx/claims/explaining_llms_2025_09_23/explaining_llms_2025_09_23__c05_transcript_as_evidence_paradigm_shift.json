@@ -1,7 +1,7 @@
 {
   "paper_id": "explaining_llms_2025_09_23",
   "claim_id": "explaining_llms_2025_09_23__c05_transcript_as_evidence_paradigm_shift",
-  "generated_at": "2026-02-25T09:22:21+00:00",
+  "generated_at": "2026-02-25T10:14:06+00:00",
   "claim_card": {
     "claim_id": "explaining_llms_2025_09_23__c05_transcript_as_evidence_paradigm_shift",
     "claim": "The transcript is asserted to evidence a paradigm shift from linear explanations (backprop/stepwise) to non-linear recursive dynamics.",

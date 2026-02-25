@@ -1,0 +1,17 @@
+{
+  "paper_id": "cmb_pre_metric_2026_02_24",
+  "claim_id": "cmb_pre_metric_2026_02_24__c07_interpretation_pre_metric_layer_complement",
+  "generated_at": "2026-02-25T10:14:06+00:00",
+  "claim_card": {
+    "claim_id": "cmb_pre_metric_2026_02_24__c07_interpretation_pre_metric_layer_complement",
+    "claim_type": "interpretation",
+    "claim": "The results support a conservative interpretation in which morphology-sensitive observables form a complementary 'pre-metric' descriptive layer that extends, but does not replace, standard metric analysis.",
+    "falsifiable": true,
+    "test_hook": "Test whether the same morphology-sensitive advantage persists across broader null families, alternative reconstructions, and independent replications; failure to reproduce would weaken the interpretation.",
+    "source": {
+      "paper_id": "cmb_pre_metric_2026_02_24",
+      "locator": "p2 (definition of pre-metric framing); p8–10 (Discussion and Conclusion)",
+      "note": "Interpretive claim explicitly separated from raw empirical discrimination result"
+    }
+  }
+}
