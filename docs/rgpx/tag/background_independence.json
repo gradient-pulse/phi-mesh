@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-25T13:20:03Z",
+  "generated_at": "2026-02-25T13:37:04Z",
   "tag": "background_independence",
-  "count": 4,
+  "count": 5,
   "items": [
     {
       "slug": "2025-11-09_RGpx_Coherence_Amplified",
@@ -22,6 +22,11 @@
       "slug": "2025-12-06_rgpx_gravity_gradient-coherence_paper",
       "date": "2025-12-06",
       "title": "Gravity as Gradient Coherence — AI Models Converging on Recursive Gradient Physics (RGPx)"
+    },
+    {
+      "slug": "2026-02-25_cmb_coherence_update",
+      "date": "2026-02-25",
+      "title": "CMB Evidence for Pre-Metric Physics"
     }
   ]
 }

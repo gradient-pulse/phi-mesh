@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-25T13:20:03Z",
+  "generated_at": "2026-02-25T13:37:04Z",
   "tag": "pre_spacetime",
-  "count": 3,
+  "count": 4,
   "items": [
     {
       "slug": "2025-11-05_ahead_of_the_spacetime_pack",
@@ -17,6 +17,11 @@
       "slug": "2026-01-04_pre_coordinate_phase",
       "date": "2026-01-04",
       "title": "Pre-coordinate phase: coherence before geometry (time kept out)"
+    },
+    {
+      "slug": "2026-02-25_cmb_coherence_update",
+      "date": "2026-02-25",
+      "title": "CMB Evidence for Pre-Metric Physics"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-25T13:20:03Z",
+  "generated_at": "2026-02-25T13:37:04Z",
   "count": 502,
   "items": [
     {
@@ -6671,8 +6671,20 @@
     {
       "slug": "2026-02-25_cmb_coherence_update",
       "date": "2026-02-25",
-      "title": "2026-02-25_cmb_coherence_update",
-      "tags": []
+      "title": "CMB Evidence for Pre-Metric Physics",
+      "tags": [
+        "cmb",
+        "cosmology",
+        "pre_coordinate_phase",
+        "pre_geometry",
+        "pre_spacetime",
+        "metric",
+        "pre_metric",
+        "background_independence",
+        "coherence_conservation",
+        "coherence_grammar",
+        "rgpx"
+      ]
     },
     {
       "slug": "2026-02-25_phi_pulse_memory_bifurcation_echo",
