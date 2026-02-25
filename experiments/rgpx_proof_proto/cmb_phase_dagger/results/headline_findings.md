@@ -4,34 +4,8 @@
 - *CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics*  
   DOI: https://doi.org/10.5281/zenodo.18759993
   
-### Gate 2B (MF) — ΛCDM end-to-end recon control: PASS (conservative baseline)
-This is the MF V0+V1 analogue of the AreaFrac Gate 2B test.
-
-Question: does ΛCDM + the full reconstruction pipeline reproduce the high morphology-sensitive regime seen relative to the phase-only surrogate null?
-
-**Current answer:** Yes, at the level required for conservative attribution. The observed field is strongly deviant relative to the phase-only surrogate null, but the same broad morphology-sensitive regime is reproduced by the ΛCDM reconstruction cohort once the measurement chain is included.
-
-What this means (and what it does not mean):
-- It **does not** erase the usefulness of the MF pipeline.
-- It **does** mean the high-D regime is not uniquely tied to the observed sky at this stage.
-- Interpreted conservatively, MF V0+V1 is a **morphology diagnostic with operational value**, not yet a standalone model-class discriminator.
-
-### Paper-level refinement of Gate 2B interpretation
-The key operational result is not “high D exists,” but that morphology-sensitive diagnostics (notably **D1_L2** and **Z_mf**) separate observed from Gaussian controls while preserving meaningful comparability to the ΛCDM reconstruction cohort.
-
-This is the basis for the CMB-track paper framing:
-- **operational advantage** in cohort discrimination
-- **pre-metric extension** of metric analysis
-- **conservative interpretation** under end-to-end controls
-
-### Next objective
-Upgrade from conservative attribution to stronger stress-test coverage by:
-1. expanding end-to-end ΛCDM recon cohorts,
-2. extending robustness probes (masks / splits / ℓ-sensitivity / estimator variants),
-3. comparing GC-feature envelopes (shape descriptors), not only scalar distances.
-
 ---
-
+	
 ## Decision gate logic (controls determine attribution)
 A “generative mismatch” (and only then, a “new physics” hypothesis) becomes admissible only if **all** hold:
 1) **Gaussian φ with matched Cℓ** fails to reproduce D at comparable rate, and  
