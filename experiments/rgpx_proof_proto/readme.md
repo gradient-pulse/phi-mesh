@@ -263,14 +263,18 @@ Pipeline validity: PASS
 	•	A self-test mode exists: observed := one phase-random surrogate, expected to yield non-significant p-values.
 
 Current gate status (MF V0+V1)
-	•	Gate 0 — Mechanical sanity (L2 correctness + self-test): PASS
-	•	Gate 1 — Gaussian Cℓ-matched control: PASS (non-extreme p-values across an ℓmax sweep)
-	•	Gate 2B — ΛCDM end-to-end recon control (MF analogue of AreaFrac Gate 2B): PASS (preliminary; N=3)
-	•	Gate 3 — Robustness / null adequacy / splits / masks / ℓ-sensitivity: OPEN
-	•	Attribution: pipeline-/reconstruction-consistent at lmax=256, nside=256 (N=3); robustness + larger N pending
+- Gate 0 — Mechanical sanity (L2 correctness + self-test): PASS
+- Gate 1 — Gaussian Cℓ-matched control: PASS (non-extreme p-values across an ℓmax sweep)
+- Gate 2B — ΛCDM end-to-end recon control: PASS (pipeline-/reconstruction-consistent morphology remains the conservative baseline interpretation)
+- Gate 3 — Robustness / null adequacy / splits / masks / ℓ-sensitivity: OPEN (ongoing expansion and stress-testing)
+
+Paper-level takeaway (current)
+- The strongest observed-vs-Gaussian cohort separation is carried by morphology-sensitive diagnostics (notably D1_L2 and Z_mf).
+- Observed morphology remains comparatively close to the ΛCDM reconstruction cohort on those diagnostics.
+- This supports a **pre-metric / morphology-first operational layer** as a useful extension to metric summaries, without asserting a unique new-physics mechanism.
 
 The exact run registry and interpretation state live in:
-	•	cmb_phase_dagger/results/headline_findings.md
+- `cmb_phase_dagger/results/headline_findings.md`
 
 ⸻
 
