@@ -30,6 +30,11 @@ readers_key_min:
     plain_translation: "small effect appears → repeats reliably → stays stable under context changes"
     test_note: "Perturb context; if the repeated pattern persists, stabilization is present."
 
+  metric_plus_morphology:
+    mesh_form: "metric + morphology-sensitive diagnostics"
+    plain_translation: "standard summary measures plus shape/organization measures"
+    test_note: "Compare cohort separation using metric-only versus metric-plus-morphology under identical controls."
+
   essential_terms:
     rgpx:
       plain_definition: "Recursive Gradient Physics: a research framework for tracking how stable organization forms from differences under feedback."
