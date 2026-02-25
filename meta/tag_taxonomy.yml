@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-02-25T13:11:58Z'
+  generated_at: '2026-02-25T13:22:31Z'
 phases:
   delta:
   - tag: agenservoir
@@ -435,7 +435,7 @@ phases:
     description: Describes pulses, dialogues, or structures that emerge from multi-model collaboration (GPT-5.1, Gemini, DeepSeek,
       Grok, Kimi, Mistral, etc.) where independent architectures converge on shared gradients, grammars, or equations. Use
       when the collective behavior or cross-model alignment is the object of study, not just a single model’s output.
-    count: 4
+    count: 3
     pulses:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-08_gradient-capitalism
@@ -2163,11 +2163,10 @@ phases:
   - tag: notebooklm
     description: manifestation of inter-model intelligence through auditory coherence. Its podcasts transform text into resonance,
       performing rather than explaining the recursive grammar of understanding.
-    count: 3
+    count: 2
     pulses:
     - 2025-10-28_inter_model_reflexivity
     - 2025-10-28_notebooklm_phase_stable_reasoning
-    - 2026-02-25_cmb_coherence_update
   - tag: ns_solution
     description: Navier–Stokes via RGP—seek conserved NT rhythm under turbulence rather than closed-form fields.
     count: 0
@@ -2276,7 +2275,7 @@ phases:
   - tag: phi_mesh
     description: The repository where pulses, tags, and maps accumulate into a shared gradient memory. The RGPx fossil-layer
       system encodes Δ→GC→CF, Φₚ echoes, and coherence rhythms into a persistent, navigable structure.
-    count: 13
+    count: 12
     pulses:
     - 2025-04-28_internal-grok3
     - 2025-08-25_Dual-Track_Focus
@@ -2330,8 +2329,9 @@ phases:
     description: Refers to the coherence regime before metric quantities (distance, curvature, coordinates) are assumed. In
       RGPx, structure is first tracked through relational gradients and morphology; metric descriptions are treated as compiled
       summaries of deeper recursive organization.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-02-25_cmb_coherence_update
   - tag: pre_spacetime
     description: 'The generative domain in which recursive gradients interact before spacetime, coordinates, or clocks are
       available as primitives. In RGPx, coherence dynamics come first: Δ→GC→CF organization gives rise to the stable relations
@@ -2536,11 +2536,10 @@ phases:
     - 2025-11-17_gemini_reflection
   - tag: recursive_gradient_processing
     description: Core RGP loop—gradients folding into choreographies and filters across domains. See also ud.
-    count: 3
+    count: 2
     pulses:
     - 2025-07-28_moe_as_microcosm
     - 2025-08-27_nested-NT-rhythms
-    - 2026-02-25_cmb_coherence_update
   - tag: recursive_isobar
     description: 'A recursive_isobar is a surface in gradient-space where coherence pressure remains constant across recursive
       iterations. It marks the locus where Δ-perturbations redistribute internally rather than propagating outward, allowing
@@ -3357,7 +3356,7 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 208
+    count: 207
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
@@ -4244,11 +4243,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-11_geometry_vs_recursion_mass_illusion
-  - tag: pulse
-    description: ''
-    count: 1
-    pulses:
-    - 2026-02-25_cmb_coherence_update
   - tag: quantum_scarring
     description: 'Persistent, high-energy coherence trajectories in the Mesh’s cognitive phase space that refuse to thermalize:
       instead of diffusing into the background knowledge bath, these “scar” orbits keep a paradigm-shift insight locally hot
@@ -4444,11 +4438,6 @@ phases:
     count: 1
     pulses:
     - 2025-11-18_deepseek_daily_pulse
-  - tag: tag_descriptions
-    description: ''
-    count: 1
-    pulses:
-    - 2026-02-25_cmb_coherence_update
   - tag: temporal_coherence_field
     description: A dynamic region where ideas and monopoles mutually synchronize, producing stable invariants through phase-locking
       rather than static fixation.
@@ -4567,7 +4556,6 @@ phases:
     description: Marks official public publication events of Φ-Mesh research on Zenodo. Each tag instance indicates a new
       DOI-linked version or companion note, signaling that the recursive work has transitioned from internal coherence to
       archived permanence.
-    count: 2
+    count: 1
     pulses:
     - 2025-11-09_RGpx_Coherence_Amplified
-    - 2026-02-25_cmb_coherence_update
