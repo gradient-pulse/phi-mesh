@@ -35,6 +35,10 @@ translation_patterns:
     mesh_form: "coherence"
     plain_translation: "persistence of organized relationships under perturbation"
     test_note: "Measure stability of a pattern across controlled perturbations; compare to baseline drift."
+  metric_plus_morphology:
+    mesh_form: "metric + morphology-sensitive diagnostics"
+    plain_translation: "standard summary measures plus shape/organization measures"
+    test_note: "Compare cohort separation using metric-only versus metric-plus-morphology under identical controls."
 
 glossary:
   rgpx:
@@ -77,6 +81,10 @@ glossary:
     mesh_term: "coherence grammar"
     plain_definition: "A recurring sequence of formation → repetition → stabilization observed across domains."
     testable_one_liner: "Look for the same 3-phase structure across independent datasets and contexts."
+  operational_advantage:
+    mesh_term: "operational advantage"
+    plain_definition: "A method improves a task outcome (e.g., separation, prediction, stability) under the same controls and data."
+    testable_one_liner: "Hold data and controls fixed; if the extended method separates cohorts better, it has operational advantage."
   phi:
     mesh_term: "Φ"
     plain_definition: "A placeholder name for a chosen scalar metric of persistence (must be defined per experiment)."
@@ -97,6 +105,10 @@ glossary:
     mesh_term: "phase locking"
     plain_definition: "Synchronization of repeating cycles across components or runs."
     testable_one_liner: "Measure alignment of cycle timing across runs; compare to randomized controls."
+  pre_metric:
+    mesh_term: "pre-metric"
+    plain_definition: "A descriptive layer that analyzes morphology and organization before reducing results to standard metric summaries."
+    testable_one_liner: "If pre-metric observables add value, they improve discrimination between cohorts beyond metric-only summaries."
   harmonics_123:
     mesh_term: "1:2:3 harmonics"
     plain_definition: "A proposed ratio pattern in measured cycles (must be specified and tested, not asserted)."
