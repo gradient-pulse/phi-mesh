@@ -99,7 +99,7 @@ Question: does ΛCDM + the full reconstruction pipeline reproduce the large MF d
 What this means (and what it does not mean):
 	•	This does not rule out useful structure; it shows the MF signal at this setting is not uniquely tied to the real sky once the measurement chain is included.
 	•	Interpreted conservatively, MF V0+V1 at (lmax=256, nside=256) is reconstruction-/estimator-consistent rather than an immediate model-class discriminator.
-  •	Only if a residual persists after higher-N end-to-end controls and Gate 3 robustness do we treat it as evidence for generative mismatch.
+    •	Only if a residual persists after higher-N end-to-end controls and Gate 3 robustness do we treat it as evidence for generative mismatch.
 
 ### Next objective
 Upgrade from conservative attribution to stronger stress-test coverage by:
