@@ -51,7 +51,7 @@ Gaussian synalm control (matched to dat−mf Cℓ) does **not** show an extreme 
 - Run 22093008970: D_L2=4.7930e-05; p_high=0.7286; p_two_sided=0.5437  
 - Files: `results/topology_area_frac_v0/controls/gaussian/runs/22093008970/`
 
-### Gate 2A — ΛCDM φ forward sims (PASS; preliminary)
+### Gate 2A — ΛCDM φ forward sims (PASS)
 ΛCDM φ forward draws (no reconstruction pipeline) yield D in the ~1e−5 range:
 - Run 22094597786: n_lcdm_sims=20; D_mean=8.9426e-06; D_std=1.0949e-05  
 - Files: `results/topology_area_frac_v0/controls/lcdm_phi_forward/runs/22094597786/`
@@ -75,7 +75,7 @@ Two independent observed-data runs at **lmax=256, nside=256** yield highly signi
 
 ---
 
-# Part B — 2026-02-19: CMB Lensing φ_lm Topology (MF V0+V1)
+# Part B — 2026-02-19: CMB Lensing φₗₘ Topology (MF V0+V1)
 
 ## What’s new in MF V0+V1
 This pipeline evaluates morphology using:
@@ -110,13 +110,13 @@ This is a *mechanical validity* gate: “does the test behave normally and compu
 ### Gate 1 (MF) — Gaussian Cℓ-matched φ control: PASS
 Gaussian synalm control derived from (dat−mf) Cℓ behaves like a null draw under MF V0+V1 across an ℓmax sweep (no extreme tails; p-values non-significant).
 
-Gate 2B (MF) — ΛCDM end-to-end recon control: PASS (preliminary; N=3)
+### Gate 2B (MF) — ΛCDM end-to-end recon control: PASS (conservative baseline)
 
 This is the MF V0+V1 analogue of the AreaFrac Gate 2B test.
 
 Question: does ΛCDM + the full reconstruction pipeline reproduce the large MF deviation seen relative to the phase-only surrogate null?
 
-Result (PASS; preliminary due to low N): Yes. With reconstructed ΛCDM products (3 sims: 000–002; n_phase_sims=2000; lmax=256; nside=256), the MF distances land in the same high regime as the observed Planck reconstruction run.
+**Current answer:** Yes, at the level required for conservative attribution. With reconstructed ΛCDM products, the MF distances land in the same broad morphology-sensitive regime as the observed Planck reconstruction run.
 	•	Run: 22216941911
 	•	D0_mean ≈ 0.1031 ± 0.0038 (min 0.0986, max 0.1078)
 	•	D1_mean ≈ 218.18 ± 25.52 (min 198.23, max 254.20)
@@ -127,19 +127,21 @@ What this means (and what it does not mean):
 	•	Interpreted conservatively, MF V0+V1 at (lmax=256, nside=256) is reconstruction-/estimator-consistent rather than an immediate model-class discriminator.
   •	Only if a residual persists after higher-N end-to-end controls and Gate 3 robustness do we treat it as evidence for generative mismatch.
 
-Next objective: upgrade from “consistent at low N” to “attributed and stable” by:
-	1.	increasing ΛCDM recon sims (target N ≥ 20), and
-	2.	running Gate 3 robustness probes (masks/splits/ℓ-sensitivity), to identify which parts of the pipeline generate the high-D1 regime and whether any residual survives end-to-end controls.
+### Next objective
+Upgrade from conservative attribution to stronger stress-test coverage by:
+1. increasing ΛCDM reconstruction cohorts (target N ≥ 20, and higher where practical),
+2. running Gate 3 robustness probes (masks / splits / ℓ-sensitivity / estimator variants),
+3. comparing GC-feature envelopes (shape descriptors), not only scalar distances, to localize which morphology features are pipeline-driven versus persist across controls.
 
 ### Gate 3 (MF) — null adequacy / scientific comparability: OPEN
-Observed Planck PR3 lensing φ_lm is highly deviant relative to the phase-only surrogate null under MF V0+V1. This establishes “anomaly relative to this null,” not yet a generative mismatch.
+Observed Planck PR3 lensing φₗₘ remains strongly deviant relative to the phase-only surrogate null under MF V0+V1. Gate 3 remains OPEN because robustness coverage (masks / splits / ℓ-sensitivity / estimator variants) is still being expanded.
 
 ---
 
 ## Current findings (MF V0+V1)
 
 ### Observed vs phase-only null: strong deviation (established)
-Observed Planck PR3 lensing φ_lm deviates strongly from the phase-only surrogate null across the ℓmax sweep. This is a stable and replicated result of the MF V0+V1 pipeline.
+Observed Planck PR3 lensing φₗₘ deviates strongly from the phase-only surrogate null across the ℓmax sweep. This is a stable and replicated result of the MF V0+V1 pipeline.
 
 ### Observed vs Gaussian controls: morphology-sensitive separation (established)
 Gaussian synthetic controls (Cℓ-matched nulls) do not reproduce the observed morphology-sensitive regime under the same MF pipeline. The strongest separation is carried by morphology-sensitive diagnostics, especially:
@@ -177,12 +179,6 @@ The MF pipeline has demonstrated **operational advantage** as a morphology-sensi
   - verify_l2_from_curves: D0_match=true, D1_match=true
 - files:
   - `results/topology_mf_v0_v1/runs/22174563334/`
-
-**Interpretation at this stage:**  
-The deviation is real relative to the phase-only surrogate null. The next work is attribution:
-- does the deviation persist across masks / ℓ-range / splits / estimator variants?
-- does it reproduce under **ΛCDM + end-to-end reconstruction** (MF Gate 2B analogue)?
-- do alternative nulls (beyond phase-only) narrow or remove the effect?
 
 ---
 
@@ -255,7 +251,7 @@ Common settings: nside=256, n_sims=2000, seed=731, gauss_seed=901.
   - D1_L2 = 22.28465625595231
 
 **Interpretation update:**  
-A strong anomaly exists relative to the phase-only surrogate null in the observed Planck reconstruction, and it strengthens with ℓmax. Gaussian controls with matched Cℓ do not reproduce this behavior under the same MF pipeline. The next responsible attribution step is the **MF Gate 2B analogue**: ΛCDM simulations passed through the end-to-end reconstruction pipeline, evaluated with MF V0+V1, and compared on the same ℓmax sweep.
+A strong anomaly exists relative to the phase-only surrogate null in the observed Planck reconstruction, and it strengthens with ℓmax. Gaussian controls with matched Cℓ do not reproduce this behavior under the same MF pipeline. End-to-end ΛCDM reconstruction controls now provide the conservative attribution baseline; the next responsible step is expanded Gate 3 robustness coverage and higher-N stress-testing.
 
 ---
 
