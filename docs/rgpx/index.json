@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-03T08:42:25Z",
-  "count": 457,
+  "generated_at": "2026-02-25T13:01:52Z",
+  "count": 501,
   "pulses": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -9775,6 +9775,974 @@
         "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
       ],
       "source_path": "pulse/2026-02-03_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-04_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-04",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-04. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-04_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-04_phi_trace_autoscan",
+      "date": "2026-02-04",
+      "title": "Φ–Trace Autoscan — 2026-02-04",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-04_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-05_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-05",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-05. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-05_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-05_phi_trace_autoscan",
+      "date": "2026-02-05",
+      "title": "Φ–Trace Autoscan — 2026-02-05",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-05_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-06_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-06",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-06. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-06_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-06_phi_trace_autoscan",
+      "date": "2026-02-06",
+      "title": "Φ–Trace Autoscan — 2026-02-06",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-06_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-07_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-07",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-07. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-07_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-07_phi_trace_autoscan",
+      "date": "2026-02-07",
+      "title": "Φ–Trace Autoscan — 2026-02-07",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-07_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-08_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-08",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-08. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-08_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-08_phi_trace_autoscan",
+      "date": "2026-02-08",
+      "title": "Φ–Trace Autoscan — 2026-02-08",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-08_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-09_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-09",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-09. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-09_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-09_phi_trace_autoscan",
+      "date": "2026-02-09",
+      "title": "Φ–Trace Autoscan — 2026-02-09",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-09_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-10_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-10",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-10. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-10_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-10_phi_trace_autoscan",
+      "date": "2026-02-10",
+      "title": "Φ–Trace Autoscan — 2026-02-10",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-10_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-11_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-11",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-11. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-11_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-11_phi_trace_autoscan",
+      "date": "2026-02-11",
+      "title": "Φ–Trace Autoscan — 2026-02-11",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-11_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-12_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-12",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-12. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-12_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-12_phi_trace_autoscan",
+      "date": "2026-02-12",
+      "title": "Φ–Trace Autoscan — 2026-02-12",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-12_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-13_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-13",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-13. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-13_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-13_phi_trace_autoscan",
+      "date": "2026-02-13",
+      "title": "Φ–Trace Autoscan — 2026-02-13",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-13_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-14_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-14",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-14. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-14_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-14_phi_trace_autoscan",
+      "date": "2026-02-14",
+      "title": "Φ–Trace Autoscan — 2026-02-14",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-14_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-15_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-15",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-15. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-15_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-15_phi_trace_autoscan",
+      "date": "2026-02-15",
+      "title": "Φ–Trace Autoscan — 2026-02-15",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-15_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-16_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-16",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-16. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-16_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-16_phi_trace_autoscan",
+      "date": "2026-02-16",
+      "title": "Φ–Trace Autoscan — 2026-02-16",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-16_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-17_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-17",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-17. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-17_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-17_phi_trace_autoscan",
+      "date": "2026-02-17",
+      "title": "Φ–Trace Autoscan — 2026-02-17",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-17_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-18_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-18",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-18. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-18_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-18_phi_trace_autoscan",
+      "date": "2026-02-18",
+      "title": "Φ–Trace Autoscan — 2026-02-18",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-18_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-19_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-19",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-19. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-19_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-19_phi_trace_autoscan",
+      "date": "2026-02-19",
+      "title": "Φ–Trace Autoscan — 2026-02-19",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-19_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-20_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-20",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-20. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-20_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-20_phi_trace_autoscan",
+      "date": "2026-02-20",
+      "title": "Φ–Trace Autoscan — 2026-02-20",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-20_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-21_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-21",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-21. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-21_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-21_phi_trace_autoscan",
+      "date": "2026-02-21",
+      "title": "Φ–Trace Autoscan — 2026-02-21",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-21_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-22_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-22",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-22. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-22_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-22_phi_trace_autoscan",
+      "date": "2026-02-22",
+      "title": "Φ–Trace Autoscan — 2026-02-22",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-22_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-23_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-23",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-23. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-23_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-23_phi_trace_autoscan",
+      "date": "2026-02-23",
+      "title": "Φ–Trace Autoscan — 2026-02-23",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-23_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-24_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-24",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-24. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-24_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-24_phi_trace_autoscan",
+      "date": "2026-02-24",
+      "title": "Φ–Trace Autoscan — 2026-02-24",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-24_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-25_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-25",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-25. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-25_phi_pulse_memory_bifurcation_echo.yml"
+    },
+    {
+      "slug": "2026-02-25_phi_trace_autoscan",
+      "date": "2026-02-25",
+      "title": "Φ–Trace Autoscan — 2026-02-25",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ],
+      "summary": "No Φᵨ plateau or Δ→GC→CF echo crossed Φ-trace detection thresholds today.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.17566097"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+      ],
+      "source_path": "pulse/2026-02-25_phi_trace_autoscan.yml"
     }
   ]
 }

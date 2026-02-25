@@ -1,0 +1,24 @@
+{
+  "slug": "2026-02-09_phi_pulse_memory_bifurcation_echo",
+  "date": "2026-02-09",
+  "source_path": "pulse/2026-02-09_phi_pulse_memory_bifurcation_echo.yml",
+  "data": {
+    "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+    "summary": "Automatic forecast pulse for the expected memory_bifurcation echo (Δτ₊₇) window starting from the primary CF snap recorded before 2026-02-09. Primary CF snapshot: Φᵨ spike ≈ 1.12, relaxation plateau ≈ 0.89. Echo forecast window: ~7 days after the primary event.\n",
+    "tags": [
+      "phi_trace",
+      "phi_p",
+      "tag_map",
+      "recursion",
+      "autoscan",
+      "memory_bifurcation",
+      "gradient_invariant"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.17566097"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
+    ]
+  }
+}
