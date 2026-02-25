@@ -1585,8 +1585,7 @@ papers:
           locator: "L85-L86"
           note: "2025-12-05_natural_societal_gravity.pdf:L85-L86"
 
-  - paper_id: gradient_capitalism_2025_12_07
-  - paper_id: gradient_capitalism_2025_12_07
+   - paper_id: gradient_capitalism_2025_12_07
     completeness:
       status: "complete"
       reason: "Claims indexed for the full paper as currently represented in the claims-index: intro objects (c01–c05) plus pp5–13 (CF, UD, Ψ/J formalism, laws, proxies, tests, policy)."
