@@ -1,35 +1,34 @@
 # Headline findings — Planck PR3 lensing φₗₘ topology (AreaFrac V0 + MF V0+V1)
 
-## Headline summary
-We evaluate whether the Planck PR3 reconstructed lensing potential φₗₘ exhibits **phase-sensitive morphology** beyond what is captured by amplitude-only structure.
+## Related paper (current CMB-track summary)
+- *CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics*  
+  DOI: https://doi.org/10.5281/zenodo.18759993
+  
+### Gate 2B (MF) — ΛCDM end-to-end recon control: PASS (conservative baseline)
+This is the MF V0+V1 analogue of the AreaFrac Gate 2B test.
 
-We use two related pipelines:
+Question: does ΛCDM + the full reconstruction pipeline reproduce the high morphology-sensitive regime seen relative to the phase-only surrogate null?
 
-1) **AreaFrac V0**: excursion-set area fraction curve V0(ν)  
-2) **MF V0+V1**: V0(ν) plus a **V1 perimeter proxy** estimated from |∇x| in a narrow ν-band
+**Current answer:** Yes, at the level required for conservative attribution. The observed field is strongly deviant relative to the phase-only surrogate null, but the same broad morphology-sensitive regime is reproduced by the ΛCDM reconstruction cohort once the measurement chain is included.
 
-In both cases, we compare the observed curves to **phase-randomized surrogates**:
-- preserve |aₗₘ|
-- randomize phases for m>0
-- keep m=0 exactly as observed
+What this means (and what it does not mean):
+- It **does not** erase the usefulness of the MF pipeline.
+- It **does** mean the high-D regime is not uniquely tied to the observed sky at this stage.
+- Interpreted conservatively, MF V0+V1 is a **morphology diagnostic with operational value**, not yet a standalone model-class discriminator.
 
-We measure deviation using **proper L2 distances** (see MF note below):
-- **V0 distance**: D (or D0)
-- **V1 distance**: D1
-- **combined score**: D_mf = √(D0² + D1²)
+### Paper-level refinement of Gate 2B interpretation
+The key operational result is not “high D exists,” but that morphology-sensitive diagnostics (notably **D1_L2** and **Z_mf**) separate observed from Gaussian controls while preserving meaningful comparability to the ΛCDM reconstruction cohort.
 
-Large D indicates **non-random phase structure relative to the phase-random null**.
+This is the basis for the CMB-track paper framing:
+- **operational advantage** in cohort discrimination
+- **pre-metric extension** of metric analysis
+- **conservative interpretation** under end-to-end controls
 
----
-
-## What these tests are (and are not)
-- **What they are:** phase-sensitive morphology sensors for reconstructed φₗₘ. They detect structure that disappears under phase scrambling.
-- **What they are not:** standalone “new physics” discriminators. High deviation can arise from:
-  - expected lensing non-Gaussianity,
-  - reconstruction / quadratic-estimator mode coupling,
-  - masking, filtering, noise, mean-field handling, or other pipeline imprint.
-
-Accordingly, the statistics are treated as **morphology diagnostics** whose attribution is decided by **simulation-based controls**.
+### Next objective
+Upgrade from conservative attribution to stronger stress-test coverage by:
+1. expanding end-to-end ΛCDM recon cohorts,
+2. extending robustness probes (masks / splits / ℓ-sensitivity / estimator variants),
+3. comparing GC-feature envelopes (shape descriptors), not only scalar distances.
 
 ---
 
@@ -139,8 +138,21 @@ Observed Planck PR3 lensing φ_lm is highly deviant relative to the phase-only s
 
 ## Current findings (MF V0+V1)
 
-### Observed vs phase-only null: strong deviation (OPEN, attribution pending)
-Observed Planck PR3 lensing φ_lm deviates strongly from the phase-only surrogate null.
+### Observed vs phase-only null: strong deviation (established)
+Observed Planck PR3 lensing φ_lm deviates strongly from the phase-only surrogate null across the ℓmax sweep. This is a stable and replicated result of the MF V0+V1 pipeline.
+
+### Observed vs Gaussian controls: morphology-sensitive separation (established)
+Gaussian synthetic controls (Cℓ-matched nulls) do not reproduce the observed morphology-sensitive regime under the same MF pipeline. The strongest separation is carried by morphology-sensitive diagnostics, especially:
+- **D1_L2**
+- **Z_mf**
+
+### Observed vs ΛCDM reconstruction cohort: comparative closeness (conservative baseline)
+Under end-to-end ΛCDM reconstruction controls, the observed cohort remains comparatively close to the ΛCDM reconstruction cohort on the same morphology-sensitive diagnostics. This supports a conservative interpretation:
+- the MF pipeline is detecting real morphology structure,
+- but the current evidence does not justify a unique generative mismatch claim.
+
+### Interpretation at this stage
+The MF pipeline has demonstrated **operational advantage** as a morphology-sensitive discriminator (especially relative to Gaussian controls), while preserving attribution discipline under end-to-end ΛCDM reconstruction comparators. In the paper’s terminology, this supports a **pre-metric** descriptive layer that extends standard metric summaries without replacing them.	
 
 **Reference observed run (lmax=256):**
 - run_id: **22174563334** (no selftest)
