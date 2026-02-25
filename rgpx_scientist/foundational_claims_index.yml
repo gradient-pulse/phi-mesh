@@ -1842,88 +1842,88 @@ papers:
           locator: "p13 (V.2.2 Taxation and Redistribution)"
           note: "2025-12-07_gradient_capitalism_inevitable_rise.pdf p13 (V.2.2)"
 
-- paper_id: cmb_pre_metric_2026_02_24
-  completeness:
-    status: "complete"
-    reason: "Claims indexed from abstract, methods, results, discussion, conclusion, and decision-block table (pp1–10), with empirical/method/interpretive separation preserved."
-  claim_cards:
-
-    - claim_id: cmb_pre_metric_2026_02_24__c01_thesis_operational_advantage
-      claim_type: thesis
-      claim: "In this Planck PR3 CMB lensing workflow, extending metric analysis with morphology-sensitive observables provides an operational advantage for cohort discrimination."
-      falsifiable: true
-      test_hook: "Run the same cohort comparison with and without morphology-sensitive diagnostics and compare observed-vs-Gaussian discrimination quality under fixed controls."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p1 Abstract; p8 (central claim restatement); p9–10 Conclusion"
-        note: "2026-02-24_CMB_Evidence_for_Pre-Metric_Physics.pdf"
-
-    - claim_id: cmb_pre_metric_2026_02_24__c02_empirical_primary_separation_d1l2_zmf
-      claim_type: empirical
-      claim: "The strongest and most persistent observed-vs-Gaussian cohort separation appears in the morphology-sensitive diagnostics D1_L2 and Z_mf across lmax ∈ {128, 192, 256, 320}."
-      falsifiable: true
-      test_hook: "Recompute D1_L2 and Z_mf across the same lmax sweep using the published pipeline and verify that observed values remain strongly separated from Gaussian control cohort means."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p1 Abstract; p5–8 Results; Table 1 (p7)"
-        note: "Decision-block comparison and narrative results sections"
-
-    - claim_id: cmb_pre_metric_2026_02_24__c03_empirical_observed_close_to_lcdm
-      claim_type: empirical
-      claim: "On the same morphology-sensitive diagnostics (D1_L2 and Z_mf), the observed cohort remains comparatively close to the ΛCDM reconstruction cohort while remaining far from the Gaussian synthetic controls."
-      falsifiable: true
-      test_hook: "Compare observed, Gaussian, and ΛCDM cohort summaries for D1_L2 and Z_mf; verify the qualitative ranking Observed ≈ ΛCDM and both far from Gaussian."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p1 Abstract; p3 (role of ΛCDM cohort); p5–8 Results; Table 1 (p7)"
-        note: "Structured-reference cohort comparison supports morphology-sensitive interpretation"
-
-    - claim_id: cmb_pre_metric_2026_02_24__c04_method_gaussian_null_power_matched
-      claim_type: method
-      claim: "The Gaussian synthetic control cohort is a deliberately strong null: it is power-spectrum-matched to the mean-field-corrected observed reconstruction ((dat-mf) spectrum) while removing higher-order/non-Gaussian morphological organization."
-      falsifiable: true
-      test_hook: "Inspect control construction steps and regenerate Gaussian controls from the cleaned harmonic field spectrum; confirm matching at the two-point level while using zero mean field for synthetic runs."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p3 (Section II.B.1)"
-        note: "Gaussian synthetic control construction from phi_clean and C_l estimate"
-
-    - claim_id: cmb_pre_metric_2026_02_24__c05_method_aux_metrics_secondary_not_headline
-      claim_type: empirical
-      claim: "The auxiliary v1 metrics (v1_energy_ratio, v1_peak_shift) act as secondary qualifiers of regime/stability and do not carry the primary observed-vs-Gaussian separation signal in this pipeline."
-      falsifiable: true
-      test_hook: "Evaluate cohort separation using only v1_energy_ratio and v1_peak_shift; compare their discriminative consistency to D1_L2 and Z_mf across the same lmax sweep."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p4 (Section II.C.2); p5–6 and p8 (Results on auxiliary v1 qualifiers); p9 Conclusion"
-        note: "Selective separation is concentrated in morphology-sensitive channels"
-
-    - claim_id: cmb_pre_metric_2026_02_24__c06_robustness_stability_under_cohort_hygiene
-      claim_type: empirical
-      claim: "The primary morphology-sensitive separation (D1_L2 and Z_mf) remains stable after expanding the Gaussian cohort to n=40 per lmax and applying Gaussian seed-band cohort hygiene filtering."
-      falsifiable: true
-      test_hook: "Repeat aggregation with expanded Gaussian controls and seed-band filtering; verify unchanged qualitative cohort ranking and persistent separation on D1_L2 and Z_mf."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p1 Abstract; p4 (cohort hygiene design); p5–6 (expanded cohort + hygiene stability); p8"
-        note: "Robustness claim against mixed-seed cohort composition artifacts"
-
-    - claim_id: cmb_pre_metric_2026_02_24__c07_interpretation_pre_metric_layer_complement
-      claim_type: interpretation
-      claim: "The results support a conservative interpretation in which morphology-sensitive observables form a complementary 'pre-metric' descriptive layer that extends, but does not replace, standard metric analysis."
-      falsifiable: true
-      test_hook: "Test whether the same morphology-sensitive advantage persists across broader null families, alternative reconstructions, and independent replications; failure to reproduce would weaken the interpretation."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p2 (definition of pre-metric framing); p8–10 (Discussion and Conclusion)"
-        note: "Interpretive claim explicitly separated from raw empirical discrimination result"
-
-    - claim_id: cmb_pre_metric_2026_02_24__c08_scope_limitations_and_next_tests
-      claim_type: scope
-      claim: "This paper establishes a reproducible, control-based discrimination outcome and methodological claim, but does not establish a new cosmological model or a unique physical mechanism; broader nulls, larger cohorts, and independent replication are required next."
-      falsifiable: true
-      test_hook: "Extend the pipeline to additional null families and reconstructions, increase cohort sizes, and perform independent replication; assess whether the reported morphology-sensitive separation persists."
-      source:
-        paper_id: cmb_pre_metric_2026_02_24
-        locator: "p7 (what is and is not established); p9–10 (limitations and next steps)"
-        note: "Conservative scope boundary and explicit falsification path"
+  - paper_id: cmb_pre_metric_2026_02_24
+      completeness:
+        status: "complete"
+        reason: "Claims indexed from abstract, methods, results, discussion, conclusion, and decision-block table (pp1–10), with empirical/method/interpretive separation preserved."
+      claim_cards:
+    
+      - claim_id: cmb_pre_metric_2026_02_24__c01_thesis_operational_advantage
+        claim_type: thesis
+        claim: "In this Planck PR3 CMB lensing workflow, extending metric analysis with morphology-sensitive observables provides an operational advantage for cohort discrimination."
+        falsifiable: true
+        test_hook: "Run the same cohort comparison with and without morphology-sensitive diagnostics and compare observed-vs-Gaussian discrimination quality under fixed controls."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p1 Abstract; p8 (central claim restatement); p9–10 Conclusion"
+          note: "2026-02-24_CMB_Evidence_for_Pre-Metric_Physics.pdf"
+  
+      - claim_id: cmb_pre_metric_2026_02_24__c02_empirical_primary_separation_d1l2_zmf
+        claim_type: empirical
+        claim: "The strongest and most persistent observed-vs-Gaussian cohort separation appears in the morphology-sensitive diagnostics D1_L2 and Z_mf across lmax ∈ {128, 192, 256, 320}."
+        falsifiable: true
+        test_hook: "Recompute D1_L2 and Z_mf across the same lmax sweep using the published pipeline and verify that observed values remain strongly separated from Gaussian control cohort means."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p1 Abstract; p5–8 Results; Table 1 (p7)"
+          note: "Decision-block comparison and narrative results sections"
+  
+      - claim_id: cmb_pre_metric_2026_02_24__c03_empirical_observed_close_to_lcdm
+        claim_type: empirical
+        claim: "On the same morphology-sensitive diagnostics (D1_L2 and Z_mf), the observed cohort remains comparatively close to the ΛCDM reconstruction cohort while remaining far from the Gaussian synthetic controls."
+        falsifiable: true
+        test_hook: "Compare observed, Gaussian, and ΛCDM cohort summaries for D1_L2 and Z_mf; verify the qualitative ranking Observed ≈ ΛCDM and both far from Gaussian."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p1 Abstract; p3 (role of ΛCDM cohort); p5–8 Results; Table 1 (p7)"
+          note: "Structured-reference cohort comparison supports morphology-sensitive interpretation"
+  
+      - claim_id: cmb_pre_metric_2026_02_24__c04_method_gaussian_null_power_matched
+        claim_type: method
+        claim: "The Gaussian synthetic control cohort is a deliberately strong null: it is power-spectrum-matched to the mean-field-corrected observed reconstruction ((dat-mf) spectrum) while removing higher-order/non-Gaussian morphological organization."
+        falsifiable: true
+        test_hook: "Inspect control construction steps and regenerate Gaussian controls from the cleaned harmonic field spectrum; confirm matching at the two-point level while using zero mean field for synthetic runs."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p3 (Section II.B.1)"
+          note: "Gaussian synthetic control construction from phi_clean and C_l estimate"
+  
+      - claim_id: cmb_pre_metric_2026_02_24__c05_method_aux_metrics_secondary_not_headline
+        claim_type: empirical
+        claim: "The auxiliary v1 metrics (v1_energy_ratio, v1_peak_shift) act as secondary qualifiers of regime/stability and do not carry the primary observed-vs-Gaussian separation signal in this pipeline."
+        falsifiable: true
+        test_hook: "Evaluate cohort separation using only v1_energy_ratio and v1_peak_shift; compare their discriminative consistency to D1_L2 and Z_mf across the same lmax sweep."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p4 (Section II.C.2); p5–6 and p8 (Results on auxiliary v1 qualifiers); p9 Conclusion"
+          note: "Selective separation is concentrated in morphology-sensitive channels"
+  
+      - claim_id: cmb_pre_metric_2026_02_24__c06_robustness_stability_under_cohort_hygiene
+        claim_type: empirical
+        claim: "The primary morphology-sensitive separation (D1_L2 and Z_mf) remains stable after expanding the Gaussian cohort to n=40 per lmax and applying Gaussian seed-band cohort hygiene filtering."
+        falsifiable: true
+        test_hook: "Repeat aggregation with expanded Gaussian controls and seed-band filtering; verify unchanged qualitative cohort ranking and persistent separation on D1_L2 and Z_mf."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p1 Abstract; p4 (cohort hygiene design); p5–6 (expanded cohort + hygiene stability); p8"
+          note: "Robustness claim against mixed-seed cohort composition artifacts"
+  
+      - claim_id: cmb_pre_metric_2026_02_24__c07_interpretation_pre_metric_layer_complement
+        claim_type: interpretation
+        claim: "The results support a conservative interpretation in which morphology-sensitive observables form a complementary 'pre-metric' descriptive layer that extends, but does not replace, standard metric analysis."
+        falsifiable: true
+        test_hook: "Test whether the same morphology-sensitive advantage persists across broader null families, alternative reconstructions, and independent replications; failure to reproduce would weaken the interpretation."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p2 (definition of pre-metric framing); p8–10 (Discussion and Conclusion)"
+          note: "Interpretive claim explicitly separated from raw empirical discrimination result"
+  
+      - claim_id: cmb_pre_metric_2026_02_24__c08_scope_limitations_and_next_tests
+        claim_type: scope
+        claim: "This paper establishes a reproducible, control-based discrimination outcome and methodological claim, but does not establish a new cosmological model or a unique physical mechanism; broader nulls, larger cohorts, and independent replication are required next."
+        falsifiable: true
+        test_hook: "Extend the pipeline to additional null families and reconstructions, increase cohort sizes, and perform independent replication; assess whether the reported morphology-sensitive separation persists."
+        source:
+          paper_id: cmb_pre_metric_2026_02_24
+          locator: "p7 (what is and is not established); p9–10 (limitations and next steps)"
+          note: "Conservative scope boundary and explicit falsification path"
