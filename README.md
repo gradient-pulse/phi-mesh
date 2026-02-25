@@ -337,30 +337,35 @@ Notes on Data Sources
 	•	🟦 Hopkins (JHTDB) → live SOAP queries from the Johns Hopkins turbulence database.
 	•	🟧 Princeton → local subset files (.csv / .h5); runs fully offline.
 
-⸻
 
-Add Pulses → Grow the Map
-	1.	Create a new YAML file in pulse/:
-        pulse/YYYY-MM-DD_short-title.yml
-	2.	Minimal fields:
-        title:
-        summary:
-        tags:
-        papers:
-        podcasts:
+## Add Pulses → Grow the Map
 
-Tag naming convention: use lowercase with underscores
-(e.g., whitehead_alfred_north, process_philosophy)
+1. **Create a new pulse file** in `pulse/` using this format:
 
-	3.	Commit & push. GitHub Actions will automatically:
-	•	validate / clean pulse formatting
-	•	add new tags to meta/tag_descriptions.yml
-	•	regenerate graph data
-	•	redeploy the Tag Map
-	4.	Open the Tag Map:
-https://gradient-pulse.github.io/phi-mesh/tag_map.html
+       pulse/YYYY-MM-DD_short-title.yml
 
-⸻
+2. **Minimum required fields:**
+
+       title:
+       summary:
+       tags:
+       papers:
+       podcasts:
+
+   **Tag naming convention:** use lowercase with underscores  
+   *(e.g., `whitehead_alfred_north`, `process_philosophy`)*
+
+3. **Commit and push.** GitHub Actions will automatically:
+
+   - validate / clean pulse formatting
+   - add new tags to `meta/tag_descriptions.yml`
+   - regenerate graph data
+   - redeploy the Tag Map
+
+4. **Open the Tag Map:**
+
+   [RGP Tag Map](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
+
 
 ## 🧭 Map Upkeep
 
