@@ -146,7 +146,11 @@ Track B — CMB Phase-Dagger (Planck PR3 lensing φₗₘ)
 
 This track evaluates whether Planck PR3 reconstructed lensing potential φₗₘ exhibits phase-sensitive morphology relative to nulls and end-to-end simulation controls.
 
-It does not by itself imply “new physics”: any deviation can be produced by expected lensing non-Gaussianity and/or reconstruction-pipeline imprint. The purpose is attribution first.
+### Published output (CMB track)
+- **CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics**  
+  DOI: https://doi.org/10.5281/zenodo.18759993
+
+This paper reports the current CMB-track result in a method-first format: morphology-sensitive diagnostics provide **operational advantage** for cohort discrimination in the Planck PR3 lensing workflow, while keeping interpretation conservative (no claim of a new cosmological model or unique mechanism).
 
 Where to read results
 	•	Headline findings (human summary): cmb_phase_dagger/results/headline_findings.md
