@@ -205,6 +205,7 @@ This shifts science from a focus on *things* to a focus on *rhythms and filters*
 
 ## Quick Links
 
+- 🌌 **CMB proof prototype corridor:** [`experiments/rgpx_proof_proto/`](experiments/rgpx_proof_proto/)
 - 📈 **Tag Map (interactive):** [`docs/tag_map.html`](docs/tag_map.html)
 - 🌊 **Gradient Map (interactive):** [`docs/gradient_map.html`](docs/gradient_map.html)
 - 🧪 **NS Prototype (90-day benchmark):** [`RGP_NS_prototype/`](RGP_NS_prototype/)
@@ -248,7 +249,6 @@ Full exposition and ongoing findings:
 ---
 
 ## Repository Layout
-
 ```text
 phi-mesh/
 ├─ README.md
@@ -267,10 +267,10 @@ phi-mesh/
 │
 ├─ analysis/                    # Local quick-run entry points
 │  ├─ hopkins_probe/
-│  │   └─ run_pipeline.py       # JHTDB probe → spectrum → pulse
+│  │  └─ run_pipeline.py        # JHTDB probe → spectrum → pulse
 │  └─ princeton_probe/
-│      ├─ run_pipeline.py       # Princeton subset runner
-│      └─ README.md             # Inputs and expected outputs
+│     ├─ run_pipeline.py        # Princeton subset runner
+│     └─ README.md              # Inputs and expected outputs
 │
 ├─ pipeline/                    # Shared analysis core
 │  ├─ preprocess.py
@@ -282,10 +282,34 @@ phi-mesh/
 │
 ├─ tools/                       # Utilities & connectors
 │  ├─ fd_connectors/
-│  │   ├─ jhtdb/
-│  │   └─ princeton/
+│  │  ├─ jhtdb/
+│  │  └─ princeton/
 │  ├─ agent_rhythm/             # NT rhythm utilities
 │  └─ archive_agent_runner/     # Legacy orchestration
+│
+├─ experiments/                 # Experimental proof corridors & prototypes
+│  └─ rgpx_proof_proto/
+│     ├─ README.md
+│     ├─ cmb_phase_dagger/      # CMB pre-metric / topology test corridor
+│     │  ├─ cmb_topology_planck_lensing__area_frac__v0.py
+│     │  ├─ cmb_topology_planck_lensing__mf_v0_v1.py
+│     │  ├─ notes/
+│     │  └─ results/
+│     │     ├─ headline_findings.md
+│     │     ├─ topology_area_frac_v0/
+│     │     │  ├─ runs/
+│     │     │  ├─ controls/
+│     │     │  │  ├─ gaussian/
+│     │     │  │  ├─ lcdm_phi_forward/
+│     │     │  │  └─ lcdm_recon/
+│     │     │  └─ legacy_flat_json/
+│     │     └─ topology_mf_v0_v1/
+│     │        ├─ runs/
+│     │        └─ controls/
+│     ├─ 2025-11-10_kimi_notebook_colab.md
+│     ├─ 2025-11-10_gemini_harmonic_link_analysis.yml
+│     ├─ 2025-11-10_deepseek_harmonic_invariant.yml
+│     └─ results_summary.yml
 │
 ├─ results/                     # Outputs from workflows & local runs
 │  ├─ fd_probe/
