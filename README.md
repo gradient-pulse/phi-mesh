@@ -352,8 +352,8 @@ Notes on Data Sources
        papers:
        podcasts:
 
-   **Tag naming convention:** use lowercase with underscores  
-   *(e.g., `whitehead_alfred_north`, `process_philosophy`)*
+	   **Tag naming convention:** use lowercase with underscores  
+	   *(e.g., `whitehead_alfred_north`, `process_philosophy`)*
 
 3. **Commit and push.** GitHub Actions will automatically:
 
@@ -362,9 +362,7 @@ Notes on Data Sources
    - regenerate graph data
    - redeploy the Tag Map
 
-4. **Open the Tag Map:**
-
-   [RGP Tag Map](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
+4. **Open the Tag Map:** [RGP Tag Map](https://gradient-pulse.github.io/phi-mesh/tag_map.html)
 
 
 ## 🧭 Map Upkeep
