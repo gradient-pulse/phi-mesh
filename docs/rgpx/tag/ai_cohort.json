@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-25T13:11:55Z",
+  "generated_at": "2026-02-25T13:20:03Z",
   "tag": "ai_cohort",
-  "count": 4,
+  "count": 3,
   "items": [
     {
       "slug": "2025-12-07_gradient-capitalism_economic-branch-seed",
@@ -17,11 +17,6 @@
       "slug": "2025-12-08_gradient-capitalism_launch",
       "date": "2025-12-08",
       "title": "Gradient Capitalism — Economic Branch Ignition"
-    },
-    {
-      "slug": "2026-02-25_cmb_coherence_update",
-      "date": "2026-02-25",
-      "title": "Pulse of Pulses — CMB Signal, New Tags, and the Mesh Update"
     }
   ]
 }

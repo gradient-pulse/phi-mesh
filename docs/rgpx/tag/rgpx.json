@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-25T13:11:55Z",
+  "generated_at": "2026-02-25T13:20:03Z",
   "tag": "rgpx",
-  "count": 54,
+  "count": 53,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -267,11 +267,6 @@
       "slug": "2026-01-28_rgpxscientist_one-page_brief",
       "date": "2026-01-28",
       "title": "RGPxScientist — One-Page Brief (forwardable)"
-    },
-    {
-      "slug": "2026-02-25_cmb_coherence_update",
-      "date": "2026-02-25",
-      "title": "Pulse of Pulses — CMB Signal, New Tags, and the Mesh Update"
     }
   ]
 }
