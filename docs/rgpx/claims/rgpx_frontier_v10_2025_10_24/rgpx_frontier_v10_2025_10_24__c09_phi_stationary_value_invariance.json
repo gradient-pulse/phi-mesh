@@ -1,7 +1,7 @@
 {
   "paper_id": "rgpx_frontier_v10_2025_10_24",
   "claim_id": "rgpx_frontier_v10_2025_10_24__c09_phi_stationary_value_invariance",
-  "generated_at": "2026-02-24T16:42:20+00:00",
+  "generated_at": "2026-02-25T09:22:21+00:00",
   "claim_card": {
     "claim_id": "rgpx_frontier_v10_2025_10_24__c09_phi_stationary_value_invariance",
     "claim": "A stationary condition is asserted: when dΦ/dt = 0, the system approaches a stable Φ* value, proposed as a cross-scale boundary condition.",

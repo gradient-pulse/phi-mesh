@@ -1,7 +1,7 @@
 {
   "paper_id": "experimenters_guide_2025_07_21",
   "claim_id": "experimenters_guide_2025_07_21__c12_dimensionless_units_claim",
-  "generated_at": "2026-02-24T16:42:20+00:00",
+  "generated_at": "2026-02-25T09:22:21+00:00",
   "claim_card": {
     "claim_id": "experimenters_guide_2025_07_21__c12_dimensionless_units_claim",
     "claim": "Ratios are asserted to be dimensionless and thus comparable across scalars/units (as long as a consistent scalar G(t) is used per run).",

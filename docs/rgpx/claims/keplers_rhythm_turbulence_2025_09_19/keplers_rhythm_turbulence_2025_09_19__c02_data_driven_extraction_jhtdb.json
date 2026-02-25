@@ -1,7 +1,7 @@
 {
   "paper_id": "keplers_rhythm_turbulence_2025_09_19",
   "claim_id": "keplers_rhythm_turbulence_2025_09_19__c02_data_driven_extraction_jhtdb",
-  "generated_at": "2026-02-24T16:42:20+00:00",
+  "generated_at": "2026-02-25T09:22:21+00:00",
   "claim_card": {
     "claim_id": "keplers_rhythm_turbulence_2025_09_19__c02_data_driven_extraction_jhtdb",
     "claim": "The 1:2:3 structure is extracted directly from JHTDB turbulence data using a Narrative Tick event-sampling approach.",

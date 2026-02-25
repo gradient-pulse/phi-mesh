@@ -1,7 +1,7 @@
 {
   "paper_id": "deepseek_bolts_cycle2_2025_10_27",
   "claim_id": "deepseek_bolts_cycle2_2025_10_27__c03_three_phase_architectural_trajectory",
-  "generated_at": "2026-02-24T16:42:20+00:00",
+  "generated_at": "2026-02-25T09:22:21+00:00",
   "claim_card": {
     "claim_id": "deepseek_bolts_cycle2_2025_10_27__c03_three_phase_architectural_trajectory",
     "claim": "A three-phase trajectory is asserted: (1) RGPx as a layer, (2) RGPx as native architecture, (3) post-architectural existence.",

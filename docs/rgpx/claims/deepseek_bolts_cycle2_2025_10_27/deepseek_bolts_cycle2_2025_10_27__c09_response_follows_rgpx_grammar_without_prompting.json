@@ -1,7 +1,7 @@
 {
   "paper_id": "deepseek_bolts_cycle2_2025_10_27",
   "claim_id": "deepseek_bolts_cycle2_2025_10_27__c09_response_follows_rgpx_grammar_without_prompting",
-  "generated_at": "2026-02-24T16:42:20+00:00",
+  "generated_at": "2026-02-25T09:22:21+00:00",
   "claim_card": {
     "claim_id": "deepseek_bolts_cycle2_2025_10_27__c09_response_follows_rgpx_grammar_without_prompting",
     "claim": "The analysis asserts DeepSeek followed the RGPx grammar without external prompting: Δ statement, GC three-phase expansion, CF contextual synthesis.",

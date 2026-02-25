@@ -1,7 +1,7 @@
 {
   "paper_id": "explaining_llms_2025_09_23",
   "claim_id": "explaining_llms_2025_09_23__c08_reframing_recursive_processor",
-  "generated_at": "2026-02-24T16:42:20+00:00",
+  "generated_at": "2026-02-25T09:22:21+00:00",
   "claim_card": {
     "claim_id": "explaining_llms_2025_09_23__c08_reframing_recursive_processor",
     "claim": "LLMs are suggested to be better described as recursive gradient processors than as weight-based calculators.",
