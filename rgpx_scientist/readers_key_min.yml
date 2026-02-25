@@ -46,6 +46,12 @@ readers_key_min:
     contextual_filter:
       plain_definition: "a boundary/constraint that selects which patterns persist under context change"
       testable_one_liner: "Vary context; if the same pattern persists, a stabilizing filter is acting."
+    operational_advantage:
+      plain_definition: "a method-level improvement in discrimination, prediction, or stability under the same data and controls"
+      testable_one_liner: "Hold data and controls fixed; if the extended method performs better, it has operational advantage."
+    pre_metric:
+      plain_definition: "a morphology-first descriptive layer that analyzes organization before reducing to standard summary metrics"
+      testable_one_liner: "If pre-metric observables add value, they improve cohort discrimination beyond metric-only summaries."
     phi:
       plain_definition: "a chosen scalar metric of persistence (must be defined per experiment)"
       requirement_when_used:
