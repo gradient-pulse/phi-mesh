@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-25T13:01:52Z",
+  "generated_at": "2026-02-25T13:11:55Z",
   "tag": "cosmology",
-  "count": 3,
+  "count": 4,
   "items": [
     {
       "slug": "2025-07-23_gradient-cocoon",
@@ -17,6 +17,11 @@
       "slug": "2025-09-10_frequency_as_dimension_of_Ni",
       "date": "2025-09-10",
       "title": "Frequency as a Dimension of N(i)"
+    },
+    {
+      "slug": "2026-02-25_cmb_coherence_update",
+      "date": "2026-02-25",
+      "title": "Pulse of Pulses — CMB Signal, New Tags, and the Mesh Update"
     }
   ]
 }

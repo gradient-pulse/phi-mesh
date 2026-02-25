@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-25T13:01:52Z",
+  "generated_at": "2026-02-25T13:11:55Z",
   "tag": "coherence_conservation",
-  "count": 2,
+  "count": 3,
   "items": [
     {
       "slug": "2025-11-17_gemini_reflection",
@@ -12,6 +12,11 @@
       "slug": "2025-11-20_gemini3_topological_phase_anchor",
       "date": "2025-11-20",
       "title": "Gemini3 — gradient_choreography × coherence_conservation"
+    },
+    {
+      "slug": "2026-02-25_cmb_coherence_update",
+      "date": "2026-02-25",
+      "title": "Pulse of Pulses — CMB Signal, New Tags, and the Mesh Update"
     }
   ]
 }

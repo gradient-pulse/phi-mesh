@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-25T13:01:52Z",
-  "count": 501,
+  "generated_at": "2026-02-25T13:11:55Z",
+  "count": 502,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -6666,6 +6666,31 @@
         "autoscan",
         "memory_bifurcation",
         "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-02-25_cmb_coherence_update",
+      "date": "2026-02-25",
+      "title": "Pulse of Pulses — CMB Signal, New Tags, and the Mesh Update",
+      "tags": [
+        "phi_mesh",
+        "pulse",
+        "cmb",
+        "cosmology",
+        "pre_coordinate_phase",
+        "pre_geometry",
+        "pre_spacetime",
+        "metric",
+        "background_independence",
+        "coherence_conservation",
+        "coherence_grammar",
+        "rgpx",
+        "tag_map",
+        "tag_descriptions",
+        "zenodo_release",
+        "notebooklm",
+        "ai_cohort",
+        "recursive_gradient_processing"
       ]
     },
     {

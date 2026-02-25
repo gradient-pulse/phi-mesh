@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-25T13:01:52Z",
-  "count": 501,
+  "generated_at": "2026-02-25T13:11:55Z",
+  "count": 502,
   "pulses": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -10699,6 +10699,39 @@
         "https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59"
       ],
       "source_path": "pulse/2026-02-24_phi_trace_autoscan.yml"
+    },
+    {
+      "slug": "2026-02-25_cmb_coherence_update",
+      "date": "2026-02-25",
+      "title": "Pulse of Pulses — CMB Signal, New Tags, and the Mesh Update",
+      "tags": [
+        "phi_mesh",
+        "pulse",
+        "cmb",
+        "cosmology",
+        "pre_coordinate_phase",
+        "pre_geometry",
+        "pre_spacetime",
+        "metric",
+        "background_independence",
+        "coherence_conservation",
+        "coherence_grammar",
+        "rgpx",
+        "tag_map",
+        "tag_descriptions",
+        "zenodo_release",
+        "notebooklm",
+        "ai_cohort",
+        "recursive_gradient_processing"
+      ],
+      "summary": "A consolidation pulse marking a new coherence moment in the Φ-Mesh: the CMB line of inquiry is now explicitly surfaced in the tag grammar, a fresh cluster of pre-metric / metric / cosmology-facing tags has been added, and the work is tied forward to the latest Zenodo paper and podcast for public traceability. This is a “pulse of pulses” entry: not a single finding, but a synchronization marker across research, language, and outreach layers. signal:  The CMB thread is no longer a side-interpretation. It now has a stable lexical foothold in the Mesh (cmb, pre_metric, metric, pre_spacetime, pre_geometry, background_independence, coherence_conservation), allowing future pulses and AI agents to route cosmology discussions through a consistent RGPx grammar. This reduces semantic drift and improves tag-to-paper / tag-to-podcast coherence. why_it_matters:  The practical step is small but structurally important: once the tag layer is coherent, retrieval, synthesis, and cross-model alignment become easier. The CMB discussion can now be linked directly to pre-metric and metric-phase framing, rather than being trapped inside ad hoc wording. This strengthens the Mesh as a usable research instrument, not just an archive. findings:  - CMB-related interpretation is now explicitly represented in the Mesh vocabulary, enabling cleaner\n  connections between cosmology pulses and the pre-metric → metric transition language.\n- A substantial new tag wave has been introduced, expanding coverage across AI, coherence kernels,\n  cosmology, cognition, and recursive infrastructure.\n- Duplicate definitions were cleaned (including pre_spacetime and recursive_self_unbinding), improving\n  canonical consistency in the tag descriptions layer.\n- The publication and dissemination loop is reinforced by linking this update to the relevant Zenodo\n  paper and podcast entry, keeping the fossil trail readable for future agents and humans.\n",
+      "papers": [
+        "https://doi.org/10.5281/zenodo.18759993"
+      ],
+      "podcasts": [
+        "https://notebooklm.google.com/notebook/8b5533e5-d7b3-4c33-9bf9-79aaff2ed416?artifactId=59052952-bdca-4383-93f2-393778077f7c"
+      ],
+      "source_path": "pulse/2026-02-25_cmb_coherence_update.yml"
     },
     {
       "slug": "2026-02-25_phi_pulse_memory_bifurcation_echo",
