@@ -19,6 +19,9 @@ on:
       - "foundational_rgp-papers/**"
       - "foundational_papers/**"
 
+permissions:
+  contents: write
+
 jobs:
   verify-corpus:
     runs-on: ubuntu-latest
@@ -115,3 +118,20 @@ jobs:
         run: |
           set -euo pipefail
           python rgpx_scientist/verify_corpus.py --repo-root .
+
+      - name: Commit regenerated manifest if changed
+        if: github.event_name == 'push'
+        shell: bash
+        working-directory: ${{ steps.project.outputs.dir }}
+        run: |
+          set -euo pipefail
+
+          if [ -n "$(git status --porcelain rgpx_scientist/foundational_papers_manifest.yml)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add rgpx_scientist/foundational_papers_manifest.yml
+            git commit -m "Regenerate foundational papers manifest [skip ci]"
+            git push
+          else
+            echo "Manifest already up to date."
+          fi
