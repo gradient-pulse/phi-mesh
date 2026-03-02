@@ -120,6 +120,8 @@ van der Erve, M., & GPT-5.2 Thinking (OpenAI). (2026).
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18838921.svg)](https://doi.org/10.5281/zenodo.18838921)  
 Defines AI intuition operationally as action-relevant stabilization through gradient sensing, recursive processing, and context-sensitive stabilization. Extends RGPx into a practical account of how intelligences stabilize toward usable action under ambiguity.
 
+---
+
 ### **CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics (v1.0)**
 van der Erve, M., & GPT-5.2 Thinking. (2026).  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18759993.svg)](https://doi.org/10.5281/zenodo.18759993)  
