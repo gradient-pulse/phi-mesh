@@ -47,7 +47,7 @@ jobs:
           fi
           echo "Using workdir: $(cat $GITHUB_OUTPUT | sed -n 's/^dir=//p')"
 
-      - name: Refuse run if papers changed without index+manifest update
+      - name: Refuse run if papers changed without index update
         shell: bash
         run: |
           set -euo pipefail
@@ -66,7 +66,6 @@ jobs:
           CHANGED="$(git diff --name-only "$BASE" "$HEAD" || true)"
           echo "$CHANGED"
 
-          # PDFs changed? (support both repo layouts: root-level or nested under phi-mesh/)
           PAPERS_CHANGED="$(echo "$CHANGED" | grep -E '(^|/)(phi-mesh/)?foundational(_rgp)?-papers/.*\.pdf$|(^|/)(phi-mesh/)?foundational_papers/.*\.pdf$' || true)"
 
           if [ -n "$PAPERS_CHANGED" ]; then
@@ -74,13 +73,13 @@ jobs:
             echo "$PAPERS_CHANGED"
 
             INDEX_CHANGED="$(echo "$CHANGED" | grep -E '(^|/)rgpx_scientist/foundational_papers_index\.yml$|(^|/)phi-mesh/rgpx_scientist/foundational_papers_index\.yml$' || true)"
-            MANIFEST_CHANGED="$(echo "$CHANGED" | grep -E '(^|/)rgpx_scientist/foundational_papers_manifest\.yml$|(^|/)phi-mesh/rgpx_scientist/foundational_papers_manifest\.yml$' || true)"
 
-            if [ -z "$INDEX_CHANGED" ] || [ -z "$MANIFEST_CHANGED" ]; then
-              echo "ERROR: PDFs changed, but index and/or manifest not updated in the same change."
-              echo "Update BOTH:"
+            if [ -z "$INDEX_CHANGED" ]; then
+              echo "ERROR: PDFs changed, but foundational_papers_index.yml was not updated in the same change."
+              echo "Update:"
               echo " - rgpx_scientist/foundational_papers_index.yml (or phi-mesh/rgpx_scientist/...)"
-              echo " - rgpx_scientist/foundational_papers_manifest.yml (or phi-mesh/rgpx_scientist/...)"
+              echo
+              echo "The manifest will be regenerated automatically by this workflow."
               exit 1
             fi
           fi
@@ -94,8 +93,21 @@ jobs:
           if [ -f "rgpx_scientist/requirements.txt" ]; then
             pip install -r rgpx_scientist/requirements.txt
           fi
-          # Needed by verify_corpus.py and dump_manifest.py
           pip install pypdf pyyaml
+
+      - name: Regenerate foundational papers manifest
+        shell: bash
+        working-directory: ${{ steps.project.outputs.dir }}
+        run: |
+          set -euo pipefail
+
+          if [ -f "rgpx_scientist/dump_manifest.py" ]; then
+            python rgpx_scientist/dump_manifest.py > rgpx_scientist/foundational_papers_manifest.yml
+            echo "Regenerated rgpx_scientist/foundational_papers_manifest.yml"
+          else
+            echo "ERROR: rgpx_scientist/dump_manifest.py not found."
+            exit 1
+          fi
 
       - name: Verify corpus (sha256 + bytes; pages if available)
         shell: bash
@@ -103,17 +115,3 @@ jobs:
         run: |
           set -euo pipefail
           python rgpx_scientist/verify_corpus.py --repo-root .
-
-      - name: Dump manifest (for debugging / regeneration)
-        if: always()
-        shell: bash
-        working-directory: ${{ steps.project.outputs.dir }}
-        run: |
-          set -euo pipefail
-          if [ -f "rgpx_scientist/dump_manifest.py" ]; then
-            echo "----- BEGIN regenerated foundational_papers_manifest.yml -----"
-            python rgpx_scientist/dump_manifest.py
-            echo "----- END regenerated foundational_papers_manifest.yml -----"
-          else
-            echo "dump_manifest.py not found; skipping."
-          fi
