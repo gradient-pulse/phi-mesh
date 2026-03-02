@@ -120,7 +120,7 @@ jobs:
           python rgpx_scientist/verify_corpus.py --repo-root .
 
       - name: Commit regenerated manifest if changed
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         shell: bash
         working-directory: ${{ steps.project.outputs.dir }}
         run: |
