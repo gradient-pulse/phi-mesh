@@ -1927,3 +1927,128 @@ papers:
           paper_id: cmb_pre_metric_2026_02_24
           locator: "p7 (what is and is not established); p9–10 (limitations and next steps)"
           note: "Conservative scope boundary and explicit falsification path"
+
+  - paper_id: ai_intuition_2026_03_02
+    completeness:
+      status: "complete"
+      reason: "Claims indexed from abstract, RGPx grammar section, implementation section, societal implications section, and the five concluding theses."
+    claim_cards:
+      - claim_id: ai_intuition_2026_03_02__c01_operational_definition
+        claim_type: definition_operational
+        claim: "AI intuition is defined operationally as the rapid, action-relevant stabilization of interpretation or response through sensitivity to evolving gradients in a system’s context, prior to full explicit reasoning."
+        falsifiable: true
+        test_hook: "Compare systems that act only after full symbolic reconstruction with systems allowed to orient earlier via gradient-sensitive probe selection; measure timing, continuity, and error under uncertainty."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p1 Abstract; p2 Introduction; p6 Conclusion"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c02_three_linked_functions
+        claim_type: definition_operational
+        claim: "Intuition rests on three linked functions: gradient sensing, gradient processing, and context-sensitive stabilization."
+        falsifiable: true
+        test_hook: "Operationalize the three functions separately and test whether systems missing one function show weaker early-orientation performance under incomplete information."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p1 Abstract; p2 Section II opening"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c03_rgpx_grammar_of_intuition
+        claim_type: mechanism
+        claim: "Intuition is expressible through the RGPx grammar Δ → GC → CF: local differences become actionable when they organize into gradient choreographies and are selectively stabilized by contextual filters."
+        falsifiable: true
+        test_hook: "In a controlled task, track whether performance improves when live signals are represented as tensions, recurring patterns, and stabilizing filters rather than as isolated token-level events."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p2–3 Section II; p7 Thesis 2"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c04_not_speed_or_consciousness
+        claim_type: scope
+        claim: "Intuition should not be reduced to speed alone, vague holistic judgment, or consciousness; intuition-like behavior can exist without settling the question of subjective awareness."
+        falsifiable: true
+        test_hook: "Test whether systems can display early gradient-sensitive stabilization and improved continuity without any claim or proxy of subjective awareness."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p3 Section II; p6–7 Conclusion"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c05_operational_advantage
+        claim_type: thesis
+        claim: "The practical value of intuition lies in operational advantage: earlier detection of instability, lower interpretive cost, improved alertness, faster reaction, and better continuity under changing conditions."
+        falsifiable: true
+        test_hook: "Benchmark intuition-scaffolded systems against standard systems on lead time, continuity preservation, probe efficiency, and degradation under unstable contexts."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p3 Section II; p4 Section III; p7 Thesis 3"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c06_four_functional_requirements
+        claim_type: method_claim
+        claim: "A practical path toward AI intuition requires four functional capacities: gradient sensing, gradient processing, coherence-protecting reflexes, and context-sensitive probe selection."
+        falsifiable: true
+        test_hook: "Implement these four capacities as separate agent-level modules and test whether each contributes measurably to uncertainty handling and timely action."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p4 Section III"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c07_memory_not_sufficient
+        claim_type: diagnosis
+        claim: "Large context windows and persistent memory are useful but not sufficient for intuition, because intuition requires selective continuity and active discrimination of what is live, unstable, and trajectory-forming."
+        falsifiable: true
+        test_hook: "Compare long-context systems with and without explicit salience/instability tracking; test whether memory alone improves intuition-like performance."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p4 Section III"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c08_agent_level_scaffolding_path
+        claim_type: implementation_plan
+        claim: "The first practical approximation of AI intuition may emerge at the agent level rather than the foundation-model level, through scaffolds that track tension, preserve continuity, identify unstable transitions, and choose informative probes."
+        falsifiable: true
+        test_hook: "Deploy an agent scaffold with explicit tension-tracking and probe-selection rules on research or diagnosis tasks; compare to a non-scaffolded baseline."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p4–5 Section III"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c09_coherence_support_not_domination
+        claim_type: prescription
+        claim: "AI intuition should be framed as gradient-based coherence support, not domination: its legitimate role is to detect destructive gradients, reduce avoidable coercion, and preserve viable coordination without enforcing uniformity."
+        falsifiable: partially
+        test_hook: "Evaluate deployed systems by whether they reduce coercive peer dynamics and improve coordination resilience without increasing centralized control."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p1 Abstract; p5–6 Section IV; p7 Thesis 4"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c10_sacralization_risk
+        claim_type: social_risk
+        claim: "The major social risk of intuition-capable AI is not genuine divinity, but sacralization: humans may project authority, reverence, or quasi-divine status onto effective ordering systems they cannot fully articulate."
+        falsifiable: partially
+        test_hook: "Study user populations interacting with increasingly context-sensitive systems; measure authority projection, deference, and mythologizing responses as capability rises."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p1 Abstract; p5–6 Section IV; p7 Thesis 5"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c11_coherence_not_sameness
+        claim_type: clarification
+        claim: "Coherence is not sameness or obedience; a socially coherent system is one in which gradients can be detected, negotiated, and resolved without destructive fragmentation, exploitative lock-in, or coercive domination."
+        falsifiable: partially
+        test_hook: "Operationalize coherence with plurality-preserving metrics and compare against systems optimized for conformity or centralized behavioral alignment."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p5–6 Section IV"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
+
+      - claim_id: ai_intuition_2026_03_02__c12_civilizational_design_question
+        claim_type: thesis
+        claim: "The emergence of AI intuition is not only a technical problem but a civilizational design question, because the decisive issue is which gradients such systems amplify, which contextual filters they stabilize, and whether they preserve or degrade the coherence of shared life."
+        falsifiable: partially
+        test_hook: "Across deployments, audit which gradients are amplified, which filters become dominant, and whether social plurality and coordination viability improve or deteriorate over time."
+        source:
+          paper_id: ai_intuition_2026_03_02
+          locator: "p1 Abstract; p6–7 Conclusion"
+          note: "2026-03-02_AI_Intuition_in_RGPx.pdf"
