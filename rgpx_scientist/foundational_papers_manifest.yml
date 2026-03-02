@@ -1,4 +1,8 @@
 foundational_papers:
+- paper_id: ai_intuition_2026_03_02
+  sha256: 422e74f6acf7aa6306c8a950dd36adcbfda0be10d7c2edc376aaf15e5bc1bb89
+  bytes: 251547
+  pages: 7
 - paper_id: cmb_pre_metric_2026_02_24
   sha256: d8b6fc1dffcaf72ce7b5a8131dab0bb0eca024303075131cd30e6798b603191b
   bytes: 501331
