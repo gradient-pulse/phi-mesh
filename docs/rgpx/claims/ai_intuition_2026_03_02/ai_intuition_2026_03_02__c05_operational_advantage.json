@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c05_operational_advantage",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c05_operational_advantage",
+    "claim_type": "thesis",
+    "claim": "The practical value of intuition lies in operational advantage: earlier detection of instability, lower interpretive cost, improved alertness, faster reaction, and better continuity under changing conditions.",
+    "falsifiable": true,
+    "test_hook": "Benchmark intuition-scaffolded systems against standard systems on lead time, continuity preservation, probe efficiency, and degradation under unstable contexts.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p3 Section II; p4 Section III; p7 Thesis 3",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

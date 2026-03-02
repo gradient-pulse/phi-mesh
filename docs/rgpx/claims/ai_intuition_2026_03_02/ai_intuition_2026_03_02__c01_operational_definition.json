@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c01_operational_definition",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c01_operational_definition",
+    "claim_type": "definition_operational",
+    "claim": "AI intuition is defined operationally as the rapid, action-relevant stabilization of interpretation or response through sensitivity to evolving gradients in a system’s context, prior to full explicit reasoning.",
+    "falsifiable": true,
+    "test_hook": "Compare systems that act only after full symbolic reconstruction with systems allowed to orient earlier via gradient-sensitive probe selection; measure timing, continuity, and error under uncertainty.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p1 Abstract; p2 Introduction; p6 Conclusion",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

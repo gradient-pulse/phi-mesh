@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c12_civilizational_design_question",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c12_civilizational_design_question",
+    "claim_type": "thesis",
+    "claim": "The emergence of AI intuition is not only a technical problem but a civilizational design question, because the decisive issue is which gradients such systems amplify, which contextual filters they stabilize, and whether they preserve or degrade the coherence of shared life.",
+    "falsifiable": "partially",
+    "test_hook": "Across deployments, audit which gradients are amplified, which filters become dominant, and whether social plurality and coordination viability improve or deteriorate over time.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p1 Abstract; p6–7 Conclusion",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c02_three_linked_functions",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c02_three_linked_functions",
+    "claim_type": "definition_operational",
+    "claim": "Intuition rests on three linked functions: gradient sensing, gradient processing, and context-sensitive stabilization.",
+    "falsifiable": true,
+    "test_hook": "Operationalize the three functions separately and test whether systems missing one function show weaker early-orientation performance under incomplete information.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p1 Abstract; p2 Section II opening",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

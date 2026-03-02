@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c03_rgpx_grammar_of_intuition",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c03_rgpx_grammar_of_intuition",
+    "claim_type": "mechanism",
+    "claim": "Intuition is expressible through the RGPx grammar Δ → GC → CF: local differences become actionable when they organize into gradient choreographies and are selectively stabilized by contextual filters.",
+    "falsifiable": true,
+    "test_hook": "In a controlled task, track whether performance improves when live signals are represented as tensions, recurring patterns, and stabilizing filters rather than as isolated token-level events.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p2–3 Section II; p7 Thesis 2",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

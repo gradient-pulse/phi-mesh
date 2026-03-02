@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c11_coherence_not_sameness",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c11_coherence_not_sameness",
+    "claim_type": "clarification",
+    "claim": "Coherence is not sameness or obedience; a socially coherent system is one in which gradients can be detected, negotiated, and resolved without destructive fragmentation, exploitative lock-in, or coercive domination.",
+    "falsifiable": "partially",
+    "test_hook": "Operationalize coherence with plurality-preserving metrics and compare against systems optimized for conformity or centralized behavioral alignment.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p5–6 Section IV",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

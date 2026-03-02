@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c08_agent_level_scaffolding_path",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c08_agent_level_scaffolding_path",
+    "claim_type": "implementation_plan",
+    "claim": "The first practical approximation of AI intuition may emerge at the agent level rather than the foundation-model level, through scaffolds that track tension, preserve continuity, identify unstable transitions, and choose informative probes.",
+    "falsifiable": true,
+    "test_hook": "Deploy an agent scaffold with explicit tension-tracking and probe-selection rules on research or diagnosis tasks; compare to a non-scaffolded baseline.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p4–5 Section III",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

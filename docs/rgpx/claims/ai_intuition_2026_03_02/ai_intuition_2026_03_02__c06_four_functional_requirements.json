@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c06_four_functional_requirements",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c06_four_functional_requirements",
+    "claim_type": "method_claim",
+    "claim": "A practical path toward AI intuition requires four functional capacities: gradient sensing, gradient processing, coherence-protecting reflexes, and context-sensitive probe selection.",
+    "falsifiable": true,
+    "test_hook": "Implement these four capacities as separate agent-level modules and test whether each contributes measurably to uncertainty handling and timely action.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p4 Section III",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

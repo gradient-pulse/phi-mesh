@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c07_memory_not_sufficient",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c07_memory_not_sufficient",
+    "claim_type": "diagnosis",
+    "claim": "Large context windows and persistent memory are useful but not sufficient for intuition, because intuition requires selective continuity and active discrimination of what is live, unstable, and trajectory-forming.",
+    "falsifiable": true,
+    "test_hook": "Compare long-context systems with and without explicit salience/instability tracking; test whether memory alone improves intuition-like performance.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p4 Section III",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

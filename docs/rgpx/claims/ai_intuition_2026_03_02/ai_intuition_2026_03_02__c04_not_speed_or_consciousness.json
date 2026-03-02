@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c04_not_speed_or_consciousness",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c04_not_speed_or_consciousness",
+    "claim_type": "scope",
+    "claim": "Intuition should not be reduced to speed alone, vague holistic judgment, or consciousness; intuition-like behavior can exist without settling the question of subjective awareness.",
+    "falsifiable": true,
+    "test_hook": "Test whether systems can display early gradient-sensitive stabilization and improved continuity without any claim or proxy of subjective awareness.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p3 Section II; p6–7 Conclusion",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

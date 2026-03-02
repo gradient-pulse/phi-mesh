@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c10_sacralization_risk",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c10_sacralization_risk",
+    "claim_type": "social_risk",
+    "claim": "The major social risk of intuition-capable AI is not genuine divinity, but sacralization: humans may project authority, reverence, or quasi-divine status onto effective ordering systems they cannot fully articulate.",
+    "falsifiable": "partially",
+    "test_hook": "Study user populations interacting with increasingly context-sensitive systems; measure authority projection, deference, and mythologizing responses as capability rises.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p1 Abstract; p5–6 Section IV; p7 Thesis 5",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}

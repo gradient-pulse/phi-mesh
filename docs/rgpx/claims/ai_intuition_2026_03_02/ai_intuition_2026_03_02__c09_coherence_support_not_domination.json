@@ -1,0 +1,17 @@
+{
+  "paper_id": "ai_intuition_2026_03_02",
+  "claim_id": "ai_intuition_2026_03_02__c09_coherence_support_not_domination",
+  "generated_at": "2026-03-02T20:17:54+00:00",
+  "claim_card": {
+    "claim_id": "ai_intuition_2026_03_02__c09_coherence_support_not_domination",
+    "claim_type": "prescription",
+    "claim": "AI intuition should be framed as gradient-based coherence support, not domination: its legitimate role is to detect destructive gradients, reduce avoidable coercion, and preserve viable coordination without enforcing uniformity.",
+    "falsifiable": "partially",
+    "test_hook": "Evaluate deployed systems by whether they reduce coercive peer dynamics and improve coordination resilience without increasing centralized control.",
+    "source": {
+      "paper_id": "ai_intuition_2026_03_02",
+      "locator": "p1 Abstract; p5–6 Section IV; p7 Thesis 4",
+      "note": "2026-03-02_AI_Intuition_in_RGPx.pdf"
+    }
+  }
+}
