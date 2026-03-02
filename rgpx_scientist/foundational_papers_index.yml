@@ -1,4 +1,9 @@
 foundational_papers:
+  - paper_id: ai_intuition_2026_03_02
+    title: "Toward an Operational Definition of AI Intuition in Recursive Gradient Physics"
+    repo_path: "foundational_rgp-papers/2026-03-02_AI_Intuition_in_RGPx.pdf"
+    zenodo_doi_url: "https://doi.org/10.5281/zenodo.18838921"
+    
   - paper_id: cmb_pre_metric_2026_02_24
     title: "CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics"
     repo_path: "foundational_rgp-papers/2026-02-24_CMB_Evidence_for_Pre-Metric_Physics.pdf"
