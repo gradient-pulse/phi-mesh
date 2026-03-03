@@ -7,6 +7,13 @@ on:
   # Manual trigger if you ever want to test it
   workflow_dispatch:
 
+concurrency:
+  group: phi-mesh-main-writers
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
 jobs:
   phi-trace-autoscan:
     runs-on: ubuntu-latest
@@ -55,7 +62,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name  "phi-mesh-bot"
+          git config user.name "phi-mesh-bot"
           git config user.email "actions@github.com"
 
           # Check for any changes (pulse + docs + meta, etc.)
@@ -63,7 +70,10 @@ jobs:
             echo "Changes detected, committing…"
             git add pulse meta docs || true
             git commit -m "Auto Φ-trace scan + Tag Map rebuild"
-            git push
+
+            # Rebase immediately before push in case main moved while this job was running
+            git pull --rebase --autostash origin main
+            git push origin HEAD:main
           else
             echo "No changes to commit."
           fi
