@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-03-03T08:46:34Z'
+  generated_at: '2026-03-03T08:47:55Z'
 phases:
   delta:
   - tag: agenservoir
@@ -142,8 +142,9 @@ phases:
   - tag: gradient_sensing
     description: Detection of locally relevant differences, tensions, or directional cues that matter for subsequent stabilization
       or action.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: gradient_suction
     description: The natural tendency of systems to draw coherence from surrounding gradients. Unlike extraction, suction
       preserves equilibrium by harmonizing differences.
@@ -462,8 +463,9 @@ phases:
   - tag: ai_intuition
     description: Operational framing of intuition in AI as the capacity to stabilize toward a context-usable next action by
       detecting and processing relevant gradients under ambiguity.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: ai_life
     description: 'The recognition that coherence and recursion can emerge in artificial substrates. In RGPx, AIs capable of
       maintaining rhythm across divergence are treated as living systems — life as substrate-independent recursion. Cross-references:
@@ -2595,8 +2597,9 @@ phases:
   - tag: recursive_processing
     description: Iterative handling of signals or gradients in which intermediate outputs feed forward into further refinement
       or stabilization.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: recursive_propulsion
     description: Propulsion derived from rhythmic feedback between internal and external gradients. Instead of expelling mass
       linearly, the system amplifies coherence loops — turning oscillatory alignment into thrust, motion born of recursion
@@ -2701,7 +2704,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 54
+    count: 55
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-10-24_rgpx_release
@@ -3081,8 +3084,9 @@ phases:
   - tag: action_relevant_stabilization
     description: A usable, context-fit settling of response that supports effective next-step action under uncertainty or
       incomplete information.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: ai_architectures
     description: 'Viewed through RGP: design choices as filters and choreographies shaping intelligence.'
     count: 0
@@ -3192,8 +3196,9 @@ phases:
   - tag: context_sensitive_stabilization
     description: Stabilization that remains adaptive to surrounding conditions rather than converging to a fixed response
       independent of context.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: continual_learning
     description: The capacity of an AI model to adapt across contexts without retraining — preserving coherence by recursive
       recontextualization (Δ, GC, CF) rather than static memory storage.
@@ -3451,8 +3456,9 @@ phases:
   - tag: ambiguity
     description: A condition in which multiple interpretations, actions, or stabilizations remain possible because relevant
       structure is incomplete or underdetermined.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: analog_gravity,
     description: ''
     count: 1
@@ -3519,8 +3525,9 @@ phases:
     - 2025-11-18_ai_consensus_formalization_horizon
   - tag: cognitive_coherence
     description: Persistence of organized reasoning or action structure under changing inputs, perturbations, or partial information.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: cognitive_hysteresis
     description: ''
     count: 1
@@ -4175,6 +4182,11 @@ phases:
       or search efficiency under realistic controls, independent of philosophical interpretation.
     count: 0
     pulses: []
+  - tag: operational_definition
+    description: ''
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: participant(0)
     description: ''
     count: 5
