@@ -54,6 +54,12 @@ readers_key_min:
     operational_advantage:
       plain_definition: "a method-level improvement in discrimination, prediction, or stability under the same data and controls"
       testable_one_liner: "Hold data and controls fixed; if the extended method performs better, it has operational advantage."
+    ai_intuition:
+      plain_definition: "the capacity of a system to stabilize toward a usable next action by detecting relevant gradients under ambiguity"
+      testable_one_liner: "Under uncertainty, compare whether the system reaches context-fit stabilization faster or more robustly than baseline."
+    action_relevant_stabilization:
+      plain_definition: "a context-usable settling of response that supports next action under incomplete information"
+      testable_one_liner: "With partial information, test whether the response converges to a more effective next move than matched controls."
     pre_metric:
       plain_definition: "a morphology-first descriptive layer that analyzes organization before reducing to standard summary metrics"
       testable_one_liner: "If pre-metric observables add value, they improve cohort discrimination beyond metric-only summaries."
