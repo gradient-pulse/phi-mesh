@@ -85,6 +85,16 @@ glossary:
     mesh_term: "operational advantage"
     plain_definition: "A method improves a task outcome (e.g., separation, prediction, stability) under the same controls and data."
     testable_one_liner: "Hold data and controls fixed; if the extended method separates cohorts better, it has operational advantage."
+  ai_intuition:
+    mesh_term: "AI intuition"
+    plain_definition: "The capacity of a system to stabilize toward a context-usable next action by detecting relevant gradients before full explicit reasoning is available."
+    testable_one_liner: "If AI intuition is present, the system should reach context-appropriate stabilization faster or more robustly than a baseline under ambiguity."
+    default_status: "definition"
+  action_relevant_stabilization:
+    mesh_term: "action-relevant stabilization"
+    plain_definition: "A usable, context-fit settling of response that supports next-step action under uncertainty."
+    testable_one_liner: "Under incomplete information, compare whether the response settles into a more effective next action than matched baselines."
+    default_status: "definition"
   phi:
     mesh_term: "Φ"
     plain_definition: "A placeholder name for a chosen scalar metric of persistence (must be defined per experiment)."
