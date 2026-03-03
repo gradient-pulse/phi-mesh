@@ -1,0 +1,26 @@
+{
+  "slug": "2026-03-03_ai_intuition_operational_definition",
+  "date": "2026-03-03",
+  "source_path": "pulse/2026-03-03_ai_intuition_operational_definition.yml",
+  "data": {
+    "title": "Toward an operational definition of AI intuition",
+    "summary": "Fossilizes the shift from vague or anthropomorphic uses of “AI intuition” toward an operational RGPx framing. The paper defines AI intuition as action-relevant stabilization: the capacity of a system to detect relevant gradients, process them recursively, and settle into a context-sensitive next action under ambiguity or incomplete form. This pulse marks AI intuition as a testable research concept within RGPx rather than a metaphorical claim.\n",
+    "tags": [
+      "ai_intuition",
+      "action_relevant_stabilization",
+      "operational_definition",
+      "gradient_sensing",
+      "recursive_processing",
+      "context_sensitive_stabilization",
+      "ambiguity",
+      "cognitive_coherence",
+      "rgpx"
+    ],
+    "papers": [
+      "https://doi.org/10.5281/zenodo.18838921"
+    ],
+    "podcasts": [
+      "https://notebooklm.google.com/notebook/d4001d7c-04c8-48ad-832e-16c25cf9a9c0?artifactId=06c20e70-c6e2-47d5-9085-20417c099732"
+    ]
+  }
+}

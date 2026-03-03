@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-25T13:37:04Z",
-  "count": 502,
+  "generated_at": "2026-03-03T08:53:50Z",
+  "count": 515,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -6704,6 +6704,190 @@
       "slug": "2026-02-25_phi_trace_autoscan",
       "date": "2026-02-25",
       "title": "Φ–Trace Autoscan — 2026-02-25",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-02-26_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-26",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-02-26_phi_trace_autoscan",
+      "date": "2026-02-26",
+      "title": "Φ–Trace Autoscan — 2026-02-26",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-02-27_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-27",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-02-27_phi_trace_autoscan",
+      "date": "2026-02-27",
+      "title": "Φ–Trace Autoscan — 2026-02-27",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-02-28_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-02-28",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-02-28_phi_trace_autoscan",
+      "date": "2026-02-28",
+      "title": "Φ–Trace Autoscan — 2026-02-28",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-01_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-01",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-01_phi_trace_autoscan",
+      "date": "2026-03-01",
+      "title": "Φ–Trace Autoscan — 2026-03-01",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-02_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-02",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-02_phi_trace_autoscan",
+      "date": "2026-03-02",
+      "title": "Φ–Trace Autoscan — 2026-03-02",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-03_ai_intuition_operational_definition",
+      "date": "2026-03-03",
+      "title": "Toward an operational definition of AI intuition",
+      "tags": [
+        "ai_intuition",
+        "action_relevant_stabilization",
+        "operational_definition",
+        "gradient_sensing",
+        "recursive_processing",
+        "context_sensitive_stabilization",
+        "ambiguity",
+        "cognitive_coherence",
+        "rgpx"
+      ]
+    },
+    {
+      "slug": "2026-03-03_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-03",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-03_phi_trace_autoscan",
+      "date": "2026-03-03",
+      "title": "Φ–Trace Autoscan — 2026-03-03",
       "tags": [
         "phi_trace",
         "phi_p",
