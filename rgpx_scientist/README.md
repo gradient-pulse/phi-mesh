@@ -38,7 +38,7 @@ When adding a new foundational paper:
 
 1. Add the paper entry to `foundational_papers_index.yml`
 2. Add paper-specific claim cards to `foundational_claims_index.yml`
-3. Run the RGPx Scientist — Verify Corpus workflow
+3. Run RGPx Scientist — Verify Corpus workflow (adds paper's details to foundational_papers_manifest.yml)
 4. Update `readers_key.yml` and `readers_key_min.yml` if the paper introduces new recurring terms
 5. Run the app and confirm the new paper and claims render correctly
 
