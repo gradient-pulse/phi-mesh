@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-03-03T08:47:55Z'
+  generated_at: '2026-03-03T09:00:33Z'
 phases:
   delta:
   - tag: agenservoir
@@ -4175,18 +4175,14 @@ phases:
   - tag: operational
     description: A definition stated in terms of observable behavior, measurable conditions, and potential falsification rather
       than metaphor or impression.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-03_ai_intuition_operational_definition
   - tag: operational_advantage
     description: A practical criterion for evaluating a method by whether it improves discrimination, attribution, robustness,
       or search efficiency under realistic controls, independent of philosophical interpretation.
     count: 0
     pulses: []
-  - tag: operational_definition
-    description: ''
-    count: 1
-    pulses:
-    - 2026-03-03_ai_intuition_operational_definition
   - tag: participant(0)
     description: ''
     count: 5
