@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T08:53:50Z",
+  "generated_at": "2026-03-03T09:00:30Z",
   "count": 515,
   "pulses": [
     {
@@ -10997,7 +10997,7 @@
       "tags": [
         "ai_intuition",
         "action_relevant_stabilization",
-        "operational_definition",
+        "operational",
         "gradient_sensing",
         "recursive_processing",
         "context_sensitive_stabilization",
