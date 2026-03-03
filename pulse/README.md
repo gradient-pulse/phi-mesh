@@ -24,8 +24,8 @@ Auto-pulses follow the same minimal schema as manual pulses:
 ## Standard Pulse Schema
 
 A minimal pulse must contain:
-- `title`
-- `summary`
+- `title` (between 'single quotes')
+- `summary` (followed by ' >')
 - `tags`
 - `papers`
 - `podcasts`
