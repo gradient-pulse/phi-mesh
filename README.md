@@ -353,8 +353,8 @@ Notes on Data Sources
 
 2. **Minimum required fields:**
 
-       title:
-       summary:
+       title: (between 'single quotes')
+       summary: (followed by >)
        tags:
        papers:
        podcasts:
