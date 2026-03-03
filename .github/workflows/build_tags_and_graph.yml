@@ -12,11 +12,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write      # needed to commit docs/data.js
+  contents: write
 
-# Make sure only ONE of these jobs runs at a time
 concurrency:
-  group: build-tags-and-graph
+  group: phi-mesh-main-writers
   cancel-in-progress: false
 
 jobs:
@@ -27,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0          # full history so pull/rebase works
+          fetch-depth: 0
           persist-credentials: true
 
       - name: Setup Python 3.10
@@ -61,31 +60,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Only proceed if docs/data.js actually changed
           if git diff --quiet -- docs/data.js; then
             echo "No changes in docs/data.js; skipping commit."
             exit 0
           fi
 
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add docs/data.js
           git commit -m "auto: rebuild docs/data.js from pulses"
 
-          # Rebase+push with retries to survive concurrent updates to main
-          for i in 1 2 3 4 5; do
-            git fetch origin main
-            git rebase origin/main || (git rebase --abort && true)
-
-            if git push origin HEAD:main; then
-              echo "Pushed successfully."
-              exit 0
-            fi
-
-            echo "Push rejected (main moved). Retrying… ($i/5)"
-            sleep $((i*3))
-          done
-
-          echo "ERROR: push failed after retries" >&2
-          exit 1
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
