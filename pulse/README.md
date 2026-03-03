@@ -13,8 +13,8 @@ Some pulses are generated automatically by predictors under `predictors/`, but *
 The first automatic series is driven by `predictors/phi_pulse/phi_pulse.py`, which emits Φ-pulses such as the Δτ₊₇ “memory_bifurcation echo forecast” when the Mesh’s Φ-trace crosses certain thresholds.
 
 Auto-pulses follow the same minimal schema as manual pulses:
-- `title`
-- `summary`
+- `title` (between 'single quotes')
+- `summary` (followed by ' >')
 - `tags`
 - `papers`
 - `podcasts`
