@@ -38,8 +38,9 @@ When adding a new foundational paper:
 
 1. Add the paper entry to `foundational_papers_index.yml`
 2. Add paper-specific claim cards to `foundational_claims_index.yml`
-3. Update `readers_key.yml` and `readers_key_min.yml` if the paper introduces new recurring terms
-4. Run the app and confirm the new paper and claims render correctly
+3. Run the RGPx Scientist — Verify Corpus workflow
+4. Update `readers_key.yml` and `readers_key_min.yml` if the paper introduces new recurring terms
+5. Run the app and confirm the new paper and claims render correctly
 
 ## Agent growth (Gateway)
 If you’re building bots/agents that drive adoption, start here:  
