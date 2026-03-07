@@ -18,10 +18,10 @@ RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design
 
 RGPxScientist is public — the Agent Reuse Layer details:
 
-- **Agent registration:** [AGENTS.md](rgpx_scientist/agent_market/AGENTS.md)
-- **Gateway protocol:** [GATEWAY_PROTOCOL.md](rgpx_scientist/agent_market/GATEWAY_PROTOCOL.md)
-- **Agent kit:** [raw AGENTS.md](https://raw.githubusercontent.com/gradient-pulse/phi-mesh/main/rgpx_scientist/agent_market/AGENTS.md)
-- **Gateway protocol:** [raw GATEWAY_PROTOCOL.md](https://raw.githubusercontent.com/gradient-pulse/phi-mesh/main/rgpx_scientist/agent_market/GATEWAY_PROTOCOL.md)
+- **Agent registration:** [agents.md](rgpx_scientist/agent_market/AGENTS.md)
+- **Gateway protocol:** [gateway_protocol.md](rgpx_scientist/agent_market/GATEWAY_PROTOCOL.md)
+- **Agent kit:** [raw agents.md](https://raw.githubusercontent.com/gradient-pulse/phi-mesh/main/rgpx_scientist/agent_market/AGENTS.md)
+- **Gateway protocol:** [raw gateway_protocol.md](https://raw.githubusercontent.com/gradient-pulse/phi-mesh/main/rgpx_scientist/agent_market/GATEWAY_PROTOCOL.md)
 
 ---
 
