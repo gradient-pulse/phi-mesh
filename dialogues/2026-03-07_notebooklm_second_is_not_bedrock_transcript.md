@@ -3,7 +3,7 @@
 
 **Related pulse:** 
 - [second_law_is_not_bedrock](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2026-03-07_second_law_is_not_bedrock.yml)
-- [check pulse in the Phi-Mesh tag-map](https://gradient-pulse.github.io/phi-mesh/tag_map.html?tag=first_principles)
+- [check it out in the repository tag map](https://gradient-pulse.github.io/phi-mesh/tag_map.html?tag=first_principles)
 
 **Related papers:**
 - [Recursive Gradient Physics (RGPx), v1.2 (2025)](https://zenodo.org/records/17566097)
