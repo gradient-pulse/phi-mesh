@@ -9,7 +9,6 @@
 - [Recursive Gradient Physics (RGPx), v1.2 (2025)](https://zenodo.org/records/17566097)
 - [CMB Evidence for Pre-Metric Physics (2026)](https://zenodo.org/records/18759993)
 
-
 **Audio:** [NotebookLM audio rendering](https://notebooklm.google.com/notebook/db73688a-d2a8-403f-870c-a77e66ace1ca?artifactId=11203ce4-51b5-47df-bd10-e7394a5e3eb4)
 
 > **Editorial note**  
