@@ -1,7 +1,9 @@
 # NotebookLM transcript — “The Second (Law) is not Bedrock”
 
 **Date:** 2026-03-07  
-**Related pulse:** [second_law_is_not_bedrock pulse](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2026-03-07_second_law_is_not_bedrock.yml)
+**Related pulse:** 
+- [second_law_is_not_bedrock pulse](https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2026-03-07_second_law_is_not_bedrock.yml)
+- [Tag-Map Link](https://gradient-pulse.github.io/phi-mesh/tag_map.html?tag=first_principles)
 
 **Related papers:**
 - [Recursive Gradient Physics (RGPx), v1.2 (2025)](https://zenodo.org/records/17566097)
