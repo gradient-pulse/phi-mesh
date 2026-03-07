@@ -1,12 +1,17 @@
 {
-  "generated_at": "2026-03-03T09:17:25Z",
+  "generated_at": "2026-03-07T09:22:06Z",
   "tag": "first_principles",
-  "count": 1,
+  "count": 2,
   "items": [
     {
       "slug": "2025-11-18_phi_pulse_rgpx_minimal_definition",
       "date": "2025-11-18",
       "title": "Φ-Pulse — RGPx minimal generative definition"
+    },
+    {
+      "slug": "2026-03-07_second_law_is_not_bedrock",
+      "date": "2026-03-07",
+      "title": "The Second Law is not bedrock"
     }
   ]
 }

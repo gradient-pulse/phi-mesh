@@ -1,12 +1,17 @@
 {
-  "generated_at": "2026-03-03T09:17:25Z",
+  "generated_at": "2026-03-07T09:22:06Z",
   "tag": "pola",
-  "count": 1,
+  "count": 2,
   "items": [
     {
       "slug": "2026-01-11_pola-nt-closure",
       "date": "2026-01-11",
       "title": "PoLA as Narrative-Tick Closure (pointer)"
+    },
+    {
+      "slug": "2026-03-07_second_law_is_not_bedrock",
+      "date": "2026-03-07",
+      "title": "The Second Law is not bedrock"
     }
   ]
 }
