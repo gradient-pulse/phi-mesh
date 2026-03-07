@@ -2,8 +2,10 @@
 
 **Date:** 2026-03-07  
 **Related pulse:** https://github.com/gradient-pulse/phi-mesh/blob/main/pulse/2026-03-07_second_law_is_not_bedrock.yml
+
 **Related papers:** https://zenodo.org/records/17566097, https://zenodo.org/records/18759993)
-**Audio:** [[NotebookLM link]](https://notebooklm.google.com/notebook/db73688a-d2a8-403f-870c-a77e66ace1ca?artifactId=11203ce4-51b5-47df-bd10-e7394a5e3eb4)
+
+**Audio:** https://notebooklm.google.com/notebook/db73688a-d2a8-403f-870c-a77e66ace1ca?artifactId=11203ce4-51b5-47df-bd10-e7394a5e3eb4
 
 > **Editorial note**
 > This transcript is an accessible spoken rendering of the pulse and related papers.
