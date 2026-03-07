@@ -6,9 +6,9 @@
 
 ## 📡 RGPx Labs
 
-RGPx Labs is not another AI-for-science lab. It extracts **gradient-based design rules** from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.
+RGPx Labs is not another AI-for-science lab. It extracts gradient-based design rules from experimental data, compressing trial-and-error cycles into reproducible, dimensionless frameworks.
 
-- **Coherence Kernel:** Developing the gradient-based infrastructure that lets future intelligences couple LLMs to a shared coherence compiler — the “something else” layer that turns data and models into stable, testable invariants.
+Current focus: the Coherence Kernel — infrastructure that couples LLMs to a shared coherence compiler, so data and models can yield stable, testable invariants rather than one-off outputs.
 
 💡 [![Investor & Support Contact](https://img.shields.io/badge/Investor_&_Support_Contact-0bb?style=for-the-badge&logo=protonmail&logoColor=white)](mailto:gradientpulse@proton.me)
 
