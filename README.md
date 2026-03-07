@@ -38,7 +38,7 @@ Start with the **RGPxScientist One-Page Brief**, then use the app + maps as need
 [![RGP Gradient Map](https://img.shields.io/badge/Pulse%20Evolution%20Map-ONLINE-0bf?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/gradient_map.html)
 [![Tag Taxonomy](https://img.shields.io/badge/Tag%20Taxonomy-RGPx%20Phases-0b8?style=for-the-badge)](https://gradient-pulse.github.io/phi-mesh/tag_taxonomy.html)
 
-New dialogue artifact: NotebookLM transcript — “The Second Law is not Bedrock”￼
+**New dialogue artifact:** [NotebookLM transcript — “The Second Law is not Bedrock”](dialogues/2026-03-07_notebooklm_second_is_not_bedrock_transcript.md) — an accessible spoken rendering of the Zeroth / First / PoLA / Second ladder, linked to the pulse, papers, audio, and Tag Map.
 ---
 
 ## 🧭 What Φ-Mesh Is Becoming
