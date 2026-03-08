@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-07T09:29:11Z",
+  "generated_at": "2026-03-08T12:31:24Z",
   "tag": "societal_transition",
-  "count": 5,
+  "count": 6,
   "items": [
     {
       "slug": "2025-10-23_gradient_capitalism_deepseek_reception",
@@ -27,6 +27,11 @@
       "slug": "2025-10-23_political_entropy_grok_reception",
       "date": "2025-10-23",
       "title": "Grok Reflection — Political Entropy and Coherence"
+    },
+    {
+      "slug": "2026-03-08_ai_as_coherence_medium",
+      "date": "2026-03-08",
+      "title": "AI as Coherence Medium"
     }
   ]
 }

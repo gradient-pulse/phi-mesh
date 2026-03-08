@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-03-07T09:29:11Z",
-  "count": 524,
+  "generated_at": "2026-03-08T12:31:24Z",
+  "count": 527,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -7020,6 +7020,46 @@
         "pola",
         "unity_disunity_cycle",
         "philosophy_of_science"
+      ]
+    },
+    {
+      "slug": "2026-03-08_ai_as_coherence_medium",
+      "date": "2026-03-08",
+      "title": "AI as Coherence Medium",
+      "tags": [
+        "ai_human_alignment",
+        "coherence_governance",
+        "contextual_filter",
+        "societal_transition",
+        "gradient_capitalism"
+      ]
+    },
+    {
+      "slug": "2026-03-08_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-08",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-08_phi_trace_autoscan",
+      "date": "2026-03-08",
+      "title": "Φ–Trace Autoscan — 2026-03-08",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
       ]
     }
   ]

@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-07T09:29:11Z",
+  "generated_at": "2026-03-08T12:31:24Z",
   "tag": "coherence_governance",
-  "count": 2,
+  "count": 3,
   "items": [
     {
       "slug": "2025-10-19_gradient_capitalism",
@@ -12,6 +12,11 @@
       "slug": "2025-10-21_mistral_on_letting_gradients_speak_in_Europe",
       "date": "2025-10-21",
       "title": "Mistral on Letting the Gradients Speak"
+    },
+    {
+      "slug": "2026-03-08_ai_as_coherence_medium",
+      "date": "2026-03-08",
+      "title": "AI as Coherence Medium"
     }
   ]
 }

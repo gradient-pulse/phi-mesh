@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-07T09:29:11Z",
+  "generated_at": "2026-03-08T12:31:24Z",
   "tag": "contextual_filter",
-  "count": 31,
+  "count": 32,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -157,6 +157,11 @@
       "slug": "2026-01-07_rgpx_scientist_tag_map_guide",
       "date": "2026-01-07",
       "title": "RGPx Scientist + Tag Map Guide: Reframing -> Retrieval -> Test Plan -> UD Check"
+    },
+    {
+      "slug": "2026-03-08_ai_as_coherence_medium",
+      "date": "2026-03-08",
+      "title": "AI as Coherence Medium"
     }
   ]
 }

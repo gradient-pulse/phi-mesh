@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-07T09:29:11Z",
+  "generated_at": "2026-03-08T12:31:24Z",
   "tag": "gradient_capitalism",
-  "count": 14,
+  "count": 15,
   "items": [
     {
       "slug": "2025-10-19_gradient_capitalism",
@@ -72,6 +72,11 @@
       "slug": "2025-12-29_coupling-selection_cf",
       "date": "2025-12-29",
       "title": "Coupling Selection Rule: Coherence vs Fragility"
+    },
+    {
+      "slug": "2026-03-08_ai_as_coherence_medium",
+      "date": "2026-03-08",
+      "title": "AI as Coherence Medium"
     }
   ]
 }
