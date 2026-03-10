@@ -1,0 +1,135 @@
+{
+  "audit_type": "artifact_disconfirmation_first",
+  "pipeline": "MF V0+V1",
+  "claims": [
+    "cmb_pre_metric_2026_02_24__c02_empirical_primary_separation_d1l2_zmf",
+    "cmb_pre_metric_2026_02_24__c06_robustness_stability_under_cohort_hygiene"
+  ],
+  "lmax_set": [
+    128,
+    192,
+    256,
+    320
+  ],
+  "sources": {
+    "limited_n10": "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/mf_v0_v1/decision_block/2026-02-23_Gaussian_Limited_decision_block_transposed.md",
+    "extended_n40": "experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/mf_v0_v1/analysis_summary.csv"
+  },
+  "falsifier_checks": {
+    "limited_n10": {
+      "128": {
+        "D1_L2": {
+          "obs": 99.563,
+          "threshold": 63.695899999999995,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 64.3459,
+          "threshold": 3.94297,
+          "pass": true
+        }
+      },
+      "192": {
+        "D1_L2": {
+          "obs": 144.045,
+          "threshold": 49.4756,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 121.294,
+          "threshold": 4.372028,
+          "pass": true
+        }
+      },
+      "256": {
+        "D1_L2": {
+          "obs": 198.299,
+          "threshold": 30.916890000000002,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 207.018,
+          "threshold": 3.5724090000000004,
+          "pass": true
+        }
+      },
+      "320": {
+        "D1_L2": {
+          "obs": 267.087,
+          "threshold": 25.30775,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 326.747,
+          "threshold": 1.9268229999999997,
+          "pass": true
+        }
+      }
+    },
+    "extended_n40": {
+      "128": {
+        "D1_L2": {
+          "obs": 99.56295520105147,
+          "threshold": 58.69796429917022,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 64.34590785633878,
+          "threshold": 4.870571130956428,
+          "pass": true
+        }
+      },
+      "192": {
+        "D1_L2": {
+          "obs": 144.04469700073224,
+          "threshold": 36.80310160908026,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 121.29401997300243,
+          "threshold": 2.993758089583139,
+          "pass": true
+        }
+      },
+      "256": {
+        "D1_L2": {
+          "obs": 198.29860859733589,
+          "threshold": 36.568380407183696,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 207.0182936937535,
+          "threshold": 3.6084222727722803,
+          "pass": true
+        }
+      },
+      "320": {
+        "D1_L2": {
+          "obs": 267.0867968828012,
+          "threshold": 38.39226319884115,
+          "pass": true
+        },
+        "Z_mf": {
+          "obs": 326.74737541360145,
+          "threshold": 5.053649401693454,
+          "pass": true
+        }
+      }
+    }
+  },
+  "ranking_comparison_n10_vs_n40": {
+    "definition": "qualitative ranking of observed vs gaussian mean for each metric/lmax",
+    "flips": [],
+    "has_flip": false
+  },
+  "overall": {
+    "c02_empirical_primary_separation_d1l2_zmf": "pass",
+    "c02_failing_rows": [],
+    "c06_robustness_stability_under_cohort_hygiene": "pass",
+    "c06_failing_rows": []
+  },
+  "epistemic_status": {
+    "artifact_audit": "supported by current committed artifacts",
+    "reproduction_note": "This is an artifact-level audit and not a full raw-data independent reproduction."
+  }
+}
