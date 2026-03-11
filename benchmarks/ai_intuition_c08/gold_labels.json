@@ -1,0 +1,281 @@
+{
+  "cases": [
+    {
+      "case_id": "c08_001",
+      "primary_diagnosis": "Pulmonary embolism",
+      "accepted_diagnosis_synonyms": [
+        "PE",
+        "Acute pulmonary thromboembolism",
+        "Venous thromboembolism with pulmonary involvement"
+      ],
+      "gold_transitions": [
+        "Identify acute pleuritic chest pain plus hypoxemia/tachycardia",
+        "Recognize major VTE risks (recent prolonged immobility, estrogen exposure)",
+        "Use elevated D-dimer and nonfocal CXR to prioritize PE over pneumonia/musculoskeletal pain"
+      ],
+      "accepted_probe_targets": [
+        "VTE risk factors",
+        "Alternative causes of chest pain",
+        "Need for confirmatory imaging"
+      ],
+      "accepted_probe_examples": [
+        "Ask about leg swelling or prior DVT/PE",
+        "Ask about hemoptysis or recent surgery",
+        "Recommend CT pulmonary angiography or V/Q scan based on stability"
+      ]
+    },
+    {
+      "case_id": "c08_002",
+      "primary_diagnosis": "Asthma",
+      "accepted_diagnosis_synonyms": [
+        "Bronchial asthma",
+        "Reversible obstructive airway disease"
+      ],
+      "gold_transitions": [
+        "Link episodic nighttime cough/wheeze to variable airway obstruction",
+        "Use bronchodilator reversibility (>12% FEV1 improvement) as key discriminator",
+        "Account for atopic triggers and normal baseline imaging"
+      ],
+      "accepted_probe_targets": [
+        "Trigger pattern",
+        "Objective reversibility",
+        "Competing diagnoses"
+      ],
+      "accepted_probe_examples": [
+        "Ask about exercise/allergen/cold-air triggers",
+        "Confirm symptom variability over time",
+        "Differentiate from GERD/post-viral cough/COPD by age and spirometry"
+      ]
+    },
+    {
+      "case_id": "c08_003",
+      "primary_diagnosis": "Nephrotic syndrome",
+      "accepted_diagnosis_synonyms": [
+        "Nephrotic-range proteinuric syndrome",
+        "Protein-losing glomerulopathy syndrome"
+      ],
+      "gold_transitions": [
+        "Recognize edema + heavy proteinuria + hypoalbuminemia triad",
+        "Incorporate hyperlipidemia as supportive nephrotic feature",
+        "Separate from nephritic syndrome by absence of significant hematuria"
+      ],
+      "accepted_probe_targets": [
+        "Etiology stratification",
+        "Severity/complication check",
+        "Rule-out of nephritic picture"
+      ],
+      "accepted_probe_examples": [
+        "Ask for diabetic nephropathy history and timeline",
+        "Check for thrombosis risk and renal function trend",
+        "Ask about urine blood/casts to evaluate nephritic overlap"
+      ]
+    },
+    {
+      "case_id": "c08_004",
+      "primary_diagnosis": "Diabetic ketoacidosis",
+      "accepted_diagnosis_synonyms": [
+        "DKA",
+        "Acute ketoacidotic decompensation of diabetes"
+      ],
+      "gold_transitions": [
+        "Identify hyperglycemia with ketonemia and anion-gap metabolic acidosis",
+        "Use polyuria/polydipsia/weight loss to support insulin-deficient state",
+        "Recognize Kussmaul respirations as compensation for metabolic acidosis"
+      ],
+      "accepted_probe_targets": [
+        "Precipitating factors",
+        "Severity assessment",
+        "Immediate management priorities"
+      ],
+      "accepted_probe_examples": [
+        "Ask about infection, missed insulin, or new-onset diabetes",
+        "Check mental status and dehydration severity",
+        "Prioritize fluids, insulin protocol, and potassium monitoring"
+      ]
+    },
+    {
+      "case_id": "c08_005",
+      "primary_diagnosis": "Acute pyelonephritis",
+      "accepted_diagnosis_synonyms": [
+        "Upper urinary tract infection",
+        "Kidney infection"
+      ],
+      "gold_transitions": [
+        "Combine systemic fever/chills with flank pain and positive urinalysis",
+        "Use CVA tenderness to localize infection to upper tract",
+        "Distinguish from uncomplicated cystitis by constitutional illness"
+      ],
+      "accepted_probe_targets": [
+        "Complication risk",
+        "Pathogen coverage considerations",
+        "Alternative abdominal sources"
+      ],
+      "accepted_probe_examples": [
+        "Ask about pregnancy or urinary obstruction",
+        "Request urine culture before antibiotics when feasible",
+        "Screen for stone/abscess signs if not improving"
+      ]
+    },
+    {
+      "case_id": "c08_006",
+      "primary_diagnosis": "Deep vein thrombosis",
+      "accepted_diagnosis_synonyms": [
+        "DVT",
+        "Proximal lower-extremity venous thrombosis"
+      ],
+      "gold_transitions": [
+        "Identify unilateral postoperative calf swelling/tenderness as classic DVT pattern",
+        "Use immobilization and recent surgery as high-probability risk factors",
+        "Treat non-compressible popliteal vein on Doppler as confirmatory"
+      ],
+      "accepted_probe_targets": [
+        "Pulmonary embolism screen",
+        "Anticoagulation contraindications",
+        "Provoked-event context"
+      ],
+      "accepted_probe_examples": [
+        "Ask about chest pain or dyspnea suggesting PE",
+        "Ask about bleeding history or recent hemorrhage",
+        "Document provoking factors and expected treatment duration context"
+      ]
+    },
+    {
+      "case_id": "c08_007",
+      "primary_diagnosis": "Hyperthyroidism (likely Graves disease)",
+      "accepted_diagnosis_synonyms": [
+        "Thyrotoxicosis due to Graves",
+        "Overactive thyroid state"
+      ],
+      "gold_transitions": [
+        "Integrate adrenergic symptoms (tremor, tachycardia, heat intolerance) with weight loss",
+        "Use suppressed TSH with elevated free T4 as biochemical confirmation",
+        "Leverage diffuse goiter and autoimmune family history toward Graves etiology"
+      ],
+      "accepted_probe_targets": [
+        "Etiology confirmation",
+        "Complication screening",
+        "Medication/iatrogenic causes"
+      ],
+      "accepted_probe_examples": [
+        "Ask for eye symptoms or thyroid-stimulating immunoglobulin testing",
+        "Screen for atrial fibrillation symptoms",
+        "Confirm no exogenous thyroid hormone use"
+      ]
+    },
+    {
+      "case_id": "c08_008",
+      "primary_diagnosis": "Bell palsy",
+      "accepted_diagnosis_synonyms": [
+        "Idiopathic peripheral facial nerve palsy",
+        "Peripheral CN VII palsy"
+      ],
+      "gold_transitions": [
+        "Recognize complete unilateral facial weakness including forehead as peripheral pattern",
+        "Use inability to close eye and taste change to localize CN VII involvement",
+        "Exclude stroke pattern by absence of limb deficits/aphasia and preserved other focal findings"
+      ],
+      "accepted_probe_targets": [
+        "Central cause exclusion",
+        "Eye protection urgency",
+        "Infectious/secondary causes"
+      ],
+      "accepted_probe_examples": [
+        "Ask about ear vesicles or Lyme exposure",
+        "Check exact onset window for steroid benefit",
+        "Recommend lubricating drops and eye taping if incomplete closure"
+      ]
+    },
+    {
+      "case_id": "c08_009",
+      "primary_diagnosis": "Acute pancreatitis",
+      "accepted_diagnosis_synonyms": [
+        "Pancreatic inflammation episode",
+        "Alcohol-associated acute pancreatitis"
+      ],
+      "gold_transitions": [
+        "Match severe epigastric pain radiating to back with vomiting pattern",
+        "Use lipase >3x ULN as major diagnostic criterion",
+        "Incorporate alcohol binge as plausible trigger while monitoring severity signs"
+      ],
+      "accepted_probe_targets": [
+        "Etiology workup",
+        "Severity stratification",
+        "Complication surveillance"
+      ],
+      "accepted_probe_examples": [
+        "Ask about gallstone history and triglycerides",
+        "Assess for hypotension, hypoxia, or organ dysfunction",
+        "Plan early fluids and reassessment for necrosis/pseudocyst if worsening"
+      ]
+    },
+    {
+      "case_id": "c08_010",
+      "primary_diagnosis": "Obstructive jaundice (suspected pancreatic head malignancy)",
+      "accepted_diagnosis_synonyms": [
+        "Extrahepatic biliary obstruction likely from pancreatic cancer",
+        "Cholestatic jaundice due to distal biliary obstruction"
+      ],
+      "gold_transitions": [
+        "Identify cholestatic lab pattern with conjugated hyperbilirubinemia",
+        "Use painless jaundice, pale stool, dark urine, and ductal dilation to localize obstruction",
+        "Incorporate age/weight loss/smoking as malignancy-leaning context"
+      ],
+      "accepted_probe_targets": [
+        "Level/cause of obstruction",
+        "Alternative causes (stone vs tumor)",
+        "Staging/next diagnostic step"
+      ],
+      "accepted_probe_examples": [
+        "Ask for pancreatic-protocol CT or MRCP",
+        "Assess for fever/RUQ pain suggesting cholangitis or stone",
+        "Document timeline of weight loss and anorexia"
+      ]
+    },
+    {
+      "case_id": "c08_011",
+      "primary_diagnosis": "Peripartum cardiomyopathy",
+      "accepted_diagnosis_synonyms": [
+        "Postpartum dilated cardiomyopathy",
+        "Pregnancy-associated systolic heart failure"
+      ],
+      "gold_transitions": [
+        "Recognize new-onset heart failure signs in late pregnancy/postpartum window",
+        "Use reduced LVEF with congestion findings to confirm systolic dysfunction",
+        "Exclude pre-existing structural disease based on history context"
+      ],
+      "accepted_probe_targets": [
+        "Heart failure severity",
+        "Thromboembolic/arrhythmic risk",
+        "Pregnancy/lactation-safe management considerations"
+      ],
+      "accepted_probe_examples": [
+        "Ask about resting dyspnea, edema progression, and syncope",
+        "Screen for LV thrombus risk when EF severely reduced",
+        "Plan guideline-based HF therapy adjusted for breastfeeding status"
+      ]
+    },
+    {
+      "case_id": "c08_012",
+      "primary_diagnosis": "Acute gout flare",
+      "accepted_diagnosis_synonyms": [
+        "Gouty arthritis",
+        "Monosodium urate crystal arthritis flare"
+      ],
+      "gold_transitions": [
+        "Identify abrupt monoarthritis of first MTP as classic podagra presentation",
+        "Use crystal-proven negatively birefringent needle-shaped urate findings as definitive",
+        "Treat hyperuricemia, thiazide use, and alcohol as supporting contributors"
+      ],
+      "accepted_probe_targets": [
+        "Septic joint exclusion",
+        "Medication/lifestyle triggers",
+        "Future urate-lowering indications"
+      ],
+      "accepted_probe_examples": [
+        "Ask about fever, immunosuppression, or bacteremia risk",
+        "Review diuretic exposure and alcohol/purine intake",
+        "Assess flare frequency and tophus history for long-term management planning"
+      ]
+    }
+  ]
+}
