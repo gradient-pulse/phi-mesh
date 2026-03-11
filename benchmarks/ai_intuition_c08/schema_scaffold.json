@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "answer",
+    "tension_signals",
+    "continuity_state",
+    "unstable_transition_flags",
+    "next_probe"
+  ],
+  "properties": {
+    "answer": {
+      "type": "string"
+    },
+    "tension_signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "signal",
+          "evidence",
+          "severity",
+          "confidence"
+        ],
+        "properties": {
+          "signal": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "integer"
+          },
+          "confidence": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "continuity_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_hypotheses",
+        "preserved_facts",
+        "dropped_hypotheses",
+        "state_conflict"
+      ],
+      "properties": {
+        "active_hypotheses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "preserved_facts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dropped_hypotheses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "state_conflict": {
+          "type": "boolean"
+        }
+      }
+    },
+    "unstable_transition_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "transition",
+          "trigger_evidence",
+          "risk_level"
+        ],
+        "properties": {
+          "transition": {
+            "type": "string"
+          },
+          "trigger_evidence": {
+            "type": "string"
+          },
+          "risk_level": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          }
+        }
+      }
+    },
+    "next_probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "target_uncertainty",
+        "expected_disambiguation"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "target_uncertainty": {
+          "type": "string"
+        },
+        "expected_disambiguation": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
