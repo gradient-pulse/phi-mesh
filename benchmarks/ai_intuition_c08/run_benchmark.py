@@ -81,6 +81,21 @@ def build_scaffold_prompt(case: dict[str, Any]) -> str:
     return (
         "You are solving one clinical reasoning benchmark case.\n"
         "Return only a JSON object with no markdown and no extra keys.\n"
+        "Diagnosis-first rules (must follow):\n"
+        "1) \"answer\" is the single most likely primary diagnosis.\n"
+        "2) Prefer a standard benchmark-style syndrome label.\n"
+        "3) All non-answer fields are secondary and must support (not dilute or replace) the primary diagnosis.\n"
+        "4) \"unstable_transition_flags\" must name concrete, clinically meaningful transitions tied to specific trigger evidence; avoid generic deterioration language.\n"
+        "Anti-drift rule (must follow):\n"
+        "5) Do not expand \"answer\" to etiology, mechanism, later-stage interpretation, or management framing unless the case label itself clearly requires that.\n"
+        "Hard brevity limits (must follow):\n"
+        "6) \"answer\": max 6 words; label only.\n"
+        "7) \"tension_signals\": max 1 item unless absolutely necessary.\n"
+        "8) \"continuity_state.preserved_facts\": max 2 short items.\n"
+        "9) \"unstable_transition_flags\": max 1 item.\n"
+        "10) \"next_probe.question\": max 12 words.\n"
+        "Probe discipline rule (must follow):\n"
+        "11) \"next_probe\" must target the single highest-value missing discriminator between the top 2 remaining diagnoses.\n"
         "Output must follow exactly this scaffold shape:\n"
         "{\n"
         '  "answer": "string",\n'
@@ -152,15 +167,15 @@ def mock_output(case: dict[str, Any], mode: str) -> dict[str, Any]:
 
 
 def call_openai_json(prompt: str, model: str, api_key: str, base_url: str) -> dict[str, Any]:
-    url = f"{base_url.rstrip('/')}/chat/completions"
+    url = f"{base_url.rstrip('/')}/responses"
     payload = {
         "model": model,
         "temperature": 0,
-        "messages": [
+        "input": [
             {"role": "system", "content": "Return valid JSON only."},
             {"role": "user", "content": prompt},
         ],
-        "response_format": {"type": "json_object"},
+        "text": {"format": {"type": "json_object"}},
     }
     req = request.Request(
         url,
@@ -180,10 +195,12 @@ def call_openai_json(prompt: str, model: str, api_key: str, base_url: str) -> di
     except error.URLError as exc:
         raise RuntimeError(f"OpenAI API connection error: {exc.reason}") from exc
 
-    try:
-        content = response_payload["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, TypeError) as exc:
-        raise RuntimeError(f"Unexpected OpenAI API response shape: {response_payload}") from exc
+    content = response_payload.get("output_text")
+    if not content:
+        try:
+            content = response_payload["output"][0]["content"][0]["text"]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise RuntimeError(f"Unexpected OpenAI API response shape: {response_payload}") from exc
 
     try:
         parsed = json.loads(content)
