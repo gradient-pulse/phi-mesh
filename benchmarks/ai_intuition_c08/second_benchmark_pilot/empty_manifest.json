@@ -1,0 +1,19 @@
+{
+  "benchmark_id": "ai_intuition_c08_second_benchmark_pilot",
+  "benchmark_type": "usmle_style_clinical_vignette_mcq_diagnosis_only",
+  "version": "0.1.0-pilot-scaffold",
+  "status": "placeholder_empty",
+  "source_status": {
+    "external_ingestion_approved": false,
+    "external_ingestion_completed": false
+  },
+  "target_item_count": 48,
+  "minimum_item_count": 40,
+  "required_slice_tags": [
+    "syndrome_first",
+    "etiology_specific",
+    "syndrome_qualifier",
+    "high_label_variation"
+  ],
+  "items": []
+}
