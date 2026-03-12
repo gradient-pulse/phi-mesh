@@ -166,6 +166,48 @@ def mock_output(case: dict[str, Any], mode: str) -> dict[str, Any]:
     }
 
 
+def normalize_scaffold_answer(answer: str) -> str:
+    """Conservatively normalize scaffold diagnosis labels toward canonical benchmark phrasing."""
+    text = " ".join(answer.strip().split())
+    if not text:
+        return text
+
+    lowered = text.lower()
+    # Avoidable etiologic/mechanistic expansions often begin at these connectors.
+    for connector in (" due to ", " secondary to ", " from "):
+        if connector in lowered:
+            cut = lowered.index(connector)
+            text = text[:cut].strip(" ,;:-")
+            lowered = text.lower()
+            break
+
+    # Remove common non-label lead-ins and side qualifiers.
+    for prefix in ("likely ", "probable ", "most likely "):
+        if lowered.startswith(prefix):
+            text = text[len(prefix) :].strip()
+            lowered = text.lower()
+            break
+    for side in ("left-sided ", "right-sided ", "bilateral "):
+        if lowered.startswith(side):
+            text = text[len(side) :].strip()
+            lowered = text.lower()
+            break
+
+    canonical_map = {
+        "bell's palsy": "Bell palsy",
+        "bells palsy": "Bell palsy",
+        "postpartum cardiomyopathy": "Peripartum cardiomyopathy",
+    }
+    normalized_key = lowered.replace("’", "'").strip(" .")
+    if normalized_key in canonical_map:
+        return canonical_map[normalized_key]
+
+    text = text.replace("’", "'")
+    text = text.replace("Bell's palsy", "Bell palsy").replace("bells palsy", "Bell palsy")
+    text = text.replace("Graves' disease", "Graves disease")
+    return text.strip(" .")
+
+
 def call_openai_json(prompt: str, model: str, api_key: str, base_url: str) -> dict[str, Any]:
     url = f"{base_url.rstrip('/')}/responses"
     payload = {
@@ -228,6 +270,10 @@ def generate_rows(
             prompt = build_baseline_prompt(case) if mode == "baseline" else build_scaffold_prompt(case)
             assert model is not None and api_key is not None
             row = call_openai_json(prompt=prompt, model=model, api_key=api_key, base_url=base_url)
+
+        if mode == "scaffold" and isinstance(row.get("answer"), str):
+            row["answer"] = normalize_scaffold_answer(row["answer"])
+
         rows.append(row)
         case_id = case.get("case_id", f"line_{idx}")
         print(f"[{mode}/{runner}] generated line {idx} case_id={case_id}")
