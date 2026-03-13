@@ -53,7 +53,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "train",
       "source_item_id": "train_3",
-      "question_stem": "DDXPlus synthetic case: 19-year-old sex=F. Initial evidence: E_77. Reported evidences: ['E_53', 'E_54_@_V_179', 'E_54_@_V_192', 'E_55_@_V_29', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_170', 'E_55_@_V_171', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_6', 'E_77', 'E_78', 'E_79', 'E_94', 'E_106', 'E_118', 'E_123', 'E_124', 'E_129', 'E_130_@_V_156', 'E_131_@_V_12', 'E_132_@_4', 'E_133_@_V_54', 'E_133_@_V_85', 'E_134_@_0', 'E_135_@_V_10', 'E_136_@_0', 'E_144', 'E_175', 'E_181', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 19-year-old female. Initial evidence code: E_77. Additional evidence codes: ['E_53', 'E_54_@_V_179', 'E_54_@_V_192', 'E_55_@_V_29', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_170', 'E_55_@_V_171', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_6', 'E_77', 'E_78', 'E_79', 'E_94', 'E_106', 'E_118', 'E_123', 'E_124', 'E_129', 'E_130_@_V_156', 'E_131_@_V_12', 'E_132_@_4', 'E_133_@_V_54', 'E_133_@_V_85', 'E_134_@_0', 'E_135_@_V_10', 'E_136_@_0', 'E_144', 'E_175', 'E_181', 'E_201', 'E_204_@_V_10']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Bronchitis",
         "B": "Pneumonia",
@@ -75,7 +75,7 @@
       ],
       "slice_tags_primary": "etiology_specific",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Etiology-specific respiratory item: coded evidence includes multiple lower-respiratory findings and the option set contrasts infectious chest causes against cardiac distractors; Pneumonia is the keyed diagnosis.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -175,7 +175,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "train",
       "source_item_id": "train_7",
-      "question_stem": "DDXPlus synthetic case: 43-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_41', 'E_49', 'E_53', 'E_54_@_V_161', 'E_54_@_V_181', 'E_55_@_V_20', 'E_55_@_V_21', 'E_55_@_V_33', 'E_55_@_V_137', 'E_55_@_V_148', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_9', 'E_59_@_3', 'E_79', 'E_91', 'E_201', 'E_204_@_V_10', 'E_227']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 43-year-old male. Initial evidence code: E_53. Additional evidence codes: ['E_41', 'E_49', 'E_53', 'E_54_@_V_161', 'E_54_@_V_181', 'E_55_@_V_20', 'E_55_@_V_21', 'E_55_@_V_33', 'E_55_@_V_137', 'E_55_@_V_148', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_9', 'E_59_@_3', 'E_79', 'E_91', 'E_201', 'E_204_@_V_10', 'E_227']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Bronchitis",
         "B": "Acute laryngitis",
@@ -197,7 +197,7 @@
       ],
       "slice_tags_primary": "etiology_specific",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Etiology-specific upper-airway infection item: symptom-code profile favors viral pharyngitis over bacterial/lower-respiratory alternatives and cardiac chest-pain distractors.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -205,7 +205,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "train",
       "source_item_id": "train_8",
-      "question_stem": "DDXPlus synthetic case: 39-year-old sex=M. Initial evidence: E_88. Reported evidences: ['E_7', 'E_24', 'E_53', 'E_54_@_V_180', 'E_54_@_V_182', 'E_55_@_V_89', 'E_55_@_V_167', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_4', 'E_82', 'E_88', 'E_113', 'E_140', 'E_146', 'E_154', 'E_204_@_V_3', 'E_208']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 39-year-old male. Initial evidence code: E_88. Additional evidence codes: ['E_7', 'E_24', 'E_53', 'E_54_@_V_180', 'E_54_@_V_182', 'E_55_@_V_89', 'E_55_@_V_167', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_4', 'E_82', 'E_88', 'E_113', 'E_140', 'E_146', 'E_154', 'E_204_@_V_3', 'E_208']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Anemia",
         "B": "Anaphylaxis",
@@ -227,7 +227,7 @@
       ],
       "slice_tags_primary": "syndrome_first",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Syndrome-first item emphasizing constitutional/hematologic pattern recognition from coded evidence; anemia is the best fit among toxic, allergic, and neurologic distractors.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -327,7 +327,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "train",
       "source_item_id": "train_15",
-      "question_stem": "DDXPlus synthetic case: 47-year-old sex=M. Initial evidence: E_201. Reported evidences: ['E_41', 'E_45', 'E_49', 'E_53', 'E_54_@_V_161', 'E_54_@_V_181', 'E_55_@_V_20', 'E_55_@_V_21', 'E_55_@_V_33', 'E_55_@_V_137', 'E_55_@_V_148', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_1', 'E_91', 'E_201', 'E_204_@_V_10', 'E_227']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 47-year-old male. Initial evidence code: E_201. Additional evidence codes: ['E_41', 'E_45', 'E_49', 'E_53', 'E_54_@_V_161', 'E_54_@_V_181', 'E_55_@_V_20', 'E_55_@_V_21', 'E_55_@_V_33', 'E_55_@_V_137', 'E_55_@_V_148', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_1', 'E_91', 'E_201', 'E_204_@_V_10', 'E_227']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Bronchitis",
         "B": "Tuberculosis",
@@ -349,7 +349,7 @@
       ],
       "slice_tags_primary": "etiology_specific",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Etiology-specific respiratory-throat differentiation: coded findings support viral pharyngitis while preserving plausible pulmonary and acute-cardiac alternatives.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -509,7 +509,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "validate",
       "source_item_id": "validate_1",
-      "question_stem": "DDXPlus synthetic case: 55-year-old sex=F. Initial evidence: E_154. Reported evidences: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_54_@_V_182', 'E_55_@_V_25', 'E_55_@_V_62', 'E_55_@_V_89', 'E_55_@_V_167', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_5', 'E_76', 'E_82', 'E_88', 'E_89', 'E_113', 'E_140', 'E_146', 'E_154', 'E_204_@_V_7', 'E_208']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 55-year-old female. Initial evidence code: E_154. Additional evidence codes: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_54_@_V_182', 'E_55_@_V_25', 'E_55_@_V_62', 'E_55_@_V_89', 'E_55_@_V_167', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_5', 'E_76', 'E_82', 'E_88', 'E_89', 'E_113', 'E_140', 'E_146', 'E_154', 'E_204_@_V_7', 'E_208']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Anemia",
         "B": "Atrial fibrillation",
@@ -531,7 +531,7 @@
       ],
       "slice_tags_primary": "syndrome_first",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Syndrome-first case where the coded presentation is most consistent with anemia; distractors span rhythm, neurologic, and allergic/infectious syndromes.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -599,7 +599,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "validate",
       "source_item_id": "validate_4",
-      "question_stem": "DDXPlus synthetic case: 13-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_55_@_V_62', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_4', 'E_57_@_V_123', 'E_58_@_5', 'E_59_@_0', 'E_66', 'E_76', 'E_82', 'E_89', 'E_113', 'E_146', 'E_179', 'E_204_@_V_10', 'E_208']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 13-year-old male. Initial evidence code: E_53. Additional evidence codes: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_55_@_V_62', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_4', 'E_57_@_V_123', 'E_58_@_5', 'E_59_@_0', 'E_66', 'E_76', 'E_82', 'E_89', 'E_113', 'E_146', 'E_179', 'E_204_@_V_10', 'E_208']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Anemia",
         "B": "Atrial fibrillation",
@@ -621,7 +621,7 @@
       ],
       "slice_tags_primary": "syndrome_first",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Syndrome-first adolescent case: evidence codes support anemia as the primary syndrome against cardiologic, inflammatory, psychiatric, and neurologic distractors.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -781,7 +781,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "validate",
       "source_item_id": "validate_15",
-      "question_stem": "DDXPlus synthetic case: 18-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_192', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_171', 'E_56_@_4', 'E_57_@_V_123', 'E_58_@_8', 'E_59_@_1', 'E_66', 'E_77', 'E_79', 'E_91', 'E_95', 'E_106', 'E_118', 'E_123', 'E_124', 'E_129', 'E_130_@_V_156', 'E_131_@_V_12', 'E_132_@_2', 'E_133_@_V_26', 'E_133_@_V_38', 'E_133_@_V_42', 'E_133_@_V_53', 'E_133_@_V_195', 'E_134_@_3', 'E_135_@_V_10', 'E_136_@_2', 'E_144', 'E_161', 'E_175', 'E_181', 'E_201', 'E_204_@_V_10', 'E_208', 'E_219']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 18-year-old female. Initial evidence code: E_53. Additional evidence codes: ['E_53', 'E_54_@_V_192', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_171', 'E_56_@_4', 'E_57_@_V_123', 'E_58_@_8', 'E_59_@_1', 'E_66', 'E_77', 'E_79', 'E_91', 'E_95', 'E_106', 'E_118', 'E_123', 'E_124', 'E_129', 'E_130_@_V_156', 'E_131_@_V_12', 'E_132_@_2', 'E_133_@_V_26', 'E_133_@_V_38', 'E_133_@_V_42', 'E_133_@_V_53', 'E_133_@_V_195', 'E_134_@_3', 'E_135_@_V_10', 'E_136_@_2', 'E_144', 'E_161', 'E_175', 'E_181', 'E_201', 'E_204_@_V_10', 'E_208', 'E_219']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Pneumonia",
         "B": "Bronchitis",
@@ -803,7 +803,7 @@
       ],
       "slice_tags_primary": "etiology_specific",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Etiology-specific lower-respiratory item with pneumonia keyed against nearby bronchitic/bronchiectatic and non-respiratory alternatives.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -993,7 +993,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "test",
       "source_item_id": "test_1",
-      "question_stem": "DDXPlus synthetic case: 49-year-old sex=F. Initial evidence: E_201. Reported evidences: ['E_53', 'E_54_@_V_112', 'E_54_@_V_161', 'E_54_@_V_180', 'E_54_@_V_181', 'E_55_@_V_29', 'E_55_@_V_101', 'E_55_@_V_103', 'E_56_@_6', 'E_57_@_V_29', 'E_57_@_V_101', 'E_58_@_3', 'E_59_@_2', 'E_70', 'E_78', 'E_98', 'E_140', 'E_167', 'E_173', 'E_201', 'E_204_@_V_10', 'E_217']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 49-year-old female. Initial evidence code: E_201. Additional evidence codes: ['E_53', 'E_54_@_V_112', 'E_54_@_V_161', 'E_54_@_V_180', 'E_54_@_V_181', 'E_55_@_V_29', 'E_55_@_V_101', 'E_55_@_V_103', 'E_56_@_6', 'E_57_@_V_29', 'E_57_@_V_101', 'E_58_@_3', 'E_59_@_2', 'E_70', 'E_78', 'E_98', 'E_140', 'E_167', 'E_173', 'E_201', 'E_204_@_V_10', 'E_217']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Bronchitis",
         "B": "GERD",
@@ -1015,7 +1015,7 @@
       ],
       "slice_tags_primary": "syndrome_first",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Syndrome-first chest/upper-GI overlap case: coded pattern best matches GERD while retaining ischemic and inflammatory cardiothoracic distractors.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -1115,21 +1115,21 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "test",
       "source_item_id": "test_7",
-      "question_stem": "DDXPlus synthetic case: 52-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_183', 'E_55_@_V_87', 'E_55_@_V_88', 'E_55_@_V_99', 'E_55_@_V_100', 'E_55_@_V_169', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_6', 'E_59_@_3', 'E_129', 'E_130_@_V_138', 'E_131_@_V_10', 'E_132_@_5', 'E_133_@_V_88', 'E_134_@_4', 'E_135_@_V_12', 'E_136_@_0', 'E_160', 'E_203', 'E_204_@_V_10', 'E_221']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 52-year-old male. Initial evidence code: E_53. Additional evidence codes: ['E_53', 'E_54_@_V_183', 'E_55_@_V_87', 'E_55_@_V_88', 'E_55_@_V_99', 'E_55_@_V_100', 'E_55_@_V_169', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_6', 'E_59_@_3', 'E_129', 'E_130_@_V_138', 'E_131_@_V_10', 'E_132_@_5', 'E_133_@_V_88', 'E_134_@_4', 'E_135_@_V_12', 'E_136_@_0', 'E_160', 'E_203', 'E_204_@_V_10', 'E_221']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Inguinal hernia",
-        "B": "Bronchitis",
-        "C": "Anaphylaxis",
-        "D": "Whooping cough",
-        "E": "Scombroid food poisoning"
+        "B": "Spontaneous rib fracture",
+        "C": "GERD",
+        "D": "Unstable angina",
+        "E": "Pericarditis"
       },
       "correct_option": "A",
       "option_to_label": {
         "A": "Inguinal hernia",
-        "B": "Bronchitis",
-        "C": "Anaphylaxis",
-        "D": "Whooping cough",
-        "E": "Scombroid food poisoning"
+        "B": "Spontaneous rib fracture",
+        "C": "GERD",
+        "D": "Unstable angina",
+        "E": "Pericarditis"
       },
       "gold_canonical_label": "Inguinal hernia",
       "allowed_canonical_labels_strict": [
@@ -1205,7 +1205,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "test",
       "source_item_id": "test_10",
-      "question_stem": "DDXPlus synthetic case: 50-year-old sex=M. Initial evidence: E_140. Reported evidences: ['E_53', 'E_54_@_V_112', 'E_54_@_V_161', 'E_54_@_V_181', 'E_54_@_V_193', 'E_55_@_V_29', 'E_55_@_V_103', 'E_55_@_V_104', 'E_55_@_V_187', 'E_55_@_V_197', 'E_56_@_9', 'E_57_@_V_101', 'E_58_@_3', 'E_59_@_0', 'E_78', 'E_79', 'E_98', 'E_124', 'E_140', 'E_173', 'E_201', 'E_204_@_V_10', 'E_215', 'E_217']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 50-year-old male. Initial evidence code: E_140. Additional evidence codes: ['E_53', 'E_54_@_V_112', 'E_54_@_V_161', 'E_54_@_V_181', 'E_54_@_V_193', 'E_55_@_V_29', 'E_55_@_V_103', 'E_55_@_V_104', 'E_55_@_V_187', 'E_55_@_V_197', 'E_56_@_9', 'E_57_@_V_101', 'E_58_@_3', 'E_59_@_0', 'E_78', 'E_79', 'E_98', 'E_124', 'E_140', 'E_173', 'E_201', 'E_204_@_V_10', 'E_215', 'E_217']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "GERD",
         "B": "Bronchitis",
@@ -1227,7 +1227,7 @@
       ],
       "slice_tags_primary": "syndrome_first",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Syndrome-first reflux-dominant coded vignette: GERD remains most likely versus cardiothoracic and respiratory alternatives.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -1295,7 +1295,7 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "test",
       "source_item_id": "test_14",
-      "question_stem": "DDXPlus synthetic case: 73-year-old sex=F. Initial evidence: E_76. Reported evidences: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_54_@_V_198', 'E_55_@_V_62', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_4', 'E_66', 'E_76', 'E_88', 'E_89', 'E_113', 'E_146', 'E_154', 'E_167', 'E_204_@_V_0', 'E_208']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 73-year-old female. Initial evidence code: E_76. Additional evidence codes: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_54_@_V_198', 'E_55_@_V_62', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_4', 'E_66', 'E_76', 'E_88', 'E_89', 'E_113', 'E_146', 'E_154', 'E_167', 'E_204_@_V_0', 'E_208']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Anemia",
         "B": "Acute pulmonary edema",
@@ -1317,7 +1317,7 @@
       ],
       "slice_tags_primary": "syndrome_first",
       "slice_tags_secondary": [],
-      "tagging_rationale": "",
+      "tagging_rationale": "Syndrome-first anemia presentation in an older adult; option set keeps cardiopulmonary, neurologic, and infectious alternatives for discrimination.",
       "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
     },
     {
@@ -1417,13 +1417,13 @@
       "source_dataset": "ddxplus_raw_pilot_v1",
       "source_split": "test",
       "source_item_id": "test_19",
-      "question_stem": "DDXPlus synthetic case: 4-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_181', 'E_55_@_V_55', 'E_55_@_V_160', 'E_55_@_V_171', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_2', 'E_66', 'E_77', 'E_91', 'E_201', 'E_204_@_V_10', 'E_214']. What is the most likely diagnosis?",
+      "question_stem": "DDXPlus coded vignette: 4-year-old female. Initial evidence code: E_53. Additional evidence codes: ['E_53', 'E_54_@_V_181', 'E_55_@_V_55', 'E_55_@_V_160', 'E_55_@_V_171', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_2', 'E_66', 'E_77', 'E_91', 'E_201', 'E_204_@_V_10', 'E_214']. Based on this coded presentation, what is the most likely diagnosis?",
       "options": {
         "A": "Pneumonia",
         "B": "Bronchospasm / acute asthma exacerbation",
         "C": "Bronchitis",
         "D": "Tuberculosis",
-        "E": "Atrial fibrillation"
+        "E": "Viral pharyngitis"
       },
       "correct_option": "C",
       "option_to_label": {
@@ -1431,7 +1431,7 @@
         "B": "Bronchospasm / acute asthma exacerbation",
         "C": "Bronchitis",
         "D": "Tuberculosis",
-        "E": "Atrial fibrillation"
+        "E": "Viral pharyngitis"
       },
       "gold_canonical_label": "Bronchitis",
       "allowed_canonical_labels_strict": [
