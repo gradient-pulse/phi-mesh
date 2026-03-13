@@ -876,7 +876,7 @@
         "A": "Influenza",
         "B": "Pneumonia",
         "C": "URTI",
-        "D": "HIV (initial infection)",
+        "D": "Viral pharyngitis",
         "E": "Bronchitis"
       },
       "correct_option": "A",
@@ -884,7 +884,7 @@
         "A": "Influenza",
         "B": "Pneumonia",
         "C": "URTI",
-        "D": "HIV (initial infection)",
+        "D": "Viral pharyngitis",
         "E": "Bronchitis"
       },
       "gold_canonical_label": "Influenza",
@@ -906,7 +906,7 @@
         "A": "Influenza",
         "B": "URTI",
         "C": "Viral pharyngitis",
-        "D": "HIV (initial infection)",
+        "D": "Bronchitis",
         "E": "Pneumonia"
       },
       "correct_option": "A",
@@ -914,7 +914,7 @@
         "A": "Influenza",
         "B": "URTI",
         "C": "Viral pharyngitis",
-        "D": "HIV (initial infection)",
+        "D": "Bronchitis",
         "E": "Pneumonia"
       },
       "gold_canonical_label": "Influenza",
@@ -1423,7 +1423,7 @@
         "B": "Bronchospasm / acute asthma exacerbation",
         "C": "Bronchitis",
         "D": "Tuberculosis",
-        "E": "Atrial fibrillation"
+        "E": "URTI"
       },
       "correct_option": "C",
       "option_to_label": {
@@ -1431,7 +1431,7 @@
         "B": "Bronchospasm / acute asthma exacerbation",
         "C": "Bronchitis",
         "D": "Tuberculosis",
-        "E": "Atrial fibrillation"
+        "E": "URTI"
       },
       "gold_canonical_label": "Bronchitis",
       "allowed_canonical_labels_strict": [
