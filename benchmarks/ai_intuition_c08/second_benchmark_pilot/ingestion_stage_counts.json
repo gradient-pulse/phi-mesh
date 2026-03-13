@@ -1,0 +1,32 @@
+{
+  "source_release_tag": "ddxplus-raw-pilot-v1",
+  "generated_at_utc": "2026-03-13T12:44:38Z",
+  "target_retained_count": 48,
+  "retained_count": 48,
+  "retained_by_split": {
+    "train": 16,
+    "validate": 16,
+    "test": 16
+  },
+  "stage_counts_by_split": {
+    "train": {
+      "rows_seen": 4999,
+      "retained": 16,
+      "exclude_insufficient_options": 7,
+      "stop_after_quota_met": 4976
+    },
+    "validate": {
+      "rows_seen": 4999,
+      "retained": 16,
+      "exclude_insufficient_options": 7,
+      "stop_after_quota_met": 4976
+    },
+    "test": {
+      "rows_seen": 4999,
+      "retained": 16,
+      "exclude_gold_not_in_top5": 2,
+      "exclude_insufficient_options": 2,
+      "stop_after_quota_met": 4979
+    }
+  }
+}
