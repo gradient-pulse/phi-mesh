@@ -1,0 +1,1476 @@
+{
+  "benchmark_id": "ai_intuition_c08_second_benchmark_pilot",
+  "benchmark_type": "ddxplus_synthetic_clinical_vignette_mcq_diagnosis_only",
+  "version": "0.2.0-ddxplus-pilot-draft",
+  "status": "draft_populated_from_prerelease_assets",
+  "source_status": {
+    "external_ingestion_approved": true,
+    "external_ingestion_completed": true,
+    "source_release_tag": "ddxplus-raw-pilot-v1"
+  },
+  "target_item_count": 48,
+  "minimum_item_count": 40,
+  "required_slice_tags": [
+    "syndrome_first",
+    "etiology_specific",
+    "syndrome_qualifier",
+    "high_label_variation"
+  ],
+  "retained_item_count": 48,
+  "items": [
+    {
+      "item_id": "pilot_ddxplus_0001",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_1",
+      "question_stem": "DDXPlus synthetic case: 18-year-old sex=M. Initial evidence: E_91. Reported evidences: ['E_48', 'E_50', 'E_53', 'E_54_@_V_161', 'E_54_@_V_183', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_167', 'E_56_@_4', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_3', 'E_77', 'E_79', 'E_91', 'E_97', 'E_201', 'E_204_@_V_10', 'E_222']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Pneumonia",
+        "C": "URTI",
+        "D": "Bronchiectasis",
+        "E": "Tuberculosis"
+      },
+      "correct_option": "C",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Pneumonia",
+        "C": "URTI",
+        "D": "Bronchiectasis",
+        "E": "Tuberculosis"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0002",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_3",
+      "question_stem": "DDXPlus synthetic case: 19-year-old sex=F. Initial evidence: E_77. Reported evidences: ['E_53', 'E_54_@_V_179', 'E_54_@_V_192', 'E_55_@_V_29', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_170', 'E_55_@_V_171', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_6', 'E_77', 'E_78', 'E_79', 'E_94', 'E_106', 'E_118', 'E_123', 'E_124', 'E_129', 'E_130_@_V_156', 'E_131_@_V_12', 'E_132_@_4', 'E_133_@_V_54', 'E_133_@_V_85', 'E_134_@_0', 'E_135_@_V_10', 'E_136_@_0', 'E_144', 'E_175', 'E_181', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Pneumonia",
+        "C": "Unstable angina",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Bronchiectasis"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Pneumonia",
+        "C": "Unstable angina",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Bronchiectasis"
+      },
+      "gold_canonical_label": "Pneumonia",
+      "allowed_canonical_labels_strict": [
+        "Pneumonia"
+      ],
+      "slice_tags_primary": "etiology_specific",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0003",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_4",
+      "question_stem": "DDXPlus synthetic case: 34-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_48', 'E_53', 'E_54_@_V_183', 'E_55_@_V_89', 'E_55_@_V_109', 'E_55_@_V_124', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_7', 'E_57_@_V_123', 'E_58_@_5', 'E_59_@_4', 'E_97', 'E_181', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "URTI",
+        "B": "Cluster headache",
+        "C": "Bronchitis",
+        "D": "Chronic rhinosinusitis",
+        "E": "Acute rhinosinusitis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "URTI",
+        "B": "Cluster headache",
+        "C": "Bronchitis",
+        "D": "Chronic rhinosinusitis",
+        "E": "Acute rhinosinusitis"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0004",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_5",
+      "question_stem": "DDXPlus synthetic case: 36-year-old sex=M. Initial evidence: E_201. Reported evidences: ['E_49', 'E_50', 'E_53', 'E_54_@_V_183', 'E_55_@_V_62', 'E_55_@_V_124', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_2', 'E_97', 'E_144', 'E_181', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "URTI",
+        "B": "Influenza",
+        "C": "Bronchitis",
+        "D": "Cluster headache",
+        "E": "Chronic rhinosinusitis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "URTI",
+        "B": "Influenza",
+        "C": "Bronchitis",
+        "D": "Cluster headache",
+        "E": "Chronic rhinosinusitis"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0005",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_6",
+      "question_stem": "DDXPlus synthetic case: 37-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_181', 'E_54_@_V_192', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_109', 'E_55_@_V_122', 'E_55_@_V_125', 'E_56_@_6', 'E_57_@_V_89', 'E_57_@_V_122', 'E_57_@_V_166', 'E_57_@_V_167', 'E_58_@_3', 'E_59_@_1', 'E_79', 'E_103', 'E_116', 'E_118', 'E_120', 'E_121', 'E_124', 'E_125', 'E_182', 'E_201', 'E_204_@_V_10', 'E_226']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Acute rhinosinusitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Bronchitis",
+        "D": "Cluster headache",
+        "E": "Chagas"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Acute rhinosinusitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Bronchitis",
+        "D": "Cluster headache",
+        "E": "Chagas"
+      },
+      "gold_canonical_label": "Chronic rhinosinusitis",
+      "allowed_canonical_labels_strict": [
+        "Chronic rhinosinusitis"
+      ],
+      "slice_tags_primary": "syndrome_qualifier",
+      "slice_tags_secondary": [
+        "high_label_variation"
+      ],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0006",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_7",
+      "question_stem": "DDXPlus synthetic case: 43-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_41', 'E_49', 'E_53', 'E_54_@_V_161', 'E_54_@_V_181', 'E_55_@_V_20', 'E_55_@_V_21', 'E_55_@_V_33', 'E_55_@_V_137', 'E_55_@_V_148', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_9', 'E_59_@_3', 'E_79', 'E_91', 'E_201', 'E_204_@_V_10', 'E_227']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Acute laryngitis",
+        "C": "Tuberculosis",
+        "D": "Viral pharyngitis",
+        "E": "Possible NSTEMI / STEMI"
+      },
+      "correct_option": "D",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Acute laryngitis",
+        "C": "Tuberculosis",
+        "D": "Viral pharyngitis",
+        "E": "Possible NSTEMI / STEMI"
+      },
+      "gold_canonical_label": "Viral pharyngitis",
+      "allowed_canonical_labels_strict": [
+        "Viral pharyngitis"
+      ],
+      "slice_tags_primary": "etiology_specific",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0007",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_8",
+      "question_stem": "DDXPlus synthetic case: 39-year-old sex=M. Initial evidence: E_88. Reported evidences: ['E_7', 'E_24', 'E_53', 'E_54_@_V_180', 'E_54_@_V_182', 'E_55_@_V_89', 'E_55_@_V_167', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_4', 'E_82', 'E_88', 'E_113', 'E_140', 'E_146', 'E_154', 'E_204_@_V_3', 'E_208']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Anemia",
+        "B": "Anaphylaxis",
+        "C": "Chagas",
+        "D": "Cluster headache",
+        "E": "Scombroid food poisoning"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Anemia",
+        "B": "Anaphylaxis",
+        "C": "Chagas",
+        "D": "Cluster headache",
+        "E": "Scombroid food poisoning"
+      },
+      "gold_canonical_label": "Anemia",
+      "allowed_canonical_labels_strict": [
+        "Anemia"
+      ],
+      "slice_tags_primary": "syndrome_first",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0008",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_9",
+      "question_stem": "DDXPlus synthetic case: 30-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_192', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_109', 'E_55_@_V_122', 'E_55_@_V_125', 'E_56_@_2', 'E_57_@_V_89', 'E_57_@_V_166', 'E_58_@_8', 'E_59_@_0', 'E_79', 'E_103', 'E_116', 'E_118', 'E_120', 'E_124', 'E_125', 'E_201', 'E_204_@_V_10', 'E_226']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Cluster headache",
+        "D": "Chagas",
+        "E": "Anemia"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Cluster headache",
+        "D": "Chagas",
+        "E": "Anemia"
+      },
+      "gold_canonical_label": "Chronic rhinosinusitis",
+      "allowed_canonical_labels_strict": [
+        "Chronic rhinosinusitis"
+      ],
+      "slice_tags_primary": "syndrome_qualifier",
+      "slice_tags_secondary": [
+        "high_label_variation"
+      ],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0009",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_10",
+      "question_stem": "DDXPlus synthetic case: 49-year-old sex=M. Initial evidence: E_66. Reported evidences: ['E_19', 'E_22', 'E_31', 'E_66', 'E_69', 'E_70', 'E_76', 'E_104', 'E_105', 'E_139', 'E_155', 'E_204_@_V_10', 'E_218']. What is the most likely diagnosis?",
+      "options": {
+        "A": "PSVT",
+        "B": "Anemia",
+        "C": "Atrial fibrillation",
+        "D": "Acute pulmonary edema",
+        "E": "Guillain-Barr\u00e9 syndrome"
+      },
+      "correct_option": "C",
+      "option_to_label": {
+        "A": "PSVT",
+        "B": "Anemia",
+        "C": "Atrial fibrillation",
+        "D": "Acute pulmonary edema",
+        "E": "Guillain-Barr\u00e9 syndrome"
+      },
+      "gold_canonical_label": "Atrial fibrillation",
+      "allowed_canonical_labels_strict": [
+        "Atrial fibrillation"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0010",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_14",
+      "question_stem": "DDXPlus synthetic case: 49-year-old sex=F. Initial evidence: E_159. Reported evidences: ['E_12', 'E_42', 'E_51', 'E_53', 'E_54_@_V_182', 'E_54_@_V_192', 'E_55_@_V_87', 'E_55_@_V_88', 'E_55_@_V_103', 'E_55_@_V_104', 'E_55_@_V_197', 'E_56_@_3', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_2', 'E_66', 'E_129', 'E_130_@_V_156', 'E_131_@_V_10', 'E_132_@_0', 'E_133_@_V_26', 'E_133_@_V_31', 'E_133_@_V_32', 'E_133_@_V_33', 'E_133_@_V_34', 'E_134_@_3', 'E_135_@_V_12', 'E_136_@_10', 'E_148', 'E_151', 'E_152_@_V_89', 'E_152_@_V_108', 'E_152_@_V_109', 'E_159', 'E_194', 'E_204_@_V_10', 'E_226']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Anaphylaxis",
+        "B": "Acute pulmonary edema",
+        "C": "Unstable angina",
+        "D": "GERD",
+        "E": "Boerhaave"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Anaphylaxis",
+        "B": "Acute pulmonary edema",
+        "C": "Unstable angina",
+        "D": "GERD",
+        "E": "Boerhaave"
+      },
+      "gold_canonical_label": "Anaphylaxis",
+      "allowed_canonical_labels_strict": [
+        "Anaphylaxis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0011",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_15",
+      "question_stem": "DDXPlus synthetic case: 47-year-old sex=M. Initial evidence: E_201. Reported evidences: ['E_41', 'E_45', 'E_49', 'E_53', 'E_54_@_V_161', 'E_54_@_V_181', 'E_55_@_V_20', 'E_55_@_V_21', 'E_55_@_V_33', 'E_55_@_V_137', 'E_55_@_V_148', 'E_56_@_5', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_1', 'E_91', 'E_201', 'E_204_@_V_10', 'E_227']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Tuberculosis",
+        "C": "Viral pharyngitis",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Unstable angina"
+      },
+      "correct_option": "C",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Tuberculosis",
+        "C": "Viral pharyngitis",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Unstable angina"
+      },
+      "gold_canonical_label": "Viral pharyngitis",
+      "allowed_canonical_labels_strict": [
+        "Viral pharyngitis"
+      ],
+      "slice_tags_primary": "etiology_specific",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0012",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_16",
+      "question_stem": "DDXPlus synthetic case: 55-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_21', 'E_53', 'E_54_@_V_71', 'E_55_@_V_101', 'E_55_@_V_159', 'E_55_@_V_160', 'E_56_@_8', 'E_57_@_V_123', 'E_58_@_1', 'E_59_@_8', 'E_66', 'E_79', 'E_123', 'E_204_@_V_10', 'E_220']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Spontaneous pneumothorax",
+        "B": "Pulmonary embolism",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Pericarditis",
+        "E": "Guillain-Barr\u00e9 syndrome"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Spontaneous pneumothorax",
+        "B": "Pulmonary embolism",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Pericarditis",
+        "E": "Guillain-Barr\u00e9 syndrome"
+      },
+      "gold_canonical_label": "Spontaneous pneumothorax",
+      "allowed_canonical_labels_strict": [
+        "Spontaneous pneumothorax"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0013",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_18",
+      "question_stem": "DDXPlus synthetic case: 35-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_5', 'E_50', 'E_53', 'E_54_@_V_154', 'E_54_@_V_161', 'E_54_@_V_180', 'E_54_@_V_183', 'E_55_@_V_34', 'E_55_@_V_35', 'E_55_@_V_159', 'E_55_@_V_170', 'E_55_@_V_171', 'E_56_@_9', 'E_57_@_V_31', 'E_57_@_V_177', 'E_57_@_V_178', 'E_57_@_V_194', 'E_57_@_V_195', 'E_58_@_1', 'E_59_@_5', 'E_66', 'E_104', 'E_105', 'E_106', 'E_151', 'E_152_@_V_34', 'E_152_@_V_120', 'E_152_@_V_172', 'E_152_@_V_173', 'E_175', 'E_204_@_V_10', 'E_217', 'E_218']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Acute pulmonary edema",
+        "B": "Unstable angina",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Panic attack",
+        "E": "Myocarditis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Acute pulmonary edema",
+        "B": "Unstable angina",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Panic attack",
+        "E": "Myocarditis"
+      },
+      "gold_canonical_label": "Acute pulmonary edema",
+      "allowed_canonical_labels_strict": [
+        "Acute pulmonary edema"
+      ],
+      "slice_tags_primary": "syndrome_qualifier",
+      "slice_tags_secondary": [
+        "high_label_variation"
+      ],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0014",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_21",
+      "question_stem": "DDXPlus synthetic case: 27-year-old sex=F. Initial evidence: E_52. Reported evidences: ['E_28', 'E_52', 'E_66', 'E_84', 'E_90', 'E_172', 'E_176', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Myasthenia gravis",
+        "B": "Guillain-Barr\u00e9 syndrome",
+        "C": "Pulmonary embolism",
+        "D": "Myocarditis",
+        "E": "Acute pulmonary edema"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Myasthenia gravis",
+        "B": "Guillain-Barr\u00e9 syndrome",
+        "C": "Pulmonary embolism",
+        "D": "Myocarditis",
+        "E": "Acute pulmonary edema"
+      },
+      "gold_canonical_label": "Myasthenia gravis",
+      "allowed_canonical_labels_strict": [
+        "Myasthenia gravis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0015",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_22",
+      "question_stem": "DDXPlus synthetic case: 54-year-old sex=F. Initial evidence: E_177. Reported evidences: ['E_16', 'E_53', 'E_54_@_V_182', 'E_54_@_V_192', 'E_55_@_V_29', 'E_55_@_V_55', 'E_55_@_V_85', 'E_55_@_V_87', 'E_55_@_V_88', 'E_56_@_8', 'E_57_@_V_123', 'E_58_@_6', 'E_59_@_6', 'E_66', 'E_78', 'E_81', 'E_82', 'E_99', 'E_138', 'E_157', 'E_177', 'E_185', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Spontaneous pneumothorax",
+        "B": "Possible NSTEMI / STEMI",
+        "C": "Panic attack",
+        "D": "Unstable angina",
+        "E": "Anemia"
+      },
+      "correct_option": "C",
+      "option_to_label": {
+        "A": "Spontaneous pneumothorax",
+        "B": "Possible NSTEMI / STEMI",
+        "C": "Panic attack",
+        "D": "Unstable angina",
+        "E": "Anemia"
+      },
+      "gold_canonical_label": "Panic attack",
+      "allowed_canonical_labels_strict": [
+        "Panic attack"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0016",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "train",
+      "source_item_id": "train_23",
+      "question_stem": "DDXPlus synthetic case: 72-year-old sex=M. Initial evidence: E_177. Reported evidences: ['E_16', 'E_53', 'E_54_@_V_192', 'E_55_@_V_55', 'E_55_@_V_87', 'E_55_@_V_103', 'E_55_@_V_104', 'E_55_@_V_153', 'E_56_@_7', 'E_57_@_V_123', 'E_58_@_10', 'E_59_@_9', 'E_75', 'E_78', 'E_80', 'E_82', 'E_111', 'E_138', 'E_155', 'E_157', 'E_171', 'E_177', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Panic attack",
+        "B": "PSVT",
+        "C": "Guillain-Barr\u00e9 syndrome",
+        "D": "Anemia",
+        "E": "Anaphylaxis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Panic attack",
+        "B": "PSVT",
+        "C": "Guillain-Barr\u00e9 syndrome",
+        "D": "Anemia",
+        "E": "Anaphylaxis"
+      },
+      "gold_canonical_label": "Panic attack",
+      "allowed_canonical_labels_strict": [
+        "Panic attack"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0017",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_1",
+      "question_stem": "DDXPlus synthetic case: 55-year-old sex=F. Initial evidence: E_154. Reported evidences: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_54_@_V_182', 'E_55_@_V_25', 'E_55_@_V_62', 'E_55_@_V_89', 'E_55_@_V_167', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_5', 'E_76', 'E_82', 'E_88', 'E_89', 'E_113', 'E_140', 'E_146', 'E_154', 'E_204_@_V_7', 'E_208']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Anemia",
+        "B": "Atrial fibrillation",
+        "C": "Cluster headache",
+        "D": "HIV (initial infection)",
+        "E": "Anaphylaxis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Anemia",
+        "B": "Atrial fibrillation",
+        "C": "Cluster headache",
+        "D": "HIV (initial infection)",
+        "E": "Anaphylaxis"
+      },
+      "gold_canonical_label": "Anemia",
+      "allowed_canonical_labels_strict": [
+        "Anemia"
+      ],
+      "slice_tags_primary": "syndrome_first",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0018",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_2",
+      "question_stem": "DDXPlus synthetic case: 10-year-old sex=F. Initial evidence: E_171. Reported evidences: ['E_16', 'E_29', 'E_50', 'E_53', 'E_54_@_V_182', 'E_55_@_V_55', 'E_55_@_V_85', 'E_55_@_V_103', 'E_55_@_V_104', 'E_55_@_V_159', 'E_56_@_6', 'E_57_@_V_123', 'E_58_@_7', 'E_59_@_8', 'E_66', 'E_75', 'E_80', 'E_81', 'E_111', 'E_124', 'E_155', 'E_157', 'E_171', 'E_177', 'E_185', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Guillain-Barr\u00e9 syndrome",
+        "B": "PSVT",
+        "C": "Panic attack",
+        "D": "Pericarditis",
+        "E": "Anaphylaxis"
+      },
+      "correct_option": "C",
+      "option_to_label": {
+        "A": "Guillain-Barr\u00e9 syndrome",
+        "B": "PSVT",
+        "C": "Panic attack",
+        "D": "Pericarditis",
+        "E": "Anaphylaxis"
+      },
+      "gold_canonical_label": "Panic attack",
+      "allowed_canonical_labels_strict": [
+        "Panic attack"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0019",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_3",
+      "question_stem": "DDXPlus synthetic case: 68-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_50', 'E_53', 'E_54_@_V_183', 'E_54_@_V_198', 'E_55_@_V_26', 'E_55_@_V_53', 'E_55_@_V_89', 'E_55_@_V_148', 'E_56_@_8', 'E_57_@_V_123', 'E_58_@_7', 'E_59_@_5', 'E_79', 'E_88', 'E_91', 'E_94', 'E_129', 'E_130_@_V_156', 'E_131_@_V_10', 'E_132_@_0', 'E_133_@_V_26', 'E_133_@_V_54', 'E_134_@_0', 'E_135_@_V_12', 'E_136_@_1', 'E_144', 'E_161', 'E_181', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Influenza",
+        "B": "Viral pharyngitis",
+        "C": "HIV (initial infection)",
+        "D": "URTI",
+        "E": "Chagas"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Influenza",
+        "B": "Viral pharyngitis",
+        "C": "HIV (initial infection)",
+        "D": "URTI",
+        "E": "Chagas"
+      },
+      "gold_canonical_label": "Influenza",
+      "allowed_canonical_labels_strict": [
+        "Influenza"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0020",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_4",
+      "question_stem": "DDXPlus synthetic case: 13-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_55_@_V_62', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_4', 'E_57_@_V_123', 'E_58_@_5', 'E_59_@_0', 'E_66', 'E_76', 'E_82', 'E_89', 'E_113', 'E_146', 'E_179', 'E_204_@_V_10', 'E_208']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Anemia",
+        "B": "Atrial fibrillation",
+        "C": "Myocarditis",
+        "D": "Panic attack",
+        "E": "Guillain-Barr\u00e9 syndrome"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Anemia",
+        "B": "Atrial fibrillation",
+        "C": "Myocarditis",
+        "D": "Panic attack",
+        "E": "Guillain-Barr\u00e9 syndrome"
+      },
+      "gold_canonical_label": "Anemia",
+      "allowed_canonical_labels_strict": [
+        "Anemia"
+      ],
+      "slice_tags_primary": "syndrome_first",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0021",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_6",
+      "question_stem": "DDXPlus synthetic case: 55-year-old sex=M. Initial evidence: E_66. Reported evidences: ['E_66', 'E_87', 'E_101', 'E_116', 'E_119', 'E_124', 'E_201', 'E_204_@_V_10', 'E_207', 'E_222', 'E_226']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Pulmonary embolism",
+        "C": "Acute pulmonary edema",
+        "D": "Guillain-Barr\u00e9 syndrome",
+        "E": "Bronchospasm / acute asthma exacerbation"
+      },
+      "correct_option": "E",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Pulmonary embolism",
+        "C": "Acute pulmonary edema",
+        "D": "Guillain-Barr\u00e9 syndrome",
+        "E": "Bronchospasm / acute asthma exacerbation"
+      },
+      "gold_canonical_label": "Bronchospasm / acute asthma exacerbation",
+      "allowed_canonical_labels_strict": [
+        "Bronchospasm / acute asthma exacerbation"
+      ],
+      "slice_tags_primary": "syndrome_qualifier",
+      "slice_tags_secondary": [
+        "high_label_variation"
+      ],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0022",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_9",
+      "question_stem": "DDXPlus synthetic case: 48-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_34', 'E_53', 'E_54_@_V_161', 'E_54_@_V_179', 'E_54_@_V_192', 'E_55_@_V_55', 'E_55_@_V_127', 'E_55_@_V_160', 'E_55_@_V_170', 'E_55_@_V_171', 'E_56_@_9', 'E_57_@_V_55', 'E_57_@_V_56', 'E_57_@_V_128', 'E_57_@_V_170', 'E_57_@_V_171', 'E_58_@_3', 'E_59_@_8', 'E_66', 'E_109', 'E_110', 'E_152_@_V_123', 'E_159', 'E_196', 'E_204_@_V_4', 'E_220']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Pulmonary embolism",
+        "B": "Spontaneous pneumothorax",
+        "C": "Pericarditis",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Panic attack"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Pulmonary embolism",
+        "B": "Spontaneous pneumothorax",
+        "C": "Pericarditis",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Panic attack"
+      },
+      "gold_canonical_label": "Pulmonary embolism",
+      "allowed_canonical_labels_strict": [
+        "Pulmonary embolism"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0023",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_11",
+      "question_stem": "DDXPlus synthetic case: 52-year-old sex=M. Initial evidence: E_65. Reported evidences: ['E_28', 'E_52', 'E_63', 'E_65', 'E_66', 'E_84', 'E_176', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Myasthenia gravis",
+        "B": "Guillain-Barr\u00e9 syndrome",
+        "C": "Pulmonary embolism",
+        "D": "Acute pulmonary edema",
+        "E": "Atrial fibrillation"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Myasthenia gravis",
+        "B": "Guillain-Barr\u00e9 syndrome",
+        "C": "Pulmonary embolism",
+        "D": "Acute pulmonary edema",
+        "E": "Atrial fibrillation"
+      },
+      "gold_canonical_label": "Myasthenia gravis",
+      "allowed_canonical_labels_strict": [
+        "Myasthenia gravis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0024",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_12",
+      "question_stem": "DDXPlus synthetic case: 43-year-old sex=F. Initial evidence: E_66. Reported evidences: ['E_20', 'E_45', 'E_66', 'E_77', 'E_118', 'E_124', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Bronchiectasis",
+        "C": "Pneumonia",
+        "D": "Pulmonary neoplasm",
+        "E": "Pulmonary embolism"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Bronchiectasis",
+        "C": "Pneumonia",
+        "D": "Pulmonary neoplasm",
+        "E": "Pulmonary embolism"
+      },
+      "gold_canonical_label": "Bronchiectasis",
+      "allowed_canonical_labels_strict": [
+        "Bronchiectasis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0025",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_14",
+      "question_stem": "DDXPlus synthetic case: 16-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_181', 'E_55_@_V_56', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_3', 'E_66', 'E_77', 'E_79', 'E_97', 'E_123', 'E_204_@_V_10', 'E_209', 'E_214', 'E_219']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Pneumonia",
+        "C": "Bronchiectasis",
+        "D": "Panic attack",
+        "E": "Myocarditis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Pneumonia",
+        "C": "Bronchiectasis",
+        "D": "Panic attack",
+        "E": "Myocarditis"
+      },
+      "gold_canonical_label": "Bronchitis",
+      "allowed_canonical_labels_strict": [
+        "Bronchitis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0026",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_15",
+      "question_stem": "DDXPlus synthetic case: 18-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_192', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_171', 'E_56_@_4', 'E_57_@_V_123', 'E_58_@_8', 'E_59_@_1', 'E_66', 'E_77', 'E_79', 'E_91', 'E_95', 'E_106', 'E_118', 'E_123', 'E_124', 'E_129', 'E_130_@_V_156', 'E_131_@_V_12', 'E_132_@_2', 'E_133_@_V_26', 'E_133_@_V_38', 'E_133_@_V_42', 'E_133_@_V_53', 'E_133_@_V_195', 'E_134_@_3', 'E_135_@_V_10', 'E_136_@_2', 'E_144', 'E_161', 'E_175', 'E_181', 'E_201', 'E_204_@_V_10', 'E_208', 'E_219']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Pneumonia",
+        "B": "Bronchitis",
+        "C": "Bronchiectasis",
+        "D": "Panic attack",
+        "E": "Influenza"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Pneumonia",
+        "B": "Bronchitis",
+        "C": "Bronchiectasis",
+        "D": "Panic attack",
+        "E": "Influenza"
+      },
+      "gold_canonical_label": "Pneumonia",
+      "allowed_canonical_labels_strict": [
+        "Pneumonia"
+      ],
+      "slice_tags_primary": "etiology_specific",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0027",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_16",
+      "question_stem": "DDXPlus synthetic case: 14-year-old sex=F. Initial evidence: E_144. Reported evidences: ['E_53', 'E_54_@_V_161', 'E_54_@_V_198', 'E_55_@_V_25', 'E_55_@_V_53', 'E_55_@_V_89', 'E_55_@_V_124', 'E_55_@_V_148', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_6', 'E_59_@_4', 'E_79', 'E_88', 'E_91', 'E_94', 'E_129', 'E_130_@_V_156', 'E_131_@_V_10', 'E_132_@_2', 'E_133_@_V_53', 'E_134_@_1', 'E_135_@_V_12', 'E_136_@_5', 'E_144', 'E_161', 'E_181', 'E_201', 'E_204_@_V_10', 'E_227']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Influenza",
+        "B": "HIV (initial infection)",
+        "C": "Viral pharyngitis",
+        "D": "URTI",
+        "E": "Bronchitis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Influenza",
+        "B": "HIV (initial infection)",
+        "C": "Viral pharyngitis",
+        "D": "URTI",
+        "E": "Bronchitis"
+      },
+      "gold_canonical_label": "Influenza",
+      "allowed_canonical_labels_strict": [
+        "Influenza"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0028",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_18",
+      "question_stem": "DDXPlus synthetic case: 71-year-old sex=M. Initial evidence: E_157. Reported evidences: ['E_16', 'E_53', 'E_54_@_V_182', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_87', 'E_55_@_V_153', 'E_55_@_V_187', 'E_56_@_3', 'E_57_@_V_123', 'E_58_@_7', 'E_59_@_8', 'E_66', 'E_80', 'E_124', 'E_148', 'E_155', 'E_157', 'E_177', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Panic attack",
+        "B": "Guillain-Barr\u00e9 syndrome",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "PSVT",
+        "E": "Spontaneous pneumothorax"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Panic attack",
+        "B": "Guillain-Barr\u00e9 syndrome",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "PSVT",
+        "E": "Spontaneous pneumothorax"
+      },
+      "gold_canonical_label": "Panic attack",
+      "allowed_canonical_labels_strict": [
+        "Panic attack"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0029",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_20",
+      "question_stem": "DDXPlus synthetic case: 0-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_50', 'E_53', 'E_54_@_V_161', 'E_54_@_V_183', 'E_54_@_V_198', 'E_55_@_V_25', 'E_55_@_V_26', 'E_55_@_V_53', 'E_55_@_V_62', 'E_55_@_V_89', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_0', 'E_79', 'E_91', 'E_94', 'E_129', 'E_130_@_V_156', 'E_131_@_V_10', 'E_132_@_5', 'E_133_@_V_53', 'E_133_@_V_54', 'E_134_@_2', 'E_135_@_V_12', 'E_136_@_4', 'E_144', 'E_161', 'E_181', 'E_201', 'E_204_@_V_10', 'E_227']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Influenza",
+        "B": "Pneumonia",
+        "C": "URTI",
+        "D": "HIV (initial infection)",
+        "E": "Bronchitis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Influenza",
+        "B": "Pneumonia",
+        "C": "URTI",
+        "D": "HIV (initial infection)",
+        "E": "Bronchitis"
+      },
+      "gold_canonical_label": "Influenza",
+      "allowed_canonical_labels_strict": [
+        "Influenza"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0030",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_21",
+      "question_stem": "DDXPlus synthetic case: 9-year-old sex=F. Initial evidence: E_88. Reported evidences: ['E_50', 'E_53', 'E_54_@_V_161', 'E_54_@_V_183', 'E_55_@_V_26', 'E_55_@_V_53', 'E_55_@_V_54', 'E_55_@_V_124', 'E_55_@_V_148', 'E_56_@_3', 'E_57_@_V_123', 'E_58_@_5', 'E_59_@_2', 'E_79', 'E_88', 'E_91', 'E_94', 'E_129', 'E_130_@_V_156', 'E_131_@_V_10', 'E_132_@_0', 'E_133_@_V_53', 'E_133_@_V_89', 'E_134_@_1', 'E_135_@_V_12', 'E_136_@_2', 'E_161', 'E_181', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Influenza",
+        "B": "URTI",
+        "C": "Viral pharyngitis",
+        "D": "HIV (initial infection)",
+        "E": "Pneumonia"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Influenza",
+        "B": "URTI",
+        "C": "Viral pharyngitis",
+        "D": "HIV (initial infection)",
+        "E": "Pneumonia"
+      },
+      "gold_canonical_label": "Influenza",
+      "allowed_canonical_labels_strict": [
+        "Influenza"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0031",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_22",
+      "question_stem": "DDXPlus synthetic case: 27-year-old sex=F. Initial evidence: E_211. Reported evidences: ['E_53', 'E_54_@_V_112', 'E_54_@_V_179', 'E_54_@_V_191', 'E_54_@_V_193', 'E_55_@_V_29', 'E_55_@_V_84', 'E_55_@_V_85', 'E_55_@_V_101', 'E_55_@_V_187', 'E_56_@_6', 'E_57_@_V_127', 'E_57_@_V_128', 'E_58_@_5', 'E_59_@_8', 'E_78', 'E_148', 'E_204_@_V_10', 'E_211']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Boerhaave",
+        "B": "Possible NSTEMI / STEMI",
+        "C": "GERD",
+        "D": "Anaphylaxis",
+        "E": "Pancreatic neoplasm"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Boerhaave",
+        "B": "Possible NSTEMI / STEMI",
+        "C": "GERD",
+        "D": "Anaphylaxis",
+        "E": "Pancreatic neoplasm"
+      },
+      "gold_canonical_label": "Boerhaave",
+      "allowed_canonical_labels_strict": [
+        "Boerhaave"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0032",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "validate",
+      "source_item_id": "validate_23",
+      "question_stem": "DDXPlus synthetic case: 7-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_181', 'E_55_@_V_32', 'E_55_@_V_108', 'E_55_@_V_122', 'E_55_@_V_125', 'E_55_@_V_126', 'E_56_@_5', 'E_57_@_V_25', 'E_57_@_V_122', 'E_57_@_V_167', 'E_58_@_8', 'E_59_@_5', 'E_103', 'E_118', 'E_120', 'E_121', 'E_124', 'E_125', 'E_181', 'E_201', 'E_204_@_V_10', 'E_226']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Viral pharyngitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Bronchitis",
+        "D": "URTI",
+        "E": "Acute rhinosinusitis"
+      },
+      "correct_option": "E",
+      "option_to_label": {
+        "A": "Viral pharyngitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Bronchitis",
+        "D": "URTI",
+        "E": "Acute rhinosinusitis"
+      },
+      "gold_canonical_label": "Acute rhinosinusitis",
+      "allowed_canonical_labels_strict": [
+        "Acute rhinosinusitis"
+      ],
+      "slice_tags_primary": "syndrome_qualifier",
+      "slice_tags_secondary": [
+        "high_label_variation"
+      ],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0033",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_1",
+      "question_stem": "DDXPlus synthetic case: 49-year-old sex=F. Initial evidence: E_201. Reported evidences: ['E_53', 'E_54_@_V_112', 'E_54_@_V_161', 'E_54_@_V_180', 'E_54_@_V_181', 'E_55_@_V_29', 'E_55_@_V_101', 'E_55_@_V_103', 'E_56_@_6', 'E_57_@_V_29', 'E_57_@_V_101', 'E_58_@_3', 'E_59_@_2', 'E_70', 'E_78', 'E_98', 'E_140', 'E_167', 'E_173', 'E_201', 'E_204_@_V_10', 'E_217']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "GERD",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Unstable angina",
+        "E": "Pericarditis"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "GERD",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Unstable angina",
+        "E": "Pericarditis"
+      },
+      "gold_canonical_label": "GERD",
+      "allowed_canonical_labels_strict": [
+        "GERD"
+      ],
+      "slice_tags_primary": "syndrome_first",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0034",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_4",
+      "question_stem": "DDXPlus synthetic case: 64-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_48', 'E_49', 'E_53', 'E_54_@_V_181', 'E_55_@_V_20', 'E_55_@_V_21', 'E_55_@_V_148', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_4', 'E_79', 'E_91', 'E_201', 'E_204_@_V_10', 'E_212']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "Acute laryngitis",
+        "C": "Tuberculosis",
+        "D": "Viral pharyngitis",
+        "E": "Influenza"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "Acute laryngitis",
+        "C": "Tuberculosis",
+        "D": "Viral pharyngitis",
+        "E": "Influenza"
+      },
+      "gold_canonical_label": "Acute laryngitis",
+      "allowed_canonical_labels_strict": [
+        "Acute laryngitis"
+      ],
+      "slice_tags_primary": "syndrome_qualifier",
+      "slice_tags_secondary": [
+        "high_label_variation"
+      ],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0035",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_5",
+      "question_stem": "DDXPlus synthetic case: 70-year-old sex=F. Initial evidence: E_201. Reported evidences: ['E_41', 'E_50', 'E_53', 'E_54_@_V_161', 'E_54_@_V_183', 'E_55_@_V_62', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_109', 'E_55_@_V_124', 'E_56_@_7', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_0', 'E_91', 'E_97', 'E_144', 'E_181', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "URTI",
+        "B": "Influenza",
+        "C": "Bronchitis",
+        "D": "HIV (initial infection)",
+        "E": "Pneumonia"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "URTI",
+        "B": "Influenza",
+        "C": "Bronchitis",
+        "D": "HIV (initial infection)",
+        "E": "Pneumonia"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0036",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_6",
+      "question_stem": "DDXPlus synthetic case: 45-year-old sex=F. Initial evidence: E_144. Reported evidences: ['E_48', 'E_49', 'E_53', 'E_54_@_V_161', 'E_55_@_V_62', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_124', 'E_55_@_V_167', 'E_56_@_7', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_0', 'E_77', 'E_79', 'E_91', 'E_97', 'E_144', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Pneumonia",
+        "B": "Bronchitis",
+        "C": "Influenza",
+        "D": "URTI",
+        "E": "HIV (initial infection)"
+      },
+      "correct_option": "D",
+      "option_to_label": {
+        "A": "Pneumonia",
+        "B": "Bronchitis",
+        "C": "Influenza",
+        "D": "URTI",
+        "E": "HIV (initial infection)"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0037",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_7",
+      "question_stem": "DDXPlus synthetic case: 52-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_183', 'E_55_@_V_87', 'E_55_@_V_88', 'E_55_@_V_99', 'E_55_@_V_100', 'E_55_@_V_169', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_6', 'E_59_@_3', 'E_129', 'E_130_@_V_138', 'E_131_@_V_10', 'E_132_@_5', 'E_133_@_V_88', 'E_134_@_4', 'E_135_@_V_12', 'E_136_@_0', 'E_160', 'E_203', 'E_204_@_V_10', 'E_221']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Inguinal hernia",
+        "B": "Bronchitis",
+        "C": "Anaphylaxis",
+        "D": "Whooping cough",
+        "E": "Scombroid food poisoning"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Inguinal hernia",
+        "B": "Bronchitis",
+        "C": "Anaphylaxis",
+        "D": "Whooping cough",
+        "E": "Scombroid food poisoning"
+      },
+      "gold_canonical_label": "Inguinal hernia",
+      "allowed_canonical_labels_strict": [
+        "Inguinal hernia"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0038",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_8",
+      "question_stem": "DDXPlus synthetic case: 97-year-old sex=M. Initial evidence: E_14. Reported evidences: ['E_14', 'E_21', 'E_53', 'E_54_@_V_71', 'E_54_@_V_191', 'E_55_@_V_159', 'E_56_@_7', 'E_57_@_V_123', 'E_58_@_4', 'E_59_@_5', 'E_66', 'E_123', 'E_165', 'E_204_@_V_10', 'E_218', 'E_220']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Unstable angina",
+        "B": "Spontaneous pneumothorax",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Pulmonary embolism",
+        "E": "Stable angina"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Unstable angina",
+        "B": "Spontaneous pneumothorax",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Pulmonary embolism",
+        "E": "Stable angina"
+      },
+      "gold_canonical_label": "Spontaneous pneumothorax",
+      "allowed_canonical_labels_strict": [
+        "Spontaneous pneumothorax"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0039",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_9",
+      "question_stem": "DDXPlus synthetic case: 61-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_161', 'E_54_@_V_181', 'E_55_@_V_56', 'E_55_@_V_101', 'E_55_@_V_148', 'E_55_@_V_159', 'E_55_@_V_170', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_7', 'E_59_@_0', 'E_77', 'E_91', 'E_97', 'E_123', 'E_181', 'E_201', 'E_204_@_V_10', 'E_214']. What is the most likely diagnosis?",
+      "options": {
+        "A": "URTI",
+        "B": "Acute COPD exacerbation / infection",
+        "C": "Bronchitis",
+        "D": "Viral pharyngitis",
+        "E": "Pneumonia"
+      },
+      "correct_option": "C",
+      "option_to_label": {
+        "A": "URTI",
+        "B": "Acute COPD exacerbation / infection",
+        "C": "Bronchitis",
+        "D": "Viral pharyngitis",
+        "E": "Pneumonia"
+      },
+      "gold_canonical_label": "Bronchitis",
+      "allowed_canonical_labels_strict": [
+        "Bronchitis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0040",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_10",
+      "question_stem": "DDXPlus synthetic case: 50-year-old sex=M. Initial evidence: E_140. Reported evidences: ['E_53', 'E_54_@_V_112', 'E_54_@_V_161', 'E_54_@_V_181', 'E_54_@_V_193', 'E_55_@_V_29', 'E_55_@_V_103', 'E_55_@_V_104', 'E_55_@_V_187', 'E_55_@_V_197', 'E_56_@_9', 'E_57_@_V_101', 'E_58_@_3', 'E_59_@_0', 'E_78', 'E_79', 'E_98', 'E_124', 'E_140', 'E_173', 'E_201', 'E_204_@_V_10', 'E_215', 'E_217']. What is the most likely diagnosis?",
+      "options": {
+        "A": "GERD",
+        "B": "Bronchitis",
+        "C": "Pericarditis",
+        "D": "Spontaneous rib fracture",
+        "E": "Unstable angina"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "GERD",
+        "B": "Bronchitis",
+        "C": "Pericarditis",
+        "D": "Spontaneous rib fracture",
+        "E": "Unstable angina"
+      },
+      "gold_canonical_label": "GERD",
+      "allowed_canonical_labels_strict": [
+        "GERD"
+      ],
+      "slice_tags_primary": "syndrome_first",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0041",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_11",
+      "question_stem": "DDXPlus synthetic case: 25-year-old sex=M. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_181', 'E_55_@_V_29', 'E_55_@_V_101', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_6', 'E_59_@_1', 'E_66', 'E_79', 'E_123', 'E_181', 'E_201', 'E_204_@_V_10', 'E_209', 'E_214', 'E_219']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Allergic sinusitis",
+        "B": "Bronchitis",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Panic attack",
+        "E": "Spontaneous pneumothorax"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Allergic sinusitis",
+        "B": "Bronchitis",
+        "C": "Possible NSTEMI / STEMI",
+        "D": "Panic attack",
+        "E": "Spontaneous pneumothorax"
+      },
+      "gold_canonical_label": "Bronchitis",
+      "allowed_canonical_labels_strict": [
+        "Bronchitis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0042",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_13",
+      "question_stem": "DDXPlus synthetic case: 59-year-old sex=F. Initial evidence: E_50. Reported evidences: ['E_41', 'E_48', 'E_50', 'E_53', 'E_54_@_V_154', 'E_54_@_V_183', 'E_55_@_V_62', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_109', 'E_55_@_V_124', 'E_56_@_6', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_1', 'E_97', 'E_201', 'E_204_@_V_10', 'E_222']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Bronchitis",
+        "B": "URTI",
+        "C": "Cluster headache",
+        "D": "Chagas",
+        "E": "Anemia"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Bronchitis",
+        "B": "URTI",
+        "C": "Cluster headache",
+        "D": "Chagas",
+        "E": "Anemia"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0043",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_14",
+      "question_stem": "DDXPlus synthetic case: 73-year-old sex=F. Initial evidence: E_76. Reported evidences: ['E_7', 'E_24', 'E_26', 'E_53', 'E_54_@_V_180', 'E_54_@_V_198', 'E_55_@_V_62', 'E_55_@_V_166', 'E_55_@_V_167', 'E_56_@_1', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_4', 'E_66', 'E_76', 'E_88', 'E_89', 'E_113', 'E_146', 'E_154', 'E_167', 'E_204_@_V_0', 'E_208']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Anemia",
+        "B": "Acute pulmonary edema",
+        "C": "Guillain-Barr\u00e9 syndrome",
+        "D": "Chagas",
+        "E": "Cluster headache"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Anemia",
+        "B": "Acute pulmonary edema",
+        "C": "Guillain-Barr\u00e9 syndrome",
+        "D": "Chagas",
+        "E": "Cluster headache"
+      },
+      "gold_canonical_label": "Anemia",
+      "allowed_canonical_labels_strict": [
+        "Anemia"
+      ],
+      "slice_tags_primary": "syndrome_first",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0044",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_16",
+      "question_stem": "DDXPlus synthetic case: 68-year-old sex=M. Initial evidence: E_181. Reported evidences: ['E_41', 'E_48', 'E_49', 'E_53', 'E_54_@_V_161', 'E_54_@_V_183', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_109', 'E_55_@_V_166', 'E_56_@_8', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_3', 'E_77', 'E_97', 'E_144', 'E_181', 'E_201', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "URTI",
+        "B": "Bronchitis",
+        "C": "Pneumonia",
+        "D": "Bronchiectasis",
+        "E": "Cluster headache"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "URTI",
+        "B": "Bronchitis",
+        "C": "Pneumonia",
+        "D": "Bronchiectasis",
+        "E": "Cluster headache"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0045",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_17",
+      "question_stem": "DDXPlus synthetic case: 2-year-old sex=F. Initial evidence: E_144. Reported evidences: ['E_41', 'E_53', 'E_54_@_V_154', 'E_55_@_V_89', 'E_55_@_V_108', 'E_55_@_V_109', 'E_55_@_V_124', 'E_55_@_V_167', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_2', 'E_59_@_3', 'E_77', 'E_79', 'E_97', 'E_144', 'E_181', 'E_204_@_V_10', 'E_222']. What is the most likely diagnosis?",
+      "options": {
+        "A": "URTI",
+        "B": "Bronchitis",
+        "C": "Pneumonia",
+        "D": "Chronic rhinosinusitis",
+        "E": "Acute rhinosinusitis"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "URTI",
+        "B": "Bronchitis",
+        "C": "Pneumonia",
+        "D": "Chronic rhinosinusitis",
+        "E": "Acute rhinosinusitis"
+      },
+      "gold_canonical_label": "URTI",
+      "allowed_canonical_labels_strict": [
+        "URTI"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0046",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_18",
+      "question_stem": "DDXPlus synthetic case: 45-year-old sex=F. Initial evidence: E_103. Reported evidences: ['E_53', 'E_54_@_V_192', 'E_55_@_V_32', 'E_55_@_V_89', 'E_55_@_V_109', 'E_55_@_V_122', 'E_55_@_V_125', 'E_56_@_2', 'E_57_@_V_25', 'E_57_@_V_122', 'E_57_@_V_166', 'E_57_@_V_167', 'E_58_@_5', 'E_59_@_3', 'E_79', 'E_103', 'E_118', 'E_120', 'E_121', 'E_124', 'E_125', 'E_181', 'E_201', 'E_204_@_V_10', 'E_226']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Viral pharyngitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Cluster headache",
+        "D": "Acute rhinosinusitis",
+        "E": "Bronchitis"
+      },
+      "correct_option": "B",
+      "option_to_label": {
+        "A": "Viral pharyngitis",
+        "B": "Chronic rhinosinusitis",
+        "C": "Cluster headache",
+        "D": "Acute rhinosinusitis",
+        "E": "Bronchitis"
+      },
+      "gold_canonical_label": "Chronic rhinosinusitis",
+      "allowed_canonical_labels_strict": [
+        "Chronic rhinosinusitis"
+      ],
+      "slice_tags_primary": "syndrome_qualifier",
+      "slice_tags_secondary": [
+        "high_label_variation"
+      ],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0047",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_19",
+      "question_stem": "DDXPlus synthetic case: 4-year-old sex=F. Initial evidence: E_53. Reported evidences: ['E_53', 'E_54_@_V_181', 'E_55_@_V_55', 'E_55_@_V_160', 'E_55_@_V_171', 'E_56_@_2', 'E_57_@_V_123', 'E_58_@_3', 'E_59_@_2', 'E_66', 'E_77', 'E_91', 'E_201', 'E_204_@_V_10', 'E_214']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Pneumonia",
+        "B": "Bronchospasm / acute asthma exacerbation",
+        "C": "Bronchitis",
+        "D": "Tuberculosis",
+        "E": "Atrial fibrillation"
+      },
+      "correct_option": "C",
+      "option_to_label": {
+        "A": "Pneumonia",
+        "B": "Bronchospasm / acute asthma exacerbation",
+        "C": "Bronchitis",
+        "D": "Tuberculosis",
+        "E": "Atrial fibrillation"
+      },
+      "gold_canonical_label": "Bronchitis",
+      "allowed_canonical_labels_strict": [
+        "Bronchitis"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    },
+    {
+      "item_id": "pilot_ddxplus_0048",
+      "source_dataset": "ddxplus_raw_pilot_v1",
+      "source_split": "test",
+      "source_item_id": "test_20",
+      "question_stem": "DDXPlus synthetic case: 63-year-old sex=F. Initial evidence: E_75. Reported evidences: ['E_16', 'E_53', 'E_54_@_V_182', 'E_55_@_V_29', 'E_55_@_V_55', 'E_55_@_V_56', 'E_55_@_V_85', 'E_55_@_V_87', 'E_56_@_7', 'E_57_@_V_123', 'E_58_@_6', 'E_59_@_7', 'E_66', 'E_75', 'E_78', 'E_80', 'E_82', 'E_99', 'E_111', 'E_124', 'E_138', 'E_148', 'E_155', 'E_157', 'E_171', 'E_177', 'E_204_@_V_10']. What is the most likely diagnosis?",
+      "options": {
+        "A": "Panic attack",
+        "B": "PSVT",
+        "C": "Guillain-Barr\u00e9 syndrome",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Spontaneous pneumothorax"
+      },
+      "correct_option": "A",
+      "option_to_label": {
+        "A": "Panic attack",
+        "B": "PSVT",
+        "C": "Guillain-Barr\u00e9 syndrome",
+        "D": "Possible NSTEMI / STEMI",
+        "E": "Spontaneous pneumothorax"
+      },
+      "gold_canonical_label": "Panic attack",
+      "allowed_canonical_labels_strict": [
+        "Panic attack"
+      ],
+      "slice_tags_primary": "high_label_variation",
+      "slice_tags_secondary": [],
+      "tagging_rationale": "Assigned based on qualifier/variation lexical markers in pathology label.",
+      "ingestion_notes": "Derived from release_*_patients pre-release CSV; options are top-5 differential labels; gold is PATHOLOGY when present in top-5."
+    }
+  ]
+}
