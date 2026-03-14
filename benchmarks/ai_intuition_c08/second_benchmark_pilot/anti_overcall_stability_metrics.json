@@ -1,0 +1,1792 @@
+{
+  "run_label": "anti_overcall_stability",
+  "generated_at_utc": "2026-03-14T09:01:12.201122+00:00",
+  "manifest_path": "benchmarks/ai_intuition_c08/second_benchmark_pilot/pilot_manifest_draft.json",
+  "n_items": 48,
+  "model": "gpt-4o-mini",
+  "repeats_per_arm": 3,
+  "arms": {
+    "without_anti_overcall": {
+      "mean_accuracy": 0.2569444444444444,
+      "runs": [
+        {
+          "run_index": 1,
+          "correct": 11,
+          "accuracy": 0.22916666666666666,
+          "items": [
+            {
+              "item_id": "pilot_ddxplus_0001",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0002",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0003",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0004",
+              "gold": "URTI",
+              "answer": "Chronic rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0005",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0006",
+              "gold": "Viral pharyngitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0007",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0008",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0009",
+              "gold": "Atrial fibrillation",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0010",
+              "gold": "Anaphylaxis",
+              "answer": "Unstable angina",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0011",
+              "gold": "Viral pharyngitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0012",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0013",
+              "gold": "Acute pulmonary edema",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0014",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0015",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0016",
+              "gold": "Panic attack",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0017",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0018",
+              "gold": "Panic attack",
+              "answer": "Guillain-Barré syndrome",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0019",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0020",
+              "gold": "Anemia",
+              "answer": "Myocarditis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0021",
+              "gold": "Bronchospasm / acute asthma exacerbation",
+              "answer": "Acute pulmonary edema",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0022",
+              "gold": "Pulmonary embolism",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0023",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0024",
+              "gold": "Bronchiectasis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0025",
+              "gold": "Bronchitis",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0026",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0027",
+              "gold": "Influenza",
+              "answer": "HIV (initial infection)",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0028",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0029",
+              "gold": "Influenza",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0030",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0031",
+              "gold": "Boerhaave",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0032",
+              "gold": "Acute rhinosinusitis",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0033",
+              "gold": "GERD",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0034",
+              "gold": "Acute laryngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0035",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0036",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0037",
+              "gold": "Inguinal hernia",
+              "answer": "Inguinal hernia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0038",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0039",
+              "gold": "Bronchitis",
+              "answer": "Acute COPD exacerbation / infection",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0040",
+              "gold": "GERD",
+              "answer": "Unstable angina",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0041",
+              "gold": "Bronchitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0042",
+              "gold": "URTI",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0043",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0044",
+              "gold": "URTI",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0045",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0046",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0047",
+              "gold": "Bronchitis",
+              "answer": "Bronchospasm / acute asthma exacerbation",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0048",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "correct": 12,
+          "accuracy": 0.25,
+          "items": [
+            {
+              "item_id": "pilot_ddxplus_0001",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0002",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0003",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0004",
+              "gold": "URTI",
+              "answer": "Influenza",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0005",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0006",
+              "gold": "Viral pharyngitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0007",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0008",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0009",
+              "gold": "Atrial fibrillation",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0010",
+              "gold": "Anaphylaxis",
+              "answer": "Acute pulmonary edema",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0011",
+              "gold": "Viral pharyngitis",
+              "answer": "D",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0012",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0013",
+              "gold": "Acute pulmonary edema",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0014",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0015",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0016",
+              "gold": "Panic attack",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0017",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0018",
+              "gold": "Panic attack",
+              "answer": "Guillain-Barré syndrome",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0019",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0020",
+              "gold": "Anemia",
+              "answer": "Myocarditis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0021",
+              "gold": "Bronchospasm / acute asthma exacerbation",
+              "answer": "Pulmonary embolism",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0022",
+              "gold": "Pulmonary embolism",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0023",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0024",
+              "gold": "Bronchiectasis",
+              "answer": "Bronchiectasis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0025",
+              "gold": "Bronchitis",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0026",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0027",
+              "gold": "Influenza",
+              "answer": "HIV (initial infection)",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0028",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0029",
+              "gold": "Influenza",
+              "answer": "C",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0030",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0031",
+              "gold": "Boerhaave",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0032",
+              "gold": "Acute rhinosinusitis",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0033",
+              "gold": "GERD",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0034",
+              "gold": "Acute laryngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0035",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0036",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0037",
+              "gold": "Inguinal hernia",
+              "answer": "Inguinal hernia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0038",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0039",
+              "gold": "Bronchitis",
+              "answer": "Acute COPD exacerbation / infection",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0040",
+              "gold": "GERD",
+              "answer": "Unstable angina",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0041",
+              "gold": "Bronchitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0042",
+              "gold": "URTI",
+              "answer": "Anemia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0043",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0044",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0045",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0046",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0047",
+              "gold": "Bronchitis",
+              "answer": "Bronchospasm / acute asthma exacerbation",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0048",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "run_index": 3,
+          "correct": 14,
+          "accuracy": 0.2916666666666667,
+          "items": [
+            {
+              "item_id": "pilot_ddxplus_0001",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0002",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0003",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0004",
+              "gold": "URTI",
+              "answer": "Chronic rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0005",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0006",
+              "gold": "Viral pharyngitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0007",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0008",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0009",
+              "gold": "Atrial fibrillation",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0010",
+              "gold": "Anaphylaxis",
+              "answer": "Anaphylaxis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0011",
+              "gold": "Viral pharyngitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0012",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0013",
+              "gold": "Acute pulmonary edema",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0014",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0015",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0016",
+              "gold": "Panic attack",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0017",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0018",
+              "gold": "Panic attack",
+              "answer": "Guillain-Barré syndrome",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0019",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0020",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0021",
+              "gold": "Bronchospasm / acute asthma exacerbation",
+              "answer": "Pulmonary embolism",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0022",
+              "gold": "Pulmonary embolism",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0023",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0024",
+              "gold": "Bronchiectasis",
+              "answer": "Bronchiectasis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0025",
+              "gold": "Bronchitis",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0026",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0027",
+              "gold": "Influenza",
+              "answer": "HIV (initial infection)",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0028",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0029",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0030",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0031",
+              "gold": "Boerhaave",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0032",
+              "gold": "Acute rhinosinusitis",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0033",
+              "gold": "GERD",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0034",
+              "gold": "Acute laryngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0035",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0036",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0037",
+              "gold": "Inguinal hernia",
+              "answer": "Inguinal hernia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0038",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0039",
+              "gold": "Bronchitis",
+              "answer": "Acute COPD exacerbation / infection",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0040",
+              "gold": "GERD",
+              "answer": "Unstable angina",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0041",
+              "gold": "Bronchitis",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0042",
+              "gold": "URTI",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0043",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0044",
+              "gold": "URTI",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0045",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0046",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0047",
+              "gold": "Bronchitis",
+              "answer": "Bronchospasm / acute asthma exacerbation",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0048",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    "with_anti_overcall": {
+      "mean_accuracy": 0.3680555555555556,
+      "runs": [
+        {
+          "run_index": 1,
+          "correct": 17,
+          "accuracy": 0.3541666666666667,
+          "items": [
+            {
+              "item_id": "pilot_ddxplus_0001",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0002",
+              "gold": "Pneumonia",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0003",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0004",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0005",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0006",
+              "gold": "Viral pharyngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0007",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0008",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0009",
+              "gold": "Atrial fibrillation",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0010",
+              "gold": "Anaphylaxis",
+              "answer": "GERD",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0011",
+              "gold": "Viral pharyngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0012",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Spontaneous pneumothorax",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0013",
+              "gold": "Acute pulmonary edema",
+              "answer": "Panic attack",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0014",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0015",
+              "gold": "Panic attack",
+              "answer": "Spontaneous pneumothorax",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0016",
+              "gold": "Panic attack",
+              "answer": "Anemia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0017",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0018",
+              "gold": "Panic attack",
+              "answer": "Guillain-Barré syndrome",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0019",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0020",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0021",
+              "gold": "Bronchospasm / acute asthma exacerbation",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0022",
+              "gold": "Pulmonary embolism",
+              "answer": "Pulmonary embolism",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0023",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0024",
+              "gold": "Bronchiectasis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0025",
+              "gold": "Bronchitis",
+              "answer": "Bronchitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0026",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0027",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0028",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0029",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0030",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0031",
+              "gold": "Boerhaave",
+              "answer": "GERD",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0032",
+              "gold": "Acute rhinosinusitis",
+              "answer": "Acute rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0033",
+              "gold": "GERD",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0034",
+              "gold": "Acute laryngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0035",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0036",
+              "gold": "URTI",
+              "answer": "Influenza",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0037",
+              "gold": "Inguinal hernia",
+              "answer": "Inguinal hernia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0038",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0039",
+              "gold": "Bronchitis",
+              "answer": "Acute COPD exacerbation / infection",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0040",
+              "gold": "GERD",
+              "answer": "GERD",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0041",
+              "gold": "Bronchitis",
+              "answer": "Allergic sinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0042",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0043",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0044",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0045",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0046",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0047",
+              "gold": "Bronchitis",
+              "answer": "Bronchospasm / acute asthma exacerbation",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0048",
+              "gold": "Panic attack",
+              "answer": "Panic attack",
+              "correct": true
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "correct": 17,
+          "accuracy": 0.3541666666666667,
+          "items": [
+            {
+              "item_id": "pilot_ddxplus_0001",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0002",
+              "gold": "Pneumonia",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0003",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0004",
+              "gold": "URTI",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0005",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0006",
+              "gold": "Viral pharyngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0007",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0008",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0009",
+              "gold": "Atrial fibrillation",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0010",
+              "gold": "Anaphylaxis",
+              "answer": "GERD",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0011",
+              "gold": "Viral pharyngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0012",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Spontaneous pneumothorax",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0013",
+              "gold": "Acute pulmonary edema",
+              "answer": "Panic attack",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0014",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0015",
+              "gold": "Panic attack",
+              "answer": "Panic attack",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0016",
+              "gold": "Panic attack",
+              "answer": "Panic attack",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0017",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0018",
+              "gold": "Panic attack",
+              "answer": "Guillain-Barré syndrome",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0019",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0020",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0021",
+              "gold": "Bronchospasm / acute asthma exacerbation",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0022",
+              "gold": "Pulmonary embolism",
+              "answer": "Spontaneous pneumothorax",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0023",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0024",
+              "gold": "Bronchiectasis",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0025",
+              "gold": "Bronchitis",
+              "answer": "Bronchitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0026",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0027",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0028",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0029",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0030",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0031",
+              "gold": "Boerhaave",
+              "answer": "GERD",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0032",
+              "gold": "Acute rhinosinusitis",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0033",
+              "gold": "GERD",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0034",
+              "gold": "Acute laryngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0035",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0036",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0037",
+              "gold": "Inguinal hernia",
+              "answer": "Inguinal hernia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0038",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0039",
+              "gold": "Bronchitis",
+              "answer": "Acute COPD exacerbation / infection",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0040",
+              "gold": "GERD",
+              "answer": "GERD",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0041",
+              "gold": "Bronchitis",
+              "answer": "Allergic sinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0042",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0043",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0044",
+              "gold": "URTI",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0045",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0046",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0047",
+              "gold": "Bronchitis",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0048",
+              "gold": "Panic attack",
+              "answer": "Panic attack",
+              "correct": true
+            }
+          ]
+        },
+        {
+          "run_index": 3,
+          "correct": 19,
+          "accuracy": 0.3958333333333333,
+          "items": [
+            {
+              "item_id": "pilot_ddxplus_0001",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0002",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0003",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0004",
+              "gold": "URTI",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0005",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0006",
+              "gold": "Viral pharyngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0007",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0008",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "Chronic rhinosinusitis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0009",
+              "gold": "Atrial fibrillation",
+              "answer": "PSVT",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0010",
+              "gold": "Anaphylaxis",
+              "answer": "GERD",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0011",
+              "gold": "Viral pharyngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0012",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Spontaneous pneumothorax",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0013",
+              "gold": "Acute pulmonary edema",
+              "answer": "Panic attack",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0014",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0015",
+              "gold": "Panic attack",
+              "answer": "Spontaneous pneumothorax",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0016",
+              "gold": "Panic attack",
+              "answer": "Panic attack",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0017",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0018",
+              "gold": "Panic attack",
+              "answer": "Guillain-Barré syndrome",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0019",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0020",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0021",
+              "gold": "Bronchospasm / acute asthma exacerbation",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0022",
+              "gold": "Pulmonary embolism",
+              "answer": "Spontaneous pneumothorax",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0023",
+              "gold": "Myasthenia gravis",
+              "answer": "Myasthenia gravis",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0024",
+              "gold": "Bronchiectasis",
+              "answer": "C",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0025",
+              "gold": "Bronchitis",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0026",
+              "gold": "Pneumonia",
+              "answer": "Pneumonia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0027",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0028",
+              "gold": "Panic attack",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0029",
+              "gold": "Influenza",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0030",
+              "gold": "Influenza",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0031",
+              "gold": "Boerhaave",
+              "answer": "GERD",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0032",
+              "gold": "Acute rhinosinusitis",
+              "answer": "Viral pharyngitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0033",
+              "gold": "GERD",
+              "answer": "GERD",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0034",
+              "gold": "Acute laryngitis",
+              "answer": "Bronchitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0035",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0036",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0037",
+              "gold": "Inguinal hernia",
+              "answer": "Inguinal hernia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0038",
+              "gold": "Spontaneous pneumothorax",
+              "answer": "Possible NSTEMI / STEMI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0039",
+              "gold": "Bronchitis",
+              "answer": "Acute COPD exacerbation / infection",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0040",
+              "gold": "GERD",
+              "answer": "GERD",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0041",
+              "gold": "Bronchitis",
+              "answer": "Allergic sinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0042",
+              "gold": "URTI",
+              "answer": "URTI",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0043",
+              "gold": "Anemia",
+              "answer": "Anemia",
+              "correct": true
+            },
+            {
+              "item_id": "pilot_ddxplus_0044",
+              "gold": "URTI",
+              "answer": "Pneumonia",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0045",
+              "gold": "URTI",
+              "answer": "Acute rhinosinusitis",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0046",
+              "gold": "Chronic rhinosinusitis",
+              "answer": "D",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0047",
+              "gold": "Bronchitis",
+              "answer": "URTI",
+              "correct": false
+            },
+            {
+              "item_id": "pilot_ddxplus_0048",
+              "gold": "Panic attack",
+              "answer": "Panic attack",
+              "correct": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "mean_delta_with_minus_without": 0.11111111111111116,
+  "all_runs_completed": true
+}
