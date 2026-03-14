@@ -6,6 +6,7 @@ This folder is the working pilot artifact set for the second benchmark pass on t
 ## Operationally active files
 - `pilot_prompt_policy_note.md` — locked prompt-policy decision note defining the current default contract and wording to keep/avoid.
 - `pilot_status_checkpoint.md` — status checkpoint file for the active pilot workflow (treat as active tracking input when present in the working set).
+- `pilot_rerun_safety_note.md` — quick reference for what is safe to rerun versus artifacts that must not be hand-edited.
 - `prompt_policy.py` — operational prompt-construction module used by policy checks/runners (referenced by smoke-check notes).
 - `check_prompt_policy.py` — fast local guardrail script that validates the operational prompt contract and anti-overcall toggle behavior.
 - `prompt_policy_smoke_test_note.md` — smoke-check intent and boundary note (what is validated and what was intentionally not rerun).
