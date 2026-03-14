@@ -16,6 +16,7 @@ This folder is the working pilot artifact set for the second benchmark pass on t
 
 ## Historical comparison artifacts
 These files are historical comparison artifacts used to justify the current direction; they are **not** the locked operational default by themselves.
+In particular, `run_first_ablation.py` is a historical comparison runner and must not be treated as the locked operational default prompt policy; operational reruns should follow `pilot_prompt_policy_note.md` and use the operational runners listed above.
 
 - `run_first_ablation.py` — first ablation runner that established baseline vs scaffold comparison on the recovered pilot state.
 - `first_ablation_metrics.json` — quantitative results from the first ablation comparison arms.
