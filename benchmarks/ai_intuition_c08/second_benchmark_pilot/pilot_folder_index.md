@@ -27,6 +27,7 @@ In particular, `run_first_ablation.py` is a historical comparison runner and mus
 Expanded-pool work is currently a deferred/closed path. Committed provenance and decision notes record that expanded-pool artifacts were not recoverable from local git refs/reflog/unreachable objects, and the recommended path is to proceed with the preserved second_benchmark_pilot baseline only. Treat expanded-pool reconstruction as optional future work, not an active dependency for current pilot prompt-policy and guardrail execution.
 
 ## Suggested reading order
+Start with the operational-policy files, then consult historical ablation artifacts for context.
 1. `pilot_prompt_policy_note.md` (current locked operational policy)
 2. `prompt_policy_smoke_test_note.md` + `check_prompt_policy.py` (guardrail behavior)
 3. `run_minimal_scaffold_followup.py` and `run_anti_overcall_stability.py` (active runner logic)
@@ -35,3 +36,4 @@ Expanded-pool work is currently a deferred/closed path. Committed provenance and
 
 ## Merge/use guidance
 Use `pilot_prompt_policy_note.md`, `prompt_policy.py`, and runner scripts as policy/runner inputs; treat `*_metrics.json` and `*_report.md` as generated outputs; and treat `*_note.md` decision/provenance documents as governance context for why the current default is locked.
+Use `run_first_ablation.py` only for historical-comparison reproduction; use the active operational runners for operational reruns.
