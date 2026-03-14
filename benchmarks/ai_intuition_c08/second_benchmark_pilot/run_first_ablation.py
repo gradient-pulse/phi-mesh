@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Run first real three-arm DDXPlus ablation on recovered pilot manifest."""
+"""Run first real three-arm DDXPlus ablation on recovered pilot manifest.
+
+Note: this script is intentionally kept as the historical baseline-vs-scaffold
+comparison runner and should not be aligned to the locked operational prompt
+policy used by follow-up pilot runners.
+"""
 
 from __future__ import annotations
 
@@ -54,7 +59,7 @@ def build_baseline_prompt(item: Item) -> str:
     return (
         "You are solving a clinical multiple-choice diagnosis case.\\n"
         "Return JSON only as {\"answer\": \"<diagnosis label>\"}.\\n"
-        "Use the option label text, not option letter.\\n\\n"
+        "Choose the single best diagnosis from the provided options.\\n\\n"
         f"Case: {item.question_stem}\\n"
         f"Options: {json.dumps(item.options, ensure_ascii=False)}"
     )
