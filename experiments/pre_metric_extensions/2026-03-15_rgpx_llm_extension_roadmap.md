@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This note opens a practical RGPx research path for future LLM extensions.
+This note opens a practical RGPx research path for pre-metric LLM extensions.
 
 The core claim is that the next meaningful extension of LLMs will not be another metric-scale attachment (longer context, larger memory, more retrieval, more tools, deeper verifier loops), but a **pre-metric guidance layer** that shapes latent search before symbolic resolution.
 
@@ -318,7 +318,7 @@ Test whether the model can identify structural relations between:
 
 Recommended branch root:
 
-`phi-mesh/experiments/pre_metric_extensions/`
+`experiments/pre_metric_extensions/`
 
 Recommended files to follow this roadmap:
 
@@ -383,9 +383,9 @@ Strong formulation:
 
 ## Immediate next steps
 
-1. Create `phi-mesh/experiments/pre_metric_extensions/README.md`
-2. Create the first proxy note: `proxy_01_patch_vs_rebuild.md`
-3. Create `failure_signatures.md` using the Codex benchmark episode as the first case
+1. Create `experiments/pre_metric_extensions/README.md`
+2. Create `failure_signatures.md` using the Codex benchmark episode as the first case
+3. Create the first proxy note: `proxy_01_patch_vs_rebuild.md`
 4. Draft `rgpx_extension_sketch.md`
 5. Begin explicit study of how gradients may develop in token/weight space and how those latent choreographies might be detected or proxied
 
