@@ -17,3 +17,7 @@ Build the **first pilot subset** with a target of **48 items** (recommended mini
 - Spec and schema are ready.
 - Manifest scaffold is ready.
 - Item population is blocked until an approved external USMLE-style source dataset is ingested.
+
+## Related note
+
+See [Codex session wrap-up](codex_session_wrapup_2026-03-15.md) for the closure note on the post-merge Codex repair cycle around `pilot_folder_index.md`.
