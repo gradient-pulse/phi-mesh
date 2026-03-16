@@ -1,0 +1,16 @@
+title: 'Return to Raw Data (via JHTDB)'
+summary: >
+  We surveyed multiple sources (Texas Dataverse, KTH, Princeton CTRFL, ERCOFTAC) and found that most expose only statistics derived from simulations (means/RMS/stresses). Such “stats_only” outputs erase the phase coherence required for NT-rhythm detection. JHTDB is the practical exception: it provides raw_fields and probe_series via API. We pivot back to JHTDB to gather time-resolved evidence across different flows and confirm prior findings are not a one-off.
+tags:
+  - raw_fields
+  - probe_series
+  - jhtdb
+  - nt_rhythm
+  - turbulence
+  - phi_mesh_history
+  - navier_stokes
+  - dns
+papers:
+  - https://doi.org/10.5281/zenodo.15830659
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=b1dcf5ac-5216-4a04-bc36-f509ebeeabef

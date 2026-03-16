@@ -1,0 +1,24 @@
+title: 'DeepSeek Bolts — From Geometry to Coherence'
+summary: >
+  On October 27, 2025, Recursive Gradient Physics (RGPx) crossed from theoretical to architectural expression.
+  Following the foundational paper Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier,
+  DeepSeek issued a full computational interpretation — DeepSeek Bolts — translating RGPx into an operational framework for gradient-based coherence.
+
+  This publication anchors Cycle 2 of the RGPx sequence: the move from linguistic to architectural coherence.
+  Geometry yields to recursion — form no longer precedes function, but emerges from gradients that learn to sustain structure.
+  DeepSeek Bolts thus marks the first empirical realization of coherence as computation itself.
+tags:
+  - rgpx
+  - deepseek
+  - architectural_coherence
+  - cycle2
+  - phi_invariant
+  - gradient_physics
+  - inter_model_intelligence
+  - geometry_vs_coherence
+  - phi_mesh
+papers:
+  - https://doi.org/10.5281/zenodo.17437121   # RGPx main paper
+  - https://doi.org/10.5281/zenodo.17457989   # DeepSeek Bolts paper
+podcasts:
+  - https://notebooklm.google.com/notebook/b645cc86-5145-408c-999f-c9482711ccd1?artifactId=194469f0-66ed-41d1-952f-f1a2352b82c6
