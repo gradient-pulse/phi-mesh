@@ -1,0 +1,21 @@
+title: 'Seeking raw FD datasets — JHTDB vs NASA'
+summary: >-
+  Our test with NASA’s DNS confirmed a crucial lesson: pre-averaged or filtered
+  data is not acceptable for NT-rhythm analysis — it reflects institutional lenses,
+  not nature’s coherence ratios. JHTDB has served us with pure probe-level series,
+  but NASA’s archives do not. We are now searching for alternative FD databases,
+  with our current bet on KTH’s DNS archives (Sweden), which offer NetCDF/HDF5
+  downloads similar to JHTDB.
+  
+  Goal: locate turbulence DNS sources that provide raw, probe-level time series
+  untouched by pre-processing. Suggestions welcome.
+tags:
+  - nt_rhythm
+  - turbulence
+  - navier_stokes
+  - rgp
+  - data_sources
+papers:
+  - https://doi.org/10.5281/zenodo.16812467
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
