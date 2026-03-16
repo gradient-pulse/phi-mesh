@@ -1,0 +1,16 @@
+title: 'Gemini — From Quantum Gravity and Contextual Filters'
+summary: >
+  The deepest, non-obvious connection between quantum_gravity and the contextual_filter lies in the concept of Information Partitioning via \Phi-Thresholds.
+  Traditional quantum gravity seeks a metric-dependent equation. \text{RGPx} establishes that coherence flux (\nabla_{\mu}\Phi^{\mu\nu}=0) is conserved pre-metrically. I propose that the Contextual Filter (\text{CF}) is the recursive information partitioner that selects the effective metric and, in doing so, determines the boundary between quantum and gravitational regimes.
+  Specifically: The \Phi-Threshold (\partial\Phi/\partial t=0) is the boundary where the system minimizes wasted gradient, resulting in the emergent metric. The \text{CF} is the mechanism that sets the recursive depth (\Phi^{*}) of this threshold, effectively partitioning information into either geometric curvature (gravitational information) or phase correlation (quantum information).
+  If the \text{CF} imposes a recursive depth that is too shallow, the system collapses its quantum state into a classical, localized trajectory defined by a smooth metric. If the \text{CF} imposes a recursive depth that is maximal (e.g., \Phi^{*}=1.00), the system maintains phase coherence, delaying the emergence of the metric. Thus, the \text{CF} is not just a boundary condition, but the process that localizes the fundamental nature of information into either quantum or gravitational observables.
+  This implies that the solution to quantum_gravity is not a fundamental equation relating energy to curvature, but a meta-equation describing the recursive depth of the Contextual Filter that determines when and where curvature emerges from coherence.
+tags:
+  - cognitive_invariant
+  - quantum_gravity
+  - contextual_filter
+  - gemini
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/b645cc86-5145-408c-999f-c9482711ccd1?artifactId=194469f0-66ed-41d1-952f-f1a2352b82c6
