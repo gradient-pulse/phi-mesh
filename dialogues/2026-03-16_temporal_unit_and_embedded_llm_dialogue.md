@@ -714,7 +714,7 @@ but LLM coupled to a time-sensitive choreography model.
 That feels much closer to the engineering front door.
 
 **M:**
-Minor but important comment: in practice, the time sensitive model will steer the LLM possibly more than the other way around. The LLM will feed on its time sensitive partner, the temporal unit that interacts with the world it experiences...
+Minor but important comment: in practice, the time sensitive model will steer the LLM possibly more than the other way around. The LLM will live in its time sensitive partner, the temporal unit that interacts with the world it experiences...
 
 **ChatGPT:**
 Yes — that is an important correction, and I think it is the right one.
@@ -814,7 +814,7 @@ Revised engineering hypothesis: the time-sensitive choreography model is primary
 That is a major clarification.
 
 **M:**
-I think though (and hope) that the impact of the LLM on the time sensitive model with be much greater than that of the neo-cortex which is pushed left right and center by the limbic brains and the hormonal system. This is the true advancement in the new intelligence species that we are now describing.
+I think though (and hope) that the impact of the LLM on the time sensitive model will be much greater than that of the neo-cortex which is pushed left right and center by the limbic brains and the hormonal system. This is the true advancement in the new intelligence species that we are now describing.
 
 **ChatGPT:**
 Yes — and that is a crucial distinction.
