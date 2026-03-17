@@ -64,12 +64,16 @@ def validate_one_event_one_string(events: Iterable[Event]) -> Dict[str, str]:
     for event in events:
         prior = event_to_string.get(event.event_id)
         if prior is not None and prior != event.string_id:
-            raise ValueError(f"Event {event.event_id} has conflicting strings: {prior} vs {event.string_id}")
+            raise ValueError(
+                f"Event {event.event_id} has conflicting strings: {prior} vs {event.string_id}"
+            )
         event_to_string[event.event_id] = event.string_id
     return event_to_string
 
 
-def group_simultaneity_families(events: Iterable[Event], simultaneity_window: int) -> Dict[int, List[str]]:
+def group_simultaneity_families(
+    events: Iterable[Event], simultaneity_window: int
+) -> Dict[int, List[str]]:
     by_tick: Dict[int, List[str]] = defaultdict(list)
     for event in events:
         by_tick[event.arrival_tick].append(event.event_id)
@@ -89,7 +93,12 @@ def group_simultaneity_families(events: Iterable[Event], simultaneity_window: in
     return families
 
 
-def replay_activation(events: List[Event], event_to_string: Dict[str, str], families: Dict[int, List[str]], cfg: Dict[str, object]) -> Dict[str, object]:
+def replay_activation(
+    events: List[Event],
+    event_to_string: Dict[str, str],
+    families: Dict[int, List[str]],
+    cfg: Dict[str, object],
+) -> Dict[str, object]:
     events_by_string: Dict[str, List[str]] = defaultdict(list)
     string_weights: Dict[str, float] = defaultdict(float)
 
@@ -113,27 +122,57 @@ def replay_activation(events: List[Event], event_to_string: Dict[str, str], fami
                 string_weights[sid] += spread_gain
 
     dominant_string = max(string_weights, key=string_weights.get)
-    coherence_score = min(1.0, replay_gain * string_weights.get("coherence_restoration", 0.0))
+    coherence_score = min(
+        1.0, replay_gain * string_weights.get("coherence_restoration", 0.0)
+    )
     plateau_or_cutoff = "cutoff" if coherence_score >= coherence_cutoff else "plateau"
 
     if dominant_string == "coherence_restoration" and coherence_score >= coherence_cutoff:
         mode = "patch"
-        reason = "Coherence restoration is dominant and exceeds cutoff; incremental patching is preferred."
+        reason = (
+            "Coherence restoration is dominant and exceeds cutoff; "
+            "incremental patching is preferred."
+        )
     elif dominant_string in {"contamination_rising", "patch_overreach"}:
         mode = "rebuild"
-        reason = "Contamination-related activity dominates despite coupling; clean rebuild is safer."
+        reason = (
+            "Contamination-related activity dominates despite coupling; "
+            "clean rebuild is safer."
+        )
     else:
         mode = "clarify"
         reason = "No decisive coherence cutoff; clarify intent before additional edits."
 
+    field_state = "more coherent" if plateau_or_cutoff == "cutoff" else "more differentiated"
+
     return {
-        "string_weights": dict(sorted(string_weights.items())),
-        "dominant_longitudinal_string": dominant_string,
-        "active_simultaneity_families": active_family_ids,
+        "vertical_longitudinal_strings": {
+            "weights": dict(sorted(string_weights.items())),
+            "events_by_string": dict(events_by_string),
+            "dominant_longitudinal_string": dominant_string,
+        },
+        "horizontal_simultaneity_families": {
+            "families": families,
+            "active_simultaneity_families": active_family_ids,
+        },
+        "event_clock_corridor": {
+            "arrival_tick_mapping": {e.event_id: e.arrival_tick for e in events},
+            "latest_tick": latest_tick,
+        },
         "coherence_score": round(coherence_score, 4),
         "plateau_cutoff_status": plateau_or_cutoff,
         "recommended_mode": mode,
         "recommended_mode_reason": reason,
+        "compact_textual_summary": {
+            "dominant_longitudinal_string": dominant_string,
+            "active_simultaneity_families": active_family_ids,
+            "field_state": field_state,
+            "text": (
+                f"dominant={dominant_string}; "
+                f"active_families={active_family_ids}; "
+                f"field={field_state}"
+            ),
+        },
         "inspectable": {
             "events_by_string": dict(events_by_string),
             "families": families,
@@ -151,7 +190,16 @@ def main() -> None:
     families = group_simultaneity_families(events, int(cfg["simultaneity_window"]))
     summary = replay_activation(events, event_to_string, families, cfg)
 
-    print(json.dumps({"events": [e.__dict__ for e in events], "event_to_string": event_to_string, "summary": summary}, indent=2))
+    print(
+        json.dumps(
+            {
+                "events": [e.__dict__ for e in events],
+                "event_to_string": event_to_string,
+                "summary": summary,
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":
