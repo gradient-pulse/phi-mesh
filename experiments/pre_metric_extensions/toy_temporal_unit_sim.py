@@ -106,6 +106,7 @@ def replay_activation(
     spread_gain = float(cfg["simultaneity_spread_gain"])
     replay_gain = float(cfg["replay_gain"])
     coherence_cutoff = float(cfg["coherence_cutoff_threshold"])
+    coherence_latest_tick_bonus = float(cfg.get("coherence_latest_tick_bonus", 0.15))
 
     latest_tick = max(e.arrival_tick for e in events)
     for event in events:
@@ -120,6 +121,13 @@ def replay_activation(
             active_family_ids.append(family_id)
             for sid in member_strings:
                 string_weights[sid] += spread_gain
+
+    coherence_has_latest_tick_event = any(
+        event.string_id == "coherence_restoration" and event.arrival_tick == latest_tick
+        for event in events
+    )
+    if coherence_has_latest_tick_event:
+        string_weights["coherence_restoration"] += coherence_latest_tick_bonus
 
     dominant_string = max(string_weights, key=string_weights.get)
     coherence_score = min(
@@ -160,6 +168,9 @@ def replay_activation(
             "latest_tick": latest_tick,
         },
         "coherence_score": round(coherence_score, 4),
+        "coherence_restoration_effective_weight": round(
+            string_weights.get("coherence_restoration", 0.0), 4
+        ),
         "plateau_cutoff_status": plateau_or_cutoff,
         "recommended_mode": mode,
         "recommended_mode_reason": reason,
