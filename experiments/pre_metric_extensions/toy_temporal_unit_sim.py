@@ -1,234 +1,166 @@
-#!/usr/bin/env python3
-"""Minimal proto temporal unit simulator for one inspectable toy case."""
-
-from __future__ import annotations
-
-from dataclasses import dataclass, field
-from pathlib import Path
-import argparse
-import json
-
-try:
-    import yaml  # type: ignore
-except Exception as exc:  # pragma: no cover
-    raise RuntimeError("PyYAML is required for this toy simulator.") from exc
-
-
-KEYWORDS = {
-    "task_arrival": {"target_unclear"},
-    "instruction_received": {"target_unclear", "coherence_restoration"},
-    "clarification_received": {"target_unclear", "coherence_restoration"},
-    "patch_attempt": {"patch_overreach", "coherence_restoration"},
-    "duplication_detected": {"contamination_rising"},
-    "stale_remnant_detected": {"contamination_rising"},
-    "evidence_mismatch_detected": {"patch_overreach", "rebuild_readiness"},
-    "coherence_restored": {"coherence_restoration", "rebuild_readiness"},
-}
-
-
-@dataclass
-class StringState:
-    event_ids: list[str] = field(default_factory=list)
-    weight: float = 0.0
-    last_tick: int = 0
-
-
-class ProtoTemporalUnit:
-    def __init__(self, config: dict):
-        self.cfg = config
-        self.strings: dict[str, StringState] = {}
-        self.event_weights: dict[str, float] = {}
-        self.event_to_strings: dict[str, set[str]] = {}
-        self.simultaneity_families: list[dict] = []
-        self.tick = 0
-        self.active_string_id = ""
-        self.coherence_history: list[float] = []
-        self.processed_events = 0
-
-    def _event_tags(self, event: dict) -> set[str]:
-        return KEYWORDS.get(event["event_type"], {event["event_type"]})
-
-    def _string_tags(self, string_id: str) -> set[str]:
-        return set(string_id.split("+"))
-
-    def _score_attachment(self, event: dict, string_id: str) -> float:
-        event_tags = self._event_tags(event)
-        string_tags = self._string_tags(string_id)
-        overlap = len(event_tags & string_tags) / max(len(event_tags | string_tags), 1)
-        near_bonus = self.cfg["near_tick_bonus"] if self.tick - self.strings[string_id].last_tick <= 1 else 0.0
-        return overlap + near_bonus
-
-    def _pick_strings_for_event(self, event: dict) -> list[str]:
-        if not self.strings:
-            seed = next(iter(self._event_tags(event)))
-            return [seed]
-        scored = [(sid, self._score_attachment(event, sid)) for sid in self.strings]
-        scored.sort(key=lambda x: x[1], reverse=True)
-        best_id, best_score = scored[0]
-        if best_score >= self.cfg["attachment_similarity_threshold"]:
-            return [best_id]
-        return sorted(self._event_tags(event))
-
-    def _apply_decay(self):
-        for eid in list(self.event_weights):
-            self.event_weights[eid] *= self.cfg["decay_factor"]
-
-    def _add_to_simultaneity(self, event: dict):
-        window = self.cfg["simultaneity_window"]
-        family_members = [event["event_id"]]
-        family_strings = set(self.event_to_strings[event["event_id"]])
-
-        for eid, weight in self.event_weights.items():
-            if eid == event["event_id"] or weight <= 0:
-                continue
-            ev_tick = int(eid.split("-e")[-1]) - 1
-            if abs(ev_tick - event["arrival_tick"]) <= window:
-                family_members.append(eid)
-                family_strings.update(self.event_to_strings.get(eid, set()))
-
-        self.simultaneity_families.append(
-            {
-                "slice_tick": event["arrival_tick"],
-                "member_event_ids": sorted(set(family_members)),
-                "member_string_ids": sorted(family_strings),
-            }
-        )
-
-    def _replay(self, start_string: str) -> set[str]:
-        active = {start_string}
-        frontier = {start_string}
-        for _ in range(self.cfg["spread_depth"]):
-            expanded = set()
-            for family in reversed(self.simultaneity_families):
-                if frontier & set(family["member_string_ids"]):
-                    expanded.update(family["member_string_ids"])
-            expanded -= active
-            if not expanded:
-                break
-            active.update(expanded)
-            frontier = expanded
-
-        for sid in active:
-            self.strings[sid].weight += self.cfg["replay_gain"]
-            for eid in self.strings[sid].event_ids:
-                self.event_weights[eid] = self.event_weights.get(eid, 0.0) + self.cfg["simultaneity_spread_gain"]
-        return active
-
-    def _coherence_score(self) -> float:
-        total = sum(max(s.weight, 0.0) for s in self.strings.values())
-        if total <= 0:
-            return 0.0
-        dominant = max(s.weight for s in self.strings.values())
-        return dominant / total
-
-    def _mode_from_score(self, score: float) -> str:
-        mode = "hold"
-        for name, threshold in sorted(self.cfg["action_mode_thresholds"].items(), key=lambda kv: kv[1]):
-            if score >= threshold:
-                mode = name
-        return mode
-
-    def ingest(self, case_id: str, event: dict):
-        self.tick = max(self.tick, event["arrival_tick"])
-        self._apply_decay()
-        self.processed_events += 1
-
-        for sid in self._pick_strings_for_event(event):
-            self.strings.setdefault(sid, StringState())
-            self.strings[sid].event_ids.append(event["event_id"])
-            self.strings[sid].weight += event.get("payload_strength", 1.0)
-            self.strings[sid].last_tick = event["arrival_tick"]
-            self.event_to_strings.setdefault(event["event_id"], set()).add(sid)
-
-        self.event_weights[event["event_id"]] = event.get("payload_strength", 1.0)
-        self.active_string_id = sorted(self.event_to_strings[event["event_id"]])[0]
-
-        self._add_to_simultaneity(event)
-        self._replay(self.active_string_id)
-
-        coherence = self._coherence_score()
-        self.coherence_history.append(coherence)
-        plateau = (
-            self.processed_events >= self.cfg["coherence_min_events"]
-            and len(self.coherence_history) >= self.cfg["coherence_min_steps"]
-            and all(c >= self.cfg["coherence_cutoff_threshold"] for c in self.coherence_history[-self.cfg["coherence_min_steps"] :])
-        )
-
-        if plateau:
-            return
-
-    def summary(self, case_id: str) -> dict:
-        coherence = self._coherence_score()
-        dominant_id = max(self.strings, key=lambda sid: self.strings[sid].weight)
-        active_events = [eid for eid, w in self.event_weights.items() if w >= 0.4]
-        tensions = []
-        if coherence < 0.55:
-            tensions.append("field is fragmented across competing strings")
-        if any("contamination_rising" in s for s in self.strings):
-            tensions.append("contamination pressure still present")
-
-        plateau = (
-            self.processed_events >= self.cfg["coherence_min_events"]
-            and len(self.coherence_history) >= self.cfg["coherence_min_steps"]
-            and all(c >= self.cfg["coherence_cutoff_threshold"] for c in self.coherence_history[-self.cfg["coherence_min_steps"] :])
-        )
-
-        return {
-            "clock_tick": self.tick,
-            "case_id": case_id,
-            "active_string_id": self.active_string_id,
-            "choreography_strings": {
-                sid: {
-                    "event_ids": st.event_ids,
-                    "weight": round(st.weight, 3),
-                    "last_tick": st.last_tick,
-                }
-                for sid, st in self.strings.items()
-            },
-            "simultaneity_families": self.simultaneity_families,
-            "event_weights": {eid: round(w, 3) for eid, w in self.event_weights.items()},
-            "active_events": sorted(active_events),
-            "dominant_basin": {"string_id": dominant_id, "weight": round(self.strings[dominant_id].weight, 3)},
-            "unresolved_tensions": tensions,
-            "coherence_score": round(coherence, 3),
-            "plateau_state": plateau,
-            "recommended_mode": self._mode_from_score(coherence),
-        }
-
-
-def load_yaml(path: Path) -> dict:
-    with path.open("r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Run minimal proto temporal unit simulation.")
-    parser.add_argument(
-        "--config",
-        default="experiments/pre_metric_extensions/proto_temporal_unit_config.yml",
-    )
-    parser.add_argument(
-        "--case",
-        default="experiments/pre_metric_extensions/toy_cases/document_repair_case.yml",
-    )
-    args = parser.parse_args()
-
-    cfg = load_yaml(Path(args.config))
-    case = load_yaml(Path(args.case))
-
-    unit = ProtoTemporalUnit(cfg)
-    ordered_events = sorted(case["events"], key=lambda e: e["arrival_tick"])
-
-    for event in ordered_events:
-        event = {**event, "case_id": case["case_id"]}
-        unit.ingest(case["case_id"], event)
-        if unit.processed_events >= cfg["coherence_min_events"] and len(unit.coherence_history) >= cfg["coherence_min_steps"] and all(
-            c >= cfg["coherence_cutoff_threshold"] for c in unit.coherence_history[-cfg["coherence_min_steps"] :]
-        ):
-            break
-
-    print(json.dumps(unit.summary(case["case_id"]), indent=2))
-
-
-if __name__ == "__main__":
-    main()
+diff --git a/experiments/pre_metric_extensions/toy_temporal_unit_sim.py b/experiments/pre_metric_extensions/toy_temporal_unit_sim.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..5bb31f473f65583b19a4a3bdda31fa29afa4c063
+--- /dev/null
++++ b/experiments/pre_metric_extensions/toy_temporal_unit_sim.py
+@@ -0,0 +1,160 @@
++#!/usr/bin/env python3
++"""Minimal, inspectable proto temporal unit toy simulation.
++
++Design constraints encoded here:
++- events carry explicit `arrival_tick` values (no tick parsing from event_id)
++- each event attaches to exactly one longitudinal string
++- cross-string coupling only occurs through simultaneity families
++"""
++
++from __future__ import annotations
++
++import json
++from collections import defaultdict
++from dataclasses import dataclass
++from typing import Dict, Iterable, List, Set
++
++
++SIMULTANEITY_WINDOW = 0  # same-tick families for maximal inspectability
++
++
++@dataclass(frozen=True)
++class Event:
++    event_id: str
++    event_type: str
++    arrival_tick: int
++    string_id: str
++
++
++def build_events() -> List[Event]:
++    """Toy, clocked stream for document/file-repair choreography."""
++    return [
++        Event("e1", "task_arrival", 1, "target_unclear"),
++        Event("e2", "instruction_received", 1, "target_unclear"),
++        Event("e3", "patch_attempt", 2, "patch_overreach"),
++        Event("e4", "stale_remnant_detected", 2, "contamination_rising"),
++        Event("e5", "evidence_mismatch_detected", 3, "contamination_rising"),
++        Event("e6", "clarification_received", 3, "coherence_restoration"),
++        Event("e7", "rebuild_triggered", 4, "rebuild_readiness"),
++        Event("e8", "coherence_restored", 4, "coherence_restoration"),
++    ]
++
++
++def validate_one_event_one_string(events: Iterable[Event]) -> Dict[str, str]:
++    """Ensure strict one-event-to-one-string attachment."""
++    event_to_string: Dict[str, str] = {}
++    for event in events:
++        prior = event_to_string.get(event.event_id)
++        if prior is not None and prior != event.string_id:
++            raise ValueError(
++                f"Event {event.event_id} has conflicting strings: {prior} vs {event.string_id}"
++            )
++        event_to_string[event.event_id] = event.string_id
++    return event_to_string
++
++
++def group_simultaneity_families(events: Iterable[Event]) -> Dict[int, List[str]]:
++    """Build same/near-same tick families from explicit arrival_tick values."""
++    by_tick: Dict[int, List[str]] = defaultdict(list)
++    for event in events:
++        by_tick[event.arrival_tick].append(event.event_id)
++
++    if SIMULTANEITY_WINDOW <= 0:
++        return {tick: ids for tick, ids in by_tick.items() if len(ids) > 1}
++
++    families: Dict[int, List[str]] = {}
++    ticks = sorted(by_tick)
++    for family_id, tick in enumerate(ticks, start=1):
++        members: List[str] = []
++        for other_tick in ticks:
++            if abs(other_tick - tick) <= SIMULTANEITY_WINDOW:
++                members.extend(by_tick[other_tick])
++        if len(members) > 1:
++            families[family_id] = sorted(set(members))
++    return families
++
++
++def replay_activation(
++    events: List[Event],
++    event_to_string: Dict[str, str],
++    families: Dict[int, List[str]],
++) -> Dict[str, object]:
++    """Replay dominant activity with cross-string spread only via families."""
++    events_by_id = {e.event_id: e for e in events}
++    events_by_string: Dict[str, List[str]] = defaultdict(list)
++    string_weights: Dict[str, float] = defaultdict(float)
++
++    for event in events:
++        events_by_string[event.string_id].append(event.event_id)
++
++    # Longitudinal weighting inside each string.
++    for event in events:
++        recency_weight = 1.0 / (1 + (events[-1].arrival_tick - event.arrival_tick))
++        string_weights[event.string_id] += recency_weight
++
++    # Horizontal coupling only via simultaneity families.
++    active_family_ids: List[int] = []
++    for family_id, member_ids in families.items():
++        member_strings = {event_to_string[mid] for mid in member_ids}
++        if len(member_strings) > 1:
++            active_family_ids.append(family_id)
++            for sid in member_strings:
++                string_weights[sid] += 0.5
++
++    dominant_string = max(string_weights, key=string_weights.get)
++
++    # Determine suggestion with simple inspectable rule.
++    if dominant_string == "coherence_restoration":
++        mode = "patch"
++        reason = (
++            "coherence_restoration dominates and is reinforced by active cross-string "
++            "simultaneity families, so incremental repair is preferred"
++        )
++    elif dominant_string in {"contamination_rising", "patch_overreach"}:
++        mode = "rebuild"
++        reason = (
++            "contamination-focused longitudinal activity dominates despite coupling, "
++            "so a clean rebuild is safer"
++        )
++    else:
++        mode = "clarify"
++        reason = (
++            "no contamination-dominant basin; preserve optionality with clarification "
++            "before major edits"
++        )
++
++    return {
++        "string_weights": dict(sorted(string_weights.items())),
++        "dominant_longitudinal_string": dominant_string,
++        "active_simultaneity_families": active_family_ids,
++        "recommended_mode": mode,
++        "recommended_mode_reason": reason,
++        "inspectable": {
++            "events_by_string": dict(events_by_string),
++            "families": families,
++            "arrival_tick_mapping": {e.event_id: e.arrival_tick for e in events},
++        },
++    }
++
++
++def main() -> None:
++    events = build_events()
++    event_to_string = validate_one_event_one_string(events)
++    families = group_simultaneity_families(events)
++    summary = replay_activation(events, event_to_string, families)
++
++    print(
++        json.dumps(
++            {
++                "events": [e.__dict__ for e in events],
++                "event_to_string": event_to_string,
++                "summary": summary,
++            },
++            indent=2,
++            sort_keys=False,
++        )
++    )
++
++
++if __name__ == "__main__":
++    main()
