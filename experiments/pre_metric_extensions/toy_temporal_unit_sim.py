@@ -135,11 +135,23 @@ def replay_activation(
     )
     plateau_or_cutoff = "cutoff" if coherence_score >= coherence_cutoff else "plateau"
 
+    recovery_override_applied = False
     if dominant_string == "coherence_restoration" and coherence_score >= coherence_cutoff:
         mode = "patch"
         reason = (
             "Coherence restoration is dominant and exceeds cutoff; "
             "incremental patching is preferred."
+        )
+    elif (
+        dominant_string in {"contamination_rising", "patch_overreach"}
+        and coherence_has_latest_tick_event
+        and coherence_score >= 0.45
+    ):
+        recovery_override_applied = True
+        mode = "clarify"
+        reason = (
+            "Contamination-related activity dominates, but a latest-tick coherence "
+            "restoration signal with sufficient coherence suggests clarifying before rebuild."
         )
     elif dominant_string in {"contamination_rising", "patch_overreach"}:
         mode = "rebuild"
@@ -172,6 +184,7 @@ def replay_activation(
             string_weights.get("coherence_restoration", 0.0), 4
         ),
         "plateau_cutoff_status": plateau_or_cutoff,
+        "recovery_override_applied": recovery_override_applied,
         "recommended_mode": mode,
         "recommended_mode_reason": reason,
         "compact_textual_summary": {
