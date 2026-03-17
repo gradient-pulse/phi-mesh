@@ -9,6 +9,7 @@ coherence_cutoff_threshold: 0.78
 coherence_min_steps: 2
 coherence_min_events: 4
 max_ticks: 32
+coherence_latest_tick_bonus: 0.15
 action_mode_thresholds:
   hold: 0.0
   observe: 0.25
