@@ -147,8 +147,7 @@ Which participant emitted it.
 #### `tick`
 When the emission occurred.
 
-```In this branch, tick means a local temporal update index, not a Narrative Tick in the stronger o3 sense. Narrative Ticks mark larger irreversible structural turns; participant/emission ticks are micro-temporal indices inside unfolding choreographies.
-```
+> In this branch, tick means a local temporal update index, not a Narrative Tick in the stronger o3 sense. Narrative Ticks mark larger irreversible structural turns; participant/emission ticks are micro-temporal indices inside unfolding choreographies.
 
 #### `activation_snapshot`
 Participant activation at emission time.
