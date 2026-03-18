@@ -326,6 +326,68 @@ This was one of the most powerful unifications in the dialogue.
 
 ---
 
+## Vertical choreography as participant
+
+A late clarification in this dialogue materially refined the ontology of the temporal-unit architecture.
+
+The swarm participant should not be treated as an event.  
+An event is better understood as something a participant emits.
+
+The true participant is the **vertical choreography**:
+- a temporally persistent local process
+- capable of strengthening, weakening, coupling, restarting, and resolving
+- producing observable events as traces of its unfolding
+
+This yields a cleaner architecture:
+
+- **participant** = vertical choreography
+- **event** = participant emission
+- **horizontal family** = coupling episode among participants through coincident or near-coincident emissions
+- **coherence** = the degree to which participants synchronize into a viable common temporality
+
+This was a major clarification because it shifted the swarm from being imagined as a cloud of event-records to being understood as an ecology of active processes.
+
+A vertical choreography can:
+- persist through time
+- enter and leave coupling relations
+- survive partial disruption
+- restart in a new UD cycle
+- and carry its own activation, persistence, and decay
+
+An isolated event cannot do this.
+
+This correction also made local coherence much clearer.  
+Local coherence is not primarily event-to-event agreement. It is **participant-to-participant viable coupling**.
+
+More precisely:
+
+> Coherence between participants is the degree to which vertical choreographies synchronize into a viable common temporality.
+
+That means participants are coherent when their emitted events:
+- line up in time sufficiently well
+- reinforce rather than destructively disrupt one another
+- help sustain a shared unfolding
+- and do not drift so far apart that common temporality collapses
+
+This also produced a much stronger picture of coordinated movement.
+
+Hand, arm, wrist, finger, grip, balance, and eye-hand dynamics can now be understood as **resonating vertical choreographies** inside the temporal unit. Their emitted events couple horizontally through same-time or near-time alignment, and the resulting resonance yields fluid action.
+
+This led to a strong formulation:
+
+> Movement is not issued as a single order; it emerges as resonance among many temporally unfolding choreographies.
+
+In this refined picture:
+- **clumsiness** reflects poor synchronization among participant choreographies
+- **grace** reflects high coherence among choreography-participants
+- **skill** reflects stable resonant patterns that can be re-entered quickly
+- **muscle memory** reflects retained dispositions for re-forming such resonances
+
+This clarification is one of the most important in the March sequence because it identifies the correct unit of agency for the temporal swarm:
+not the event, but the vertical choreography that persists through time and emits events as it becomes.
+
+---
+
 ## Consequences for the temporal unit architecture
 
 By the end of the dialogue, the temporal unit had become more than:
@@ -447,6 +509,26 @@ The temporal unit is no longer just the way for an LLM to remember better. It is
 
 **ChatGPT:**  
 “The price of intuition and creativity may be the proliferation of partially traceable choreographic couplings; sleep is the coherence-restoring phase that prevents this richness from collapsing into entropic drift.”
+
+---
+
+### Excerpt 8 — The true participant
+
+**M:**  
+“Aha... but what are participants? Well, an event is not a participant, it is what the participant ‘produces’! A vertical choreography IS the participant...”
+
+**ChatGPT:**  
+“Events are not the swarm participants; they are the expressions of swarm participants. The real participants are vertical choreographies that persist through time and couple through the events they emit.”
+
+---
+
+### Excerpt 9 — Resonating choreographies
+
+**M:**  
+“And now all of a sudden we see the coordinated hand and arm muscle movements being simulated in the brain's temporal unit as resonating choreographies.”
+
+**ChatGPT:**  
+“Movement is not issued as a single order; it emerges as resonance among many temporally unfolding choreographies.”
 
 ---
 
