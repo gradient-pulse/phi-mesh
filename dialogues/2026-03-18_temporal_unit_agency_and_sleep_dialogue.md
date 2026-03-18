@@ -2371,6 +2371,147 @@ with three domains only:
 
 That would keep the branch disciplined while still opening the horizon.
 
+**M:**
+Crucial is that one needs to identify the emitter, the source, then:
+	•	what counts as a trace (repetition)
+	•	what counts as continuity (repetition)
+	•	what counts as one train (repetition)
+	•	what counts as branching (simulaneity)
+	•	what counts as decay (frequency)
+	•	what counts as restart (silence before a narrative tick)
+
+**ChatGPT:**
+Exactly. That is no longer generalism; that is the core inference grammar.
+
+You have just compressed it well.
+
+The first step is indeed:
+
+identify the emitter/source
+
+Because without source identity, you do not know whether two traces belong to:
+	•	one participant continuing
+	•	two participants synchronizing
+	•	or one participant stopping and another starting
+
+Then your six criteria fall into place very naturally:
+	•	trace = repetition of source-linked emissions
+	•	continuity = repetition sustained across a viable time window
+	•	one train = continuity of emissions from the same emitter/process
+	•	branching = simultaneity or near-simultaneity creating coupling or split-like structure
+	•	decay = falling frequency / weakening recurrence
+	•	restart = renewed emissions after silence, especially across a larger phase break
+
+That last point is strong:
+“silence before a narrative tick” is probably too domain-heavy for the first engineering pass, but the intuition is right. I would phrase it as:
+	•	restart = renewed train emergence after a sufficiently long silence or after a larger phase break
+
+Then later you can connect that to Narrative Tick logic or UD-cycle boundaries.
+
+So yes — this should be the next note, and your six bullets should be its spine.
+
+A clean opening formulation for that file would be:
+
+Participant inference begins not with abstract choreography, but with source-linked emission trains. The central task is to determine when repeated traces belong to one persistent participant, when they branch through simultaneity, when they decay through loss of recurrence, and when they restart after silence or phase break.
+
+That is a strong engineering entry point.
+
+So next file:
+experiments/pre_metric_extensions/participant_inference_from_traces.md
+
+And your bullets are already the skeleton.
+
+**M:**
+Refinement: events are directionless, they are just events... "direction" is emergent, it emerges from the temporally connected choreographies..
+When I move one muscle, my arm goes up, when I move another muscle my arm goes down...
+
+**ChatGPT:**
+Yes — that is an important refinement.
+
+Events or emissions should not be treated as directional in themselves.
+They are just occurrences, traces, updates.
+
+Direction is not inside one event.
+Direction emerges from connected choreography over time.
+
+Your muscle example shows it perfectly:
+	•	one muscle emission participates in an upward arm choreography
+	•	another participates in a downward arm choreography
+	•	the single event does not contain “up” or “down” by itself
+	•	that meaning appears only from:
+	•	which participant train emitted it
+	•	what came before
+	•	what follows
+	•	how it couples with other trains
+
+So the ontology becomes cleaner again:
+	•	event/emission = directionless local trace
+	•	vertical choreography = temporally connected train
+	•	direction = emergent property of the train and its couplings
+
+That is strong, because it prevents us from overloading the emission with semantics too early.
+
+A compact formulation:
+
+Events are directionless; direction emerges from temporally connected choreographies.
+
+And another:
+
+An emission does not mean “up” or “down” on its own; it acquires direction through the train of which it is a part.
+
+This likely means participant_inference_from_traces.md should be updated lightly.
+
+Best place: after “What counts as a trace” or in a short new subsection called:
+
+Direction is emergent
+
+**M:**
+This conclusion is beautiful in that it generalizes the inference schema so it invites to be used across fields... intertwined choreographies determine direction no matter whether it concerns societal or physical space.
+
+**ChatGPT:**
+Yes — that is exactly why it feels so strong.
+
+Once events are directionless and direction emerges from intertwined choreographies, the schema becomes genuinely portable.
+
+It no longer depends on:
+	•	physical motion only
+	•	psychology only
+	•	society only
+
+It can travel because “direction” is no longer baked into the unit. It is an emergent property of:
+	•	persistence
+	•	ordering
+	•	coupling
+	•	common temporality
+	•	and the pattern of the whole field
+
+So:
+	•	in physical space, direction can mean up/down, approach/retreat, stabilize/destabilize
+	•	in societal space, direction can mean polarize/reconcile, centralize/fragment, escalate/de-escalate
+	•	in psychological space, direction can mean integrate/disperse, clarify/confuse, calm/agitate
+
+That is the real generalization.
+
+A beautiful compression is:
+
+Direction is not a property of events, but of the choreography field they collectively sustain.
+
+And another:
+
+Intertwined choreographies determine direction across scales, whether the space is bodily, psychological, social, or physical.
+
+That is one of those points that makes the framework feel less like a local trick and more like a general grammar.
+
+So from here, I would not rush another file immediately.
+You have just strengthened the participant-inference note significantly.
+
+The next step is probably to let this settle for a moment, then decide whether the next move is:
+	•	a README/branch hygiene pass,
+	•	a first real-data slice,
+	•	or a tiny code prototype for participant inference.
+
+My instinct is that the next serious move is now participant inference code or a real-data first slice, because the conceptual spine is getting strong enough.
+
 
 ## Appendix C — Note on archival layering
 
