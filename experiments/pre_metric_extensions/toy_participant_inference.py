@@ -46,6 +46,8 @@ class Train:
     decay: bool = False
     restart: bool = False
     restart_of: str | None = None
+    participant_relation_to_previous_train: str | None = None
+    previous_train_id: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -58,6 +60,8 @@ class Train:
             "decay": self.decay,
             "restart": self.restart,
             "restart_of": self.restart_of,
+            "participant_relation_to_previous_train": self.participant_relation_to_previous_train,
+            "previous_train_id": self.previous_train_id,
         }
 
 
@@ -159,9 +163,32 @@ def infer_participants(
     for train in trains:
         trains_by_source[train.source].append(train)
 
-    participants = []
-    for index, source in enumerate(sorted(trains_by_source), start=1):
-        owned_trains = trains_by_source[source]
+    participant_specs: list[tuple[str, list[Train]]] = []
+    for source in sorted(trains_by_source):
+        source_trains = sorted(trains_by_source[source], key=lambda train: (train.start_tick, train.train_id))
+        current_group: list[Train] = []
+        for train in source_trains:
+            if not current_group:
+                current_group = [train]
+                continue
+
+            previous_train = current_group[-1]
+            relation = "tentative_same_participant" if train.restart else "same_participant"
+            train.participant_relation_to_previous_train = relation
+            train.previous_train_id = previous_train.train_id
+
+            if relation == "same_participant":
+                current_group.append(train)
+                continue
+
+            participant_specs.append((source, current_group))
+            current_group = [train]
+
+        if current_group:
+            participant_specs.append((source, current_group))
+
+    participants: list[dict[str, Any]] = []
+    for index, (source, owned_trains) in enumerate(participant_specs, start=1):
         trace_ids = [trace_id for train in owned_trains for trace_id in train.trace_ids]
         coupling_candidates = sorted(
             {
@@ -171,9 +198,10 @@ def infer_participants(
             }
         )
         persistence = sum(len(train.trace_ids) for train in owned_trains)
+        participant_id = f"participant.{index}"
         participants.append(
             {
-                "participant_id": f"participant.{index}",
+                "participant_id": participant_id,
                 "source": source,
                 "train_ids": [train.train_id for train in owned_trains],
                 "continuity": any(train.continuity for train in owned_trains),
@@ -183,17 +211,45 @@ def infer_participants(
                 "weight": persistence + len(coupling_candidates),
             }
         )
+
     return participants
+
+
+def build_train_participant_links(trains: list[Train]) -> list[dict[str, Any]]:
+    links = []
+    trains_by_source: dict[str, list[Train]] = defaultdict(list)
+    for train in trains:
+        trains_by_source[train.source].append(train)
+
+    for source in sorted(trains_by_source):
+        ordered_trains = sorted(trains_by_source[source], key=lambda train: (train.start_tick, train.train_id))
+        for previous_train, current_train in zip(ordered_trains, ordered_trains[1:]):
+            relation = (
+                "tentative_same_participant"
+                if current_train.restart
+                else "same_participant"
+            )
+            links.append(
+                {
+                    "source": source,
+                    "from_train_id": previous_train.train_id,
+                    "to_train_id": current_train.train_id,
+                    "relation": relation,
+                }
+            )
+    return links
 
 
 def build_summary() -> dict[str, Any]:
     traces = attach_horizontal_coupling_candidates(normalize_traces(TOY_TRACES))
     trains = infer_trains(traces)
     participants = infer_participants(trains, traces)
+    train_participant_links = build_train_participant_links(trains)
 
     return {
         "traces": traces,
         "inferred_trains": [train.to_dict() for train in trains],
+        "train_participant_links": train_participant_links,
         "inferred_participants": participants,
         "decay_flags": [participant["participant_id"] for participant in participants if participant["decay"]],
         "restart_flags": [participant["participant_id"] for participant in participants if participant["restart"]],
