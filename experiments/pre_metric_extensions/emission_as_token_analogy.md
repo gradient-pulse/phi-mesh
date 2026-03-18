@@ -181,6 +181,39 @@ This analogy suggests the following practical decomposition.
 
 This layered picture should guide future simulation code.
 
+## Emission trains
+
+A useful refinement is to think of a choreography not as a mere list of events, but as a **train of emissions** unfolding through time.
+
+This helps distinguish the temporal-unit path from the token path more clearly.
+
+In the LLM setting:
+- tokens gain relevance through effective contextual use
+
+In the temporal-unit setting:
+- emissions gain weight through the persistence of their train
+- and through synchronization with other trains
+
+So a compact bridge is:
+
+> Tokens are weighted by contextual effectiveness; emissions are weighted by train persistence and cross-train synchronization.
+
+This suggests the following terminology:
+
+- **participant** = vertical choreography / ongoing process
+- **emission train** = ordered unfolding of emissions from that participant
+- **weight** = function of vertical persistence plus horizontal synchronization
+- **coherence** = viable common temporality among trains
+
+“Train” is useful because it emphasizes:
+- continuity
+- ordered emission
+- momentum
+- coupling with other unfolding lines
+- and possible fading, restart, or derailment
+
+This is a helpful engineering image for future simulation work.
+
 ---
 
 ## Why this bridge is useful
