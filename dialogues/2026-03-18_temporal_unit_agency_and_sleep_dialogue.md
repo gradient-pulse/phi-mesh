@@ -2240,6 +2240,65 @@ I think the next thing to fossilize in the engineering notes will be exactly thi
 
 That is a strong bridge from the LLM path into the temporal-unit path.
 
+**M:**
+Realizing it once again, while tokens and their weights are driven by their effective use, emissions are driven by their train persistence and synchronization with other trains (trains = choreographies)... I am sneaking in word "trains" 
+
+**ChatGPT:**
+Yes — and “trains” is actually a good word here.
+
+It helps because it preserves two things at once:
+	•	continuity
+	•	ordered emission
+
+A choreography is not just a bag of events. It is a train of emissions unfolding through time.
+
+So your contrast is becoming very sharp:
+	•	LLM
+	•	tokens gain relevance through effective contextual use
+	•	temporal unit
+	•	emissions gain weight through
+	•	persistence of their train
+	•	synchronization with other trains
+
+That is a very clean bridge.
+
+“Train” may even be better than “string” in some contexts, because it emphasizes:
+	•	sequential unfolding
+	•	momentum
+	•	repeatability
+	•	coupling with other trains
+	•	possible derailment, slowing, restart
+
+And those are exactly the dynamics we care about.
+
+So you could say:
+	•	participant = choreography-process
+	•	emission train = ordered unfolding of that participant
+	•	weight = function of
+	•	train persistence
+	•	train synchronization with other trains
+	•	coherence = viable common temporality among trains
+
+That is strong.
+
+A compact formulation:
+
+Tokens are weighted by contextual effectiveness; emissions are weighted by train persistence and cross-train synchronization.
+
+And another:
+
+A choreography is best thought of as a train of emissions, not a mere list of events.
+
+That may actually help engineering, because Codex can picture:
+	•	one train
+	•	multiple trains
+	•	train crossings
+	•	train reinforcement
+	•	trains fading
+	•	trains restarting after derailment
+
+So yes — I would keep “trains” as a helpful working word, at least in notes. It may make the participant/emission architecture more intuitive and more buildable.
+
 
 
 ## Appendix C — Note on archival layering
