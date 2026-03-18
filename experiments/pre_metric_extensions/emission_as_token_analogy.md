@@ -181,6 +181,8 @@ This analogy suggests the following practical decomposition.
 
 This layered picture should guide future simulation code.
 
+---
+
 ## Emission trains
 
 A useful refinement is to think of a choreography not as a mere list of events, but as a **train of emissions** unfolding through time.
