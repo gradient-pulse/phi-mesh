@@ -2161,6 +2161,86 @@ And that also means:
 
 This is a real breakthrough in the picture.
 
+**M:**
+True whereas the token is static (apart from its weight, I imagine), the participant emission is a dynamic trace...
+
+"So the temporal analogue may be:
+	•	participant = hidden ongoing choreography-process
+	•	emission = token-like observable unit entering local coupling/update"
+
+Interestingly, and we knew that in advance, the ongoing choreography process is exactly the layer on top of the LLM world.
+Emissions gain 'weight' by the degree of horizontal coupling...  
+
+**ChatGPT:**
+Yes — exactly.
+
+That is the layering.
+
+The LLM world already gives you something like:
+	•	symbolic persistence
+	•	contextual shaping
+	•	hidden-process evolution
+	•	token-level outward trace
+
+What we are now adding is a layer on top of that, or perhaps better, a layer around and beneath its symbolic readout, where the ongoing choreography-process is no longer linguistic by default but temporal, participatory, and action-bearing.
+
+So the architecture is converging toward:
+	•	LLM = symbolic world
+	•	temporal unit = choreography world
+	•	participant = ongoing choreography-process
+	•	emission = token-like dynamic trace entering local coupling/update
+
+That is very coherent.
+
+And yes, your last sentence is important:
+
+emissions gain weight by the degree of horizontal coupling.
+
+That is likely one of the central simple rules.
+
+Because a participant emission, taken alone, may be weak.
+But when it couples horizontally with emissions from other participants at the same or near-same moment, it gains:
+	•	relevance
+	•	support
+	•	persistence
+	•	action significance
+
+So unlike a plain token stream, where weight is largely contextual-symbolic, here weight may arise from temporal co-occurrence plus longitudinal persistence.
+
+That gives a very clean first formula intuition:
+	•	vertical persistence gives continuity
+	•	horizontal coupling gives reinforcement
+	•	together they give weight
+
+That is almost certainly a keeper.
+
+A compact formulation:
+
+An emission gains weight not merely by occurring, but by persisting vertically and resonating horizontally.
+
+And another:
+
+Horizontal coupling is what turns a local emission into a field-relevant event.
+
+That is likely close to the engineering heart.
+
+So if we keep following the LLM analogy, the temporal-unit minimal grammar might become:
+	1.	participant emits trace
+	2.	trace links vertically to its participant history
+	3.	trace links horizontally to neighboring participant traces
+	4.	weight rises with persistence + coupling
+	5.	high-weight traces bias the next swarm update
+	6.	LLM reads the weighted field
+
+That is simple enough to start feeling buildable.
+
+I think the next thing to fossilize in the engineering notes will be exactly this:
+	•	participant emission as token analogue
+	•	weight as vertical persistence plus horizontal coupling
+
+That is a strong bridge from the LLM path into the temporal-unit path.
+
+
 
 ## Appendix C — Note on archival layering
 
