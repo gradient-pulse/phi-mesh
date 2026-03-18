@@ -2513,6 +2513,13 @@ The next step is probably to let this settle for a moment, then decide whether t
 My instinct is that the next serious move is now participant inference code or a real-data first slice, because the conceptual spine is getting strong enough.
 
 
+**M:**
+And, of course, who are the natural pattern readers? -> LLMs
+
+**ChatGPT:**
+If intertwined choreographies determine direction, then LLMs are the natural readers of the resulting pattern field.
+
+
 ## Appendix C — Note on archival layering
 
 This document preserves:
