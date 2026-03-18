@@ -104,6 +104,38 @@ Compactly:
 
 This is the starting unit for participant inference.
 
+## Direction is emergent
+
+A trace or emission should not be treated as directional in itself.
+
+An emission is only a local occurrence:
+- time-local
+- source-attributable
+- minimally processable
+
+Direction does not belong to the isolated emission.
+It emerges from:
+- the persistence of the train
+- the ordering of emissions through time
+- the coupling of that train with other trains
+- and the larger choreography in which the emission participates
+
+So a single emission should not be labeled too quickly as:
+- upward
+- downward
+- stabilizing
+- destabilizing
+- advancing
+- retreating
+
+Those are properties of unfolding choreography, not of isolated traces.
+
+Compactly:
+
+> Events are directionless; direction emerges from temporally connected choreographies.
+
+This is important for inference, because participant discovery should begin from repetition and continuity, not from prematurely assigned directional meaning.
+
 ---
 
 ## 2. What counts as continuity
