@@ -212,6 +212,16 @@ It defines:
 - how to compare trajectory/control descriptions with choreography descriptions
 - what would count as first operational success
 
+### `tu_plus_stack/`
+A subfolder for the emerging LLM-paralleled awareness-support architecture.
+
+It hosts notes on:
+- TU as a mindless choreography mapper
+- TU+ as a choreography-aware predictor/replay layer
+- the cortex-like LLM as symbolic interpreter
+- video as a first practical input path
+- falsifiable prototype claims for the stack
+
 ---
 
 ## Related dialogue notes
