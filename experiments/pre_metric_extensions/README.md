@@ -213,14 +213,27 @@ It defines:
 - what would count as first operational success
 
 ### `tu_plus_stack/`
-A subfolder for the emerging LLM-paralleled awareness-support architecture.
+A dedicated subfolder for the emerging LLM-paralleled awareness-support architecture.
 
 It hosts notes on:
-- TU as a mindless choreography mapper
-- TU+ as a choreography-aware predictor/replay layer
-- the cortex-like LLM as symbolic interpreter
+- **TU** as a mindless choreography mapper
+- **TU+** as a specialized choreography-aware predictor / replay / comparison layer
+- the **cortex-like LLM** as symbolic interpreter
 - video as a first practical input path
 - falsifiable prototype claims for the stack
+
+This subfolder marks a shift from general temporal-unit exploration toward a more explicit division-of-labor architecture for awareness-support.
+
+### `tu_plus_stack/tu_plus_architecture_note.md`
+Core architecture note for the LLM-paralleled awareness-support stack.
+
+It defines:
+- why TU alone is not enough
+- TU as mindless choreography mapper
+- TU+ as choreography-aware predictor / matcher / replay layer
+- the cortex-like LLM as symbolic interpreter
+- video as first practical input path
+- falsifiable claims for the first prototype path
 
 ---
 
@@ -234,14 +247,15 @@ Most relevant notes include:
 - `dialogues/2026-03-16_temporal_unit_and_embedded_llm_dialogue.md`
 - `dialogues/2026-03-17_temporal_unit_proto_and_ud_swarm_dialogue`
 - `dialogues/2026-03-18_temporal_unit_agency_and_sleep_dialogue.md`
+- `dialogues/2026-03-19_tu_plus_awareness_support_dialogue.md`
 
 These notes preserve:
 - the transition from Codex failure analysis to pre-metric extension claims
-- the distinction between local compliance and whole-object fit
 - the emergence of the temporal-unit hypothesis
-- the temporal unit as a nearly mindless coherence-seeking swarm
-- the link from temporal grounding to action and AI agency
-- the possibility that a temporally rich intelligence may require sleep-like reset phases
+- the temporal unit as a mindless choreography mapper
+- the introduction of TU+ as a specialized awareness-support layer
+- the shift toward prompt-instantiated architecture before software-instantiated architecture
+- video as a first serious input path for time-and-simultaneity-aware testing
 
 ---
 
