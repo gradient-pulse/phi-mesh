@@ -288,6 +288,20 @@ That boundary should remain explicit.
 
 ---
 
+## Missing loop now specified elsewhere
+
+The TU / TU+ / cortexLLM stack is not complete without an action-confirmation loop in which predicted trains are enacted, returned traces are compared against expectation, and mismatch reshapes the choreography field.
+
+That loop is specified separately in:
+
+- `action_confirmation_loop_note.md`
+
+This separation is intentional:
+- the present note defines the overall stack
+- the action-confirmation note defines the missing operational circuit inside it
+
+---
+
 ## Falsifiable prototype claims
 
 This architecture implies several claims that can be tested.
