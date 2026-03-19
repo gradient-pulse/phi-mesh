@@ -425,15 +425,32 @@ These are strong enough to be falsified and narrow enough to test later.
 
 This note specifies the loop structurally, but does not yet define:
 
-- exact signal formats
-- exact choreography ID format
-- exact motion-token sentence format
-- exact motor-activation encoding
-- exact mismatch metric
-- exact coherence metric
-- exact training or prompting regime
+### Representation
+- exact signal formats  
+  (to be determined by the relay protocol between cortexLLM, TU+, action operator, and return traces)
 
-Those belong later.
+- exact choreography ID format  
+  (likely an ordered, weighted, coupled motion-token train or train cluster)
+
+- exact motion-token sequence format  
+  (the structured enactable sequence passed downward to the action operator)
+
+### Translation
+- exact motor-activation encoding  
+  (action-operator specific: robot, aircraft, drone swarm, etc.)
+
+- exact relay / translation protocol  
+  (how consistency is preserved from symbolic context to predicted train to enacted motion and back again)
+
+### Evaluation
+- exact mismatch metric  
+  (delta between predicted train structure and returned actual trace structure; mismatch should first reshape TU+/field weighting before triggering altered continuation)
+
+- exact coherence metric  
+  (coherence among motion choreographies, and between motion choreographies and observation choreographies)
+
+- exact training or prompting regime  
+  (how translation consistency is preserved up and down the stack across repeated loops)
 
 The present note exists to close the architectural hole, not to finalize implementation detail.
 
