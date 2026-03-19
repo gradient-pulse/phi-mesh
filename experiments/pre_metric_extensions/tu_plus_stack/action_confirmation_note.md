@@ -4,6 +4,8 @@
 
 This note defines the missing operational loop in the emerging TU / TU+ / cortexLLM architecture.
 
+This loop should be read as an operational expression of RGPx, not as a mere fast/slow cognitive control scheme.
+
 The central claim is:
 
 > Prediction is not enough. A viable architecture needs an action-confirmation loop in which predicted trains are enacted, returned traces are compared against expectation, and mismatch reshapes the choreography field.
