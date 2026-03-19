@@ -242,6 +242,34 @@ That is its architectural identity.
 
 ---
 
+## This stack should not be reduced to fast/slow psychology
+
+The TU / TU+ / cortexLLM architecture may loosely resemble a fast / slow division of labor, but that analogy is not the architecture itself.
+
+The stack is not grounded primarily in Kahneman-style psychology.
+It is grounded in:
+
+- gradient choreographies
+- recursive influence
+- the Principle of Least Action (PoLA)
+- conservation of coherence
+- action-confirmation through returned traces
+
+So the architecture should be understood as process-first rather than psychology-first:
+
+- **TU** maps active choreography structure
+- **TU+** predicts, compares, and replays choreography continuation
+- **cortexLLM** interprets the field symbolically
+- **action-confirmation** closes the loop between prediction and returned traces
+
+The fast/slow analogy may help with intuition, but it does not define the stack.
+
+A compact formulation:
+
+> Kahneman gives tempo and a rough division of labor; RGPx gives the deeper grammar.
+
+---
+
 ## Awareness-support signals
 
 TU+ should not output full narratives.
