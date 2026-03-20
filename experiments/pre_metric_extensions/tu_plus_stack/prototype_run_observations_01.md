@@ -2,14 +2,15 @@
 
 ## Scope
 
-This note records observations from the first two bounded dry-run cycles of the prompt-instantiated TU / TU+ / cortexLLM triad.
+This note records observations from the first three bounded dry-run cycles of the prompt-instantiated TU / TU+ / cortexLLM triad.
 
 The purpose is to preserve the baseline before introducing stronger pressures such as:
-- returned trace confirmation
-- mismatch
 - second-source interaction
 - coupling
 - restart pressure
+- fragmentation
+- stronger mismatch
+- more explicit action-confirmation dynamics
 
 ---
 
@@ -29,6 +30,27 @@ A second dry-run cycle using the full post-cycle-1 shared state, testing:
 - stabilization of the same source/train
 - continued role separation
 - slight refinement of choreography match and hold-state interpretation
+
+### Cycle 3
+A third dry-run cycle introducing a mild returned-trace mismatch:
+- a prior hold-dominant expectation
+- brief confirmation of hold
+- followed by slight resumed rightward motion
+- revision of the active choreography interpretation
+- mismatch logging without collapse of coherence
+
+---
+
+## Important test discipline used
+
+During the dry runs, only the output of the immediately prior role was passed forward:
+
+- TU output was passed to TU+
+- TU+ output was passed to cortexLLM
+
+This made the test stricter than a full-state pass-through, because each role had to operate from bounded upstream structure rather than from the full accumulated state.
+
+This strengthens the finding that role separation is viable.
 
 ---
 
@@ -52,7 +74,7 @@ It allowed:
 - continuity across cycles
 - stabilization of the active train
 - strengthening of source confidence
-- preservation of the predictive match
+- preservation and revision of the predictive match
 - symbolic context that did not overwrite lower-level structure
 
 ---
@@ -72,9 +94,10 @@ This is important because it suggests the triad can:
 TU+ did not become a second cortexLLM.
 It stayed in its lane by:
 - matching choreography memory
-- slightly strengthening the match
 - refining likely continuation
-- preserving attention at low salience
+- preserving or raising attention appropriately
+- logging mismatch when needed
+- revising the best-fit choreography without drifting into broad narration
 
 This supports the idea that prompt-instantiated specialization is feasible.
 
@@ -87,29 +110,85 @@ This is important because it suggests the stack can support top-down influence w
 
 ---
 
+### 6. Mild mismatch can be absorbed without coherence collapse
+Cycle 3 is the first genuinely important pressure test.
+
+The prior expectation was roughly:
+- hold state
+- maybe resume later
+
+The returned trace showed:
+- brief hold
+- then slight resumed rightward motion
+
+The architecture absorbed this by:
+- **TU** extending the train rather than fragmenting it
+- **TU+** revising the choreography match from a hold-dominant reading toward a pause-to-resume reading
+- **cortexLLM** updating the symbolic framing without overreacting
+
+This shows that the triad can revise interpretation under mild mismatch while preserving coherence and role boundaries.
+
+---
+
+### 7. TU can remain disciplined under revision
+In Cycle 3, TU did not narrate or speculate.
+It simply:
+- added the new motion-tokens
+- extended the train
+- strengthened the source hypothesis
+- updated coherence
+
+This is a good sign that TU can remain mapper-first even when the field changes.
+
+---
+
+### 8. TU+ begins to look functionally non-trivial
+In Cycle 3, TU+ did more than simply decorate the output.
+
+It:
+- weakened the old `approach_then_pause` reading
+- introduced a stronger `approach_pause_resume` reading
+- raised attention salience
+- logged mismatch
+- issued a revised predicted train
+
+This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
+
+---
+
+## What has now been tested
+
+The following have now been tested at least in weak form:
+
+- returned traces
+- mild mismatch
+- revision of choreography interpretation
+- correction pressure
+- preservation of coherence under reinterpretation
+
+---
+
 ## What has not yet been tested
 
 The following remain untested:
 
-- returned traces
-- mismatch
-- correction
-- action-confirmation
 - second source/object
-- coupling
+- coupling between trains
 - restart pressure
 - fragmentation
-- high-salience recruitment
+- stronger mismatch
+- high-salience recruitment under real ambiguity
+- richer action-confirmation dynamics
 
-So the current result is a **baseline success**, not yet a full stress test.
+So the current result is now more than a baseline success, but still not a full field stress test.
 
 ---
 
 ## Current verdict
 
-The first two cycles support the following claim:
+The first three cycles support the following stronger claim:
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct and use shared structured state to preserve and refine a stable choreography across cycles.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and refine stable choreography across cycles, and absorb mild mismatch without losing coherence or collapsing role boundaries.
 
 This does not yet prove the full architecture, but it does justify moving to the next pressure test.
 
@@ -117,14 +196,14 @@ This does not yet prove the full architecture, but it does justify moving to the
 
 ## Recommended next test
 
-The next best test is to introduce one controlled pressure only:
+The next best test is to introduce one new structural pressure:
 
-- a returned trace that either confirms or weakly contradicts the predicted hold-state
+- a second source/object with weak coupling
 
 This will let the triad be tested on:
-- confirmation
-- mismatch
-- correction pressure
-- and possible reweighting of the active field
+- multi-source persistence
+- coupling detection
+- cross-train coherence
+- ambiguity between independent and linked choreographies
 
-That is the next meaningful step.
+That is now the next meaningful step.
