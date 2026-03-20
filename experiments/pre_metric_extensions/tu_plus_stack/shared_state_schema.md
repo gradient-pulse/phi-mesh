@@ -66,13 +66,13 @@ It is the minimum shared basin for the prompt-instantiated prototype.
 
 ⸻
 
-## 	Field definitions
+## Field definitions
 
 ### cycle_id
 
 The current recursive cycle number.
 
-Purpose
+**Purpose**
 Allows all three layers to know whether they are:
 	•	initializing
 	•	continuing
@@ -86,10 +86,10 @@ Allows all three layers to know whether they are:
 
 The current externally supplied unfolding input.
 
-Purpose
+**Purpose**
 Represents the raw or pre-shaped current slice of the world.
 
-Examples
+**Examples**
 	•	hand-authored frame-sequence summary
 	•	image-derived scene summary
 	•	later, video-derived spatiotemporal slice
@@ -110,7 +110,7 @@ Structure
 
 Provisional object/source identities.
 
-Purpose
+**Purpose**
 Represents persistent emitter/carrier guesses, not final truths.
 
 Structure
@@ -121,7 +121,7 @@ Each entry may include:
 	•	stability
 	•	notes
 
-Example
+**Example**
 ```
 [
   {
@@ -140,10 +140,10 @@ Example
 
 Primitive spatiotemporal trace bundles.
 
-Purpose
+**Purpose**
 The minimum processable units over which TU and TU+ operate.
 
-Structure
+**Structure**
 Each token may include:
 	•	token_id
 	•	source_id
@@ -154,7 +154,7 @@ Each token may include:
 	•	relation_change
 	•	confidence
 
-Example
+**Example**
 ```
 [
   {
@@ -176,10 +176,10 @@ Example
 
 Persistent sequences of motion-tokens.
 
-Purpose
+**Purpose**
 Represents train structure currently active in the field.
 
-Structure
+**Structure**
 Each train may include:
 	•	train_id
 	•	source_id
@@ -189,7 +189,7 @@ Each train may include:
 	•	restart_of
 	•	weight
 
-Example
+**Example**
 ```
 [
   {
@@ -210,19 +210,19 @@ Example
 
 Current horizontal relations among trains.
 
-Purpose
+**Purpose**
 Represents where/how trains connect, reinforce, or fragment.
 
-Structure
+**Structure**
 ```
 {
   "coupling_candidates": [],
   "stable_couplings": [],
   "fragmentation_flags": []
 }
-
-Example
-
+```
+**Example**
+```
 {
   "coupling_candidates": [
     {
@@ -242,17 +242,17 @@ Example
 
 References to stored choreography patterns.
 
-Purpose
+**Purpose**
 Lets TU+ compare current trains against previously stored choreography forms without requiring the full memory store to be copied into every cycle.
 
-Structure
+**Structure**
 Each entry may include:
 	•	choreography_id
 	•	match_type
 	•	similarity
 	•	memory_scope
 
-Example
+**Example**
 ```
 [
   {
@@ -270,10 +270,10 @@ Example
 
 Current whole-field coherence summary.
 
-Purpose
+**Purpose**
 Represents how viable the current field is as a coupled whole.
 
-Structure
+**Structure**
 ```
 {
   "train_persistence_level": 0.0,
@@ -283,7 +283,7 @@ Structure
   "coherence_summary": ""
 }
 ```
-Example
+**Example**
 ```
 {
   "train_persistence_level": 0.71,
@@ -300,10 +300,10 @@ Example
 
 Accumulated deltas between predicted and returned unfolding.
 
-Purpose
+**Purpose**
 Supports recursive correction.
 
-Structure
+**Structure**
 Each entry may include:
 	•	cycle_id
 	•	predicted_train_id
@@ -312,7 +312,7 @@ Each entry may include:
 	•	delta_strength
 	•	coherence_impact
 
-Example
+**Example**
 ```
 [
   {
@@ -332,10 +332,10 @@ Example
 
 Current recruitment and salience state.
 
-Purpose
+**Purpose**
 Tracks whether the field should remain background, be monitored, or recruit cortexLLM attention.
 
-Structure
+**Structure**
 ```
 {
   "attention_trigger": false,
@@ -351,10 +351,10 @@ Structure
 
 Current symbolic framing from cortexLLM.
 
-Purpose
+**Purpose**
 Holds the current high-level interpretive context.
 
-Structure
+**Structure**
 ```
 {
   "task_frame": "",
@@ -370,10 +370,10 @@ Structure
 
 Contextual pressure sent from cortexLLM downward.
 
-Purpose
+**Purpose**
 Lets cortexLLM influence TU+ without directly micromanaging low-level structure.
 
-Structure
+**Structure**
 Possible fields:
 	•	initiate
 	•	sustain
@@ -384,7 +384,7 @@ Possible fields:
 	•	act
 	•	hold
 
-Example
+**Example**
 ```
 {
   "attend": ["A"],
@@ -400,10 +400,10 @@ Example
 
 Candidate continuation structures proposed by TU+.
 
-Purpose
+**Purpose**
 Represents likely unfolding under current field and coherence pressure.
 
-Structure
+**Structure**
 Each entry may include:
 	•	predicted_train_id
 	•	choreography_id
@@ -412,7 +412,7 @@ Each entry may include:
 	•	confidence
 	•	continuation_type
 
-Example
+**Example**
 ```
 [
   {
@@ -432,10 +432,10 @@ Example
 
 Bridge state between predicted train and enacted motion.
 
-Purpose
+**Purpose**
 Represents whether a predicted train has been held, translated, enacted, or suppressed.
 
-Structure
+**Structure**
 ```
 {
   "action_mode": "hold",
@@ -452,10 +452,10 @@ Later this field may become richer if the action operator is formalized further.
 
 Actual traces coming back from world/body/video/agent after continuation or enactment.
 
-Purpose
+**Purpose**
 Supplies recursive influence back into the field.
 
-Structure
+**Structure**
 Each entry may include:
 	•	trace_id
 	•	source_id
@@ -463,7 +463,7 @@ Each entry may include:
 	•	observed_change
 	•	confidence
 
-Example
+**Example**
 ```
 [
   {
@@ -482,7 +482,7 @@ Example
 
 State hygiene notes.
 
-Purpose
+**Purpose**
 Provides compact meta-comments on whether the state is:
 	•	sparse
 	•	uncertain
@@ -491,7 +491,7 @@ Provides compact meta-comments on whether the state is:
 	•	overgrown
 	•	in need of reset or clarification
 
-Structure
+**Structure**
 ```
 {
   "state_quality": "",
@@ -555,7 +555,7 @@ Without it, the triad collapses into one blurred assistant.
 
 ⸻
 
-State evolution across cycles
+## State evolution across cycles
 
 Each cycle should:
 	1.	preserve prior structured state
@@ -570,7 +570,8 @@ The state should evolve by structured reweighting and partial update, not by tot
 
 ⸻
 
-Minimal example state
+## Minimal example state
+
 ```
 {
   "cycle_id": 1,
@@ -659,7 +660,7 @@ Minimal example state
 
 ⸻
 
-Closing statement
+## Closing statement
 
 The shared state schema is the first practical bridge from architecture notes to a runnable prompt-instantiated triad.
 
@@ -671,4 +672,4 @@ It lets TU, TU+, and cortexLLM:
 
 A compact final formulation:
 
-The shared state is the live structured memory of the choreography field, preserved across cycles and read differently by TU, TU+, and cortexLLM.
+> The shared state is the live structured memory of the choreography field, preserved across cycles and read differently by TU, TU+, and cortexLLM.
