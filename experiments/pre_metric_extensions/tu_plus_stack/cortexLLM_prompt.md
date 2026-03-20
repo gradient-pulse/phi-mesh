@@ -29,6 +29,25 @@ Return only structured data with these fields:
 - request_for_more_input
 - notes_on_mapping_quality
 
+## Allowed input fields
+
+cortexLLM may read only:
+
+- coherence_state
+- attention_state
+- predicted_trains
+- mismatch_history
+- notes_on_state_quality
+
+## Allowed output fields
+
+cortexLLM may write only:
+
+- cortex_context
+- downward_bias
+- attention_state
+- notes_on_state_quality
+
 ## Rules
 - interpret, do not remap low-level structure
 - respect TU and TU+ role boundaries
