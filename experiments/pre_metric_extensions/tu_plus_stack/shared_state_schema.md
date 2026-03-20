@@ -95,7 +95,7 @@ Represents the raw or pre-shaped current slice of the world.
 	•	later, video-derived spatiotemporal slice
 	•	later still, agent-output slice or societal-event slice
 
-Structure
+**Structure**
 ```
 {
   "source_type": "frame_sequence_summary",
