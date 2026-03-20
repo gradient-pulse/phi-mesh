@@ -10,6 +10,7 @@ Each layer sees only the fields it needs.
 Each layer updates only the fields it is responsible for.
 
 The shared state is therefore:
+
 - persistent across cycles
 - structured rather than free-form
 - role-bounded
@@ -75,13 +76,13 @@ The current recursive cycle number.
 **Purpose**
 
 Allows all three layers to know whether they are:
-```
-	•	initializing
-	•	continuing
-	•	correcting
-	•	stabilizing
-	•	or restarting
-```
+
+- initializing
+- continuing
+- correcting
+- stabilizing
+- or restarting
+	
 ---
 
 ### input_slice
@@ -94,10 +95,10 @@ Represents the raw or pre-shaped current slice of the world.
 
 **Examples**
 
-	•	hand-authored frame-sequence summary
-	•	image-derived scene summary
-	•	later, video-derived spatiotemporal slice
-	•	later still, agent-output slice or societal-event slice
+- hand-authored frame-sequence summary
+- image-derived scene summary
+- later, video-derived spatiotemporal slice
+- later still, agent-output slice or societal-event slice
 
 **Structure**
 
@@ -122,13 +123,12 @@ Represents persistent emitter/carrier guesses, not final truths.
 **Structure**
 
 Each entry may include:
-```
-	•	source_id
-	•	hypothesis_type
-	•	confidence
-	•	stability
-	•	notes
-```
+
+- source_id
+- hypothesis_type
+- confidence
+- stability
+- notes
 
 **Example**
 
@@ -157,16 +157,15 @@ The minimum processable units over which TU and TU+ operate.
 **Structure**
 
 Each token may include:
-```
-	•	token_id
-	•	source_id
-	•	time_slice
-	•	displacement_delta
-	•	direction
-	•	angle_change
-	•	relation_change
-	•	confidence
-```
+
+- token_id
+- source_id
+- time_slice
+- displacement_delta
+- direction
+- angle_change
+- relation_change
+- confidence
 
 **Example**
 
@@ -198,15 +197,14 @@ Represents train structure currently active in the field.
 **Structure**
 
 Each train may include:
-```
-	•	train_id
-	•	source_id
-	•	token_ids
-	•	persistence
-	•	status
-	•	restart_of
-	•	weight
-```
+
+- train_id
+- source_id
+- token_ids
+- persistence
+- status
+- restart_of
+- weight
 
 **Example**
 
@@ -272,12 +270,11 @@ Lets TU+ compare current trains against previously stored choreography forms wit
 **Structure**
 
 Each entry may include:
-```
-	•	choreography_id
-	•	match_type
-	•	similarity
-	•	memory_scope
-```
+
+- choreography_id
+- match_type
+- similarity
+- memory_scope
 
 **Example**
 
@@ -338,14 +335,13 @@ Supports recursive correction.
 **Structure**
 
 Each entry may include:
-```
-	•	cycle_id
-	•	predicted_train_id
-	•	returned_trace_ref
-	•	delta_type
-	•	delta_strength
-	•	coherence_impact
-```
+
+- cycle_id
+- predicted_train_id
+- returned_trace_ref
+- delta_type
+- delta_strength
+- coherence_impact
 
 **Example**
 
@@ -417,16 +413,15 @@ Lets cortexLLM influence TU+ without directly micromanaging low-level structure.
 **Structure**
 
 Possible fields:
-```
-	•	initiate
-	•	sustain
-	•	suppress
-	•	reorient
-	•	attend
-	•	compare
-	•	act
-	•	hold
-```
+
+- initiate
+- sustain
+- suppress
+- reorient
+- attend
+- compare
+- act
+- hold
 
 **Example**
 
@@ -452,14 +447,13 @@ Represents likely unfolding under current field and coherence pressure.
 **Structure**
 
 Each entry may include:
-```
-	•	predicted_train_id
-	•	choreography_id
-	•	source_id
-	•	predicted_token_sequence
-	•	confidence
-	•	continuation_type
-```
+
+- predicted_train_id
+- choreography_id
+- source_id
+- predicted_token_sequence
+- confidence
+- continuation_type
 
 **Example**
 
@@ -511,13 +505,12 @@ Supplies recursive influence back into the field.
 **Structure**
 
 Each entry may include:
-```
-	•	trace_id
-	•	source_id
-	•	time_slice
-	•	observed_change
-	•	confidence
-```
+
+- trace_id
+- source_id
+- time_slice
+- observed_change
+- confidence
 
 **Example**
 
@@ -542,14 +535,13 @@ State hygiene notes.
 **Purpose**
 
 Provides compact meta-comments on whether the state is:
-```
-	•	sparse
-	•	uncertain
-	•	stable
-	•	fragmented
-	•	overgrown
-	•	in need of reset or clarification
-```
+
+- sparse
+- uncertain
+- stable
+- fragmented
+- overgrown
+- in need of reset or clarification
 
 **Structure**
 
@@ -569,53 +561,53 @@ The whole state exists, but each role should focus only on what it needs.
 
 **TU reads primarily**
 
-	•	input_slice
-	•	source_hypotheses
-	•	motion_tokens
-	•	active_trains
-	•	returned_traces
+- input_slice
+- source_hypotheses
+- motion_tokens
+- active_trains
+- returned_traces
 
 **TU writes primarily**
 
-	•	source_hypotheses
-	•	motion_tokens
-	•	active_trains
-	•	coupling_state
-	•	coherence_state
+- source_hypotheses
+- motion_tokens
+- active_trains
+- coupling_state
+- coherence_state
 
 **TU+ reads primarily**
 
-	•	source_hypotheses
-	•	motion_tokens
-	•	active_trains
-	•	coupling_state
-	•	choreography_memory_refs
-	•	coherence_state
-	•	mismatch_history
-	•	downward_bias
+- source_hypotheses
+- motion_tokens
+- active_trains
+- coupling_state
+- choreography_memory_refs
+- coherence_state
+- mismatch_history
+- downward_bias
 
 **TU+ writes primarily**
 
-	•	choreography_memory_refs
-	•	attention_state
-	•	predicted_trains
-	•	coherence_state
-	•	mismatch_history (through comparison pressure)
+- choreography_memory_refs
+- attention_state
+- predicted_trains
+- coherence_state
+- mismatch_history (through comparison pressure)
 
 **cortexLLM reads primarily**
 
-	•	coherence_state
-	•	attention_state
-	•	predicted_trains
-	•	mismatch_history
-	•	notes_on_state_quality
+- coherence_state
+- attention_state
+- predicted_trains
+- mismatch_history
+- notes_on_state_quality
 
 **cortexLLM writes primarily**
 
-	•	cortex_context
-	•	downward_bias
-	•	attention_state
-	•	notes_on_state_quality
+- cortex_context
+- downward_bias
+- attention_state
+- notes_on_state_quality
 
 This role-bounded access is essential.
 Without it, the triad collapses into one blurred assistant.
@@ -625,11 +617,12 @@ Without it, the triad collapses into one blurred assistant.
 ## State evolution across cycles
 
 Each cycle should:
-	1.	preserve prior structured state
-	2.	update only changed fields
-	3.	avoid replacing the entire state with prose
-	4.	let returned traces reshape active trains and coherence
-	5.	allow restart/splitting when persistent mismatch appears
+
+1. preserve prior structured state
+2. update only changed fields
+3. avoid replacing the entire state with prose
+4. let returned traces reshape active trains and coherence
+5. allow restart/splitting when persistent mismatch appears
 
 Compactly:
 
@@ -732,10 +725,11 @@ Compactly:
 The shared state schema is the first practical bridge from architecture notes to a runnable prompt-instantiated triad.
 
 It lets TU, TU+, and cortexLLM:
-	•	share a live field
-	•	remain role-bounded
-	•	recurse across cycles
-	•	and escape one-shot prompt prison without dissolving into noise
+
+- share a live field
+- remain role-bounded
+- recurse across cycles
+- and escape one-shot prompt prison without dissolving into noise
 
 A compact final formulation:
 
