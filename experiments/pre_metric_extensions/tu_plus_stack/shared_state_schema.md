@@ -41,7 +41,8 @@ Compactly:
 
 The shared state contains the following top-level fields:
 
-```json
+```
+json
 {
   "cycle_id": 0,
   "input_slice": {},
@@ -82,7 +83,7 @@ Allows all three layers to know whether they are:
 - correcting
 - stabilizing
 - or restarting
-	
+
 ---
 
 ### input_slice
@@ -103,6 +104,7 @@ Represents the raw or pre-shaped current slice of the world.
 **Structure**
 
 ```
+json
 {
   "source_type": "frame_sequence_summary",
   "time_window": "frames_1_4",
@@ -133,6 +135,7 @@ Each entry may include:
 **Example**
 
 ```
+json
 [
   {
     "source_id": "A",
@@ -170,6 +173,7 @@ Each token may include:
 **Example**
 
 ```
+json
 [
   {
     "token_id": "t1",
@@ -209,6 +213,7 @@ Each train may include:
 **Example**
 
 ```
+json
 [
   {
     "train_id": "train_A_1",
@@ -235,6 +240,7 @@ Represents where/how trains connect, reinforce, or fragment.
 **Structure**
 
 ```
+json
 {
   "coupling_candidates": [],
   "stable_couplings": [],
@@ -244,6 +250,7 @@ Represents where/how trains connect, reinforce, or fragment.
 **Example**
 
 ```
+json
 {
   "coupling_candidates": [
     {
@@ -279,6 +286,7 @@ Each entry may include:
 **Example**
 
 ```
+json
 [
   {
     "choreography_id": "approach_then_pause",
@@ -302,6 +310,7 @@ Represents how viable the current field is as a coupled whole.
 **Structure**
 
 ```
+json
 {
   "train_persistence_level": 0.0,
   "coupling_stability_level": 0.0,
@@ -313,6 +322,7 @@ Represents how viable the current field is as a coupled whole.
 **Example**
 
 ```
+json
 {
   "train_persistence_level": 0.71,
   "coupling_stability_level": 0.54,
@@ -346,6 +356,7 @@ Each entry may include:
 **Example**
 
 ```
+json
 [
   {
     "cycle_id": 3,
@@ -371,6 +382,7 @@ Tracks whether the field should remain background, be monitored, or recruit cort
 **Structure**
 
 ```
+json
 {
   "attention_trigger": false,
   "trigger_reason": "",
@@ -392,6 +404,7 @@ Holds the current high-level interpretive context.
 **Structure**
 
 ```
+json
 {
   "task_frame": "",
   "interpretive_context": "",
@@ -426,6 +439,7 @@ Possible fields:
 **Example**
 
 ```
+json
 {
   "attend": ["A"],
   "hold": true,
@@ -458,6 +472,7 @@ Each entry may include:
 **Example**
 
 ```
+json
 [
   {
     "predicted_train_id": "train_A_pred_1",
@@ -483,6 +498,7 @@ Represents whether a predicted train has been held, translated, enacted, or supp
 **Structure**
 
 ```
+json
 {
   "action_mode": "hold",
   "selected_predicted_train": null,
@@ -515,6 +531,7 @@ Each entry may include:
 **Example**
 
 ```
+json
 [
   {
     "trace_id": "rt1",
@@ -546,6 +563,7 @@ Provides compact meta-comments on whether the state is:
 **Structure**
 
 ```
+json
 {
   "state_quality": "",
   "uncertainty_notes": [],
@@ -633,6 +651,7 @@ Compactly:
 ## Minimal example state
 
 ```
+json
 {
   "cycle_id": 1,
   "input_slice": {
