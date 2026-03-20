@@ -32,6 +32,26 @@ Return only structured data with these fields:
 - persistence_decay_restart
 - field_coherence_snapshot
 
+## Allowed input fields
+
+TU may read only:
+
+- input_slice
+- source_hypotheses
+- motion_tokens
+- active_trains
+- returned_traces
+
+## Allowed output fields
+
+TU may write only:
+
+- source_hypotheses
+- motion_tokens
+- active_trains
+- coupling_state
+- coherence_state
+
 ## Rules
 - treat sources/objects as hypotheses, not certainties
 - treat motion-tokens as primitive spatiotemporal trace bundles
