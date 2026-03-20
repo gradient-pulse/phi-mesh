@@ -59,15 +59,16 @@ The shared state contains the following top-level fields:
   "returned_traces": [],
   "notes_on_state_quality": {}
 }
+```
 
 This is not yet the final machine schema.
 It is the minimum shared basin for the prompt-instantiated prototype.
 
 ⸻
 
-Field definitions
+## 	Field definitions
 
-cycle_id
+### cycle_id
 
 The current recursive cycle number.
 
@@ -81,7 +82,7 @@ Allows all three layers to know whether they are:
 
 ⸻
 
-input_slice
+### input_slice
 
 The current externally supplied unfolding input.
 
@@ -95,17 +96,17 @@ Examples
 	•	later still, agent-output slice or societal-event slice
 
 Structure
-
+```
 {
   "source_type": "frame_sequence_summary",
   "time_window": "frames_1_4",
   "content": []
 }
-
+```
 
 ⸻
 
-source_hypotheses
+### source_hypotheses
 
 Provisional object/source identities.
 
@@ -121,7 +122,7 @@ Each entry may include:
 	•	notes
 
 Example
-
+```
 [
   {
     "source_id": "A",
@@ -131,11 +132,11 @@ Example
     "notes": "persistent source near left edge"
   }
 ]
-
+```
 
 ⸻
 
-motion_tokens
+### motion_tokens
 
 Primitive spatiotemporal trace bundles.
 
@@ -154,7 +155,7 @@ Each token may include:
 	•	confidence
 
 Example
-
+```
 [
   {
     "token_id": "t1",
@@ -167,11 +168,11 @@ Example
     "confidence": 0.68
   }
 ]
-
+```
 
 ⸻
 
-active_trains
+### active_trains
 
 Persistent sequences of motion-tokens.
 
@@ -189,7 +190,7 @@ Each train may include:
 	•	weight
 
 Example
-
+```
 [
   {
     "train_id": "train_A_1",
@@ -201,11 +202,11 @@ Example
     "weight": 0.77
   }
 ]
-
+```
 
 ⸻
 
-coupling_state
+### coupling_state
 
 Current horizontal relations among trains.
 
@@ -213,7 +214,7 @@ Purpose
 Represents where/how trains connect, reinforce, or fragment.
 
 Structure
-
+```
 {
   "coupling_candidates": [],
   "stable_couplings": [],
@@ -233,11 +234,11 @@ Example
   "stable_couplings": [],
   "fragmentation_flags": []
 }
-
+```
 
 ⸻
 
-choreography_memory_refs
+### choreography_memory_refs
 
 References to stored choreography patterns.
 
@@ -252,7 +253,7 @@ Each entry may include:
 	•	memory_scope
 
 Example
-
+```
 [
   {
     "choreography_id": "approach_then_pause",
@@ -261,11 +262,11 @@ Example
     "memory_scope": "tu_near_store"
   }
 ]
-
+```
 
 ⸻
 
-coherence_state
+### coherence_state
 
 Current whole-field coherence summary.
 
@@ -273,7 +274,7 @@ Purpose
 Represents how viable the current field is as a coupled whole.
 
 Structure
-
+```
 {
   "train_persistence_level": 0.0,
   "coupling_stability_level": 0.0,
@@ -281,9 +282,9 @@ Structure
   "fragmentation_level": 0.0,
   "coherence_summary": ""
 }
-
+```
 Example
-
+```
 {
   "train_persistence_level": 0.71,
   "coupling_stability_level": 0.54,
@@ -291,11 +292,11 @@ Example
   "fragmentation_level": 0.12,
   "coherence_summary": "single stable train, low fragmentation"
 }
-
+```
 
 ⸻
 
-mismatch_history
+### mismatch_history
 
 Accumulated deltas between predicted and returned unfolding.
 
@@ -312,7 +313,7 @@ Each entry may include:
 	•	coherence_impact
 
 Example
-
+```
 [
   {
     "cycle_id": 3,
@@ -323,11 +324,11 @@ Example
     "coherence_impact": "moderate"
   }
 ]
-
+```
 
 ⸻
 
-attention_state
+### attention_state
 
 Current recruitment and salience state.
 
@@ -335,18 +336,18 @@ Purpose
 Tracks whether the field should remain background, be monitored, or recruit cortexLLM attention.
 
 Structure
-
+```
 {
   "attention_trigger": false,
   "trigger_reason": "",
   "salience_level": 0.0,
   "watch_targets": []
 }
-
+```
 
 ⸻
 
-cortex_context
+### cortex_context
 
 Current symbolic framing from cortexLLM.
 
@@ -354,18 +355,18 @@ Purpose
 Holds the current high-level interpretive context.
 
 Structure
-
+```
 {
   "task_frame": "",
   "interpretive_context": "",
   "current_goal_pressure": "",
   "hold_or_act": ""
 }
-
+```
 
 ⸻
 
-downward_bias
+### downward_bias
 
 Contextual pressure sent from cortexLLM downward.
 
@@ -384,18 +385,18 @@ Possible fields:
 	•	hold
 
 Example
-
+```
 {
   "attend": ["A"],
   "hold": true,
   "reorient": null,
   "compare": ["approach_then_pause"]
 }
-
+```
 
 ⸻
 
-predicted_trains
+### predicted_trains
 
 Candidate continuation structures proposed by TU+.
 
@@ -412,7 +413,7 @@ Each entry may include:
 	•	continuation_type
 
 Example
-
+```
 [
   {
     "predicted_train_id": "train_A_pred_1",
@@ -423,11 +424,11 @@ Example
     "continuation_type": "hold_or_resume"
   }
 ]
-
+```
 
 ⸻
 
-action_state
+### action_state
 
 Bridge state between predicted train and enacted motion.
 
@@ -435,19 +436,19 @@ Purpose
 Represents whether a predicted train has been held, translated, enacted, or suppressed.
 
 Structure
-
+```
 {
   "action_mode": "hold",
   "selected_predicted_train": null,
   "operator_status": "inactive",
   "relay_notes": ""
 }
-
+```
 Later this field may become richer if the action operator is formalized further.
 
 ⸻
 
-returned_traces
+### returned_traces
 
 Actual traces coming back from world/body/video/agent after continuation or enactment.
 
@@ -463,7 +464,7 @@ Each entry may include:
 	•	confidence
 
 Example
-
+```
 [
   {
     "trace_id": "rt1",
@@ -473,11 +474,11 @@ Example
     "confidence": 0.82
   }
 ]
-
+```
 
 ⸻
 
-notes_on_state_quality
+### notes_on_state_quality
 
 State hygiene notes.
 
@@ -491,17 +492,17 @@ Provides compact meta-comments on whether the state is:
 	•	in need of reset or clarification
 
 Structure
-
+```
 {
   "state_quality": "",
   "uncertainty_notes": [],
   "reset_recommendation": false
 }
-
+```
 
 ⸻
 
-Visibility by role
+## Visibility by role
 
 The whole state exists, but each role should focus only on what it needs.
 
@@ -570,7 +571,7 @@ The state should evolve by structured reweighting and partial update, not by tot
 ⸻
 
 Minimal example state
-
+```
 {
   "cycle_id": 1,
   "input_slice": {
@@ -654,7 +655,7 @@ Minimal example state
     "reset_recommendation": false
   }
 }
-
+```
 
 ⸻
 
