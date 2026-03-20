@@ -88,15 +88,18 @@ Allows all three layers to know whether they are:
 The current externally supplied unfolding input.
 
 **Purpose**
+
 Represents the raw or pre-shaped current slice of the world.
 
 **Examples**
+
 	•	hand-authored frame-sequence summary
 	•	image-derived scene summary
 	•	later, video-derived spatiotemporal slice
 	•	later still, agent-output slice or societal-event slice
 
 **Structure**
+
 ```
 {
   "source_type": "frame_sequence_summary",
@@ -112,9 +115,11 @@ Represents the raw or pre-shaped current slice of the world.
 Provisional object/source identities.
 
 **Purpose**
+
 Represents persistent emitter/carrier guesses, not final truths.
 
-Structure
+**Structure**
+
 Each entry may include:
 	•	source_id
 	•	hypothesis_type
@@ -123,6 +128,7 @@ Each entry may include:
 	•	notes
 
 **Example**
+
 ```
 [
   {
@@ -142,9 +148,11 @@ Each entry may include:
 Primitive spatiotemporal trace bundles.
 
 **Purpose**
+
 The minimum processable units over which TU and TU+ operate.
 
 **Structure**
+
 Each token may include:
 	•	token_id
 	•	source_id
@@ -156,6 +164,7 @@ Each token may include:
 	•	confidence
 
 **Example**
+
 ```
 [
   {
@@ -178,9 +187,11 @@ Each token may include:
 Persistent sequences of motion-tokens.
 
 **Purpose**
+
 Represents train structure currently active in the field.
 
 **Structure**
+
 Each train may include:
 	•	train_id
 	•	source_id
@@ -191,6 +202,7 @@ Each train may include:
 	•	weight
 
 **Example**
+
 ```
 [
   {
@@ -212,9 +224,11 @@ Each train may include:
 Current horizontal relations among trains.
 
 **Purpose**
+
 Represents where/how trains connect, reinforce, or fragment.
 
 **Structure**
+
 ```
 {
   "coupling_candidates": [],
@@ -223,6 +237,7 @@ Represents where/how trains connect, reinforce, or fragment.
 }
 ```
 **Example**
+
 ```
 {
   "coupling_candidates": [
@@ -244,9 +259,11 @@ Represents where/how trains connect, reinforce, or fragment.
 References to stored choreography patterns.
 
 **Purpose**
+
 Lets TU+ compare current trains against previously stored choreography forms without requiring the full memory store to be copied into every cycle.
 
 **Structure**
+
 Each entry may include:
 	•	choreography_id
 	•	match_type
@@ -254,6 +271,7 @@ Each entry may include:
 	•	memory_scope
 
 **Example**
+
 ```
 [
   {
@@ -272,9 +290,11 @@ Each entry may include:
 Current whole-field coherence summary.
 
 **Purpose**
+
 Represents how viable the current field is as a coupled whole.
 
 **Structure**
+
 ```
 {
   "train_persistence_level": 0.0,
@@ -285,6 +305,7 @@ Represents how viable the current field is as a coupled whole.
 }
 ```
 **Example**
+
 ```
 {
   "train_persistence_level": 0.71,
@@ -302,9 +323,11 @@ Represents how viable the current field is as a coupled whole.
 Accumulated deltas between predicted and returned unfolding.
 
 **Purpose**
+
 Supports recursive correction.
 
 **Structure**
+
 Each entry may include:
 	•	cycle_id
 	•	predicted_train_id
@@ -314,6 +337,7 @@ Each entry may include:
 	•	coherence_impact
 
 **Example**
+
 ```
 [
   {
@@ -334,9 +358,11 @@ Each entry may include:
 Current recruitment and salience state.
 
 **Purpose**
+
 Tracks whether the field should remain background, be monitored, or recruit cortexLLM attention.
 
 **Structure**
+
 ```
 {
   "attention_trigger": false,
@@ -353,9 +379,11 @@ Tracks whether the field should remain background, be monitored, or recruit cort
 Current symbolic framing from cortexLLM.
 
 **Purpose**
+
 Holds the current high-level interpretive context.
 
 **Structure**
+
 ```
 {
   "task_frame": "",
@@ -372,9 +400,11 @@ Holds the current high-level interpretive context.
 Contextual pressure sent from cortexLLM downward.
 
 **Purpose**
+
 Lets cortexLLM influence TU+ without directly micromanaging low-level structure.
 
 **Structure**
+
 Possible fields:
 	•	initiate
 	•	sustain
@@ -386,6 +416,7 @@ Possible fields:
 	•	hold
 
 **Example**
+
 ```
 {
   "attend": ["A"],
@@ -402,9 +433,11 @@ Possible fields:
 Candidate continuation structures proposed by TU+.
 
 **Purpose**
+
 Represents likely unfolding under current field and coherence pressure.
 
 **Structure**
+
 Each entry may include:
 	•	predicted_train_id
 	•	choreography_id
@@ -414,6 +447,7 @@ Each entry may include:
 	•	continuation_type
 
 **Example**
+
 ```
 [
   {
@@ -434,9 +468,11 @@ Each entry may include:
 Bridge state between predicted train and enacted motion.
 
 **Purpose**
+
 Represents whether a predicted train has been held, translated, enacted, or suppressed.
 
 **Structure**
+
 ```
 {
   "action_mode": "hold",
@@ -454,9 +490,11 @@ Later this field may become richer if the action operator is formalized further.
 Actual traces coming back from world/body/video/agent after continuation or enactment.
 
 **Purpose**
+
 Supplies recursive influence back into the field.
 
 **Structure**
+
 Each entry may include:
 	•	trace_id
 	•	source_id
@@ -465,6 +503,7 @@ Each entry may include:
 	•	confidence
 
 **Example**
+
 ```
 [
   {
@@ -484,6 +523,7 @@ Each entry may include:
 State hygiene notes.
 
 **Purpose**
+
 Provides compact meta-comments on whether the state is:
 	•	sparse
 	•	uncertain
@@ -493,6 +533,7 @@ Provides compact meta-comments on whether the state is:
 	•	in need of reset or clarification
 
 **Structure**
+
 ```
 {
   "state_quality": "",
