@@ -64,7 +64,7 @@ The shared state contains the following top-level fields:
 This is not yet the final machine schema.
 It is the minimum shared basin for the prompt-instantiated prototype.
 
-⸻
+---
 
 ## Field definitions
 
@@ -81,7 +81,7 @@ Allows all three layers to know whether they are:
 	•	stabilizing
 	•	or restarting
 
-⸻
+---
 
 ### input_slice
 
@@ -108,7 +108,7 @@ Represents the raw or pre-shaped current slice of the world.
 }
 ```
 
-⸻
+---
 
 ### source_hypotheses
 
@@ -141,7 +141,7 @@ Each entry may include:
 ]
 ```
 
-⸻
+---
 
 ### motion_tokens
 
@@ -180,7 +180,7 @@ Each token may include:
 ]
 ```
 
-⸻
+---
 
 ### active_trains
 
@@ -217,7 +217,7 @@ Each train may include:
 ]
 ```
 
-⸻
+---
 
 ### coupling_state
 
@@ -252,7 +252,7 @@ Represents where/how trains connect, reinforce, or fragment.
 }
 ```
 
-⸻
+---
 
 ### choreography_memory_refs
 
@@ -283,7 +283,7 @@ Each entry may include:
 ]
 ```
 
-⸻
+---
 
 ### coherence_state
 
@@ -316,7 +316,7 @@ Represents how viable the current field is as a coupled whole.
 }
 ```
 
-⸻
+---
 
 ### mismatch_history
 
@@ -351,7 +351,7 @@ Each entry may include:
 ]
 ```
 
-⸻
+---
 
 ### attention_state
 
@@ -372,7 +372,7 @@ Tracks whether the field should remain background, be monitored, or recruit cort
 }
 ```
 
-⸻
+---
 
 ### cortex_context
 
@@ -393,7 +393,7 @@ Holds the current high-level interpretive context.
 }
 ```
 
-⸻
+---
 
 ### downward_bias
 
@@ -426,7 +426,7 @@ Possible fields:
 }
 ```
 
-⸻
+---
 
 ### predicted_trains
 
@@ -461,7 +461,7 @@ Each entry may include:
 ]
 ```
 
-⸻
+---
 
 ### action_state
 
@@ -483,7 +483,7 @@ Represents whether a predicted train has been held, translated, enacted, or supp
 ```
 Later this field may become richer if the action operator is formalized further.
 
-⸻
+---
 
 ### returned_traces
 
@@ -516,7 +516,7 @@ Each entry may include:
 ]
 ```
 
-⸻
+---
 
 ### notes_on_state_quality
 
@@ -542,27 +542,27 @@ Provides compact meta-comments on whether the state is:
 }
 ```
 
-⸻
+---
 
 ## Visibility by role
 
 The whole state exists, but each role should focus only on what it needs.
 
-TU reads primarily
+**TU reads primarily**
 	•	input_slice
 	•	source_hypotheses
 	•	motion_tokens
 	•	active_trains
 	•	returned_traces
 
-TU writes primarily
+**TU writes primarily**
 	•	source_hypotheses
 	•	motion_tokens
 	•	active_trains
 	•	coupling_state
 	•	coherence_state
 
-TU+ reads primarily
+**TU+ reads primarily**
 	•	source_hypotheses
 	•	motion_tokens
 	•	active_trains
@@ -572,21 +572,21 @@ TU+ reads primarily
 	•	mismatch_history
 	•	downward_bias
 
-TU+ writes primarily
+**TU+ writes primarily**
 	•	choreography_memory_refs
 	•	attention_state
 	•	predicted_trains
 	•	coherence_state
 	•	mismatch_history (through comparison pressure)
 
-cortexLLM reads primarily
+**cortexLLM reads primarily**
 	•	coherence_state
 	•	attention_state
 	•	predicted_trains
 	•	mismatch_history
 	•	notes_on_state_quality
 
-cortexLLM writes primarily
+**cortexLLM writes primarily**
 	•	cortex_context
 	•	downward_bias
 	•	attention_state
@@ -595,7 +595,7 @@ cortexLLM writes primarily
 This role-bounded access is essential.
 Without it, the triad collapses into one blurred assistant.
 
-⸻
+---
 
 ## State evolution across cycles
 
@@ -608,9 +608,9 @@ Each cycle should:
 
 Compactly:
 
-The state should evolve by structured reweighting and partial update, not by total rewrite.
+> The state should evolve by structured reweighting and partial update, not by total rewrite.
 
-⸻
+---
 
 ## Minimal example state
 
@@ -700,7 +700,7 @@ The state should evolve by structured reweighting and partial update, not by tot
 }
 ```
 
-⸻
+---
 
 ## Closing statement
 
