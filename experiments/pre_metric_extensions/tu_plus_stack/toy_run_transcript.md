@@ -27,8 +27,7 @@ Frame sequence summary:
 
 ## Initial shared state
 
-```
-json
+```json
 {
   "cycle_id": 1,
   "input_slice": {
@@ -88,8 +87,7 @@ json
 - coherence_state
 
 **TU output**
-```
-json
+```json
 {
   "source_hypotheses": [
     {
@@ -158,8 +156,7 @@ json
 }
 ```
 **Shared state after TU update**
-```
-json
+```json
 {
   "cycle_id": 1,
   "input_slice": {
@@ -277,8 +274,7 @@ json
 - mismatch_history
 
 **TU+ output**
-```
-json
+```json
 {
   "choreography_memory_refs": [
     {
@@ -315,8 +311,7 @@ json
 }
 ```
 **Shared state after TU+ update**
-```
-json
+```json
 {
   "cycle_id": 1,
   "input_slice": {
@@ -451,8 +446,7 @@ json
 - notes_on_state_quality
 
 **cortexLLM output**
-```
-json
+```json
 {
   "cortex_context": {
     "task_frame": "monitor unfolding source",
@@ -480,9 +474,10 @@ json
     "reset_recommendation": false
   }
 }
-
+```
 Shared state after cortexLLM update
 
+```json
 {
   "cycle_id": 1,
   "input_slice": {
