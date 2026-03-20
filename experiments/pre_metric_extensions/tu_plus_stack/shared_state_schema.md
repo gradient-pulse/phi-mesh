@@ -73,6 +73,7 @@ It is the minimum shared basin for the prompt-instantiated prototype.
 The current recursive cycle number.
 
 **Purpose**
+
 Allows all three layers to know whether they are:
 	•	initializing
 	•	continuing
