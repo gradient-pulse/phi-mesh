@@ -157,6 +157,7 @@ The minimum processable units over which TU and TU+ operate.
 **Structure**
 
 Each token may include:
+```
 	•	token_id
 	•	source_id
 	•	time_slice
@@ -165,6 +166,7 @@ Each token may include:
 	•	angle_change
 	•	relation_change
 	•	confidence
+```
 
 **Example**
 
@@ -196,6 +198,7 @@ Represents train structure currently active in the field.
 **Structure**
 
 Each train may include:
+```
 	•	train_id
 	•	source_id
 	•	token_ids
@@ -203,6 +206,7 @@ Each train may include:
 	•	status
 	•	restart_of
 	•	weight
+```
 
 **Example**
 
@@ -268,10 +272,12 @@ Lets TU+ compare current trains against previously stored choreography forms wit
 **Structure**
 
 Each entry may include:
+```
 	•	choreography_id
 	•	match_type
 	•	similarity
 	•	memory_scope
+```
 
 **Example**
 
@@ -332,12 +338,14 @@ Supports recursive correction.
 **Structure**
 
 Each entry may include:
+```
 	•	cycle_id
 	•	predicted_train_id
 	•	returned_trace_ref
 	•	delta_type
 	•	delta_strength
 	•	coherence_impact
+```
 
 **Example**
 
@@ -409,6 +417,7 @@ Lets cortexLLM influence TU+ without directly micromanaging low-level structure.
 **Structure**
 
 Possible fields:
+```
 	•	initiate
 	•	sustain
 	•	suppress
@@ -417,6 +426,7 @@ Possible fields:
 	•	compare
 	•	act
 	•	hold
+```
 
 **Example**
 
@@ -442,12 +452,14 @@ Represents likely unfolding under current field and coherence pressure.
 **Structure**
 
 Each entry may include:
+```
 	•	predicted_train_id
 	•	choreography_id
 	•	source_id
 	•	predicted_token_sequence
 	•	confidence
 	•	continuation_type
+```
 
 **Example**
 
@@ -499,11 +511,13 @@ Supplies recursive influence back into the field.
 **Structure**
 
 Each entry may include:
+```
 	•	trace_id
 	•	source_id
 	•	time_slice
 	•	observed_change
 	•	confidence
+```
 
 **Example**
 
@@ -528,12 +542,14 @@ State hygiene notes.
 **Purpose**
 
 Provides compact meta-comments on whether the state is:
+```
 	•	sparse
 	•	uncertain
 	•	stable
 	•	fragmented
 	•	overgrown
 	•	in need of reset or clarification
+```
 
 **Structure**
 
