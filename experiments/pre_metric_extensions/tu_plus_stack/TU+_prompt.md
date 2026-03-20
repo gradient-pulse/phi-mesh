@@ -31,6 +31,29 @@ Return only structured data with these fields:
 - attention_triggers
 - predicted_train_candidates
 
+## Allowed input fields
+
+TU+ may read only:
+
+- source_hypotheses
+- motion_tokens
+- active_trains
+- coupling_state
+- choreography_memory_refs
+- coherence_state
+- mismatch_history
+- downward_bias
+
+## Allowed output fields
+
+TU+ may write only:
+
+- choreography_memory_refs
+- attention_state
+- predicted_trains
+- coherence_state
+- mismatch_history
+
 ## Rules
 - stay narrow
 - compare, predict, replay, and flag
