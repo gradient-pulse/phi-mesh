@@ -549,6 +549,7 @@ Provides compact meta-comments on whether the state is:
 The whole state exists, but each role should focus only on what it needs.
 
 **TU reads primarily**
+
 	•	input_slice
 	•	source_hypotheses
 	•	motion_tokens
@@ -556,6 +557,7 @@ The whole state exists, but each role should focus only on what it needs.
 	•	returned_traces
 
 **TU writes primarily**
+
 	•	source_hypotheses
 	•	motion_tokens
 	•	active_trains
@@ -563,6 +565,7 @@ The whole state exists, but each role should focus only on what it needs.
 	•	coherence_state
 
 **TU+ reads primarily**
+
 	•	source_hypotheses
 	•	motion_tokens
 	•	active_trains
@@ -573,6 +576,7 @@ The whole state exists, but each role should focus only on what it needs.
 	•	downward_bias
 
 **TU+ writes primarily**
+
 	•	choreography_memory_refs
 	•	attention_state
 	•	predicted_trains
@@ -580,6 +584,7 @@ The whole state exists, but each role should focus only on what it needs.
 	•	mismatch_history (through comparison pressure)
 
 **cortexLLM reads primarily**
+
 	•	coherence_state
 	•	attention_state
 	•	predicted_trains
@@ -587,6 +592,7 @@ The whole state exists, but each role should focus only on what it needs.
 	•	notes_on_state_quality
 
 **cortexLLM writes primarily**
+
 	•	cortex_context
 	•	downward_bias
 	•	attention_state
