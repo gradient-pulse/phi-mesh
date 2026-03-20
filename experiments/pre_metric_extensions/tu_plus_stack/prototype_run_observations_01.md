@@ -190,6 +190,27 @@ Cycle 7 showed that sustained aligned co-motion can raise a weak relational hypo
 
 ---
 
+### Cycle 8 — Early de-confirmation pressure on joint choreography
+
+**What was tested**
+
+- asymmetry within the provisionally confirmed joint field
+- lead-lag divergence
+- weakening of alignment without full collapse
+- pressure on whether joint confirmation should be reduced or maintained
+
+**What happened**
+
+- TU preserved both sources as individually coherent but weakened coupling, lowered joint stability, and introduced fragmentation flags marking early break pressure
+- TU+ weakened `emergent_joint_parallel_choreography`, introduced `asymmetric_parallel_break` as the strongest current match, and logged mismatch against the earlier joint-continuation expectation
+- cortexLLM reframed the field as a stressed joint choreography under de-confirmation pressure, but did not prematurely collapse it into fully independent trajectories
+
+**Finding**
+
+Cycle 8 showed that a provisionally confirmed joint choreography can come under early de-confirmation pressure without forcing premature collapse into independent-source interpretation.
+
+---
+
 ## Cross-cycle findings so far
 
 ### 1. Role separation is viable
@@ -268,7 +289,7 @@ This is a good sign that TU can remain structurally disciplined even when the fi
 ---
 
 ### 8. TU+ begins to look functionally non-trivial
-By Cycles 3–7, TU+ did more than decorate output.
+By Cycles 3–8, TU+ did more than decorate output.
 
 It:
 - revised choreography readings
@@ -278,45 +299,49 @@ It:
 - dissolved weak relational matches when coherence failed to support them
 - reopened and strengthened relational matches when coherence rose again
 - provisionally confirmed a joint choreography when sustained co-motion supported it
+- weakened that same joint choreography when asymmetric break pressure emerged
 - issued revised predicted trains
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
 
 ---
 
-### 9. Weak coupling can be represented without premature collapse
-Cycles 4–7 suggest the architecture can distinguish between:
+### 9. Weak coupling and joint choreography can be represented without premature collapse
+Cycles 4–8 suggest the architecture can distinguish between:
 - a new provisional source
 - a weak coupling candidate
 - a stable joint choreography
 - a dissolved relational hypothesis
 - a reopened but still provisional joint interpretation
 - a provisionally confirmed joint choreography
+- a stressed joint choreography under de-confirmation pressure
 
 That distinction matters and appears to be maintainable so far.
 
 ---
 
 ### 10. Coherence is beginning to act as the selection principle
-By Cycles 5–7, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
+By Cycles 5–8, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 
 What survived was not what was initially plausible, but what remained coherent enough.
 What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
 What was provisionally confirmed was not what was merely tempting, but what persisted coherently across another interval.
+What was later stressed was not discarded immediately, but de-promoted as coherence weakened asymmetrically.
 
 This suggests that coherence is not merely a measured field property in the schema.
-It is beginning to function as the effective driver of revision, selection, and promotion.
+It is beginning to function as the effective driver of revision, selection, promotion, and de-promotion.
 
 That is highly relevant to the RGPx framing of the prototype.
 
 ---
 
-### 11. The architecture can reject, re-admit, and provisionally confirm relational hypotheses
-Cycles 5–7 together are especially important.
+### 11. The architecture can reject, re-admit, confirm, and begin to de-confirm relational hypotheses
+Cycles 5–8 together are especially important.
 
 - Cycle 5 showed disciplined rejection of an unsupported weak coupling
 - Cycle 6 showed disciplined re-opening when reciprocal alignment and co-motion raised coherence again
 - Cycle 7 showed provisional confirmation when that co-motion persisted across an additional interval
+- Cycle 8 showed early de-confirmation pressure when asymmetry and lag weakened the prior joint field
 
 This suggests the architecture is not simply drifting toward complexity or falling back to independence.
 It can move in multiple directions depending on which interpretation coherence supports.
@@ -343,6 +368,7 @@ The following have now been tested at least in weak form:
 - provisional reopening of a previously weakened relational hypothesis
 - early-stage confirmation pressure for coupling under reciprocal evidence
 - provisional stable coupling confirmation across an additional cycle
+- early de-confirmation pressure on a provisionally confirmed joint choreography
 
 ---
 
@@ -350,9 +376,9 @@ The following have now been tested at least in weak form:
 
 The following remain untested:
 
-- breakdown of a provisionally confirmed joint choreography
+- full breakdown of a provisionally confirmed joint choreography
 - restart pressure
-- fragmentation
+- fragmentation beyond early flags
 - stronger mismatch
 - high-salience recruitment under real ambiguity
 - richer action-confirmation dynamics
@@ -364,11 +390,11 @@ So the current result is more than a baseline success, but still not a full fiel
 
 ## Current verdict
 
-The first seven cycles support the following stronger claim:
+The first eight cycles support the following stronger claim:
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, and provisionally confirm joint choreography when sustained co-motion supports it — all without collapsing role boundaries.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, and begin to de-confirm that choreography when coherence weakens asymmetrically — all without collapsing role boundaries.
 
-This does not yet prove the full architecture, but it does justify moving to the next pressure test.
+This does not yet prove the full architecture, but it now supports the stronger hunch that a true world model may require an RGPx-driven division of LLM labor organized around coherence-sensitive role specialization.
 
 ---
 
@@ -376,9 +402,9 @@ This does not yet prove the full architecture, but it does justify moving to the
 
 The next best test is to introduce one new structural pressure:
 
-- breakdown pressure on the provisionally confirmed joint choreography
+- full break pressure on the stressed joint choreography
 
 This will let the triad be tested on:
-- whether provisional confirmation can be revised without collapse
+- whether provisional confirmation can be fully revised without collapse of the overall field
 - whether durable confirmation can be distinguished from short-lived stabilization
-- whether coherence can drive not only rejection, reopening, and confirmation, but also disciplined de-confirmation
+- whether coherence can drive not only rejection, reopening, confirmation, and early de-confirmation, but disciplined collapse into a new stable reading
