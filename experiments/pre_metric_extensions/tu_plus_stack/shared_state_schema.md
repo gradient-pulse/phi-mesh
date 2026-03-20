@@ -75,12 +75,13 @@ The current recursive cycle number.
 **Purpose**
 
 Allows all three layers to know whether they are:
+```
 	•	initializing
 	•	continuing
 	•	correcting
 	•	stabilizing
 	•	or restarting
-
+```
 ---
 
 ### input_slice
@@ -121,11 +122,13 @@ Represents persistent emitter/carrier guesses, not final truths.
 **Structure**
 
 Each entry may include:
+```
 	•	source_id
 	•	hypothesis_type
 	•	confidence
 	•	stability
 	•	notes
+```
 
 **Example**
 
