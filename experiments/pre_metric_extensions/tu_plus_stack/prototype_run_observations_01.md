@@ -2,7 +2,9 @@
 
 ## Provisional statement
 
-So far, the dry runs suggest that a prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, and absorb mild ambiguity without collapsing into one generic assistant voice.
+So far, the dry runs suggest that a prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, and absorb ambiguity without collapsing into one generic assistant voice.
+
+More strongly, by Cycle 5 the dry runs suggest that coherence is beginning to function not merely as a measured field property, but as an effective driver of revision and selection across competing choreography interpretations.
 
 This statement is provisional and should be updated as new cycles are added.
 
@@ -13,11 +15,11 @@ This statement is provisional and should be updated as new cycles are added.
 This note records observations from bounded dry-run cycles of the prompt-instantiated TU / TU+ / cortexLLM triad.
 
 Its purpose is to preserve findings incrementally while the prototype is exposed to stronger pressures such as:
-- second-source interaction
-- coupling
+- coupling stabilization
 - restart pressure
 - fragmentation
 - stronger mismatch
+- higher-salience recruitment
 - richer action-confirmation dynamics
 
 ---
@@ -125,160 +127,15 @@ Cycle 4 showed that the triad can introduce a second provisional source and trac
 
 ---
 
-## Cross-cycle findings so far
+### Cycle 5 — Dissolution of weak coupling
 
-### 1. Role separation is viable
-The triad did not collapse into one generic assistant voice.
+**What was tested**
 
-- **TU** remained a mapper of structure
-- **TU+** remained a predictor / comparer
-- **cortexLLM** remained a symbolic interpreter and biaser
+- continued two-source field
+- weakening of the earlier weak mutual-approach relation
+- possible dissolution of the provisional coupling
+- symbolic narrowing after relational ambiguity
 
-This is already a meaningful threshold crossed.
+**What happened**
 
----
-
-### 2. Shared state is not ornamental
-The shared state proved useful rather than decorative.
-
-It allowed:
-- continuity across cycles
-- stabilization of active trains
-- strengthening of source confidence
-- preservation and revision of predictive matches
-- symbolic context that did not overwrite lower-level structure
-
----
-
-### 3. Stable persistence can be carried across cycles
-The architecture can preserve a calm, coherent field without inventing unnecessary novelty or collapse.
-
-This suggests the triad can:
-- hold a stable interpretation
-- lightly refine it
-- avoid overreacting
-- maintain narrow role discipline
-
----
-
-### 4. TU+ can remain narrow
-TU+ did not become a second cortexLLM.
-
-It stayed in its lane by:
-- matching choreography memory
-- refining likely continuation
-- preserving or raising attention appropriately
-- logging mismatch when needed
-- revising best-fit choreography without drifting into broad narration
-
-This supports the idea that prompt-instantiated specialization is feasible.
-
----
-
-### 5. cortexLLM can bias without micromanaging
-cortexLLM framed scenes symbolically and sent compact downward bias without rewriting motion structure.
-
-This suggests the stack can support top-down influence without collapsing into symbolic domination of all layers.
-
----
-
-### 6. Mild mismatch can be absorbed without coherence collapse
-The architecture can revise interpretation under mild mismatch while preserving coherence and role boundaries.
-
-This is one of the first genuinely important non-baseline results.
-
----
-
-### 7. TU can remain disciplined under revision
-Under changed evidence, TU did not narrate or speculate.
-It remained mapper-first by:
-- adding motion-tokens
-- extending trains
-- strengthening source hypotheses
-- updating coherence
-
-This is a good sign that TU can remain structurally disciplined even when the field changes.
-
----
-
-### 8. TU+ begins to look functionally non-trivial
-By Cycle 3 and strengthened in Cycle 4, TU+ did more than decorate output.
-
-It:
-- revised choreography readings
-- raised salience when warranted
-- logged mismatch
-- introduced new relational partial matches
-- issued revised predicted trains
-
-This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
-
----
-
-### 9. Weak coupling can be represented without premature collapse
-Cycle 4 suggests the architecture can distinguish between:
-- a new provisional source
-- a weak coupling candidate
-- and a stable joint choreography
-
-That distinction matters and appears to be maintainable so far.
-
----
-
-## What has now been tested
-
-The following have now been tested at least in weak form:
-
-- role separation across full cycles
-- shared-state persistence
-- stable train continuation
-- returned traces
-- mild mismatch
-- revision of choreography interpretation
-- correction pressure
-- preservation of coherence under reinterpretation
-- second-source emergence
-- weak coupling detection
-- relational ambiguity management
-
----
-
-## What has not yet been tested
-
-The following remain untested:
-
-- stable coupling confirmation
-- restart pressure
-- fragmentation
-- stronger mismatch
-- high-salience recruitment under real ambiguity
-- richer action-confirmation dynamics
-- dissolution of provisional coupling
-- competition between multiple possible couplings
-
-So the current result is more than a baseline success, but still not a full field stress test.
-
----
-
-## Current verdict
-
-The first four cycles support the following stronger claim:
-
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, and represent weak multi-source coupling without collapsing role boundaries.
-
-This does not yet prove the full architecture, but it does justify moving to the next pressure test.
-
----
-
-## Recommended next test
-
-The next best test is to introduce one new structural pressure:
-
-- either stabilization of the weak coupling into a clearer joint choreography
-- or dissolution of the weak coupling back into two independent trajectories
-
-This will let the triad be tested on:
-- coupling confirmation vs rejection
-- relational coherence
-- false positive avoidance
-- and the boundary between coincidence and genuine joint choreography
+- TU preserved both sources but mapped increasing separation rather than growing relation
