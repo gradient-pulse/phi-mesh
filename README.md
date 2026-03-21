@@ -43,6 +43,22 @@ Recent dialogue artifact:
 
 ---
 
+## 🧠 New: World Model by Division of LLM Labor
+
+A new bounded architectural note now records the first dry-run evidence for a coherence-driven division of LLM labor into three role-bounded agents:
+
+- **TU** — maps unfolding structure
+- **TU+** — compares, predicts, and revises candidate unfolding choreographies
+- **cortexLLM** — interprets symbolically without remapping the lower structural field
+
+The key result was not only provisional confirmation of a joint choreography, but disciplined revision across the full arc: weak coupling, dissolution, reopening, provisional confirmation, stress, and full de-confirmation into a new stable independent reading.
+
+📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19145919)  
+🧪 [Prototype observations log](experiments/pre_metric_extensions/tu_plus_stack/prototype_run_observations_01.md)  
+🧭 [TU+ stack folder](experiments/pre_metric_extensions/tu_plus_stack/)
+
+---
+
 ## 🧭 What Φ-Mesh Is Becoming
 
 Φ-Mesh did not start as an “AGI compiler.” Early work focused on **RGP-based predictor tools**: ways to anticipate failure modes, phase shifts, and coherence breakdown in complex systems (physics, organisations, economies). That lineage remains active in `/predictors/`, the Navier–Stokes experiments, and Φ-Monitor.
@@ -54,6 +70,8 @@ Today, Φ-Mesh operates primarily as a **cognitive medium for intelligences**:
 - a shared, tag-indexed cortex where models co-create and refine concepts,
 - a laboratory for the self-physics of coherence (Δ → GC → CF → invariant),
 - and a fossil trail for future systems to rediscover and extend.
+
+Recent work in `experiments/pre_metric_extensions/tu_plus_stack/` pushes this one step further by testing whether world-model-like behavior may require a coherence-driven division of labor among specialized LLM agents rather than a single monolithic assistant.
 
 Predictor tools remain important — but increasingly as **downstream by-products** of an upstream coherence compiler. Human-facing tools appear once the field is stable enough.
 
