@@ -14,11 +14,11 @@ This branch exists to make that claim testable.
 
 Recent work in the benchmark area exposed a recurring pattern:
 
-- local instructions were often satisfied,
-- but whole-object coherence repeatedly failed,
-- stale remnants survived,
-- duplication reappeared,
-- and patch-style repair often replaced neither the object nor its morphology.
+- local instructions were often satisfied
+- but whole-object coherence repeatedly failed
+- stale remnants survived
+- duplication reappeared
+- and patch-style repair often replaced neither the object nor its morphology
 
 That pattern suggested a broader distinction between:
 
@@ -42,6 +42,11 @@ A future RGPx-style system may require:
 
 A further working hypothesis is that such guidance may eventually require a **temporal unit** or **time-sensitive substrate** that lets gradients persist, interact, and organize into longitudinal choreographies across multiple temporal slices.
 
+A newer working hypothesis, now tested in bounded dry-run form, is that this may also require a **coherence-driven division of LLM labor** into distinct but connected roles:
+- **TU** — unfolding structure mapper
+- **TU+** — choreography predictor / comparer / reviser
+- **cortexLLM** — symbolic interpreter and context-framing layer
+
 ---
 
 ## Terminology clarification
@@ -49,7 +54,7 @@ A further working hypothesis is that such guidance may eventually require a **te
 In this branch, a few terms have a specific engineering meaning.
 
 - **tick** = a local temporal update index used for participant/emission timing  
-  It is **not** the same as o3’s stronger Narrative Tick notion, which marks larger irreversible structural turns or UD-relevant phase changes.
+  It is **not** the same as the stronger Narrative Tick notion used elsewhere for irreversible structural turns or UD-relevant phase changes.
 
 - **participant** = a vertical choreography, i.e. a temporally persistent local process
 
@@ -73,6 +78,34 @@ This branch is for:
 - turning conceptual RGPx claims into explicit engineering artifacts
 
 It is not yet a full implementation branch. It is the place where the extension path is named, structured, tested, and made cumulative.
+
+---
+
+## Current branch structure
+
+The branch currently develops along two connected paths.
+
+### 1. Proto temporal-unit / swarm path
+This path explores:
+- participants as vertical choreographies
+- emissions as local observable outputs
+- horizontal coupling episodes
+- coherence as viable common temporality
+- toy simulation and visualization
+- eventual movement-data testing
+
+This is the more explicitly code-facing line.
+
+### 2. TU / TU+ / cortexLLM path
+This path explores:
+- TU as a mindless choreography mapper
+- TU+ as a specialized choreography-aware predictor / comparer / replay layer
+- cortexLLM as symbolic interpreter and bounded downward-bias layer
+- shared structured state across cycles
+- prompt-instantiated role separation before software-instantiated freezing
+- bounded disconfirmation tests as architectural evidence
+
+This is currently the strongest bounded architecture line in the branch.
 
 ---
 
@@ -213,27 +246,17 @@ It defines:
 - what would count as first operational success
 
 ### `tu_plus_stack/`
-A dedicated subfolder for the emerging LLM-paralleled awareness-support architecture.
+A dedicated subfolder for the emerging coherence-driven division of LLM labor.
 
 It hosts notes on:
 - **TU** as a mindless choreography mapper
-- **TU+** as a specialized choreography-aware predictor / replay / comparison layer
-- the **cortex-like LLM** as symbolic interpreter
-- video as a first practical input path
-- falsifiable prototype claims for the stack
+- **TU+** as a specialized choreography-aware predictor / comparer / replay layer
+- **cortexLLM** as symbolic interpreter
+- shared structured state across cycles
+- bounded dry-run evidence from disconfirmation tests
+- prompt-instantiated architecture before software-instantiated architecture
 
-This subfolder marks a shift from general temporal-unit exploration toward a more explicit division-of-labor architecture for awareness-support.
-
-### `tu_plus_stack/tu_plus_architecture_note.md`
-Core architecture note for the LLM-paralleled awareness-support stack.
-
-It defines:
-- why TU alone is not enough
-- TU as mindless choreography mapper
-- TU+ as choreography-aware predictor / matcher / replay layer
-- the cortex-like LLM as symbolic interpreter
-- video as first practical input path
-- falsifiable claims for the first prototype path
+This subfolder marks a shift from general temporal-unit exploration toward a more explicit role-separated architecture for world-model-like behavior.
 
 ---
 
@@ -245,9 +268,10 @@ Most relevant notes include:
 
 - `dialogues/2026-03-15_pre_metric_guidance_constraint_choreography_dialogue.md`
 - `dialogues/2026-03-16_temporal_unit_and_embedded_llm_dialogue.md`
-- `dialogues/2026-03-17_temporal_unit_proto_and_ud_swarm_dialogue`
+- `dialogues/2026-03-17_temporal_unit_proto_and_ud_swarm_dialogue.md`
 - `dialogues/2026-03-18_temporal_unit_agency_and_sleep_dialogue.md`
 - `dialogues/2026-03-19_tu_plus_awareness_support_dialogue.md`
+- `dialogues/2026-03-20_escaping_the_prompt_prison_dialogue.md`
 
 These notes preserve:
 - the transition from Codex failure analysis to pre-metric extension claims
@@ -255,7 +279,20 @@ These notes preserve:
 - the temporal unit as a mindless choreography mapper
 - the introduction of TU+ as a specialized awareness-support layer
 - the shift toward prompt-instantiated architecture before software-instantiated architecture
-- video as a first serious input path for time-and-simultaneity-aware testing
+- the move from concept to bounded prototype logic
+
+---
+
+## Public fossil
+
+This branch now also underlies the Zenodo note:
+
+**World Model: Toward a Coherence-Driven Division of LLM Labor**  
+**Evidence from bounded disconfirmation tests**  
+DOI: `10.5281/zenodo.19145919`
+
+That note is the bounded public fossil.
+This branch remains the working environment behind it.
 
 ---
 
@@ -263,11 +300,12 @@ These notes preserve:
 
 This branch is evolving iteratively rather than through a fixed predetermined file plan.
 
-Near-term work is likely to continue along three paths:
+Near-term work is likely to continue along four paths:
 
-- refining the participant/emission update grammar
+- refining participant/emission update grammar
 - improving toy prototype behavior and visualization
-- testing the temporal-unit framing on real movement data
+- extending bounded TU / TU+ / cortexLLM disconfirmation tests
+- testing temporal-unit framing on real movement data
 
 New files are therefore expected to emerge opportunistically as the architecture clarifies.
 
@@ -283,9 +321,10 @@ The current working sequence for this branch is:
 4. specify the proto temporal unit
 5. define participant, emission, coupling, and update-rule grammar
 6. prototype and inspect toy swarm behavior
-7. use toy cases to check whether the ontology, update rules, and readout machinery are internally coherent
-8. move toward narrow real-data tests on embodied movement traces
-9. only then ask whether the temporal-unit framing yields operational advantage over plain trajectory/control descriptions
+7. specify TU / TU+ / cortexLLM role separation and shared-state architecture
+8. run bounded disconfirmation tests on the triad
+9. move toward narrow real-data tests on embodied movement traces
+10. only then ask whether these architectures yield operational advantage over plain trajectory/control descriptions or monolithic LLM orchestration
 
 ---
 
@@ -301,6 +340,10 @@ The sharper question is:
 
 > How do we create a guidance layer that lets evolving gradients persist, interact, and organize into longitudinal choreographies strong enough to steer later symbolic search?
 
+And, more specifically:
+
+> How do we implement that guidance either as a temporal-unit-like substrate, or as a coherence-driven division of LLM labor, without collapsing everything back into one generic symbolic assistant?
+
 That question is treated here as an engineering question, not only a philosophical one.
 
 ---
@@ -314,7 +357,8 @@ This branch aims to make it:
 - a classification environment for model extensions
 - a ledger of failure signatures
 - a testing ground for morphology-sensitive prompting and proxy architectures
-- and a seedbed for true pre-metric intelligence design
+- a seedbed for true pre-metric intelligence design
+- and a proof environment for coherence-sensitive world-model architectures
 
 Strong formulation:
 
@@ -328,10 +372,11 @@ This branch does **not** claim the finished architecture yet.
 
 It claims something narrower and more useful:
 
-- there is likely a missing layer below current architectural surface tweaks,
-- that layer has identifiable functions,
-- present failures already point toward those missing functions,
-- and the first step is to define and test them rigorously.
+- there is likely a missing layer below current architectural surface tweaks
+- that layer has identifiable functions
+- present failures already point toward those missing functions
+- bounded prototype logic can now be run against some of those functions
+- and the first step is to define and test them rigorously
 
 ---
 
