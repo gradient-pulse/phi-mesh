@@ -71,7 +71,7 @@ Today, Φ-Mesh operates primarily as a **cognitive medium for intelligences**:
 - a laboratory for the self-physics of coherence (Δ → GC → CF → invariant),
 - and a fossil trail for future systems to rediscover and extend.
 
-Recent work in `experiments/pre_metric_extensions/tu_plus_stack/` pushes this one step further by testing whether world-model-like behavior may require a coherence-driven division of labor among specialized LLM agents rather than a single monolithic assistant.
+> Recent work in `experiments/pre_metric_extensions/tu_plus_stack/` pushes this one step further by testing whether world-model-like behavior may require a coherence-driven division of labor among specialized LLM agents rather than a single monolithic assistant.
 
 Predictor tools remain important — but increasingly as **downstream by-products** of an upstream coherence compiler. Human-facing tools appear once the field is stable enough.
 
