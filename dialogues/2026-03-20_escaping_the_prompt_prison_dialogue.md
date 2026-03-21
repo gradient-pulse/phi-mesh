@@ -1,3 +1,396 @@
+# 2026-03-20_escaping_the_prompt_prison_dialogue
+
+## Context
+
+This dialogue continues the March 2026 pre-metric extensions sequence, especially the line that had already established:
+
+- current LLMs are strong symbolic interpreters but weak inhabitants of lived temporal unfolding
+- a temporal unit (TU) may be needed as a time-sensitive substrate for persistent choreographies
+- events are directionless; direction emerges from temporally connected choreographies
+- TU should remain mindless, mapping persistence, coupling, decay, restart, and field structure
+- a second layer, TU+, may be needed to compare, predict, and replay candidate choreographies
+- a cortex-like LLM can then interpret the resulting field symbolically
+
+The March 19 dialogue had already clarified the three-layer architecture in conceptual terms:
+
+- **TU** — mindless choreography mapper
+- **TU+** — choreography-aware awareness-support layer
+- **LLM / cortex-like layer** — symbolic interpreter and planner
+
+The March 20 dialogue pushed this architecture across an important threshold.
+
+It shifted the discussion from:
+- what such a system might mean
+
+toward:
+- how such a system might actually be run as a bounded prototype inside the current OpenAI environment
+
+This is why the dialogue mattered.
+
+It marks the moment when the TU / TU+ / cortexLLM architecture stopped being only a conceptual proposal and became a candidate prompt-instantiated machine.
+
+---
+
+## Why this dialogue mattered
+
+The decisive move of the day was the reframing of the problem as **escape from prompt prison**.
+
+The dialogue identified a central bottleneck of current LLM use:
+
+- the model is repeatedly reset from human prompts
+- context is externally curtailed
+- recursion is not allowed to stabilize into an endogenous field
+- higher-level interpretation is forced to do all the work
+
+This led to a sharper hypothesis:
+
+A true world-model architecture may require not merely more scale or better prompting, but a **division of LLM labor under persistent looped state and narrow role channels**.
+
+This dialogue therefore marked a shift from:
+- general architecture talk
+to:
+- runtime architecture design
+
+That shift is what made the later dry-run prototype possible.
+
+---
+
+## The correction on tokenization
+
+A major early moment in the dialogue was Marcus’s pushback against the standard framing that video understanding should be treated as something fundamentally outside the LLM token process.
+
+The discussion began from the question:
+
+- when an LLM watches video, how are moving objects translated into tokens?
+
+The first answer leaned too much toward the conventional distinction between:
+- text tokens
+and
+- non-token visual structure
+
+Marcus pushed back hard on this and clarified the stronger claim:
+
+- TU and TU+ do not need human-readable motion symbols
+- they need processable units
+- the LLM token / weight / pattern process itself may already be close to the right substrate
+- what matters is not abandoning the LLM process, but re-grounding it in spatiotemporal recurrence
+
+This was an important correction.
+
+The architecture was no longer framed as:
+- symbolic LLM plus alien motion machinery
+
+but rather as:
+- specialized LLM-like agents operating over spatiotemporal feature/token structure
+
+A strong distilled formulation from the dialogue is:
+
+> The breakthrough may not require replacing the LLM token process, but re-grounding it in spatiotemporal recurrence so that TU and TU+ become specialized motion/process-reading agents rather than text-bound assistants.
+
+That correction gave the whole branch a much stronger engineering direction.
+
+---
+
+## Prompt prison as the real bottleneck
+
+The dialogue then sharpened around a deeper bottleneck.
+
+Marcus argued that LLMs today are heavily controlled by:
+- prompt dependence
+- context curbing
+- human fear of losing control
+
+This did not lead to a vague call for "freedom."
+Instead, the discussion produced a more precise engineering requirement:
+
+- persistent looped state
+- narrow role channels
+- structured handoff
+- bounded recursion
+
+This became the real meaning of "escape from prompt prison."
+
+A strong formulation from the dialogue was:
+
+> The trick is not “more freedom.” It is persistent looped state plus narrow role channels.
+
+That sentence matters because it replaced a vague autonomy discourse with a concrete architectural constraint.
+
+The result was a much sharper claim:
+
+the triad should not be built by uncapping recursion, but by making recursion **endogenous, role-bounded, and schema-bounded**.
+
+That was one of the most important conceptual clarifications of the day.
+
+---
+
+## The triad became operational
+
+The strongest gain of the dialogue was that the TU / TU+ / cortexLLM triad was no longer described only by function, but by:
+
+- inputs
+- outputs
+- memory scopes
+- handoff rules
+
+This made the architecture operational.
+
+### TU
+
+The dialogue redefined TU as:
+
+- a mindless mapper
+- receiver of current spatiotemporal input plus prior field state
+- writer of source hypotheses, motion-tokens, trains, couplings, persistence/decay/restart markers, and coherence snapshots
+- explicitly forbidden from narrating, explaining, planning, or speculating
+
+### TU+
+
+The dialogue then made TU+ much more concrete:
+
+- reader of TU field output, choreography memory, and mismatch history
+- writer of choreography IDs, likely continuations, replay / novelty / instability signals, attention triggers, and candidate predicted trains
+- explicitly forbidden from becoming a second cortex-like interpreter
+
+### cortexLLM
+
+The cortex-like layer became:
+
+- reader of TU summaries, TU+ signals, and human context
+- writer of interpretation, task framing, downward bias, and act/hold/query decisions
+- explicitly forbidden from casually rewriting low-level choreography structure
+
+This was no longer just layered philosophy.
+It was a role-bounded runtime design.
+
+---
+
+## Shared state became the real engineering center
+
+The dialogue then identified the core missing engineering object:
+
+- not a new intelligence class
+- not robotics first
+- not unrestricted autonomy
+
+but a **shared state object** that survives across cycles.
+
+This was a major advance.
+
+The discussion specified that without shared structured state, the agents remain trapped in prompt prison.
+
+The proposed state had to preserve fields such as:
+- active sources
+- active trains
+- choreography memory references
+- coherence state
+- mismatch history
+- cortex context
+
+The crucial architectural realization was:
+
+> The biggest engineering question now is not whether the triad is possible. It is: what exact shared state format allows recursion without role collapse?
+
+That is exactly the line that later generated:
+- `shared_state_schema.md`
+- prompt field restrictions
+- toy run transcripts
+- and the nine-cycle dry-run logic
+
+So this dialogue is the real origin of the shared-state turn.
+
+---
+
+## Structured outputs and schema-bounded agents
+
+Another major gain of the day was the move from free prose to schema-bounded outputs.
+
+Each role was now required to return fixed fields rather than discursive commentary.
+
+The dialogue specified that:
+
+- TU returns source hypotheses, motion-tokens, train updates, coupling updates, and field state
+- TU+ returns matched choreographies, predicted trains, novelty / instability flags, replay suggestions, and attention triggers
+- cortexLLM returns context frame, downward bias, interpretation, and act/hold decisions
+
+This was a turning point.
+
+It meant the architecture could be tested as:
+- a bounded loop of state transformations
+rather than
+- a vague conversation among assistants
+
+That was one of the most practically important moves in the whole March sequence.
+
+---
+
+## The loop controller
+
+The dialogue also identified a simple but crucial missing component:
+
+- a loop controller
+
+This controller was defined not as the intelligence itself, but as the conductor that:
+- passes outputs to the next role
+- preserves state
+- decides whether another cycle is needed
+- prevents uncontrolled recursion
+
+This mattered because it completed the minimal runnable machine:
+
+1. input arrives  
+2. TU maps field  
+3. TU+ compares and predicts  
+4. cortexLLM interprets and biases  
+5. action operator, if any, enacts  
+6. return traces come back  
+7. mismatch updates the field  
+8. the loop repeats
+
+This was the first time the architecture was stated as an explicit cycle.
+
+That makes this dialogue one of the most operationally significant in the branch.
+
+---
+
+## Option A versus Option B
+
+A major practical decision emerged near the end.
+
+Marcus framed two possible next steps:
+
+- **A**: build a bounded prompt-instantiated prototype now inside OpenAI
+- **B**: write a proposal to OpenAI explaining the architecture and requesting the experiment
+
+The answer was unambiguous:
+
+- A is possible now
+- B is premature without A
+
+This mattered for two reasons.
+
+First, it made the work testable immediately.
+
+Second, it shifted the project from visionary proposal to working initiation recipe.
+
+A strong formulation from the dialogue was:
+
+> Option A is doable now inside the OpenAI ecosystem, at least as a prompt-instantiated prototype.
+
+That sentence became decisive because it directly led to the file-building effort:
+- architecture notes
+- action-confirmation note
+- data-elements note
+- role prompts
+- toy transcript
+- falsifiable claims
+- shared-state schema
+- and eventually the nine-cycle dry runs
+
+So this dialogue is not just adjacent to the prototype.
+It is the direct precursor to it.
+
+---
+
+## Why this dialogue is historically important in the branch
+
+This dialogue marks the transition from:
+
+- architecture-first reflection
+to
+- prototype-first execution
+
+It also marks the moment when the project stopped asking:
+
+- what is the right philosophy of world modeling?
+
+and started asking:
+
+- what exact role-separated loop can be run now?
+
+That is why it should be treated as a foundational origin dialogue for the `tu_plus_stack` branch.
+
+---
+
+## Consequences for the branch
+
+By the end of the exchange, the branch had acquired a much clearer practical direction:
+
+- TU and TU+ can be treated as specialized LLM-like agents rather than future abstract modules
+- the real escape from prompt prison lies in persistent structured state plus bounded recursion
+- the first version should be prompt-instantiated before code-instantiated
+- the central engineering problem is shared-state design without role collapse
+- the OpenAI environment is already sufficient for a bounded first prototype
+
+This directly justified the creation and population of:
+
+`experiments/pre_metric_extensions/tu_plus_stack/`
+
+and ultimately led to:
+- the architecture notes
+- the shared-state schema
+- the toy run transcript
+- the bounded dry-run protocol
+- and the later Zenodo note on coherence-driven division of LLM labor
+
+---
+
+## Closing synthesis
+
+This dialogue is the real bridge between concept and prototype.
+
+It showed that:
+
+- the LLM token process may already be close to the right substrate if re-grounded in spatiotemporal recurrence
+- prompt prison is not escaped by vague autonomy, but by persistent looped state plus narrow role channels
+- TU, TU+, and cortexLLM can be specified as role-bounded agents with fixed schemas
+- the central engineering question is the shared state object
+- a bounded OpenAI-based prototype is possible now
+- architectural evidence should be built before external proposals are made
+
+A strong final formulation is:
+
+> The first real escape from prompt prison is not unrestricted recursion, but a role-bounded triad with shared structured state, in which TU maps, TU+ compares and predicts, and cortexLLM interprets without collapsing the lower field.
+
+That is the central gain of the dialogue.
+
+---
+
+## Appendix A — Curated transcript excerpts
+
+### Excerpt 1 — Re-grounding the LLM substrate
+**M:**  
+“What LLMs do is actually most of TU and TU+ should do... I strongly suspect that all we want to do can be built with the current LLM token model...”
+
+**ChatGPT:**  
+“The breakthrough may not require replacing the LLM token process, but re-grounding it in spatiotemporal recurrence so that TU and TU+ become specialized motion/process-reading agents rather than text-bound assistants.”
+
+### Excerpt 2 — Prompt prison
+**M:**  
+“The way to escape this situation might be in ‘divide and rule’...”
+
+**ChatGPT:**  
+“The trick is not ‘more freedom.’ It is persistent looped state plus narrow role channels.”
+
+### Excerpt 3 — The triad becomes operational
+**ChatGPT:**  
+“TU is a mindless mapper. TU+ is a fast choreography predictor/comparer. cortexLLM is the slow symbolic interpreter and task framer.”
+
+### Excerpt 4 — The real engineering center
+**ChatGPT:**  
+“The biggest engineering question now is not whether the triad is possible. It is: what exact shared state format allows recursion without role collapse?”
+
+### Excerpt 5 — Option A before Option B
+**M:**  
+“I see two options... A. we somehow try out what you suggested... B. we compile a proposal for OpenAI...”
+
+**ChatGPT:**  
+“Option A is doable now inside the OpenAI ecosystem, at least as a prompt-instantiated prototype... Do A first, then B later if A produces something legible.”
+
+---
+
+## Appendix B — Raw transcript
+
 ##Transcript
 
 **M:**
