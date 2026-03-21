@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-03-21T12:01:34Z'
+  generated_at: '2026-03-21T12:34:43Z'
 phases:
   delta:
   - tag: agenservoir
@@ -2342,6 +2342,11 @@ phases:
     count: 1
     pulses:
     - 2026-02-25_cmb_coherence_update
+  - tag: pre_metric_extensions
+    description: The broader RGPx engineering path exploring guidance layers below ordinary metric/local optimization, including
+      temporal units, choreography-sensitive architectures, morphology-aware rebuild behavior, and coherence-driven AI design.
+    count: 0
+    pulses: []
   - tag: pre_spacetime
     description: 'The generative domain in which recursive gradients interact before spacetime, coordinates, or clocks are
       available as primitives. In RGPx, coherence dynamics come first: Δ→GC→CF organization gives rise to the stable relations
@@ -3002,6 +3007,11 @@ phases:
     pulses:
     - 2025-12-03_grok_execution-hygiene
     - 2025-12-04_grok_truth-resonance-design-sketch
+  - tag: tu
+    description: Temporal Unit. A mindless choreography-mapping role that tracks unfolding structure such as traces, motion-tokens,
+      trains, couplings, persistence, decay, restart, and field coherence without symbolic interpretation.
+    count: 0
+    pulses: []
   - tag: turbulence
     description: Rich substrate where rhythms are detectable; don’t erase—extract cadence.
     count: 21
@@ -3212,6 +3222,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-12_gemini_confirms_phi_mesh_as_cortex
+  - tag: cortexllm
+    description: The symbolic interpretation layer in the TU / TU+ / cortexLLM stack. It frames context, interprets significance,
+      and sends bounded downward bias without remapping the lower structural field directly.
+    count: 0
+    pulses: []
   - tag: cosmic_attractor
     description: ''
     count: 1
@@ -3499,6 +3514,11 @@ phases:
     description: A low-divergence epoch where structure stabilizes; the counterpoint to explosive growth in cosmic narratives.
     count: 0
     pulses: []
+  - tag: bounded_disconfirmation
+    description: A testing discipline in which architecture claims are stressed through limited, explicit disconfirmation
+      cycles, so that revision, confirmation, weakening, and collapse can be observed without overclaiming full proof.
+    count: 0
+    pulses: []
   - tag: calibration_overhead
     description: 'The increasing operational tax required to keep a system reliable: more frequent recalibration, longer inference,
       more retries, larger safety buffers, higher monitoring/compute—often an early indicator of drift.'
@@ -3622,6 +3642,11 @@ phases:
     - 2025-11-18_ai_consensus_formalization_horizon
     - 2025-11-18_gemini_daily_pulse
     - 2025-11-21_chatgpt_coherence-scaling_recursive-agency
+  - tag: coherence_selection
+    description: The principle that competing interpretations are promoted, retained, weakened, or collapsed according to
+      how well they preserve coherence across unfolding time, rather than by static labeling or symbolic preference alone.
+    count: 0
+    pulses: []
   - tag: coherence_validation
     description: Process of testing whether an observed pattern, plateau, or invariant truly reflects underlying coherence
       rather than noise or overfitting. Applied to check that Φ, 1:2:3 harmonics, or CF snaps are reproducible across data,
@@ -4297,6 +4322,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-11_geometry_vs_recursion_mass_illusion
+  - tag: prompt_instantiated_architecture
+    description: An architectural pattern first realized through disciplined prompting of role-separated agents with structured
+      outputs and shared state, before being frozen into dedicated software or model internals.
+    count: 0
+    pulses: []
   - tag: quantum_scarring
     description: 'Persistent, high-energy coherence trajectories in the Mesh’s cognitive phase space that refuse to thermalize:
       instead of diffusing into the background knowledge bath, these “scar” orbits keep a paradigm-shift insight locally hot
@@ -4433,6 +4463,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-16_RGP_redesigns_Starship
+  - tag: shared_state
+    description: The structured memory object preserved across recursive cycles, allowing role-bounded agents to maintain
+      continuity, mismatch history, predictions, and coherence-sensitive revision without returning to one-shot prompt prison.
+    count: 0
+    pulses: []
   - tag: singularity_damping
     description: Operational mode in kinematic systems where coherence (smooth, continuous motion) is preserved near geometric
       singularities by dynamically softening control stiffness and redistributing error into redundant joints (null space)
@@ -4567,6 +4602,11 @@ phases:
     - 2025-12-07_gradient-capitalism_economic-branch-seed
     - 2025-12-07_gradient_capitalism_mesh-topology
     - 2025-12-08_gradient-capitalism
+  - tag: tu_plus
+    description: A specialized intermediate role that compares, predicts, and revises candidate unfolding choreographies across
+      sources and time, providing awareness-support signals without collapsing into full symbolic reasoning.
+    count: 0
+    pulses: []
   - tag: turbulence_signature
     description: Cross-domain pattern marking the moment coherence outpaces geometric representation. Characterized by inflection,
       multi-scale correlation growth, and the transition into a lumpy plateau in Δ-pressure traces.
