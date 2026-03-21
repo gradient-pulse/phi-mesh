@@ -379,7 +379,7 @@ distributed_mind: >
 disunity: >
   The dissolution of coherence when recursive gradient alignment breaks—flux fragmenting into instability, the counterpart to sustained unity.
 division_of_labor: >
-  Splitting gradient tasks so each agent tracks a cleaner sub-signal.
+  The principle that distinct cognitive or agent roles should remain functionally separated rather than collapsing into one monolithic model, especially when mapping, prediction, and symbolic interpretation require different constraints.
 dns: >
   Direct Numerical Simulation (method). Valuable only when raw, time-resolved solver outputs are available (full fields or probe time series). DNS-derived 'stats only' datasets are not usable for NT-rhythm detection.
 drift: >
@@ -1316,6 +1316,8 @@ visual_coherence: >
   When emergent visuals resonate with underlying gradients and survive contextual filtering.
 whitehead: >
   Process philosopher, Alfred North Whitehead, who offered a precursor to RGP, reality as becoming, gradients in motion.
+world_model: >
+  Architectural work concerned with how an AI system maintains a coherent evolving representation of unfolding structure across time, ambiguity, mismatch, and relational change.
 word_to_pixel: >
   Language tensions unfolding as visual choreographies; captions and pixels share the same syntax.
 writing: >
