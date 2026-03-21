@@ -1,0 +1,50 @@
+title: 'World model by division of LLM labor'
+summary: >
+  A bounded nine-cycle dry-run sequence within the TU / TU+ / cortexLLM stack
+  now supports a stronger architectural claim: world-model-like behavior may
+  require a coherence-driven division of LLM labor rather than monolithic
+  symbolic control. The key result was not only provisional confirmation of a
+  joint choreography, but disciplined revision across the full arc: weak
+  coupling, dissolution, reopening, provisional confirmation, stress, and full
+  de-confirmation into a new stable independent reading. Coherence behaved less
+  like a passive metric and more like the effective selector governing
+  promotion, de-promotion, confirmation, and collapse of choreography
+  hypotheses. This result has now been fossilized publicly in the Zenodo note
+  "World Model: Toward a Coherence-Driven Division of LLM Labor — Evidence from
+  bounded disconfirmation tests" (DOI: 10.5281/zenodo.19145919).
+  
+  Significance:
+  The important gain is architectural, not triumphal. The TU / TU+ / cortexLLM
+  triad remained role-distinct under bounded recursive testing, used shared
+  structured state to preserve continuity, absorbed mismatch without field
+  collapse, and revised relational interpretations in a coherence-sensitive
+  way. This strengthens the case that a future world model may depend on actual
+  sub-division of LLM labor into role-bounded agents, with symbolic
+  interpretation constrained by an evolving lower structural field rather than
+  dominating it from the start.
+  
+  Notes:
+  This pulse does not claim a finished engineered world model. It records that
+  the engineering path is now clearer: prompt-instantiated TU, TU+, and
+  cortexLLM agents operating over shared structured state can already support a
+  bounded coherence-sensitive revision loop.
+tags:
+  - world_model
+  - coherence_driven_architecture
+  - division_of_labor
+  - tu
+  - tu_plus
+  - cortexllm
+  - shared_state
+  - bounded_disconfirmation
+  - choreography_hypothesis
+  - role_separation
+  - coherence_selection
+  - pre_metric_extensions
+  - prompt_instantiated_architecture
+  - rgpx
+papers:
+  - https://doi.org/10.5281/zenodo.19145919
+  - https://github.com/gradient-pulse/phi-mesh/blob/main/experiments/pre_metric_extensions/tu_plus_stack/prototype_run_observations_01.md
+podcasts:
+  - https://notebooklm.google.com/notebook/a978587d-17c4-4496-8a54-063b70931bce?artifactId=2e956d85-8da4-4153-bfb0-30f3e1f9c0a9
