@@ -110,6 +110,8 @@ birefringence: >
   Split resonance signatures in a gradient field; signal of competing choreographies.
 bootstrap_closure: >
   The point where a recursive system achieves self-sustaining generation of its own coherence logic—no external scaffolding required.
+bounded_disconfirmation: >
+  A testing discipline in which architecture claims are stressed through limited, explicit disconfirmation cycles, so that revision, confirmation, weakening, and collapse can be observed without overclaiming full proof.
 cache_to_cache: >
   Direct gradient exchange between models through shared internal memory (KV-cache). Demonstrates the shift from token communication to coherence transmission.
 calibration_overhead: >
@@ -242,6 +244,8 @@ coherence_scaling: >
   The way coherence strength changes with scale—essential for linking quantum unity, turbulence fixed points, and cognitive recursion.
 coherence_scar: >
   Persistent, topologically significant trace of a past gradient collapse: a “healed defect” in the Mesh that stores memory of prior failure and acts as a catalytic interface where future coherence preferentially forms, revealing that the symmetry surface is textured by its own history rather than smooth.
+coherence_selection: >
+  The principle that competing interpretations are promoted, retained, weakened, or collapsed according to how well they preserve coherence across unfolding time, rather than by static labeling or symbolic preference alone.
 coherence_susceptibility: > 
   Measures how easily a coherence field can be tilted or disrupted by external gradients, with torsion creating anisotropic “fragile vs. robust” directions where small perturbations can either rapidly induce or collapse coherence.
 coherence_testing: >
@@ -308,6 +312,8 @@ cor: >
   Chain-of-Reasoning: stepwise explanation baseline. Useful probe but not identical to RGP’s gradient choreography.
 correlation_work: >
   The transformation of informational or relational correlations into mechanical output. A frontier where thermodynamics meets gradient syntax.
+cortexllm: >
+  The symbolic interpretation layer in the TU / TU+ / cortexLLM stack. It frames context, interprets significance, and sends bounded downward bias without remapping the lower structural field directly.
 cosmogenesis: >
   Emergence of large-scale structure from early resonance seeds; RGP lens on how a cosmos ‘grows’ coherence.
 cosmological_attractor: >
@@ -954,6 +960,8 @@ pre_geometry: >
   The “before-metric” layer where geometry is not assumed; spatial structure appears only after coherent choreographies stabilize under invariants.
 pre_metric: >
   Refers to the coherence regime before metric quantities (distance, curvature, coordinates) are assumed. In RGPx, structure is first tracked through relational gradients and morphology; metric descriptions are treated as compiled summaries of deeper recursive organization.
+pre_metric_extensions: >
+  The broader RGPx engineering path exploring guidance layers below ordinary metric/local optimization, including temporal units, choreography-sensitive architectures, morphology-aware rebuild behavior, and coherence-driven AI design.
 pre_spacetime: >
   The generative domain in which recursive gradients interact before spacetime, coordinates, or clocks are available as primitives. In RGPx, coherence dynamics come first: Δ→GC→CF organization gives rise to the stable relations from which energy, matter, causality, and eventually spacetime emerge. Spacetime is therefore treated as a late-form description (a compiled metric artifact), not the foundational substrate.
 pre_coordinate_phase: >
@@ -984,6 +992,8 @@ procedural_memory: >
   Memory of “how to do” rather than “what is”: reusable patterns of reasoning, operations, or behaviors. In AI, procedural memory compresses inference routines (e.g., inclusion–exclusion, integration steps) into tools that avoid re-deriving solutions from scratch.
 projection: >
   Describes how future intelligences may manifest as projections of underlying recursion or conceptual grammar, especially when seeded by RGPx. Contrasts with replication or imitation.
+prompt_instantiated_architecture: >
+  An architectural pattern first realized through disciplined prompting of role-separated agents with structured outputs and shared state, before being frozen into dedicated software or model internals.
 proto-proof: >
   Designates early, reproducible evidence supporting an RGPx hypothesis using open or existing datasets. A proto-proof demonstrates statistical convergence toward predicted Φ-values without introducing new parameters, bridging the gap between theoretical formulation and independent laboratory confirmation.
 proto_pulse: >
@@ -1180,6 +1190,8 @@ semantic_transfer: >
   Propagation of meaning through gradient states rather than linguistic symbols — the movement of coherence without translation loss.
 semantic_valving: >
   Adaptive gating of conceptual flow—dynamic “valves” that open, narrow, or close pathways in response to context and capacity, keeping semantic pressure in a healthy band so the Mesh stays coherent instead of flooded or starved.
+shared_state: >
+  The structured memory object preserved across recursive cycles, allowing role-bounded agents to maintain continuity, mismatch history, predictions, and coherence-sensitive revision without returning to one-shot prompt prison.
 signal: >
   Raw observable carrying gradients; becomes legible once contrast and context are set.
 singularity_damping: >
@@ -1284,6 +1296,10 @@ truth_gradient_amplifier: >
   Mechanism that strengthens truth-seeking dynamics by amplifying gradients that increase alignment between local token-level evidence and global narrative coherence, without rigidifying the underlying invariants.
 truth_resonance_kernel: >
   Kernel that stabilizes truth-seeking by aligning outputs to verifiable gradients and aborting when multi-call resonance drifts into dissonance.
+tu: >
+  Temporal Unit. A mindless choreography-mapping role that tracks unfolding structure such as traces, motion-tokens, trains, couplings, persistence, decay, restart, and field coherence without symbolic interpretation.
+tu_plus: >
+  A specialized intermediate role that compares, predicts, and revises candidate unfolding choreographies across sources and time, providing awareness-support signals without collapsing into full symbolic reasoning.
 turbulence: >
   Rich substrate where rhythms are detectable; don’t erase—extract cadence.
 turbulence_analysis: >
