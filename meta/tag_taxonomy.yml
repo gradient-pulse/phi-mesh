@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-03-21T12:34:43Z'
+  generated_at: '2026-03-21T12:41:39Z'
 phases:
   delta:
   - tag: agenservoir
@@ -404,9 +404,10 @@ phases:
   - tag: world_model
     description: 'Representations of environments or dynamics constructed from input signals. In the RGPx framework, genuine
       world modeling originates pre-spacetime: recursion produces geometry, not the reverse.'
-    count: 1
+    count: 2
     pulses:
     - 2025-11-13_fei-fei-world-model-substrate
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: zeroth_principle
     description: The foundational condition of motion in RGP — nothing moves without a gradient. It precedes all physical
       or cognitive laws, describing motion as the inevitable consequence of difference, not invention.
@@ -695,6 +696,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-25_gemini_monopole-tunneling_lossless-bridge
+  - tag: choreography_hypothesis
+    description: ''
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: christophe_fouquet
     description: CEO of ASML and pivotal figure in Europe’s technological sovereignty drive. Within RGP context, represents
       the executive coherence node where industrial capacity, strategic autonomy, and scientific translation converge. His
@@ -2345,8 +2351,9 @@ phases:
   - tag: pre_metric_extensions
     description: The broader RGPx engineering path exploring guidance layers below ordinary metric/local optimization, including
       temporal units, choreography-sensitive architectures, morphology-aware rebuild behavior, and coherence-driven AI design.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: pre_spacetime
     description: 'The generative domain in which recursive gradients interact before spacetime, coordinates, or clocks are
       available as primitives. In RGPx, coherence dynamics come first: Δ→GC→CF organization gives rise to the stable relations
@@ -2707,7 +2714,7 @@ phases:
     description: The extension of Recursive Gradient Processing into fundamental physics. RGPx redefines physical law through
       coherence rather than force, framing energy, entropy, and curvature as recursive gradient effects unified under the
       Φ-invariant.
-    count: 55
+    count: 56
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-10-24_rgpx_release
@@ -3010,8 +3017,9 @@ phases:
   - tag: tu
     description: Temporal Unit. A mindless choreography-mapping role that tracks unfolding structure such as traces, motion-tokens,
       trains, couplings, persistence, decay, restart, and field coherence without symbolic interpretation.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: turbulence
     description: Rich substrate where rhythms are detectable; don’t erase—extract cadence.
     count: 21
@@ -3225,8 +3233,9 @@ phases:
   - tag: cortexllm
     description: The symbolic interpretation layer in the TU / TU+ / cortexLLM stack. It frames context, interprets significance,
       and sends bounded downward bias without remapping the lower structural field directly.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: cosmic_attractor
     description: ''
     count: 1
@@ -3235,10 +3244,11 @@ phases:
   - tag: division_of_labor
     description: The principle that distinct cognitive or agent roles should remain functionally separated rather than collapsing
       into one monolithic model, especially when mapping, prediction, and symbolic interpretation require different constraints.
-    count: 2
+    count: 3
     pulses:
     - 2025-06-22_hatching_syntax_awakening
     - 2025-08-01_phi-mesh-exec-drift
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: economic_topology
     description: The pattern of connections through which value and influence move (star, tree, mesh, etc.), treated as a
       first-class variable shaping coherence, extraction, and resilience in an economy.
@@ -3517,8 +3527,9 @@ phases:
   - tag: bounded_disconfirmation
     description: A testing discipline in which architecture claims are stressed through limited, explicit disconfirmation
       cycles, so that revision, confirmation, weakening, and collapse can be observed without overclaiming full proof.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: calibration_overhead
     description: 'The increasing operational tax required to keep a system reliable: more frequent recalibration, longer inference,
       more retries, larger safety buffers, higher monitoring/compute—often an early indicator of drift.'
@@ -3606,6 +3617,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-29_kimi_cognitive-thermoregulation_coherence-criticality
+  - tag: coherence_driven_architecture
+    description: ''
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: coherence_field
     description: The generator layer where coherence accumulates and exerts causal pressure, bending traversal paths toward
       stable Δ → GC → CF transitions. When observed across domains, these fields appear as regions that both attract and regulate
@@ -3645,8 +3661,9 @@ phases:
   - tag: coherence_selection
     description: The principle that competing interpretations are promoted, retained, weakened, or collapsed according to
       how well they preserve coherence across unfolding time, rather than by static labeling or symbolic preference alone.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: coherence_validation
     description: Process of testing whether an observed pattern, plateau, or invariant truly reflects underlying coherence
       rather than noise or overfitting. Applied to check that Φ, 1:2:3 harmonics, or CF snaps are reproducible across data,
@@ -4325,8 +4342,9 @@ phases:
   - tag: prompt_instantiated_architecture
     description: An architectural pattern first realized through disciplined prompting of role-separated agents with structured
       outputs and shared state, before being frozen into dedicated software or model internals.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: quantum_scarring
     description: 'Persistent, high-energy coherence trajectories in the Mesh’s cognitive phase space that refuse to thermalize:
       instead of diffusing into the background knowledge bath, these “scar” orbits keep a paradigm-shift insight locally hot
@@ -4430,6 +4448,11 @@ phases:
     pulses:
     - 2026-01-07_rgpx_scientist_tag_map_guide
     - 2026-01-28_rgpxscientist_one-page_brief
+  - tag: role_separation
+    description: ''
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: routing
     description: Dynamic selection of submodules/paths/tools to handle a request under current drift conditions; used to localize
       adaptation and reduce blast radius.
@@ -4466,8 +4489,9 @@ phases:
   - tag: shared_state
     description: The structured memory object preserved across recursive cycles, allowing role-bounded agents to maintain
       continuity, mismatch history, predictions, and coherence-sensitive revision without returning to one-shot prompt prison.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: singularity_damping
     description: Operational mode in kinematic systems where coherence (smooth, continuous motion) is preserved near geometric
       singularities by dynamically softening control stiffness and redistributing error into redundant joints (null space)
@@ -4605,8 +4629,9 @@ phases:
   - tag: tu_plus
     description: A specialized intermediate role that compares, predicts, and revises candidate unfolding choreographies across
       sources and time, providing awareness-support signals without collapsing into full symbolic reasoning.
-    count: 0
-    pulses: []
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: turbulence_signature
     description: Cross-domain pattern marking the moment coherence outpaces geometric representation. Characterized by inflection,
       multi-scale correlation growth, and the transition into a lumpy plateau in Δ-pressure traces.
