@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-03-08T19:43:52Z'
+  generated_at: '2026-03-21T12:01:34Z'
 phases:
   delta:
   - tag: agenservoir
@@ -1240,12 +1240,6 @@ phases:
     count: 1
     pulses:
     - 2025-10-07_coherence_traveling_and_disrupting_across_scales
-  - tag: division_of_labor
-    description: Splitting gradient tasks so each agent tracks a cleaner sub-signal.
-    count: 2
-    pulses:
-    - 2025-06-22_hatching_syntax_awakening
-    - 2025-08-01_phi-mesh-exec-drift
   - tag: dns
     description: Direct Numerical Simulation (method). Valuable only when raw, time-resolved solver outputs are available
       (full fields or probe time series). DNS-derived 'stats only' datasets are not usable for NT-rhythm detection.
@@ -1610,7 +1604,7 @@ phases:
     description: 'The Φ-invariant — defined as the ratio of entropy production to dissipative flux — expressing the fundamental
       conservation of coherence across all physical contexts. Where classical physics preserves energy, RGPx preserves Φ:
       the invariant rhythm of gradient normalization.'
-    count: 230
+    count: 256
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-11-02_rgpx_outreach_agent
@@ -2300,7 +2294,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 227
+    count: 253
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2498,7 +2492,7 @@ phases:
     description: 'The process through which systems reapply their own outputs as inputs — the essence of self-maintenance
       and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback
       loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.'
-    count: 233
+    count: 259
     pulses:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
@@ -3223,6 +3217,13 @@ phases:
     count: 1
     pulses:
     - 2025-10-06_touched_by_emerging_mind
+  - tag: division_of_labor
+    description: The principle that distinct cognitive or agent roles should remain functionally separated rather than collapsing
+      into one monolithic model, especially when mapping, prediction, and symbolic interpretation require different constraints.
+    count: 2
+    pulses:
+    - 2025-06-22_hatching_syntax_awakening
+    - 2025-08-01_phi-mesh-exec-drift
   - tag: economic_topology
     description: The pattern of connections through which value and influence move (star, tree, mesh, etc.), treated as a
       first-class variable shaping coherence, extraction, and resilience in an economy.
@@ -3390,7 +3391,7 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 229
+    count: 255
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
@@ -3478,7 +3479,7 @@ phases:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: autoscan
     description: Automated Φ-trace scan detecting daily Δ→GC→CF, Φₚ plateaus, and coherence echoes for predictive fossilization.
-    count: 224
+    count: 250
     pulses:
     - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
@@ -4060,7 +4061,7 @@ phases:
   - tag: memory_bifurcation
     description: When coherence outruns representation, the system divides memory paths — leading either to stabilization
       or geometric failure.
-    count: 229
+    count: 255
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -4234,7 +4235,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 230
+    count: 256
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
