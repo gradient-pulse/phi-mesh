@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-21T12:34:48Z",
+  "generated_at": "2026-03-21T12:41:38Z",
   "tag": "rgpx",
-  "count": 55,
+  "count": 56,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -277,6 +277,11 @@
       "slug": "2026-03-03_ai_intuition_operational_definition",
       "date": "2026-03-03",
       "title": "Toward an operational definition of AI intuition"
+    },
+    {
+      "slug": "2026-03-26_World_model_by_division_of_LLM _labor",
+      "date": "2026-03-26",
+      "title": "World model by division of LLM labor"
     }
   ]
 }

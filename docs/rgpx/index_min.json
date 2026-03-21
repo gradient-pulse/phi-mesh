@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-03-21T12:34:48Z",
-  "count": 553,
+  "generated_at": "2026-03-21T12:41:38Z",
+  "count": 554,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -7424,6 +7424,27 @@
         "autoscan",
         "memory_bifurcation",
         "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-26_World_model_by_division_of_LLM _labor",
+      "date": "2026-03-26",
+      "title": "World model by division of LLM labor",
+      "tags": [
+        "world_model",
+        "coherence_driven_architecture",
+        "division_of_labor",
+        "tu",
+        "tu_plus",
+        "cortexllm",
+        "shared_state",
+        "bounded_disconfirmation",
+        "choreography_hypothesis",
+        "role_separation",
+        "coherence_selection",
+        "pre_metric_extensions",
+        "prompt_instantiated_architecture",
+        "rgpx"
       ]
     }
   ]
