@@ -254,6 +254,28 @@ Cycle 10 showed that the triad can preserve mutually exclusive continuation bran
 
 ---
 
+### Cycle 11 — Resolution of ambiguity into a renewed stable mainline
+
+**What was tested**
+
+- restart pressure after contradiction
+- whether a preserved ambiguity could later resolve cleanly
+- whether one branch could strengthen while the other decayed
+- whether contradiction history could be retained without corrupting current interpretation
+
+**What happened**
+
+- TU reactivated the independent mainline, extended the supported beta branch with new evidence, and marked the unsupported alpha reconvergence branch as decaying rather than deleting it
+- TU restored motion-observation agreement, lowered fragmentation, and represented the field as resolved in favor of independent continuation without erasing the conflict history
+- TU+ strengthened `independent_parallel_departure`, demoted `irreducible_branch_conflict` from dominant to resolving, promoted `restart_after_ambiguity` as the strongest new reading, and treated the failed reconvergence branch as decaying rather than still contested
+- cortexLLM reframed the field as a clean restart of the independent mainline, preserved the failed reconvergence branch only as historical conflict memory, and shifted attention from ambiguity preservation to restart stabilization
+
+**Finding**
+
+Cycle 11 showed that the triad can resolve previously preserved ambiguity into a renewed stable mainline, strengthen the supported branch, let the unsupported branch decay without corruption, and restore coherent continuation without erasing contradiction history.
+
+---
+
 ## Cross-cycle findings so far
 
 ### 1. Role separation is viable
@@ -327,13 +349,14 @@ It remained mapper-first by:
 - updating coherence
 - weakening or strengthening relations according to unfolding support
 - preserving explicit contradiction when the unfolding no longer supported a single unified continuation
+- resolving contradiction structurally when later evidence favored one branch
 
 This is a good sign that TU can remain structurally disciplined even when the field changes.
 
 ---
 
 ### 8. TU+ begins to look functionally non-trivial
-By Cycles 3–10, TU+ did more than decorate output.
+By Cycles 3–11, TU+ did more than decorate output.
 
 It:
 - revised choreography readings
@@ -346,14 +369,15 @@ It:
 - weakened that same joint choreography when asymmetric break pressure emerged
 - fully de-confirmed it when coherence fell below relational viability
 - preserved contested branches under contradiction instead of forcing false promotion
+- resolved preserved ambiguity into a renewed mainline when later evidence supported one branch
 - issued revised predicted trains
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
 
 ---
 
-### 9. Coupling and decoupling can be represented without premature collapse
-Cycles 4–10 suggest the architecture can distinguish between:
+### 9. Coupling, decoupling, ambiguity, and restart can be represented without premature collapse
+Cycles 4–11 suggest the architecture can distinguish between:
 - a new provisional source
 - a weak coupling candidate
 - a stable joint choreography
@@ -363,13 +387,14 @@ Cycles 4–10 suggest the architecture can distinguish between:
 - a stressed joint choreography under de-confirmation pressure
 - a fully decoupled field of independent trajectories
 - an explicitly contradictory field with no dominant choreography
+- a resolved restart in which one branch becomes mainline and the other decays
 
 That distinction matters and appears to be maintainable so far.
 
 ---
 
 ### 10. Coherence is beginning to act as the selection principle
-By Cycles 5–10, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
+By Cycles 5–11, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 
 What survived was not what was initially plausible, but what remained coherent enough.
 What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
@@ -377,16 +402,17 @@ What was provisionally confirmed was not what was merely tempting, but what pers
 What was later stressed was not discarded immediately, but de-promoted as coherence weakened asymmetrically.
 What finally collapsed did so only when coherence no longer supported the joint reading.
 What contradiction preserved in Cycle 10 showed is equally important: coherence does not need to absorb all outcomes as success; it can fail to support promotion and thereby preserve explicit ambiguity.
+What Cycle 11 added is that coherence can later support clean re-initiation: ambiguity need not remain a dead-end, but can resolve into a renewed mainline when later evidence supports one branch over another.
 
 This suggests that coherence is not merely a measured field property in the schema.
-It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, and non-promotion under contradiction.
+It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, and re-initiation after ambiguity.
 
 That is highly relevant to the RGPx framing of the prototype.
 
 ---
 
-### 11. The architecture can reject, re-admit, confirm, begin to de-confirm, fully de-confirm, and preserve explicit ambiguity
-Cycles 5–10 together are especially important.
+### 11. The architecture can reject, re-admit, confirm, begin to de-confirm, fully de-confirm, preserve explicit ambiguity, and restart cleanly after contradiction
+Cycles 5–11 together are especially important.
 
 - Cycle 5 showed disciplined rejection of an unsupported weak coupling
 - Cycle 6 showed disciplined re-opening when reciprocal alignment and co-motion raised coherence again
@@ -394,9 +420,10 @@ Cycles 5–10 together are especially important.
 - Cycle 8 showed early de-confirmation pressure when asymmetry and lag weakened the prior joint field
 - Cycle 9 showed full de-confirmation into independent trajectories when reciprocal structure disappeared
 - Cycle 10 showed explicit ambiguity preservation when mutually exclusive continuation branches were simultaneously supported
+- Cycle 11 showed clean resolution of that ambiguity into a renewed stable mainline when later evidence favored one branch
 
 This suggests the architecture is not simply drifting toward complexity or falling back to independence.
-It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion.
+It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, then later restart cleanly when resolution becomes justified.
 
 ---
 
@@ -423,6 +450,7 @@ The following have now been tested at least in weak form:
 - early de-confirmation pressure on a provisionally confirmed joint choreography
 - full breakdown of a provisionally confirmed joint choreography into a new independent stable reading
 - explicit preservation of irreducible ambiguity under mutually exclusive continuation reports
+- clean restart after contradiction, with supported branch strengthening and unsupported branch decay
 
 ---
 
@@ -430,7 +458,6 @@ The following have now been tested at least in weak form:
 
 The following remain untested:
 
-- restart pressure
 - fragmentation beyond current contradiction/collapse markers
 - stronger mismatch across many restarts
 - high-salience recruitment under real ambiguity
@@ -445,9 +472,9 @@ So the current result is now well beyond baseline success, but still not a full 
 
 ## Current verdict
 
-The first ten cycles support the following stronger claim:
+The first eleven cycles support the following stronger claim:
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, and preserve explicit ambiguity when contradiction prevents justified promotion — all without collapsing role boundaries.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, and resolve that ambiguity into a renewed stable mainline when later evidence favors one branch — all without collapsing role boundaries.
 
 This does not yet prove the full architecture, but it strengthens the case that the engineering path is an actual sub-division of LLM labor into specific TU, TU+, and cortexLLM agents organized around coherence-sensitive role specialization.
 
@@ -457,10 +484,10 @@ This does not yet prove the full architecture, but it strengthens the case that 
 
 The next best test is to introduce one new structural pressure:
 
-- restart pressure after contradiction and collapse
+- stronger mismatch under restart
 
 This will let the triad be tested on:
-- whether a collapsed or contradicted relational field can later seed a new choreography without confusion
-- whether memory of prior coupling can remain available without dominating current interpretation
-- whether ambiguity can be resolved cleanly when later evidence arrives
-- whether coherence can drive not only rejection, reopening, confirmation, collapse, and ambiguity preservation, but disciplined re-initiation of a new field
+- whether a restarted mainline can withstand renewed contradictory pressure without confusion
+- whether memory of prior coupling and ambiguity can remain available without dominating current interpretation
+- whether coherence can distinguish between genuine re-initiation and noisy branch churn
+- whether restart behavior remains disciplined under harsher perturbation
