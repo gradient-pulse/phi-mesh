@@ -567,16 +567,21 @@ It is the smallest state-and-transition grammar that presently seems sufficient 
 
 ## Closing statement
 
-The current prototype suggests that a workable division of LLM labor may require more than role prompts alone.
+The current prototype supports a minimal architectural claim:
 
-It may require a persistent structured state in which:
+A workable division of LLM labor requires more than role prompts alone. It requires persistent structured state across cycles.
 
-- trains can persist
-- couplings can strengthen or weaken
-- contradiction can branch explicitly
-- unsupported branches can decay
-- ambiguity can be preserved
-- restart can occur without corruption
-- and fresh weak recoupling can arise without memory confusion
+For the architecture to behave as observed, that state must support at least the following capacities:
+-	train persistence across cycles
+-	strengthening and weakening of coupling
+-	explicit branch formation under contradiction
+-	decay of unsupported branches without silent erasure
+-	preservation of ambiguity when promotion is unjustified
+-	clean restart after contradiction or collapse
+-	fresh weak recoupling without automatic revival of prior collapsed joint structure
 
-That is the minimal architectural claim this spec is meant to preserve.
+The practical implication is direct:
+
+> the next engineering step is not to add more narrative description, but to preserve these capacities explicitly in state schema, transition rules, and test design.
+
+That is the minimal architectural commitment this spec is intended to preserve.
