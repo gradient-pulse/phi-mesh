@@ -453,7 +453,7 @@ By Cycles 5–13, revision appears to be driven less by static labeling and more
 - What Cycle 12 added is that re-initiation does not freeze the field into rigid independence: coherence can remain open to fresh weak relational evidence without mistaking it for automatic revival of an earlier collapsed joint field.
 - What Cycle 13 added is that weak renewed relation can survive mixed follow-up without being either over-promoted into restored joint choreography or prematurely erased back into pure independence.
 
-This suggests that **coherence** is not merely a measured field property in the schema.
+This suggests that *coherence* is not merely a measured field property in the schema.
 It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, and provisional weak continuation under mixed support.
 
 That is highly relevant to the RGPx framing of the prototype.
