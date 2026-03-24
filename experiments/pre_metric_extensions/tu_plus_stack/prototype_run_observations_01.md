@@ -443,15 +443,15 @@ That distinction matters and appears to be maintainable so far.
 ### 10. Coherence is beginning to act as the selection principle
 By Cycles 5–13, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 
-What survived was not what was initially plausible, but what remained coherent enough.
-What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
-What was provisionally confirmed was not what was merely tempting, but what persisted coherently across another interval.
-What was later stressed was not discarded immediately, but de-promoted as coherence weakened asymmetrically.
-What finally collapsed did so only when coherence no longer supported the joint reading.
-What contradiction preserved in Cycle 10 showed is equally important: coherence does not need to absorb all outcomes as success; it can fail to support promotion and thereby preserve explicit ambiguity.
-What Cycle 11 added is that coherence can later support clean re-initiation: ambiguity need not remain a dead-end, but can resolve into a renewed mainline when later evidence supports one branch over another.
-What Cycle 12 added is that re-initiation does not freeze the field into rigid independence: coherence can remain open to fresh weak relational evidence without mistaking it for automatic revival of an earlier collapsed joint field.
-What Cycle 13 added is that weak renewed relation can survive mixed follow-up without being either over-promoted into restored joint choreography or prematurely erased back into pure independence.
+- What survived was not what was initially plausible, but what remained coherent enough.
+- What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
+- What was provisionally confirmed was not what was merely tempting, but what persisted coherently across another interval.
+- What was later stressed was not discarded immediately, but de-promoted as coherence weakened asymmetrically.
+- What finally collapsed did so only when coherence no longer supported the joint reading.
+- What contradiction preserved in Cycle 10 showed is equally important: coherence does not need to absorb all outcomes as success; it can fail to support promotion and thereby preserve explicit ambiguity.
+- What Cycle 11 added is that coherence can later support clean re-initiation: ambiguity need not remain a dead-end, but can resolve into a renewed mainline when later evidence supports one branch over another.
+- What Cycle 12 added is that re-initiation does not freeze the field into rigid independence: coherence can remain open to fresh weak relational evidence without mistaking it for automatic revival of an earlier collapsed joint field.
+- What Cycle 13 added is that weak renewed relation can survive mixed follow-up without being either over-promoted into restored joint choreography or prematurely erased back into pure independence.
 
 This suggests that **coherence** is not merely a measured field property in the schema.
 It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, and provisional weak continuation under mixed support.
