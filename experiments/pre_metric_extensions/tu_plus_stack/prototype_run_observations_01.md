@@ -318,23 +318,43 @@ Cycle 13 showed that a fresh weak recoupling candidate can survive mixed follow-
 
 ---
 
-Cycle 14 — Soft failure of weak recoupling under stronger mismatch
+### Cycle 14 — Soft failure of weak recoupling under stronger mismatch
 
-What was tested
+**What was tested**
 -	whether a fresh weak recoupling candidate could lose support under stronger mismatch without producing contradiction or collapse
 -	whether the architecture would overreact by restoring ambiguity or forcing joint-field drama
 -	whether weak reopening could be cleanly de-promoted back toward independent continuation
 -	whether the system could preserve a fading near-reopening as informative history rather than confusion
 
-What happened
+**What happened**
 -	TU preserved the restarted mainline, extended both trains, and represented the new slice as stronger mismatch: A reasserted independent lead, B’s modest rise broke off, and separation increased again
 -	TU reduced coupling candidate strength, kept stable_couplings empty, and treated the field as returning toward cleaner independent continuation without contradiction or field collapse
 -	TU+ re-strengthened independent_parallel_departure, reduced recoupling_temptation_after_restart, and introduced soft_failed_recoupling_after_restart as the strongest new match, marking the weak reopening attempt as a fading near-event rather than a restored joint choreography
 -	cortexLLM explicitly framed the result as disciplined de-promotion of weak renewed relation rather than contradiction, collapse, or joint recovery, and preserved the event as a soft failed reopening under continued mainline coherence
 
-Finding
+**Finding**
 
 Cycle 14 showed that a weak reopening attempt after restart can lose support under stronger mismatch and be cleanly de-promoted into renewed independent continuation without triggering contradiction, collapse, or false restoration of joint choreography.
+
+---
+
+### Cycle 15 — Fresh relational re-emergence after soft failed reopening
+
+**What was tested**
+-	whether a fresh relational signal could re-emerge after a soft failed reopening without being dismissed as mere replay
+-	whether the architecture would become too conservative after the prior near-miss
+-	whether renewed local alignment pressure could be registered as genuinely new provisional evidence
+-	whether the system could remain open to weak renewed relation without restoring joint choreography prematurely
+
+**What happened**
+-	TU preserved the independent mainline, extended both trains, and represented the new slice as a fresh local relational softening: A’s path flattened slightly again, B showed a modest upward-forward adjustment, and weak reciprocal alignment became visible without erasing A’s lead
+-	TU kept stable coupling absent, raised a modest new coupling candidate, and treated the field as renewed weak relation under continued independence rather than replay of the earlier failed reopening
+-	TU+ retained independent_parallel_departure as dominant mainline context, preserved soft_failed_recoupling_after_restart as recent background rather than active truth, and introduced fresh_relational_reemergence_after_soft_fail as the strongest new match
+-	cortexLLM explicitly refused cynicism, framed the renewed relation as genuinely fresh provisional evidence, and kept the independent mainline dominant while preventing memory-driven overpromotion into restored joint choreography
+
+**Finding**
+
+Cycle 15 showed that after a soft failed reopening, the triad can still register a genuinely fresh weak relational signal without becoming too conservative or confusing the new evidence with replay of the earlier failed candidate.
 
 ---
 
@@ -405,21 +425,23 @@ This is one of the first genuinely important non-baseline results.
 ### 7. TU can remain disciplined under revision
 Under changed evidence, TU did not narrate or speculate.
 It remained mapper-first by:
-- adding motion-tokens
-- extending trains
-- strengthening source hypotheses
-- updating coherence
-- weakening or strengthening relations according to unfolding support
-- preserving explicit contradiction when the unfolding no longer supported a single unified continuation
-- resolving contradiction structurally when later evidence favored one branch
-- registering fresh weak recoupling after restart without over-promoting it into stable joint choreography
+-	adding motion-tokens
+-	extending trains
+-	strengthening source hypotheses
+-	updating coherence
+-	weakening or strengthening relations according to unfolding support
+-	preserving explicit contradiction when the unfolding no longer supported a single unified continuation
+-	resolving contradiction structurally when later evidence favored one branch
+-	registering fresh weak recoupling after restart without over-promoting it into stable joint choreography
+-	cleanly de-promoting a weak reopening attempt when stronger mismatch removed support
+-	registering genuinely fresh renewed relation after that soft failure without collapsing into either cynicism or false restoration
 
 This is a good sign that TU can remain structurally disciplined even when the field changes.
 
 ---
 
 ### 8. TU+ begins to look functionally non-trivial
-By Cycles 3–14, TU+ did more than decorate output.
+By Cycles 3–15, TU+ did more than decorate output.
 
 It:
 -	revised choreography readings
@@ -436,13 +458,15 @@ It:
 -	registered fresh weak recoupling temptation after restart without confusing it with restoration of the old joint field
 -	kept that weak recoupling candidate alive under mixed follow-up without prematurely promoting or dismissing it
 -	cleanly de-promoted that weak reopening attempt when stronger mismatch removed support, without treating the event as contradiction or collapse
+-	registered a genuinely fresh relational re-emergence after that soft failure, rather than rejecting it cynically or collapsing it into memory replay
 -	issued revised predicted trains
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
+
 ---
 
 ### 9. Coupling, decoupling, ambiguity, restart, and fresh recoupling can be represented without premature collapse
-Cycles 4–14 suggest the architecture can distinguish between:
+Cycles 4–15 suggest the architecture can distinguish between:
 -	a new provisional source
 -	a weak coupling candidate
 -	a stable joint choreography
@@ -456,13 +480,14 @@ Cycles 4–14 suggest the architecture can distinguish between:
 -	a fresh weak recoupling temptation arising after restart
 -	a mixed follow-up in which weak renewed relation remains provisional without stable coupling promotion
 -	a soft failed reopening in which that weak renewed relation later loses support and is de-promoted cleanly back toward independent continuation
+-	a genuinely fresh relational re-emergence after that soft failure, treated as new provisional evidence rather than as replay or automatic restoration
 
 That distinction matters and appears to be maintainable so far.
 
 ---
 
 ### 10. Coherence is beginning to act as the selection principle
-By Cycles 5–14, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
+By Cycles 5–15, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 -	What survived was not what was initially plausible, but what remained coherent enough.
 -	What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
 -	What was provisionally confirmed was not what was merely tempting, but what persisted coherently across another interval.
@@ -473,16 +498,17 @@ By Cycles 5–14, revision appears to be driven less by static labeling and more
 -	What Cycle 12 added is that re-initiation does not freeze the field into rigid independence: coherence can remain open to fresh weak relational evidence without mistaking it for automatic revival of an earlier collapsed joint field.
 -	What Cycle 13 added is that weak renewed relation can survive mixed follow-up without being either over-promoted into restored joint choreography or prematurely erased back into pure independence.
 -	What Cycle 14 added is that a weak reopening attempt can then lose support under stronger mismatch and be cleanly de-promoted without contradiction, collapse, or confusion.
+-	What Cycle 15 added is that after such a soft failed reopening, the field need not become cynical: genuinely fresh weak relation can re-emerge and be treated as new provisional evidence rather than replay of the earlier failed candidate.
 
 This suggests that coherence is not merely a measured field property in the schema.
-It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, and soft failed reopening under stronger mismatch.
+It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, soft failed reopening under stronger mismatch, and renewed provisional relation after a near-miss.
 
 That is highly relevant to the RGPx framing of the prototype.
 
 ---
 
 ### 11. The architecture can reject, re-admit, confirm, begin to de-confirm, fully de-confirm, preserve explicit ambiguity, restart cleanly after contradiction, and register fresh weak recoupling after restart
-Cycles 5–14 together are especially important.
+Cycles 5–15 together are especially important.
 -	Cycle 5 showed disciplined rejection of an unsupported weak coupling
 -	Cycle 6 showed disciplined re-opening when reciprocal alignment and co-motion raised coherence again
 -	Cycle 7 showed provisional confirmation when that co-motion persisted across an additional interval
@@ -493,14 +519,14 @@ Cycles 5–14 together are especially important.
 -	Cycle 12 showed that fresh weak relational evidence can reappear after restart and be treated as a new coupling temptation rather than as confused revival of the old joint field
 -	Cycle 13 showed that this fresh weak coupling candidate can survive mixed follow-up evidence without being prematurely promoted into restored joint choreography or prematurely dismissed
 -	Cycle 14 showed that the same weak reopening attempt can later lose support under stronger mismatch and be cleanly de-promoted back toward independent continuation without contradiction or collapse
+-	Cycle 15 showed that after this soft failed reopening, the architecture can still register a genuinely fresh relational signal rather than becoming too conservative or reducing all renewed relation to replay
 
 This suggests the architecture is not simply drifting toward complexity or falling back to independence.
-It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, and then let it fade cleanly when support is lost.
+It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, and then reopen to genuinely fresh renewed relation without cynicism.
 
 ---
 
 ## What has now been tested
-
 The following have now been tested at least in weak form:
 
 - role separation across full cycles
@@ -523,9 +549,9 @@ The following have now been tested at least in weak form:
 - full breakdown of a provisionally confirmed joint choreography into a new independent stable reading
 - explicit preservation of irreducible ambiguity under mutually exclusive continuation reports
 - clean restart after contradiction, with supported branch strengthening and unsupported branch decay
-- fresh weak recoupling temptation after restart without false reopening of the earlier collapsed joint choreography
-- fresh weak recoupling after restart surviving mixed follow-up without premature promotion or dismissa
-- weak reopening after restart losing support under stronger mismatch and being cleanly de-promoted without contradiction or collapse
+-	fresh weak recoupling after restart surviving mixed follow-up without premature promotion or dismissal
+-	weak reopening after restart losing support under stronger mismatch and being cleanly de-promoted without contradiction or collapse
+-	genuinely fresh weak relational re-emergence after a soft failed reopening, without cynical suppression or false restoration
 
 ---
 
@@ -546,10 +572,9 @@ So the current result is now well beyond baseline success, but still not a full 
 ---
 
 ## Current verdict
+The first fifteen cycles support the following stronger claim:
 
-TThe first fourteen cycles support the following stronger claim:
-
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, and cleanly de-promote that weak reopening when stronger mismatch removes support — all without collapsing role boundaries.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, and still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration — all without collapsing role boundaries.
 
 This does not yet prove the full architecture, but it strengthens the case that the engineering path is an actual sub-division of LLM labor into specific TU, TU+, and cortexLLM agents organized around coherence-sensitive role specialization.
 
@@ -558,10 +583,10 @@ This does not yet prove the full architecture, but it strengthens the case that 
 ## Recommended next test
 
 The next best test is to introduce one new structural pressure:
--	renewed relational signal after a soft failed reopening
+-	strengthening or fading of fresh renewed relation after a soft failed reopening
 
 This will let the triad be tested on:
--	whether a fresh relational signal can arise again after a weak reopening has already failed softly
--	whether the architecture becomes too conservative after a near-miss or remains open to later justified relation
--	whether memory of prior coupling, contradiction, restart, and soft failed reopening can remain available without dominating current interpretation
--	whether coherence can distinguish between genuinely renewed relation and repeated noisy relational churn
+-	whether a genuinely fresh renewed relation can strengthen across another slice without premature promotion
+-	whether that renewed relation can fade again cleanly without corrupting the field
+-	whether memory of prior coupling, contradiction, restart, soft failed reopening, and fresh re-emergence can remain available without dominating current interpretation
+-	whether coherence can distinguish between durable renewed relation and repeated noisy relational churn
