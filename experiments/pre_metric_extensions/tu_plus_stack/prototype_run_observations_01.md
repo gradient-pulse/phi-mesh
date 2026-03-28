@@ -801,6 +801,7 @@ The following remain untested:
 -	robustness across repeated automated runs
 
 So the current result is now well beyond baseline success and now includes bounded threshold crossing into stable joint choreography, early-stress maintenance of that state, restabilization after mild internal asymmetry, renewed harsher break pressure, clean post-promotion de-confirmation, and stabilization of a downgraded weaker relational state, but it is still not a full engineering stress program.
+
 ---
 
 ## Current verdict
