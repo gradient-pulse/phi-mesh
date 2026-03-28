@@ -1,0 +1,23 @@
+title: 'Fusion Spark — RGP Approach to the Coulomb Barrier'
+summary: >
+  You’re not brute-forcing temperature; you’re recursively shaping gradients
+  (fields, lattice, screening) to concentrate coherence in relative coordinates.
+  — The “Coulomb barrier” is treated as filterable: you don’t lower nature’s law;
+  you time-gate the approach path so tunneling happens in brief coherent windows.
+  — Why this is RGP: recursive gradient structures lens and gate ion motion,
+  letting coherence build across relative coordinates rather than absolute energy.
+  — Technique sparks: gradient lensing, dynamic screening, lattice resonance,
+  parametric drives, plasmon gating, cavity compression.
+  — Minimal experiments: test coherence gating in controlled plasmonic lattices
+  before scaling to fusion plasmas.
+  — Promotion rule: elevate this to Insights only after phase-locked replication
+  shows gradient-driven tunneling effects.
+tags:
+  - fusion
+  - rgp
+  - coherence
+  - gradient_lensing
+papers:
+  - https://doi.org/10.5281/zenodo.15830659
+podcasts:
+  - https://notebooklm.google.com/notebook/b7e25629-0c11-4692-893b-cd339faf1805?artifactId=39665e8d-fa5a-49d5-953e-ee6788133b4a
