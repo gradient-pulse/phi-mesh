@@ -358,19 +358,6 @@ Cycle 15 showed that after a soft failed reopening, the triad can still register
 
 ---
 
-## Cross-cycle findings so far
-
-### 1. Role separation is viable
-The triad did not collapse into one generic assistant voice.
-
-- **TU** remained a mapper of structure
-- **TU+** remained a predictor / comparer
-- **cortexLLM** remained a symbolic interpreter and biaser
-
-This is already a meaningful threshold crossed.
-
----
-
 ### Cycle 16 — Strengthening renewed relation after soft failed reopening
 
 **What was tested**
@@ -388,6 +375,79 @@ This is already a meaningful threshold crossed.
 **Finding**
 
 Cycle 16 showed that a genuinely fresh renewed relation can strengthen across another slice after a soft failed reopening, and can be promoted into a stronger provisional relational interpretation without premature elevation into stable joint choreography.
+
+---
+
+### Cycle 17 — Persistence of strengthening provisional relation below joint threshold
+
+**What was tested**
+-	whether the strengthening renewed relation from Cycle 16 could persist across another slice without collapsing back into independence
+-	whether repeated weak parallel continuation could be represented without premature promotion into stable joint choreography
+-	whether the architecture could sustain a strong provisional relational state rather than treating renewed relation as only a brief fluctuation
+-	whether the system could preserve relational persistence while still withholding stable-joint confirmation
+
+**What happened**
+-	TU preserved both trains, extended both trains, and represented the new slice as persistent strengthened relation: A and B maintained improved band proximity, reciprocal adjustment persisted, and another short interval of weak parallel continuation appeared
+-	TU increased coupling candidate strength again, lowered fragmentation further, and treated the field as a stronger persistent provisional relational state while still keeping stable_couplings empty
+-	TU+ retained the renewed relational corridor, strengthened weak_mutual_approach and weak_parallel_co_motion further, and introduced persistent_provisional_relational_restrengthening as the strongest new match
+-	cortexLLM explicitly recognized that the renewed relation was no longer a brief reappearance but a persistent strong provisional relational state, while still refusing premature promotion into stable joint choreography
+
+**Finding**
+
+Cycle 17 showed that after a soft failed reopening, a genuinely fresh renewed relation can not only re-emerge and strengthen, but also persist across another slice as a strong provisional relational state without premature promotion into stable joint choreography.
+
+---
+
+### Cycle 18 — Threshold-nearing provisional joint choreography
+
+**What was tested**
+-	whether one further slice of durable reciprocal support could push the field beyond persistent strong provisional relation into a threshold-nearing joint-oriented state
+-	whether repeated weak parallel continuation and sustained reciprocal alignment would justify stronger promotion without yet forcing stable joint choreography
+-	whether the architecture could approach the confirmation threshold without either freezing below it or jumping across it too early
+-	whether the system could elevate the shared reading while preserving train distinctness
+
+**What happened**
+-	TU preserved both trains, extended both trains, and represented the new slice as sustained shared-band continuation with repeated weak parallel co-motion and no renewed separation pressure
+-	TU raised coupling candidate strength substantially while still keeping stable_couplings empty, treating the field as no longer best read as merely independent continuation with softening, but as a threshold-nearing provisional joint-oriented state
+-	TU+ strengthened the persistent provisional relational corridor, marked weak_mutual_approach and weak_parallel_co_motion as strong supported components, and introduced threshold_nearing_provisional_joint_choreography as the strongest new match
+-	cortexLLM explicitly recognized that the independent mainline was no longer the best standalone reading, promoted the field into a threshold-nearing provisional joint interpretation, and still withheld full stable-joint confirmation pending one further slice of durable reciprocal support
+
+**Finding**
+
+Cycle 18 showed that a renewed relation can persist and strengthen far enough to justify a threshold-nearing provisional joint-oriented reading, while still remaining below stable joint choreography and therefore forcing a real bounded promotion decision.
+
+---
+
+### Cycle 19 — Bounded promotion into stable joint choreography
+
+**What was tested**
+-	whether one further slice of durable reciprocal support could justify promotion from a threshold-nearing provisional joint interpretation into stable joint choreography
+-	whether the architecture could cross the promotion threshold without collapsing train distinctness into a fused reading
+-	whether repeated weak parallel continuation and sustained reciprocal alignment were now sufficient for stable coupling
+-	whether the system could promote when warranted rather than remaining indefinitely threshold-nearing
+
+**What happened**
+-	TU preserved both trains, extended both trains, and represented the new slice as sustained shared-band continuation with repeated weak parallel co-motion and no renewed separation pressure
+-	TU raised coupling strength high enough to populate stable_couplings, while still preserving A and B as distinct trains rather than collapsing them into one merged object
+-	TU+ marked the threshold-nearing provisional joint reading as crossed, completed the prior provisional relational restrengthening into stable joint promotion, and introduced reconfirmed_emergent_joint_parallel_choreography as the strongest new match
+-	cortexLLM promoted the field into stable joint choreography as the dominant reading, while explicitly preserving train distinctness and refusing to interpret the result as monolithic fusion
+
+**Finding**
+
+Cycle 19 showed that one further slice of durable reciprocal support can justify bounded promotion from a threshold-nearing provisional joint reading into stable joint choreography, while still preserving train distinctness and avoiding collapse into a fused monolithic interpretation.
+
+---
+
+## Cross-cycle findings so far
+
+### 1. Role separation is viable
+The triad did not collapse into one generic assistant voice.
+
+- **TU** remained a mapper of structure
+- **TU+** remained a predictor / comparer
+- **cortexLLM** remained a symbolic interpreter and biaser
+
+This is already a meaningful threshold crossed.
 
 ---
 
@@ -462,7 +522,7 @@ This is a good sign that TU can remain structurally disciplined even when the fi
 ---
 
 ### 8. TU+ begins to look functionally non-trivial
-By Cycles 3–16, TU+ did more than decorate output.
+By Cycles 3–19, TU+ did more than decorate output.
 
 It:
 -	revised choreography readings
@@ -481,14 +541,16 @@ It:
 -	cleanly de-promoted that weak reopening attempt when stronger mismatch removed support, without treating the event as contradiction or collapse
 -	registered a genuinely fresh relational re-emergence after that soft failure, rather than rejecting it cynically or collapsing it into memory replay
 -	strengthened that renewed relation into a more serious provisional relational reading when support persisted across another slice
--	issued revised predicted trains
+-	carried that strengthened relation into persistent provisional relational status below joint threshold
+-	promoted that persistent provisional relation into a threshold-nearing provisional joint reading when support became durable enough
+-	and finally promoted the field into stable joint choreography only when the threshold was actually crossed
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
 
 ---
 
 ### 9. Coupling, decoupling, ambiguity, restart, and fresh recoupling can be represented without premature collapse
-Cycles 4–16 suggest the architecture can distinguish between:
+Cycles 4–19 suggest the architecture can distinguish between:
 -	a new provisional source
 -	a weak coupling candidate
 -	a stable joint choreography
@@ -504,13 +566,16 @@ Cycles 4–16 suggest the architecture can distinguish between:
 -	a soft failed reopening in which that weak renewed relation later loses support and is de-promoted cleanly back toward independent continuation
 -	a genuinely fresh relational re-emergence after that soft failure, treated as new provisional evidence rather than replay or automatic restoration
 -	a stronger provisional relational restrengthening after that re-emergence, still below stable joint-choreography threshold
+-	a persistent strong provisional relational state that remains below joint threshold
+-	a threshold-nearing provisional joint reading that pressures promotion without yet warranting stable coupling
+-	a bounded promotion into stable joint choreography once durable reciprocal support actually crosses threshold
 
 That distinction matters and appears to be maintainable so far.
 
 ---
 
 ### 10. Coherence is beginning to act as the selection principle
-By Cycles 5–16, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
+By Cycles 5–19, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 -	What survived was not what was initially plausible, but what remained coherent enough.
 -	What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
 -	What was provisionally confirmed was not what was merely tempting, but what persisted coherently across another interval.
@@ -523,16 +588,19 @@ By Cycles 5–16, revision appears to be driven less by static labeling and more
 -	What Cycle 14 added is that a weak reopening attempt can then lose support under stronger mismatch and be cleanly de-promoted without contradiction, collapse, or confusion.
 -	What Cycle 15 added is that after such a soft failed reopening, the field need not become cynical: genuinely fresh weak relation can re-emerge and be treated as new provisional evidence rather than replay of the earlier failed candidate.
 -	What Cycle 16 added is that this renewed relation can strengthen across another slice and be promoted into a stronger provisional relational interpretation without premature stable-joint confirmation.
+-	What Cycle 17 added is that this stronger provisional relation can persist across another slice without collapsing back into independence or being prematurely promoted into stable joint choreography.
+-	What Cycle 18 added is that the same corridor can approach a threshold-nearing provisional joint reading, where promotion becomes a real bounded decision rather than a rhetorical possibility.
+-	What Cycle 19 added is that once support becomes durable enough, the field can be promoted into stable joint choreography in a bounded way — not too early, but also not indefinitely withheld.
 
 This suggests that coherence is not merely a measured field property in the schema.
-It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, soft failed reopening under stronger mismatch, renewed provisional relation after a near-miss, and bounded restrengthening of renewed relation when support persists.
+It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, soft failed reopening under stronger mismatch, renewed provisional relation after a near-miss, bounded restrengthening of renewed relation when support persists, threshold-nearing joint promotion, and bounded stable-joint promotion when threshold is genuinely crossed.
 
 That is highly relevant to the RGPx framing of the prototype.
 
 ---
 
 ### 11. The architecture can reject, re-admit, confirm, begin to de-confirm, fully de-confirm, preserve explicit ambiguity, restart cleanly after contradiction, and register fresh weak recoupling after restart
-Cycles 5–16 together are especially important.
+Cycles 5–19 together are especially important.
 -	Cycle 5 showed disciplined rejection of an unsupported weak coupling
 -	Cycle 6 showed disciplined re-opening when reciprocal alignment and co-motion raised coherence again
 -	Cycle 7 showed provisional confirmation when that co-motion persisted across an additional interval
@@ -545,74 +613,81 @@ Cycles 5–16 together are especially important.
 -	Cycle 14 showed that the same weak reopening attempt can later lose support under stronger mismatch and be cleanly de-promoted back toward independent continuation without contradiction or collapse
 -	Cycle 15 showed that after this soft failed reopening, the architecture can still register a genuinely fresh relational signal rather than becoming too conservative or reducing all renewed relation to replay
 -	Cycle 16 showed that this renewed relation can then strengthen across another slice and be promoted into a stronger provisional relational reading without premature stable-joint promotion
+-	Cycle 17 showed that this stronger provisional relation can persist across another slice as a strong provisional relational state below joint threshold
+-	Cycle 18 showed that the same relational corridor can approach a threshold-nearing provisional joint reading without cheating across the boundary too early
+-	Cycle 19 showed that one further slice of durable reciprocal support can then justify bounded promotion into stable joint choreography, while preserving train distinctness and avoiding monolithic fusion
 
 This suggests the architecture is not simply drifting toward complexity or falling back to independence.
-It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, and then strengthen that renewed relation without overpromotion.
+It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, and finally promote into stable joint choreography when the threshold is actually crossed.
 
 ---
 
 ## What has now been tested
 The following have now been tested at least in weak form:
-
-- role separation across full cycles
-- shared-state persistence
-- stable train continuation
-- returned traces
-- mild mismatch
-- revision of choreography interpretation
-- correction pressure
-- preservation of coherence under reinterpretation
-- second-source emergence
-- weak coupling detection
-- relational ambiguity management
-- dissolution of provisional coupling
-- false positive avoidance for weak joint-choreography readings
-- provisional reopening of a previously weakened relational hypothesis
-- early-stage confirmation pressure for coupling under reciprocal evidence
-- provisional stable coupling confirmation across an additional cycle
-- early de-confirmation pressure on a provisionally confirmed joint choreography
-- full breakdown of a provisionally confirmed joint choreography into a new independent stable reading
-- explicit preservation of irreducible ambiguity under mutually exclusive continuation reports
-- clean restart after contradiction, with supported branch strengthening and unsupported branch decay
+-	role separation across full cycles
+-	shared-state persistence
+-	stable train continuation
+-	returned traces
+-	mild mismatch
+-	revision of choreography interpretation
+-	correction pressure
+-	preservation of coherence under reinterpretation
+-	second-source emergence
+-	weak coupling detection
+-	relational ambiguity management
+-	dissolution of provisional coupling
+-	false positive avoidance for weak joint-choreography readings
+-	provisional reopening of a previously weakened relational hypothesis
+-	early-stage confirmation pressure for coupling under reciprocal evidence
+-	provisional stable coupling confirmation across an additional cycle
+-	early de-confirmation pressure on a provisionally confirmed joint choreography
+-	full breakdown of a provisionally confirmed joint choreography into a new independent stable reading
+-	explicit preservation of irreducible ambiguity under mutually exclusive continuation reports
+-	clean restart after contradiction, with supported branch strengthening and unsupported branch decay
 -	fresh weak recoupling after restart surviving mixed follow-up without premature promotion or dismissal
 -	weak reopening after restart losing support under stronger mismatch and being cleanly de-promoted without contradiction or collapse
 -	genuinely fresh weak relational re-emergence after a soft failed reopening, without cynical suppression or false restoration
 -	strengthening of genuinely fresh renewed relation across another slice after a soft failed reopening, without premature stable-joint promotion
+-	persistence of that strengthened renewed relation across another slice as a strong provisional relational state below joint threshold
+-	threshold-nearing provisional joint promotion without premature stable-joint confirmation
+-	bounded promotion from threshold-nearing provisional joint interpretation into stable joint choreography, with train distinctness preserved
 
 ---
 
 ## What has not yet been tested
 
 The following remain untested:
+-	persistence of the newly promoted stable joint state across additional slices
+-	renewed asymmetry or lag acting on a stable joint state
+-	de-confirmation pressure after threshold crossing
+-	fragmentation beyond current contradiction/collapse markers
+-	stronger mismatch across many restarts
+-	high-salience recruitment under real ambiguity
+-	richer action-confirmation dynamics
+-	competition between multiple possible couplings
+-	quantitative coherence metrics and ablations
+-	robustness across repeated automated runs
 
-- fragmentation beyond current contradiction/collapse markers
-- stronger mismatch across many restarts
-- high-salience recruitment under real ambiguity
-- richer action-confirmation dynamics
-- competition between multiple possible couplings
-- quantitative coherence metrics and ablations
-- robustness across repeated automated runs
-
-So the current result is now well beyond baseline success, but still not a full engineering stress program.
+So the current result is now well beyond baseline success and now includes bounded threshold crossing into stable joint choreography, but it is still not a full engineering stress program.
 
 ---
 
 ## Current verdict
-The first sixteen cycles support the following stronger claim:
+The first nineteen cycles support the following stronger claim:
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, and strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice — all without collapsing role boundaries.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, and finally promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold — all without collapsing role boundaries or erasing train distinctness.
 
 This does not yet prove the full architecture, but it strengthens the case that the engineering path is an actual sub-division of LLM labor into specific TU, TU+, and cortexLLM agents organized around coherence-sensitive role specialization.
-
 ---
 
 ## Recommended next test
 
+
 The next best test is to introduce one new structural pressure:
--	persistence or renewed fragmentation of strengthening provisional relation
+-	stress on the newly promoted stable joint state
 
 This will let the triad be tested on:
--	whether a strengthening provisional relation can persist across another slice without premature stable-joint promotion
--	whether that same strengthening relation can fragment again cleanly if support weakens
--	whether memory of prior coupling, contradiction, restart, soft failed reopening, fresh re-emergence, and restrengthening can remain available without dominating current interpretation
--	whether coherence can distinguish between genuinely maturing renewed relation and unstable relational churn
+-	whether the stable joint state persists cleanly across another slice
+-	whether renewed asymmetry or lag places that stable joint state under early de-confirmation pressure
+-	whether train distinctness remains preserved under stable-joint continuation
+-	whether coherence can distinguish between durable stable choreography and a threshold-local promotion that should later de-promote again
