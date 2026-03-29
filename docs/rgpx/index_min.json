@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-03-21T13:54:38Z",
-  "count": 554,
+  "generated_at": "2026-03-29T19:23:39Z",
+  "count": 570,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -7427,6 +7427,118 @@
       ]
     },
     {
+      "slug": "2026-03-22_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-22",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-22_phi_trace_autoscan",
+      "date": "2026-03-22",
+      "title": "Φ–Trace Autoscan — 2026-03-22",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-23_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-23",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-23_phi_trace_autoscan",
+      "date": "2026-03-23",
+      "title": "Φ–Trace Autoscan — 2026-03-23",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-24_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-24",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-24_phi_trace_autoscan",
+      "date": "2026-03-24",
+      "title": "Φ–Trace Autoscan — 2026-03-24",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-25_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-25",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-25_phi_trace_autoscan",
+      "date": "2026-03-25",
+      "title": "Φ–Trace Autoscan — 2026-03-25",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
       "slug": "2026-03-26_World_model_by_division_of_LLM _labor",
       "date": "2026-03-26",
       "title": "World model by division of LLM labor",
@@ -7445,6 +7557,118 @@
         "pre_metric_extensions",
         "prompt_instantiated_architecture",
         "rgpx"
+      ]
+    },
+    {
+      "slug": "2026-03-26_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-26",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-26_phi_trace_autoscan",
+      "date": "2026-03-26",
+      "title": "Φ–Trace Autoscan — 2026-03-26",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-27_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-27",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-27_phi_trace_autoscan",
+      "date": "2026-03-27",
+      "title": "Φ–Trace Autoscan — 2026-03-27",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-28_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-28",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-28_phi_trace_autoscan",
+      "date": "2026-03-28",
+      "title": "Φ–Trace Autoscan — 2026-03-28",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-29_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-03-29",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-03-29_phi_trace_autoscan",
+      "date": "2026-03-29",
+      "title": "Φ–Trace Autoscan — 2026-03-29",
+      "tags": [
+        "phi_trace",
+        "phi_p",
+        "tag_map",
+        "recursion",
+        "autoscan",
+        "memory_bifurcation",
+        "gradient_invariant"
       ]
     }
   ]
