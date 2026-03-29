@@ -557,6 +557,26 @@ Cycle 25 showed that the downgraded weaker relational state can persist beyond i
 
 ---
 
+### Cycle 26 — Clearer independent separation after weaker-relational decay
+
+**What was tested**
+-	whether the loosening weaker-relational plateau would continue thinning until clearer independent separation became the better current reading
+-	whether the architecture could let go of the lower-order relational plateau without erasing residual historical linkage
+-	whether train distinctness would remain preserved through this further downgrade
+-	whether the system could distinguish between a weakening lower-order relation and a genuinely restored independent-separation mainline
+
+**What happened**
+-	TU preserved both trains, extended both trains, and represented the new slice as continued lead-lag separation with no compensating relational recovery: A remained ahead, B remained behind, and the broader shared field contributed less to present organization than the now-dominant independent structure
+-	TU kept stable_couplings absent, weakened the remaining coupling candidate further, and treated the weaker-relational plateau as having tipped into clearer independent separation rather than as still-dominant lower-order relation
+-	TU+ treated loosening_weaker_relational_mainline as completed into a clearer separation outcome, re-strengthened independent_parallel_departure, and introduced clearer_independent_separation_after_weaker_relation as the strongest new match
+-	cortexLLM explicitly framed the field as having crossed into clearer independent separation while preserving the graded history from stable joint choreography through weaker relation into the present state
+
+**Finding**
+
+Cycle 26 showed that once the weaker-relational plateau thins far enough, the triad can restore a clearer independent-separation reading without denying the graded descent that led there.
+
+---
+
 ## Cross-cycle findings so far
 
 ### 1. Role separation is viable
@@ -641,14 +661,15 @@ It remained mapper-first by:
 -	representing harsher renewed asymmetry as serious break pressure inside the stable joint state without prematurely deleting the shared reading
 -	deconfirming the promoted shared state when reciprocal support genuinely fell below threshold, while preserving both train continuity and weaker residual relation
 -	stabilizing that downgraded state at a lower relational level rather than forcing either renewed joint recovery or immediate full separation
--	and then representing that weaker-relational plateau as capable of loosening further without yet forcing total independent separation
+-	representing that weaker-relational plateau as capable of loosening further without yet forcing total independent separation
+-	and then restoring a clearer independent-separation reading once the lower-order plateau lost enough support
 
 This is a good sign that TU can remain structurally disciplined even when the field changes.
 
 ---
 
 ### 8. TU+ begins to look functionally non-trivial
-By Cycles 3–25, TU+ did more than decorate output.
+By Cycles 3–26, TU+ did more than decorate output.
 
 It:
 -	revised choreography readings
@@ -675,7 +696,8 @@ It:
 -	represented a harsher reopening of the break corridor without prematurely converting that pressure into full collapse
 -	represented actual post-promotion de-confirmation once the former stable state truly lost support, downgrading it into a weaker relational reading rather than erasing history
 -	represented stabilization of that downgraded field as a weaker relational mainline rather than an endlessly collapsing residue
--	and then represented loosening inside that lower-order plateau without prematurely declaring full independent separation
+-	represented loosening inside that lower-order plateau without prematurely declaring full independent separation
+-	and then represented the return of a clearer independent-separation reading once the lower-order relation thinned far enough
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
 
@@ -683,7 +705,7 @@ This is the first point at which TU+ looks like a meaningful intermediate layer 
 
 ### 9. Coupling, decoupling, ambiguity, restart, and fresh recoupling can be represented without premature collapse
 
-Cycles 4–25 suggest the architecture can distinguish between:
+Cycles 4–26 suggest the architecture can distinguish between:
 -	a new provisional source
 -	a weak coupling candidate
 -	a stable joint choreography
@@ -707,7 +729,8 @@ Cycles 4–25 suggest the architecture can distinguish between:
 -	a re-stabilized stable joint state that can later reopen a serious break corridor under harsher asymmetry
 -	a formerly stable joint state that can then be cleanly downgraded into a weaker relational / separating reading when reciprocal support is genuinely lost
 -	a downgraded post-promotion state that can stabilize as a weaker relational mainline instead of collapsing straight into full independence
--	and a weaker-relational mainline that can later loosen further without yet forcing clear independent separation
+-	a weaker-relational mainline that can later loosen further without yet forcing clear independent separation
+-	and a weakening lower-order relation that can finally tip into a clearer independent-separation mainline without erasing residual relational history
 
 That distinction matters and appears to be maintainable so far.
 
@@ -715,7 +738,7 @@ That distinction matters and appears to be maintainable so far.
 
 ### 10. Coherence is beginning to act as the selection principle
 
-By Cycles 5–25, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
+By Cycles 5–26, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 -	What survived was not what was initially plausible, but what remained coherent enough.
 -	What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
 -	What was provisionally confirmed was not what was merely tempting, but what persisted coherently across another interval.
@@ -737,9 +760,10 @@ By Cycles 5–25, revision appears to be driven less by static labeling and more
 -	What Cycle 23 added is that once reciprocal support truly falls below threshold, coherence can also support clean post-promotion de-confirmation: the former stable shared state can be downgraded without denial, overreaction, or historical erasure.
 -	What Cycle 24 added is that this downgraded state need not keep collapsing: coherence can support a lower-order resting state in which weaker relation stabilizes without either restoring the former joint state or forcing full independence.
 -	What Cycle 25 added is that even this weaker relational plateau need not be treated as fully secure: coherence can represent loosening inside the lower-order state without yet forcing total independent separation.
+-	What Cycle 26 added is that once that lower-order plateau thins far enough, coherence can support a return to clearer independent separation while still preserving the graded descent that led there.
 
 This suggests that coherence is not merely a measured field property in the schema.
-It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, soft failed reopening under stronger mismatch, renewed provisional relation after a near-miss, bounded restrengthening of renewed relation when support persists, threshold-nearing joint promotion, bounded stable-joint promotion when threshold is genuinely crossed, disciplined maintenance of a promoted joint state under early internal stress, bounded restabilization after that stress is reabsorbed, renewed serious break pressure when resilience limits are approached again, clean post-promotion downgrade when the shared state genuinely loses support, stabilization of a weaker relational plateau after de-confirmation, and gradual loosening of that lower-order plateau when its own support weakens.
+It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, soft failed reopening under stronger mismatch, renewed provisional relation after a near-miss, bounded restrengthening of renewed relation when support persists, threshold-nearing joint promotion, bounded stable-joint promotion when threshold is genuinely crossed, disciplined maintenance of a promoted joint state under early internal stress, bounded restabilization after that stress is reabsorbed, renewed serious break pressure when resilience limits are approached again, clean post-promotion downgrade when the shared state genuinely loses support, stabilization of a weaker relational plateau after de-confirmation, gradual loosening of that lower-order plateau when its own support weakens, and eventual restoration of a clearer independent-separation reading once that lower-order support becomes too thin.
 
 That is highly relevant to the RGPx framing of the prototype.
 
@@ -747,7 +771,7 @@ That is highly relevant to the RGPx framing of the prototype.
 
 ### 11. The architecture can reject, re-admit, confirm, begin to de-confirm, fully de-confirm, preserve explicit ambiguity, restart cleanly after contradiction, and register fresh weak recoupling after restart
 
-Cycles 5–25 together are especially important.
+Cycles 5–26 together are especially important.
 -	Cycle 5 showed disciplined rejection of an unsupported weak coupling
 -	Cycle 6 showed disciplined re-opening when reciprocal alignment and co-motion raised coherence again
 -	Cycle 7 showed provisional confirmation when that co-motion persisted across an additional interval
@@ -769,9 +793,10 @@ Cycles 5–25 together are especially important.
 -	Cycle 23 showed that once that reopened break corridor crossed threshold, the architecture could cleanly deconfirm the formerly stable joint state into a weaker relational / separating reading without clinging to the old state or erasing its history
 -	Cycle 24 showed that this downgraded state can then settle into a weaker relational mainline rather than continuing to break immediately into clear independent separation
 -	Cycle 25 showed that this weaker relational plateau can itself begin to loosen, without yet requiring either renewed recovery or full independent separation
+-	Cycle 26 showed that once the lower-order plateau thinned further, the architecture could restore a clearer independent-separation reading without denying the graded descent through weaker relation that preceded it
 
 This suggests the architecture is not simply drifting toward complexity or falling back to independence.
-It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, and then track the loosening of that plateau without prematurely forcing a total break.
+It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, and finally restore a clearer independent-separation reading once the lower-order support becomes too thin.
 
 ---
 
@@ -810,14 +835,14 @@ The following have now been tested at least in weak form:
 -	clean post-promotion de-confirmation of the formerly stable joint state into a weaker relational / separating reading
 -	stabilization of that downgraded state as a weaker relational mainline rather than immediate full independent separation
 -	loosening of that weaker relational plateau without yet forcing clear independent separation
+-	restoration of a clearer independent-separation reading once that lower-order plateau thins sufficiently
 
 ---
 
 ## What has not yet been tested
 
 The following remain untested:
--	further drift from the loosening weaker-relational mainline into clearer independent separation
--	renewed relational recovery after actual post-promotion de-confirmation
+-	renewed relational recovery after clearer independent separation has been restored
 -	repeated oscillation between weaker relation and clearer separation
 -	fragmentation beyond current contradiction/collapse markers
 -	stronger mismatch across many restarts
@@ -827,14 +852,14 @@ The following remain untested:
 -	quantitative coherence metrics and ablations
 -	robustness across repeated automated runs
 
-So the current result is now well beyond baseline success and now includes bounded threshold crossing into stable joint choreography, early-stress maintenance of that state, restabilization after mild internal asymmetry, renewed harsher break pressure, clean post-promotion de-confirmation, stabilization of a downgraded weaker relational state, and loosening of that lower-order plateau, but it is still not a full engineering stress program.
+So the current result is now well beyond baseline success and now includes bounded threshold crossing into stable joint choreography, early-stress maintenance of that state, restabilization after mild internal asymmetry, renewed harsher break pressure, clean post-promotion de-confirmation, stabilization of a downgraded weaker relational state, loosening of that lower-order plateau, and restoration of a clearer independent-separation reading, but it is still not a full engineering stress program.
 
 ---
 
 ## Current verdict
-The first twenty-five cycles support the following stronger claim:
+The first twenty-six cycles support the following stronger claim:
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, and then track the loosening of that lower-order plateau without yet forcing clear independent separation — all without collapsing role boundaries or erasing train distinctness.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, and finally restore a clearer independent-separation reading once the lower-order support becomes too thin — all without collapsing role boundaries or erasing train distinctness.
 
 This does not yet prove the full architecture, but it strengthens the case that the engineering path is an actual sub-division of LLM labor into specific TU, TU+, and cortexLLM agents organized around coherence-sensitive role specialization.
 
@@ -843,10 +868,10 @@ This does not yet prove the full architecture, but it strengthens the case that 
 ## Recommended next test
 
 The next best test is to introduce one new structural pressure:
--	further drift or renewed recovery from the loosening weaker-relational mainline
+-	renewed relational recovery or stable independence after the restored independent-separation reading
 
 This will let the triad be tested on:
--	whether the lower-order plateau continues loosening into clearer independent separation
--	whether weaker relation can re-stabilize rather than continue decaying
--	whether renewed relational recovery can occur even after clean post-promotion downgrade
--	whether coherence can distinguish between a truly decaying lower-order relation and one that is only fluctuating before restabilization
+-	whether the clearer independent-separation state now stabilizes cleanly
+-	whether fresh relational recovery can reappear even after the lower-order plateau has fully thinned out
+-	whether train distinctness remains preserved under either stable independence or renewed relational return
+-	whether coherence can distinguish between a durable restored independence and a field that is still open to later recoupling
