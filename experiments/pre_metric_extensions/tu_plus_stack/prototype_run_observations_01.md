@@ -875,6 +875,8 @@ Cycle 40 showed that after actual renewed de-confirmation in the second arc, the
 
 Cycle 41 showed that the second-arc weaker relational plateau can persist across another slice as a real dynamic state, meaning downgraded relation is not merely residue but an active carrier of transformed prior organization.
 
+Cycle 41 strengthens the interpretation that memory in the stack behaves as transformed organizational persistence rather than static storage.
+
 ---
 
 ## Cross-cycle findings so far
@@ -1205,6 +1207,14 @@ Cycles 5–40 together are especially important.
 
 This suggests the architecture is not simply drifting toward complexity or falling back to independence.
 It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that independent mainline to fresh weak relational pressure without prematurely surrendering it, let that pressure strengthen into a renewed lower-order relation without overpromoting it, let that lower-order return persist as a durable corridor without forcing threshold-nearing promotion too early, let that durable corridor strengthen further while still remaining sub-threshold, let that strengthening corridor approach the re-promotion boundary without prematurely crossing it, let that threshold-nearing return persist as an occupied boundary state, then cleanly re-promote that occupied boundary into renewed stable joint choreography once support genuinely crosses threshold, restabilize that re-promoted shared state again when its first bounded internal stress softens, reopen a serious second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime once the reopened break corridor truly crosses threshold, and then let the downgraded second-arc field settle into a weaker relational plateau rather than forcing immediate binary separation.
+
+---
+
+### 11a. Memory appears as transformed organizational persistence
+
+Memory appears not as static storage, but as transformed organizational persistence: prior coherence remains causally active in downgraded form and can later re-shape present dynamics.
+
+These results suggest a possible route toward more genuinely longitudinal AI behavior: memory-like persistence, intuitive continuity, and nontrivial historical sensitivity emerging from transformed coherence rather than static recall alone.
 
 ---
 
