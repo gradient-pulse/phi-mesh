@@ -777,6 +777,26 @@ Cycle 36 showed that a renewed stable joint choreography reached through discipl
 
 ---
 
+### Cycle 37 — Restabilization of renewed stable joint choreography after early internal stress
+
+**What was tested**
+-	whether the renewed stable joint choreography from Cycle 36 could reabsorb its first bounded internal asymmetry rather than reopening a fresh break corridor
+-	whether the architecture could represent recovery inside a re-promoted stable joint state rather than only promotion or stress
+-	whether train distinctness would remain preserved during renewed restabilization
+-	whether the system could avoid both false perfection and premature renewed de-confirmation
+
+**What happened**
+-	TU preserved both trains, extended both trains, and represented the new slice as renewed stable joint continuation with reduced asymmetry: B regained some alignment, A’s slight lead no longer widened, and the shared band remained intact
+-	TU kept stable_couplings active, reduced the prior internal stress marker, and treated the field as a restabilizing renewed stable joint state rather than as a reopening break sequence
+-	TU+ retained the renewed stable joint reading as dominant, treated renewed_stable_joint_choreography_under_early_stress as resolving rather than escalating, and introduced restabilized_renewed_stable_joint_choreography as the strongest new match
+-	cortexLLM explicitly framed the field as a re-promoted shared state that had reabsorbed mild internal stress, while preserving train distinctness and refusing to romanticize the result as frictionless permanence
+
+**Finding**
+
+Cycle 37 showed that after renewed stable joint choreography came under bounded internal stress, the triad could reabsorb that stress and restabilize the renewed shared state without erasing train distinctness or forcing false perfection.
+
+---
+
 ## Cross-cycle findings so far
 
 ### 1. Role separation is viable
@@ -843,7 +863,6 @@ This is one of the first genuinely important non-baseline results.
 
 ### 7. TU can remain disciplined under revision
 
-Under changed evidence, TU did not narrate or speculate.
 It remained mapper-first by:
 -	adding motion-tokens
 -	extending trains
@@ -869,14 +888,12 @@ It remained mapper-first by:
 -	allowing that recovery pressure to strengthen into an emerging lower-order relation without prematurely promoting to joint choreography
 -	allowing that lower-order relation to persist as a durable corridor without prematurely promoting it toward threshold-nearing joint return
 -	allowing that durable lower-order corridor to strengthen further without cheating across the next threshold
--	and then allowing that strengthening corridor to approach the re-promotion boundary without prematurely crossing into threshold-nearing joint choreography
+-	allowing that strengthening corridor to approach the re-promotion boundary without prematurely crossing into threshold-nearing joint choreography
 -	allowing that strengthening durable lower-order corridor to cross into threshold-nearing re-promotion without prematurely restoring stable joint choreography
--	and then allowing that threshold-nearing return to persist across another slice as an occupied boundary state without cheating into stable joint recovery
--	allowing a persistent threshold-nearing re-promotion state to cross cleanly into renewed stable joint choreography once reciprocal support again became strong enough
--	while preserving train distinctness and avoiding monolithic fusion during re-promotion
+-	allowing that threshold-nearing return to persist across another slice as an occupied boundary state without cheating into stable joint recovery
 -	allowing a persistent threshold-nearing re-promotion state to cross cleanly into renewed stable joint choreography once reciprocal support again became strong enough
 -	preserving that renewed stable joint state under its first bounded internal asymmetry without prematurely reopening full breakdown
--	while preserving train distinctness and avoiding monolithic fusion during and after re-promotion
+-	and restabilizing that re-promoted shared state once the early internal stress softened again, while preserving train distinctness and avoiding false perfection
 
 This is a good sign that TU can remain structurally disciplined even when the field changes.
 
@@ -884,7 +901,7 @@ This is a good sign that TU can remain structurally disciplined even when the fi
 
 ### 8. TU+ begins to look functionally non-trivial
 
-By Cycles 3–35, TU+ did more than decorate output.
+By Cycles 3–37, TU+ did more than decorate output.
 
 It:
 -	revised choreography readings
@@ -918,14 +935,12 @@ It:
 -	represented that pressure strengthening into a genuinely emerging lower-order relation while still keeping it below joint choreography
 -	represented that lower-order relation as persistent and durable rather than as a momentary return flare
 -	represented that durable lower-order relation as strengthening further while still remaining sub-threshold
--	and then represented that strengthening durable corridor as approaching the re-promotion boundary without prematurely declaring threshold-nearing joint return
+-	represented that strengthening durable corridor as approaching the re-promotion boundary without prematurely declaring threshold-nearing joint return
 -	represented that strengthening durable corridor as actually crossing into threshold-nearing re-promotion after stabilized independence
--	and then represented that threshold-nearing state as persistent across another slice rather than as a momentary flare or immediate promotion
--	represented threshold-nearing re-promotion after stabilized independence as a persistent occupied boundary rather than a brief flare
--	and then completed that occupied threshold state into renewed stable joint choreography once the boundary was genuinely crossed again
--	represented threshold-nearing re-promotion after stabilized independence as a persistent occupied boundary rather than a brief flare
+-	represented that threshold-nearing state as persistent across another slice rather than as a momentary flare or immediate promotion
 -	completed that occupied threshold state into renewed stable joint choreography once the boundary was genuinely crossed again
--	and then represented early internal stress inside that renewed stable joint state without prematurely converting it into renewed collapse
+-	represented early internal stress inside that renewed stable joint state without prematurely converting it into renewed collapse
+-	and represented restabilization of that renewed stable joint state once the early internal stress softened again
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
 
@@ -933,7 +948,7 @@ This is the first point at which TU+ looks like a meaningful intermediate layer 
 
 ### 9. Coupling, decoupling, ambiguity, restart, and fresh recoupling can be represented without premature collapse
 
-Cycles 4–35 suggest the architecture can distinguish between:
+Cycles 4–37 suggest the architecture can distinguish between:
 -	a new provisional source
 -	a weak coupling candidate
 -	a stable joint choreography
@@ -964,14 +979,12 @@ Cycles 4–35 suggest the architecture can distinguish between:
 -	a fresh recovery pressure that can then strengthen into a genuinely emerging lower-order relation without prematurely becoming joint choreography
 -	a lower-order relational return that can then persist as a durable corridor without yet requiring threshold-nearing re-promotion
 -	a durable lower-order corridor that can strengthen further without yet becoming threshold-nearing joint return
--	and a strengthening durable corridor that can then approach the threshold-nearing re-promotion boundary without yet crossing it
+-	a strengthening durable corridor that can then approach the threshold-nearing re-promotion boundary without yet crossing it
 -	a strengthening durable corridor that can cross into threshold-nearing re-promotion after stabilized independence without yet restoring stable joint choreography
--	and a threshold-nearing re-promotion state that can then persist across another slice as an occupied boundary condition without yet becoming stable joint choreography
--	a threshold-nearing re-promotion state that can persist as an occupied boundary without yet becoming stable joint choreography
--	and a persistent threshold-nearing return that can then be cleanly promoted into renewed stable joint choreography after stabilized independence
--	a threshold-nearing re-promotion state that can persist as an occupied boundary condition without yet becoming stable joint choreography
+-	a threshold-nearing re-promotion state that can then persist across another slice as an occupied boundary condition without yet becoming stable joint choreography
 -	a persistent threshold-nearing return that can then be cleanly promoted into renewed stable joint choreography after stabilized independence
--	and a renewed stable joint choreography that can come under early internal stress without immediately losing its re-promoted shared organization
+-	a renewed stable joint choreography that can come under early internal stress without immediately losing its re-promoted shared organization
+-	and a renewed stable joint choreography that can then restabilize once that early internal stress softens again
 
 That is highly relevant to the RGPx framing of the prototype.
 
@@ -979,7 +992,7 @@ That is highly relevant to the RGPx framing of the prototype.
 
 ### 10. Coherence is beginning to act as the selection principle
 
-By Cycles 5–35, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
+By Cycles 5–37, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 -	What survived was not what was initially plausible, but what remained coherent enough.
 -	What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
 -	What was provisionally confirmed was not what was merely tempting, but what persisted coherently across another interval.
@@ -1012,9 +1025,10 @@ By Cycles 5–35, revision appears to be driven less by static labeling and more
 -	What Cycle 34 added is that this threshold-nearing return can persist as an occupied boundary state rather than collapsing back into mere approach or leaping forward prematurely.
 -	What Cycle 35 added is that once reciprocal support becomes strong enough again, that occupied threshold state can be cleanly promoted into renewed stable joint choreography without loss of train distinctness.
 -	What Cycle 36 added is that once renewed stable joint choreography has been re-established, coherence can preserve that shared state under its first bounded internal asymmetry without either romanticizing permanence or prematurely reopening collapse.
+-	What Cycle 37 adds is that the same re-promoted shared state can then reabsorb that early internal stress and restabilize, suggesting that the promotion → stress → recovery corridor is reproducible rather than one-off.
 
 This suggests that coherence is not merely a measured field property in the schema.
-It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, soft failed reopening under stronger mismatch, renewed provisional relation after a near-miss, bounded restrengthening of renewed relation when support persists, threshold-nearing joint promotion, bounded stable-joint promotion when threshold is genuinely crossed, disciplined maintenance of a promoted joint state under early internal stress, bounded restabilization after that stress is reabsorbed, renewed serious break pressure when resilience limits are approached again, clean post-promotion downgrade when the shared state genuinely loses support, stabilization of a weaker relational plateau after de-confirmation, gradual loosening of that lower-order plateau when its own support weakens, eventual restoration of a clearer independent-separation reading once that lower-order support becomes too thin, stabilization of that restored independent state as a new mainline, renewed weak recovery pressure against even that stabilized independent state, strengthening of that recovery pressure into an emerging lower-order relation, persistence of that lower-order return as a durable corridor, further strengthening of that corridor without premature re-promotion, and approach of that corridor toward the re-promotion boundary without premature crossing.
+It is beginning to function as the effective driver of revision, selection, promotion, de-promotion, collapse, non-promotion under contradiction, re-initiation after ambiguity, disciplined weak reopening after restart, provisional weak continuation under mixed support, soft failed reopening under stronger mismatch, renewed provisional relation after a near-miss, bounded restrengthening of renewed relation when support persists, threshold-nearing joint promotion, bounded stable-joint promotion when threshold is genuinely crossed, disciplined maintenance of a promoted joint state under early internal stress, bounded restabilization after that stress is reabsorbed, renewed serious break pressure when resilience limits are approached again, clean post-promotion downgrade when the shared state genuinely loses support, stabilization of a weaker relational plateau after de-confirmation, gradual loosening of that lower-order plateau when its own support weakens, eventual restoration of a clearer independent-separation reading once that lower-order support becomes too thin, stabilization of that restored independent state as a new mainline, renewed weak recovery pressure against even that stabilized independent state, strengthening of that recovery pressure into an emerging lower-order relation, persistence of that lower-order return as a durable corridor, further strengthening of that corridor without premature re-promotion, approach of that corridor toward the re-promotion boundary without premature crossing, clean renewed promotion once that occupied threshold is genuinely crossed again, and renewed restabilization after early internal stress inside the re-promoted shared state.
 
 That is highly relevant to the RGPx framing of the prototype.
 
@@ -1022,7 +1036,7 @@ That is highly relevant to the RGPx framing of the prototype.
 
 ### 11. The architecture can reject, re-admit, confirm, begin to de-confirm, fully de-confirm, preserve explicit ambiguity, restart cleanly after contradiction, and register fresh weak recoupling after restart
 
-Cycles 5–35 together are especially important.
+Cycles 5–37 together are especially important.
 -	Cycle 5 showed disciplined rejection of an unsupported weak coupling
 -	Cycle 6 showed disciplined re-opening when reciprocal alignment and co-motion raised coherence again
 -	Cycle 7 showed provisional confirmation when that co-motion persisted across an additional interval
@@ -1055,9 +1069,10 @@ Cycles 5–35 together are especially important.
 -	Cycle 34 showed that this threshold-nearing return could then persist across another slice as an occupied boundary state without yet becoming stable joint choreography
 -	Cycle 35 showed that this occupied threshold state could then be cleanly promoted into renewed stable joint choreography once reciprocal support again became strong enough
 -	Cycle 36 showed that this renewed stable joint choreography could then survive its first bounded internal asymmetry while remaining the dominant reading, with train distinctness preserved and early stress tracked explicitly
+-	Cycle 37 showed that the same re-promoted stable joint state could then reabsorb that early internal stress and restabilize again, without erasing train distinctness or forcing false perfection
 
 This suggests the architecture is not simply drifting toward complexity or falling back to independence.
-It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that independent mainline to fresh weak relational pressure without prematurely surrendering it, let that pressure strengthen into a renewed lower-order relation without overpromoting it, let that lower-order return persist as a durable corridor without forcing threshold-nearing promotion too early, let that durable corridor strengthen further while still remaining sub-threshold, and then let that strengthening corridor approach the re-promotion boundary without prematurely crossing it.
+It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that independent mainline to fresh weak relational pressure without prematurely surrendering it, let that pressure strengthen into a renewed lower-order relation without overpromoting it, let that lower-order return persist as a durable corridor without forcing threshold-nearing promotion too early, let that durable corridor strengthen further while still remaining sub-threshold, let that strengthening corridor approach the re-promotion boundary without prematurely crossing it, let that threshold-nearing return persist as an occupied boundary state, then cleanly re-promote that occupied boundary into renewed stable joint choreography once support genuinely crosses threshold, and restabilize that re-promoted shared state again when its first bounded internal stress softens.
 
 ---
 
@@ -1109,15 +1124,16 @@ The following have now been tested at least in weak form:
 -	bounded promotion from persistent threshold-nearing re-promotion into renewed stable joint choreography after stabilized independence
 -	survival of that renewed stable joint choreography under first bounded internal asymmetry
 -	explicit tracking of early internal stress inside a re-promoted shared state without premature de-confirmation
+-	restabilization of that re-promoted shared state once the early internal stress softened again
 
 ---
 
 ## What has not yet been tested
 
 The following remain untested:
--	restabilization of the renewed stable joint state after early internal stress
--	renewed harsher break pressure inside the re-promoted stable joint state
+-	renewed harsher break pressure inside the re-promoted stable joint state after restabilization
 -	bounded failure from the re-promoted stable joint state back into weaker relation or defended independence
+-	comparison of resilience between the first promoted stable-joint arc and the second re-promoted one
 -	repeated oscillation between weaker relation and clearer separation
 -	fragmentation beyond current contradiction/collapse markers
 -	stronger mismatch across many restarts
@@ -1127,27 +1143,27 @@ The following remain untested:
 -	quantitative coherence metrics and ablations
 -	robustness across repeated automated runs
 
-So the current result is now well beyond baseline success and now includes bounded threshold crossing into stable joint choreography, early-stress maintenance of that state, restabilization after mild internal asymmetry, renewed harsher break pressure, clean post-promotion de-confirmation, stabilization of a downgraded weaker relational state, loosening of that lower-order plateau, restoration of a clearer independent-separation reading, stabilization of that restored independent state, fresh recovery pressure against that stabilized independence, strengthening of that pressure into an emerging lower-order relation, persistence of that lower-order return as a durable corridor, further strengthening of that durable corridor, and approach of that corridor toward threshold-nearing re-promotion, but it is still not a full engineering stress program.
+So the current result is now well beyond baseline success and now includes bounded threshold crossing into stable joint choreography, early-stress maintenance of that state, restabilization after mild internal asymmetry, renewed harsher break pressure, clean post-promotion de-confirmation, stabilization of a downgraded weaker relational state, loosening of that lower-order plateau, restoration of a clearer independent-separation reading, stabilization of that restored independent state, fresh recovery pressure against that stabilized independence, strengthening of that pressure into an emerging lower-order relation, persistence of that lower-order return as a durable corridor, further strengthening of that durable corridor, approach of that corridor toward threshold-nearing re-promotion, bounded re-promotion into renewed stable joint choreography, and restabilization of that re-promoted shared state after first bounded internal stress, but it is still not a full engineering stress program.
 
 ---
 
 ## Current verdict
 
-The first thirty-five cycles support the following stronger claim:
+The first thirty-seven cycles support the following stronger claim:
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that stabilized independent state to fresh weak relational recovery pressure without prematurely overturning it, allow that recovery pressure to strengthen into a genuinely emerging lower-order relation without prematurely restoring joint choreography, allow that lower-order return to persist as a durable corridor without premature threshold-nearing re-promotion, allow that durable corridor to strengthen further while still remaining sub-threshold, allow that strengthening corridor to cross into threshold-nearing re-promotion after stabilized independence without prematurely restoring stable joint choreography, allow that threshold-nearing return to persist as an occupied boundary state without yet becoming stable joint choreography, then cleanly promote that occupied threshold state into renewed stable joint choreography once reciprocal support again becomes strong enough, and preserve that renewed stable joint choreography under its first bounded internal asymmetry without collapsing role boundaries or erasing train distinctness.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that stabilized independent state to fresh weak relational recovery pressure without prematurely overturning it, allow that recovery pressure to strengthen into a genuinely emerging lower-order relation without prematurely restoring joint choreography, allow that lower-order return to persist as a durable corridor without premature threshold-nearing re-promotion, allow that durable corridor to strengthen further while still remaining sub-threshold, allow that strengthening corridor to cross into threshold-nearing re-promotion after stabilized independence without prematurely restoring stable joint choreography, allow that threshold-nearing return to persist as an occupied boundary state without yet becoming stable joint choreography, then cleanly promote that occupied threshold state into renewed stable joint choreography once reciprocal support again becomes strong enough, preserve that renewed stable joint choreography under its first bounded internal asymmetry, and then restabilize that re-promoted shared state again when the early internal stress softens — all without collapsing role boundaries or erasing train distinctness.
 
-This is a real step, not just another incremental shade change. Cycle 35 closes the recovery arc and gives you a second, cleaner proof that the architecture can re-enter stable shared organization after full descent and defended independence.
+This is more than a one-off corridor. By Cycle 37, the architecture has now repeated the promotion → stress → recovery pattern after a full descent, defended independence, lower-order return, and disciplined re-promotion. That makes the underlying selection logic look increasingly structural rather than accidental.
 
 ---
 
 ## Recommended next test
 
 The next best test is to introduce one new structural pressure:
--	restabilization or renewed harsher break pressure inside the re-promoted stable joint choreography
+-	renewed harsher break pressure inside the restabilized re-promoted stable joint choreography
 
 This will let the triad be tested on:
--	whether the renewed stable joint state reabsorbs early internal stress
--	whether a fresh serious break corridor reopens more quickly than in the first stable-joint cycle
+-	whether the second stable-joint regime is more resilient than the first
+-	whether a fresh serious break corridor reopens more quickly than in the first promotion arc
 -	whether train distinctness remains preserved under renewed stable coupling stress
 -	whether coherence can distinguish between a genuinely resilient re-promoted joint state and one that only briefly reassembled before renewed de-confirmation
