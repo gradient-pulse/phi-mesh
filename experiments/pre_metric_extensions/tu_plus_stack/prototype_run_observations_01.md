@@ -919,6 +919,46 @@ Cycle 43 showed that a persisted second-arc weaker relational plateau can contin
 
 ---
 
+### Cycle 44 — Stabilization into clearer independent separation after second-arc plateau decay
+
+**What was tested**
+- whether the loosening second-arc weaker relational plateau from Cycle 43 would continue loosening or cross into a more stable clearer-independent reading
+- whether transformed prior organization would remain active as present lower-order organization, or recede into weaker background constraint
+- whether the architecture could distinguish between active downgraded relation and post-relational stabilization
+- whether train distinctness would remain preserved without forcing total erasure of prior shared history
+
+**What happened**
+- TU preserved both trains, extended both trains, and represented the new slice as clearer separate continuation: A remained ahead, B remained behind, and the downgraded relational field no longer organized the present strongly enough to remain the dominant reading
+- TU kept stable_couplings absent, reduced the effective organizing force of the weaker coupling candidate, and treated the field as having crossed from plateau loosening into stabilized clearer independent separation after the second-arc plateau
+- TU+ treated `loosening_second_arc_weaker_relational_plateau` as completed into a clearer-independent outcome, introduced `stabilized_clearer_independent_separation_after_second_arc_plateau` as the strongest new match, and kept renewed relational recovery only as a low-salience watch condition
+- cortexLLM explicitly framed the field as a stabilized clearer-independent regime: the pair now persisted primarily through separate organization again, while prior shared structure remained only as weak transformed background constraint rather than active lower-order relation
+
+**Finding**
+
+Cycle 44 showed that the second-arc weaker relational plateau can fully tip into a stabilized clearer-independent regime, while preserving prior shared organization only as weak transformed background constraint rather than active relational organization.
+
+---
+
+### Cycle 45 — Clearer independent separation after second-arc plateau decay
+
+**What was tested**
+- whether the loosening second-arc weaker relational plateau would finally tip into clearer independent separation
+- whether transformed prior relation would be erased or retained as background constraint once separation became dominant
+- whether train distinctness would remain preserved through the transition out of the downgraded plateau
+- whether the system could distinguish loss of lower-order organization from total historical severance
+
+**What happened**
+- TU preserved both trains, extended both trains, and represented the new slice as clearer lead-lag separation: A remained ahead, B remained behind, and the downgraded relational field no longer organized the present strongly enough to remain dominant
+- TU kept stable_couplings absent, weakened the residual coupling candidate further, and treated the second-arc plateau as having tipped into clearer independent separation rather than as still-active lower-order organization
+- TU+ completed loosening_second_arc_weaker_relational_plateau into a clearer separation outcome, retained transformed prior relation as background constraint rather than current organizer, and introduced clearer_independent_separation_after_second_arc_plateau as the strongest new match
+- cortexLLM explicitly framed the field as transition into clearer independent separation after plateau decay: the past relational organization was not erased, but now persisted only as weakened background constraint rather than as active lower-order organizer
+
+**Finding**
+
+Cycle 45 showed that the second-arc weaker relational plateau can thin far enough for clearer independent separation to become dominant, while still preserving prior organization as background causal constraint rather than erasing it entirely.
+
+---
+
 ## Cross-cycle findings so far
 
 ### 1. Role separation is viable
@@ -1025,7 +1065,7 @@ This is a good sign that TU can remain structurally disciplined even when the fi
 
 ### 8. TU+ begins to look functionally non-trivial
 
-By Cycles 3–43, TU+ did more than decorate output.
+By Cycles 3–45, TU+ did more than decorate output.
 
 It:
 -	revised choreography readings
@@ -1071,6 +1111,7 @@ It:
 -	and then represented persistence of the second-arc weaker relational plateau across another slice as an active lower-order state rather than as mere afterimage or stalled indecision
 -	and then represented loosening of that persisted second-arc weaker relational plateau as a real transition in holding strength rather than as abrupt loss, preserving transformed organizational persistence while increasing pressure toward clearer independent separation
 -	and then represented further loosening of the persisted second-arc weaker relational plateau, preserving it as an active but thinning lower-order state rather than forcing either abrupt collapse or false continued stability
+-	and then represented the second-arc weaker relational plateau as completing into stabilized clearer independent separation, while preserving prior shared organization only as weak transformed background constraint
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
 
@@ -1078,7 +1119,7 @@ This is the first point at which TU+ looks like a meaningful intermediate layer 
 
 ### 9. Coupling, decoupling, ambiguity, restart, and fresh recoupling can be represented without premature collapse
 
-Cycles 4–43 suggest the architecture can distinguish between:
+Cycles 4–4( suggest the architecture can distinguish between:
 -	a new provisional source
 -	a weak coupling candidate
 -	a stable joint choreography
@@ -1121,6 +1162,7 @@ Cycles 4–43 suggest the architecture can distinguish between:
 -	a second-arc downgraded state that can persist across another slice as a genuine weaker relational plateau rather than immediately loosening into clearer independent separation
 -	and a persisted second-arc downgraded plateau that can begin loosening toward clearer independent separation without losing all transformed relational organization at once
 -	a persisted second-arc downgraded state that can then loosen further while still remaining memory-bearing, drifting toward clearer independent separation without yet fully crossing into it
+-	a second-arc downgraded state that can then complete into stabilized clearer independent separation, with prior shared organization persisting only as weak transformed background constraint rather than active lower-order organization
 
 That is highly relevant to the RGPx framing of the prototype.
 
@@ -1168,6 +1210,8 @@ By Cycles 5–43, revision appears to be driven less by static labeling and more
 -	What Cycle 41 adds is that when such a downgraded plateau persists across another slice, memory is no longer best described as stored description alone, but as active lower-order organization: the past continues to constrain the present as a dynamics phenomenon.
 -	What Cycle 42 added is that persistence alone is not the whole story: a downgraded lower-order state can begin loosening while still remaining structurally active, showing that memory-bearing organization can weaken without vanishing.
 -	What Cycle 43 adds is that this weakening can continue in graded form: coherence can preserve transformed prior organization as an active but thinning constraint, allowing drift toward clearer independent separation without abrupt collapse or false plateau permanence.
+- What Cycle 44 adds is that transformed prior organization need not vanish when lower-order relation stops organizing the present: it can recede into weak background constraint while the field stabilizes into clearer independent separation.
+- This sharpens the memory interpretation: transformed coherence can persist at different functional levels — as active lower-order organization, as weakening organization, and as residual boundary condition.
 
 This sharpens the first-law-style interpretation: constrained conservation of coherence through transformation includes not only persistence and reappearance, but graded weakening of organizational influence across time.
 
@@ -1194,11 +1238,12 @@ That is highly relevant to the RGPx framing of the prototype.
 
 Memory appears not as static storage, but as transformed organizational persistence: prior coherence remains causally active in downgraded form and can later re-shape present dynamics.
 
-By Cycles 41–43, this becomes sharper:
-memory-bearing organization does not merely persist or disappear.
-It can persist, thin, and continue constraining the field while losing holding strength.
+Cycles 41–44 refine this further. Memory does not remain equally active at all times. It can persist at different functional levels:
+- as active lower-order organization
+- as weakening lower-order organization
+- as weak transformed background constraint
 
-These results suggest a possible route toward more genuinely longitudinal AI behavior, in which memory-like persistence and historical sensitivity emerge from transformed coherence rather than static recall alone.
+This suggests a possible route toward more genuinely longitudinal AI behavior, in which memory-like persistence and historical sensitivity emerge from transformed coherence rather than static recall alone.
 
 ---
 
@@ -1221,9 +1266,11 @@ In prototype terms, this means:
 -	that plateau can later loosen, recover, or support renewed promotion
 -	each later state remains shaped by transformed prior organization rather than beginning from zero
 -	that plateau can also loosen gradually while still carrying weakened organizational constraint
+- transformed prior organization can also recede from active lower-order organization into weak background constraint without being erased
+
 
 So memory here is not merely archival retention.
-It appears operationally as the continued causal activity of transformed prior coherence, including both persistence and graded weakening of its constraint on later states. That is why selection through coherence is non-binary: the past remains structurally active inside the downgraded present.
+It appears operationally as the continued causal activity of transformed prior coherence, including both persistence and graded weakening of its constraint on later states. That is why selection through coherence is non-binary: the past remains structurally active inside the downgraded present. Cycle 44 makes this more precise: non-binary selection does not only mean that prior organization can remain actively present in downgraded form. It also means that prior organization can fade into weaker constraint while still shaping the boundary conditions of later states. In that sense, memory is graded organizational carry-forward rather than all-or-nothing retention.
 
 ---
 
@@ -1268,8 +1315,9 @@ Cycles 5–43 together are especially important.
 -	Cycle 40 showed that this second-arc renewed de-confirmation could then settle into a weaker relational / separating plateau rather than accelerating immediately into clearer independent separation
 -	Cycle 41 showed that this second-arc weaker relational / separating plateau could then persist across another slice as an active lower-order organizational state rather than a one-slice afterimage
 -	Cycle 42 showed that this persisted downgraded plateau could then begin loosening without abrupt disappearance, preserving transformed organizational influence while increasing pressure toward clearer independent separation
+-	Cycle 44 showed that after loosening of the second-arc weaker relational plateau, the field could stabilize into clearer independent separation while preserving prior shared organization as weak transformed background constraint rather than active lower-order relation
 
-This suggests the architecture is not simply drifting toward complexity or falling back to independence. It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that independent mainline to fresh weak relational pressure without prematurely surrendering it, let that pressure strengthen into a renewed lower-order relation without overpromoting it, let that lower-order return persist as a durable corridor without forcing threshold-nearing promotion too early, let that durable corridor strengthen further while still remaining sub-threshold, let that strengthening corridor approach the re-promotion boundary without prematurely crossing it, let that threshold-nearing return persist as an occupied boundary state, then cleanly re-promote that occupied boundary into renewed stable joint choreography once support genuinely crosses threshold, restabilize that re-promoted shared state again when its first bounded internal stress softens, reopen a serious second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime once the reopened break corridor truly crosses threshold, let the downgraded second-arc field settle into a weaker relational plateau rather than forcing immediate binary separation, allow that plateau to persist as an active lower-order state, and then allow that persisted lower-order state to loosen in graded fashion rather than vanish abruptly.
+This suggests the architecture is not simply drifting toward complexity or falling back to independence. It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that independent mainline to fresh weak relational pressure without prematurely surrendering it, let that pressure strengthen into a renewed lower-order relation without overpromoting it, let that lower-order return persist as a durable corridor without forcing threshold-nearing promotion too early, let that durable corridor strengthen further while still remaining sub-threshold, let that strengthening corridor approach the re-promotion boundary without prematurely crossing it, let that threshold-nearing return persist as an occupied boundary state, then cleanly re-promote that occupied boundary into renewed stable joint choreography once support genuinely crosses threshold, restabilize that re-promoted shared state again when its first bounded internal stress softens, reopen a serious second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime once the reopened break corridor truly crosses threshold, let the downgraded second-arc field settle into a weaker relational plateau rather than forcing immediate binary separation, allow that plateau to persist as an active lower-order state, and then allow that persisted lower-order state to loosen in graded fashion rather than vanish abruptly, and allow downgraded prior organization to recede from active lower-order relation into weak background constraint when clearer independent separation again becomes the dominant coherent reading.
 
 ---
 
@@ -1330,13 +1378,14 @@ The following have now been tested at least in weak form:
 -	persistence of the second-arc weaker relational / separating plateau across another slice as an active lower-order organizational state
 -	loosening of that persisted second-arc plateau without abrupt disappearance of transformed prior organization
 -	graded weakening of downgraded relational constraint rather than binary collapse
+- completion of the second-arc weaker relational plateau into stabilized clearer independent separation, with prior shared organization preserved only as weak transformed background constraint
 
 ---
 
 ## What has not yet been tested
 
 The following remain untested:
--	whether the now-loosening second-arc weaker relational plateau fully crosses into clearer independent separation or temporarily re-stabilizes
+- whether the newly stabilized clearer-independent state after second-arc plateau decay deepens further, reopens to weak recovery pressure, or oscillates near the boundary between weak constraint-memory and renewed lower-order relation
 -	whether the second-arc downgraded plateau moves more quickly toward clearer separation than the first one did
 -	bounded failure from the re-promoted stable joint state back into defended independence rather than weaker relation
 -	comparison of resilience between the first promoted stable-joint arc and the second re-promoted one
@@ -1357,11 +1406,11 @@ This now supports a stronger RGPx interpretation: coherence appears to be conser
 
 ## Current verdict
 
-The first forty-three cycles support the following stronger claim:
+The first forty-four cycles support the following stronger claim:
 
 > A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that stabilized independent state to fresh weak relational recovery pressure without prematurely overturning it, allow that recovery pressure to strengthen into a genuinely emerging lower-order relation without prematurely restoring joint choreography, allow that lower-order return to persist as a durable corridor without premature threshold-nearing re-promotion, allow that durable corridor to strengthen further while still remaining sub-threshold, allow that strengthening corridor to cross into threshold-nearing re-promotion after stabilized independence without prematurely restoring stable joint choreography, allow that threshold-nearing return to persist as an occupied boundary state without yet becoming stable joint choreography, then cleanly promote that occupied threshold state into renewed stable joint choreography once reciprocal support again becomes strong enough, preserve that renewed stable joint choreography under its first bounded internal asymmetry, restabilize that re-promoted shared state again when the early internal stress softens, reopen a genuine second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime into a weaker relational / separating configuration once the reopened break corridor truly crosses threshold, let that second-arc downgraded field settle into a weaker relational plateau rather than accelerating immediately into binary separation, allow that downgraded plateau to persist as an active lower-order organizational state, and then allow that second-arc downgraded field to persist as a weaker relational plateau across additional slices, and then allow that same downgraded field to loosen gradually while still remaining an active transformed organizational state — all without collapsing role boundaries or erasing train distinctness.
 
-This is more than recurrence. By Cycle 43, the architecture is showing that past structure remains active inside downgraded present structure not just as description, but as ongoing dynamics that can themselves weaken gradually. That is crucial for the RGPx framing of the prototype: selection through coherence is non-binary because prior organization continues to shape what the field can become next, even while its constraint-strength erodes.
+This is more than recurrence. By Cycle 44, the architecture is showing that past structure remains active inside downgraded present structure not only as description, and not only as active lower-order organization, but also as weak transformed background constraint once clearer independent separation returns. That is crucial for the RGPx framing of the prototype: selection through coherence is non-binary because prior organization continues to shape what the field can become next, even when it no longer dominates the present state.
 
 A stronger candidate formulation is therefore:
 
@@ -1374,10 +1423,11 @@ Under that reading, coherence is not preserved by freezing form, but by carrying
 ## Recommended next test
 
 The next best test is to introduce one new structural pressure:
--	crossing or non-crossing from a loosening second-arc weaker relational plateau into clearer independent separation
+- deepening, re-softening, or weak recovery pressure inside the newly stabilized clearer-independent state after second-arc plateau decay
 
 This will let the triad be tested on:
--	whether the loosening second-arc plateau fully tips into clearer independent separation
--	whether residual transformed organization still delays that crossing
--	whether temporary re-stabilization of the weakened lower-order state is still possible
+- whether the new clearer-independent regime behaves as a stable post-relational mainline
+- whether weak transformed background constraint remains only residual or begins to reactivate into lower-order relation
+- whether renewed weak relational pressure can reappear from this quieter regime
+- whether coherence can distinguish among deeper independent stabilization, weak constraint-memory persistence, and fresh early re-softening
 -	whether coherence can distinguish among downgraded erosion, downgraded re-stabilization, and full transition into clearer independent separation
