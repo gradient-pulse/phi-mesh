@@ -2506,3 +2506,99 @@ and:
 
 ---
 
+### Cycle 84 — Structural-variation invariance under phase-aligned perturbation
+
+**What was tested**
+- whether **slight internal structural variation** within a:
+  - highly aligned  
+  - phase-synchronized  
+  - repeated perturbation  
+  can induce:
+  - accumulation  
+  - threshold shift  
+  - or activation  
+- whether micro-variation introduces a pathway beyond:
+  - alignment  
+  - phase coherence  
+  - repetition  
+- whether the architecture distinguishes between:
+  - structural variation within perturbation  
+  - and structural change of the regime  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_structurally_varied_perturbation`  
+    - slight internal structural variation  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no accumulation  
+    - no structural update  
+  - treated variation as non-activating  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_structurally_varied_perturbation`  
+  - explicitly rejected:
+    - structural_variation → accumulation  
+    - structural_variation → precursor pressure  
+    - variation → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no variation-driven activation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_structural_variation_invariant_phase_aligned_perturbation`  
+  - established:
+    - slight structural variation does not generate accumulation  
+    - variation does not modify threshold distance  
+    - dual signal configuration remains stable and non-activating  
+  - confirmed:
+    - boundary integrity remains intact under variation  
+
+**Finding**
+
+Cycle 84 demonstrates **structural-variation invariance under phase-aligned perturbation**:
+
+- slight internal variation does not induce accumulation  
+- high alignment + phase + variation remains sub-threshold  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- accumulation  
+- precursor pressure generation  
+- or variation-driven activation  
+
+This establishes:
+
+> **micro-variation within perturbation does not constitute structural change**
+
+and:
+
+> **activation requires regime-level structural change, not signal-level variation**
+
+**Operational delta**
+
+- state distinction added:
+  - `structural_variation_invariant_perturbation_regime`  
+    - defined as:  
+      *a condition in which slight internal variation within highly aligned, phase-synchronized sub-threshold perturbations does not accumulate, shift thresholds, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - micro-variation does not induce accumulation  
+  - signal-level variation ≠ regime-level structural change  
+  - variation + alignment + phase ≠ activation  
+
+---
+
