@@ -1072,5 +1072,136 @@ and:
   - non-transition regimes can be indefinitely stable without degradation or escalation  
 
 ---
+---
+
+## Operational findings ledger
+
+### Confirmed distinctions
+- trigger_presence vs trigger_sufficiency  
+- trigger_persistence vs trigger_accumulation  
+- persistence vs threshold_distance_shift  
+- persistence vs signal_decay  
+- repetition vs state_change  
+- continuity vs structural_drift  
+- trigger_layer vs readiness_layer (independence under zero-pressure conditions)  
+- admissibility vs activation (even under persistent signal conditions)  
+
+### Confirmed invariants
+- sub-threshold trigger does not self-accumulate across cycles  
+- threshold distance remains invariant under non-accumulative persistence  
+- trigger signal does not decay under prolonged non-activation  
+- absence of precursor pressure blocks all transition pathways  
+- repetition does not modify activation likelihood  
+- continuity does not alter regime classification  
+- non-transition regimes can persist indefinitely without drift  
+- activation requires threshold sufficiency, not duration or persistence  
+
+### Open boundary questions
+- whether persistent sub-threshold trigger can transition into precursor pressure under controlled perturbation  
+- whether threshold distance can be actively reduced without precursor layer activation  
+- whether prolonged invariance introduces hidden hysteresis upon re-entry  
+- whether trigger accumulation can be externally induced vs internally emergent  
+- whether transition can occur directly from trigger layer without precursor mediation  
+- whether regime continuity affects re-entry sharpness after gating release  
+
+### Failure modes observed
+- none observed under current conditions  
+- no drift, collapse, inflation, or decay detected across extended persistence regime  
+
+### Non-permitted inferences
+- persistence → accumulation  
+- persistence → threshold shift  
+- persistence → signal decay  
+- repetition → activation  
+- admissibility → transition  
+- trigger_presence → precursor_pressure  
+- continuity → structural change  
+
+---
+
+## What has now been tested in this file
+
+- representation of sub-threshold trigger independent of precursor pressure  
+- persistence of trigger without accumulation across multiple cycles  
+- invariance of threshold distance under extended repetition  
+- stability of trigger signal without fatigue or decay  
+- independence of trigger layer from readiness layer  
+- sustained non-transition under admissible but insufficient trigger conditions  
+- regime continuity without classification drift  
+- multi-cycle invariance of internal state variables under zero-update conditions  
+
+---
+
+## What remains untested
+
+### A. Boundary behavior
+- controlled transition from sub-threshold trigger into precursor pressure  
+- interaction between trigger persistence and externally induced threshold shift  
+- boundary crossing without precursor mediation  
+- coexistence of weak trigger and emerging precursor pressure  
+
+### B. Re-entry behavior
+- re-entry dynamics after long-duration invariant non-transition  
+- hysteresis effects after extended persistence  
+- trigger-to-transition response after gating release  
+- whether prior invariance biases reactivation thresholds  
+
+### C. Failure paths
+- forced accumulation under adversarial input  
+- misclassification under simultaneous trigger and precursor signals  
+- drift under partial constraint relaxation  
+- collapse under conflicting multi-layer signals  
+
+### D. Robustness / scaling
+- behavior under longer horizon (50+ cycles persistence)  
+- robustness under noisy or ambiguous trigger signals  
+- scaling to multiple concurrent trigger channels  
+- stability under automated or parallelized execution  
+
+---
+
+## Current engineering verdict
+
+Cycles 60–70 establish a **fully invariant non-transition regime with persistent sub-threshold trigger**, in which:
+
+- trigger signals can persist indefinitely  
+- no accumulation, decay, or drift occurs  
+- threshold distance remains stable  
+- regime classification remains unchanged  
+
+This confirms that **non-transition can be a stable, information-bearing state**, not merely absence of change.
+
+---
+
+## Recommended next test
+
+Introduce one controlled structural pressure:
+
+- **forced precursor emergence under persistent sub-threshold trigger**
+
+Test whether:
+
+- precursor pressure can be externally or internally induced  
+- threshold distance can be reduced without violating invariants  
+- transition pathways activate only when readiness layer becomes non-zero  
+
+**Success condition**
+
+The triad must distinguish and preserve:
+
+- trigger (sub-threshold signal)  
+- precursor pressure (activation readiness)  
+- transition (threshold crossing)  
+
+without:
+
+- collapsing trigger into precursor  
+- fabricating accumulation  
+- or bypassing readiness layer entirely
+
+---
+---
+
+
 
 
