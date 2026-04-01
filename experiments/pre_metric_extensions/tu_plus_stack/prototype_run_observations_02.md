@@ -727,4 +727,89 @@ and:
 
 ---
 
+### Cycle 67 — Non-accumulative persistence invariance under repetition
+
+**What was tested**
+- whether repeated persistence of a sub-threshold trigger across additional cycles:
+  - induces accumulation  
+  - shifts threshold proximity  
+  - or remains strictly invariant  
+- whether the architecture preserves:
+  - trigger persistence  
+  - without implicit intensification or drift  
+- whether repetition alone alters activation conditions  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - `sub_threshold_trigger_persistent`  
+    - `trigger_non_accumulative`  
+    - `non_transition_maintained`  
+  - explicitly avoided:
+    - trigger intensification  
+    - precursor regeneration  
+    - transition trace reactivation  
+  - maintained zero motion-token emission and no structural update  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent` (subdominant)  
+  - explicitly encoded:
+    - persistence as non-accumulative  
+  - rejected:
+    - persistence → accumulation  
+    - repetition → threshold shift  
+    - weak trigger → precursor pressure  
+  - preserved regime integrity without reinterpretation  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_non_accumulative_persistent_trigger`  
+  - established:
+    - repetition does not modify threshold distance  
+    - trigger layer remains stable under repetition  
+    - absence of readiness layer activity blocks all transition pathways  
+  - confirmed absence of latent drift or hidden escalation  
+
+**Finding**
+
+Cycle 67 demonstrates that the architecture maintains **invariance under repeated sub-threshold trigger persistence**:
+
+- trigger remains present  
+- persistence remains non-accumulative  
+- threshold distance remains unchanged  
+- non-transition regime is preserved  
+
+without:
+- implicit escalation  
+- threshold drift  
+- or delayed activation  
+
+This establishes:
+
+> **repetition alone does not change system state or proximity to transition**
+
+and:
+
+> **non-accumulative persistence is a stable invariant regime**
+
+**Operational delta**
+
+- state distinction added:
+  - `non_accumulative_persistence_invariance`  
+    - defined as:  
+      *a regime in which repeated persistence of a sub-threshold trigger does not alter accumulation, threshold proximity, or activation likelihood*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - threshold distance is invariant under repetition without accumulation  
+  - persistence does not imply intensification  
+  - activation conditions remain unchanged under repeated sub-threshold exposure  
+
+---
+
 
