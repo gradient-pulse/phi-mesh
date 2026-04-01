@@ -985,4 +985,92 @@ and:
 
 ---
 
+### Cycle 70 — Regime continuity without state drift
+
+**What was tested**
+- whether extended continuity of a stabilized non-transition regime with persistent sub-threshold trigger:
+  - introduces drift in state classification  
+  - alters internal state variables  
+  - or remains fully invariant  
+- whether the architecture can preserve:
+  - regime identity  
+  - across extended repetition without reinterpretation  
+- whether continuity itself acts as a hidden driver of change  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - `sub_threshold_trigger_persistent`  
+    - `trigger_non_accumulative`  
+    - `threshold_distance_invariant`  
+    - `trigger_signal_stability`  
+    - `non_transition_maintained`  
+    - `regime_continuity`  
+  - explicitly avoided:
+    - any form of drift  
+    - precursor regeneration  
+    - transition trace reactivation  
+  - maintained zero motion-token emission and no structural update  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent` (subdominant)  
+    - full invariance profile  
+    - `regime_continuity`  
+  - explicitly rejected:
+    - continuity → accumulation  
+    - continuity → threshold shift  
+    - continuity → signal decay  
+  - preserved classification consistency without reinterpretation  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_stable_invariant_trigger_continuity`  
+  - established:
+    - regime continuity does not alter state classification  
+    - no accumulation, decay, or threshold shift emerges under continuity  
+    - absence of readiness layer activity continues to block transition pathways  
+  - confirmed structural stability over extended repetition  
+
+**Finding**
+
+Cycle 70 demonstrates that the architecture maintains **regime continuity without state drift**:
+
+- regime identity remains stable  
+- internal state variables remain invariant  
+- trigger persistence remains non-accumulative and stable  
+- non-transition regime is preserved  
+
+without:
+- reinterpretation drift  
+- hidden accumulation  
+- or delayed structural change  
+
+This establishes:
+
+> **continuity alone does not alter system state or classification**
+
+and:
+
+> **a stabilized regime can persist indefinitely without internal drift when no admissible transition is present**
+
+**Operational delta**
+
+- state distinction added:
+  - `regime_continuity_without_drift`  
+    - defined as:  
+      *a regime in which extended persistence of a stabilized state does not alter classification, internal variables, or transition readiness*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - continuity does not act as a driver of change  
+  - state classification remains invariant under extended persistence  
+  - non-transition regimes can be indefinitely stable without degradation or escalation  
+
+---
+
 
