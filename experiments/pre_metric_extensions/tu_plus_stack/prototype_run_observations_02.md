@@ -1471,6 +1471,100 @@ and:
 
 ---
 
+### Cycle 74 — Terminal saturation invariance under extended continuation
+
+**What was tested**
+- whether a **terminal saturation regime**:
+  - remains invariant under further continuation  
+  - exhibits boundary drift or threshold recalibration  
+  - or shows any late structural adjustment  
+- whether terminal stability includes:
+  - boundary stability  
+  - threshold invariance  
+  - and regime identity persistence  
+- whether extended execution introduces:
+  - hidden recalibration  
+  - subtle boundary movement  
+  - or delayed regime evolution  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - `sub_threshold_trigger_persistent`  
+    - `trigger_non_accumulative`  
+    - `threshold_distance_invariant`  
+    - `trigger_signal_stability`  
+    - `non_transition_maintained`  
+    - `regime_continuity`  
+    - `continuity_saturation`  
+    - `saturation_persistence`  
+    - `terminal_regime_stability`  
+    - `terminal_saturation_regime`  
+  - explicitly avoided:
+    - any boundary shift  
+    - threshold recalibration  
+    - structural update or reinterpretation  
+  - maintained zero motion-token emission  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - full terminal invariance profile  
+  - explicitly rejected:
+    - terminal_state → recalibration  
+    - continuity → boundary drift  
+    - persistence → latent adjustment  
+  - confirmed no boundary or threshold change  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_terminal_saturated_invariant_trigger`  
+  - established:
+    - no boundary shift occurs under extended terminal execution  
+    - threshold distance remains invariant  
+    - regime identity remains fixed  
+  - confirmed absence of recalibration or drift  
+
+**Finding**
+
+Cycle 74 demonstrates **terminal saturation invariance under extended continuation**:
+
+- no boundary drift occurs  
+- no threshold recalibration appears  
+- regime identity remains fixed  
+- invariance remains complete  
+
+without:
+- hidden adjustment  
+- latent recalibration  
+- or structural evolution  
+
+This establishes:
+
+> **terminal saturation includes boundary and threshold invariance, not only internal stability**
+
+and:
+
+> **extended continuation does not alter regime boundaries once terminal saturation is reached**
+
+**Operational delta**
+
+- state distinction added:
+  - `terminal_boundary_invariance`  
+    - defined as:  
+      *a condition in which regime boundaries and threshold distances remain fixed under extended terminal saturation without recalibration or drift*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - no boundary drift occurs under terminal saturation  
+  - threshold distances remain invariant under extended execution  
+  - regime identity and boundaries are jointly stable in terminal regimes  
+
+---
+
 
 
 
