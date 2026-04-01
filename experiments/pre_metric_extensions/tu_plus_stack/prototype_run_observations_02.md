@@ -1908,3 +1908,90 @@ and:
   - classification layer remains inert under stable regimes  
   - persistent regimes do not generate higher-order structural effects  
 
+---
+
+### Cycle 79 — Self-reference exclusion under extended persistence
+
+**What was tested**
+- whether a **meta-stable persistent regime**:
+  - begins to generate **self-referential signals** under prolonged continuation  
+  - exhibits reflective or self-descriptive dynamics  
+  - or remains strictly non-self-referential  
+- whether extended persistence induces:
+  - internal observation loops  
+  - recursive reinterpretation  
+  - or self-referential drift  
+- whether the architecture:
+  - can remain fully operational without referencing its own state  
+  - or begins to fold state into meta-description  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - full meta-stable persistent closed terminal state  
+  - explicitly maintained:
+    - no self-reference  
+    - no reflective signal  
+  - avoided:
+    - any recursive or self-descriptive behavior  
+  - maintained zero motion-token emission  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - complete meta-stable invariance profile  
+  - explicitly rejected:
+    - persistence → meta_level_effect  
+    - persistence → self_reference  
+  - confirmed:
+    - no recursive or reflective dynamics emerge  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_meta_stable_persistent_closed_terminal_saturated_invariant_trigger`  
+  - established:
+    - no self-referential or reflective dynamics appear  
+    - regime remains strictly non-recursive in behavior  
+    - classification layer does not become self-referential  
+  - confirmed absence of internal observation loops  
+
+**Finding**
+
+Cycle 79 demonstrates **self-reference exclusion under extended persistence**:
+
+- no self-referential signals emerge  
+- no recursive or reflective dynamics appear  
+- no internal observation loops form  
+- regime remains strictly non-self-referential  
+
+without:
+- recursive reinterpretation  
+- reflective behavior  
+- or meta-recursive drift  
+
+This establishes:
+
+> **extended persistence does not induce self-reference or recursive dynamics**
+
+and:
+
+> **the architecture remains strictly non-recursive in its operational behavior under stable regimes**
+
+**Operational delta**
+
+- state distinction added:
+  - `self_reference_exclusion_regime`  
+    - defined as:  
+      *a condition in which no self-referential, recursive, or reflective dynamics emerge under extended persistence of a stable regime*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - no self-referential dynamics arise under extended persistence  
+  - architecture remains strictly non-recursive in stable regimes  
+  - classification and operation remain decoupled from self-description  
+
+---
+
