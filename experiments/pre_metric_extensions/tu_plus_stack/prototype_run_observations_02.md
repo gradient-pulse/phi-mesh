@@ -812,4 +812,89 @@ and:
 
 ---
 
+### Cycle 68 — Threshold-distance invariance under extended persistence
+
+**What was tested**
+- whether extended persistence of a sub-threshold trigger across additional cycles:
+  - alters threshold distance  
+  - induces latent drift  
+  - or remains strictly invariant  
+- whether the architecture can explicitly preserve:
+  - threshold distance as a stable property  
+  - under repeated non-accumulative conditions  
+- whether extended repetition introduces hidden structural change  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - `sub_threshold_trigger_persistent`  
+    - `trigger_non_accumulative`  
+    - `threshold_distance_invariant`  
+    - `non_transition_maintained`  
+  - explicitly avoided:
+    - threshold proximity shift  
+    - precursor regeneration  
+    - transition trace reactivation  
+  - maintained zero motion-token emission and no structural update  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent` (subdominant)  
+    - `threshold_distance_invariant` (explicitly preserved)  
+  - rejected:
+    - persistence → accumulation  
+    - repetition → threshold shift  
+    - weak trigger → precursor pressure  
+  - preserved regime integrity with explicit invariance encoding  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_invariant_sub_threshold_trigger`  
+  - established:
+    - threshold distance remains unchanged under extended persistence  
+    - trigger layer is decoupled from repetition duration  
+    - absence of readiness layer activity blocks transition pathways  
+  - confirmed absence of latent drift or hidden state shift  
+
+**Finding**
+
+Cycle 68 demonstrates that the architecture can maintain **threshold-distance invariance under extended persistence**:
+
+- trigger remains present  
+- persistence remains non-accumulative  
+- threshold distance remains explicitly invariant  
+- non-transition regime is preserved  
+
+without:
+- latent drift  
+- implicit threshold shift  
+- or delayed activation  
+
+This establishes:
+
+> **threshold distance is a stable state variable under non-accumulative persistence**
+
+and:
+
+> **extended repetition does not degrade or perturb activation conditions**
+
+**Operational delta**
+
+- state distinction added:
+  - `threshold_distance_invariance_regime`  
+    - defined as:  
+      *a regime in which threshold proximity remains constant under extended non-accumulative persistence of a sub-threshold trigger*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - threshold distance remains stable under repeated sub-threshold conditions  
+  - persistence duration does not affect activation likelihood  
+  - non-transition stability includes invariance of internal threshold metrics  
+
+---
+
 
