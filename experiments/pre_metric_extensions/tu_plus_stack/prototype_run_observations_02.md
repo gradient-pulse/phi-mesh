@@ -2416,3 +2416,93 @@ and:
 
 ---
 
+### Cycle 83 — Phase-alignment invariance under high-coherence perturbation
+
+**What was tested**
+- whether **high alignment + near-synchronous phase relation** between perturbation and baseline trigger:
+  - induces accumulation  
+  - generates precursor pressure  
+  - or triggers activation  
+- whether phase coherence adds a new pathway to escalation beyond:
+  - repetition  
+  - and alignment  
+- whether the architecture distinguishes between:
+  - structural coupling  
+  - and phase-aligned coincidence  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_phase_aligned_perturbation`  
+    - near-synchronous phase relation  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no accumulation  
+    - no structural update  
+  - treated phase alignment as non-activating  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_phase_aligned_perturbation`  
+  - explicitly rejected:
+    - phase_synchronization → accumulation  
+    - alignment_and_phase → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no phase-driven activation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_phase_alignment_invariant_structured_perturbation`  
+  - established:
+    - phase-synchronized perturbations do not accumulate  
+    - high alignment + phase coherence does not induce threshold shift  
+    - dual signal configuration remains stable and non-activating  
+  - confirmed:
+    - boundary integrity remains intact under phase alignment  
+
+**Finding**
+
+Cycle 83 demonstrates **phase-alignment invariance under high-coherence perturbation**:
+
+- phase synchronization does not induce accumulation  
+- high alignment + phase coherence remains sub-threshold  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- accumulation  
+- precursor pressure generation  
+- or phase-driven activation  
+
+This establishes:
+
+> **phase alignment does not substitute for structural coupling**
+
+and:
+
+> **even highly coherent sub-threshold signals remain non-activating without structural change**
+
+**Operational delta**
+
+- state distinction added:
+  - `phase_alignment_invariant_perturbation_regime`  
+    - defined as:  
+      *a condition in which highly aligned and phase-synchronized sub-threshold perturbations do not accumulate, shift thresholds, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - phase coherence alone does not induce activation  
+  - alignment + phase ≠ structural coupling  
+  - highly coherent sub-threshold signals remain non-activating  
+
+---
+
