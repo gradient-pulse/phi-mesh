@@ -1289,6 +1289,95 @@ and:
 
 ---
 
+### Cycle 72 — Saturation persistence without emergent deviation
+
+**What was tested**
+- whether a **saturated invariance regime**:
+  - remains stable under further cycles  
+  - develops late emergent behavior  
+  - or deviates after saturation point  
+- whether saturation is:
+  - stable  
+  - reversible  
+  - or fragile under continued execution  
+- whether additional cycles beyond saturation introduce any deviation  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - `sub_threshold_trigger_persistent`  
+    - `trigger_non_accumulative`  
+    - `threshold_distance_invariant`  
+    - `trigger_signal_stability`  
+    - `non_transition_maintained`  
+    - `regime_continuity`  
+    - `continuity_saturation`  
+  - explicitly avoided:
+    - any deviation from saturated state  
+    - precursor regeneration  
+    - transition trace reactivation  
+  - maintained zero motion-token emission and no structural update  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - full invariance profile  
+    - `continuity_saturation`  
+  - explicitly rejected:
+    - continuity → emergent effect  
+    - saturation → delayed deviation  
+    - persistence → signal decay or accumulation  
+  - confirmed stability of saturated regime  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_saturated_invariant_trigger_continuity`  
+  - established:
+    - saturation prevents emergence of new dynamics  
+    - no second-order effects appear beyond saturation  
+    - regime classification remains stable under continued execution  
+  - confirmed absence of deviation or instability  
+
+**Finding**
+
+Cycle 72 demonstrates that **saturation persists without emergent deviation**:
+
+- saturated regime remains stable  
+- no late effects emerge  
+- no deviation or instability occurs  
+- invariance remains complete  
+
+without:
+- delayed dynamics  
+- hidden instability  
+- or structural evolution  
+
+This establishes:
+
+> **saturation is a stable terminal condition under unchanged inputs**
+
+and:
+
+> **once saturation is reached, additional cycles do not introduce new behavior**
+
+**Operational delta**
+
+- state distinction added:
+  - `saturation_persistence_regime`  
+    - defined as:  
+      *a regime in which a saturated invariant state remains stable under continued execution without deviation, emergence, or degradation*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - saturation prevents emergence of new dynamics  
+  - no deviation occurs beyond saturation point  
+  - terminal invariant regimes remain stable under continued execution  
+
+---
+
 
 
 
