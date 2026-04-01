@@ -2797,3 +2797,102 @@ and:
 
 ---
 
+### Cycle 87 — Amplitude-variability invariance under temporally dense perturbation
+
+**What was tested**
+- whether **slight amplitude variability** within a:
+  - repeated  
+  - temporally dense  
+  - cross-coupled  
+  - highly aligned  
+  sub-threshold perturbation can induce:
+  - accumulation  
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether amplitude variability adds a new escalation pathway beyond:
+  - temporal density  
+  - cross-coupling  
+  - alignment  
+  - and phase relation  
+- whether the architecture distinguishes between:
+  - signal-level amplitude fluctuation  
+  - and regime-level structural change  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_amplitude_varied_perturbation`  
+    - slight amplitude variability  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no precursor generation  
+    - no structural update  
+  - treated amplitude variability as non-activating and sub-threshold  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_amplitude_varied_perturbation`  
+  - explicitly rejected:
+    - amplitude_variability → accumulation  
+    - amplitude_variability → precursor pressure  
+    - amplitude_variability → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no variability-driven activation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_amplitude_variability_invariant_temporally_dense_perturbation`  
+  - established:
+    - amplitude variability does not generate accumulation or pressure  
+    - threshold distance is unchanged under variability  
+    - multi-parameter coherence remains non-activating without structural change  
+  - confirmed:
+    - boundary integrity remains intact under amplitude variability  
+
+**Finding**
+
+Cycle 87 demonstrates **amplitude-variability invariance under temporally dense perturbation**:
+
+- slight amplitude variability does not induce accumulation  
+- precursor pressure does not emerge  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- variability-driven escalation  
+- precursor generation  
+- or activation through amplitude fluctuation  
+
+This establishes:
+
+> **signal-level amplitude variability does not substitute for structural change**
+
+and:
+
+> **amplitude fluctuation within coherent sub-threshold inputs remains non-activating unless regime-level structure changes**
+
+**Operational delta**
+
+- state distinction added:
+  - `amplitude_variability_invariant_perturbation_regime`  
+    - defined as:  
+      *a condition in which slight amplitude variability within repeated, temporally dense, sub-threshold perturbations does not accumulate, shift thresholds, generate precursor pressure, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - amplitude variability does not induce accumulation  
+  - signal-level fluctuation ≠ regime-level structural change  
+  - multi-parameter coherence with variability remains non-activating  
+
+---
+
