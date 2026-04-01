@@ -225,4 +225,90 @@ and:
 - invariants reinforced:
   - transition requires admissibility, not pressure magnitude  
   - precursor pressure does not decay under gating  
-  - stasis does not erase internal readiness  
+  - stasis does not erase internal readiness
+
+---
+
+### Cycle 61 — Gating release without forced transition
+
+**What was tested**
+- whether release of input gating produces:
+  - immediate transition  
+  - precursor decay  
+  - or stable retention of near-threshold pressure without structural change  
+- whether admissibility restoration alone is sufficient to trigger update  
+- whether the architecture can distinguish between:
+  - blocked transition  
+  - admissible non-transition  
+  - and triggered transition  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `admissible_input: present_bounded`  
+    - `protocol_flag: gating_release_candidate`  
+  - removed enforced stasis classification  
+  - preserved both trains without extension  
+  - did not inject motion, continuation, or relational activation  
+
+- **TU+**
+  - reclassified the field from governed stasis into:
+    - `near_threshold_precursor_state` (dominant)  
+    - `released_gating_condition` (resolved subdominant)  
+  - preserved precursor pressure as:
+    - active  
+    - near-threshold  
+    - not triggered  
+  - explicitly rejected:
+    - gating release → immediate transition  
+    - admissible input → required update  
+    - latent pressure → activation  
+
+- **cortexLLM**
+  - classified the field as:
+    - `admissible_non_transition_precursor_regime`  
+  - formalized the release event as:
+    - enforcement removed  
+    - readiness retained  
+    - transition not triggered  
+  - established that:
+    - removal of constraint does not itself cause structural change  
+    - admissibility restores access to transition, but does not force it  
+
+**Finding**
+
+Cycle 61 shows that the architecture can pass from **blocked non-transition** into **admissible non-transition** without collapsing into automatic update:
+
+- gating is released  
+- precursor pressure remains active  
+- transition becomes accessible  
+- transition is not triggered  
+
+without:
+- forced structural change  
+- precursor decay  
+- or hallucinated continuation  
+
+This establishes:
+
+> **admissibility is necessary for transition, but not sufficient**
+
+and:
+
+> **release of enforcement does not itself constitute activation**
+
+**Operational delta**
+
+- state distinction added:
+  - `admissible_non_transition_precursor_regime`  
+    - defined as:  
+      *a regime in which gating is removed and transition is permitted in principle, but no specific trigger has yet caused structural change*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - transition requires more than admissibility alone  
+  - precursor pressure can persist through gating release  
+  - removal of enforcement does not force update  
