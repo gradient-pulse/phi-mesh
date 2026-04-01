@@ -1063,6 +1063,26 @@ Cycle 50 showed that recurrent softening pressure against a restored clearer-ind
 
 ---
 
+### Cycle 51 — Accumulation into near-threshold precursor state
+
+**What was tested**
+- whether strengthening recurrent sub-threshold softening pressure would continue accumulating rather than fading or stabilizing
+- whether accumulated precursor pressure could reach a near-threshold condition without triggering premature relational reopening
+- whether the architecture could represent a boundary state distinct from both independent persistence and lower-order relation
+- whether train distinctness would remain preserved while independence became conditionally permeable
+
+**What happened**
+- TU preserved both trains, extended both trains, and represented the new slice as continued independent persistence under further intensified softening pressure: A remained ahead, B remained behind, but reciprocal softening accumulated to a level where independence was no longer cleanly inert
+- TU kept stable_couplings absent, retained only residual coupling/background constraint, and treated the field as accumulated near-threshold precursor pressure rather than renewed lower-order relation
+- TU+ retained restored/stabilized clearer independent separation as the dominant regime, strengthened the interpretation of recurrent softening pressure into accumulated precursor pressure, and introduced `near_threshold_precursor_state_after_recurrent_pressure` as the strongest new match
+- cortexLLM explicitly framed the field as a boundary condition: independence remained the current organizer, but only conditionally, with the field now held at a decision boundary between continued independence and relational reopening
+
+**Finding**
+
+Cycle 51 showed that strengthening recurrent sub-threshold pressure can accumulate into a near-threshold precursor state, where independence remains active but conditional, and the field is held at a decision boundary without premature relational promotion.
+
+---
+
 ## Cross-cycle findings so far
 
 ### 1. Role separation is viable
@@ -1169,7 +1189,7 @@ This is a good sign that TU can remain structurally disciplined even when the fi
 
 ### 8. TU+ begins to look functionally non-trivial
 
-By Cycles 3–50, TU+ did more than decorate output.
+By Cycles 3–51, TU+ did more than decorate output.
 
 It:
 -	revised choreography readings
@@ -1225,6 +1245,7 @@ It:
 - and then represented fresh softening pressure against restored clearer independent separation as capable of recurring across another slice without yet becoming renewed lower-order relation
 - and then represented transformed prior organization as repeated sub-threshold shaping pressure rather than passive background or active relational reopening
 - and then represented recurrent softening pressure against restored clearer independent separation as strengthening across another slice without yet promoting renewed lower-order relation, preserving the distinction between accumulating precursor pressure and genuine relational reopening
+- and then represented strengthening recurrent softening pressure as accumulating into a near-threshold precursor state, explicitly distinguishing a boundary condition from both independent persistence and genuine relational reopening
 
 This is the first point at which TU+ looks like a meaningful intermediate layer rather than a cosmetic one.
 
@@ -1290,6 +1311,7 @@ Cycles 4–50 suggest the architecture can distinguish between:
 - strengthening recurrent sub-threshold softening pressure against a restored clearer-independent regime without yet reopening lower-order relation
 - accumulating precursor pressure from transformed prior organization that increases regime permeability without yet reorganizing the field
 - and a field in which repeated historical reactivation becomes stronger across slices while independence still remains the dominant current organizer
+- and a field in which accumulated sub-threshold precursor pressure reaches a near-threshold boundary state, where independence remains active but conditional, and relational reopening is not yet warranted
 
 That is highly relevant to the RGPx framing of the prototype.
 
@@ -1297,7 +1319,7 @@ That is highly relevant to the RGPx framing of the prototype.
 
 ### 10. Coherence is beginning to act as the selection principle
 
-By Cycles 5–50, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
+By Cycles 5–51, revision appears to be driven less by static labeling and more by which choreography interpretation best preserves coherence across unfolding time.
 
 -	What survived was not what was initially plausible, but what remained coherent enough.
 -	What re-entered was not what was preferred symbolically, but what regained coherence strongly enough.
@@ -1354,6 +1376,9 @@ By Cycles 5–50, revision appears to be driven less by static labeling and more
 - What Cycle 50 adds is that recurrent softening pressure need not merely recur; it can strengthen across another slice while still remaining below the threshold for renewed lower-order relation.
 - This sharpens the precursor-state logic: coherence can preserve independence as the dominant regime while allowing transformed prior organization to accumulate as stronger sub-threshold pressure.
 - That means coherence is selecting not only among regimes, precursor pressures, and repeated precursor pressures, but also among different intensities of repeated precursor pressure before relational reopening is warranted.
+- What Cycle 51 adds is that strengthening recurrent sub-threshold pressure need not immediately reorganize the field: coherence can hold the system in a near-threshold boundary state where independence remains dominant but conditional, and relational reopening is not yet warranted.
+- This introduces a new selection mode: coherence can actively stabilize boundary conditions rather than forcing promotion or rejecting pressure.
+- That means coherence is selecting not only among regimes, precursor pressures, repeated pressures, and strengthening pressures, but also among boundary states where multiple futures remain viable without premature resolution.
 
 This sharpens the first-law-style interpretation: constrained conservation of coherence through transformation includes not only persistence and reappearance, but graded weakening of organizational influence across time.
 
@@ -1380,7 +1405,7 @@ That is highly relevant to the RGPx framing of the prototype.
 
 Memory appears not as static storage, but as transformed organizational persistence: prior coherence remains causally active in downgraded form and can later re-shape present dynamics.
 
-Cycles 41–50 refine this further. 
+Cycles 41–51 refine this further. 
 
 Memory does not remain equally active at all times. It can persist at different functional levels:
 - as active lower-order organization
@@ -1389,8 +1414,11 @@ Memory does not remain equally active at all times. It can persist at different 
 - as renewed sub-threshold shaping pressure on a restored independent regime
 - as recurrent sub-threshold shaping pressure on a restored independent regime
 - as strengthening recurrent sub-threshold shaping pressure on a restored independent regime
+- as boundary-conditioning pressure that can hold the field in a near-threshold state without triggering immediate reorganization
+- as dynamically gated influence that modulates when transitions are allowed rather than directly causing them
+- as a selector-shaping constraint that determines not only what can happen next, but also when it is permitted to happen
 
-This suggests a possible route toward more genuinely longitudinal AI behavior, in which memory-like persistence and historical sensitivity emerge from transformed coherence rather than static recall alone.
+This suggests a possible route toward more genuinely longitudinal AI behavior, in which memory-like persistence and historical sensitivity emerge from transformed coherence that not only preserves prior organization in downgraded form, but also regulates when and how that organization can re-enter as an active influence on future transitions.
 
 ---
 
@@ -1407,10 +1435,12 @@ The cycles now support a stronger conceptual interpretation aligned with the RGP
 - weak transformed background constraint can later become dynamically relevant again as fresh softening pressure without yet reopening lower-order relation
 - weak transformed background constraint can recur as repeated sub-threshold shaping pressure without yet reopening lower-order relation
 - repeated sub-threshold shaping pressure can strengthen across slices without yet reopening genuine lower-order relation
+- strengthening recurrent sub-threshold shaping pressure can stabilize as boundary-conditioning influence without forcing immediate reorganization
+- transformed prior organization can act not only as a source of potential future states, but as a constraint that delays or regulates when transitions occur
 
 This suggests the following working formulation:
 
-> **Constrained conservation of coherence through transformation**
+> **Constrained conservation of coherence through transformation and boundary-conditioned selection**
 
 In prototype terms, this means:
 - stable joint choreography can degrade into weaker relation without disappearing without trace
@@ -1422,6 +1452,7 @@ In prototype terms, this means:
 - transformed prior organization can remain historically real even when it no longer governs the present slice
 - transformed prior organization can recur across multiple slices as sub-threshold pressure before any true relational reopening is warranted
 - transformed prior organization can accumulate as strengthening recurrent sub-threshold pressure before any true relational reopening is warranted
+- transformed prior organization can hold the field in a near-threshold boundary state without triggering immediate transition into renewed relation or continued independence
 
 So memory here is not merely archival retention.
 
@@ -1431,7 +1462,7 @@ It appears operationally as the continued causal activity of transformed prior c
 
 ### 13. The architecture can reject, re-admit, confirm, begin to de-confirm, fully de-confirm, preserve explicit ambiguity, restart cleanly after contradiction, and register fresh weak recoupling after restart
 
-Cycles 5–50 together are especially important.
+Cycles 5–51 together are especially important.
 
 -	Cycle 5 showed disciplined rejection of an unsupported weak coupling
 -	Cycle 6 showed disciplined re-opening when reciprocal alignment and co-motion raised coherence again
@@ -1484,8 +1515,10 @@ Cycles 5–50 together are especially important.
 - Cycle 49 also showed that transformed prior organization could become a repeated sub-threshold shaping pressure rather than merely a one-slice perturbation or passive background constraint
 - Cycle 50 showed that this recurrent softening pressure could strengthen across another slice without yet justifying renewed lower-order relation
 - Cycle 50 also showed that transformed prior organization could accumulate as stronger sub-threshold pressure, increasing the permeability of the restored independent regime without yet reorganizing it into relation
+- Cycle 51 showed that once recurrent sub-threshold shaping pressure had accumulated far enough, the architecture could hold the field at a near-threshold precursor boundary state without prematurely reopening lower-order relation or collapsing back into inert independent persistence
+- Cycle 51 also showed that accumulated precursor pressure could become a distinct boundary condition in its own right, where independence remained active but conditional, and relational reopening became imminent without yet being justified
 
-This suggests the architecture is not simply drifting toward complexity or falling back to independence. It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that independent mainline to fresh weak relational pressure without prematurely surrendering it, let that pressure strengthen into a renewed lower-order relation without overpromoting it, let that lower-order return persist as a durable corridor without forcing threshold-nearing promotion too early, let that durable corridor strengthen further while still remaining sub-threshold, let that strengthening corridor approach the re-promotion boundary without prematurely crossing it, let that threshold-nearing return persist as an occupied boundary state, then cleanly re-promote that occupied boundary into renewed stable joint choreography once support genuinely crosses threshold, restabilize that re-promoted shared state again when its first bounded internal stress softens, reopen a serious second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime once the reopened break corridor truly crosses threshold, let the downgraded second-arc field settle into a weaker relational plateau rather than forcing immediate binary separation, allow that plateau to persist as an active lower-order state, and then allow that persisted lower-order state to loosen in graded fashion rather than vanish abruptly, and allow downgraded prior organization to recede from active lower-order relation into weak background constraint when clearer independent separation again becomes the dominant coherent reading, and finally stabilize that post-plateau clearer independent separation as a true current mainline while retaining prior shared organization only as weak transformed background constraint, and allow transformed prior organization to remain historically real even after it has receded below present governing strength, and allow weakened background constraint to recur as repeated sub-threshold shaping pressure against a restored independent regime without yet forcing renewed lower-order relation, and allow recurrent sub-threshold shaping pressure against a restored independent regime to strengthen across additional slices without yet forcing renewed lower-order relation.
+This suggests the architecture is not simply drifting toward complexity or falling back to independence. It can move through a fuller interpretive lifecycle depending on which interpretation coherence supports — and can also stop short of forced resolution when coherence does not justify promotion, later restart cleanly when resolution becomes justified, remain open to fresh weak coupling without memory confusion, preserve that weak candidate provisionally under mixed follow-up, let it fade cleanly when support is lost, reopen to genuinely fresh renewed relation without cynicism, strengthen that renewed relation without overpromotion, carry it persistently below threshold, approach threshold in a bounded way, promote into stable joint choreography when the threshold is actually crossed, maintain that promoted state under early internal stress, restabilize that state when the stress is reabsorbed, reopen the possibility of genuine de-confirmation when harsher asymmetry appears again, cleanly downgrade the former stable shared state when coherence support truly falls below threshold, stabilize at a lower relational plateau rather than forcing all remaining structure to vanish, track the loosening of that plateau without prematurely forcing a total break, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that independent mainline to fresh weak relational pressure without prematurely surrendering it, let that pressure strengthen into a renewed lower-order relation without overpromoting it, let that lower-order return persist as a durable corridor without forcing threshold-nearing promotion too early, let that durable corridor strengthen further while still remaining sub-threshold, let that strengthening corridor approach the re-promotion boundary without prematurely crossing it, let that threshold-nearing return persist as an occupied boundary state, then cleanly re-promote that occupied boundary into renewed stable joint choreography once support genuinely crosses threshold, restabilize that re-promoted shared state again when its first bounded internal stress softens, reopen a serious second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime once the reopened break corridor truly crosses threshold, let the downgraded second-arc field settle into a weaker relational plateau rather than forcing immediate binary separation, allow that plateau to persist as an active lower-order state, and then allow that persisted lower-order state to loosen in graded fashion rather than vanish abruptly, and allow downgraded prior organization to recede from active lower-order relation into weak background constraint when clearer independent separation again becomes the dominant coherent reading, and finally stabilize that post-plateau clearer independent separation as a true current mainline while retaining prior shared organization only as weak transformed background constraint, and allow transformed prior organization to remain historically real even after it has receded below present governing strength, and allow weakened background constraint to recur as repeated sub-threshold shaping pressure against a restored independent regime without yet forcing renewed lower-order relation, and allow recurrent sub-threshold shaping pressure against a restored independent regime to strengthen across additional slices without yet forcing renewed lower-order relation, and allow that accumulated pressure to stabilize temporarily as a near-threshold boundary condition without forcing either immediate relational reopening or immediate return to inert independence.
 
 ---
 
@@ -1568,12 +1601,14 @@ The following have now been tested at least in weak form:
 - accumulation of transformed prior organization as stronger sub-threshold pressure without renewed lower-order relational reopening
 - increased permeability of a restored independent regime under repeated historical reactivation pressure
 - distinction between recurrent softening pressure and strengthening recurrent softening pressure
+- stabilization of accumulated sub-threshold shaping pressure as a near-threshold boundary condition without triggering immediate relational reopening or reverting to inert independent persistence
 
 ---
 
 ## What has not yet been tested
 
 The following remain untested:
+- whether a near-threshold boundary state under strengthening recurrent sub-threshold pressure can persist across multiple slices as a stable condition in its own right, rather than resolving into relational reopening or decaying back into inert independent persistence
 - whether the restored clearer-independent regime under strengthening recurrent softening pressure re-stabilizes, continues softening, or reopens into genuine lower-order relation
 - whether strengthening repeated sub-threshold reactivation pressure from transformed prior organization can accumulate into a true renewed relational corridor
 - whether strengthening recurrent softening pressure fades again, stabilizes as a standing precursor condition, or crosses into authentic relational re-entry
@@ -1596,27 +1631,30 @@ This now supports a stronger RGPx interpretation: coherence appears to be conser
 
 ## Current verdict
 
-The first fifty cycles support the following stronger claim:
+## Current verdict
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that stabilized independent state to fresh weak relational recovery pressure without prematurely overturning it, allow that recovery pressure to strengthen into a genuinely emerging lower-order relation without prematurely restoring joint choreography, allow that lower-order return to persist as a durable corridor without premature threshold-nearing re-promotion, allow that durable corridor to strengthen further while still remaining sub-threshold, allow that strengthening corridor to cross into threshold-nearing re-promotion after stabilized independence without prematurely restoring stable joint choreography, allow that threshold-nearing return to persist as an occupied boundary state without yet becoming stable joint choreography, then cleanly promote that occupied threshold state into renewed stable joint choreography once reciprocal support again becomes strong enough, preserve that renewed stable joint choreography under its first bounded internal asymmetry, restabilize that re-promoted shared state again when the early internal stress softens, reopen a genuine second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime into a weaker relational / separating configuration once the reopened break corridor truly crosses threshold, let that second-arc downgraded field settle into a weaker relational plateau rather than accelerating immediately into binary separation, allow that downgraded plateau to persist as an active lower-order organizational state, and then allow that second-arc downgraded field to persist as a weaker relational plateau across additional slices, and then allow that same downgraded field to loosen gradually while still remaining an active transformed organizational state, and finally let the post-plateau clearer independent regime stabilize as a true current mainline while retaining prior shared organization only as weak transformed background constraint, preserve prior organization as weakened background constraint after lower-order relational dominance has ended, and allow that weakened background constraint to become dynamically relevant again as fresh softening pressure on a restored clearer-independent regime without yet forcing renewed lower-order relation — all without collapsing role boundaries or erasing train distinctness, allow that persisted downgraded plateau to loosen gradually across further slices, and eventually let clearer independent separation become dominant without erasing transformed prior organization, which remains as weakened background constraint, and allow weakened background constraint to recur as repeated sub-threshold shaping pressure on a restored clearer-independent regime, and allow that repeated pressure to strengthen across another slice without yet forcing renewed lower-order relation.
+The first fifty-one cycles support the following stronger claim:
 
-This is more than recurrence. By Cycle 50, the architecture is showing that past structure remains active across multiple transformed regimes: first as active downgraded lower-order organization, then as loosening residual organization, then as weakened background constraint once clearer independent separation becomes dominant, then as fresh sub-threshold shaping pressure on that restored independent regime, then as recurrent sub-threshold shaping pressure across more than one slice, and now as strengthening recurrent sub-threshold pressure that increases regime permeability without yet reopening genuine lower-order relation. That is crucial for the RGPx framing of the prototype: selection through coherence is non-binary because prior organization continues to shape what the field can become next even after it ceases to be the leading organizer.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that stabilized independent state to fresh weak relational recovery pressure without prematurely overturning it, allow that recovery pressure to strengthen into a genuinely emerging lower-order relation without prematurely restoring joint choreography, allow that lower-order return to persist as a durable corridor without premature threshold-nearing re-promotion, allow that durable corridor to strengthen further while still remaining sub-threshold, allow that strengthening corridor to cross into threshold-nearing re-promotion after stabilized independence without prematurely restoring stable joint choreography, allow that threshold-nearing return to persist as an occupied boundary state without yet becoming stable joint choreography, then cleanly promote that occupied threshold state into renewed stable joint choreography once reciprocal support again becomes strong enough, preserve that renewed stable joint choreography under its first bounded internal asymmetry, restabilize that re-promoted shared state again when the early internal stress softens, reopen a genuine second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime into a weaker relational / separating configuration once the reopened break corridor truly crosses threshold, let that second-arc downgraded field settle into a weaker relational plateau rather than accelerating immediately into binary separation, allow that downgraded plateau to persist as an active lower-order organizational state, and then allow that second-arc downgraded field to persist as a weaker relational plateau across additional slices, and then allow that same downgraded field to loosen gradually while still remaining an active transformed organizational state, and finally let the post-plateau clearer independent regime stabilize as a true current mainline while retaining prior shared organization only as weak transformed background constraint, preserve prior organization as weakened background constraint after lower-order relational dominance has ended, and allow that weakened background constraint to become dynamically relevant again as fresh softening pressure on a restored clearer-independent regime without yet forcing renewed lower-order relation, allow that persisted downgraded plateau to loosen gradually across further slices, and eventually let clearer independent separation become dominant without erasing transformed prior organization, which remains as weakened background constraint, and allow weakened background constraint to recur as repeated sub-threshold shaping pressure on a restored clearer-independent regime, and allow that repeated pressure to strengthen across another slice without yet forcing renewed lower-order relation, and allow accumulated sub-threshold pressure to reach and hold a near-threshold precursor boundary state in which independence remains active but conditional, without premature relational reopening or collapse back into inert independence.
+
+This is more than recurrence. By Cycle 51, the architecture is showing that past structure remains active across multiple transformed regimes: first as active downgraded lower-order organization, then as loosening residual organization, then as weakened background constraint once clearer independent separation becomes dominant, then as fresh sub-threshold shaping pressure on that restored independent regime, then as recurrent sub-threshold shaping pressure across more than one slice, then as strengthening recurrent sub-threshold pressure that increases regime permeability without yet reopening genuine lower-order relation, and now as accumulated near-threshold precursor pressure that can hold the field at a boundary without yet forcing transition. That is crucial for the RGPx framing of the prototype: selection through coherence is non-binary because prior organization continues to shape what the field can become next even after it ceases to be the leading organizer, and can also condition when transition is allowed to complete.
 
 A stronger candidate formulation is therefore:
 
-> **Constrained conservation of coherence through transformation**
+> **Constrained conservation of coherence through transformation and boundary-conditioned selection**
 
-Under that reading, coherence is not preserved by freezing form, but by carrying structured causal influence across transformed regimes. That makes coherence look increasingly like the operative selection device of the stack.
+Under that reading, coherence is not preserved by freezing form, but by carrying structured causal influence across transformed regimes and by conditioning when selection is allowed to complete at regime boundaries. In RGPx terms, gradients change before anything moves; motion is one possible metric shadow of deeper pre-metric reconfiguration.
 
 ---
 
 ## Recommended next test
 
 The next best test is to introduce one new structural pressure:
-- continuation, fading, stabilization, or escalation of strengthening recurrent softening pressure against the restored clearer-independent regime
+- continuation, stabilization, decay, or crossing of the near-threshold precursor boundary state formed under accumulated recurrent softening pressure against the restored clearer-independent regime
 
 This will let the triad be tested on:
-- whether the restored clearer-independent regime re-stabilizes as a true mainline
-- whether strengthening recurrent softening pressure remains sub-threshold and later fades again
-- whether repeated and strengthening sub-threshold pressure accumulates into genuine renewed lower-order relation
-- whether coherence can distinguish among re-stabilized independence, standing precursor pressure, and authentic relational re-entry
+- whether the near-threshold precursor boundary state can persist across another slice as a stable condition in its own right
+- whether the restored clearer-independent regime can re-stabilize from that boundary state as a true mainline
+- whether the accumulated boundary-conditioned pressure decays back into weaker sub-threshold shaping influence
+- whether the near-threshold precursor state crosses into genuine renewed lower-order relation
+- whether coherence can distinguish among boundary persistence, re-stabilized independence, precursor decay, and authentic relational re-entry
