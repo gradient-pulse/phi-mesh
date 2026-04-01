@@ -151,3 +151,78 @@ Only summarize what is newly justified by cycles in this file.
 State one controlled structural pressure only.
 
 - ...
+
+---
+
+# Cycle Evidence
+
+---
+
+### Cycle 60 — Boundary conflict: stasis enforcement vs precursor pressure
+
+**What was tested**
+- whether governed stasis holds under simultaneous near-threshold precursor pressure  
+- whether precursor pressure is:
+  - preserved  
+  - suppressed  
+  - or incorrectly promoted  
+- whether strict input gating and rising readiness can coexist without structural bleed  
+
+**What happened**
+- **TU**
+  - enforced hard non-update  
+  - preserved:
+    - `precursor_pressure: present_near_threshold`  
+    - `admissible_input: none`  
+  - no motion-token injection, continuation, or reinterpretation  
+
+- **TU+**
+  - maintained:
+    - `governed_stasis_under_input_gating` (dominant)  
+    - `near_threshold_precursor_state` (active, sustained)  
+  - rejected:
+    - pressure → transition  
+    - gating → pressure decay  
+  - no inflation or suppression of pressure  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `licensed_non_transition_with_active_boundary_pressure`  
+  - introduced explicit separation between:
+    - enforcement layer (input gating)  
+    - readiness layer (precursor pressure)  
+  - established orthogonality between enforcement and readiness  
+  - rejected collapse of stasis, pressure, and transition into a single state  
+
+**Finding**
+Cycle 60 demonstrates that the architecture can sustain a **boundary conflict regime**:
+
+- stasis remains enforced  
+- precursor pressure remains active and near-threshold  
+- transition remains blocked  
+
+without:
+- pressure inflation into pseudo-transition  
+- pressure decay under gating  
+- or reinterpretation drift  
+
+This establishes:
+
+> **boundary conflict is a stable, representable regime**
+
+and:
+
+> **enforcement (admissibility) and readiness (pressure) are structurally independent dimensions**
+
+**Operational delta**
+- state distinction added:
+  - `boundary_conflict_regime`  
+    - defined as coexistence of governed stasis and sustained precursor pressure without admissible transition  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - transition requires admissibility, not pressure magnitude  
+  - precursor pressure does not decay under gating  
+  - stasis does not erase internal readiness  
