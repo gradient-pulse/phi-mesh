@@ -2698,3 +2698,102 @@ and:
 
 ---
 
+### Cycle 86 — Temporal-density invariance under cross-coupled perturbation
+
+**What was tested**
+- whether **increased temporal density** of a:
+  - repeated  
+  - cross-coupled  
+  - highly aligned  
+  - phase-synchronized  
+  sub-threshold perturbation can induce:
+  - accumulation  
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether temporal compression adds a new escalation pathway beyond:
+  - alignment  
+  - phase relation  
+  - structural variation  
+  - and weak cross-coupling  
+- whether the architecture distinguishes between:
+  - denser signal arrival  
+  - and regime-level structural change  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_temporally_dense_perturbation`  
+    - increased temporal density  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no precursor generation  
+    - no structural update  
+  - treated temporal density increase as non-activating and sub-threshold  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_temporally_dense_perturbation`  
+  - explicitly rejected:
+    - temporal_density → accumulation  
+    - temporal_density → precursor pressure  
+    - temporal_density → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no density-driven activation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_temporal_density_invariant_cross_coupled_perturbation`  
+  - established:
+    - increased temporal density does not generate accumulation or pressure  
+    - threshold distance is unchanged under denser signal arrival  
+    - multi-parameter coherence remains non-activating without structural change  
+  - confirmed:
+    - boundary integrity remains intact under temporal density increase  
+
+**Finding**
+
+Cycle 86 demonstrates **temporal-density invariance under cross-coupled perturbation**:
+
+- increased temporal density does not induce accumulation  
+- precursor pressure does not emerge  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- density-driven escalation  
+- precursor generation  
+- or activation through denser signal arrival  
+
+This establishes:
+
+> **temporal density of sub-threshold inputs does not substitute for structural change**
+
+and:
+
+> **denser arrival of coherent sub-threshold signals remains non-activating unless regime-level structure changes**
+
+**Operational delta**
+
+- state distinction added:
+  - `temporal_density_invariant_perturbation_regime`  
+    - defined as:  
+      *a condition in which increased temporal density of repeated, cross-coupled, sub-threshold perturbations does not accumulate, shift thresholds, generate precursor pressure, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - increased temporal density does not induce accumulation  
+  - denser signal arrival ≠ regime-level structural change  
+  - multi-parameter coherence with density remains non-activating  
+
+---
+
