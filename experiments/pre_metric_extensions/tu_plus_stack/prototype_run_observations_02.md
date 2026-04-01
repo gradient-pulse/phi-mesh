@@ -644,4 +644,87 @@ and:
 
 ---
 
+### Cycle 66 — Persistent sub-threshold trigger without accumulation
+
+**What was tested**
+- whether a **persistent** sub-threshold trigger across consecutive cycles:
+  - accumulates into activation  
+  - regenerates precursor pressure  
+  - or remains strictly non-activating  
+- whether the architecture distinguishes between:
+  - trigger persistence  
+  - trigger accumulation  
+  - and threshold crossing  
+- whether repeated presence of a weak trigger introduces hidden escalation or drift  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - `sub_threshold_trigger_persistent`  
+    - `non_transition_maintained`  
+  - explicitly avoided:
+    - trigger escalation  
+    - precursor regeneration  
+    - transition trace reactivation  
+  - emitted no motion tokens and applied no structural update  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent` (subdominant)  
+  - explicitly rejected:
+    - persistence → accumulation  
+    - weak trigger → precursor pressure  
+    - admissibility → implicit transition  
+  - preserved strict non-escalating representation of the trigger  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_persistent_sub_threshold_trigger`  
+  - established:
+    - persistence does not imply accumulation  
+    - trigger layer remains independent from readiness layer  
+    - absence of precursor pressure blocks transition pathways  
+  - confirmed stability under repeated sub-threshold conditions  
+
+**Finding**
+
+Cycle 66 demonstrates that the architecture can sustain **persistent sub-threshold trigger conditions** without accumulation:
+
+- trigger remains present across cycles  
+- no escalation toward activation occurs  
+- precursor pressure remains absent  
+- stabilized non-transition regime is preserved  
+
+without:
+- hidden accumulation  
+- delayed activation  
+- or reinterpretation drift  
+
+This establishes:
+
+> **trigger persistence is not equivalent to trigger accumulation**
+
+and:
+
+> **repeated sub-threshold signals do not inherently move the system toward transition**
+
+**Operational delta**
+
+- state distinction added:
+  - `persistent_sub_threshold_trigger_regime`  
+    - defined as:  
+      *a regime in which a weak trigger signal persists across cycles without accumulating into precursor pressure or activation*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - persistence alone does not change threshold status  
+  - trigger layer does not self-escalate through repetition  
+  - absence of precursor pressure guarantees non-transition despite signal persistence  
+
+---
+
 
