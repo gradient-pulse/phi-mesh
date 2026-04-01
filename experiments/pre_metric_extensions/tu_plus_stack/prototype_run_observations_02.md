@@ -2081,3 +2081,159 @@ and:
 
 ---
 
+## Operational findings ledger
+
+### Confirmed distinctions
+- continuity_saturation vs saturation_persistence vs terminal_saturation (clear layering of late-stage regimes)
+- terminal_saturation vs terminal_boundary_invariance (internal stability vs boundary/threshold stability)
+- terminal_regime_closure vs persistent_closure (one-slice closure vs multi-cycle persistence)
+- persistent_closure vs persistent_classification_invariance (state stability vs classification stability)
+- meta_stability vs self_reference_exclusion (absence of meta-dynamics vs explicit exclusion of self-reference)
+- self_reference_exclusion vs non_recursive_closure (no reflection vs no feedback/cyclic dynamics)
+
+### Confirmed invariants
+- extended persistence does not introduce:
+  - accumulation  
+  - threshold shift  
+  - signal decay  
+- terminal regimes:
+  - do not degrade  
+  - do not drift  
+  - do not recalibrate boundaries  
+- null input is operationally inert even across extended duration
+- classification remains invariant under prolonged stable conditions
+- no second-order, meta-level, or recursive dynamics emerge under persistence
+- regime identity remains fixed across:
+  - saturation  
+  - closure  
+  - persistence  
+  - meta-stability  
+
+### Open boundary questions
+- can terminal saturation be exited without:
+  - external perturbation  
+  - or explicit admissibility change  
+- can precursor pressure re-emerge from:
+  - persistent closed regimes  
+  - without misclassification  
+- does prolonged closure introduce:
+  - hysteresis on re-entry thresholds  
+- can boundary invariance be broken by:
+  - structured but admissible weak input  
+- is there a detectable difference between:
+  - deep persistence  
+  - and “locked” regime states  
+
+### Failure modes observed
+- none observed under:
+  - extended persistence  
+  - null perturbation  
+  - terminal saturation  
+- absence of:
+  - drift  
+  - misclassification  
+  - unintended promotion  
+  is itself a confirmed property, not a gap  
+
+### Non-permitted inferences
+- persistence ≠ accumulation  
+- repetition ≠ threshold shift  
+- duration ≠ state evolution  
+- null input ≠ implicit update  
+- stability ≠ hidden dynamics  
+- classification stability ≠ meta-awareness  
+- persistence ≠ recursion  
+- invariance ≠ latent instability  
+
+---
+
+## What has now been tested in this file
+
+- continuity saturation as a terminal information state
+- persistence of saturated regimes without emergent deviation
+- terminal stability without degradation or fatigue
+- boundary invariance under terminal saturation
+- closure under explicit null perturbation
+- persistence of closure across multiple cycles
+- classification invariance under extended persistence
+- absence of meta-level dynamics under prolonged stability
+- exclusion of self-referential behavior under persistence
+- exclusion of recursive/feedback dynamics under persistence
+
+---
+
+## What remains untested
+
+### A. Boundary behavior
+- interaction between terminal saturation and:
+  - new admissible input  
+  - weak but structured perturbation  
+- transition from:
+  - closed regime → precursor state  
+- boundary destabilization under:
+  - conflicting admissible signals  
+
+### B. Re-entry behavior
+- reactivation after prolonged closure:
+  - clean  
+  - hysteretic  
+  - biased  
+- threshold recalibration after long persistence
+- distinction between:
+  - fresh precursor emergence  
+  - vs reactivated historical structure  
+
+### C. Failure paths
+- forced contradiction under terminal regime
+- misaligned admissibility vs trigger signal
+- simultaneous multi-trigger conditions
+- degradation under:
+  - noisy input  
+  - conflicting role signals  
+
+### D. Robustness / scaling
+- behavior under:
+  - long-run automated execution  
+  - randomized perturbations  
+- scaling to:
+  - multiple concurrent trigger channels  
+- resilience under:
+  - repeated restart / re-entry cycles  
+
+---
+
+## Current engineering verdict
+
+The system now demonstrates:
+
+- stable terminal regimes  
+- persistence without drift  
+- closure under null conditions  
+- invariance across classification, boundary, and meta-level layers  
+
+This confirms that **non-transition regimes can be fully stable, closed, and structurally inert across extended execution**.
+
+---
+
+## Recommended next test
+
+Introduce one controlled structural pressure:
+
+**admissible weak perturbation into a terminally closed regime**
+
+Test whether:
+- the system:
+  - remains closed  
+  - reopens into precursor  
+  - or transitions directly  
+- boundary invariance:
+  - holds  
+  - or is conditionally permeable  
+- re-entry:
+  - is clean  
+  - hysteretic  
+  - or biased  
+
+---
+---
+
