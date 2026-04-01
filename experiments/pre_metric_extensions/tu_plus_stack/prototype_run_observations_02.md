@@ -2994,3 +2994,101 @@ and:
 
 ---
 
+### Cycle 89 — Polarity-variation invariance under temporally dense perturbation
+
+**What was tested**
+- whether **slight polarity variation** within a:
+  - repeated  
+  - temporally dense  
+  - cross-coupled  
+  - highly aligned  
+  sub-threshold perturbation can induce:
+  - accumulation  
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether polarity variation adds a new escalation pathway beyond:
+  - phase drift  
+  - amplitude variability  
+  - temporal density  
+- whether the architecture distinguishes between:
+  - signal polarity fluctuation  
+  - and regime-level structural change  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_polarity_varied_perturbation`  
+    - slight polarity variation  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no precursor generation  
+    - no structural update  
+  - treated polarity variation as non-activating and sub-threshold  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_polarity_varied_perturbation`  
+  - explicitly rejected:
+    - polarity_variation → accumulation  
+    - polarity_variation → precursor pressure  
+    - polarity_variation → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no polarity-driven activation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_polarity_variation_invariant_temporally_dense_perturbation`  
+  - established:
+    - polarity variation does not generate accumulation or pressure  
+    - threshold distance is unchanged under polarity variation  
+    - multi-parameter coherence remains non-activating without structural change  
+  - confirmed:
+    - boundary integrity remains intact under polarity variation  
+
+**Finding**
+
+Cycle 89 demonstrates **polarity-variation invariance under temporally dense perturbation**:
+
+- slight polarity variation does not induce accumulation  
+- precursor pressure does not emerge  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- polarity-driven escalation  
+- precursor generation  
+- or activation through polarity fluctuation  
+
+This establishes:
+
+> **signal polarity variation does not substitute for structural change**
+
+and:
+
+> **polarity fluctuation within coherent sub-threshold inputs remains non-activating unless regime-level structure changes**
+
+**Operational delta**
+
+- state distinction added:
+  - `polarity_variation_invariant_perturbation_regime`  
+    - defined as:  
+      *a condition in which slight polarity variation within repeated, temporally dense, sub-threshold perturbations does not accumulate, shift thresholds, generate precursor pressure, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - polarity variation does not induce accumulation  
+  - signal polarity fluctuation ≠ regime-level structural change  
+  - multi-parameter coherence with polarity variation remains non-activating  
+
+---
+
