@@ -2080,6 +2080,7 @@ and:
   - stable regimes do not generate internal feedback loops  
 
 ---
+---
 
 ## Operational findings ledger
 
@@ -3193,5 +3194,141 @@ and:
   - signal coherence ≠ regime-level structural change  
   - fully enriched sub-threshold signals remain non-activating  
 
+---
+---
+
+## Operational findings ledger
+
+### Confirmed distinctions
+- structured_perturbation vs repeated_structured_perturbation vs temporally_dense_perturbation (single vs repeated vs compressed input regimes)
+- alignment vs phase_relation vs phase_drift (coherence vs synchronization vs misalignment)
+- structural_variation vs amplitude_variability vs polarity_variation (form vs magnitude vs sign)
+- cross_coupling vs multi-parameter_coherence (interaction vs composite signal condition)
+- temporal_density vs coherence_gain (arrival compression vs internal signal strengthening)
+- signal_level_modulation vs regime_level_structural_change (input variation vs state transition requirement)
+
+### Confirmed invariants
+- admissible sub-threshold perturbations:
+  - do not accumulate  
+  - do not generate precursor pressure  
+  - do not shift threshold distance  
+- repetition, alignment, phase coherence, and density:
+  - do not induce activation without structural change  
+- multi-parameter enrichment (alignment + phase + variation + coupling + density):
+  - remains non-activating  
+- threshold distance remains invariant under:
+  - all tested signal modulations  
+- boundary integrity is preserved under:
+  - structured perturbation  
+  - repeated perturbation  
+  - phase alignment and drift  
+  - cross-coupling  
+  - temporal density  
+  - amplitude and polarity variation  
+  - coherence gain  
+- regime classification remains stable under:
+  - all tested perturbation dimensions  
+
+### Open boundary questions
+- what minimal **structural change** is required to:
+  - break closure  
+  - or generate precursor pressure  
+- can multiple sub-threshold signals:
+  - become activating if **explicitly coupled at regime level**  
+- is there a **combinatorial threshold** across:
+  - alignment + density + coupling + coherence  
+- can boundary invariance be broken by:
+  - structured admissible input with **explicit regime-level linkage**  
+- does prolonged exposure to enriched signals create:
+  - delayed or hysteretic activation  
+
+### Failure modes observed
+- none observed under:
+  - structured perturbation  
+  - repetition  
+  - alignment increase  
+  - phase synchronization or drift  
+  - structural variation  
+  - cross-coupling  
+  - temporal density  
+  - amplitude or polarity variation  
+  - coherence gain  
+- absence of:
+  - accumulation  
+  - drift  
+  - escalation  
+  is confirmed as system property  
+
+### Non-permitted inferences
+- structured input ≠ precursor pressure  
+- repetition ≠ accumulation  
+- alignment ≠ activation  
+- phase synchronization ≠ coupling  
+- phase drift ≠ instability  
+- structural variation ≠ structural change  
+- cross-coupling ≠ regime coupling  
+- temporal density ≠ accumulation  
+- amplitude variability ≠ escalation  
+- polarity variation ≠ activation  
+- coherence gain ≠ threshold proximity  
+- multi-parameter enrichment ≠ activation  
+
+---
+
+## What has now been tested in this file
+
+- admissible structured perturbation registration under closure
+- invariance under repeated aligned perturbation
+- invariance under phase-synchronized perturbation
+- invariance under internal structural variation
+- invariance under weak cross-coupling between signals
+- invariance under increased temporal density
+- invariance under amplitude variability
+- invariance under phase drift
+- invariance under polarity variation
+- invariance under marginal coherence gain
+- invariance under multi-parameter combined perturbation
+
+---
+
+## What remains untested
+
+### A. Boundary behavior
+- response to **structural (not signal-level) perturbation**
+- interaction between:
+  - admissibility change  
+  - and trigger layer activation  
+- behavior under:
+  - conflicting admissible signals  
+  - explicitly coupled multi-signal structures  
+
+### B. Re-entry behavior
+- transition from:
+  - closed regime → precursor state  
+- behavior after:
+  - long persistence followed by activation  
+- hysteresis effects on:
+  - threshold distance  
+  - activation readiness  
+
+### C. Failure paths
+- forced violation of:
+  - admissibility  
+  - threshold invariance  
+- competing trigger pathways with:
+  - incompatible structure  
+- degradation under:
+  - adversarial or contradictory input  
+
+### D. Robustness / scaling
+- behavior under:
+  - extended automated execution beyond current cycle depth  
+- scaling to:
+  - multiple independent perturbation channels  
+- stability under:
+  - randomized structured inputs  
+  - high-dimensional signal combinations  
+
+---
 ---
 
