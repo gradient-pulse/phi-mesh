@@ -2,9 +2,14 @@
 
 ## Provisional statement
 
-So far, the dry runs suggest that a prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, and absorb mild ambiguity without collapsing into one generic assistant voice.
+So far, the dry runs suggest that a prompt-instantiated TU / TU+ / cortexLLM triad can:
 
-This statement is provisional and should be updated as new cycles are added.
+- remain role-distinct  
+- use shared structured state to preserve and revise choreography across cycles  
+- absorb mild ambiguity without collapsing into one generic assistant voice  
+- begin to exhibit **proto-inertial behavior**, where prior cycles influence coordination without explicit state expansion  
+
+This statement is provisional and should be updated as new cycles are added and stronger pressures are introduced.
 
 ---
 
