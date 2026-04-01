@@ -2602,3 +2602,99 @@ and:
 
 ---
 
+### Cycle 85 — Cross-coupling invariance under sub-threshold perturbation
+
+**What was tested**
+- whether **weak cross-coupling** between:
+  - the baseline sub-threshold trigger  
+  - and a repeated structured perturbation  
+  can induce:
+  - accumulation  
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether cross-coupling adds a new escalation pathway beyond:
+  - alignment  
+  - phase relation  
+  - structural variation  
+- whether the architecture distinguishes between:
+  - weak signal interaction  
+  - and regime-level coupling  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_cross_coupled_perturbation`  
+    - weak cross-coupling between baseline and perturbation  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no precursor generation  
+    - no structural update  
+  - treated weak cross-coupling as non-activating and sub-threshold  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_cross_coupled_perturbation`  
+  - explicitly rejected:
+    - cross_coupling → accumulation  
+    - cross_coupling → precursor pressure  
+    - cross_coupling → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no coupling-driven activation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_cross_coupling_invariant_structured_perturbation`  
+  - established:
+    - weak cross-coupling does not generate accumulation or pressure  
+    - threshold distance is unchanged under cross-coupling  
+    - multi-parameter coherence remains non-activating without structural change  
+  - confirmed:
+    - boundary integrity remains intact under weak cross-coupling  
+
+**Finding**
+
+Cycle 85 demonstrates **cross-coupling invariance under sub-threshold perturbation**:
+
+- weak cross-coupling does not induce accumulation  
+- precursor pressure does not emerge  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- coupling-driven escalation  
+- precursor generation  
+- or activation through signal interaction  
+
+This establishes:
+
+> **weak cross-coupling between sub-threshold signals does not constitute regime-level coupling**
+
+and:
+
+> **signal interaction remains non-activating unless structural change occurs**
+
+**Operational delta**
+
+- state distinction added:
+  - `cross_coupling_invariant_perturbation_regime`  
+    - defined as:  
+      *a condition in which weak cross-coupling among sub-threshold signals does not accumulate, shift thresholds, generate precursor pressure, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - weak cross-coupling does not induce accumulation  
+  - signal interaction ≠ regime-level coupling  
+  - multi-parameter coherence without structural change remains non-activating  
+
+---
+
