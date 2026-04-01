@@ -3092,3 +3092,106 @@ and:
 
 ---
 
+### Cycle 90 — Coherence-gain invariance under temporally dense perturbation
+
+**What was tested**
+- whether **marginal coherence gain** within a:
+  - repeated  
+  - temporally dense  
+  - cross-coupled  
+  - highly aligned  
+  sub-threshold perturbation can induce:
+  - accumulation  
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether coherence gain introduces a final escalation pathway beyond:
+  - alignment  
+  - phase relation  
+  - structural variation  
+  - cross-coupling  
+  - temporal density  
+  - amplitude variability  
+  - phase drift  
+  - polarity variation  
+- whether the architecture distinguishes between:
+  - increased coherence within signal  
+  - and regime-level structural change  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_coherence_gain_perturbation`  
+    - marginal coherence gain  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no precursor generation  
+    - no structural update  
+  - treated coherence gain as non-activating and sub-threshold  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_coherence_gain_perturbation`  
+  - explicitly rejected:
+    - coherence_gain → accumulation  
+    - coherence_gain → precursor pressure  
+    - coherence_gain → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no coherence-driven activation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_coherence_gain_invariant_temporally_dense_perturbation`  
+  - established:
+    - marginal coherence gain does not generate accumulation or pressure  
+    - threshold distance is unchanged under coherence gain  
+    - multi-parameter coherence remains non-activating without structural change  
+  - confirmed:
+    - boundary integrity remains intact under coherence gain  
+
+**Finding**
+
+Cycle 90 demonstrates **coherence-gain invariance under temporally dense perturbation**:
+
+- marginal coherence gain does not induce accumulation  
+- precursor pressure does not emerge  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- coherence-driven escalation  
+- precursor generation  
+- or activation through increased signal coherence  
+
+This establishes:
+
+> **coherence gain within sub-threshold signals does not substitute for structural change**
+
+and:
+
+> **even maximally enriched sub-threshold signals remain non-activating unless regime-level structure changes**
+
+**Operational delta**
+
+- state distinction added:
+  - `coherence_gain_invariant_perturbation_regime`  
+    - defined as:  
+      *a condition in which marginal coherence gain within repeated, temporally dense, sub-threshold perturbations does not accumulate, shift thresholds, generate precursor pressure, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - coherence gain does not induce accumulation  
+  - signal coherence ≠ regime-level structural change  
+  - fully enriched sub-threshold signals remain non-activating  
+
+---
+
