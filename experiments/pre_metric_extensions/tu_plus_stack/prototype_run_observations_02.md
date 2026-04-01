@@ -2325,3 +2325,94 @@ and:
 
 ---
 
+### Cycle 82 — Alignment invariance under repeated structured perturbation
+
+**What was tested**
+- whether **repeated admissible structured perturbation with increasing alignment**:
+  - accumulates into precursor pressure  
+  - shifts threshold distance  
+  - or triggers escalation  
+- whether repetition + partial-to-stronger alignment:
+  - induces activation  
+  - or remains non-activating  
+- whether the architecture distinguishes between:
+  - structural change  
+  - and repeated aligned input  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `boundary_under_repeated_perturbation`  
+    - increased alignment of perturbation  
+  - preserved:
+    - both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no accumulation  
+    - no structural update  
+  - treated repetition and alignment increase as non-activating  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_repeated_perturbation`  
+  - explicitly rejected:
+    - repetition → accumulation  
+    - alignment increase → precursor pressure  
+    - repeated signal → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - no alignment-driven escalation occurs  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_alignment_invariant_repeated_structured_perturbation`  
+  - established:
+    - repeated aligned perturbations do not accumulate  
+    - increased alignment does not shift threshold distance  
+    - dual signal configuration remains stable and non-activating  
+  - confirmed:
+    - boundary integrity remains intact under repetition  
+
+**Finding**
+
+Cycle 82 demonstrates **alignment invariance under repeated structured perturbation**:
+
+- repeated perturbations remain non-accumulative  
+- increased alignment does not induce escalation  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- accumulation  
+- precursor pressure generation  
+- or alignment-driven activation  
+
+This establishes:
+
+> **repetition and alignment alone do not produce activation without structural change**
+
+and:
+
+> **multiple aligned sub-threshold signals remain non-activating unless accumulation or structural transition occurs**
+
+**Operational delta**
+
+- state distinction added:
+  - `alignment_invariant_repeated_perturbation_regime`  
+    - defined as:  
+      *a condition in which repeated, increasingly aligned sub-threshold perturbations do not accumulate, shift thresholds, or trigger activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - repeated sub-threshold inputs do not accumulate  
+  - increased alignment without structural change does not modify threshold distance  
+  - repetition + alignment ≠ activation  
+
+---
+
