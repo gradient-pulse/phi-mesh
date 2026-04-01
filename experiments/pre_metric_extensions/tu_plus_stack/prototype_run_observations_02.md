@@ -306,7 +306,90 @@ and:
       *a regime in which gating is removed and transition is permitted in principle, but no specific trigger has yet caused structural change*  
 
 - classification:
+  - new capability
+
+---
+
+### Cycle 62 — Bounded transition triggered from precursor state
+
+**What was tested**
+- whether an admissible precursor state can produce a **triggered transition**  
+- whether transition can occur:
+  - in bounded form  
+  - without automatic propagation  
+  - and without full structural continuation  
+- whether precursor pressure is:
+  - discharged through transition  
+  - or persists after activation  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `protocol_flag: trigger_candidate_present`  
+    - `admissible_input: present_bounded`  
+  - applied:
+    - bounded minimal motion tokens  
+    - minimal extension to both trains  
+  - transitioned regime into:
+    - `threshold_crossing_transition_initiated`  
+
+- **TU+**
+  - classified the event as:
+    - `threshold_crossing_transition`  
+    - with `bounded_minimal` structural change  
+  - reclassified precursor pressure as:
+    - discharged via transition  
+  - preserved:
+    - no propagation beyond bounded step  
+    - no promotion into extended continuation  
+
+- **cortexLLM**
+  - formalized the regime as:
+    - `bounded_triggered_transition`  
+  - identified:
+    - transition triggered by specific activation, not by admissibility alone  
+    - activation localized and non-propagating  
+  - separated:
+    - trigger (activation)  
+    - propagation (not engaged)  
+
+**Finding**
+
+Cycle 62 shows that the architecture can execute a **bounded transition event** from an admissible precursor state:
+
+- precursor pressure is discharged  
+- transition is triggered  
+- structural change occurs  
+- propagation does not occur  
+
+without:
+- forced continuation  
+- uncontrolled expansion  
+- or collapse into full transition cascade  
+
+This establishes:
+
+> **transition can be locally triggered and remain bounded**
+
+and:
+
+> **activation and propagation are distinct phases of transition**
+
+**Operational delta**
+
+- state distinction added:
+  - `bounded_transition_event`  
+    - defined as:  
+      *a triggered transition with minimal structural change that does not propagate into continued transformation*  
+
+- classification:
   - new capability  
+
+- invariants reinforced:
+  - transition requires a specific trigger beyond admissibility  
+  - precursor pressure can be discharged through transition  
+  - activation does not imply propagation  
 
 - invariants reinforced:
   - transition requires more than admissibility alone  
