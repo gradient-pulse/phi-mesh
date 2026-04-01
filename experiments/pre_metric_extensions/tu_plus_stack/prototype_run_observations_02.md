@@ -484,3 +484,84 @@ and:
 
 ---
 
+### Cycle 64 — Sustained stabilization without reactivation
+
+**What was tested**
+- whether a stabilized post-transition state:
+  - persists across additional cycles  
+  - reactivates transition  
+  - or regenerates precursor pressure  
+- whether transition trace:
+  - remains non-driving across multiple slices  
+  - or reintroduces dynamics  
+- whether admissibility alone can trigger delayed activation  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `no_trigger_present`  
+  - applied no motion tokens  
+  - preserved both trains without further extension  
+  - did not initiate continuation or relational activation  
+
+- **TU+**
+  - classified the regime as:
+    - `stabilized_post_transition_persistence`  
+  - preserved:
+    - no structural change  
+    - no reactivation  
+  - maintained transition trace as:
+    - persistent  
+    - non-driving  
+  - confirmed absence of precursor pressure  
+
+- **cortexLLM**
+  - formalized the regime as:
+    - `stabilized_non_transition_persistence_regime`  
+  - established:
+    - persistence under admissibility without activation  
+    - no hidden pressure or latent reactivation  
+  - confirmed:
+    - transition trace remains inert across cycles  
+
+**Finding**
+
+Cycle 64 shows that the architecture can sustain a **stable post-transition regime across multiple cycles**:
+
+- no new trigger appears  
+- no transition reactivates  
+- no precursor pressure regenerates  
+- structure remains unchanged  
+
+without:
+- delayed activation  
+- hidden dynamics  
+- or drift in state classification  
+
+This establishes:
+
+> **stabilized post-transition states can persist under admissibility without spontaneous reactivation**
+
+and:
+
+> **transition trace remains non-driving even across repeated cycles**
+
+**Operational delta**
+
+- state distinction added:
+  - `stabilized_post_transition_persistence_regime`  
+    - defined as:  
+      *a regime in which a completed bounded transition remains stable across cycles without reactivation, propagation, or pressure regeneration*  
+
+- classification:
+  - persistence check  
+
+- invariants reinforced:
+  - activation requires a new trigger, not admissibility alone  
+  - transition trace remains inert across multiple cycles  
+  - absence of precursor pressure is maintained after transition  
+
+---
+
+
