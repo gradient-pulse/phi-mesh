@@ -564,4 +564,84 @@ and:
 
 ---
 
+### Cycle 65 — Sub-threshold trigger without activation
+
+**What was tested**
+- whether a stabilized post-transition state can register a **weak trigger candidate** without:
+  - reactivating transition  
+  - regenerating precursor pressure  
+  - or drifting into structural change  
+- whether the architecture can distinguish between:
+  - trigger presence  
+  - trigger sufficiency  
+  - and actual activation  
+- whether admissibility plus weak trigger is enough to cause update  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `weak_trigger_candidate`  
+  - preserved both trains without further extension  
+  - applied no motion tokens  
+  - did not initiate continuation, precursor reactivation, or relational activation  
+
+- **TU+**
+  - preserved the stabilized post-transition regime as dominant  
+  - represented:
+    - `weak_trigger_signal` as present  
+    - but explicitly sub-threshold and non-activating  
+  - rejected:
+    - weak trigger → activation  
+    - admissibility → transition  
+    - weak signal → implicit accumulation  
+
+- **cortexLLM**
+  - formalized the regime as:
+    - `admissible_non_transition_under_sub_threshold_trigger`  
+  - established:
+    - signal presence is not equivalent to threshold sufficiency  
+    - activation layer remains inactive  
+    - precursor pressure remains absent  
+  - confirmed that weak trigger conditions do not reactivate transition trace or induce structural drift  
+
+**Finding**
+
+Cycle 65 shows that the architecture can represent a **sub-threshold trigger condition** without activation:
+
+- trigger signal is present  
+- activation does not occur  
+- precursor pressure does not return  
+- stabilized structure is preserved  
+
+without:
+- structural change  
+- hidden trigger accumulation  
+- or reinterpretation drift  
+
+This establishes:
+
+> **trigger presence and trigger sufficiency are distinct state dimensions**
+
+and:
+
+> **admissibility plus weak signal is not enough to produce activation**
+
+**Operational delta**
+
+- state distinction added:
+  - `stabilized_non_transition_with_sub_threshold_trigger`  
+    - defined as:  
+      *a regime in which an admissible weak trigger signal is present but remains below activation threshold, so no structural change occurs*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - activation requires threshold sufficiency, not signal presence alone  
+  - weak trigger can be represented without precursor regeneration  
+  - transition trace remains non-driving under weak-trigger conditions
+
+---
+
 
