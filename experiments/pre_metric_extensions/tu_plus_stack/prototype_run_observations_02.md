@@ -1565,6 +1565,92 @@ and:
 
 ---
 
+### Cycle 75 — Terminal regime closure under null perturbation
+
+**What was tested**
+- whether a **terminal saturation regime**:
+  - remains stable under explicit absence of perturbation  
+  - exhibits sensitivity to null-input conditions  
+  - or reveals hidden dependency on external variation  
+- whether the regime:
+  - requires ongoing validation input  
+  - or is fully self-sustaining under null conditions  
+- whether explicit confirmation of “no perturbation”:
+  - introduces any structural effect  
+  - or remains operationally inert  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - full terminal invariant state  
+    - `terminal_saturation_regime`  
+    - `terminal_boundary_invariance`  
+  - explicitly marked:
+    - no internal or external perturbation  
+  - avoided:
+    - any response to null condition  
+    - any structural update or reinterpretation  
+  - maintained zero motion-token emission  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - complete terminal invariance profile  
+  - explicitly rejected:
+    - absence_of_perturbation → implicit update  
+    - null_input → state change  
+  - confirmed:
+    - null conditions have no structural effect  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_terminal_saturated_invariant_trigger`  
+  - established:
+    - absence of perturbation produces no effect  
+    - regime does not depend on external variation for stability  
+    - classification remains fixed under null conditions  
+  - confirmed no sensitivity to explicit null-input marking  
+
+**Finding**
+
+Cycle 75 demonstrates **terminal regime closure under null perturbation**:
+
+- regime remains fully stable under explicit absence of perturbation  
+- no dependency on external input is observed  
+- null conditions introduce no structural effect  
+- invariance remains complete and self-sustaining  
+
+without:
+- sensitivity to null input  
+- hidden dependency  
+- or latent activation  
+
+This establishes:
+
+> **terminal regimes are closed under null perturbation conditions**
+
+and:
+
+> **absence of input does not influence or destabilize a fully saturated invariant regime**
+
+**Operational delta**
+
+- state distinction added:
+  - `terminal_regime_closure`  
+    - defined as:  
+      *a condition in which a terminally saturated regime remains fully stable and unaffected under explicit absence of internal or external perturbation*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - null input does not produce structural change  
+  - terminal regimes are independent of external variation  
+  - absence of perturbation is operationally inert in a saturated regime  
+
+---
+
 
 
 
