@@ -897,4 +897,92 @@ and:
 
 ---
 
+### Cycle 69 — Trigger signal stability without fatigue or decay
+
+**What was tested**
+- whether extended persistence of a sub-threshold trigger:
+  - leads to signal decay (fatigue)  
+  - weakens over time  
+  - or remains stable  
+- whether the architecture can distinguish between:
+  - persistence  
+  - accumulation  
+  - and signal degradation  
+- whether prolonged non-activation affects trigger integrity  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - `sub_threshold_trigger_persistent`  
+    - `trigger_non_accumulative`  
+    - `threshold_distance_invariant`  
+    - `trigger_signal_stability`  
+    - `non_transition_maintained`  
+  - explicitly avoided:
+    - signal decay  
+    - precursor regeneration  
+    - transition trace reactivation  
+  - maintained zero motion-token emission and no structural update  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent` (subdominant)  
+    - `threshold_distance_invariant`  
+    - `trigger_signal_stability`  
+  - explicitly rejected:
+    - persistence → accumulation  
+    - persistence → signal decay  
+    - weak trigger → precursor pressure  
+  - preserved stable representation without reinterpretation  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_stable_non_accumulative_trigger`  
+  - established:
+    - extended persistence does not induce fatigue or decay  
+    - trigger layer remains stable under duration  
+    - absence of readiness layer blocks transition pathways  
+  - confirmed absence of latent drift or degradation  
+
+**Finding**
+
+Cycle 69 demonstrates that the architecture maintains **trigger signal stability under extended persistence**:
+
+- trigger remains present  
+- persistence remains non-accumulative  
+- threshold distance remains invariant  
+- signal integrity is preserved (no fatigue or decay)  
+
+without:
+- signal weakening  
+- accumulation  
+- or delayed activation  
+
+This establishes:
+
+> **sub-threshold trigger signals are stable under prolonged non-activation**
+
+and:
+
+> **persistence does not degrade signal integrity**
+
+**Operational delta**
+
+- state distinction added:
+  - `stable_sub_threshold_trigger_regime`  
+    - defined as:  
+      *a regime in which a sub-threshold trigger remains stable over extended persistence without accumulation, decay, or threshold shift*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - trigger signals do not decay under non-activation  
+  - persistence duration does not affect signal strength  
+  - stability, not accumulation or decay, governs long-duration sub-threshold behavior  
+
+---
+
 
