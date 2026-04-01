@@ -1245,6 +1245,58 @@ and further:
 
 ---
 
+### Cycle 58 — Boundary coexistence of governed stasis and precursor pressure
+
+**What was tested**
+- whether governed stasis can coexist with active near-threshold precursor pressure without:
+  - forcing transition
+  - decaying pressure
+  - or contaminating role discipline  
+- whether input gating and accumulated precursor pressure can be simultaneously represented without collapse  
+- whether the architecture can distinguish clearly between:
+  - stasis (no admissible update)
+  - pressure (near-threshold readiness)
+  - and transition (threshold crossing)
+
+**What happened**
+- **TU** preserved both trains without extension and explicitly marked:
+  - admissibility blocked  
+  - precursor pressure present  
+  - governed stasis active  
+  with no motion-token injection or structural drift  
+- **TU** retained residual background constraint and treated the field as governed persistence under pressure  
+- **TU+** maintained `governed_stasis_under_input_gating` as dominant and `near_threshold_precursor_state` as sustained subdominant, with:
+  - no promotion  
+  - no demotion  
+  - no reinterpretation  
+- **cortexLLM** framed the field as a licensed non-transition regime under active boundary pressure, explicitly rejecting:
+  - pressure → transition  
+  - stasis → absence  
+  while preserving readiness for admissible change  
+
+**Finding**
+
+Cycle 58 showed that the architecture can maintain **clean coexistence of stasis and pressure**:
+
+- stasis remains intact  
+- pressure remains real  
+- transition remains blocked  
+
+without:
+- pressure inflation into pseudo-transition  
+- pressure decay due to inactivity  
+- or forced resolution due to cycle progression  
+
+This establishes that:
+
+> **pressure and stasis are orthogonal components of the field, not competing states**
+
+and further:
+
+> **transition requires admissibility, not accumulation alone**
+
+---
+
 ## Cross-cycle findings so far
 
 ### 1. Role separation is viable
@@ -1751,6 +1803,30 @@ This introduces a third stable regime alongside:
 
 ---
 
+### 15. Stasis–pressure orthogonality holds under boundary conflict
+
+Cycle 58 establishes that:
+
+- governed stasis and precursor pressure can coexist without mutual distortion  
+- pressure does not force transition under blocked admissibility  
+- stasis does not suppress or erase accumulated precursor pressure  
+
+This introduces a stable three-layer separation:
+
+- regime: governed stasis  
+- boundary condition: precursor pressure  
+- transition: explicitly gated  
+
+This confirms that:
+
+- pressure accumulation alone is insufficient for transition  
+- admissibility gating is the controlling condition for regime change  
+- coherence governs not only transitions and non-transitions, but also the separation between pressure and action  
+
+This strengthens the interpretation that boundary-conditioned selection operates independently of pressure magnitude.
+
+---
+
 ## What has now been tested
 
 The following have now been tested at least in weak form:
@@ -1845,6 +1921,11 @@ The following have now been tested at least in weak form:
 - multi-cycle stabilization of a licensed non-transition regime  
 - preservation of precursor boundary pressure without forced promotion or decay  
 - maintenance of role discipline under zero-update conditions  
+- coexistence of governed stasis and near-threshold precursor pressure without collapse into transition or decay  
+- preservation of precursor pressure under input gating without reinterpretation or inflation  
+- maintenance of strict separation between stasis, pressure, and transition  
+- stability of role discipline under simultaneous non-transition and high-pressure conditions  
+- confirmation that transition requires admissibility rather than pressure accumulation alone  
 
 ---
 
@@ -1893,7 +1974,7 @@ This now supports a stronger RGPx interpretation: coherence appears to be conser
 
 The first fifty-six cycles support the following stronger claim:
 
-> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that stabilized independent state to fresh weak relational recovery pressure without prematurely overturning it, allow that recovery pressure to strengthen into a genuinely emerging lower-order relation without prematurely restoring joint choreography, allow that lower-order return to persist as a durable corridor without premature threshold-nearing re-promotion, allow that durable corridor to strengthen further while still remaining sub-threshold, allow that strengthening corridor to cross into threshold-nearing re-promotion after stabilized independence without prematurely restoring stable joint choreography, allow that threshold-nearing return to persist as an occupied boundary state without yet becoming stable joint choreography, then cleanly promote that occupied threshold state into renewed stable joint choreography once reciprocal support again becomes strong enough, preserve that renewed stable joint choreography under its first bounded internal asymmetry, restabilize that re-promoted shared state again when the early internal stress softens, reopen a genuine second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime into a weaker relational / separating configuration once the reopened break corridor truly crosses threshold, let that second-arc downgraded field settle into a weaker relational plateau rather than accelerating immediately into binary separation, allow that downgraded plateau to persist as an active lower-order organizational state, and then allow that second-arc downgraded field to persist as a weaker relational plateau across additional slices, and then allow that same downgraded field to loosen gradually while still remaining an active transformed organizational state, and finally let the post-plateau clearer independent regime stabilize as a true current mainline while retaining prior shared organization only as weak transformed background constraint, preserve prior organization as weakened background constraint after lower-order relational dominance has ended, and allow that weakened background constraint to become dynamically relevant again as fresh softening pressure on a restored clearer-independent regime without yet forcing renewed lower-order relation, allow that persisted downgraded plateau to loosen gradually across further slices, and eventually let clearer independent separation become dominant without erasing transformed prior organization, which remains as weakened background constraint, and allow weakened background constraint to recur as repeated sub-threshold shaping pressure on a restored clearer-independent regime, and allow that repeated pressure to strengthen across another slice without yet forcing renewed lower-order relation, and allow accumulated sub-threshold pressure to reach and hold a near-threshold precursor boundary state in which independence remains active but conditional, without premature relational reopening or collapse back into inert independence, and suspend transition cleanly when bounded upstream input is absent, treating missing admissible signal as a valid operational state rather than fabricating continuationand allow accumulated sub-threshold pressure to reach and hold a near-threshold precursor boundary state in which independence remains active but conditional, without premature relational reopening or collapse back into inert independence, and allow repeated absence of admissible input to produce governed stasis as a stable regime rather than fabricated continuation, and allow repeated absence of admissible input to produce governed stasis across multiple slices as a stable regime rather than fabricated continuation, and preserve that regime under strict role enforcement without ambiguity inflation, hidden drift, or structural overreach, and allow governed stasis to persist across multiple consecutive slices as a stable regime rather than a transient hold, while preserving strict role discipline, coherence, and structural integrity without drift or symbolic overreach. The architecture now additionally demonstrates that a governed stasis regime can persist across cycles as a licensed non-transition state without drift, fabrication, or ambiguity inflation, further reinforcing that coherence governs not only what transitions occur, but also when no transition is permitted.
+> A prompt-instantiated TU / TU+ / cortexLLM triad can remain role-distinct, use shared structured state to preserve and revise choreography across cycles, absorb mild mismatch, represent weak multi-source coupling, dissolve unsupported relational hypotheses, reopen emerging joint interpretations when coherence rises again, provisionally confirm joint choreography when sustained co-motion supports it, fully de-confirm that choreography into a new stable independent reading when coherence no longer supports the joint field, preserve explicit ambiguity when contradiction prevents justified promotion, resolve that ambiguity into a renewed stable mainline when later evidence favors one branch, register fresh weak recoupling after restart without confusing it with the earlier collapsed joint choreography, keep that weak renewed relation provisional under mixed follow-up without premature promotion or dismissal, cleanly de-promote that weak reopening when stronger mismatch removes support, still register genuinely fresh renewed relation after that near-miss without collapsing into cynicism or false restoration, strengthen that renewed relation into a stronger provisional relational interpretation when support persists across another slice, carry that strengthened relation persistently below joint threshold, approach a threshold-nearing provisional joint reading without cheating across the boundary, promote that relational corridor into stable joint choreography when durable reciprocal support genuinely crosses threshold, preserve that promoted joint state under early internal asymmetry while explicitly tracking de-confirmation pressure, restabilize that stressed joint state when the asymmetry softens again, reopen a serious break corridor when harsher asymmetry later returns, cleanly downgrade the formerly stable joint state into a weaker relational / separating reading when coherence support genuinely falls below threshold, stabilize that downgraded state at a weaker relational level rather than forcing immediate full independence, track the loosening of that lower-order plateau without yet forcing clear independent separation, restore a clearer independent-separation reading once the lower-order support becomes too thin, stabilize that restored independence as a coherent current mainline, reopen even that stabilized independent state to fresh weak relational recovery pressure without prematurely overturning it, allow that recovery pressure to strengthen into a genuinely emerging lower-order relation without prematurely restoring joint choreography, allow that lower-order return to persist as a durable corridor without premature threshold-nearing re-promotion, allow that durable corridor to strengthen further while still remaining sub-threshold, allow that strengthening corridor to cross into threshold-nearing re-promotion after stabilized independence without prematurely restoring stable joint choreography, allow that threshold-nearing return to persist as an occupied boundary state without yet becoming stable joint choreography, then cleanly promote that occupied threshold state into renewed stable joint choreography once reciprocal support again becomes strong enough, preserve that renewed stable joint choreography under its first bounded internal asymmetry, restabilize that re-promoted shared state again when the early internal stress softens, reopen a genuine second break corridor when stronger asymmetry tests the resilience boundary of that second stable-joint regime, cleanly de-confirm that second shared regime into a weaker relational / separating configuration once the reopened break corridor truly crosses threshold, let that second-arc downgraded field settle into a weaker relational plateau rather than accelerating immediately into binary separation, allow that downgraded plateau to persist as an active lower-order organizational state, and then allow that second-arc downgraded field to persist as a weaker relational plateau across additional slices, and then allow that same downgraded field to loosen gradually while still remaining an active transformed organizational state, and finally let the post-plateau clearer independent regime stabilize as a true current mainline while retaining prior shared organization only as weak transformed background constraint, preserve prior organization as weakened background constraint after lower-order relational dominance has ended, and allow that weakened background constraint to become dynamically relevant again as fresh softening pressure on a restored clearer-independent regime without yet forcing renewed lower-order relation, allow that persisted downgraded plateau to loosen gradually across further slices, and eventually let clearer independent separation become dominant without erasing transformed prior organization, which remains as weakened background constraint, and allow weakened background constraint to recur as repeated sub-threshold shaping pressure on a restored clearer-independent regime, and allow that repeated pressure to strengthen across another slice without yet forcing renewed lower-order relation, and allow accumulated sub-threshold pressure to reach and hold a near-threshold precursor boundary state in which independence remains active but conditional, without premature relational reopening or collapse back into inert independence, and suspend transition cleanly when bounded upstream input is absent, treating missing admissible signal as a valid operational state rather than fabricating continuationand allow accumulated sub-threshold pressure to reach and hold a near-threshold precursor boundary state in which independence remains active but conditional, without premature relational reopening or collapse back into inert independence, and allow repeated absence of admissible input to produce governed stasis as a stable regime rather than fabricated continuation, and allow repeated absence of admissible input to produce governed stasis across multiple slices as a stable regime rather than fabricated continuation, and preserve that regime under strict role enforcement without ambiguity inflation, hidden drift, or structural overreach, and allow governed stasis to persist across multiple consecutive slices as a stable regime rather than a transient hold, while preserving strict role discipline, coherence, and structural integrity without drift or symbolic overreach. The architecture now additionally demonstrates that a governed stasis regime can persist across cycles as a licensed non-transition state without drift, fabrication, or ambiguity inflation, further reinforcing that coherence governs not only what transitions occur, but also when no transition is permitted. The architecture now additionally demonstrates that governed stasis and precursor pressure can coexist without forcing transition or decaying signal, confirming that boundary-conditioned admissibility, not pressure accumulation alone, determines when transition is permitted.
 
 This is now more than recurrence, more than precursor accumulation, and more than one-slice boundary hold. By Cycle 55, the architecture is showing that past structure remains active across multiple transformed regimes: first as active downgraded lower-order organization, then as loosening residual organization, then as weakened background constraint once clearer independent separation becomes dominant, then as fresh sub-threshold shaping pressure on that restored independent regime, then as recurrent sub-threshold shaping pressure across more than one slice, then as strengthening recurrent sub-threshold pressure that increases regime permeability without yet reopening genuine lower-order relation, then as accumulated near-threshold precursor pressure that can hold the field at a boundary without yet forcing transition, and now as governed stasis that can persist across multiple slices under strict role enforcement when no admissible input licenses structural update. That is crucial for the RGPx framing of the prototype: selection through coherence is non-binary because prior organization continues to shape what the field can become next even after it ceases to be the leading organizer, can condition when transition is allowed to complete, and can also sustain a regime in which no transition is permitted at all.
 
