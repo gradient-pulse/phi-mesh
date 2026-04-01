@@ -395,3 +395,92 @@ and:
   - transition requires more than admissibility alone  
   - precursor pressure can persist through gating release  
   - removal of enforcement does not force update  
+
+---
+
+### Cycle 63 — Post-transition stabilization without propagation
+
+**What was tested**
+- whether a bounded transition event leads to:
+  - continued propagation  
+  - reactivation of pressure  
+  - or immediate stabilization  
+- whether transition trace:
+  - drives further change  
+  - or remains non-active memory  
+- whether the system can distinguish between:
+  - active transition  
+  - completed transition  
+  - and stabilized post-transition state  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `post_transition_stabilization_candidate`  
+  - applied no further motion tokens  
+  - preserved both trains at minimally extended state  
+  - did not initiate continuation or relational activation  
+
+- **TU+**
+  - classified the regime as:
+    - `post_transition_stabilization`  
+  - preserved:
+    - no further structural change  
+    - no propagation  
+  - represented transition as:
+    - completed  
+    - with residual trace only  
+  - confirmed absence of precursor pressure  
+
+- **cortexLLM**
+  - formalized the regime as:
+    - `post_transition_stabilization_regime`  
+  - established:
+    - transition is no longer active  
+    - no propagation follows activation  
+    - residual trace is non-driving  
+  - separated:
+    - activation (completed)  
+    - memory (retained)  
+    - dynamics (inactive)  
+
+**Finding**
+
+Cycle 63 shows that the architecture can stabilize immediately after a **bounded transition event**:
+
+- transition completes  
+- no propagation occurs  
+- precursor pressure remains absent  
+- structure stabilizes at new state  
+
+without:
+- delayed continuation  
+- reactivation of pressure  
+- or residual dynamic influence from transition trace  
+
+This establishes:
+
+> **bounded transitions can terminate cleanly without propagation**
+
+and:
+
+> **transition trace can persist as non-driving memory without influencing subsequent state**
+
+**Operational delta**
+
+- state distinction added:
+  - `post_transition_stabilization_regime`  
+    - defined as:  
+      *a regime following a bounded transition in which no further structural change occurs and transition trace remains non-active*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - activation does not imply propagation  
+  - transition trace does not imply continued dynamics  
+  - system can stabilize immediately after bounded transition  
+
+---
+
