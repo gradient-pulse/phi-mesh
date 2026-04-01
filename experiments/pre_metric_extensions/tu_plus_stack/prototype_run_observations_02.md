@@ -1651,6 +1651,91 @@ and:
 
 ---
 
+### Cycle 76 — Closure persistence under continued null conditions
+
+**What was tested**
+- whether a **closed terminal regime**:
+  - remains stable under continued explicit null conditions  
+  - exhibits delayed sensitivity to prolonged absence of perturbation  
+  - or reveals hidden dependency over extended null duration  
+- whether closure:
+  - is persistent across multiple null cycles  
+  - or requires periodic validation  
+- whether extended null continuation introduces:
+  - latent drift  
+  - delayed activation  
+  - or structural fatigue  
+
+**What happened**
+
+- **TU**
+  - preserved:
+    - full closed terminal invariant state  
+    - `terminal_regime_closure`  
+  - explicitly maintained:
+    - no internal or external perturbation  
+  - avoided:
+    - any structural response  
+    - any reinterpretation or update  
+  - maintained zero motion-token emission  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - complete closed terminal invariance profile  
+  - explicitly rejected:
+    - null_condition → implicit update  
+    - prolonged absence → latent change  
+  - confirmed:
+    - no delayed effects under continued null conditions  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_closed_terminal_saturated_invariant_trigger`  
+  - established:
+    - closure persists across extended null continuation  
+    - no delayed sensitivity or hidden dependency appears  
+    - regime classification remains fixed  
+  - confirmed absence of latent drift or activation  
+
+**Finding**
+
+Cycle 76 demonstrates **closure persistence under continued null conditions**:
+
+- closed regime remains stable across multiple null cycles  
+- no delayed effects or sensitivity appear  
+- no hidden dependency on external input emerges  
+- invariance remains complete  
+
+without:
+- drift  
+- delayed activation  
+- or structural fatigue  
+
+This establishes:
+
+> **closure is persistent, not transient, under continued null conditions**
+
+and:
+
+> **prolonged absence of perturbation does not alter or destabilize a closed terminal regime**
+
+**Operational delta**
+
+- state distinction added:
+  - `persistent_closure_regime`  
+    - defined as:  
+      *a condition in which a closed terminal regime remains stable across extended null continuation without delayed effects, drift, or dependency emergence*  
+
+- classification:
+  - stress confirmation  
+
+- invariants reinforced:
+  - closure persists across multiple null cycles  
+  - no delayed sensitivity to prolonged null conditions  
+  - closed regimes remain structurally unaffected by continued absence of input  
+
+---
 
 
 
