@@ -2237,3 +2237,91 @@ Test whether:
 ---
 ---
 
+### Cycle 81 — Boundary-preserving response to admissible structured perturbation
+
+**What was tested**
+- whether a **terminally closed non-transition regime** can register an **admissible weak structured perturbation** without:
+  - accumulating into precursor pressure  
+  - shifting threshold distance  
+  - or triggering transition  
+- whether partial alignment between a new perturbation and the existing sub-threshold trigger:
+  - induces escalation  
+  - or remains non-activating  
+- whether boundary integrity is preserved under coherent but sub-threshold novelty  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `admissible_weak_structured_perturbation`  
+    - `boundary_under_perturbation`  
+  - preserved both trains unchanged  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no precursor regeneration  
+    - no structural update  
+  - treated the perturbation as admissible but sub-threshold and non-accumulative  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - `sub_threshold_trigger_persistent`  
+    - `boundary_under_perturbation` (subdominant)  
+  - explicitly rejected:
+    - perturbation → accumulation  
+    - perturbation → precursor pressure  
+    - partial alignment → escalation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - boundary integrity is preserved under perturbation  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_boundary_preserving_structured_perturbation`  
+  - established:
+    - structured perturbation is registered without transition  
+    - dual sub-threshold signals do not accumulate  
+    - absence of readiness layer activity blocks transition pathways  
+  - confirmed:
+    - regime classification remains stable under admissible structured perturbation  
+
+**Finding**
+
+Cycle 81 demonstrates **boundary-preserving response to admissible structured perturbation**:
+
+- coherent novelty can be registered  
+- perturbation remains sub-threshold  
+- threshold distance remains invariant  
+- transition remains blocked  
+- regime integrity is preserved  
+
+without:
+- accumulation  
+- precursor regeneration  
+- or escalation through partial alignment  
+
+This establishes:
+
+> **admissible structured perturbation does not by itself destabilize a closed non-transition regime**
+
+and:
+
+> **multiple sub-threshold signals remain non-activating unless structural change occurs**
+
+**Operational delta**
+
+- state distinction added:
+  - `boundary_preserving_structured_perturbation_regime`  
+    - defined as:  
+      *a condition in which an admissible coherent sub-threshold perturbation is registered without breaking closure, shifting threshold distance, or generating activation*  
+
+- classification:
+  - new capability  
+
+- invariants reinforced:
+  - admissible sub-threshold perturbations do not modify regime state  
+  - threshold distance remains invariant under structured perturbation  
+  - partial alignment between sub-threshold signals does not imply escalation  
+
+---
+
