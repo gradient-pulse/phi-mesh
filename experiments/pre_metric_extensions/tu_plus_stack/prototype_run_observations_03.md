@@ -474,3 +474,95 @@ readiness presence
 
 ---
 
+### Cycle 96 — Sustained propagation without full activation
+
+**What was tested**
+- whether **sustained, coherent propagation** of:
+  - global precursor pressure  
+after closure break (Cycle 95) leads to:
+  - full activation  
+  - reversion to closure  
+  - or a stable intermediate state  
+- whether propagation alone is sufficient to:
+  - complete transition  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `sustained_global_precursor`  
+    - `coherent_propagation`  
+  - preserved:
+    - transition trajectory  
+  - explicitly maintained:
+    - no reversion to localized precursor  
+    - no restoration of closure  
+    - no full activation  
+  - treated propagation as:
+    - stable  
+    - continuous  
+    - non-completing  
+
+- **TU+**
+  - maintained:
+    - `transition_boundary_state` (dominant)  
+  - confirmed:
+    - closure does not reform  
+    - transition persists under propagation  
+  - rejected:
+    - reversion to non-transition  
+    - spontaneous activation completion  
+
+- **cortexLLM**
+  - classified regime as:
+    - `transition_boundary_with_sustained_propagation`  
+  - established:
+    - propagation stability maintains transition state  
+    - activation is not yet realized  
+    - system is locked in a **pre-activation state**  
+  - confirmed:
+    - closure break is persistent once propagation is sustained  
+
+---
+
+**Finding**
+
+Cycle 96 demonstrates:
+
+- sustained propagation:
+  - maintains global precursor pressure  
+  - prevents closure reformation  
+  - does not complete activation  
+- system remains:
+  - beyond closure  
+  - below full activation  
+
+This establishes:
+
+> **propagation is necessary to break and sustain closure break, but not sufficient to complete activation**
+
+and:
+
+> **a stable transition boundary state exists between closure and activation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `sustained_transition_boundary_regime`  
+    - defined as:  
+      *a condition in which global precursor pressure is sustained through coherent propagation, preventing closure reformation but not yet producing full activation*  
+
+- classification:
+  - first stable post-closure, pre-activation regime  
+
+- invariants refined:
+  - closure break is persistent once propagation is sustained  
+  - activation requires an additional condition beyond propagation  
+  - transition boundary can be dynamically stable without completing activation  
+
+---
+
