@@ -295,4 +295,90 @@ and:
 
 ---
 
+### Cycle 104 — Partial feedback restoration (failed reactivation)
+
+**What was tested**
+- whether **moderate restoration of endogenous feedback**:
+  - activation → readiness  
+after collapse (Cycle 103) can:
+  - re-establish activation  
+  - or initiate reactivation pathway  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `partial_feedback_recovery`  
+    - `localized_precursor_reemergence`  
+  - detected:
+    - partial recoupling of activation layer  
+    - local precursor pressure reappearing  
+  - explicitly maintained:
+    - no propagation  
+    - no threshold crossing  
+    - no activation re-entry  
+
+- **TU+**
+  - maintained:
+    - `transition_boundary_state` (dominant)  
+  - confirmed:
+    - feedback restoration is subcritical  
+    - precursor remains localized  
+    - threshold distance reduces but stays positive  
+  - rejected:
+    - activation re-entry under partial restoration  
+
+- **cortexLLM**
+  - classified regime as:
+    - `transition_boundary_with_subcritical_reactivation_attempt`  
+  - established:
+    - reactivation attempt occurs but fails  
+    - propagation is not restored  
+    - activation layer remains insufficiently coupled  
+  - confirmed:
+    - system remains in transition boundary  
+
+---
+
+**Finding**
+
+Cycle 104 demonstrates:
+
+- partial feedback restoration:
+  - reintroduces local precursor pressure  
+  - reduces threshold distance  
+  - does not restore activation  
+- system:
+  - attempts reactivation  
+  - fails due to lack of propagation and critical coupling  
+
+This establishes:
+
+> **reactivation requires full structural reconstitution, not partial recovery**
+
+and:
+
+> **localized precursor reemergence without propagation is insufficient for activation re-entry**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `failed_reactivation_regime`  
+    - defined as:  
+      *a condition in which partial restoration of feedback produces localized precursor pressure but fails to re-establish propagation, critical coupling, or activation*  
+
+- classification:
+  - first failed reactivation attempt  
+
+- invariants refined:
+  - activation re-entry requires restoration of propagation and critical coupling  
+  - partial feedback recovery cannot reconstitute activation  
+  - transition boundary can host subcritical reactivation attempts without resolution  
+
+---
+
 
