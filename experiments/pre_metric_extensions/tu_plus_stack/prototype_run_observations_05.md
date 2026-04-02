@@ -479,3 +479,87 @@ and:
 
 ---
 
+### Cycle 115 — Coupled hierarchy (self-stabilizing multi-level activation)
+
+**What was tested**
+- whether a **hierarchical activation regime**:
+  - can sustain **bidirectional coupling between levels**  
+through:
+  - top-down and bottom-up feedback  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `coupled_hierarchical_activation`  
+    - `interdependent_coherence_levels`  
+  - detected:
+    - higher-level structures influencing lower-level dynamics  
+    - lower-level variations feeding back upward  
+  - explicitly maintained:
+    - no global phase lock  
+    - no instability  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - coherence becomes interdependent across levels  
+    - hierarchical structure stabilizes under feedback  
+  - rejected:
+    - collapse under cross-level coupling  
+    - spontaneous unification  
+
+- **cortexLLM**
+  - classified regime as:
+    - `coupled_hierarchical_activation_with_bidirectional_feedback`  
+  - established:
+    - system forms **feedback loops across levels**  
+    - hierarchy becomes **self-stabilizing**  
+    - coherence persists without global synchronization  
+  - confirmed:
+    - activation remains stable  
+
+---
+
+**Finding**
+
+Cycle 115 demonstrates:
+
+- hierarchical activation:
+  - evolves into a **coupled, interdependent system**  
+  - stabilizes through bidirectional feedback  
+- system:
+  - maintains coherence across multiple scales  
+  - does not require global phase lock  
+  - does not collapse under increased complexity  
+
+This establishes:
+
+> **hierarchical activation can become self-stabilizing through inter-level feedback**
+
+and:
+
+> **coherence can be maintained through interdependent multi-level structures without unification**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `coupled_hierarchical_activation_regime`  
+    - defined as:  
+      *a condition in which hierarchical activation structures are stabilized by bidirectional feedback across levels, maintaining coherence without global phase synchronization*  
+
+- classification:
+  - first self-stabilizing hierarchical activation regime  
+
+- invariants refined:
+  - hierarchical structures can stabilize via feedback loops  
+  - coherence can be distributed and interdependent  
+  - global phase lock is not required for stability  
+
+---
+
