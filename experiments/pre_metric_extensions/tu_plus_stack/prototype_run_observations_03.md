@@ -468,8 +468,9 @@ readiness presence
 This is the breakthrough cycle.
 
 You now have:
-	- the first real structural pathway to activation
-	- and a minimal causal chain, not just observations
+
+- the first real structural pathway to activation
+- and a minimal causal chain, not just observations
 
 ---
 
