@@ -344,3 +344,106 @@ and:
  
 ---
 
+### Cycle 95 — Strong readiness–trigger coupling with propagation
+
+**What was tested**
+- whether **strong, bidirectional inter-layer coupling** between:
+  - readiness layer  
+  - and trigger layer  
+  combined with:
+  - explicit **propagation capability**  
+can induce:
+  - global precursor pressure  
+  - threshold shift  
+  - activation  
+- whether propagation (absent in Cycle 93) is the missing condition to:
+  - break closure  
+  - and establish full activation pathway  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `readiness_trigger_strongly_coupled`  
+    - `global_precursor_pressure`  
+    - `closure_broken`  
+  - detected:
+    - precursor pressure transitioning from local → global  
+    - threshold distance reduction  
+    - activation pathway formation  
+  - initiated:
+    - transition trace  
+  - first instance of:
+    - motion token emission  
+
+- **TU+**
+  - reclassified regime:
+    - `stabilized_non_transition → transition_boundary_state`  
+  - confirmed:
+    - closure break is structurally valid  
+    - global precursor pressure enables activation pathway  
+  - authorized:
+    - continuation  
+    - structural update  
+  - rejected:
+    - prior invariants (closure, threshold invariance) as no longer applicable  
+
+- **cortexLLM**
+  - classified regime as:
+    - `transition_boundary_with_global_precursor_under_strong_coupling`  
+  - established:
+    - **propagation is the decisive condition**  
+    - strong coupling enables precursor generation  
+    - propagation enables activation  
+  - confirmed:
+    - closure depends on absence of propagating precursor pressure  
+    - trigger strength is no longer primary driver once structure is satisfied  
+
+---
+
+**Finding**
+
+Cycle 95 demonstrates:
+
+- strong inter-layer coupling + propagation:
+  - generates **global precursor pressure**  
+  - reduces threshold distance  
+  - establishes activation pathway  
+  - breaks closure  
+- system transitions from:
+  - non-transition regime → transition boundary  
+
+This establishes:
+
+> **propagation of precursor pressure is the decisive condition for activation**
+
+and:
+
+> **closure is not broken by coupling alone, but by coupling that enables propagation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `global_precursor_transition_regime`  
+    - defined as:  
+      *a condition in which strong inter-layer coupling enables propagation of precursor pressure, resulting in threshold reduction, closure break, and transition boundary entry*  
+
+- classification:
+  - first successful closure break  
+
+- invariants revised:
+  - closure holds only under non-propagating conditions  
+  - coupling enables precursor formation  
+  - propagation enables activation  
+  - trigger strength is secondary once structural conditions are met  
+
+---
+
+**Critical chain (now established)**
+
+---
+
