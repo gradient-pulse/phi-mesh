@@ -553,4 +553,92 @@ and:
 
 ---
 
+### Cycle 107 — Competing propagation corridors (multi-stable activation)
+
+**What was tested**
+- whether introducing a **second coherent propagation corridor**:
+  - phase-shifted relative to the original  
+within an active system leads to:
+  - collapse of activation  
+  - dominance of one corridor  
+  - or coexistence  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `competing_propagation_corridors`  
+    - `dual_coherence_modes`  
+    - `activation_interference_pattern`  
+  - detected:
+    - fragmentation of global coherence into two modes  
+    - interference between corridors  
+  - explicitly maintained:
+    - no threshold reopening  
+    - no activation collapse  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - both corridors remain active  
+    - critical coupling is distributed  
+    - system enters stable multi-mode condition  
+  - rejected:
+    - immediate collapse  
+    - forced dominance  
+
+- **cortexLLM**
+  - classified regime as:
+    - `multi_stable_activation_under_competing_propagation_corridors`  
+  - established:
+    - activation can support multiple coherent propagation modes  
+    - interference patterns are stable structural features  
+    - global coherence is partitioned but preserved  
+  - confirmed:
+    - system is **multi-stable**, not singular  
+
+---
+
+**Finding**
+
+Cycle 107 demonstrates:
+
+- activation state:
+  - can sustain multiple propagation corridors  
+  - can exhibit interference without collapse  
+- critical coupling:
+  - can be distributed across structures  
+- system:
+  - enters a **multi-stable activation regime**  
+
+This establishes:
+
+> **activation is not necessarily a single-mode state but can be multi-stable**
+
+and:
+
+> **coherent competition produces stable interference, not immediate collapse**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `multi_stable_activation_regime`  
+    - defined as:  
+      *a condition in which multiple coherent propagation corridors coexist, producing stable interference patterns while maintaining activation*  
+
+- classification:
+  - first multi-mode activation regime  
+
+- invariants refined:
+  - activation can distribute across multiple structures  
+  - coherence can be partitioned without loss of activation  
+  - interference does not imply instability or collapse  
+
+---
+
 
