@@ -253,3 +253,94 @@ and:
 
 ---
 
+### Cycle 93 — Moderate readiness–trigger coupling with localized precursor pressure
+
+**What was tested**
+- whether **increasing inter-layer coupling** between:
+  - readiness layer  
+  - and trigger layer  
+  to a **moderate, bidirectional strength** can induce:
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether a stronger structural coupling than Cycle 92:
+  - breaks closure  
+  - or instead produces a contained intermediate state  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `readiness_trigger_moderately_coupled`  
+    - `localized_precursor_pressure`  
+  - preserved:
+    - global regime closure  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no transition trace activation  
+    - no structural update  
+  - treated precursor pressure as:
+    - weakly emergent  
+    - localized  
+    - non-propagating  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - moderate coupling and localized precursor pressure as subdominant conditions  
+  - explicitly rejected:
+    - localized_precursor_pressure → global activation  
+    - moderate_coupling → threshold shift  
+    - moderate_coupling → full activation  
+  - confirmed:
+    - threshold distance remains globally invariant  
+    - closure remains intact  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_moderate_coupling_and_localized_precursor`  
+  - established:
+    - moderate coupling enables **local precursor pressure generation**  
+    - absence of propagation prevents global transition  
+    - closure can contain internal activation attempts without breaking  
+  - confirmed:
+    - global regime remains non-transition despite internal strain  
+
+**Finding**
+
+Cycle 93 demonstrates:
+
+- moderate inter-layer coupling can generate **localized precursor pressure**  
+- precursor pressure can exist **without global activation**  
+- threshold distance remains globally invariant  
+- closure is preserved  
+
+when:
+- precursor pressure remains localized and non-propagating  
+
+This establishes:
+
+> **coupling strength can generate precursor pressure before it generates activation**
+
+and:
+
+> **closure can contain localized internal activation attempts without breaking**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `localized_precursor_regime`  
+    - defined as:  
+      *a condition in which moderate inter-layer coupling produces localized precursor pressure without threshold shift, propagation, or global activation*  
+
+- classification:
+  - first structural perturbation that produces an internal precursor effect  
+
+- invariants refined:
+  - precursor pressure can be local without becoming global  
+  - activation requires propagation or globalized precursor coherence, not merely local precursor formation
+ 
+---
+
