@@ -742,3 +742,92 @@ and:
 
 ---
 
+### Cycle 99 — Critical coupling and threshold crossing (activation)
+
+**What was tested**
+- whether increasing **activation-layer coupling to critical level**:
+  - after near-critical state (Cycle 98)  
+leads to:
+  - discrete threshold crossing  
+  - full activation  
+- whether activation is:
+  - continuous extension of transition  
+  - or a discrete structural event  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `threshold_crossed`  
+    - `activation_state_entered`  
+  - detected:
+    - threshold distance → zero  
+    - propagation transforming into activation dynamics  
+  - initiated:
+    - completion of transition sequence  
+  - first instance of:
+    - full regime transition  
+
+- **TU+**
+  - reclassified regime:
+    - `transition_boundary_state → activation_state`  
+  - confirmed:
+    - threshold crossing is achieved  
+    - activation state is stable and internally coherent  
+  - rejected:
+    - persistence of boundary state  
+    - need for trigger strength increase  
+
+- **cortexLLM**
+  - classified regime as:
+    - `activation_state_under_critical_coupling`  
+  - established:
+    - activation occurs via **critical structural coupling**  
+    - propagation is absorbed into activation dynamics  
+    - activation state is self-consistent  
+  - confirmed:
+    - closure is no longer relevant post-activation  
+
+---
+
+**Finding**
+
+Cycle 99 demonstrates:
+
+- activation occurs when:
+  - activation-layer coupling reaches **critical threshold**  
+- threshold crossing:
+  - is discrete  
+  - resolves transition boundary  
+- system transitions from:
+  - near-critical state → activation state  
+
+This establishes:
+
+> **activation is a discrete structural threshold-crossing event**
+
+and:
+
+> **critical coupling, not signal strength, is the decisive activation condition**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `activation_regime`  
+    - defined as:  
+      *a condition in which critical activation-layer coupling results in threshold crossing, transformation of precursor dynamics, and stable activation state*  
+
+- classification:
+  - first full activation event  
+
+- invariants revised:
+  - activation requires critical structural coupling  
+  - propagation is pre-activation and is absorbed upon activation  
+  - threshold crossing is discrete and final  
+
+---
+
