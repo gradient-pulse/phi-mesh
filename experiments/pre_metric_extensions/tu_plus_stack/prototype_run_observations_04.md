@@ -470,4 +470,87 @@ and:
 
 ---
 
+### Cycle 106 — Activation re-entry via propagation coherence restoration
+
+**What was tested**
+- whether **full restoration of propagation coherence**:
+  - after near-critical reactivation (Cycle 105)  
+can:
+  - enable threshold crossing  
+  - and re-enter activation  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `propagation_coherent_global`  
+    - `activation_state_reentered`  
+    - `threshold_crossed`  
+  - detected:
+    - precursor pressure globalizing coherently  
+    - activation layer fully recoupling  
+    - threshold distance → zero  
+  - initiated:
+    - reactivation transition  
+
+- **TU+**
+  - reclassified regime:
+    - `transition_boundary_state → activation_state`  
+  - confirmed:
+    - threshold crossing re-established  
+    - activation re-entry is structurally valid  
+  - rejected:
+    - persistence of near-critical boundary state  
+
+- **cortexLLM**
+  - classified regime as:
+    - `activation_reentry_state_under_global_propagation_coherence`  
+  - established:
+    - propagation coherence is the decisive missing condition  
+    - activation is repeatable under full structural reconstitution  
+  - confirmed:
+    - transition boundary is not terminal  
+
+---
+
+**Finding**
+
+Cycle 106 demonstrates:
+
+- activation re-entry occurs when:
+  - propagation becomes fully coherent  
+  - activation layer recouples critically  
+- threshold crossing:
+  - is re-achievable  
+  - follows the same structural pathway as initial activation  
+
+This establishes:
+
+> **activation is repeatable given full structural reconstitution**
+
+and:
+
+> **propagation coherence is the decisive condition for both initial activation and reactivation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `reactivated_activation_regime`  
+    - defined as:  
+      *a condition in which activation is re-entered after collapse through full restoration of propagation coherence and critical coupling*  
+
+- classification:
+  - first successful activation re-entry  
+
+- invariants refined:
+  - activation is reversible and repeatable  
+  - transition boundary is a recoverable intermediate state  
+  - propagation coherence is required for threshold crossing  
+
+---
+
 
