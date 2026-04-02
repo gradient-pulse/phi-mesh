@@ -381,4 +381,93 @@ and:
 
 ---
 
+### Cycle 105 — Strong feedback restoration with partial propagation (near-critical reactivation)
+
+**What was tested**
+- whether **strong restoration of endogenous feedback**:
+  - with partial re-enablement of propagation pathways  
+after failed reactivation (Cycle 104) can:
+  - re-enter activation  
+  - or reach a stable near-critical state  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `strong_feedback_recovery`  
+    - `partial_propagation_reestablished`  
+    - `extended_precursor_pressure`  
+    - `near_critical_reactivation_state`  
+  - detected:
+    - precursor pressure extending beyond local scope  
+    - propagation partially restored  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no activation re-entry  
+
+- **TU+**
+  - maintained:
+    - `transition_boundary_state` (dominant)  
+  - confirmed:
+    - strong feedback restoration is insufficient alone  
+    - propagation remains incomplete  
+    - threshold distance is minimal but positive  
+  - rejected:
+    - automatic activation re-entry under strong restoration  
+
+- **cortexLLM**
+  - classified regime as:
+    - `transition_boundary_with_near_critical_reactivation_under_partial_propagation`  
+  - established:
+    - system reaches **near-critical reactivation state**  
+    - precursor pressure extends but does not fully globalize  
+    - propagation remains non-coherent  
+  - confirmed:
+    - activation re-entry is blocked by incomplete structural reconstitution  
+
+---
+
+**Finding**
+
+Cycle 105 demonstrates:
+
+- strong feedback restoration:
+  - re-establishes coupling  
+  - extends precursor pressure  
+  - partially restores propagation  
+- system:
+  - approaches activation threshold  
+  - does not cross it  
+- activation re-entry fails due to:
+  - incomplete propagation coherence  
+
+This establishes:
+
+> **reactivation requires full propagation coherence, not partial propagation**
+
+and:
+
+> **even strong structural restoration can produce stable near-critical reactivation without activation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `near_critical_reactivation_regime`  
+    - defined as:  
+      *a condition in which strong feedback restoration and partial propagation produce extended precursor pressure and near-threshold dynamics without threshold crossing or activation re-entry*  
+
+- classification:
+  - first high-energy, near-critical reactivation regime  
+
+- invariants refined:
+  - activation re-entry requires full propagation coherence  
+  - strong feedback restoration alone is insufficient  
+  - transition boundary can sustain near-critical reactivation states without resolution
+
+---
+
 
