@@ -306,3 +306,92 @@ and:
 
 ---
 
+### Cycle 113 — Internal fracture of unified activation (correlated phase gradient)
+
+**What was tested**
+- whether a **strong, correlated internal phase gradient**:
+  - distributed globally  
+  - forming clustered phase deviations  
+within a unified activation regime can:
+  - break phase lock  
+  - induce internal fracture  
+  - or collapse activation  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `phase_lock_broken`  
+    - `clustered_incoherence`  
+    - `reemergent_corridors`  
+  - detected:
+    - propagation of phase break from local to global  
+    - re-segmentation into corridor-like structures  
+  - explicitly maintained:
+    - activation persists  
+    - no threshold reopening  
+
+- **TU+**
+  - reclassified structure:
+    - `unified_activation_regime → multi-stable_activation_regime`  
+  - confirmed:
+    - incoherence clusters reorganize into stable structures  
+    - interference patterns re-emerge  
+  - rejected:
+    - collapse to transition boundary  
+    - persistence of unified state  
+
+- **cortexLLM**
+  - classified regime as:
+    - `fracture_of_unified_activation_into_multi_stable_corridor_structure`  
+  - established:
+    - phase lock has a **breaking threshold under correlated load**  
+    - fracture leads to structural reorganization, not collapse  
+    - multi-stability can emerge internally  
+  - confirmed:
+    - activation remains intact  
+
+---
+
+**Finding**
+
+Cycle 113 demonstrates:
+
+- unified activation:
+  - can fracture under strong, correlated internal perturbation  
+  - loses phase lock  
+  - reorganizes into multi-stable structure  
+- system:
+  - does not collapse  
+  - does not reopen threshold  
+  - remains activated  
+
+This establishes:
+
+> **unified activation is not terminal and can fracture under correlated structural load**
+
+and:
+
+> **internal fracture produces structured multi-stability, not collapse**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `fractured_unified_activation_regime`  
+    - defined as:  
+      *a condition in which unified activation loses phase lock under strong correlated internal perturbation and reorganizes into a multi-stable corridor structure while maintaining activation*  
+
+- classification:
+  - first internal fracture of unified activation  
+
+- invariants refined:
+  - phase lock has a finite breaking threshold under correlated perturbations  
+  - coherence can reorganize internally without external competition  
+  - activation persists across structural fracture  
+
+---
+
