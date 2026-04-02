@@ -997,11 +997,11 @@ It is:
 
 So:
 
-activation stability is graded, not binary
+> activation stability is graded, not binary
 
 and:
 
-activation persistence depends on ongoing structural support
+> activation persistence depends on ongoing structural support
 
 ⸻
 
@@ -1015,11 +1015,11 @@ Activation collapses when:
 
 This means:
 
-activation is reversible under sufficient structural degradation
+> activation is reversible under sufficient structural degradation
 
 and:
 
-threshold-zero is not permanent unless structural maintenance persists
+> threshold-zero is not permanent unless structural maintenance persists
 
 ⸻
 
@@ -1037,11 +1037,11 @@ Reactivation does occur when:
 
 This means:
 
-activation re-entry follows the same structural logic as initial activation
+> activation re-entry follows the same structural logic as initial activation
 
 and:
 
-propagation coherence is decisive for both activation and reactivation
+> propagation coherence is decisive for both activation and reactivation
 
 ⸻
 
@@ -1055,11 +1055,11 @@ Once reactivated, the system can sustain:
 
 This means:
 
-activation is not intrinsically single-mode
+> activation is not intrinsically single-mode
 
 and:
 
-coherence can be distributed across multiple active structures without collapse
+> coherence can be distributed across multiple active structures without collapse
 
 ⸻
 
