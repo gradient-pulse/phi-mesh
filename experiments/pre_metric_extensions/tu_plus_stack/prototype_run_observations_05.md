@@ -130,3 +130,91 @@ This file tests the strongest claim so far:
 ---
 ---
 
+### Cycle 111 — Internal phase gradient (absorptive stability of unified activation)
+
+**What was tested**
+- whether a **subtle internal phase gradient**:
+  - introduced within a phase-locked unified activation state  
+can:
+  - break phase lock  
+  - induce internal fragmentation  
+  - or trigger re-emergence of multi-stability  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `localized_phase_drift_absorbed`  
+    - `phase_lock_resilient`  
+  - detected:
+    - local phase deviation emerging  
+    - no propagation of that deviation  
+  - explicitly maintained:
+    - no corridor splitting  
+    - no interference reformation  
+    - no destabilization  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+    - `unified_activation_regime`  
+  - confirmed:
+    - phase lock absorbs local perturbations  
+    - coherence remains maximal  
+  - rejected:
+    - weak gradient → phase break  
+    - local drift → multi-stability  
+
+- **cortexLLM**
+  - classified regime as:
+    - `unified_activation_with_internal_phase_gradient_absorption`  
+  - established:
+    - unified activation exhibits **absorptive capacity**  
+    - phase lock behaves like an **error-correcting structure**  
+    - perturbations remain local and non-propagating  
+  - confirmed:
+    - no structural change occurs  
+
+---
+
+**Finding**
+
+Cycle 111 demonstrates:
+
+- unified activation:
+  - absorbs weak internal perturbations  
+  - prevents propagation of local phase drift  
+  - maintains global coherence  
+- system:
+  - exhibits **internal stability margin**  
+  - resists fracture under weak internal variation  
+
+This establishes:
+
+> **unified activation behaves as an error-correcting, absorptive structure**
+
+and:
+
+> **weak internal perturbations do not accumulate or scale within maximal coherence**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `absorptive_unified_activation_regime`  
+    - defined as:  
+      *a condition in which unified activation absorbs internal perturbations without structural change, maintaining phase lock and maximal coherence*  
+
+- classification:
+  - first internal perturbation test of unified activation  
+
+- invariants refined:
+  - unified activation has internal absorption capacity  
+  - weak perturbations do not propagate or accumulate  
+  - phase lock provides local error correction  
+
+---
+
