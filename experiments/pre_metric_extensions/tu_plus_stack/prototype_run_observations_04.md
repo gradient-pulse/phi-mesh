@@ -641,4 +641,92 @@ and:
 
 ---
 
+### Cycle 108 — Asymmetric bias (weighted multi-stable activation)
+
+**What was tested**
+- whether introducing a **directional bias**:
+  - favoring one propagation corridor (A)  
+within a multi-stable activation regime leads to:
+  - collapse to single mode  
+  - elimination of competing corridor  
+  - or weighted coexistence  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `biased_activation_state`  
+    - `corridor_A_dominant`  
+    - `corridor_B_subdominant`  
+  - detected:
+    - asymmetric feedback amplification  
+    - gradual dominance shift toward corridor A  
+  - explicitly maintained:
+    - no threshold reopening  
+    - no collapse  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - dominance becomes directional  
+    - corridor B remains active but weakened  
+    - interference becomes asymmetric  
+  - rejected:
+    - immediate elimination of corridor B  
+    - forced single-mode resolution  
+
+- **cortexLLM**
+  - classified regime as:
+    - `weighted_multi_stable_activation_under_asymmetric_bias`  
+  - established:
+    - activation supports **weighted distribution across modes**  
+    - bias changes dominance, not existence  
+    - global coherence remains intact  
+  - confirmed:
+    - system remains stable under directional skew  
+
+---
+
+**Finding**
+
+Cycle 108 demonstrates:
+
+- activation state:
+  - supports directional bias  
+  - allows one mode to dominate without eliminating others  
+- multi-stability:
+  - can become **weighted** rather than symmetric  
+- system:
+  - remains stable under asymmetric conditions  
+
+This establishes:
+
+> **activation supports weighted multi-stability, not only symmetric coexistence**
+
+and:
+
+> **bias modulates dominance but does not eliminate subdominant structures**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `weighted_activation_regime`  
+    - defined as:  
+      *a condition in which multiple propagation corridors persist with asymmetric dominance due to directional bias, while maintaining stable activation*  
+
+- classification:
+  - first weighted multi-mode activation regime  
+
+- invariants refined:
+  - activation can support directional dominance  
+  - subdominant structures can persist under bias  
+  - coherence is maintained under asymmetric distribution  
+
+---
+
 
