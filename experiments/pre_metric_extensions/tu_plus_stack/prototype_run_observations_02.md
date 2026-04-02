@@ -1,5 +1,7 @@
 # Prototype Run Observations 02
 
+> Note: see "## File Closure — Established Non-Transition Regime" at the end of this file.
+
 ## Purpose
 
 This file continues the dry-run observation trail from `prototype_run_observations_01.md`, starting at Cycle 60.
@@ -3332,3 +3334,125 @@ and:
 ---
 ---
 
+## File Closure — Established Non-Transition Regime
+
+## Terminal statement
+
+Cycles 60–90 establish a **closed, invariant non-transition regime** under admissible conditions.
+
+The system demonstrates:
+
+- persistent non-transition under:
+  - repeated execution  
+  - extended duration  
+- stability under:
+  - null input  
+  - structured perturbation  
+- invariance under:
+  - alignment  
+  - phase relation and drift  
+  - structural variation  
+  - cross-coupling  
+  - temporal density  
+  - amplitude variability  
+  - polarity variation  
+  - coherence gain  
+  - multi-parameter combinations  
+
+No tested condition resulted in:
+- accumulation  
+- precursor pressure  
+- threshold shift  
+- boundary recalibration  
+- classification drift  
+- activation  
+
+---
+
+## Established properties
+
+- **Closure**  
+  The regime remains closed under all admissible sub-threshold inputs.
+
+- **Non-accumulation**  
+  Repetition and enrichment of signals do not accumulate toward activation.
+
+- **Threshold invariance**  
+  Distance to activation threshold remains constant under all tested perturbations.
+
+- **Signal-space immunity**  
+  Increased signal richness does not affect regime state.
+
+- **Boundary stability**  
+  Boundary conditions remain intact under all tested input variations.
+
+- **Classification invariance**  
+  Regime identity remains fixed across all cycles.
+
+---
+
+## Exclusion domain
+
+The following are now **excluded as activation mechanisms**:
+
+- repetition  
+- alignment increase  
+- phase synchronization  
+- phase drift  
+- structural micro-variation  
+- weak cross-coupling  
+- temporal density increase  
+- amplitude variability  
+- polarity variation  
+- coherence gain  
+- any combination of the above  
+
+---
+
+## Engineering interpretation
+
+All tested inputs operate within **signal space**.
+
+No signal-space modulation—individually or in combination—produces:
+- activation  
+- transition  
+- or precursor formation  
+
+This implies:
+
+> **activation requires a condition outside the explored signal-space manifold**
+
+---
+
+## File completion rationale
+
+This file is complete because:
+
+- the tested input space has been:
+  - systematically expanded  
+  - orthogonally varied  
+  - combinatorially enriched  
+
+- all explored dimensions converge to:
+  - invariant non-transition  
+  - stable closure  
+
+No further signal-space variation is expected to produce new behavior.
+
+---
+
+## Transition to next phase
+
+Next phase objective:
+
+> **Identify minimal structural change required to break closure**
+
+This requires:
+- moving beyond signal modulation  
+- introducing regime-level structural perturbations  
+
+File 03 will focus exclusively on:
+- structural perturbation  
+- boundary break conditions  
+- re-entry dynamics  
+- failure paths  
