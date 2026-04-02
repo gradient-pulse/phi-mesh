@@ -167,3 +167,89 @@ and:
  
 ---
 
+### Cycle 92 — Weak readiness–trigger coupling
+
+**What was tested**
+- whether **introducing inter-layer coupling** between:
+  - readiness layer  
+  - and trigger layer  
+  at **weak strength** can induce:
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether coupling (absent in Cycle 91) is sufficient to:
+  - break closure  
+  - or establish an activation pathway  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `readiness_trigger_weakly_coupled`  
+  - preserved:
+    - regime closure  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no precursor generation  
+    - no structural update  
+  - treated weak coupling as structurally valid but insufficient  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - weak coupling as subdominant condition  
+  - explicitly rejected:
+    - weak_coupling → precursor pressure  
+    - weak_coupling → activation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - closure remains intact  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_weak_readiness_trigger_coupling`  
+  - established:
+    - coupling is necessary but not sufficient  
+    - weak coupling does not generate precursor pressure  
+    - activation pathway is not established  
+  - confirmed:
+    - closure persists under weak inter-layer coupling  
+
+**Finding**
+
+Cycle 92 demonstrates:
+
+- inter-layer coupling alone does not induce activation  
+- precursor pressure does not emerge  
+- threshold distance remains invariant  
+- closure is preserved  
+
+when:
+- coupling strength is insufficient  
+
+This establishes:
+
+> **coupling is necessary but requires sufficient strength to affect the regime**
+
+and:
+
+> **weak inter-layer coupling remains operationally inert**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `weak_coupling_regime`  
+    - defined as:  
+      *a condition in which inter-layer coupling exists but is insufficient to generate precursor pressure, shift thresholds, or trigger activation*  
+
+- classification:
+  - first coupling-based structural test result  
+
+- invariants refined:
+  - coupling without sufficient strength does not break closure  
+  - activation requires effective (not merely present) inter-layer binding  
+
+---
+
