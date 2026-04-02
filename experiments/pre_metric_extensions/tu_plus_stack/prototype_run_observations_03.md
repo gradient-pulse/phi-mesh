@@ -566,3 +566,92 @@ and:
 
 ---
 
+### Cycle 97 — Partial activation-layer engagement
+
+**What was tested**
+- whether **introducing activation-layer presence**:
+  - weak  
+  - partially coupled to propagation  
+after:
+  - sustained propagation (Cycle 96)  
+leads to:
+  - full activation  
+  - or continued subcritical transition  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `activation_layer_weakly_present`  
+    - `partial_activation_coupling`  
+  - preserved:
+    - transition trajectory  
+  - detected:
+    - further reduction in threshold distance  
+    - weak activation trace emergence  
+  - explicitly maintained:
+    - no full activation  
+    - no reversion to closure  
+
+- **TU+**
+  - maintained:
+    - `transition_boundary_state` (dominant)  
+  - confirmed:
+    - activation layer engagement is subcritical  
+    - transition deepens without resolution  
+  - rejected:
+    - spontaneous activation completion  
+    - closure reformation  
+
+- **cortexLLM**
+  - classified regime as:
+    - `transition_boundary_with_partial_activation_layer_engagement`  
+  - established:
+    - activation layer is now engaged but insufficiently coupled  
+    - propagation + coupling + weak activation presence still do not complete transition  
+  - confirmed:
+    - system is approaching activation but remains below threshold  
+
+---
+
+**Finding**
+
+Cycle 97 demonstrates:
+
+- activation layer presence:
+  - further reduces threshold distance  
+  - introduces activation trace  
+  - does not complete activation  
+- system remains:
+  - in transition boundary  
+  - in a deeper pre-activation state  
+
+This establishes:
+
+> **activation requires sufficient activation-layer coupling, not merely presence**
+
+and:
+
+> **transition can deepen through layered engagement without resolving into activation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `partial_activation_regime`  
+    - defined as:  
+      *a condition in which activation layer is present and partially coupled, reducing threshold distance but not producing full activation*  
+
+- classification:
+  - first activation-layer engagement without completion  
+
+- invariants refined:
+  - activation requires sufficient activation-layer coupling strength  
+  - propagation + coupling + weak activation presence remain subcritical  
+  - transition boundary is multi-layered and can deepen without resolution  
+
+---
+
