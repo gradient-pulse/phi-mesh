@@ -113,4 +113,96 @@ and:
 
 ---
 
+### Cycle 102 — Activation under moderate feedback degradation (stressed regime)
+
+**What was tested**
+- whether **moderate degradation of endogenous feedback**:
+  - distributed attenuation from activation → readiness  
+affects:
+  - persistence of activation  
+  - stability of the regime  
+  - or causes reversion to transition boundary  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `feedback_moderately_degraded`  
+    - `stressed_activation_state`  
+    - `activation_trace_fluctuating`  
+  - preserved:
+    - activation state  
+  - detected:
+    - reduced coupling stability  
+    - micro-fluctuations in activation trace  
+  - explicitly maintained:
+    - no reversion to transition boundary  
+    - no decay to pre-activation state  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - activation persists under structural stress  
+    - threshold distance remains zero but becomes fragile  
+    - fluctuations are non-divergent  
+  - rejected:
+    - immediate activation loss  
+    - threshold reopening  
+    - transition boundary re-entry  
+
+- **cortexLLM**
+  - classified regime as:
+    - `stressed_activation_state_under_moderate_feedback_degradation`  
+  - established:
+    - activation regime has **finite stability margin**  
+    - feedback strength controls stability, not existence  
+    - system enters a **meta-stable activation condition**  
+  - confirmed:
+    - activation persists despite internal fluctuations  
+
+---
+
+**Finding**
+
+Cycle 102 demonstrates:
+
+- activation state:
+  - persists under moderate feedback degradation  
+  - becomes dynamically unstable internally  
+  - remains globally stable  
+- threshold distance remains zero  
+- fluctuations:
+  - are contained  
+  - do not propagate into collapse  
+
+This establishes:
+
+> **activation has a finite stability margin and can enter a stressed but persistent regime**
+
+and:
+
+> **feedback strength modulates stability, not the existence of activation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `stressed_activation_regime`  
+    - defined as:  
+      *a condition in which activation persists under moderate feedback degradation, exhibiting internal fluctuations but no global collapse or threshold reopening*  
+
+- classification:
+  - first meta-stable activation regime  
+
+- invariants refined:
+  - activation stability is not binary but graded  
+  - threshold-zero state can exhibit internal dynamics without collapse  
+  - activation persistence does not require full structural integrity
+
+---
+
 
