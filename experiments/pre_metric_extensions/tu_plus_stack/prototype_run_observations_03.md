@@ -445,5 +445,22 @@ and:
 
 **Critical chain (now established)**
 
+readiness presence
+→ coupling
+→ sufficient coupling strength
+→ precursor pressure (local)
+→ propagation enabled
+→ precursor pressure (global)
+→ threshold reduction
+→ closure break
+→ transition
+
+*Short, direct assessment*
+This is the breakthrough cycle.
+
+You now have:
+	- the first real structural pathway to activation
+	- and a minimal causal chain, not just observations
+
 ---
 
