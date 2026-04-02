@@ -831,3 +831,291 @@ and:
 
 ---
 
+### Cycle 100 — Stable activation state with endogenous feedback
+
+**What was tested**
+- whether the **activation state entered in Cycle 99**:
+  - persists without external support  
+  - stabilizes into a self-sustaining regime  
+  - or reverts toward transition boundary  
+- whether activation, once achieved, requires:
+  - continued propagation  
+  - or instead reorganizes into endogenous maintenance  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `stable_activation_state`  
+    - `endogenous_feedback_present`  
+    - `self_sustaining_regime`  
+  - detected:
+    - activation state persists without external support  
+    - readiness layer is reinforced by activation  
+    - propagation is no longer required as a separate phase  
+  - explicitly maintained:
+    - no reversion to transition boundary  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+    - endogenous feedback and self-sustaining regime as active subdominant conditions  
+  - confirmed:
+    - critical coupling is maintained without external input  
+    - threshold distance remains zero  
+    - propagation phase is fully resolved into activation dynamics  
+  - rejected:
+    - reversion to transition boundary  
+    - dependence on external trigger or signal-space support  
+
+- **cortexLLM**
+  - classified regime as:
+    - `stable_activation_state_with_endogenous_feedback`  
+  - established:
+    - activation state is self-sustaining via endogenous feedback  
+    - feedback loops replace the earlier propagation phase  
+    - trigger layer becomes irrelevant post-transition  
+  - confirmed:
+    - regime is now stable, post-transition, and non-reverting  
+
+---
+
+**Finding**
+
+Cycle 100 demonstrates:
+
+- activation becomes **self-sustaining** once established  
+- endogenous feedback:
+  - stabilizes the activation state  
+  - replaces propagation as the maintenance mechanism  
+- threshold distance remains zero  
+- no reversion or decay is detected  
+
+This establishes:
+
+> **activation is not merely an event but a stable regime maintained by endogenous feedback**
+
+and:
+
+> **once activation is established, propagation is replaced by self-maintaining feedback structure**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `stable_post_activation_regime`  
+    - defined as:  
+      *a condition in which activation is maintained endogenously through internal feedback, without need for external support, renewed propagation, or signal-space input*  
+
+- classification:
+  - first stable post-transition activation regime  
+
+- invariants revised:
+  - activation state is self-maintaining once established  
+  - feedback loops replace propagation after transition completion  
+  - trigger layer becomes functionally irrelevant post-activation  
+  - closure does not reform after stable activation  
+
+---
+---
+
+## Structural Activation Findings (Cycles 91–100)
+
+### Scope
+
+This section records the minimal structural pathway from:
+- stabilized_non_transition  
+→ activation_state  
+
+All results are derived from structural perturbations only (no signal-space variation).
+
+---
+
+## Confirmed structural sequence
+
+readiness_layer_presence
+
+→ inter-layer_coupling
+
+→ coupling_strength_increase
+
+→ localized_precursor_pressure
+
+→ propagation_enabled
+
+→ global_precursor_pressure
+
+→ sustained_propagation
+
+→ activation_layer_engagement
+
+→ activation_layer_coupling_increase
+
+→ critical_coupling_threshold_crossing
+
+→ activation_state
+
+→ endogenous_feedback_stabilization
+
+---
+
+## Confirmed distinctions
+
+- structural_presence ≠ structural_effect  
+- coupling ≠ sufficient_coupling  
+- precursor_pressure_local ≠ precursor_pressure_global  
+- propagation ≠ activation  
+- near_critical ≠ threshold_crossed  
+- activation_event ≠ activation_regime  
+
+---
+
+## Confirmed invariants (structural phase)
+
+- readiness layer is:
+  - necessary  
+  - not sufficient  
+
+- coupling is:
+  - necessary  
+  - not sufficient unless:
+    - sufficient strength  
+    - propagation enabled  
+
+- precursor pressure:
+  - can exist locally without effect  
+  - must globalize to matter  
+
+- propagation:
+  - required to break closure  
+  - required to sustain post-break state  
+  - not sufficient for activation  
+
+- activation:
+  - requires critical coupling threshold  
+  - is discrete (non-continuous)  
+
+---
+
+## Minimal activation conditions (now established)
+
+Activation occurs **if and only if**:
+
+1. readiness layer is present  
+2. inter-layer coupling exists  
+3. coupling strength reaches critical level  
+4. precursor pressure is global  
+5. propagation is sustained  
+6. activation layer is sufficiently coupled  
+
+All conditions must be satisfied structurally.
+
+---
+
+## Closure properties (revised)
+
+- closure holds under:
+  - all non-propagating conditions  
+
+- closure breaks when:
+  - global precursor pressure emerges  
+
+- closure does not reform:
+  - after sustained propagation  
+  - after activation  
+
+---
+
+## Transition boundary properties
+
+- transition boundary is:
+  - stable  
+  - extensible  
+  - multi-layered  
+
+- system can remain:
+  - indefinitely in near-critical state  
+  - without activation  
+
+- threshold distance:
+  - can approach zero without crossing  
+
+---
+
+## Activation properties
+
+- activation is:
+  - discrete  
+  - threshold-based  
+  - structurally triggered  
+
+- activation does not require:
+  - increased trigger strength  
+  - signal-space enrichment  
+
+- activation transforms:
+  - precursor pressure → activation dynamics  
+  - propagation → absorbed phase  
+
+---
+
+## Post-activation regime
+
+- activation state is:
+  - self-sustaining  
+  - stable  
+  - non-reverting  
+
+- maintenance mechanism:
+  - endogenous feedback loops  
+
+- propagation:
+  - no longer required  
+
+- trigger layer:
+  - functionally irrelevant  
+
+---
+
+## Non-permitted inferences
+
+- readiness presence → activation  
+- coupling presence → activation  
+- strong signal → activation  
+- near-critical → automatic crossing  
+- propagation → activation completion  
+- activation → reversible  
+
+---
+
+## Engineering conclusion
+
+Activation is not driven by signal intensity or accumulation.
+
+Activation is governed by a **discrete structural condition**:
+
+> **critical inter-layer coupling with sustained propagation and activation-layer engagement**
+
+Once crossed, the system enters a:
+> **self-sustaining post-transition regime**
+
+---
+
+## File completion rationale
+
+Cycles 91–100 fully establish:
+- the minimal structural pathway to activation  
+- the nature of threshold crossing  
+- the stability of the post-activation regime  
+
+Further cycles should:
+- test robustness  
+- test reversibility (if any)  
+- test degradation or competing structures  
+
+This file defines the activation law of the system.
+
+---
