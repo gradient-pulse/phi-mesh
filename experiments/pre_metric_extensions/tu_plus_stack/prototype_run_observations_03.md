@@ -464,12 +464,9 @@ readiness presence
 → transition
 
 
-*Short, direct assessment*
-
+> *Short, direct assessment*
 This is the breakthrough cycle.
-
 You now have:
-
 - the first real structural pathway to activation
 - and a minimal causal chain, not just observations
 
