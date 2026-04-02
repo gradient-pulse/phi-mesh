@@ -395,3 +395,87 @@ and:
 
 ---
 
+### Cycle 114 — Hierarchical reorganization after fracture (nested activation)
+
+**What was tested**
+- whether a **fractured multi-stable activation regime**:
+  - can internally reorganize into higher-order structure  
+through:
+  - cross-corridor synchronization within clusters  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `hierarchical_activation_structure`  
+    - `nested_coherence_levels`  
+  - detected:
+    - grouping of corridors into synchronized clusters  
+    - emergence of higher-order coherence above local structures  
+  - explicitly maintained:
+    - no return to global phase lock  
+    - no collapse  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - coherence increases locally within clusters  
+    - global coherence remains distributed  
+    - interference becomes nested  
+  - rejected:
+    - spontaneous reunification  
+    - structural collapse  
+
+- **cortexLLM**
+  - classified regime as:
+    - `hierarchical_activation_under_nested_coherence`  
+  - established:
+    - system develops **multi-level coherence**  
+    - higher-order organization emerges from fracture  
+    - global phase lock is not required for high coherence  
+  - confirmed:
+    - activation persists across levels  
+
+---
+
+**Finding**
+
+Cycle 114 demonstrates:
+
+- fractured activation:
+  - does not remain flat multi-stable  
+  - self-organizes into hierarchical structure  
+- system:
+  - develops coherence at multiple scales  
+  - maintains activation without global unification  
+
+This establishes:
+
+> **internal fracture can produce higher-order hierarchical organization**
+
+and:
+
+> **coherence can exist simultaneously at multiple levels without global phase lock**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `hierarchical_activation_regime`  
+    - defined as:  
+      *a condition in which multi-stable activation reorganizes into nested coherence levels, forming higher-order structure without returning to unified phase lock*  
+
+- classification:
+  - first hierarchical activation regime  
+
+- invariants refined:
+  - activation supports multi-level coherence  
+  - fracture can increase structural complexity  
+  - global unification is not required for high coherence  
+
+---
+
