@@ -80,3 +80,90 @@ Expected outcomes (to be observed, not assumed):
 - threshold shift  
 
 ---
+
+### Cycle 91 — Readiness-layer injection without coupling
+
+**What was tested**
+- whether **introducing a readiness layer (structural perturbation)**:
+  - without coupling to the trigger layer  
+  can induce:
+  - precursor pressure  
+  - threshold shift  
+  - or activation  
+- whether the mere **presence of readiness** is sufficient to:
+  - break closure  
+  - or open an activation pathway  
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `readiness_layer_present`  
+    - `readiness_layer_uncoupled`  
+  - preserved:
+    - regime closure  
+  - explicitly maintained:
+    - no trigger change  
+    - no precursor generation  
+    - no structural update  
+  - treated readiness presence as structurally valid but inert  
+
+- **TU+**
+  - maintained:
+    - `stabilized_non_transition` (dominant)  
+    - readiness layer as subdominant, non-binding condition  
+  - explicitly rejected:
+    - readiness_presence → precursor pressure  
+    - readiness_presence → activation  
+  - confirmed:
+    - threshold distance remains invariant  
+    - closure remains intact  
+
+- **cortexLLM**
+  - classified the regime as:
+    - `admissible_non_transition_with_uncoupled_readiness_layer`  
+  - established:
+    - readiness layer is necessary but not sufficient for activation  
+    - absence of coupling prevents activation pathway formation  
+  - confirmed:
+    - structural injection alone does not break closure  
+
+**Finding**
+
+Cycle 91 demonstrates:
+
+- readiness layer presence does not induce activation  
+- precursor pressure does not emerge  
+- threshold distance remains invariant  
+- closure is preserved  
+
+without:
+- coupling  
+- activation pathway formation  
+
+This establishes:
+
+> **readiness layer is necessary but not sufficient for activation**
+
+and:
+
+> **structural presence without inter-layer coupling is operationally inert**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `uncoupled_readiness_regime`  
+    - defined as:  
+      *a condition in which readiness layer presence without trigger coupling does not generate precursor pressure, shift thresholds, or trigger activation*  
+
+- classification:
+  - first structural perturbation result  
+
+- invariants refined:
+  - structural injection alone does not break closure  
+  - activation requires inter-layer binding, not mere layer presence
+ 
+---
+
