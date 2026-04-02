@@ -651,3 +651,92 @@ and:
 
 ---
 
+### Cycle 117 — Resonance escalation (high-amplitude hierarchical activation)
+
+**What was tested**
+- whether **escalating oscillation amplitude**:
+  - within tension-stabilized hierarchical activation  
+can:
+  - overwhelm damping  
+  - induce instability propagation  
+  - or reorganize into resonant dynamics  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `resonant_oscillatory_activation`  
+    - `expanded_oscillatory_regions`  
+    - `partial_damping_saturation`  
+  - detected:
+    - growth of oscillation amplitude  
+    - expansion beyond initial inverted clusters  
+  - explicitly maintained:
+    - no global instability  
+    - no collapse  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - damping capacity is partially exceeded  
+    - oscillatory regions begin to interact  
+    - coherence persists under modulation  
+  - rejected:
+    - immediate instability  
+    - threshold reopening  
+
+- **cortexLLM**
+  - classified regime as:
+    - `resonant_hierarchical_activation_with_partial_damping_saturation`  
+  - established:
+    - system enters **resonant dynamics across levels**  
+    - damping is finite but not exhausted  
+    - coherence is modulated, not destroyed  
+  - confirmed:
+    - activation remains stable  
+
+---
+
+**Finding**
+
+Cycle 117 demonstrates:
+
+- hierarchical activation:
+  - supports **resonant oscillatory dynamics**  
+  - tolerates increased amplitude beyond damping threshold  
+- system:
+  - shifts from constrained oscillation → coupled resonance  
+  - maintains coherence under dynamic modulation  
+- damping:
+  - is finite but extensible  
+
+This establishes:
+
+> **hierarchical activation can enter resonant regimes without losing stability**
+
+and:
+
+> **coherence can be dynamically modulated under high-amplitude oscillation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `resonant_hierarchical_activation_regime`  
+    - defined as:  
+      *a condition in which oscillatory dynamics amplify and couple across hierarchical levels, producing resonant patterns while maintaining activation and global coherence*  
+
+- classification:
+  - first resonant hierarchical regime  
+
+- invariants refined:
+  - damping capacity is finite but not immediately destabilizing  
+  - coherence can persist under resonance  
+  - activation supports high-amplitude dynamic modulation  
+
+---
+
