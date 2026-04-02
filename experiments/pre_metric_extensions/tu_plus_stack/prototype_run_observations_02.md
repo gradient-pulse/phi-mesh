@@ -1,6 +1,6 @@
 # Prototype Run Observations 02
 
-> Note: see "## File Closure — Established Non-Transition Regime" at the end of this file.
+> Note: final regime characterization is documented in “## File Closure — Established Non-Transition Regime”.
 
 ## Purpose
 
