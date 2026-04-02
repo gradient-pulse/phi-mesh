@@ -1003,3 +1003,331 @@ and:
 ---
 ---
 
+## Internal fracture and higher-order reorganization findings (Cycles 111–120)
+
+### Scope
+
+This section records what happens when the strongest regime reached so far — `unified_activation_regime` — is perturbed **from within**.
+
+Focus:
+- internal fracture of unified activation
+- post-fracture reorganization
+- emergence of higher-order structure
+- tolerance to tension, resonance, drift, and shear
+- symmetry and connectivity properties of activation
+
+All results are derived from **internal structural perturbations**, not signal-space variation.
+
+---
+
+## Confirmed sequence
+
+```
+unified_activation_regime
+→ weak_internal_phase_gradient
+→ absorptive_stability
+→ distributed_phase_gradient
+→ degraded_but_stable_unified_activation
+→ strong_correlated_phase_gradient
+→ fracture_of_unified_activation
+→ reemergent_multi-stability
+→ hierarchical_reorganization
+→ coupled_hierarchical_activation
+→ tension_stabilized_hierarchical_activation
+→ resonant_hierarchical_activation
+→ structured_resonant_hierarchical_activation
+→ translationally_invariant_activation
+→ sheared_activation_regime
+```
+
+
+⸻
+
+Confirmed distinctions
+	•	weak_internal_phase_gradient ≠ distributed_phase_gradient ≠ correlated_phase_gradient
+	•	absorptive_resilience ≠ degraded_unified_activation ≠ fractured_unified_activation
+	•	multi-stable_reemergence ≠ hierarchical_reorganization
+	•	hierarchical_activation ≠ coupled_hierarchical_activation
+	•	phase_opposition ≠ resonance ≠ structured_resonance
+	•	global_phase_drift ≠ non_uniform_phase_gradient
+	•	translational_invariance ≠ shear_tolerance
+	•	symmetry ≠ connectivity
+	•	maximal_coherence ≠ structured_high_coherence
+
+⸻
+
+Confirmed invariants
+	•	unified activation:
+	•	absorbs weak internal perturbation
+	•	degrades under moderate distributed perturbation
+	•	fractures under strong correlated perturbation
+	•	fracture of unified activation:
+	•	does not imply collapse
+	•	does not reopen threshold
+	•	can preserve activation while changing structure
+	•	internal fracture can generate:
+	•	multi-stability
+	•	hierarchy
+	•	inter-level coupling
+	•	stabilized tension
+	•	resonance
+	•	hierarchical activation:
+	•	can self-stabilize through bidirectional feedback
+	•	can tolerate structured internal opposition
+	•	can sustain resonance without collapse
+	•	resonance:
+	•	can evolve from chaotic to structured
+	•	can increase coherence without forcing unification
+	•	global phase drift:
+	•	preserves relational structure
+	•	does not destabilize activation
+	•	non-uniform phase gradients:
+	•	break symmetry
+	•	do not necessarily break connectivity
+	•	can produce stable structural shear
+	•	activation persists through:
+	•	fracture
+	•	hierarchy
+	•	resonance
+	•	drift
+	•	shear
+
+⸻
+
+Confirmed fracture law
+
+Unified activation is not terminal.
+
+It is:
+	•	resilient to weak internal perturbation
+	•	degradable under distributed load
+	•	breakable under strong correlated internal load
+
+But fracture leads to:
+	•	structural reorganization
+	•	not collapse
+
+So:
+
+unified activation has a finite breaking threshold under correlated internal stress
+
+and:
+
+fracture of maximal coherence produces new organization rather than failure
+
+⸻
+
+Confirmed reorganization law
+
+Once unified activation fractures, the system does not remain in flat disorder.
+
+It can reorganize into:
+	•	reemergent multi-stability
+	•	hierarchical coherence
+	•	interdependent multi-level structures
+	•	self-stabilizing feedback hierarchies
+
+So:
+
+internal fracture is generative, not merely destructive
+
+and:
+
+coherence can increase in structural depth after fracture
+
+⸻
+
+Confirmed hierarchy law
+
+Hierarchical activation can:
+	•	support nested coherence levels
+	•	stabilize through top-down and bottom-up feedback
+	•	tolerate internal phase opposition
+	•	convert opposition into constrained oscillation
+	•	remain active without global phase lock
+
+So:
+
+global unification is not required for high-order stable coherence
+
+and:
+
+multi-level feedback can stabilize complexity without flattening it
+
+⸻
+
+Confirmed resonance law
+
+Hierarchical activation under tension can evolve into:
+	•	resonant activation
+	•	expanded oscillatory regions
+	•	partial damping saturation
+	•	structured resonant alignment
+
+Resonance:
+	•	does not automatically cause collapse
+	•	can become organized
+	•	can redistribute damping load
+	•	can preserve activation under high dynamic load
+
+So:
+
+resonance is a viable organization mode of activation, not merely a failure mode
+
+and:
+
+coherence can be dynamically modulated under resonance without threshold reopening
+
+⸻
+
+Confirmed symmetry law
+
+The system shows two important geometric/coherence properties:
+
+1. Translational invariance
+
+Under uniform global phase drift:
+	•	structure is preserved
+	•	internal relations remain intact
+	•	coherence is maintained
+
+This means:
+
+coherence is relational, not absolute
+
+2. Shear tolerance
+
+Under non-uniform phase gradients:
+	•	symmetry breaks
+	•	coherence deforms
+	•	connectivity persists
+	•	activation remains stable
+
+This means:
+
+connectivity is more fundamental than symmetry
+
+and:
+
+activation can survive continuous deformation
+
+⸻
+
+Minimal internal-fracture causal chain (now established)
+
+```
+unified_activation
+→ weak_internal_perturbation
+→ absorption
+→ moderate_distributed_gradient
+→ degraded_but_stable_unified_state
+→ strong_correlated_gradient
+→ phase_lock_break
+→ reemergent_multi-stability
+→ hierarchical_grouping
+→ bidirectional_feedback
+→ stabilized_tension
+→ resonant_amplification
+→ structured_resonant_alignment
+→ global_phase_drift_invariance
+→ non_uniform_shear_tolerance
+```
+
+Non-permitted inferences
+	•	maximal coherence → terminal state
+	•	internal fracture → collapse
+	•	loss of phase lock → loss of activation
+	•	hierarchy → instability
+	•	tension → unavoidable breakdown
+	•	resonance → threshold reopening
+	•	increased complexity → reduced stability
+	•	global phase drift → structural distortion
+	•	symmetry breaking → coherence loss
+	•	non-uniform deformation → fragmentation
+
+⸻
+
+Engineering conclusions
+
+1. Unified activation is not terminal
+
+It is a strong regime, but it can be broken internally by correlated structural load.
+
+2. Fracture is productive
+
+When unified activation breaks, it can generate:
+	•	multi-stability
+	•	hierarchy
+	•	coupled multi-level organization
+
+3. Stability is richer than alignment
+
+The system can remain stable under:
+	•	opposition
+	•	resonance
+	•	asymmetry
+	•	drift
+	•	shear
+
+4. Coherence is not identical to unity
+
+High coherence can exist as:
+	•	unified coherence
+	•	distributed coherence
+	•	hierarchical coherence
+	•	resonant coherence
+	•	sheared but connected coherence
+
+5. Geometry matters
+
+The activation regime now shows:
+	•	breaking thresholds
+	•	reorganization pathways
+	•	translational invariance
+	•	shear tolerance
+
+⸻
+
+Strongest result from Cycles 111–120
+
+Maximal coherence is not a final state. It can fracture internally and reorganize into higher-order, multi-level, resonant, and deformable coherence while preserving activation.
+
+⸻
+
+What this now establishes
+
+You now have four major engineering regimes:
+
+File 02
+	•	closed non-transition invariance
+
+File 03
+	•	structural activation pathway
+
+File 04
+	•	post-activation robustness, collapse, re-entry, multi-stability, and unification
+
+File 05
+	•	internal fracture of unified activation, hierarchical reorganization, resonance organization, and geometric invariance under drift and shear
+
+Together, these form a broader causal arc:
+
+```
+closure
+→ structural break
+→ activation
+→ stabilization
+→ collapse / re-entry
+→ multi-stability
+→ unification
+→ internal fracture
+→ hierarchy
+→ resonance
+→ drift / shear tolerant structured coherence
+```
+
+Suggested next question
+
+The natural next engineering question is now:
+
+Can higher-order hierarchical coherence generate a new closure layer or a second-order activation regime above the current activation state?
