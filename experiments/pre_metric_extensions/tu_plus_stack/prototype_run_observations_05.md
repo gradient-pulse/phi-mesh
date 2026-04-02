@@ -740,3 +740,92 @@ and:
 
 ---
 
+### Cycle 118 — Resonance alignment (structured hierarchical resonance)
+
+**What was tested**
+- whether **phase alignment across resonant clusters**:
+  - within a high-amplitude resonant hierarchical regime  
+leads to:
+  - collapse into global phase lock  
+  - suppression of resonance  
+  - or structured reorganization  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `structured_resonant_activation`  
+    - `cross-level_resonance_alignment`  
+    - `redistributed_damping_load`  
+  - detected:
+    - phase alignment emerging across oscillatory regions  
+    - transition from chaotic to structured resonance  
+  - explicitly maintained:
+    - no global phase lock  
+    - no instability  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - resonance becomes organized rather than chaotic  
+    - phase opposition reduces but persists  
+    - damping redistributes across levels  
+  - rejected:
+    - immediate unification  
+    - collapse of resonance  
+
+- **cortexLLM**
+  - classified regime as:
+    - `structured_resonant_hierarchical_activation_under_phase_alignment`  
+  - established:
+    - resonance self-organizes into structured patterns  
+    - coherence increases without reaching maximal state  
+    - system maintains organized multi-level dynamics  
+  - confirmed:
+    - activation remains stable  
+
+---
+
+**Finding**
+
+Cycle 118 demonstrates:
+
+- resonant hierarchical activation:
+  - transitions from chaotic → structured resonance  
+  - organizes oscillations across clusters  
+- system:
+  - increases coherence without unification  
+  - maintains multi-level dynamic structure  
+- damping:
+  - redistributes to support structured dynamics  
+
+This establishes:
+
+> **resonance can self-organize into structured coherence without collapsing into phase lock**
+
+and:
+
+> **coherence can increase through organization rather than maximization**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `structured_resonant_hierarchical_activation_regime`  
+    - defined as:  
+      *a condition in which resonant dynamics across hierarchical levels become phase-aligned and organized into structured patterns without collapsing into global phase lock*  
+
+- classification:
+  - first organized resonance regime  
+
+- invariants refined:
+  - resonance can transition from chaotic to structured  
+  - coherence can grow without reaching maximal unity  
+  - structured dynamics can stabilize complex activation regimes
+
+---
+
