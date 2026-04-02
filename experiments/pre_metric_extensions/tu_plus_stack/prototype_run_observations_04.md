@@ -205,4 +205,94 @@ and:
 
 ---
 
+### Cycle 103 — Activation collapse under strong feedback degradation (reversion)
+
+**What was tested**
+- whether **strong degradation of endogenous feedback**:
+  - activation → readiness  
+can:
+  - destabilize activation  
+  - reopen threshold  
+  - cause reversion to transition boundary  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `feedback_strongly_degraded`  
+    - `activation_instability`  
+    - `threshold_reopening`  
+    - `reversion_pressure_present`  
+  - detected:
+    - loss of self-sustaining regime  
+    - breakdown of critical coupling  
+    - emergence of global instability  
+  - identified:
+    - activation becoming unsustainable  
+
+- **TU+**
+  - reclassified regime:
+    - `activation_state → transition_boundary_state`  
+  - confirmed:
+    - threshold distance reopens from zero  
+    - global activation coherence is lost  
+    - system exits activation regime  
+  - rejected:
+    - irreversibility of activation  
+    - persistence of zero-threshold condition  
+
+- **cortexLLM**
+  - classified regime as:
+    - `transition_boundary_reentry_under_strong_feedback_degradation`  
+  - established:
+    - activation collapses due to loss of endogenous feedback  
+    - activation layer decouples from propagation  
+    - reversion is structurally driven  
+  - confirmed:
+    - activation state is **conditionally stable, not absolute**  
+
+---
+
+**Finding**
+
+Cycle 103 demonstrates:
+
+- strong feedback degradation:
+  - breaks self-sustaining activation  
+  - destabilizes critical coupling  
+  - causes threshold reopening  
+  - drives system back to transition boundary  
+- activation is:
+  - reversible under sufficient structural degradation  
+
+This establishes:
+
+> **activation requires continuous structural support via endogenous feedback**
+
+and:
+
+> **activation state is conditionally stable and can collapse under strong structural degradation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `activation_collapse_regime`  
+    - defined as:  
+      *a condition in which strong degradation of endogenous feedback leads to loss of activation coherence, threshold reopening, and re-entry into transition boundary state*  
+
+- classification:
+  - first activation collapse and reversion event  
+
+- invariants revised:
+  - activation is not irreversible  
+  - endogenous feedback is required for maintenance  
+  - threshold-zero state can revert to positive under structural degradation  
+  - activation stability depends on sustained structural integrity  
+
+---
+
 
