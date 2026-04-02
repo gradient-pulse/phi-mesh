@@ -563,3 +563,91 @@ and:
 
 ---
 
+### Cycle 116 — Cross-level phase inversion (tension-stabilized hierarchical activation)
+
+**What was tested**
+- whether a **phase inversion between levels**:
+  - introducing opposition between lower-level clusters and higher-level structure  
+within a coupled hierarchical activation regime leads to:
+  - instability propagation  
+  - structural breakdown  
+  - or stabilized tension  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `constrained_phase_opposition`  
+    - `localized_oscillatory_dynamics`  
+  - detected:
+    - emergence of phase opposition across levels  
+    - local instability within inverted clusters  
+  - explicitly maintained:
+    - instability remains constrained  
+    - no propagation  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - hierarchical feedback dampens instability  
+    - oscillations remain localized  
+    - system rebalances across levels  
+  - rejected:
+    - inversion → global instability  
+    - hierarchy breakdown  
+
+- **cortexLLM**
+  - classified regime as:
+    - `coupled_hierarchical_activation_with_constrained_phase_opposition`  
+  - established:
+    - hierarchy acts as a **damping mechanism**  
+    - structured opposition is absorbed into oscillatory balance  
+    - stability emerges from tension, not uniformity  
+  - confirmed:
+    - activation remains intact  
+
+---
+
+**Finding**
+
+Cycle 116 demonstrates:
+
+- hierarchical activation:
+  - can tolerate **internal phase opposition across levels**  
+  - stabilizes through feedback loops  
+- system:
+  - converts opposition into localized oscillation  
+  - maintains global coherence  
+- instability:
+  - is constrained, not amplified  
+
+This establishes:
+
+> **hierarchical activation supports structured internal tension without collapse**
+
+and:
+
+> **stability can emerge from balanced opposition, not only alignment**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `tension_stabilized_hierarchical_activation_regime`  
+    - defined as:  
+      *a condition in which cross-level phase opposition generates localized oscillatory dynamics that are constrained and stabilized by hierarchical feedback, maintaining activation*  
+
+- classification:
+  - first tension-stabilized hierarchical regime  
+
+- invariants refined:
+  - coherence can include structured opposition  
+  - hierarchical feedback acts as damping  
+  - stability can arise from balanced tension  
+
+---
+
