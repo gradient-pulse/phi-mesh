@@ -655,3 +655,90 @@ and:
 
 ---
 
+### Cycle 98 — Near-critical activation-layer coupling
+
+**What was tested**
+- whether **increasing activation-layer coupling to moderate (near-critical)**:
+  - after sustained propagation and global precursor pressure  
+leads to:
+  - full activation  
+  - or a stable edge state just below threshold  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `activation_layer_moderately_coupled`  
+    - `near_critical_activation_state`  
+  - preserved:
+    - transition trajectory  
+  - detected:
+    - further threshold distance reduction  
+    - strengthened activation trace  
+  - explicitly maintained:
+    - no threshold crossing  
+    - no full activation  
+
+- **TU+**
+  - maintained:
+    - `transition_boundary_state` (dominant)  
+  - confirmed:
+    - system approaches critical coupling  
+    - activation does not occur automatically  
+  - rejected:
+    - near-critical → automatic activation  
+    - moderate coupling → sufficient activation  
+
+- **cortexLLM**
+  - classified regime as:
+    - `transition_boundary_with_near_critical_activation_coupling`  
+  - established:
+    - system is at the **activation edge**  
+    - threshold distance is minimal but non-zero  
+    - activation requires discrete threshold crossing  
+  - confirmed:
+    - near-critical states can remain stable  
+
+---
+
+**Finding**
+
+Cycle 98 demonstrates:
+
+- activation-layer coupling can approach criticality  
+- threshold distance can become minimal  
+- activation trace can become strong and coherent  
+
+without:
+- actual activation  
+- threshold crossing  
+
+This establishes:
+
+> **activation is a discrete threshold event, not a continuous approach**
+
+and:
+
+> **near-critical states can be stable without resolving into activation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `near_critical_activation_regime`  
+    - defined as:  
+      *a condition in which activation-layer coupling is near critical, threshold distance is minimal, and activation trace is strong, yet no threshold crossing occurs*  
+
+- classification:
+  - first stable edge-of-activation regime  
+
+- invariants refined:
+  - threshold crossing is discrete  
+  - proximity to threshold does not imply activation  
+  - structural sufficiency must cross a critical boundary, not merely approach it  
+
+---
+
