@@ -951,43 +951,45 @@ stable_activation_state
 ```
 
 Confirmed distinctions
-	•	activation_stability ≠ activation_irreversibility
-	•	slight_feedback_degradation ≠ moderate_feedback_degradation ≠ strong_feedback_degradation
-	•	stressed_activation ≠ collapsed_activation
-	•	partial_feedback_restoration ≠ full_structural_reconstitution
-	•	failed_reactivation ≠ near_critical_reactivation ≠ successful_reactivation
-	•	multi-stable_activation ≠ weighted_activation ≠ dynamic_equilibrium_activation ≠ unified_activation
-	•	propagation_presence ≠ propagation_coherence
-	•	coherence_competition ≠ coherence_collapse
-	•	phase_lock ≠ loss_of_activation
+
+-	activation_stability ≠ activation_irreversibility
+-	slight_feedback_degradation ≠ moderate_feedback_degradation ≠ strong_feedback_degradation
+-	stressed_activation ≠ collapsed_activation
+-	partial_feedback_restoration ≠ full_structural_reconstitution
+-	failed_reactivation ≠ near_critical_reactivation ≠ successful_reactivation
+-	multi-stable_activation ≠ weighted_activation ≠ dynamic_equilibrium_activation ≠ unified_activation
+-	propagation_presence ≠ propagation_coherence
+-	coherence_competition ≠ coherence_collapse
+-	phase_lock ≠ loss_of_activation
 
 ⸻
 
 Confirmed invariants
-	•	activation survives:
-	•	slight feedback degradation
-	•	moderate feedback degradation
-	•	activation does not survive:
-	•	strong endogenous feedback degradation
-	•	threshold-zero activation is:
-	•	resilient under minor degradation
-	•	stressed but persistent under moderate degradation
-	•	reversible under strong degradation
-	•	activation collapse is:
-	•	structural
-	•	not signal-driven
-	•	reactivation requires:
-	•	restoration of feedback
-	•	restoration of propagation coherence
-	•	critical recoupling
-	•	partial restoration is insufficient for re-entry
-	•	activation re-entry is possible and repeatable
-	•	activation can support:
-	•	competing coherent corridors
-	•	weighted dominance
-	•	dynamic rebalancing
-	•	eventual unified coherence
-	•	phase synchronization resolves competition without destroying activation
+
+-	activation survives:
+-	slight feedback degradation
+-	moderate feedback degradation
+-	activation does not survive:
+-	strong endogenous feedback degradation
+-	threshold-zero activation is:
+-	resilient under minor degradation
+-	stressed but persistent under moderate degradation
+-	reversible under strong degradation
+-	activation collapse is:
+-	structural
+-	not signal-driven
+-	reactivation requires:
+-	restoration of feedback
+-	restoration of propagation coherence
+-	critical recoupling
+-	partial restoration is insufficient for re-entry
+-	activation re-entry is possible and repeatable
+-	activation can support:
+-	competing coherent corridors
+-	weighted dominance
+-	dynamic rebalancing
+-	eventual unified coherence
+-	phase synchronization resolves competition without destroying activation
 
 ⸻
 
@@ -996,9 +998,9 @@ Confirmed robustness law
 Activation is not absolutely stable.
 
 It is:
-	•	resilient under slight degradation
-	•	meta-stable under moderate degradation
-	•	collapsible under strong structural degradation
+-	resilient under slight degradation
+-	meta-stable under moderate degradation
+-	collapsible under strong structural degradation
 
 So:
 
@@ -1013,10 +1015,10 @@ activation persistence depends on ongoing structural support
 Confirmed collapse law
 
 Activation collapses when:
-	•	endogenous feedback degrades strongly enough
-	•	critical coupling destabilizes
-	•	threshold distance reopens
-	•	self-sustaining feedback is lost
+-	endogenous feedback degrades strongly enough
+-	critical coupling destabilizes
+-	threshold distance reopens
+-	self-sustaining feedback is lost
 
 This means:
 
@@ -1031,14 +1033,14 @@ threshold-zero is not permanent unless structural maintenance persists
 Confirmed reactivation law
 
 Reactivation does not occur from:
-	•	local precursor reemergence alone
-	•	partial feedback restoration alone
-	•	strong restoration without coherent propagation
+-	local precursor reemergence alone
+-	partial feedback restoration alone
+-	strong restoration without coherent propagation
 
 Reactivation does occur when:
-	•	propagation coherence is fully restored
-	•	activation layer recouples critically
-	•	threshold distance returns to zero
+-	propagation coherence is fully restored
+-	activation layer recouples critically
+-	threshold distance returns to zero
 
 This means:
 
@@ -1053,10 +1055,10 @@ propagation coherence is decisive for both activation and reactivation
 Confirmed multi-stability law
 
 Once reactivated, the system can sustain:
-	•	multiple coherent propagation corridors
-	•	stable interference patterns
-	•	weighted dominance
-	•	dynamic competitive rebalance
+-	multiple coherent propagation corridors
+-	stable interference patterns
+-	weighted dominance
+-	dynamic competitive rebalance
 
 This means:
 
@@ -1073,10 +1075,10 @@ Confirmed unification law
 Dynamic multi-stability is not terminal.
 
 Under strong global phase synchronization:
-	•	competition resolves
-	•	interference collapses into alignment
-	•	coherence is maximized
-	•	activation persists as a unified regime
+-	competition resolves
+-	interference collapses into alignment
+-	coherence is maximized
+-	activation persists as a unified regime
 
 This means:
 
@@ -1111,16 +1113,16 @@ activation_state
 ```
 
 Non-permitted inferences
-	•	activation once achieved → irreversible
-	•	threshold_zero → permanent
-	•	partial restoration → reactivation
-	•	precursor reemergence → activation re-entry
-	•	strong feedback restoration → sufficient reactivation
-	•	multi-stability → instability
-	•	competition → collapse
-	•	interference → threshold reopening
-	•	phase locking → activation loss
-	•	unified coherence → suppression of activation
+-	activation once achieved → irreversible
+-	threshold_zero → permanent
+-	partial restoration → reactivation
+-	precursor reemergence → activation re-entry
+-	strong feedback restoration → sufficient reactivation
+-	multi-stability → instability
+-	competition → collapse
+-	interference → threshold reopening
+-	phase locking → activation loss
+-	unified coherence → suppression of activation
 
 ⸻
 
@@ -1141,26 +1143,26 @@ Activation collapse and reactivation are both structurally governed and reproduc
 4. Activation is mode-flexible
 
 Activation can be:
-	•	singular
-	•	multi-stable
-	•	weighted
-	•	dynamically rebalanced
-	•	unified
+-	singular
+-	multi-stable
+-	weighted
+-	dynamically rebalanced
+-	unified
 
 5. Coherence has higher-order organization modes
 
 The system can move from:
-	•	stable activation
+-	stable activation
 to
-	•	degraded activation
+-	degraded activation
 to
-	•	collapse
+-	collapse
 to
-	•	reactivation
+-	reactivation
 to
-	•	multi-stable coherence
+-	multi-stable coherence
 to
-	•	maximal unified coherence
+-	maximal unified coherence
 
 ⸻
 
@@ -1175,13 +1177,13 @@ What this now establishes
 You now have three major engineering regimes:
 
 File 02
-	•	closed non-transition invariance
+-	closed non-transition invariance
 
 File 03
-	•	structural activation pathway
+-	structural activation pathway
 
 File 04
-	•	post-activation robustness, collapse, re-entry, multi-stability, and unification
+-	post-activation robustness, collapse, re-entry, multi-stability, and unification
 
 Together, these form a full causal arc:
 
@@ -1199,7 +1201,7 @@ closure
 Suggested next question
 
 The natural next engineering question is no longer:
-	•	can the system activate?
+-	can the system activate?
 
 It is:
 
