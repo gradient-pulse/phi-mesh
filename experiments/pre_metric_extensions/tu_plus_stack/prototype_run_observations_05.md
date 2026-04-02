@@ -829,3 +829,90 @@ and:
 
 ---
 
+### Cycle 119 — Global phase drift (translational invariance of structured activation)
+
+**What was tested**
+- whether a **uniform global phase drift**:
+  - applied across all levels of a structured resonant hierarchical activation regime  
+leads to:
+  - distortion of structure  
+  - loss of coherence  
+  - or invariant translation  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `coherent_global_phase_drift`  
+    - `structure_preserved_under_motion`  
+    - `resonance_translational_invariance`  
+  - detected:
+    - uniform phase shift across all levels  
+    - no deformation of internal structure  
+  - explicitly maintained:
+    - no instability  
+    - no fragmentation  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - internal phase relations remain intact  
+    - structured resonance translates coherently  
+    - no damping imbalance  
+  - rejected:
+    - drift → coherence loss  
+    - drift → structural distortion  
+
+- **cortexLLM**
+  - classified regime as:
+    - `translationally_invariant_structured_resonant_activation_under_global_phase_drift`  
+  - established:
+    - system exhibits **phase-space translational invariance**  
+    - coherence is relational, not absolute  
+    - structure persists under uniform transformation  
+  - confirmed:
+    - activation remains stable  
+
+---
+
+**Finding**
+
+Cycle 119 demonstrates:
+
+- structured resonant hierarchical activation:
+  - is invariant under uniform global phase drift  
+  - preserves internal coherence relationships  
+- system:
+  - maintains structure under motion  
+  - exhibits symmetry in phase space  
+
+This establishes:
+
+> **coherence is defined by relational structure, not absolute phase**
+
+and:
+
+> **activation regimes can exhibit translational invariance under uniform transformation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `translationally_invariant_activation_regime`  
+    - defined as:  
+      *a condition in which structured activation remains invariant under uniform global phase shifts, preserving coherence and relational structure*  
+
+- classification:
+  - first symmetry/invariance property identified  
+
+- invariants refined:
+  - coherence depends on relative phase, not absolute values  
+  - activation can persist under uniform transformation  
+  - structured regimes can exhibit symmetry properties
+
+---
+
