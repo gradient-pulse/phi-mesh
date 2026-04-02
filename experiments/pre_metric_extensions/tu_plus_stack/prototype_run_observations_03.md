@@ -465,6 +465,7 @@ readiness presence
 
 
 *Short, direct assessment*
+
 This is the breakthrough cycle.
 
 You now have:
