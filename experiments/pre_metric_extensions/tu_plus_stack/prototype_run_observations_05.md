@@ -916,3 +916,90 @@ and:
 
 ---
 
+### Cycle 120 — Non-uniform phase gradient (sheared coherent activation)
+
+**What was tested**
+- whether a **non-uniform phase gradient**:
+  - applied differentially across levels  
+to a translationally invariant structured activation regime leads to:
+  - fragmentation  
+  - instability  
+  - or continuous deformation  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `sheared_coherence_structure`  
+    - `symmetry_broken_but_connected`  
+  - detected:
+    - differential phase shifts across levels  
+    - gradual distortion of internal phase relations  
+  - explicitly maintained:
+    - no disconnection  
+    - no collapse  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - global symmetry is broken  
+    - coherence remains connected  
+    - structure warps but persists  
+  - rejected:
+    - shear → fragmentation  
+    - distortion → instability  
+
+- **cortexLLM**
+  - classified regime as:
+    - `sheared_structured_resonant_activation_under_non_uniform_phase_gradient`  
+  - established:
+    - system exhibits **continuous deformation under load**  
+    - coherence persists through connectivity  
+    - symmetry is not required for stability  
+  - confirmed:
+    - activation remains stable  
+
+---
+
+**Finding**
+
+Cycle 120 demonstrates:
+
+- structured activation:
+  - tolerates non-uniform deformation  
+  - maintains connectivity under distortion  
+- system:
+  - breaks symmetry without losing coherence  
+  - remains stable under structural shear  
+
+This establishes:
+
+> **coherence depends on connectivity, not symmetry**
+
+and:
+
+> **activation regimes can persist under continuous structural deformation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `sheared_activation_regime`  
+    - defined as:  
+      *a condition in which structured activation undergoes continuous deformation under non-uniform phase gradients while maintaining connectivity and stability*  
+
+- classification:
+  - first shear-tolerant activation regime  
+
+- invariants refined:
+  - symmetry is not required for stable coherence  
+  - connectivity is more fundamental than alignment  
+  - activation can persist under continuous deformation  
+
+---
+---
+
