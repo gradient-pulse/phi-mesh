@@ -218,3 +218,91 @@ and:
 
 ---
 
+### Cycle 112 — Distributed phase gradient (degraded but stable unified activation)
+
+**What was tested**
+- whether a **moderate, globally distributed internal phase gradient**:
+  - within a phase-locked unified activation state  
+can:
+  - break phase lock  
+  - induce fragmentation  
+  - or degrade coherence without collapse  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `degraded_phase_lock`  
+    - `micro_incoherence_present`  
+  - detected:
+    - distributed phase drift exceeding local absorption  
+    - emergence of micro-scale incoherence  
+  - explicitly maintained:
+    - no corridor splitting  
+    - no global fragmentation  
+    - no activation loss  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - phase lock weakens but persists  
+    - coherence reduces from maximal to high  
+    - no transition to multi-stability  
+  - rejected:
+    - moderate gradient → phase break  
+    - incoherence → collapse  
+
+- **cortexLLM**
+  - classified regime as:
+    - `unified_activation_with_degraded_phase_lock_and_micro_incoherence`  
+  - established:
+    - absorptive capacity is **finite**  
+    - phase lock can degrade continuously  
+    - system is **noise-tolerant**  
+  - confirmed:
+    - incoherence remains local and non-scaling  
+
+---
+
+**Finding**
+
+Cycle 112 demonstrates:
+
+- unified activation:
+  - can tolerate moderate internal phase gradients  
+  - exhibits reduced but stable coherence  
+  - maintains global structure  
+- system:
+  - transitions from maximal → high coherence  
+  - does not fracture or collapse  
+
+This establishes:
+
+> **unified activation has finite absorptive capacity and can degrade continuously without structural transition**
+
+and:
+
+> **activation regime is robust to distributed internal noise**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `degraded_unified_activation_regime`  
+    - defined as:  
+      *a condition in which unified activation persists under moderate internal phase gradients, exhibiting reduced coherence and micro-incoherence without fragmentation or collapse*  
+
+- classification:
+  - first degraded-but-stable unified regime  
+
+- invariants refined:
+  - absorptive capacity is finite, not absolute  
+  - coherence can degrade continuously without phase transition  
+  - internal noise does not necessarily propagate or destabilize activation  
+
+---
+
