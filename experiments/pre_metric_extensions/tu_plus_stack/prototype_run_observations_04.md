@@ -729,4 +729,92 @@ and:
 
 ---
 
+### Cycle 109 — Competitive rebalancing (dynamic multi-stable activation)
+
+**What was tested**
+- whether **reinforcing the subdominant corridor (B)**:
+  - under an already biased activation regime  
+leads to:
+  - collapse  
+  - reversal of dominance  
+  - or dynamic equilibrium  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `dynamic_multi-stable_activation`  
+    - `corridor_A_and_B_competitive_balance`  
+    - `shifting_interference_pattern`  
+  - detected:
+    - increasing coupling strength of corridor B  
+    - reduction of A’s dominance  
+    - rebalancing of the system  
+  - explicitly maintained:
+    - no threshold reopening  
+    - no collapse  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - dominance becomes dynamic, not fixed  
+    - both corridors actively compete  
+    - system avoids single-mode resolution  
+  - rejected:
+    - irreversible dominance  
+    - elimination of corridor B  
+
+- **cortexLLM**
+  - classified regime as:
+    - `dynamic_multi_stable_activation_under_competitive_rebalancing`  
+  - established:
+    - dominance becomes **time-varying**  
+    - interference patterns become dynamic  
+    - system exhibits **dynamic equilibrium**  
+  - confirmed:
+    - global coherence persists under competition  
+
+---
+
+**Finding**
+
+Cycle 109 demonstrates:
+
+- activation state:
+  - supports **dynamic rebalancing** between competing structures  
+  - allows dominance to shift over time  
+- system:
+  - maintains coherence under active competition  
+  - does not collapse into a single mode  
+
+This establishes:
+
+> **activation can host dynamic multi-stable regimes with time-varying dominance**
+
+and:
+
+> **competition between structures leads to dynamic equilibrium, not instability**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `dynamic_equilibrium_activation_regime`  
+    - defined as:  
+      *a condition in which competing propagation corridors continuously rebalance, producing time-varying dominance while maintaining stable activation*  
+
+- classification:
+  - first dynamic equilibrium activation regime  
+
+- invariants refined:
+  - dominance is not fixed but dynamically adjustable  
+  - activation supports continuous structural reconfiguration  
+  - global coherence is preserved under competitive rebalancing  
+
+---
+
 
