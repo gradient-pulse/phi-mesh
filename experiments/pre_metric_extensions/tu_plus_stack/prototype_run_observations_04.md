@@ -892,14 +892,17 @@ and:
 **Operational delta**
 
 - state distinction added:
+  
   - `unified_activation_regime`  
     - defined as:  
       *a condition in which competing propagation corridors synchronize into a single coherent phase, eliminating interference and maximizing global coherence while maintaining activation*  
 
 - classification:
+  
   - first maximal coherence activation regime  
 
 - invariants refined:
+  
   - activation can evolve from multi-stable to unified states  
   - phase synchronization resolves structural competition  
   - coherence can be maximized without loss of activation  
@@ -914,6 +917,7 @@ and:
 This section records the behavior of the system **after activation has been established**.
 
 Focus:
+
 - robustness of activation
 - degradation tolerance
 - collapse and re-entry
