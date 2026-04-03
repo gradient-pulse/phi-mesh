@@ -166,3 +166,89 @@ or
 ---
 ---
 
+### Cycle 125 — Near-threshold metastability (sub-threshold transient activation)
+
+**What was tested**
+- whether **slightly sub-threshold connectivity**:
+  - leads to immediate extinction (binary behavior)  
+  - or allows transient, decaying activity  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `transient_sub-threshold_activity`  
+    - `incomplete_feedback_loops`  
+    - `gradual_decay_dynamics`  
+  - detected:
+    - residual propagation below threshold  
+    - persistence of weakened, incomplete feedback  
+  - explicitly maintained:
+    - no immediate local collapse  
+    - activity decays over time  
+
+- **TU+**
+  - maintained:
+    - `sub-threshold_dynamics` (dominant)  
+  - confirmed:
+    - activity persists transiently below threshold  
+    - decay rate depends on depth below threshold  
+    - system exhibits metastability  
+  - rejected:
+    - strict binary switching  
+    - immediate extinction  
+
+- **cortexLLM**
+  - classified regime as:
+    - `metastable_sub-threshold_activity_with_time-dependent_decay`  
+  - established:
+    - activation below threshold is **transient, not stable**  
+    - decay is inevitable without recoupling  
+    - viability includes a temporal dimension  
+  - confirmed:
+    - system is not strictly binary  
+
+---
+
+**Finding**
+
+Cycle 125 demonstrates:
+
+- local connectivity threshold:
+  - does not define **instantaneous existence**  
+  - defines **stability vs decay**  
+- activation below threshold:
+  - can persist transiently  
+  - decays over time  
+- system:
+  - exhibits **metastable sub-threshold dynamics**  
+
+This establishes:
+
+> **activation viability is not strictly binary but time-dependent near threshold**
+
+and:
+
+> **sub-threshold activity is transient and decay-bound, not immediately extinguished**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `metastable_sub-threshold_activation_regime`  
+    - defined as:  
+      *a condition in which activation persists transiently below connectivity threshold through incomplete feedback loops and decays over time without recoupling*  
+
+- classification:
+  - first successful falsification of Binary Local Viability Law  
+
+- invariants revised:
+  - connectivity threshold defines stability, not instantaneous existence  
+  - activation viability includes a temporal dimension  
+  - decay replaces immediate extinction near threshold
+
+---
+
