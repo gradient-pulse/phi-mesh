@@ -424,6 +424,7 @@ and:
   - global activation is an aggregate of local units  
 
 ---
+---
 
 ## Guidance
 
