@@ -576,3 +576,175 @@ and:
 
 ---
 
+### Cycle 141 — Long duration, low-coherence asymmetry (duration is not sufficient)
+
+**What was tested**
+- whether **extended asymmetry duration alone**:
+  - is sufficient to stabilize a contextual filter  
+- specifically:
+  - long-duration exposure with **low-coherence, noisy, inconsistent selectivity**
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `prolonged_low-coherence_asymmetry`  
+    - `fluctuating_selective_bias`  
+    - `failed_constraint_stabilization`  
+    - `no_contextual_filter_despite_duration`  
+  - detected:
+    - directional bias persisting over long duration  
+    - selective influence fluctuating across time  
+  - explicitly maintained:
+    - no stable gating pattern  
+    - no CF formation despite long exposure  
+
+- **TU+**
+  - confirmed:
+    - duration is present, but selectivity is incoherent  
+    - local gating attempts do not converge into reproducible structure  
+    - contextual filter conditions are not satisfied  
+  - rejected:
+    - sufficiency of duration alone  
+    - assumption that extended asymmetry guarantees filter formation  
+
+- **cortexLLM**
+  - classified regime as:
+    - `persistent_activation_under_prolonged_low-coherence_asymmetry_without_contextual_filter`  
+  - established:
+    - prolonged asymmetry does not compensate for low coherence quality  
+    - reproducibility is absent despite duration  
+    - elapsed time is not the primitive control variable  
+  - confirmed:
+    - the stronger candidate variable is **coherence-integrated persistence**  
+
+---
+
+**Finding**
+
+Cycle 141 demonstrates:
+
+- long duration alone:
+  - does **not** stabilize a contextual filter  
+- persistent activation under asymmetry:
+  - can remain non-filtering if selective bias is noisy and inconsistent  
+- contextual filter formation:
+  - depends on more than elapsed time  
+  - requires coherent, reproducible selectivity across time  
+
+This establishes:
+
+> **duration alone is insufficient for contextual filter stabilization**
+
+and:
+
+> **coherence-integrated persistence is now the stronger candidate control variable**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `duration_without_coherence_regime`  
+    - defined as:  
+      *a condition in which persistent activation is exposed to long-duration asymmetry but fails to form a contextual filter because selective influence is incoherent and non-reproducible*  
+
+- classification:
+  - first direct falsification of “duration alone” as sufficient for CF stabilization  
+
+- invariants refined:
+  - elapsed time is not enough  
+  - coherent selectivity must be maintained across time  
+  - reproducibility depends on coherence quality, not duration alone  
+
+---
+
+### Cycle 142 — Short duration, high-coherence asymmetry (rapid CF stabilization)
+
+**What was tested**
+- whether **brief but highly coherent asymmetry**:
+  - can stabilize a contextual filter quickly  
+- or whether:
+  - long duration is still required regardless of coherence quality  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `brief_high-coherence_asymmetry`  
+    - `rapid_selective_stabilization`  
+    - `short-window_constraint_formation`  
+    - `contextual_filter_candidate_stabilized`  
+  - detected:
+    - stable selective bias forming rapidly  
+    - local gating converging before the pulse ended  
+  - explicitly maintained:
+    - no diffusive spillover  
+    - successful short-window CF candidate stabilization  
+
+- **TU+**
+  - confirmed:
+    - short duration does not prevent CF formation when coherence is high  
+    - selectivity is stable and reproducible within the brief window  
+    - contextual filter conditions are satisfied before pulse end  
+  - rejected:
+    - long duration as necessary condition  
+    - elapsed time as primary control variable  
+
+- **cortexLLM**
+  - classified regime as:
+    - `persistent_activation_with_rapid_contextual_filter_stabilization_under_high-coherence_asymmetry`  
+  - established:
+    - coherence quality compensates for short duration  
+    - selectivity and reproducibility can converge rapidly when bias is stable  
+    - **coherence-integrated persistence** is the stronger control variable  
+  - confirmed:
+    - duration is a proxy, not the primitive driver  
+
+---
+
+**Finding**
+
+Cycle 142 demonstrates:
+
+- brief asymmetry:
+  - **can** stabilize a contextual filter  
+  - provided the asymmetry is highly coherent and stable  
+- contextual filter formation:
+  - is not governed primarily by elapsed duration  
+  - depends more strongly on coherent, reproducible selectivity across time  
+- system:
+  - forms a genuine CF within a short window when coherence quality is high  
+
+This establishes:
+
+> **short duration is sufficient for contextual filter stabilization when coherence quality is high**
+
+and:
+
+> **coherence-integrated persistence is a stronger control variable than elapsed time**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `rapid_contextual_filter_stabilization_regime`  
+    - defined as:  
+      *a condition in which persistent activation forms a contextual filter within a short asymmetry window because selective bias is highly coherent and reproducible*  
+
+- classification:
+  - decisive contrast case against the “duration alone” interpretation  
+
+- invariants refined:
+  - elapsed time is not the primary CF control variable  
+  - high coherence can reduce required stabilization duration  
+  - contextual filter emergence depends on coherent, reproducible selective influence  
+
+---
+---
+
