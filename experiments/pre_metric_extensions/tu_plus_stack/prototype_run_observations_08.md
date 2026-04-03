@@ -332,3 +332,91 @@ and:
 
 ---
 
+### Cycle 130 — Feedback delay (temporal flexibility of the minimal loop)
+
+**What was tested**
+- whether the **minimal closed feedback loop**:
+  - still sustains activation when one edge carries a finite temporal delay  
+- in other words:
+  - is zero-latency required  
+  - or is topological closure sufficient despite temporal lag  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `delayed_feedback_loop`  
+    - `phase_shifted_recirculation`  
+    - `modulated_activation_dynamics`  
+  - detected:
+    - preserved loop closure under delay  
+    - recirculation continuing with phase lag  
+  - explicitly maintained:
+    - no collapse  
+    - no threshold reopening  
+
+- **TU+**
+  - maintained:
+    - `localized_activation_state`  
+  - confirmed:
+    - activation persists under finite delay  
+    - dynamics become phase-modulated / oscillatory  
+    - delay does not destroy viability  
+  - rejected:
+    - requirement of zero-latency  
+    - immediate instability from delay  
+
+- **cortexLLM**
+  - classified regime as:
+    - `latency_tolerant_closed_loop_activation`  
+  - established:
+    - closure is **topological, not temporally synchronous**  
+    - recirculation requires connectivity, not zero-lag synchrony  
+    - the minimal loop remains valid under bounded temporal distortion  
+  - confirmed:
+    - activation unit is time-flexible within bounds  
+
+---
+
+**Finding**
+
+Cycle 130 demonstrates:
+
+- minimal closed feedback loop:
+  - remains viable under finite feedback delay  
+  - does not require synchronous recirculation  
+- activation:
+  - persists with phase lag  
+  - becomes dynamically modulated rather than extinguished  
+- topology:
+  - matters more than perfect timing  
+
+This establishes:
+
+> **the minimal closed feedback loop is temporally flexible even though it is topologically irreducible**
+
+and:
+
+> **activation requires closed recirculation, not zero-latency closure**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `latency_tolerant_minimal_loop_regime`  
+    - defined as:  
+      *a condition in which a minimal closed feedback loop remains activation-viable under finite temporal delay, producing phase-shifted but self-sustaining recirculation*  
+
+- classification:
+  - first successful refinement of the Minimal Closed Feedback Loop Law  
+
+- invariants revised:
+  - minimality is strict in topology and size  
+  - minimality is **not** strict in timing  
+  - closure is necessary, synchrony is not  
+
+---
+
