@@ -132,3 +132,90 @@ The goal is to determine whether this statement holds universally, or whether ac
 ---
 ---
 
+### Cycle 121 — Partial connectivity failure (fragmented activation without collapse)
+
+**What was tested**
+- whether **connectivity can fail**:
+  - under correlated multi-level phase inversion  
+while:
+  - preserving activation  
+  - avoiding collapse  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `partial_connectivity_failure`  
+    - `fragmented_active_substructures`  
+  - detected:
+    - weakening and breaking of propagation pathways  
+    - emergence of partially disconnected substructures  
+  - explicitly maintained:
+    - activation persists locally  
+    - no threshold reopening  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - connectivity loss is partial  
+    - activation persists within fragments  
+    - no immediate collapse  
+  - rejected:
+    - connectivity failure → collapse  
+    - full disconnection under single perturbation  
+
+- **cortexLLM**
+  - classified regime as:
+    - `fragmented_activation_under_partial_connectivity_failure`  
+  - established:
+    - system splits into **disconnected active subgraphs**  
+    - activation persists locally  
+    - global coherence is lost, but local coherence remains  
+  - confirmed:
+    - no threshold reopening  
+
+---
+
+**Finding**
+
+Cycle 121 demonstrates:
+
+- connectivity:
+  - can partially fail  
+  - can fragment the system into substructures  
+- activation:
+  - does not require global connectivity  
+  - can persist locally within disconnected regions  
+- system:
+  - transitions from global → fragmented activation  
+
+This establishes:
+
+> **global connectivity is not required for activation**
+
+and:
+
+> **activation can persist as localized phenomena on disconnected substructures**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `fragmented_activation_regime`  
+    - defined as:  
+      *a condition in which global connectivity is partially broken, producing disconnected substructures that independently sustain activation*  
+
+- classification:
+  - first successful falsification attempt of global connectivity necessity  
+
+- invariants revised:
+  - connectivity requirement is local, not global  
+  - coherence can be localized  
+  - activation can survive fragmentation  
+
+---
+
