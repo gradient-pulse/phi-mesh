@@ -252,3 +252,88 @@ and:
 
 ---
 
+### Cycle 126 — Sustained sub-threshold dynamics (decay without plateau)
+
+**What was tested**
+- whether **keeping fragments slightly below connectivity threshold for extended duration**:
+  - allows a stable sub-threshold regime to form  
+  - or leads only to delayed extinction  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `irreversible_decay_dynamics`  
+    - `no_metastable_plateau`  
+    - `asymptotic_extinction`  
+  - detected:
+    - residual propagation continuing temporarily  
+    - continued weakening of incomplete feedback loops  
+  - explicitly maintained:
+    - no spontaneous recovery  
+    - no stabilization of sub-threshold activity  
+
+- **TU+**
+  - maintained:
+    - `decay_dynamics` (dominant)  
+  - confirmed:
+    - activity decays monotonically  
+    - no time-independent metastable plateau appears  
+    - extinction is the limit of the process  
+  - rejected:
+    - stable sub-threshold activation  
+    - recurrent or oscillatory sub-threshold persistence  
+
+- **cortexLLM**
+  - classified regime as:
+    - `sub-threshold_decay_regime_with_no_stable_metastability`  
+  - established:
+    - sub-threshold activity is **history-dependent residue**, not a new stable state  
+    - incomplete feedback loops cannot self-close  
+    - extinction is asymptotic but inevitable without recoupling  
+  - confirmed:
+    - no stable metastable regime exists below threshold  
+
+---
+
+**Finding**
+
+Cycle 126 demonstrates:
+
+- sub-threshold activity:
+  - can persist transiently  
+  - cannot stabilize indefinitely  
+  - decays monotonically toward extinction  
+- the system:
+  - does not form a true below-threshold plateau  
+  - retains only fading memory of prior activation  
+
+This establishes:
+
+> **sub-threshold activity is transient memory, not a self-sustaining regime**
+
+and:
+
+> **metastability below threshold is time-limited and decay-bound, not indefinitely stable**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `decay_only_sub-threshold_regime`  
+    - defined as:  
+      *a condition in which below-threshold activity persists only as monotonic, history-dependent decay and cannot form a stable or plateaued metastable state without recoupling*  
+
+- classification:
+  - closure of the Binary Local Viability falsification thread  
+
+- invariants revised:
+  - sub-threshold viability is temporal but not indefinite  
+  - stable activity requires closed feedback loops  
+  - below-threshold dynamics are residual, not self-sustaining  
+
+---
+
