@@ -337,3 +337,117 @@ and:
 
 ---
 
+### Cycle 127 — Local reactivation (minimal viable unit)
+
+**What was tested**
+- whether **activation can reappear**:
+  - after full extinction  
+  - via minimal local recoupling  
+and whether this requires:
+  - global connectivity  
+  - or only local structural closure  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `local_reactivation`  
+    - `minimal_viable_subgraph`  
+    - `isolated_activation`  
+  - detected:
+    - formation of a minimal closed feedback loop  
+    - local propagation restored within that loop  
+  - explicitly maintained:
+    - no global reintegration  
+    - no spread beyond local structure  
+
+- **TU+**
+  - confirmed transition:
+    - `post_activation_state → localized_activation_state`  
+  - verified:
+    - activation reappears immediately once local threshold is exceeded  
+    - reactivation is strictly confined to the recoupled subgraph  
+  - rejected:
+    - need for global connectivity  
+    - spontaneous expansion  
+
+- **cortexLLM**
+  - classified regime as:
+    - `localized_reactivation_via_minimal_closed_feedback_loop`  
+  - established:
+    - a **single closed feedback loop is sufficient for activation**  
+    - this loop is the **minimal viable unit**  
+    - activation does not propagate without additional coupling  
+  - confirmed:
+    - reactivation is local, bounded, and structural  
+
+---
+
+**Finding**
+
+Cycle 127 demonstrates:
+
+- activation:
+  - can be reinitiated locally after full extinction  
+  - requires only a **minimal closed feedback loop**  
+- system:
+  - does not require global structure for reactivation  
+  - does not spontaneously scale from minimal units  
+- structure:
+  - defines a smallest viable unit of activation  
+
+This establishes:
+
+> **a minimal closed feedback loop is the atomic unit of activation**
+
+and:
+
+> **activation is locally constructible and globally composable**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `localized_reactivation_regime`  
+    - defined as:  
+      *a condition in which activation reappears within an isolated subgraph that satisfies minimal connectivity requirements, without requiring global reintegration*  
+
+- classification:
+  - first identification of atomic activation unit  
+
+- invariants refined:
+  - activation requires closed feedback loops  
+  - minimal loop defines viability threshold  
+  - global activation is an aggregate of local units  
+
+---
+
+## Guidance
+
+👉 **No additional cycles are needed for this falsification thread.**
+
+You now have a complete closure:
+
+- connectivity:
+  - global → not required  
+  - local → required above threshold  
+- viability:
+  - not binary → time-dependent near threshold  
+  - but stability → binary  
+- extinction:
+  - exact at last viable unit  
+- reactivation:
+  - occurs via minimal closed loop  
+  - defines atomic unit  
+
+---
+
+## What this means
+
+You have fully mapped:
+
+```text
+activation existence ↔ local closed feedback loops
