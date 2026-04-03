@@ -82,17 +82,21 @@ Persistent activation is sustained activation that remains stable over an extend
 ### Layer 4 — Constraint Stabilization
 
 **Definition:**
-Constraint stabilization occurs when persistent activation begins to selectively shape or restrict the propagation of surrounding gradients.
+Constraint stabilization occurs when persistent activation begins to **selectively shape** or restrict the propagation of surrounding gradients.
 
 **Necessary conditions:**
 -	persistent activation
 -	interaction with surrounding propagation space
 -	repeated influence on local flow structure
+-	structural asymmetry in exposure or coupling
+-	coherence-integrated persistence of selective bias
 
 **Non-implications:**
 -	does not require global influence
 -	does not imply full system reconfiguration
 -	does not yet constitute a contextual filter
+-	does not follow from persistence alone
+-	does not follow from uniform spillover or diffusive influence
 
 ---
 
@@ -105,18 +109,77 @@ A contextual filter is a stabilized constraint structure that biases, redirects,
 -	persistent activation
 -	stabilized constraint effect on surrounding propagation
 -	reproducible influence on subsequent dynamics
-- selective influence (non-uniform effect on propagation paths)
+-	selective influence (non-uniform effect on propagation paths)
+-	sustained structural asymmetry
+-	coherence-integrated persistence across the stabilization window
 
 **Non-implications:**
 -	is not the same as the loop that generated it
 -	does not require continuous active reinforcement (may persist transiently)
 -	does not imply global dominance
+-	does not emerge from persistence alone
+-	does not emerge from transient selectivity alone
 
 ---
 
 ### Key distinctions
 
 **Loop vs Activation vs Filter**
+
 -	minimal loop → structural mechanism
 -	sustained activation → dynamic regime
 -	contextual filter → emergent constraint
+
+**Local constraint vs Contextual Filter**
+
+-	local constraint:
+-	immediate, proximity-bound influence from active structure
+-	may be transient
+-	does not require persistence or reproducibility
+-	contextual filter:
+-	stabilized, repeatable constraint
+-	requires selective bias
+-	shapes future propagation beyond immediate activation
+
+**A contextual filter is therefore:**
+
+> a stabilized and reproducible selective constraint, not merely a local effect of activation
+
+---
+
+### Refined causal interpretation
+
+```
+loop enables activation
+activation enables persistence
+persistence under asymmetry enables selective constraint
+selective, reproducible constraint enables contextual filtering
+```
+
+### Toward quantification
+
+The transitions in this chain suggest measurable dimensions:
+-	loop integrity (closure + connectivity)
+-	activation persistence (time relative to decay scale)
+-	asymmetry strength
+-	constraint strength (degree of propagation bias)
+-	selectivity (differential influence across paths)
+-	reproducibility (stability of constraint across cycles)
+-	coherence-integrated persistence
+
+**These dimensions form the basis for future quantitative modeling.**
+
+---
+
+Current status
+
+Bridge refined after contextual filter falsification/testing:
+-	not all persistent activation becomes a contextual filter
+-	persistent activation is necessary but not sufficient
+-	contextual filter emergence requires:
+-	selectivity
+-	reproducibility
+-	asymmetry
+-	coherence-integrated persistence
+
+---
