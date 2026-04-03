@@ -389,3 +389,90 @@ and:
 
 ---
 
+### Cycle 124 — Global extinction (connectivity boundary closure)
+
+**What was tested**
+- whether **eliminating the last remaining viable fragments**:
+  - by pushing all local connectivity below threshold  
+results in:
+  - full extinction of activation  
+  - or residual persistence  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `global_activation_extinction`  
+    - `empty_activation_support_set`  
+    - `threshold_reopened`  
+  - detected:
+    - all fragments crossing below connectivity threshold  
+    - complete failure of local propagation loops  
+  - explicitly maintained:
+    - no residual activation  
+    - no delayed collapse  
+
+- **TU+**
+  - confirmed transition:
+    - `activation_state → post_activation_state`  
+  - verified:
+    - extinction occurs only after last viable fragment fails  
+    - no partial persistence remains  
+  - rejected:
+    - delayed extinction  
+    - persistence without viable subgraphs  
+
+- **cortexLLM**
+  - classified regime as:
+    - `global_activation_extinction_at_connectivity_boundary`  
+  - established:
+    - activation existence = **non-empty set of viable subgraphs**  
+    - extinction occurs exactly at last subgraph failure  
+    - threshold reopens only after complete local failure  
+  - confirmed:
+    - no spontaneous reactivation  
+
+---
+
+**Finding**
+
+Cycle 124 demonstrates:
+
+- activation:
+  - is entirely dependent on **local connectivity viability**  
+  - ceases immediately when the final viable subgraph fails  
+- system:
+  - transitions cleanly from activated → non-activated state  
+  - does not exhibit residual or delayed activation  
+- extinction:
+  - is **boundary-driven and exact**, not gradual  
+
+This establishes:
+
+> **activation exists if and only if at least one viable local connectivity subgraph exists**
+
+and:
+
+> **global extinction occurs exactly at the failure of the final viable subgraph**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `connectivity_boundary_extinction_regime`  
+    - defined as:  
+      *a condition in which activation ceases precisely when the final substructure exceeding minimal connectivity threshold fails, resulting in a fully non-activated state*  
+
+- classification:
+  - completion of Connectivity Law falsification and refinement  
+
+- invariants finalized (for this test):
+  - activation = union of viable local subgraphs  
+  - local connectivity threshold defines viability  
+  - extinction boundary is exact and discrete  
+
+---
+---
