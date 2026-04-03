@@ -420,3 +420,122 @@ and:
 
 ---
 
+### Cycle 131 — Extreme delay (bounded temporal coherence)
+
+**What was tested**
+- whether the **minimal closed feedback loop**:
+  - remains viable under arbitrarily large temporal delay  
+- or whether:
+  - a finite upper bound exists on delay tolerance  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `excessive_latency`  
+    - `loss_of_coherent_recirculation`  
+    - `delayed_decay_dynamics`  
+  - detected:
+    - recirculation persists topologically  
+    - but fails to reinforce due to excessive phase lag  
+  - explicitly maintained:
+    - activation weakens progressively  
+    - no sustained regime under extreme delay  
+
+- **TU+**
+  - confirmed:
+    - transition:
+      - `latency_tolerant_activation → latency_induced_decay`  
+    - coherence window is exceeded  
+    - activation cannot be sustained beyond this bound  
+  - rejected:
+    - unbounded delay tolerance  
+    - persistence under arbitrary latency  
+
+- **cortexLLM**
+  - classified regime as:
+    - `latency_bounded_activation_with_coherence_window_limit`  
+  - established:
+    - topological closure alone is insufficient  
+    - activation requires **temporal coherence window**  
+    - recirculation must reinforce within bounded delay  
+  - confirmed:
+    - minimal loop is temporally constrained  
+
+---
+
+**Finding**
+
+Cycle 131 demonstrates:
+
+- minimal closed feedback loop:
+  - tolerates finite delay  
+  - fails under excessive delay  
+- system:
+  - transitions from modulated activation → delayed decay  
+- activation:
+  - requires not only closure  
+  - but **timely reinforcement**
+
+This establishes:
+
+> **activation requires both topological closure and a bounded temporal coherence window**
+
+and:
+
+> **latency tolerance is finite, not unbounded**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `latency_bounded_activation_regime`  
+    - defined as:  
+      *a condition in which activation persists only when feedback recirculation occurs within a finite temporal coherence window; exceeding this window leads to loss of sustained activation*  
+
+- classification:
+  - completion of temporal falsification of minimal loop  
+
+- invariants finalized:
+  - minimal loop is:
+    - topologically irreducible  
+    - size-irreducible  
+    - temporally bounded  
+  - activation requires:
+    - closure  
+    - sufficient structural depth  
+    - bounded latency  
+
+---
+
+## Closing statement (Cycles 128–131)
+
+This falsification round tested whether the **minimal closed feedback loop**—identified as the atomic unit of activation—can be:
+
+- opened  
+- reduced  
+- replaced  
+- or temporally distorted  
+
+---
+
+### Final result
+
+All falsification attempts failed to invalidate the core structure.
+
+Instead, they refined it.
+
+---
+
+### Established law (refined)
+
+```
+Activation requires a minimal closed feedback loop that is:
+
+- topologically closed (irreducible under edge removal)
+- size-irreducible (cannot be reduced below minimal cycle length)
+- temporally bounded (requires recirculation within a finite coherence window)
+```
