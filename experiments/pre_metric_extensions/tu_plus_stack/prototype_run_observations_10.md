@@ -748,3 +748,29 @@ and:
 ---
 ---
 
+## Contextual Filter Emergence findings (Cycles 137–142)
+
+### Objective
+
+Test whether **persistent activation alone** is sufficient to generate a contextual filter, or whether contextual filter emergence requires additional conditions.
+
+---
+
+## Confirmed sequence
+
+```
+persistent_activation
+→ symmetric spillover
+→ no contextual filter
+→ asymmetric exposure
+→ selective reproducible constraint
+→ contextual filter emergence
+→ symmetry restoration
+→ contextual filter dissolution
+→ transient asymmetry pulse
+→ transient selectivity without stabilization
+→ long-duration low-coherence asymmetry
+→ no contextual filter despite duration
+→ short-duration high-coherence asymmetry
+→ rapid contextual filter stabilization
+```
