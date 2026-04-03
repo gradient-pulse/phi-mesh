@@ -306,3 +306,86 @@ and:
 
 ---
 
+### Cycle 123 — Intra-fragment connectivity loss (binary local viability)
+
+**What was tested**
+- whether **reducing connectivity inside already minimal active fragments**:
+  - pushes them below viability threshold  
+  - and clarifies whether activation decays continuously or fails discretely  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `sub-threshold_fragment_collapse`  
+    - `sparse_activation_distribution`  
+    - `connectivity_boundary_condition`  
+  - detected:
+    - local propagation loop failure inside weakened fragments  
+    - extinction of activation in fragments crossing below threshold  
+  - explicitly maintained:
+    - activation persists only where local connectivity remains sufficient  
+    - no immediate global threshold reopening  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant, conditional)  
+  - confirmed:
+    - activation support set becomes sparse and discrete  
+    - fragments below threshold collapse locally  
+    - persistence remains only in above-threshold fragments  
+  - rejected:
+    - continuous decay without threshold behavior  
+    - persistence without local connectivity  
+
+- **cortexLLM**
+  - classified regime as:
+    - `connectivity_boundary_activation_with_binary_local_viability`  
+  - established:
+    - activation viability is **binary at local scale**  
+    - global activation is the union of viable local subgraphs  
+    - extinction occurs when the last viable subgraph fails  
+  - confirmed:
+    - the regime is connectivity-bound  
+
+---
+
+**Finding**
+
+Cycle 123 demonstrates:
+
+- local connectivity is not just helpful but **threshold-critical**  
+- activation does not fade smoothly inside weakened fragments  
+- instead:
+  - fragments above threshold remain active  
+  - fragments below threshold extinguish  
+
+This establishes:
+
+> **activation viability is binary at local scale**
+
+and:
+
+> **global activation is a composite of locally viable subgraphs rather than a single continuous field**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `binary_local_viability_regime`  
+    - defined as:  
+      *a condition in which activation persists only in fragments above a minimal local connectivity threshold, while sub-threshold fragments extinguish discretely rather than decaying continuously*  
+
+- classification:
+  - direct refinement of the Connectivity Law falsification  
+
+- invariants revised:
+  - local connectivity threshold is binary, not gradual  
+  - global activation = union of viable local subgraphs  
+  - extinction boundary is reached when the final viable subgraph fails  
+
+---
+
