@@ -161,3 +161,87 @@ or
 ---
 ---
 
+### Cycle 128 — Single-edge loop break (irreducibility under edge removal)
+
+**What was tested**
+- whether a **minimal closed feedback loop** can still sustain activation if:
+  - one edge is removed  
+  - turning the loop into an open chain  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `loop_opened`  
+    - `loss_of_feedback_closure`  
+    - `transient_propagation_only`  
+  - detected:
+    - immediate loss of recirculation  
+    - only one-pass propagation remains  
+  - explicitly maintained:
+    - no sustained activation  
+    - immediate entry into decay  
+
+- **TU+**
+  - reclassified regime:
+    - `localized_activation_regime → open_chain_decay_regime`  
+  - confirmed:
+    - loop closure is essential  
+    - open chain cannot sustain activation  
+  - rejected:
+    - partial activation without closure  
+    - delayed or plateaued persistence  
+
+- **cortexLLM**
+  - classified regime as:
+    - `open_chain_decay_without_feedback_recirculation`  
+  - established:
+    - topology, not just connectivity, determines viability  
+    - activation requires recirculation, not mere propagation  
+    - minimal loop is irreducible under edge removal  
+  - confirmed:
+    - no alternative sustaining structure appears  
+
+---
+
+**Finding**
+
+Cycle 128 demonstrates:
+
+- removing a single edge from the minimal loop:
+  - destroys feedback closure  
+  - prevents sustained activation  
+  - leaves only transient propagation  
+- system:
+  - decays immediately  
+  - does not form a weaker sustained regime  
+
+This establishes:
+
+> **the minimal closed feedback loop is irreducible under edge removal**
+
+and:
+
+> **activation requires recirculation, not merely connected propagation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `open_chain_decay_regime`  
+    - defined as:  
+      *a condition in which a previously viable minimal loop is opened by removing one edge, leaving only transient propagation and immediate decay*  
+
+- classification:
+  - first direct test of topological irreducibility of the atomic activation unit  
+
+- invariants refined:
+  - closed loop topology is necessary for sustained activation  
+  - connectivity alone is insufficient without recirculation  
+  - atomic activation unit survives falsification under minimal edge removal  
+
+---
+
