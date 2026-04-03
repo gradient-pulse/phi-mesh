@@ -82,7 +82,7 @@ Persistent activation is sustained activation that remains stable over an extend
 ### Layer 4 — Constraint Stabilization
 
 **Definition:**
-Constraint stabilization occurs when persistent activation begins to shape or restrict the propagation of surrounding gradients.
+Constraint stabilization occurs when persistent activation begins to selectively shape or restrict the propagation of surrounding gradients.
 
 **Necessary conditions:**
 -	persistent activation
@@ -105,6 +105,7 @@ A contextual filter is a stabilized constraint structure that biases, redirects,
 -	persistent activation
 -	stabilized constraint effect on surrounding propagation
 -	reproducible influence on subsequent dynamics
+- selective influence (non-uniform effect on propagation paths)
 
 **Non-implications:**
 -	is not the same as the loop that generated it
