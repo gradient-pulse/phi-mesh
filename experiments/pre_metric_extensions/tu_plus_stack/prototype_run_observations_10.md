@@ -484,3 +484,88 @@ and refined to:
 
 ---
 
+### Cycle 140 — Transient asymmetry pulse (sub-stabilization selectivity)
+
+**What was tested**
+- whether a **brief asymmetry pulse**:
+  - can generate a true contextual filter  
+- or whether:
+  - it produces only temporary selective behavior that fails to stabilize  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `transient_selectivity`  
+    - `pulse_induced_bias`  
+    - `non-stabilized_constraint`  
+  - detected:
+    - short-lived selective path bias during the pulse  
+    - local gating only while asymmetry is present  
+  - explicitly maintained:
+    - no lasting selective structure  
+    - no stable CF formation  
+
+- **TU+**
+  - confirmed:
+    - selectivity appears transiently  
+    - gating is not persistent or reproducible  
+    - influence returns to uniform spillover after pulse removal  
+  - rejected:
+    - any-selectivity-is-enough interpretation  
+    - classification of transient bias as contextual filtering  
+
+- **cortexLLM**
+  - classified regime as:
+    - `persistent_activation_with_transient_selectivity_and_no_contextual_filter`  
+  - established:
+    - transient asymmetry is insufficient for CF stabilization  
+    - selectivity without reproducibility is not filtering  
+    - CF formation requires a **minimum stabilization duration**  
+  - confirmed:
+    - persistent activation remains intact without CF emergence  
+
+---
+
+**Finding**
+
+Cycle 140 demonstrates:
+
+- brief asymmetry:
+  - can generate temporary selective bias  
+  - cannot stabilize a contextual filter  
+- contextual filtering:
+  - requires more than momentary selectivity  
+  - requires sustained asymmetry over a stabilization window  
+- system:
+  - shows **filter-like response**
+  - but not **filter formation**
+
+This establishes:
+
+> **transient selectivity is not sufficient for contextual filter formation**
+
+and:
+
+> **contextual filter stabilization has a minimum duration requirement**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `sub-stabilization_selective_response_regime`  
+    - defined as:  
+      *a condition in which persistent activation expresses brief selective bias under transient asymmetry but fails to produce a stabilized, reproducible contextual filter*  
+
+- classification:
+  - confirmation of minimum-duration requirement for CF stabilization  
+
+- invariants refined:
+  - selectivity alone is insufficient  
+  - reproducibility requires sustained asymmetry  
+  - CF emergence depends on both structure and duration  
+
+---
