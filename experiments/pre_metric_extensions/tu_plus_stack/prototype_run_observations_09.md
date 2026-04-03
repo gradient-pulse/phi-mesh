@@ -244,4 +244,95 @@ and:
 - invariants revised:
   - atomic units are interactive, not fully independent  
   - composition introduces new dynamics not present in isolation  
-  - identity can persist under weak coupling without additivity  
+  - identity can persist under weak coupling without additivity
+ 
+---
+
+### Cycle 133 — Shared-edge coupling (strengthened non-additive interaction)
+
+**What was tested**
+- whether two **atomic activation units**:
+  - coupled through a shared edge rather than a shared node  
+show:
+  - stronger interaction  
+  - partial synchronization  
+  - or collapse / merger  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `moderate_coupling`  
+    - `shared_edge_interaction`  
+    - `partial_phase_locking`  
+    - `enhanced_modulation`  
+  - detected:
+    - overlapping recirculation paths  
+    - stronger phase interaction than in the shared-node case  
+  - explicitly maintained:
+    - no collapse  
+    - no complete merger  
+
+- **TU+**
+  - confirmed:
+    - interaction strength increases with shared structure extent  
+    - both loops remain active  
+    - phase dynamics show partial locking  
+  - rejected:
+    - strict independence  
+    - linear superposition  
+    - destructive interference at moderate coupling  
+
+- **cortexLLM**
+  - classified regime as:
+    - `moderately_coupled_dual_loop_activation_with_partial_phase_locking`  
+  - established:
+    - shared-edge coupling enables stronger bidirectional influence than shared-node coupling  
+    - coupling strength modulates synchronization tendency  
+    - composite behavior is strongly non-linear and non-additive  
+  - confirmed:
+    - unit identity persists without fusion  
+
+---
+
+**Finding**
+
+Cycle 133 demonstrates:
+
+- atomic activation units:
+  - interact more strongly when they share an edge than when they share only a node  
+  - can partially synchronize without merging  
+- system:
+  - remains stable  
+  - exhibits stronger emergent coupling dynamics  
+- composition:
+  - is shaped by shared-structure extent, not simple addition  
+
+This establishes:
+
+> **interaction strength between atomic units depends on the extent of shared structure**
+
+and:
+
+> **atomic units can enter partial synchronization without losing identity**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `moderately_coupled_atomic_units_regime`  
+    - defined as:  
+      *a condition in which two atomic activation units share an edge, producing stronger non-additive interaction and partial phase locking while preserving distinct loop identity*  
+
+- classification:
+  - second-stage falsification of strict Composite Activation Law  
+
+- invariants refined:
+  - shared-edge coupling is stronger than shared-node coupling  
+  - coupling strength governs synchronization tendency  
+  - composite activation is emergent and non-linear, not additive
+
+---
