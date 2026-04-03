@@ -219,3 +219,90 @@ and:
 
 ---
 
+### Cycle 122 — Extreme fragmentation (local connectivity threshold)
+
+**What was tested**
+- whether **further fragmentation and intra-fragment weakening**:
+  - can push the system beyond partial disconnection  
+  - and test the limits of activation persistence  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `critical_fragmentation`  
+    - `heterogeneous_activation_distribution`  
+    - `minimal_connectivity_fragments`  
+  - detected:
+    - near-total loss of inter-fragment connectivity  
+    - weakening of internal coupling within fragments  
+    - emergence of local instability  
+  - explicitly maintained:
+    - activation persists in stronger fragments  
+    - partial local collapse occurs  
+
+- **TU+**
+  - maintained:
+    - `activation_state` (dominant)  
+  - confirmed:
+    - activation becomes **non-uniform and discrete**  
+    - fragments above a connectivity threshold remain active  
+    - fragments below threshold collapse locally  
+  - rejected:
+    - need for global connectivity  
+    - total collapse under strong fragmentation  
+
+- **cortexLLM**
+  - classified regime as:
+    - `thresholded_fragmented_activation_under_extreme_connectivity_reduction`  
+  - established:
+    - activation depends on **minimal local connectivity threshold**  
+    - connectivity requirement is **quantized, not continuous**  
+    - system becomes a patchwork of viable subgraphs  
+  - confirmed:
+    - no global threshold reopening  
+
+---
+
+**Finding**
+
+Cycle 122 demonstrates:
+
+- connectivity:
+  - is not required globally  
+  - is required **locally above a minimal threshold**  
+- activation:
+  - persists only in substructures meeting this threshold  
+  - becomes discrete and heterogeneous  
+- system:
+  - transitions from fragmented → **thresholded fragmented activation**  
+
+This establishes:
+
+> **activation requires a minimal local connectivity threshold**
+
+and:
+
+> **connectivity is quantized: below threshold → collapse, above threshold → persistence**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `thresholded_fragmented_activation_regime`  
+    - defined as:  
+      *a condition in which activation persists only in substructures exceeding a minimal connectivity threshold, resulting in a discrete distribution of active and inactive fragments*  
+
+- classification:
+  - first identification of connectivity threshold behavior  
+
+- invariants revised:
+  - connectivity is local and threshold-dependent  
+  - activation is not continuous across structure  
+  - fragmentation produces quantized activation patterns  
+
+---
+
