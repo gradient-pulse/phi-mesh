@@ -476,3 +476,217 @@ and:
 
 ---
 ---
+
+## Connectivity falsification findings (Cycles 121–124)
+
+### Objective
+
+Test whether **connectivity is required for activation**, and if so, whether this requirement is:
+- global  
+- local  
+- continuous  
+- or thresholded  
+
+---
+
+## Confirmed sequence
+
+```
+structured_activation
+→ correlated_multi-level_phase_inversion
+→ partial_connectivity_failure
+→ fragmented_activation
+→ intensified_fragmentation
+→ thresholded_fragmented_activation
+→ intra-fragment_connectivity_reduction
+→ binary_local_viability
+→ final_fragment_failure
+→ global_activation_extinction
+```
+
+---
+
+### Confirmed distinctions
+
+-	global_connectivity ≠ local_connectivity
+-	partial_disconnection ≠ full_disconnection
+-	fragmentation ≠ collapse
+-	heterogeneous_activation ≠ continuous_activation
+-	local_viability ≠ global_viability
+-	threshold_behavior ≠ gradual_decay
+-	extinction_boundary ≠ instability_region
+
+---
+
+### Core findings
+
+1. Global connectivity is not required
+
+-	system can fragment into disconnected substructures
+-	activation persists locally within those substructures
+-	global coherence is lost without collapse
+
+**activation does not require global connectivity**
+
+---
+
+2. Activation localizes under fragmentation
+
+-	activation becomes:
+-	discrete
+-	heterogeneous
+-	subgraph-dependent
+-	system transitions from:
+-	unified / distributed activation
+→ fragmented activation
+
+**activation can exist as a set of independent local phenomena**
+
+---
+
+3. Minimal local connectivity threshold exists
+
+-	each fragment must maintain:
+-	sufficient internal coupling
+-	closed local propagation loops
+-	if below threshold:
+-	fragment collapses locally
+
+**activation requires minimal local connectivity, not arbitrary connectivity**
+
+---
+
+4. Local viability is binary
+
+-	fragments do not:
+-	degrade smoothly
+-	instead:
+-	remain active (above threshold)
+-	or extinguish (below threshold)
+
+**activation viability is binary at local scale**
+
+---
+
+5. Global activation is composite
+-	system-wide activation is:
+
+union_of(all_viable_local_subgraphs)
+
+-	not:
+-	a continuous global field
+
+**global activation is an aggregate, not a monolith**
+
+---
+
+6. Extinction is exact and boundary-driven
+
+-	as long as ≥1 viable fragment exists:
+-	activation persists
+-	when last fragment fails:
+-	activation ceases immediately
+-	threshold reopens
+
+**extinction occurs exactly at the last viable subgraph failure**
+
+---
+
+### Connectivity Law — falsification result
+
+Original assumption
+
+**connectivity is more fundamental than symmetry for maintaining coherence**
+
+---
+
+### Refined law
+
+Connectivity is not required globally for activation.
+
+Activation requires minimal local connectivity within subgraphs.
+
+Global activation exists if and only if at least one viable local connectivity subgraph exists.
+
+
+---
+
+### Minimal causal chain (refined)
+
+connectivity_reduction
+```
+→ partial_disconnection
+→ fragmented_activation
+→ local_threshold_behavior
+→ binary_viability_per_fragment
+→ shrinking_viable_subgraph_set
+→ final_subgraph_failure
+→ global_activation_extinction
+```
+
+---
+
+### Non-permitted inferences
+
+-	connectivity loss → immediate collapse
+-	fragmentation → instability
+-	activation → continuous field
+-	viability → gradual decay
+-	extinction → delayed or probabilistic
+-	global connectivity → required for activation
+-	symmetry → required for activation
+
+---
+
+### Engineering conclusions
+
+1. Connectivity is local, not global
+
+**Activation depends only on local propagation loops, not global integration.**
+
+2. Activation is discrete at scale
+
+System behavior is governed by:
+-	presence/absence of viable subgraphs
+not continuous intensity.
+
+3. Thresholds dominate behavior
+
+Local connectivity defines:
+-	sharp viability boundary
+-	discrete extinction events
+
+4. Global state is compositional
+
+Activation is:
+-	the sum of viable components
+not a unified continuous structure.
+
+5. Collapse is not fragmentation
+
+Fragmentation:
+-	redistributes activation
+
+Collapse:
+-	occurs only when all viable fragments fail.
+
+---
+
+### Strongest result
+
+**Activation is a locally thresholded, discrete phenomenon that does not require global connectivity and ceases exactly when the final viable local subgraph fails.**
+
+---
+
+### Outcome
+
+Connectivity Law is not invalidated, but refined and constrained:
+-	❌ Global connectivity is not fundamental
+-	✅ Local connectivity threshold is fundamental
+
+---
+
+### Status
+
+This falsification round is complete and closed.
+
