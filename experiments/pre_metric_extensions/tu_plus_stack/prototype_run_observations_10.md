@@ -382,3 +382,105 @@ and:
   - structural asymmetry enables contextual filtering  
 
 ---
+
+### Cycle 139 — Symmetry restoration (contextual filter reversibility)
+
+**What was tested**
+- whether a **formed contextual filter (CF)**:
+  - persists once established  
+- or whether:
+  - it depends on continued structural asymmetry  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `filter_decay`  
+    - `loss_of_selectivity`  
+    - `symmetric_spillover_restored`  
+    - `contextual_filter_dissolved`  
+  - detected:
+    - weakening of selective bias  
+    - disappearance of stable gating patterns  
+  - explicitly maintained:
+    - activation persists  
+    - filter structure does not  
+
+- **TU+**
+  - confirmed:
+    - removal of asymmetry leads to loss of selectivity  
+    - gating is not self-sustaining  
+    - reproducible constraint pattern breaks down  
+  - rejected:
+    - persistence of CF without asymmetry  
+    - assumption that CF becomes autonomous once formed  
+
+- **cortexLLM**
+  - classified regime as:
+    - `persistent_activation_with_contextual_filter_loss_under_symmetry_restoration`  
+  - established:
+    - CF formation is reversible  
+    - CF depends on continued asymmetry  
+    - activation and filtering are separable regimes  
+  - confirmed:
+    - filter loss does not require activation collapse  
+
+---
+
+**Finding**
+
+Cycle 139 demonstrates:
+
+- contextual filters:
+  - do **not** persist autonomously once formed  
+  - require **ongoing structural asymmetry**  
+- system:
+  - can retain persistent activation  
+  - while losing filtering capability  
+- structure:
+  - filtering is **conditional and reversible**  
+
+This establishes:
+
+> **contextual filters are not self-sustaining; they require continuous asymmetry to exist**
+
+and:
+
+> **persistent activation and contextual filtering are distinct and separable regimes**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `contextual_filter_reversible_regime`  
+    - defined as:  
+      *a condition in which a contextual filter dissolves when the asymmetry that generated it is removed, while persistent activation remains intact*  
+
+- classification:
+  - confirmation of conditional and reversible CF formation  
+
+- invariants refined:
+  - CF emergence requires asymmetry  
+  - CF persistence requires continued asymmetry  
+  - CFs are not autonomous structures  
+  - activation ≠ filtering  
+
+---
+
+## Status
+
+The hypothesis:
+
+> “persistent activation alone is insufficient to generate a contextual filter”
+
+is now **strongly supported**
+
+and refined to:
+
+> **contextual filters require persistent activation + structural asymmetry + selective, reproducible constraint**
+
+---
+
