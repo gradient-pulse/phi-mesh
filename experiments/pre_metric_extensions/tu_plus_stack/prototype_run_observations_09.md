@@ -426,3 +426,91 @@ and:
  
 ---
 
+### Cycle 135 — Strong multi-edge coupling (merging of atomic units)
+
+**What was tested**
+- whether two **atomic activation units**:
+  - under strong multi-edge coupling  
+remain distinct  
+or instead:
+  - merge into a single larger activation structure  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `strong_coupling`  
+    - `boundary_dissolution`  
+    - `full_phase_synchronization`  
+    - `merged_activation_unit`  
+  - detected:
+    - extensive overlap of recirculation paths  
+    - convergence toward full synchronization  
+  - explicitly maintained:
+    - no destructive instability  
+    - stable activation throughout  
+
+- **TU+**
+  - confirmed:
+    - independent loop identity is lost  
+    - cross-feedback dominates internal loop dynamics  
+    - a larger closed feedback structure emerges  
+  - rejected:
+    - persistence of distinct units under high coupling  
+    - destructive interference at strong overlap  
+
+- **cortexLLM**
+  - classified regime as:
+    - `coupling_induced_topological_merging_into_single_activation_unit`  
+  - established:
+    - strong overlap eliminates structural boundaries  
+    - recirculation paths integrate into a single topology  
+    - atomic units can merge into larger units under sufficient coupling  
+  - confirmed:
+    - activation remains stable and self-sustaining after merger  
+
+---
+
+**Finding**
+
+Cycle 135 demonstrates:
+
+- atomic activation units:
+  - do not remain permanently distinct under strong coupling  
+  - can merge into a single larger activation unit  
+- system:
+  - transitions from interacting dual units → unified integrated structure  
+  - preserves activation during and after merger  
+- composition:
+  - is not merely interactive  
+  - it can become **topologically generative**
+
+This establishes:
+
+> **atomic activation units can merge into larger activation units under sufficient structural overlap**
+
+and:
+
+> **the identity of atomic units is conditional, not absolute**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `merged_atomic_activation_regime`  
+    - defined as:  
+      *a condition in which previously distinct atomic activation units lose boundary identity under strong multi-edge coupling and reorganize into a single larger closed feedback structure*  
+
+- classification:
+  - first observed merger boundary in Composite Activation falsification  
+
+- invariants refined:
+  - atomic units are not permanently atomic under strong coupling  
+  - structural overlap can redefine the unit of activation  
+  - composite activation can become topologically unified rather than merely coordinated  
+
+---
+
