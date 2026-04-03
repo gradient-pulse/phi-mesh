@@ -336,3 +336,93 @@ and:
   - composite activation is emergent and non-linear, not additive
 
 ---
+
+### Cycle 134 — Asymmetric delayed bridge (driver–response coupling)
+
+**What was tested**
+- whether two **atomic activation units**:
+  - when coupled by a delayed, directional bridge  
+  behave symmetrically  
+  or instead develop:
+  - directional influence  
+  - entrainment  
+  - and non-additive role asymmetry  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `asymmetric_cross-coupling`  
+    - `directional_phase_influence`  
+    - `delayed_driven_response`  
+  - detected:
+    - loop A influencing loop B more strongly than vice versa  
+    - delayed modulation rather than symmetric interaction  
+  - explicitly maintained:
+    - no collapse  
+    - no merger  
+    - both loops remain active  
+
+- **TU+**
+  - confirmed:
+    - interaction is no longer symmetric  
+    - loop B retains activation but loses phase autonomy  
+    - loop A functions as the primary stabilizing source  
+  - rejected:
+    - equal mutual influence  
+    - destructive instability from delayed asymmetry  
+
+- **cortexLLM**
+  - classified regime as:
+    - `directionally_coupled_dual_loop_activation_with_delayed_entrainment`  
+  - established:
+    - delayed bridge creates **driver–response dynamics**  
+    - atomic units can assume unequal roles  
+    - composite behavior is non-additive and direction-dependent  
+  - confirmed:
+    - both units remain viable despite asymmetry  
+
+---
+
+**Finding**
+
+Cycle 134 demonstrates:
+
+- atomic activation units:
+  - do not merely couple in strength  
+  - can also couple in **direction**
+- system:
+  - develops driver–response structure  
+  - preserves both units without fusion  
+- interaction:
+  - is shaped by asymmetry and delay, not just shared topology  
+
+This establishes:
+
+> **atomic activation units can form directional, role-asymmetric relationships**
+
+and:
+
+> **composite activation is governed by directionality as well as coupling strength**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `directionally_coupled_atomic_units_regime`  
+    - defined as:  
+      *a condition in which two atomic activation units remain distinct but become coupled through an asymmetric delayed bridge, producing driver–response dynamics without merger or collapse*  
+
+- classification:
+  - third-stage falsification/refinement of the Composite Activation Law  
+
+- invariants refined:
+  - atomic units are not strictly additive  
+  - interaction can be asymmetric and directional  
+  - composite activation can express role hierarchy without structural fusion
+ 
+---
+
