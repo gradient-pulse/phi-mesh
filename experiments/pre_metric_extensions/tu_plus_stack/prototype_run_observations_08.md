@@ -245,3 +245,90 @@ and:
 
 ---
 
+### Cycle 129 — Loop size reduction (irreducible minimal cycle)
+
+**What was tested**
+- whether the **minimal closed feedback loop**:
+  - can be reduced in size  
+  - while still sustaining activation  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `minimal_cycle_irreducible`  
+    - `no_sub-cycle_topology`  
+    - `failed_loop_contraction`  
+  - detected:
+    - node removal breaks the cycle  
+    - edge rewiring restores a loop but not a smaller one  
+  - explicitly maintained:
+    - no viable smaller cycle emerges  
+    - activation persists only in original minimal topology  
+
+- **TU+**
+  - confirmed:
+    - attempts to reduce loop size lead to:
+      - either cycle break → activation loss  
+      - or rewiring → same minimal cycle restored  
+  - identified:
+    - two-node cycles are non-viable  
+  - rejected:
+    - existence of sub-minimal loops  
+    - sustained activation in compressed structures  
+
+- **cortexLLM**
+  - classified regime as:
+    - `minimal_cycle_irreducibility_under_size_reduction`  
+  - established:
+    - minimal loop has **irreducible size and topology**  
+    - recirculation requires sufficient structural depth  
+    - both closure and minimal length are necessary  
+  - confirmed:
+    - no alternative minimal topology exists  
+
+---
+
+**Finding**
+
+Cycle 129 demonstrates:
+
+- minimal closed feedback loop:
+  - cannot be reduced in size  
+  - cannot be replaced by smaller cycles  
+- system:
+  - either:
+    - breaks activation (if loop is reduced)  
+    - or restores original minimal loop (if rewired)  
+- topology:
+  - imposes a strict lower bound on viable structures  
+
+This establishes:
+
+> **the minimal closed feedback loop has an irreducible size and topology**
+
+and:
+
+> **activation requires both closure and minimal structural depth**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `minimal_cycle_irreducible_regime`  
+    - defined as:  
+      *a condition in which attempts to reduce the size of a minimal closed feedback loop either destroy activation or restore the original topology, confirming a strict lower bound on viable structures*  
+
+- classification:
+  - completion of minimality falsification under size reduction  
+
+- invariants finalized (for this test):
+  - minimal loop is irreducible in both topology and size  
+  - activation requires recirculation and sufficient structural depth  
+  - no smaller or alternative sustaining structures exist  
+
+---
+
