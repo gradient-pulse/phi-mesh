@@ -774,3 +774,207 @@ persistent_activation
 → short-duration high-coherence asymmetry
 → rapid contextual filter stabilization
 ```
+
+---
+
+### Confirmed distinctions
+
+-	persistent_activation ≠ contextual_filter
+-	spillover ≠ selective_constraint
+-	selectivity ≠ reproducibility
+-	transient_selectivity ≠ stabilized_filter
+-	asymmetry ≠ coherent_asymmetry
+-	duration ≠ coherence-integrated_persistence
+-	activation_persistence ≠ filter_persistence
+
+---
+
+### Core findings
+
+1. Persistent activation alone is insufficient
+
+Persistent activation can:
+-	remain stable
+-	influence surrounding propagation
+-	yet fail to produce a contextual filter
+
+This occurs when influence is:
+-	uniform
+-	diffusive
+-	non-selective
+-	non-reproducible
+
+**Persistence alone does not generate contextual filters.**
+
+---
+
+2. Symmetric spillover is a false positive
+
+Under symmetric exposure:
+-	influence spreads outward
+-	but no path is selectively favored
+-	no stable gating pattern forms
+
+Uniform spillover must not be misclassified as contextual filtering.
+
+---
+
+3. Structural asymmetry enables filter formation
+
+When asymmetry is introduced:
+-	path bias emerges
+-	propagation is selectively redirected
+-	local gating becomes repeatable
+
+**Contextual filters emerge when persistent activation produces selective, reproducible constraint under asymmetric conditions.**
+
+---
+
+4. Contextual filters are reversible
+
+When asymmetry is removed:
+-	selectivity decays
+-	gating dissolves
+-	influence returns to spillover
+
+while:
+-	activation remains persistent
+
+**Contextual filters are not autonomous; they require continued asymmetry.**
+
+---
+
+5. Transient selectivity is insufficient
+
+Brief asymmetry pulses can produce:
+-	temporary path bias
+-	temporary local gating
+
+but:
+-	no stable reproducibility
+-	no contextual filter stabilization
+
+**Not all selectivity counts as filtering.**
+
+---
+
+6. Duration alone is insufficient
+
+Long-duration asymmetry with:
+-	noisy
+-	fluctuating
+-	low-coherence selectivity
+
+fails to produce a contextual filter.
+
+**Elapsed time alone does not stabilize contextual filters.**
+
+---
+
+7. Coherence quality can compensate for short duration
+
+Short-duration asymmetry with:
+-	high coherence
+-	stable selectivity
+-	reproducible bias
+
+does produce rapid contextual filter stabilization.
+
+**High coherence can reduce the required stabilization duration.**
+
+---
+
+### Refined emergence law
+
+```
+Contextual filters do not emerge from persistence alone.
+
+They emerge when persistent activation generates
+selective, reproducible constraint under sustained structural asymmetry.
+
+The operative control variable is not elapsed duration alone,
+but coherence-integrated persistence.
+```
+
+### Minimal causal chain (refined)
+
+```
+persistent_activation
+
+→ interaction_with_surrounding_space
+→ asymmetry
+→ selective_bias
+→ reproducible_gating
+→ stabilized_constraint
+→ contextual_filter
+```
+
+And the failure branches:
+
+```
+persistent_activation
+→ symmetric spillover
+→ no CF
+
+persistent_activation
+→ transient asymmetry
+→ transient selectivity
+→ no CF
+
+persistent_activation
+→ long-duration low-coherence asymmetry
+→ fluctuating bias
+→ no CF
+```
+
+
+---
+
+### Non-permitted inferences
+
+-	persistent activation → contextual filter
+-	any outward influence → contextual filter
+-	any selectivity → contextual filter
+-	long duration → contextual filter
+-	contextual filters, once formed, are autonomous
+-	activation loss is required for filter loss
+
+---
+
+### Engineering conclusions
+
+1. Contextual filters are stricter than activation
+
+*Not every persistent activation becomes a filter.*
+
+2. Selectivity is necessary
+
+*A contextual filter must bias future propagation non-uniformly.*
+
+3. Reproducibility is necessary
+
+*A contextual filter must impose a repeatable constraint, not a momentary effect.*
+
+4. Asymmetry is necessary
+
+*Symmetric conditions do not produce contextual filters.*
+
+5. Duration is secondary
+
+*Elapsed time matters only insofar as coherent selective bias is maintained across it.*
+
+6. Coherence-integrated persistence is the stronger candidate variable
+
+*What stabilizes a contextual filter is not mere duration, but sustained coherent selectivity over time.*
+
+---
+
+### Strongest result
+
+**Contextual filters are not produced by persistence alone, but by persistent activation that maintains selective, reproducible constraint under asymmetric conditions.**
+
+---
+
+### Status
+
+*prototype_run_observations_10.md is complete and can be closed.*
