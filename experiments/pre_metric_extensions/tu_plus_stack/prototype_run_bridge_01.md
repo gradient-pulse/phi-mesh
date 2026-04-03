@@ -115,7 +115,7 @@ A contextual filter is a stabilized constraint structure that biases, redirects,
 
 ### Key distinctions
 
-*Loop vs Activation vs Filter**
+**Loop vs Activation vs Filter**
 -	minimal loop → structural mechanism
 -	sustained activation → dynamic regime
 -	contextual filter → emergent constraint
