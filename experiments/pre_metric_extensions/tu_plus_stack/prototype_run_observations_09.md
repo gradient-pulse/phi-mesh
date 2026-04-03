@@ -160,3 +160,88 @@ This determines whether the system is:
 - **modular**  
 or  
 - **interactively generative**
+
+---
+---
+
+### Cycle 132 — Shared-node coupling (failure of strict additivity)
+
+**What was tested**
+- whether two **atomic activation units**:
+  - remain strictly independent when coupled through a single shared node  
+- or whether even minimal shared structure:
+  - produces interaction  
+  - without full merging or collapse  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `weak_coupling`  
+    - `shared_node_interaction`  
+    - `phase_adjustment_between_units`  
+  - detected:
+    - cross-influence at the shared node  
+    - modulation of phase relations between loops  
+  - explicitly maintained:
+    - no collapse  
+    - no immediate merger  
+
+- **TU+**
+  - confirmed:
+    - both loops remain active  
+    - strict independence is lost  
+    - interaction appears even under minimal coupling  
+  - rejected:
+    - additive independence  
+    - need for strong coupling before interaction appears  
+
+- **cortexLLM**
+  - classified regime as:
+    - `weakly_coupled_dual_loop_activation_with_phase_interaction`  
+  - established:
+    - shared-node coupling creates a bidirectional interaction channel  
+    - composite behavior is **non-additive**  
+    - unit identity is preserved despite interaction  
+  - confirmed:
+    - the system is interactive without becoming fused  
+
+---
+
+**Finding**
+
+Cycle 132 demonstrates:
+
+- atomic activation units:
+  - do not remain strictly independent under shared-node coupling  
+  - begin to interact immediately through phase modulation  
+- system:
+  - preserves both units  
+  - but no longer behaves like a simple sum of isolated parts  
+
+This establishes:
+
+> **strict additivity of atomic activation units is false**
+
+and:
+
+> **minimal shared structure is sufficient to generate non-additive interaction**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `weakly_interacting_atomic_units_regime`  
+    - defined as:  
+      *a condition in which two atomic activation units remain distinct but exhibit non-additive phase interaction through minimal shared structural coupling*  
+
+- classification:
+  - first successful falsification of the strict Composite Activation Law  
+
+- invariants revised:
+  - atomic units are interactive, not fully independent  
+  - composition introduces new dynamics not present in isolation  
+  - identity can persist under weak coupling without additivity  
