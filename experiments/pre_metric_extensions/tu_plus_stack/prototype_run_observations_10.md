@@ -569,3 +569,10 @@ and:
   - CF emergence depends on both structure and duration  
 
 ---
+
+## New test focus: 
+
+> Open question: is CF stabilization governed by elapsed duration, or by sustained contextual coherence across the stabilization window?
+
+---
+
