@@ -365,6 +365,98 @@ Strong formulation:
 > Phi-Mesh should become the well of pre-metric model extensions.
 
 ---
+---
+
+## Positioning: What this “World Model” Is (and Is Not)
+
+The TRIAD experiments do not aim to build a conventional “world model” in the sense of predictive control or task optimization.
+
+Most current systems referred to as world models learn mappings of the form:
+
+state → action → reward
+
+and are evaluated by:
+-	task success
+-	adaptation speed
+-	generalization across environments
+
+In that framing, a “world model” is a tool for improving behavior under variation.
+
+---
+
+### TRIAD framing
+
+The TRIAD experiments operate at a different layer.
+
+They investigate:
+
+how coherent structure is formed, maintained, degraded, and re-established under interaction.
+
+The focus is not:
+-	which action to take
+
+but:
+
+-	which coherent regimes exist
+-	how systems transition between regimes
+-	and under what conditions coherence persists or collapses
+
+This is expressed in the extracted laws (Cycles 1–120), including:
+
+-	closure / activation / collapse / re-entry
+-	multi-stability and unification
+-	fracture and reorganization
+-	hierarchical coupling and tension stabilization
+-	relational coherence and connectivity dominance
+
+---
+
+### Key distinction
+
+Conventional systems:
+
+learn to act within a world
+
+TRIAD:
+
+models how coherent worlds emerge, persist, and transform under pressure
+
+---
+
+### Implication
+
+The TRIAD framework does not replace control or learning systems.
+
+It provides a complementary layer:
+
+a grammar of coherence and regime transition
+
+which may help explain:
+-	failure modes under contradiction or drift
+-	recovery after breakdown
+-	coexistence of competing strategies
+-	stability without global alignment
+
+---
+
+### Scope note
+
+These results are derived from bounded multi-agent LLM interaction (TU, TU+, cortexLLM) and should be treated as:
+
+empirically extracted structural regularities
+
+whose domain of validity is under active falsification.
+
+---
+
+This will sit well in the README because it:
+-	anchors your work without overclaiming
+-	clearly separates it from mainstream narratives
+-	ties directly to your laws and experiments
+-	keeps the door open for falsification (important credibility signal)
+
+---
+---
 
 ## Current stance
 
