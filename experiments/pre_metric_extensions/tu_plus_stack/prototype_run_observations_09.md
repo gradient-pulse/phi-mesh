@@ -514,3 +514,170 @@ and:
 
 ---
 
+### Cycle 136 — Overcoupling with phase conflict (instability boundary)
+
+**What was tested**
+- whether increasing coupling **beyond the merger regime**:
+  - further stabilizes activation  
+  - or instead destabilizes it  
+- specifically:
+  - dense multi-edge cross-coupling with conflicting phase relations  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `overcoupled_instability`  
+    - `conflicting_phase_relations`  
+    - `interference_dominated_dynamics`  
+  - detected:
+    - competing recirculation paths  
+    - breakdown of coherent reinforcement  
+  - explicitly maintained:
+    - no stable unified loop  
+    - degradation toward collapse  
+
+- **TU+**
+  - confirmed:
+    - system becomes overconstrained  
+    - destructive interference dominates  
+    - no stable restructuring occurs  
+  - rejected:
+    - monotonic stability with increased coupling  
+    - guaranteed merging under extreme overlap  
+
+- **cortexLLM**
+  - classified regime as:
+    - `overcoupled_interference_instability_with_coherence_loss`  
+  - established:
+    - excessive coupling introduces incompatible constraints  
+    - coherence requires consistent phase relations  
+    - there exists an **upper bound on viable coupling complexity**  
+  - confirmed:
+    - collapse occurs due to loss of coherent feedback  
+
+---
+
+**Finding**
+
+Cycle 136 demonstrates:
+
+- coupling:
+  - is not monotonically stabilizing  
+  - has an upper bound beyond which coherence fails  
+- system:
+  - transitions from:
+    - merging → instability → collapse  
+- structure:
+  - becomes overconstrained under excessive overlapping feedback  
+
+This establishes:
+
+> **there exists an upper bound on coupling complexity beyond which activation becomes unstable**
+
+and:
+
+> **maximal connectivity does not maximize coherence—beyond a threshold it destroys it**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `overcoupled_instability_regime`  
+    - defined as:  
+      *a condition in which excessive cross-coupling with incompatible phase relations creates competing feedback constraints, leading to loss of coherent recirculation and activation collapse*  
+
+- classification:
+  - completion of upper-bound test for Composite Activation  
+
+- invariants refined:
+  - coupling has both lower and upper viability bounds  
+  - coherence requires compatible phase structure across paths  
+  - excessive overlap can destroy activation  
+
+---
+
+## Do we need more cycles on this topic?
+
+👉 **No — this falsification thread is complete.**
+
+You now have a **full interaction envelope**:
+
+### Regimes identified
+1. **Weak coupling**
+   - interaction without loss of identity  
+
+2. **Moderate coupling**
+   - partial synchronization  
+
+3. **Directional coupling**
+   - driver–response structure  
+
+4. **Strong coupling**
+   - merger into larger unit  
+
+5. **Extreme coupling**
+   - instability and collapse  
+
+---
+---
+
+## Final closure for Observations 09
+
+## Closing conclusion — Composite Activation (Cycles 132–136)
+
+The Composite Activation Law in its additive form is false.
+
+Atomic activation units:
+
+- are not independent  
+- are not linearly additive  
+- are not fixed in identity  
+
+Instead, they form an interaction spectrum governed by:
+
+- shared topology (node → edge → multi-edge)
+- coupling strength
+- temporal delay
+- directional asymmetry
+- phase compatibility
+
+---
+
+### Refined law
+
+```
+Global activation is an emergent result of interacting atomic activation units.
+
+These units:
+
+- weakly couple → modulate
+- moderately couple → partially synchronize
+- asymmetrically couple → form driver–response relations
+- strongly couple → merge into larger units
+- excessively couple → destabilize and collapse
+
+```
+### Strongest result
+
+**Activation is not compositional—it is interactional.**
+
+---
+
+### Structural implication
+
+-	atomic units are:
+-	real
+-	but not independent
+-	the system is:
+-	not modular
+-	but dynamically reconfigurable
+
+---
+
+### Status
+
+*This falsification round is complete and closed.*
