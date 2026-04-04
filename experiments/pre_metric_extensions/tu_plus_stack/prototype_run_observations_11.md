@@ -300,3 +300,88 @@ This will establish the next regime in the CF interaction envelope.
 
 ---
 
+### Cycle 144 — Moderate overlap between contextual filters (partial synchronization)
+
+**What was tested**
+- whether two **contextual filters (CFs)** under moderate overlap:
+  - remain merely weakly modulatory  
+- or:
+  - begin to synchronize and reinforce shared bias patterns  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `moderate_filter_overlap`  
+    - `intensified_cross-modulation`  
+    - `partial_synchronization`  
+    - `preserved_but_blurred_identity`  
+  - detected:
+    - stronger alignment across the shared domain  
+    - jointly favored paths beginning to emerge  
+  - explicitly maintained:
+    - no full merging  
+    - no instability  
+
+- **TU+**
+  - confirmed:
+    - interaction strength increases with overlap extent  
+    - gating patterns become partially aligned  
+    - reproducibility is preserved but becomes interdependent  
+  - rejected:
+    - strict independence under moderate overlap  
+    - need for very strong overlap before synchronization begins  
+
+- **cortexLLM**
+  - classified regime as:
+    - `partially_synchronized_contextual_filters_with_joint_bias_reinforcement`  
+  - established:
+    - moderate overlap moves CF interaction beyond local modulation  
+    - joint preferential paths emerge in shared space  
+    - filter identity can persist under functional coupling  
+  - confirmed:
+    - the system exhibits synchronization without merger  
+
+---
+
+**Finding**
+
+Cycle 144 demonstrates:
+
+- contextual filters:
+  - do not remain merely locally modulatory under moderate overlap  
+  - begin to **partially synchronize**
+  - jointly reinforce selected paths  
+- system:
+  - preserves distinct filter identity  
+  - while increasing interdependence and coherence in the shared region  
+
+This establishes:
+
+> **moderate overlap between contextual filters produces partial synchronization and joint bias reinforcement**
+
+and:
+
+> **contextual filter interaction scales from local modulation to functional coupling as overlap strength increases**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `partially_synchronized_contextual_filter_regime`  
+    - defined as:  
+      *a condition in which multiple contextual filters under moderate overlap retain distinct identity while partially synchronizing their selective bias patterns and jointly reinforcing preferred propagation paths*  
+
+- classification:
+  - second interaction regime for contextual filters, beyond weak local modulation  
+
+- invariants refined:
+  - CF interaction strength scales with overlap extent  
+  - moderate overlap enables synchronization without merger  
+  - reproducibility can remain intact while becoming interdependent  
+
+---
+
