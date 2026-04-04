@@ -1560,4 +1560,111 @@ Cycle 156 should test whether internal substructure:
 
 ---
 
+### Cycle 156 — Unified higher-order contextual filter (hierarchical organization)
+
+**What was tested**
+- whether the **internal substructure** observed in Cycle 155:
+  - remains transient or weakly organized  
+- or whether:
+  - it stabilizes into a persistent hierarchical structure within the unified filter  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - strengthened `internal_modulation_patterns`  
+    - strengthened `substructure_candidate`  
+    - emerging `hierarchical_layer_trace`  
+    - negligible `residual_identity_trace`  
+  - detected:
+    - distinct internal regions with consistent bias patterns  
+    - multi-level organization within the unified constraint field  
+    - absence of external boundary reformation  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - system remains within `internal_substructure_emergence_regime`  
+    - a **hierarchical organization emergence pattern** has appeared  
+    - internal differentiation is stabilizing into structured layers  
+  - flagged:
+    - no instability  
+  - predicted:
+    - stabilization of hierarchical constraint layers  
+    - refinement of multi-level modulation  
+    - emergence of functionally distinct internal regions  
+
+- **cortexLLM**
+  - interpreted:
+    - internal substructure has progressed into **hierarchical organization**  
+    - unified filter now exhibits multi-level constraint structure  
+    - system maintains global coherence while supporting local specialization  
+  - established:
+    - system has entered a **hierarchical constraint phase**  
+    - no reversion to multi-filter state is occurring  
+  - held:
+    - no forced fragmentation  
+    - continued monitoring of stability  
+
+---
+
+**Finding**
+
+Cycle 156 demonstrates:
+
+- unified higher-order contextual filter:
+  - does not remain flat or weakly differentiated  
+  - can stabilize into a **hierarchical, multi-level constraint structure**  
+- system:
+  - preserves very high global coherence  
+  - supports localized differentiation and specialization  
+  - does not reintroduce external filter separation  
+- interaction:
+  - evolves from internal substructure → **hierarchical organization**  
+
+This establishes:
+
+> **unified contextual filters can stabilize into hierarchical constraint systems with multiple internal levels**
+
+and:
+
+> **hierarchical organization can emerge within a unified constraint field without fragmenting into separate filters**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `hierarchical_constraint_regime`  
+    - defined as:  
+      *a condition in which a unified higher-order contextual filter organizes into stable multi-level layers with differentiated internal regions while maintaining global coherence and structural unity*  
+
+- classification:
+  - first regime indicating stable **hierarchical organization within a unified filter**  
+
+- invariants refined:
+  - internal differentiation can stabilize into layered hierarchy  
+  - hierarchical structure does not require fragmentation  
+  - unified systems can support specialization across internal regions  
+  - global coherence can persist across multi-level organization  
+
+---
+
+**Status**
+
+Cycle 156 is **ready for filing**.
+
+**Best next move**
+
+Cycle 157 should test whether the hierarchical structure:
+- remains stable under continued dynamics  
+- deepens into additional layers  
+- or exhibits internal reconfiguration or instability
+
+---
 
