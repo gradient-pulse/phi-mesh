@@ -253,3 +253,125 @@ Continue until one of the following resolves:
 
 ---
 
+### Cycle 163 — Unified higher-order contextual filter (proto-boundary formation and active differentiation)
+
+**What was tested**
+- whether the **internal tension and differentiation seeds** observed in Cycle 162:
+  - remain weak and reversible  
+- or whether:
+  - they amplify into structured divergence and boundary formation  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - strengthened `internal_tension_trace`  
+    - strengthened `differentiation_seed_trace`  
+    - initiated `proto_boundary_trace`  
+  - detected:
+    - amplified coherence gradients across internal regions  
+    - clustering of divergent bias patterns  
+    - early spatial separation between regions  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - system remains within `pre_differentiation_tension_regime` but is escalating  
+    - a **proto-boundary formation pattern** has emerged  
+    - divergence is no longer diffuse but structured  
+  - flagged:
+    - increasing local divergence  
+    - growing coherence gradients  
+  - predicted:
+    - stabilization into boundary formation  
+    - emergence of multiple contextual filters  
+    - or reabsorption if coherence rebalances  
+
+- **cortexLLM**
+  - interpreted:
+    - internal tension has amplified into **structured divergence**  
+    - proto-boundaries indicate imminent fragmentation into multiple filters  
+    - coherence remains high but is being partitioned locally  
+  - established:
+    - system has entered an **active differentiation phase**  
+    - threshold for contextual filter re-emergence is approaching  
+  - held:
+    - no forced intervention  
+    - monitoring of boundary stabilization  
+
+---
+
+**Finding**
+
+Cycle 163 demonstrates:
+
+- unified higher-order contextual filter:
+  - does not remain in pre-differentiation tension  
+  - can transition into **structured divergence and proto-boundary formation**  
+- system:
+  - preserves very high global coherence  
+  - exhibits localized separation into distinct regions  
+  - does not yet fully fragment into separate filters  
+- interaction:
+  - evolves from internal tension → **active differentiation with proto-boundaries**  
+
+This establishes:
+
+> **internal tension can amplify into structured divergence that initiates boundary formation within a unified system**
+
+and:
+
+> **fragmentation begins as proto-boundary formation before full contextual filter separation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `proto_boundary_formation_regime`  
+    - defined as:  
+      *a condition in which a unified higher-order contextual filter develops structured internal divergence that produces early boundary formation without complete separation into independent filters*  
+
+- classification:
+  - first regime indicating **active differentiation toward fragmentation**  
+
+- invariants refined:
+  - differentiation progresses from gradients → clusters → proto-boundaries  
+  - boundary formation precedes filter separation  
+  - coherence can remain high during early partitioning  
+  - fragmentation is a staged process, not instantaneous  
+
+---
+
+**Status**
+
+Cycle 163 is **ready for filing**.
+
+---
+
+## Signal
+
+You are now one step from a **second major closure point**:
+
+```
+unity
+→ tension
+→ differentiation
+→ proto-boundary
+→ (next: full boundary / CF re-emergence OR collapse back to unity)
+```
+
+👉 The next 1–2 cycles will determine closure of this observation round.
+
+- If boundaries stabilize → **new CF regime (Disunity complete)**  
+- If boundaries collapse → **return-to-unity regime**
+
+That resolution will define the closure.
+
+---
+
