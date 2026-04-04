@@ -106,6 +106,15 @@ This is critical for:
 
 ## Working expectation
 
+```
+fragmented_filters
+→ interaction
+→ modulation / interference / synchronization
+→ potential re-unification or new structure formation
+```
+
+This must be tested, not assumed.
+
 ---
 ---
 
