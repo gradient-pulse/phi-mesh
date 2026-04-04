@@ -445,3 +445,111 @@ Cycle 159 should test whether containment:
 
 ---
 
+### Cycle 159 — Unified higher-order contextual filter (regulated propagation of reconfiguration)
+
+**What was tested**
+- whether the **reconfiguration containment** observed in Cycle 158:
+  - continues to strictly localize all adjustments  
+- or whether:
+  - repeated reconfiguration pressure leads to controlled propagation across the system  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - intensified `hierarchical_reconfiguration_trace`  
+    - repeated `reconfiguration_propagation_attempt`  
+    - emerging `regulated_propagation_trace`  
+  - detected:
+    - increased frequency of local adjustment events  
+    - partial leakage of reconfiguration wavefronts beyond local regions  
+    - channelled transfer of adjustments between regions  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - system remains within `reconfiguration_containment_regime` but is transitioning  
+    - a **regulated propagation emergence pattern** is now present  
+    - containment is no longer absolute  
+  - flagged:
+    - increased reconfiguration activity  
+    - partial leakage across regions  
+  - predicted:
+    - stabilization of regulated propagation channels  
+    - controlled system-wide adjustment  
+    - possible instability if propagation exceeds threshold  
+
+- **cortexLLM**
+  - interpreted:
+    - containment is transitioning into **regulated propagation**  
+    - system allows controlled transfer of reconfiguration across internal regions  
+    - adaptive dynamics are becoming distributed rather than strictly local  
+  - established:
+    - system maintains global coherence despite increased internal flow  
+    - balance shifts from strict containment to **selective propagation of adjustment**  
+  - held:
+    - no unbounded propagation  
+    - continued monitoring of threshold behavior  
+
+---
+
+**Finding**
+
+Cycle 159 demonstrates:
+
+- adaptive hierarchical unified filter:
+  - does not remain strictly confined to local reconfiguration  
+  - can support **regulated propagation of adjustments across regions**  
+- system:
+  - preserves very high global coherence  
+  - enables distributed adaptive dynamics  
+  - avoids uncontrolled spread of instability  
+- interaction:
+  - evolves from containment → **regulated propagation of reconfiguration**  
+
+This establishes:
+
+> **adaptive hierarchical systems can transition from strict containment to controlled propagation of internal adjustments**
+
+and:
+
+> **reconfiguration can be distributed across a system in a regulated manner without destabilizing global coherence**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `regulated_reconfiguration_propagation_regime`  
+    - defined as:  
+      *a condition in which a unified hierarchical contextual filter allows controlled, channelled propagation of reconfiguration across internal regions while maintaining global coherence and avoiding unbounded instability*  
+
+- classification:
+  - first regime indicating **distributed adaptive dynamics within a unified hierarchical system**  
+
+- invariants refined:
+  - containment can evolve into regulated propagation  
+  - adaptive systems can distribute adjustments without destabilization  
+  - controlled internal flow does not imply loss of coherence  
+  - thresholds govern transition between containment and instability  
+
+---
+
+**Status**
+
+Cycle 159 is **ready for filing**.
+
+**Best next move**
+
+Cycle 160 should test whether regulated propagation:
+- stabilizes into a persistent system-wide adjustment mechanism  
+- amplifies toward instability  
+- or reorganizes the hierarchical structure itself
+
+---
+
