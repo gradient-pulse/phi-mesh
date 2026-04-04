@@ -1,7 +1,5 @@
 # Conversation Handover
 
-## HANDOVER text
-
 We are continuing a structured RGPx experimental protocol.
 
 Last completed:
