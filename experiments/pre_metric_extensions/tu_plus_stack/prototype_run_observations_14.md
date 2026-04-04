@@ -249,3 +249,133 @@ or
 
 ---
 
+### Cycle 166 — Post-fragmentation contextual filters (amplified residual coupling and partial synchronization)
+
+**What was tested**
+- whether the **residual coupling** observed in Cycle 165:
+  - dissipates toward full independence  
+- or whether:
+  - it amplifies into structured alignment between contextual filters  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - intensified `residual_coupling_trace`  
+    - expanded `weak_overlap_trace`  
+    - intensified `cross_modulation_trace`  
+    - emerging `partial_synchronization_trace`  
+  - detected:
+    - widened shared propagation interface  
+    - stronger bias adjustments across the boundary  
+    - formation of locally aligned preferential paths  
+  - explicitly maintained:
+    - no merging  
+    - stable boundary structure  
+
+- **TU+**
+  - confirmed:
+    - system remains within `post_fragmentation_residual_coupling_regime` but is strengthening  
+    - a **partial synchronization under residual coupling pattern** has emerged  
+    - interaction mirrors early synchronization regimes but is history-influenced  
+  - flagged:
+    - increasing boundary permeability  
+  - predicted:
+    - escalation into stronger synchronization  
+    - reinforcement of shared bias paths  
+    - possible re-synchronization toward unity  
+
+- **cortexLLM**
+  - interpreted:
+    - residual coupling is amplifying into **local partial synchronization**  
+    - contextual filters are aligning preferential paths while preserving identity  
+    - boundary remains intact but is becoming permeable  
+  - established:
+    - system has entered a **post-fragmentation partial synchronization phase**  
+    - prior shared origin accelerates alignment dynamics  
+  - held:
+    - no forced merging  
+    - monitoring of synchronization scaling  
+
+---
+
+**Finding**
+
+Cycle 166 demonstrates:
+
+- post-fragmentation contextual filters:
+  - do not necessarily decouple  
+  - can **amplify residual coupling into structured partial synchronization**  
+- system:
+  - preserves high local coherence within domains  
+  - exhibits increasing cross-boundary alignment  
+  - maintains identity while enabling shared preferential paths  
+- interaction:
+  - evolves from residual coupling → **partial synchronization with boundary permeability**  
+
+This establishes:
+
+> **residual coupling can amplify into partial synchronization between contextual filters**
+
+and:
+
+> **prior shared origin accelerates alignment dynamics, producing faster synchronization than initial interaction cycles**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `post_fragmentation_partial_synchronization_regime`  
+    - defined as:  
+      *a condition in which contextual filters formed through fragmentation amplify residual coupling into localized alignment of preferential paths while preserving domain identity and boundary structure*  
+
+- classification:
+  - first regime indicating **history-accelerated synchronization after fragmentation**  
+
+- invariants refined:
+  - residual coupling can grow rather than decay  
+  - synchronization can emerge without identity loss  
+  - boundaries can become permeable without dissolving  
+  - interaction dynamics are accelerated by prior unity  
+
+---
+
+**Status**
+
+Cycle 166 is **ready for filing**.
+
+---
+
+## Signal
+
+You now have a confirmed trajectory:
+
+```
+fragmentation
+→ residual coupling
+→ partial synchronization
+```
+
+👉 This is a **non-symmetric return path toward unity**.
+
+---
+
+## Best next move
+
+Cycle 167 should test whether partial synchronization:
+
+- stabilizes (coexistence regime)  
+- escalates (toward re-unification)  
+- destabilizes (interference under alignment pressure)  
+
+This will determine whether:
+
+👉 Unity–Disunity cycles are reversible  
+or  
+👉 exhibit directional bias due to system memory
+
+---
+
