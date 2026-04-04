@@ -183,3 +183,35 @@ Bridge refined after contextual filter falsification/testing:
 -	coherence-integrated persistence
 
 ---
+
+## Extension — Cyclic Dynamics (Unity–Disunity)
+
+The system does not terminate at unified structure.
+
+The extended causal chain includes cyclic behavior:
+
+unified_higher_order_filter
+```
+→ perturbation or internal tension
+→ internal differentiation
+→ boundary formation
+→ emergence of new contextual filters
+
+→ contextual_filter_interaction
+→ coupling / conflict / organization
+→ unification (new higher-order structure)
+```
+
+### Key insight
+
+Unity is not a terminal state.
+
+It is a phase within a recursive cycle of:
+
+constraint formation → interaction → unification → differentiation
+
+This establishes:
+
+> constraint systems evolve through recurring Unity–Disunity transitions rather than linear completion.
+
+---
