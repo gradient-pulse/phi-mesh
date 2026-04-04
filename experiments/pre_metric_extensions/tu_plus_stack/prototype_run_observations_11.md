@@ -692,4 +692,112 @@ Cycle 148 should test whether the reinforced boundary:
 
 ---
 
+### Cycle 148 — Incompatible moderate overlap between contextual filters (boundary lock-in and spatial segregation)
+
+**What was tested**
+- whether the **boundary reinforcement** observed in Cycle 147:
+  - remains a transitional pattern  
+- or whether:
+  - it stabilizes into a persistent partition that resolves interference between incompatible contextual filters  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - strengthened `boundary_reinforcement_trace`  
+    - damped `interference_oscillation_trace`  
+    - reduced overlap interference  
+    - preserved dual filter identity  
+  - detected:
+    - well-defined boundary interface  
+    - reduced cross-penetration between filters  
+    - restoration of coherence within separated domains  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - transition from `boundary_reinforcement_transition_regime` to **boundary lock-in subregime**  
+    - oscillatory interference has damped into a stable interface  
+    - interaction between filters is now minimal  
+  - flagged:
+    - no significant instability  
+  - predicted:
+    - long-term coexistence with fixed interface  
+    - stable spatial segregation  
+    - minimal interaction unless perturbed  
+
+- **cortexLLM**
+  - interpreted:
+    - conflict resolution has converged into **spatial partitioning**  
+    - oscillatory dynamics have been converted into structural separation  
+    - the system has minimized interference by eliminating shared propagation space  
+  - established:
+    - the interaction regime has transitioned into **low-interaction equilibrium**  
+    - contextual filters now coexist with a stable boundary  
+  - held:
+    - no re-expansion of overlap  
+    - no forced interaction  
+
+---
+
+**Finding**
+
+Cycle 148 demonstrates:
+
+- incompatible contextual filters under moderate overlap:
+  - do not require merger or collapse to resolve conflict  
+  - can stabilize into **boundary lock-in and spatial segregation**  
+- system:
+  - preserves both contextual filter identities  
+  - restores local coherence within each separated domain  
+  - minimizes interference by eliminating shared propagation space  
+- interaction:
+  - transitions from oscillatory conflict → boundary reinforcement → stable partition  
+
+This establishes:
+
+> **incompatible contextual filters can resolve conflict through stable spatial partitioning rather than merging or destabilizing**
+
+and:
+
+> **boundary lock-in provides a low-interaction equilibrium that preserves identity while minimizing interference**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `boundary_lock_in_and_spatial_segregation_regime`  
+    - defined as:  
+      *a condition in which multiple contextual filters under incompatible overlap stabilize into distinct spatial domains separated by a persistent boundary, eliminating most cross-interference while preserving identity*  
+
+- classification:
+  - first stable equilibrium regime for incompatible contextual filter interaction  
+
+- invariants refined:
+  - oscillatory interference can damp into structural partition  
+  - incompatible CF interaction need not escalate to instability  
+  - spatial segregation is a viable and stable conflict-resolution mechanism  
+  - preserved identity can be maintained through boundary lock-in with minimal coupling  
+
+---
+
+**Status**
+
+Cycle 148 is **ready for filing**.
+
+**Best next move**
+
+Cycle 149 should test whether the partition:
+- remains stable under perturbation  
+- allows limited cross-boundary coupling  
+- or can be re-driven into interaction under increased overlap pressure  
+
+---
+
 
