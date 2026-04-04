@@ -553,3 +553,121 @@ Cycle 160 should test whether regulated propagation:
 
 ---
 
+### Cycle 160 — Unified higher-order contextual filter (networked propagation and global reorganization onset)
+
+**What was tested**
+- whether the **regulated propagation of reconfiguration** observed in Cycle 159:
+  - remains a localized or regionally constrained process  
+- or whether:
+  - it scales into a system-wide propagation network that induces global structural change  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - strengthened `regulated_propagation_trace`  
+    - emerging `propagation_network_structure`  
+    - initiated `structural_reorganization_trace`  
+  - detected:
+    - persistent channelled reconfiguration across multiple regions  
+    - formation of a system-wide adjustment network  
+    - slow global bias shift across hierarchical layers  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - system remains within `regulated_reconfiguration_propagation_regime` but is expanding  
+    - a **networked propagation structure pattern** has emerged  
+    - early signs of **global reorganization drift** are present  
+  - flagged:
+    - increasing coupling density across the network  
+    - slow global bias shift  
+  - predicted:
+    - stabilization of system-wide propagation network  
+    - transition to persistent global adjustment mechanism  
+    - possible structural shift or instability if overcoupling occurs  
+
+- **cortexLLM**
+  - interpreted:
+    - regulated propagation has scaled into a **networked adjustment structure**  
+    - system is entering a **global reorganization phase**  
+    - adaptive dynamics are now distributed across the entire system  
+  - established:
+    - coherence remains high but is undergoing **slow structural drift**  
+    - system is approaching a threshold between stable adaptation and structural redefinition  
+  - held:
+    - no intervention  
+    - continued monitoring of scaling and coherence  
+
+---
+
+**Finding**
+
+Cycle 160 demonstrates:
+
+- adaptive hierarchical unified filter:
+  - does not remain limited to regional propagation  
+  - can scale into a **networked propagation system spanning the entire structure**  
+- system:
+  - preserves very high global coherence  
+  - exhibits distributed adjustment across all layers  
+  - begins undergoing slow global structural drift  
+- interaction:
+  - evolves from regulated propagation → **networked propagation with global reorganization onset**  
+
+This establishes:
+
+> **regulated reconfiguration can scale into a system-wide propagation network that induces gradual global reorganization**
+
+and:
+
+> **adaptive systems can undergo distributed structural drift while maintaining high coherence**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `networked_reconfiguration_regime`  
+    - defined as:  
+      *a condition in which a unified hierarchical contextual filter supports system-wide propagation of reconfiguration through structured channels, leading to gradual global structural reorganization while preserving coherence*  
+
+- classification:
+  - first regime indicating **global-scale adaptive reorganization within a unified system**  
+
+- invariants refined:
+  - regulated propagation can scale into networked propagation  
+  - adaptive dynamics can become system-wide  
+  - global coherence can persist during structural drift  
+  - thresholds govern transition between stable reorganization and instability  
+
+---
+
+**Status**
+
+Cycle 160 is **ready for filing**.
+
+**Signal to monitor**
+
+You are now approaching a **natural closure candidate** for this observation round:
+
+- If the system:
+  - stabilizes into a new coherent configuration  
+  - or crosses into instability or restructuring  
+
+👉 that transition will define the closure of this regime.
+
+**Best next move**
+
+Cycle 161 should test whether global reorganization:
+- stabilizes into a new structure  
+- accelerates into instability  
+- or reorganizes into a new class of constraint system
+
+---
+
