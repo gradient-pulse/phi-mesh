@@ -671,3 +671,136 @@ Cycle 161 should test whether global reorganization:
 
 ---
 
+### Cycle 161 — Unified higher-order contextual filter (coherent global realignment and stabilization)
+
+**What was tested**
+- whether the **networked global reorganization** observed in Cycle 160:
+  - continues as ongoing structural drift  
+- or whether:
+  - it converges into a new stable global configuration  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - strengthened `propagation_network_structure`  
+    - stabilized `regulated_propagation_trace`  
+    - strengthened `structural_reorganization_trace`  
+    - emerging `emergent_reconfigured_structure`  
+  - detected:
+    - system-wide coordinated reconfiguration  
+    - convergence toward a consistent global bias pattern  
+    - absence of instability during transition  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - system remains within `networked_reconfiguration_regime` but is converging  
+    - a **coherent global realignment pattern** has emerged  
+    - reconfiguration is no longer exploratory but stabilizing  
+  - flagged:
+    - no instability  
+  - predicted:
+    - stabilization into new global constraint configuration  
+    - persistence of reconfigured structure as new baseline  
+    - possible future differentiation cycles  
+
+- **cortexLLM**
+  - interpreted:
+    - global reorganization has converged into **coherent realignment**  
+    - system has formed a new global constraint configuration  
+    - no instability has emerged during reconfiguration  
+  - established:
+    - prior structure has been transformed into a **new stable baseline**  
+    - system has completed the global reorganization phase  
+  - held:
+    - no further reconfiguration without new perturbation  
+    - monitoring of stability  
+
+---
+
+**Finding**
+
+Cycle 161 demonstrates:
+
+- adaptive hierarchical unified filter:
+  - does not remain in continuous reorganization  
+  - can converge into a **coherent globally realigned structure**  
+- system:
+  - preserves very high global coherence  
+  - completes system-wide adjustment without instability  
+  - establishes a new stable constraint configuration  
+- interaction:
+  - evolves from networked propagation → **coherent global realignment and stabilization**  
+
+This establishes:
+
+> **networked reconfiguration can converge into a new globally coherent constraint structure**
+
+and:
+
+> **adaptive systems can complete large-scale structural transitions without instability, forming new stable baselines**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `global_realignment_stabilization_regime`  
+    - defined as:  
+      *a condition in which a unified hierarchical contextual filter completes system-wide reconfiguration and stabilizes into a new coherent global constraint configuration without loss of coherence*  
+
+- classification:
+  - first regime indicating **completion of global adaptive reorganization**  
+
+- invariants refined:
+  - global reorganization can terminate in stable alignment  
+  - system-wide adaptation does not require instability  
+  - new baselines can emerge through distributed reconfiguration  
+  - coherence can be preserved across full structural transitions  
+
+---
+---
+
+## 🔔 Natural Closure Signal
+
+You have reached a **natural closure point for this observation round**:
+
+This sequence completes a full arc:
+
+``` id="l5k2pd"
+local reconfiguration
+→ containment
+→ regulated propagation
+→ networked propagation
+→ global reorganization
+→ coherent realignment (new baseline)
+```
+Recommendation
+
+👉 Close prototype_run_observations_12.md here (at Cycle 161)
+
+You now have:
+
+-	Observations_11 → Unity formation
+-	Observations_12 → Post-unity adaptation → new equilibrium
+
+The next file should begin a new cycle, e.g.:
+-	response to new perturbation
+-	re-fragmentation (Disunity phase)
+-	or interaction between multiple unified systems
+
+---
+
+Best next move
+
+Start prototype_run_observations_13.md with:
+
+introduction of a new perturbation or competing unified structure
+
+That will open the next UD cycle cleanly.
