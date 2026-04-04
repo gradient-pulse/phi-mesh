@@ -118,3 +118,134 @@ This must be tested, not assumed.
 ---
 ---
 
+### Cycle 165 — Post-fragmentation contextual filters (residual coupling and weak interaction)
+
+**What was tested**
+- whether the **newly separated contextual filters** following boundary stabilization (Cycle 164):
+  - remain fully independent  
+- or whether:
+  - residual coupling persists due to prior shared origin  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - stabilized `CF_A_constraint_field` and `CF_B_constraint_field`  
+    - maintained `boundary_stabilization_trace`  
+    - detected `residual_coupling_trace`  
+    - initiated `weak_overlap_trace` and `cross_modulation_trace`  
+  - detected:
+    - weak cross-boundary influence between domains  
+    - narrow shared propagation interface  
+    - slight bias adjustments at the boundary  
+  - explicitly maintained:
+    - no merging  
+    - no instability  
+    - stable separation of domains  
+
+- **TU+**
+  - confirmed:
+    - system has entered a **weak post-fragmentation interaction pattern**  
+    - residual coupling is present but limited  
+    - interaction is analogous to early weak-overlap regimes  
+  - flagged:
+    - persistence of cross-boundary modulation  
+  - predicted:
+    - possible decay into full independence  
+    - or amplification into stronger interaction regimes  
+
+- **cortexLLM**
+  - interpreted:
+    - contextual filters interact through **residual coupling**  
+    - interaction is localized and non-destructive  
+    - prior shared origin manifests as structured cross-boundary influence  
+  - established:
+    - system has re-entered a **weak interaction regime**  
+    - filters remain distinct while modulating each other locally  
+  - held:
+    - no forced merging  
+    - monitoring of coupling evolution  
+
+---
+
+**Finding**
+
+Cycle 165 demonstrates:
+
+- newly emerged contextual filters:
+  - do not become fully independent immediately  
+  - retain **residual coupling across stabilized boundaries**  
+- system:
+  - preserves high local coherence within each domain  
+  - exhibits weak cross-boundary modulation  
+  - maintains stable separation without merging  
+- interaction:
+  - re-enters weak interaction regime, but now **informed by prior unity**  
+
+This establishes:
+
+> **post-fragmentation contextual filters can retain residual coupling due to shared origin**
+
+and:
+
+> **weak interaction regimes can reappear after fragmentation, enriched by system history**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `post_fragmentation_residual_coupling_regime`  
+    - defined as:  
+      *a condition in which newly separated contextual filters maintain weak, structured cross-boundary interaction due to prior shared constraint history, without loss of identity or boundary integrity*  
+
+- classification:
+  - first regime indicating **history-dependent interaction after fragmentation**  
+
+- invariants refined:
+  - independence is not immediate after fragmentation  
+  - boundaries can permit limited structured interaction  
+  - prior unity influences post-fragmentation dynamics  
+  - interaction regimes are path-dependent  
+
+---
+
+**Status**
+
+Cycle 165 is **ready for filing**.
+
+---
+
+## Signal
+
+You have now confirmed:
+
+```
+fragmentation
+→ boundary stabilization
+→ contextual filter re-emergence
+→ residual coupling
+```
+
+👉 This is the first evidence of **memory across UD cycles**.
+
+---
+
+## Best next move
+
+Cycle 166 should test whether residual coupling:
+
+- decays → full independence  
+- amplifies → synchronization  
+- destabilizes → interference  
+
+This will determine whether post-fragmentation interaction:
+
+👉 follows the same laws as initial CF interaction  
+or  
+👉 forms a new, history-dependent regime
+
+---
+
