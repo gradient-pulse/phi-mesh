@@ -121,3 +121,16 @@ This directly operationalizes:
 ---
 
 ## Working expectation
+
+```
+unified_structure
+→ perturbation
+→ internal tension
+→ differentiation or fragmentation
+→ emergence of new contextual filters
+→ new interaction phase
+```
+This must be tested, not assumed.
+
+---
+---
