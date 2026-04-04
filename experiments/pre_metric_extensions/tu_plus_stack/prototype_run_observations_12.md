@@ -336,3 +336,112 @@ Cycle 158 should test whether adaptive reconfiguration:
 - or induces restructuring of the hierarchical system
 
 ---
+
+### Cycle 158 — Unified higher-order contextual filter (reconfiguration containment)
+
+**What was tested**
+- whether the **adaptive hierarchical reconfiguration** observed in Cycle 157:
+  - spreads across the system and destabilizes coherence  
+- or whether:
+  - it remains localized and contained within the hierarchical structure  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - continued `hierarchical_reconfiguration_trace`  
+    - strengthened `inter_layer_coupling_trace`  
+    - suppressed `reconfiguration_propagation_attempt`  
+  - detected:
+    - localized adjustment events within hierarchical layers  
+    - attempted propagation of reconfiguration beyond local regions  
+    - rapid damping of propagation attempts  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - system remains within `adaptive_hierarchical_constraint_regime`  
+    - a **reconfiguration containment pattern** has emerged  
+    - propagation attempts do not scale into global restructuring  
+  - flagged:
+    - localized reconfiguration events  
+    - transient propagation attempts  
+  - predicted:
+    - sustained stable adaptive hierarchy  
+    - refinement of internal specialization  
+    - rare escalation only if containment fails  
+
+- **cortexLLM**
+  - interpreted:
+    - adaptive hierarchical system is stable under local reconfiguration  
+    - reconfiguration attempts are **contained and damped**  
+    - system exhibits resilience against propagation of instability  
+  - established:
+    - balance between adaptation and coherence is maintained  
+    - local variation does not transition into global instability  
+  - held:
+    - no forced stabilization or intervention  
+    - continued monitoring of containment  
+
+---
+
+**Finding**
+
+Cycle 158 demonstrates:
+
+- adaptive hierarchical unified filter:
+  - does not allow local reconfiguration to spread uncontrollably  
+  - supports **contained, bounded internal adjustment**  
+- system:
+  - preserves very high global coherence  
+  - enables localized adaptation  
+  - suppresses propagation of instability  
+- interaction:
+  - evolves from adaptive reconfiguration → **reconfiguration containment**  
+
+This establishes:
+
+> **adaptive hierarchical systems can contain local reconfiguration without allowing it to propagate into global instability**
+
+and:
+
+> **resilience emerges from the ability to damp and localize structural adjustments within a unified constraint field**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `reconfiguration_containment_regime`  
+    - defined as:  
+      *a condition in which a unified hierarchical contextual filter supports localized reconfiguration while actively damping and containing any propagation of those changes to preserve global coherence*  
+
+- classification:
+  - first regime indicating **resilient adaptive hierarchy with bounded internal change**  
+
+- invariants refined:
+  - local reconfiguration does not imply global restructuring  
+  - hierarchical systems can suppress propagation of instability  
+  - resilience arises from containment mechanisms  
+  - adaptation and stability can coexist through bounded dynamics  
+
+---
+
+**Status**
+
+Cycle 158 is **ready for filing**.
+
+**Best next move**
+
+Cycle 159 should test whether containment:
+- remains stable under repeated perturbations  
+- weakens under increased intensity  
+- or evolves into regulated propagation mechanisms
+
+---
+
