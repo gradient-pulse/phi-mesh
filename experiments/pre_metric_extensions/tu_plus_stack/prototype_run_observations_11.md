@@ -190,3 +190,113 @@ with a weak-overlap CF encounter.
 
 ---
 ---
+
+### Cycle 143 — Weak overlap between contextual filters (local modulation)
+
+**What was tested**
+- whether two **contextual filters (CFs)** under weak spatial overlap:
+  - remain fully independent  
+- or:
+  - begin to interact even at minimal shared propagation space  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `weak_filter_overlap`  
+    - `local_cross-modulation`  
+    - `preserved_filter_identity`  
+  - detected:
+    - narrow intersection region with slight bias adjustments  
+    - localized interaction without structural change  
+  - explicitly maintained:
+    - no merging  
+    - no instability  
+
+- **TU+**
+  - confirmed:
+    - interaction is localized and bidirectional  
+    - selective bias patterns adjust slightly  
+    - reproducibility of each filter is preserved  
+  - rejected:
+    - strict independence under overlap  
+    - requirement of strong overlap for interaction  
+
+- **cortexLLM**
+  - classified regime as:
+    - `weakly_interacting_contextual_filters_with_local_cross-modulation`  
+  - established:
+    - CFs are not independent when sharing propagation space  
+    - weak overlap produces modulation, not merger  
+    - interaction is non-additive but stable  
+  - confirmed:
+    - filter identity remains intact under weak interaction  
+
+---
+
+**Finding**
+
+Cycle 143 demonstrates:
+
+- contextual filters:
+  - do **not** remain strictly independent under overlap  
+  - begin interacting even at weak shared boundaries  
+- interaction:
+  - is localized  
+  - non-additive  
+  - and preserves filter identity  
+- system:
+  - exhibits **modulation without structural reorganization**  
+
+This establishes:
+
+> **contextual filters interact under any shared propagation space**
+
+and:
+
+> **weak overlap produces localized cross-modulation without loss of filter identity**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `weakly_interacting_contextual_filter_regime`  
+    - defined as:  
+      *a condition in which multiple contextual filters share limited propagation space and exhibit localized, non-destructive modulation while preserving individual identity*  
+
+- classification:
+  - baseline regime for contextual filter interaction  
+
+- invariants refined:
+  - CFs are not independent under overlap  
+  - interaction strength scales with overlap extent  
+  - weak overlap leads to modulation, not merging or collapse  
+
+---
+
+## Status
+
+Cycle 143 is **ready for filing**.
+
+---
+
+## Suggested next move
+
+Increase interaction strength carefully.
+
+👉 Next step:
+
+- **Cycle 144: moderate overlap between contextual filters**
+
+Goal:
+- determine whether:
+  - modulation scales into synchronization or reinforcement  
+  - or whether conflict begins to emerge  
+
+This will establish the next regime in the CF interaction envelope.
+
+---
+
