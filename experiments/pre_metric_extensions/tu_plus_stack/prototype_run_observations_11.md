@@ -385,3 +385,88 @@ and:
 
 ---
 
+### Cycle 145 — Incompatible moderate overlap between contextual filters (competitive interference)
+
+**What was tested**
+- whether two **contextual filters (CFs)** under moderate overlap:
+  - still tend toward synchronization  
+- or whether:
+  - incompatible selective bias patterns produce interference instead of reinforcement  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - `incompatible_filter_overlap`  
+    - `competing_selective_bias`  
+    - `local_interference`  
+    - `preserved_conflicted_identity`  
+  - detected:
+    - conflict in gating preferences within the shared domain  
+    - failure of jointly favored paths to stabilize  
+  - explicitly maintained:
+    - no full merging  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - incompatible bias patterns generate competition rather than alignment  
+    - reproducibility degrades inside the overlap region while remaining intact outside it  
+    - filter identity is preserved under conflict  
+  - rejected:
+    - inevitable synchronization under moderate overlap  
+    - immediate merger despite incompatibility  
+
+- **cortexLLM**
+  - classified regime as:
+    - `competitively_interacting_contextual_filters_with_local_interference`  
+  - established:
+    - compatibility of selective bias is a key control variable in CF interaction  
+    - incompatible overlap produces structured interference, not merger  
+    - coherence is locally degraded but not globally destroyed  
+  - confirmed:
+    - the system remains active and organized under conflict  
+
+---
+
+**Finding**
+
+Cycle 145 demonstrates:
+
+- contextual filters:
+  - do not automatically synchronize under overlap  
+  - can enter **competitive interference** when their selective biases are incompatible  
+- system:
+  - preserves both filter identities  
+  - degrades coherence locally in the overlap region  
+  - avoids both merger and collapse at this interaction strength  
+
+This establishes:
+
+> **compatibility of selective bias governs whether contextual filters reinforce or interfere**
+
+and:
+
+> **moderate overlap between incompatible contextual filters produces structured local interference without merger**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `competitive_interference_filter_regime`  
+    - defined as:  
+      *a condition in which multiple contextual filters under moderate overlap retain distinct identity while incompatible selective biases generate localized interference and prevent synchronization*  
+
+- classification:
+  - first conflict-driven interaction regime for contextual filters  
+
+- invariants refined:
+  - CF interaction depends on compatibility, not overlap alone  
+  - incompatible overlap yields interference rather than synchronization  
+  - filter identity can persist under opposition  
+
+---
+---
