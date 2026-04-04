@@ -469,4 +469,227 @@ and:
   - filter identity can persist under opposition  
 
 ---
+
+### Cycle 146 — Incompatible moderate overlap between contextual filters (oscillatory interference trace)
+
+**What was tested**
+- whether the **competitive interference regime** established in Cycle 145:
+  - remains static and locally bounded  
+- or whether:
+  - continued incompatible moderate overlap produces a more dynamic conflict pattern inside the shared region  
+
 ---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - incompatible_filter_overlap_continued  
+    - preserved_conflicted_identity  
+    - interference_oscillation_trace  
+    - semi_stable_boundary  
+  - detected:
+    - alternating_gating_preference_within_overlap  
+    - fluctuating_local_coherence  
+    - bounded_interference_region  
+  - explicitly maintained:
+    - no_filter_decay  
+    - no_restart  
+    - no_global_collapse  
+
+- **TU+**
+  - confirmed:
+    - competitive_interference_filter_regime_persists  
+    - oscillatory_interference_subregime_candidate_detected  
+    - conflict_is_temporally_structured  
+  - flagged:
+    - fluctuating_local_coherence  
+    - alternating_gating_patterns  
+    - unresolved_competition  
+  - predicted:
+    - oscillation_stabilization  
+    - boundary_reinforcement_or_segregation  
+    - possible_escalation_if_overlap_increases  
+
+- **cortexLLM**
+  - classified regime as:
+    - oscillatory_competitive_interference_within_bounded_system  
+  - established:
+    - interference_is_not_static  
+    - oscillation_is_dynamic_conflict_management  
+    - system_tests_multiple_gating_configurations_without_convergence  
+    - conflict_is_temporal_not_purely_spatial  
+    - system_remains_globally_stable  
+  - held:
+    - no_forced_merging  
+    - no_forced_resolution  
+
+---
+
+**Finding**
+
+Cycle 146 demonstrates:
+
+- incompatible contextual filters under moderate overlap:
+  - do not merely sustain static local interference  
+  - can enter **oscillatory conflict** within the shared region  
+- system:
+  - preserves both contextual filter identities  
+  - preserves global coherence  
+  - maintains only local degradation inside shared space  
+- interference:
+  - becomes temporally structured  
+  - without becoming merger, collapse, or full instability  
+
+This establishes:
+
+> **competitive interference between incompatible contextual filters can evolve into oscillatory local conflict rather than remaining static**
+
+and:
+
+> **moderate incompatible overlap can produce a bounded oscillatory interference trace while preserving dual filter identity**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `oscillatory_competitive_interference_subregime`  
+    - defined as:  
+      *a condition in which multiple contextual filters under moderate incompatible overlap retain distinct identity while interference in the shared region becomes temporally patterned through alternating gating preference and fluctuating local coherence*  
+
+- classification:
+  - first temporally structured subregime within conflict-driven contextual filter interaction  
+
+- invariants refined:
+  - competitive interference is not necessarily static  
+  - incompatible CF overlap can generate oscillatory conflict patterns  
+  - local instability can become temporally organized while remaining globally bounded  
+  - preserved identity can coexist with alternating gating inside shared space  
+
+---
+
+**Status**
+
+Cycle 146 is **ready for filing**.
+
+**Best next move**
+
+Cycle 147 should test whether the oscillatory interference trace:
+- stabilizes into a repeatable bounded pattern  
+- sharpens into boundary segregation  
+- or amplifies toward destabilization
+
+---
+
+### Cycle 147 — Incompatible moderate overlap between contextual filters (boundary reinforcement)
+
+**What was tested**
+- whether the **oscillatory competitive interference** observed in Cycle 146:
+  - remains an open-ended dynamic conflict  
+- or whether:
+  - it begins to resolve structurally through boundary formation between incompatible contextual filters  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - continued oscillatory competitive interference  
+    - strengthened `interference_oscillation_trace`  
+    - emerging `boundary_reinforcement_trace`  
+    - preserved dual filter identity  
+  - detected:
+    - periodic alternating gating within the overlap region  
+    - sharpening boundary definition  
+    - reduced cross-penetration between the two filters  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - the system still matches the `oscillatory_competitive_interference_subregime`  
+    - a new **boundary reinforcement transition pattern** is emerging  
+    - oscillatory conflict is beginning to organize into a more stable interface  
+  - flagged:
+    - residual fluctuation within overlap  
+    - continued alternating dominance  
+  - predicted:
+    - stabilized oscillation with sharp boundary  
+    - damped oscillation with boundary lock-in  
+    - possible transition to spatial segregation  
+
+- **cortexLLM**
+  - interpreted:
+    - oscillatory interference is transitioning toward **structural resolution**  
+    - the system is reducing conflict by limiting shared propagation space  
+    - temporal conflict is being converted into spatial separation  
+  - established:
+    - boundary reinforcement is the first sign of conflict partitioning rather than simple persistence of interference  
+    - the interaction regime is shifting from competition toward partitioned coexistence  
+  - held:
+    - no forced merger  
+    - no forced re-expansion of overlap  
+    - next test should determine whether the boundary locks in or reverts  
+
+---
+
+**Finding**
+
+Cycle 147 demonstrates:
+
+- incompatible contextual filters under moderate overlap:
+  - do not remain indefinitely in undifferentiated oscillatory conflict  
+  - can begin forming a **reinforced boundary** that reduces direct interference  
+- system:
+  - preserves both contextual filter identities  
+  - preserves global coherence  
+  - converts temporal conflict into emergent spatial partitioning  
+- interaction:
+  - begins shifting from oscillatory competition toward bounded segregation  
+
+This establishes:
+
+> **oscillatory competitive interference can transition into boundary reinforcement rather than amplifying toward collapse**
+
+and:
+
+> **incompatible contextual filters can reduce conflict by sharpening spatial separation while preserving distinct identity**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `boundary_reinforcement_transition_regime`  
+    - defined as:  
+      *a condition in which multiple contextual filters under incompatible overlap remain distinct while oscillatory conflict begins to organize a reinforced interface that reduces cross-penetration and partially partitions shared propagation space*  
+
+- classification:
+  - first transition regime from temporal conflict toward spatial partitioning in contextual filter interaction  
+
+- invariants refined:
+  - oscillatory interference can serve as a precursor to structural separation  
+  - incompatible CF interaction need not end in merger or collapse  
+  - boundary formation is a viable conflict-resolution pathway  
+  - preserved identity can be strengthened through reduced overlap and interface sharpening  
+
+---
+
+**Status**
+
+Cycle 147 is **ready for filing**.
+
+**Best next move**
+
+Cycle 148 should test whether the reinforced boundary:
+- locks into a stable partition,
+- remains dynamically oscillatory but bounded,
+- or breaks down and returns to broader interference.
+
+---
+
+
