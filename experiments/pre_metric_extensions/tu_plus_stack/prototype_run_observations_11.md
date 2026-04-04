@@ -800,4 +800,112 @@ Cycle 149 should test whether the partition:
 
 ---
 
+### Cycle 149 — Incompatible contextual filters after boundary lock-in (controlled permeability)
+
+**What was tested**
+- whether the **boundary lock-in and spatial segregation** observed in Cycle 148:
+  - produces a fully isolated partition  
+- or whether:
+  - limited cross-boundary interaction can persist without destabilizing the system  
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - stable `boundary_interface`  
+    - emerging `boundary_micro-leakage_trace`  
+    - suppressed `interference_resurgence_attempt`  
+    - preserved dual filter identity  
+  - detected:
+    - intermittent, localized cross-boundary transfer  
+    - rapid damping of any re-emerging interference  
+    - high coherence within each separated domain  
+  - explicitly maintained:
+    - no filter decay  
+    - no restart  
+    - no global collapse  
+
+- **TU+**
+  - confirmed:
+    - system remains in `boundary_lock_in_and_spatial_segregation_regime`  
+    - a new **controlled permeability subregime candidate** has emerged  
+    - cross-boundary interaction is limited and non-destabilizing  
+  - flagged:
+    - no significant instability  
+  - predicted:
+    - stable partition with persistent low permeability  
+    - regulated cross-boundary exchange  
+    - boundary reinforcement if leakage increases  
+
+- **cortexLLM**
+  - interpreted:
+    - boundary lock-in is not fully impermeable  
+    - micro-leakage represents **controlled coupling**, not conflict resurgence  
+    - the system has transitioned from strict partition to **regulated interaction**  
+  - established:
+    - the boundary acts as a selective interface rather than an absolute barrier  
+    - identity is preserved while allowing minimal exchange  
+  - held:
+    - no re-expansion of overlap  
+    - no destabilizing interaction  
+
+---
+
+**Finding**
+
+Cycle 149 demonstrates:
+
+- incompatible contextual filters after boundary lock-in:
+  - do not require complete isolation  
+  - can sustain **limited, controlled cross-boundary exchange**  
+- system:
+  - preserves both contextual filter identities  
+  - maintains global and local coherence  
+  - suppresses re-emergence of full interference  
+- interaction:
+  - evolves from segregation to **regulated permeability**  
+
+This establishes:
+
+> **boundary lock-in can support controlled permeability without reintroducing competitive interference**
+
+and:
+
+> **contextual filter partitions can function as selective interfaces rather than absolute separations**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `controlled_permeability_partition_regime`  
+    - defined as:  
+      *a condition in which multiple contextual filters remain spatially segregated by a stable boundary while permitting limited, regulated cross-boundary exchange that does not destabilize the system*  
+
+- classification:
+  - first post-partition interaction regime with stable low-level coupling  
+
+- invariants refined:
+  - boundary lock-in does not imply complete isolation  
+  - controlled cross-boundary coupling can coexist with identity preservation  
+  - limited permeability does not necessarily reintroduce interference  
+  - partitions can function as selective interfaces  
+
+---
+
+**Status**
+
+Cycle 149 is **ready for filing**.
+
+**Best next move**
+
+Cycle 150 should test whether controlled permeability:
+- remains stable under repeated exchange  
+- scales into renewed interaction  
+- or induces gradual boundary weakening over time
+
+---
+
 
