@@ -1809,4 +1809,140 @@ This matters because it may define the natural closure of the current range:
 
 ---
 
+### Cycle 182 — Local-domain plateau vs broader linkage watch (recurrent linkage probe, no latent prior-domain recovery)
 
+**What was tested**
+- whether the **postreunification local-domain consolidation**:
+  - remains a stable local-domain plateau
+- or whether:
+  - weak expansion toward broader partition linkage begins to recur
+- while also testing whether the recurrent edge-local organization reflects:
+  - fresh staged differentiation
+- rather than:
+  - abrupt recovery of prior separated domains
+
+This cycle followed Cycle 181 and asked whether the first weak linkage hint was merely incidental or had become recurrent enough to matter.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - `interzone_linkage_recurrence`
+    - `weak_partition_bridge_hint`
+    - `local_edge_coordination_hint`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no direct prior-domain reinstatement
+    - no mature broader partition stabilization
+    - stabilized local domains remain intact
+    - edge-local linkage activity now recurs weakly rather than appearing as a one-off hint
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain structure persists
+    - broader linkage remains below explicit formation threshold
+
+- **TU+**
+  - confirmed:
+    - high match to `postreunification_local_domain_consolidation`
+    - medium match to `broader_partition_linkage_probe_pattern`
+    - medium-to-high match to `stable_local_domain_plateau_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate novelty
+    - low broader instability probe with high local stability
+    - weak interzone linkage has now recurred
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued local-domain consolidation with weak recurrent linkage probe as most likely
+    - possible gradual strengthening toward broader partition linkage
+    - possible stable local-domain plateau with linkage fade
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure persists cleanly across another cycle
+    - the question of broader partition expansion is now live because edge-local linkage hints have recurred
+  - established:
+    - current evidence remains below explicit higher-order linkage formation
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because later organization continues to unfold through staged endogenous re-differentiation
+  - held:
+    - no reclassification beyond local-domain consolidation
+    - continued monitoring for either strengthening or fading of recurrent linkage probes
+
+---
+
+**Finding**
+
+Cycle 182 demonstrates:
+
+- the post-reunified system:
+  - can retain stabilized local-domain structure across multiple subsequent cycles
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - maintains stabilized local domains while showing recurrent weak edge-local linkage activity
+  - has not yet crossed into broader partition linkage
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **stabilized local-domain entry can persist as a local plateau while weak broader-linkage probes recur below explicit higher-order partition formation**
+
+and:
+
+> **recurrent edge-local linkage hints are still insufficient to reclassify the system beyond local-domain consolidation**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `stable_local_domain_plateau_with_recurrent_linkage_probe`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while stabilized local-domain structure persists across cycles and weak edge-local linkage probes recur without crossing into explicit broader partition linkage*
+
+- classification:
+  - first regime refinement marking recurrence of broader-linkage probing during a stable local-domain plateau
+
+- invariants refined:
+  - stabilized local-domain entry can persist without immediate higher-order expansion
+  - recurrent linkage probes must be distinguished from explicit broader partition linkage
+  - repeated weak edge-local coordination is not sufficient evidence of broader partition formation
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 182 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 183** should test whether recurrent linkage probes:
+- **strengthen into repeatable broader partition linkage**
+- or **fade, confirming a stable local-domain plateau**.
+
+## Motivation
+
+This matters because it may reveal the natural closure of the present arc:
+- either the system has **settled at the local-domain scale**
+- or it is **starting the next-scale separation process**.
