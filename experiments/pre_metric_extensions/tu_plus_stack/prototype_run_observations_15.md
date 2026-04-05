@@ -227,3 +227,122 @@ Cycle 170 should test whether the low-grade internal variance:
 	•	or crosses a threshold into boundary precursor formation
 
 That next step matters. If 169 showed immediate restart, the cycle would look almost mechanically oscillatory. It did not. It showed a hold phase. That makes the regime more interesting and more realistic, because systems that matter usually do not just flip; they dwell, accumulate, and then cross.
+
+---
+
+### Cycle 170 — Post-re-unification falsification probe (true unity vs latent dual structure)
+
+**What was tested**
+- whether the **post-re-unification hold state** reflects:
+  - a genuine single unified constraint structure
+- or whether:
+  - it masks latent dual structure not fully erased during Cycle 168
+- specifically, whether the system shows:
+  - direct re-expression of prior domains
+  - rapid boundary return without precursor formation
+  - asymmetric train organization inconsistent with true unity
+
+This cycle served as the first explicit falsification probe of the Cycle 168 re-unification claim.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `boundary_absence`
+    - `identity_non-separation`
+    - low-grade `diffuse_micro-variance`
+    - scattered `non-clustered_local_fluctuation`
+    - tentative `latent_structure_probe`
+  - detected:
+    - no boundary regeneration
+    - no localized partition lines
+    - no domain-specific train separation
+    - no resurgence of identity-retention trace
+    - no direct re-expression of prior domains
+  - explicitly maintained:
+    - very high global coherence
+    - dominant unified baseline
+    - diffuse variance without structured split
+
+- **TU+**
+  - confirmed:
+    - strong match to `post_reunification_hold_regime`
+    - strong match to `unified_stability_hold_pattern`
+    - only low match to `latent_dual_structure_re-expression_pattern`
+  - flagged:
+    - no instability
+    - no mismatch
+    - no old-domain reinstatement
+    - no direct boundary return
+  - predicted:
+    - continued post-re-unification hold as most likely
+    - possible diffuse variance accumulation without structural split
+    - lower-probability staged new differentiation
+    - low-probability latent dual structure direct re-expression
+
+- **cortexLLM**
+  - interpreted:
+    - falsification probe does not reveal evidence of latent dual structure
+    - system remains in a genuine post-re-unification hold regime
+    - diffuse internal variance persists but is not organized into old domain re-expression or fresh boundary formation
+  - established:
+    - current evidence strengthens rather than weakens the Cycle 168 interpretation
+    - future differentiation must be distinguished between:
+      - fresh staged formation
+      - rapid recovery of unresolved older structure
+  - held:
+    - no rejection of the true unity interpretation
+    - continued monitoring under falsification criteria
+
+---
+
+**Finding**
+
+Cycle 170 demonstrates:
+
+- the post-re-unified system:
+  - does not show hidden dual structure becoming structurally visible
+  - does not directly reinstate prior domains
+  - does not regenerate boundaries without precursor formation
+- system:
+  - remains in a high-coherence unified hold regime
+  - preserves absence of local partitioning and identity separation
+  - contains only diffuse, non-organized variance
+- falsification test:
+  - fails to produce evidence against the Cycle 168 claim of full re-unification
+
+This establishes:
+
+> **the first explicit falsification probe does not refute Cycle 168**
+
+and:
+
+> **current evidence favors true unity over latent dual structure**
+
+---
+
+**Operational delta**
+
+- falsification result added:
+  - `cycle_168_not_falsified_by_initial_post_unity_probe`
+    - defined as:
+      *a condition in which a post-re-unified system, when specifically tested for hidden dual structure, shows no direct re-expression of prior domains, no rapid boundary return, and no asymmetric organization inconsistent with true unity*
+
+- classification:
+  - first explicit falsification pass supporting the validity of `re_unification_completion_regime`
+
+- invariants refined:
+  - true re-unification cannot be rejected merely because diffuse variance persists
+  - latent dual structure requires explicit structural evidence, not hypothetical possibility
+  - direct recovery of old domains must be distinguished from fresh differentiation
+  - falsification of full re-unification requires more than post-cycle fluctuation
+
+---
+
+**Status**
+
+Cycle 170 is **ready for filing**.
