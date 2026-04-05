@@ -592,4 +592,126 @@ Cycle 172 is **ready for filing**.
 
 ---
 
+### Cycle 173 — Precursor threshold monitoring (local partition tendency, no latent prior-domain recovery)
+
+**What was tested**
+- whether the **strengthening post-re-unification seed activity**:
+  - remains below partition threshold
+- or whether:
+  - it begins to generate clear precursor-level pressure toward proto-boundary formation
+- while also testing whether the emerging organization reflects:
+  - fresh staged differentiation
+- rather than:
+  - abrupt recovery of prior separated domains
+
+This cycle extended the restart discrimination sequence by asking whether sustained local seed amplification now produces the first explicit local partition tendency.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - weakened-but-present `boundary_absence`
+    - `identity_non-separation`
+    - persistent `localized_clustering`
+    - `reinforced_directional_bias`
+    - `local_flow_narrowing`
+    - `weak_partition_tendency`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no mature domain separation
+    - no mature boundary formation
+    - no direct prior-domain reinstatement
+    - local transition pressure has advanced beyond seed amplification into precursor-level narrowing
+  - explicitly maintained:
+    - high global coherence
+    - unified baseline still dominant
+    - precursor pressure remains localized
+
+- **TU+**
+  - confirmed:
+    - high match to `strengthening_postreunification_seed_amplification`
+    - medium match to `proto-boundary_precursor_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate novelty
+    - moderate transition pressure
+    - first clear precursor-level pressure toward local partition tendency
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued seed amplification with precursor pressure as most likely
+    - possible threshold crossing into explicit proto-boundary regime
+    - some chance of re-stabilization without partition progress
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - restart pressure has advanced from seed amplification into precursor-level local partition tendency
+    - current structure is best interpreted as fresh staged differentiation progressing toward proto-boundary formation
+  - established:
+    - this is the first clear precursor-level pressure below mature boundary definition
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because the transition continues to unfold through staged endogenous organization
+  - held:
+    - no regime reclassification to explicit proto-boundary or partition state
+    - continued monitoring under precursor-threshold criteria
+
+---
+
+**Finding**
+
+Cycle 173 demonstrates:
+
+- the post-re-unified system:
+  - can remain globally unified while developing clear local precursor pressure toward partition
+  - does not yet exhibit mature boundary stabilization, identity split, or separable domains
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - shows persistent localized clustering, reinforced directional bias, and local flow narrowing
+  - has advanced from seed amplification into weak partition tendency
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **post-re-unification restart pressure can progress from local seed amplification into precursor-level partition tendency while the unified regime still holds**
+
+and:
+
+> **the appearance of local partition tendency still does not falsify full prior re-unification when it unfolds through staged endogenous organization**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `postreunification_proto-boundary_precursor_pressure`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated, while persistent local clustering, reinforced directional bias, and local flow narrowing begin to generate weak partition tendency below mature boundary formation*
+
+- classification:
+  - first regime refinement marking the transition from seed amplification into precursor-level partition pressure below explicit proto-boundary stabilization
+
+- invariants refined:
+  - fresh restart can advance into local partition tendency before any mature boundary appears
+  - precursor-level narrowing and weak partition tendency remain analytically distinct from stable boundary definition
+  - latent prior-domain recovery still requires explicit reinstatement of old organizational structure
+  - staged endogenous differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 173 is **ready for filing**.
+
+---
+
 
