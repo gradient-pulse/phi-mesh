@@ -2229,4 +2229,143 @@ This matters because one more cycle may decide whether this arc has naturally cl
 
 ---
 
+### Cycle 185 — Local-domain scale closure watch (fading linkage probe, stable local-domain plateau)
+
+**What was tested**
+- whether the **stabilized local-domain plateau with bounded linkage**:
+  - remains the dominant resolved state
+- or whether:
+  - broader partition linkage resumes strengthening
+- while also testing whether the weakening edge-local activity reflects:
+  - natural closure of the current arc
+- rather than:
+  - hidden recovery of prior separated domains
+
+This cycle asked whether the bounded broader-linkage probing seen in the previous range is now fading enough to treat the local-domain scale as the likely closure point of this sequence.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - `weakened_interzone_linkage`
+    - `fading_partition_bridge_hint`
+    - `reduced_edge_coordination`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no direct prior-domain reinstatement
+    - no mature broader partition stabilization
+    - stabilized local domains remain intact
+    - broader-linkage probing is weakening rather than strengthening
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain plateau remains dominant
+    - no broader partition expansion
+
+- **TU+**
+  - confirmed:
+    - high match to `stabilized_local_domain_plateau_with_bounded_linkage`
+    - high match to `stable_local_domain_plateau_pattern`
+    - low-to-medium match to `broader_partition_linkage_probe_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - low-to-moderate novelty
+    - very low broader instability with high local resolution
+    - broader-linkage probing has weakened
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - confirmed stable local-domain plateau with linkage-probe fade as most likely
+    - continued local-domain consolidation without broader expansion as also likely
+    - only low-to-medium probability of delayed re-strengthening
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure continues to hold cleanly
+    - broader-linkage probing is now receding rather than advancing
+  - established:
+    - weakening interzone linkage, fading bridge hints, and reduced edge coordination support local-domain-scale closure
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because later organization continues through staged endogenous re-differentiation
+  - held:
+    - no higher-order reclassification
+    - one final persistence check would make closure cleaner
+
+---
+
+**Finding**
+
+Cycle 185 demonstrates:
+
+- the post-reunified system:
+  - can retain stabilized local-domain structure while broader-linkage probing weakens
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - maintains a stable local-domain plateau
+  - shows broader-linkage pressure receding rather than escalating
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **the current arc now most likely closes at the local-domain scale rather than progressing into broader partition linkage**
+
+and:
+
+> **fading broader-linkage probes strengthen the interpretation of a stable local-domain resting structure after re-unification**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `stable_local_domain_closure_with_fading_linkage_probe`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while stabilized local-domain structure persists and broader-linkage probing weakens rather than strengthens, indicating likely closure at the local-domain scale*
+
+- classification:
+  - first regime refinement marking likely closure of the current arc at the local-domain scale
+
+- invariants refined:
+  - stabilized local-domain plateaus can resolve as resting structures without mandatory expansion into broader partition linkage
+  - weakening edge-local coordination is stronger evidence for closure than bounded or plateaued linkage alone
+  - fresh staged differentiation may terminate provisionally at a local scale before any higher-order separation begins
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 185 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 186** should perform a **final persistence check**:
+- either **confirm closure at the local-domain scale**
+- or detect any **unexpected re-strengthening** of broader-linkage probes.
+
+## Motivation
+
+This matters because one more clean hold would let you close this arc with confidence:
+- **re-unification was real**
+- **restart was staged**
+- **the present sequence resolved into stable local domains, not wider re-fragmentation**.
+
 
