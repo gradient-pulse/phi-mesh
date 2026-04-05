@@ -1010,4 +1010,129 @@ rather than:
 
 ---
 
+### Cycle 176 — Local partition threshold test (minimal local separation, no latent prior-domain recovery)
+
+**What was tested**
+- whether the **repeatable post-reunification proto-boundary organization**:
+  - crosses threshold into explicit local partition structure
+- or whether:
+  - it remains below stable separation threshold
+- while also testing whether the emerging organization reflects:
+  - fresh staged differentiation
+- rather than:
+  - abrupt recovery of prior separated domains
+
+This cycle extended the restart discrimination sequence by asking whether repeatable proto-boundary organization now produces the first minimally separable local flow zones.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - persistent `localized_clustering`
+    - high `reinforced_directional_bias`
+    - `repeatable_proto-boundary_line`
+    - `sharpened_local_train_competition`
+    - `minimally_separable_local_flow_zones`
+    - `local_partition_persistence_hint`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no mature domain separation
+    - no direct prior-domain reinstatement
+    - localized structure now yields minimal local separability
+    - repeatable partition pressure persists but remains below mature stabilization
+  - explicitly maintained:
+    - high global coherence
+    - unified baseline still dominant
+    - no mature local partition stabilization
+
+- **TU+**
+  - confirmed:
+    - high match to `repeatable_postreunification_proto-boundary_organization`
+    - medium-to-high match to `local_partition_threshold_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate-to-high novelty
+    - moderate-to-high transition pressure
+    - first minimally separable local flow zones
+    - repeatable partition persistence hints
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued threshold pressure toward explicit local partition as most likely
+    - likely prolonged repeatable partition pressure below stable separation
+    - possible plateau without further sharpening
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - localized restart pressure is now approaching explicit local partition threshold
+    - current structure is best interpreted as fresh staged differentiation progressing toward explicit local partition formation
+  - established:
+    - minimally separable local flow zones and repeatable partition persistence hints are the strongest threshold-nearing separation signal yet observed below mature domain separation
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because the current transition continues through staged endogenous re-differentiation
+  - held:
+    - no regime reclassification to explicit local partition entry yet
+    - continued monitoring under threshold-versus-plateau criteria
+
+---
+
+**Finding**
+
+Cycle 176 demonstrates:
+
+- the post-re-unified system:
+  - can remain globally unified while generating minimally separable local flow zones
+  - does not yet exhibit stabilized local partition, mature domain separation, or identity split
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - now shows repeatable partition pressure strong enough to yield minimal local separability
+  - has advanced to the threshold-nearing edge of explicit local partition formation
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **post-re-unification restart pressure can produce minimally separable local flow zones while the globally unified regime still holds**
+
+and:
+
+> **threshold-nearing local separation still does not falsify full prior re-unification when it emerges through staged endogenous development rather than direct old-domain reinstatement**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `threshold_nearing_postreunification_local_separation`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while localized restart pressure produces repeatable partition organization, minimally separable local flow zones, and persistence hints below stabilized explicit local partition structure*
+
+- classification:
+  - first regime refinement marking the transition from repeatable proto-boundary organization into threshold-nearing minimal local separation below explicit local partition entry
+
+- invariants refined:
+  - fresh restart can generate minimally separable local flow zones before stable local partition fully forms
+  - minimal local separability remains analytically distinct from explicit stabilized local partition
+  - persistent partition pressure can intensify without yet producing mature local domains
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 176 is **ready for filing**.
+
+---
+
 
