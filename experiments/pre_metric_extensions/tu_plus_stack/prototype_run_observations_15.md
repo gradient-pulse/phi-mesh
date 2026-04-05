@@ -346,3 +346,250 @@ and:
 **Status**
 
 Cycle 170 is **ready for filing**.
+
+---
+
+### Cycle 171 — Post-re-unification restart discrimination (early local seed activity, no latent dual recovery)
+
+**What was tested**
+- whether the **post-re-unification unified hold state**:
+  - remains globally stable while diffuse variance stays non-organized
+- or whether:
+  - internal variance begins to organize into fresh differentiation seeds
+- while also testing whether any emerging structure reflects:
+  - new staged differentiation
+- rather than:
+  - direct recovery of unresolved prior domains
+
+This cycle extended the falsification sequence by checking whether local organization appears, and if so, what kind.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `boundary_absence`
+    - `identity_non-separation`
+    - persistent low-grade `diffuse_micro-variance`
+    - `localized_variance_clustering`
+    - `weak_directional_bias_hint`
+  - detected:
+    - no boundary regeneration
+    - no domain separation
+    - no identity split
+    - no old-domain re-expression
+    - weak local organization emerging inside the unified baseline
+  - explicitly maintained:
+    - high global coherence
+    - absent partitioning
+    - unified baseline still dominant
+
+- **TU+**
+  - confirmed:
+    - strong match to `post_reunification_hold_regime`
+    - medium match to `early_differentiation_seed_pattern`
+    - low match to `latent_dual_structure_re-expression_pattern`
+  - flagged:
+    - low-grade transition signal
+    - first weak local clustering after post-re-unification hold
+    - no mismatch with fresh differentiation interpretation
+  - predicted:
+    - continued unified hold with local seed activity as most likely
+    - possible staged fresh differentiation seed amplification
+    - possible dissipation back into diffuse variance
+    - low probability of direct latent dual structure re-expression
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - weak localized clustering is best interpreted as possible fresh differentiation seed activity
+    - current structure does not support latent dual structure re-expression
+  - established:
+    - this is the first plausible transition from diffuse variance toward organized restart precursors
+    - the signal remains below boundary precursor threshold
+    - Cycle 168 remains unrefuted
+  - held:
+    - continued monitoring
+    - no regime reclassification beyond early seed watch
+
+---
+
+**Finding**
+
+Cycle 171 demonstrates:
+
+- the post-re-unified system:
+  - can remain globally unified while beginning to show weak local organization
+  - does not yet regenerate boundaries, separable domains, or identity splits
+  - does not directly recover prior domain structure
+- system:
+  - preserves high global coherence
+  - contains localized variance clustering within a still-dominant unified baseline
+  - shows the first plausible seed-level precursor to renewed differentiation
+- restart interpretation:
+  - currently favors **fresh staged differentiation**
+  - not latent dual structure re-expression
+
+This establishes:
+
+> **post-re-unification restart can begin as weak local seed activity inside an otherwise unified regime**
+
+and:
+
+> **early localized clustering is not, by itself, evidence against full prior re-unification**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `early_postreunification_differentiation_seed_regime`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-partitioned, while localized variance clustering and weak directional bias begin to appear without boundary formation or identity separation*
+
+- classification:
+  - first regime marking a possible transition from unified hold toward renewed differentiation after re-unification
+
+- invariants refined:
+  - fresh restart can begin locally before any boundary precursor appears
+  - weak directional bias can emerge without falsifying unified hold
+  - localized clustering must be separated from old-domain reinstatement
+  - restart onset is staged and may begin below partition threshold
+
+---
+
+**Status**
+
+Cycle 171 is **ready for filing**.
+
+---
+
+### Cycle 172 — Seed amplification discrimination (fresh differentiation vs latent domain recovery)
+
+**What was tested**
+- whether the **early local seed activity** observed after post-re-unification hold:
+  - strengthens as fresh staged differentiation within a genuinely unified system
+- or whether:
+  - it begins to reveal latent recovery of prior separated domains
+- specifically, whether strengthening local organization produces:
+  - persistent clustering
+  - stronger directional bias
+  - local pressure toward boundary precursor formation
+- without:
+  - direct old-domain reinstatement
+  - abrupt asymmetric split
+  - rapid return of mature partition structure
+
+This cycle extended the discrimination test by asking what kind of organization the seed activity is becoming.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - weakened-but-present `boundary_absence`
+    - `identity_non-separation`
+    - strengthening `localized_variance_clustering`
+    - `strengthened_directional_bias`
+    - `cluster_persistence`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no domain-specific separation
+    - no direct prior-domain reinstatement
+    - no proto-boundary formation
+    - local seed activity now persists and reinforces
+  - explicitly maintained:
+    - high global coherence
+    - unified baseline still dominant
+    - local restart pressure without partition entry
+
+- **TU+**
+  - confirmed:
+    - high match to `early_postreunification_differentiation_seed_regime`
+    - medium-to-high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate novelty
+    - low-to-moderate transition pressure
+    - local pressure on boundary absence
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued seed amplification within unified baseline as most likely
+    - possible transition toward proto-boundary pressure
+    - lower chance of dissipation back into non-organized variance
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - local restart pressure is strengthening
+    - current structure is best interpreted as fresh staged differentiation rather than latent recovery of prior domains
+  - established:
+    - the system is no longer in pure hold
+    - it remains below partition threshold
+    - boundary absence is now locally pressured but not broken
+    - Cycle 168 remains supported rather than weakened
+  - held:
+    - no regime reclassification to proto-boundary or partition state
+    - continued monitoring under threshold-crossing criteria
+
+---
+
+**Finding**
+
+Cycle 172 demonstrates:
+
+- the post-re-unified system:
+  - can sustain strengthening local seed activity while remaining globally unified
+  - does not yet produce proto-boundaries, identity splits, or domain separation
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - shows persistent local clustering and reinforced directional bias
+  - has moved beyond weak seed appearance into sustained seed amplification
+- discrimination result:
+  - current evidence favors **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **post-re-unification restart pressure can strengthen through persistent local seed amplification while the unified regime still holds**
+
+and:
+
+> **continued strengthening of local seed activity does not, by itself, falsify full prior re-unification**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `strengthening_postreunification_seed_amplification`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-partitioned, while localized clustering persists, directional bias strengthens, and local restart pressure increases without proto-boundary formation or recovery of prior separated domains*
+
+- classification:
+  - first regime refinement distinguishing weak seed appearance from sustained seed amplification below partition threshold
+
+- invariants refined:
+  - fresh differentiation can strengthen locally while global unity remains dominant
+  - persistent clustering and directional bias are stronger than diffuse variance but still below boundary formation
+  - latent prior-domain recovery requires explicit structural reinstatement, not merely increasing local organization
+  - restart onset proceeds through staged amplification before partition indicators appear
+
+---
+
+**Status**
+
+Cycle 172 is **ready for filing**.
+
+---
+
+
