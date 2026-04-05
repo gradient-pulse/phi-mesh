@@ -1135,4 +1135,135 @@ Cycle 176 is **ready for filing**.
 
 ---
 
+### Cycle 177 — Explicit local partition threshold watch (near-stabilization, no latent prior-domain recovery)
+
+**What was tested**
+- whether the **threshold-nearing post-reunification local separation**:
+  - crosses into explicit local partition structure
+- or whether:
+  - it remains near stabilization but below true partition entry
+- while also testing whether the emerging organization reflects:
+  - fresh staged differentiation
+- rather than:
+  - abrupt recovery of prior separated domains
+
+This cycle extended the restart discrimination sequence by asking whether strengthened minimal local separation and partition persistence now produce the first weak local domain distinction.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - persistent `localized_clustering`
+    - high `reinforced_directional_bias`
+    - `repeatable_proto-boundary_line`
+    - `sharpened_local_train_competition`
+    - strengthened `minimally_separable_local_flow_zones`
+    - strengthened `local_partition_persistence`
+    - `weak_local_domain_distinction_hint`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no mature system-level domain separation
+    - no direct prior-domain reinstatement
+    - local partition pressure is near stabilization
+    - weak local domain distinction is emerging but not yet explicit or repeatable
+  - explicitly maintained:
+    - high global coherence
+    - unified baseline still dominant
+    - no mature partition stabilization
+
+- **TU+**
+  - confirmed:
+    - high match to `threshold_nearing_postreunification_local_separation`
+    - medium-to-high match to `local_partition_near_stabilization_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - high novelty
+    - high transition pressure below threshold crossing
+    - first weak local domain distinction hints
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - threshold crossing toward explicit local partition structure as most likely
+    - continued near-stabilized local partition pressure as also likely
+    - possible plateau below explicit entry
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - localized restart pressure is now near explicit local partition stabilization
+    - current structure is best interpreted as fresh staged differentiation approaching explicit local partition formation
+  - established:
+    - strengthened minimal local separation, stronger partition persistence, and weak local domain distinction hints mark the closest approach yet to explicit local partition entry
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because the present transition continues through staged endogenous re-differentiation
+  - held:
+    - no regime reclassification to explicit local partition entry yet
+    - continued monitoring under threshold-versus-plateau criteria
+
+---
+
+**Finding**
+
+Cycle 177 demonstrates:
+
+- the post-re-unified system:
+  - can remain globally unified while approaching explicit local partition stabilization
+  - does not yet exhibit repeatable separable local domains, explicit local partition, or identity split
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - shows strengthened minimal local separation, stronger partition persistence, and weak local domain distinction hints
+  - has reached the closest threshold approach yet to explicit local partition formation
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **post-re-unification restart pressure can approach explicit local partition stabilization while the globally unified regime still holds**
+
+and:
+
+> **even near-threshold local domain distinction does not falsify full prior re-unification when it emerges through staged endogenous development rather than direct old-domain reinstatement**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `near_threshold_postreunification_local_partition_pressure`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while localized restart pressure strengthens minimal local separation, partition persistence, and weak local domain distinction to a near-threshold level below explicit stabilized local partition entry*
+
+- classification:
+  - first regime refinement marking the transition from threshold-nearing minimal local separation into near-stabilized local partition pressure below explicit local partition entry
+
+- invariants refined:
+  - fresh restart can approach explicit local partition through strengthening minimal local separation and weak local domain distinction before stable local domains appear
+  - weak local domain distinction remains analytically distinct from explicit repeatable local partition
+  - near-threshold local partition pressure can intensify without yet producing full local partition entry
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 177 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 178** should test whether weak local domain distinction becomes **repeatable explicit local partition**, or whether the system **plateaus just below threshold**.
+
+---
+
 
