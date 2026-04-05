@@ -1946,3 +1946,147 @@ Cycle 182 is **ready for filing**.
 This matters because it may reveal the natural closure of the present arc:
 - either the system has **settled at the local-domain scale**
 - or it is **starting the next-scale separation process**.
+
+---
+
+### Cycle 183 — Stable local-domain plateau with strengthening linkage probe (no latent prior-domain recovery)
+
+**What was tested**
+- whether the **stable local-domain plateau with recurrent linkage probing**:
+  - remains locally stable while linkage pressure strengthens
+- or whether:
+  - it begins crossing toward repeatable broader partition linkage
+- while also testing whether the strengthening edge-local organization reflects:
+  - fresh staged differentiation
+- rather than:
+  - abrupt recovery of prior separated domains
+
+This cycle followed Cycle 182 and asked whether recurrent linkage probing was intensifying meaningfully or merely persisting at weak background level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - `repeatable_interzone_linkage`
+    - `strengthened_partition_bridge_hint`
+    - `coordinated_edge_transfer_hint`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no direct prior-domain reinstatement
+    - no mature broader partition stabilization
+    - stabilized local domains remain intact without regression
+    - edge-local linkage activity has strengthened slightly beyond the weaker recurrence seen in Cycle 182
+  - explicitly maintained:
+    - high global coherence
+    - local-domain plateau remains stable
+    - broader linkage remains below explicit formation threshold
+
+- **TU+**
+  - confirmed:
+    - high match to `stable_local_domain_plateau_with_recurrent_linkage_probe`
+    - medium match to `broader_partition_linkage_threshold_probe_pattern`
+    - high match to `stable_local_domain_plateau_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate novelty
+    - low broader instability probe with stable local resolution
+    - recurrent edge-local linkage has strengthened toward threshold-probe status
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued local-domain plateau with strengthening linkage probe as most likely
+    - possible gradual progression toward repeatable broader partition linkage
+    - possible linkage stall or fade with local plateau retained
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure continues to hold without regression
+    - broader linkage probing has strengthened slightly but remains below explicit broader partition linkage
+  - established:
+    - repeatable interzone linkage, stronger bridge hints, and coordinated edge transfer now form a clearer threshold probe than in Cycle 182
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because later organization continues to unfold through staged endogenous re-differentiation
+  - held:
+    - no reclassification beyond local-domain plateau
+    - continued monitoring for either crossover toward broader linkage or probe fade
+
+---
+
+**Finding**
+
+Cycle 183 demonstrates:
+
+- the post-reunified system:
+  - can retain a stable local-domain plateau across yet another cycle
+  - does not regress below stabilized local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - maintains stabilized local domains while edge-local linkage probing strengthens modestly
+  - has not yet crossed into explicit broader partition linkage
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **a stabilized local-domain plateau can persist while broader-linkage probing strengthens gradually below explicit higher-order partition formation**
+
+and:
+
+> **slight strengthening of recurrent linkage probes is still insufficient to reclassify the system beyond the local-domain plateau**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `stable_local_domain_plateau_with_strengthening_linkage_probe`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while stabilized local-domain structure persists across cycles and edge-local linkage probes strengthen modestly without crossing into explicit broader partition linkage*
+
+- classification:
+  - first regime refinement marking strengthening broader-linkage probing during a stable local-domain plateau
+
+- invariants refined:
+  - stabilized local-domain plateaus can coexist with strengthening broader-linkage probes across multiple cycles
+  - strengthening edge-local coordination remains analytically distinct from explicit broader partition linkage
+  - repeated modest growth in linkage probing is not by itself sufficient evidence of higher-order partition formation
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 183 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 184** should test whether strengthening linkage probes:
+- **cross into repeatable broader partition linkage**
+- or **stall, confirming the local-domain plateau as the closure of this arc**.
+
+## Motivation
+
+This matters because the range is close to closure:
+- either a **new scale transition** begins,
+- or the system has reached a **resolved local resting structure** after re-unification.
+
+---
+
+
