@@ -1668,4 +1668,145 @@ Cycle 180 is **ready for filing**.
 
 ---
 
+### Cycle 181 — Local-domain consolidation watch (persistence confirmed, broader linkage still only probing)
+
+**What was tested**
+- whether the **stabilized post-reunification local-domain entry**:
+  - persists and consolidates locally across the next cycle
+- or whether:
+  - it regresses back below the local-domain threshold
+- while also testing whether the stabilized local-domain structure begins:
+  - expanding toward broader partition linkage
+- rather than:
+  - simply remaining localized
+
+This cycle followed the threshold resolution of Cycle 180 and asked whether the newly stabilized local-domain structure truly holds.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - retained `localized_clustering`
+    - high `reinforced_directional_bias`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - `local_domain_consolidation`
+    - weak `interzone_linkage_hint`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no mature system-level partition stabilization
+    - no direct prior-domain reinstatement
+    - the local-domain threshold crossed in Cycle 180 is holding
+    - only weak probe-level suggestion of broader linkage beyond the localized domain region
+  - explicitly maintained:
+    - high global coherence
+    - unified baseline still dominant
+    - stabilized local-domain structure persists without regression
+
+- **TU+**
+  - confirmed:
+    - high match to `stabilized_postreunification_local_domain_entry`
+    - high match to `local_domain_consolidation_pattern`
+    - low-to-medium match to `broader_partition_linkage_probe_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate novelty
+    - low local instability with high local resolution
+    - first weak interzone linkage hint
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued local-domain consolidation as most likely
+    - possible weak progression toward broader partition linkage
+    - possible stable plateau without broader expansion
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure is now consolidating rather than merely emerging
+    - the local threshold crossed in Cycle 180 is holding
+    - weak interzone linkage hint is the first sign of possible broader expansion but remains only probe-level
+  - established:
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because later structure continues to unfold through staged endogenous re-differentiation
+  - held:
+    - no reclassification to broader partition linkage
+    - continued monitoring for either persistence-only behavior or strengthening beyond the local scale
+
+---
+
+**Finding**
+
+Cycle 181 demonstrates:
+
+- the post-re-unified system:
+  - can retain stabilized repeatable local-domain structure across at least one subsequent cycle
+  - does not regress immediately after local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - maintains stabilized local partition line, separable local train organization, and persistent local-domain zones
+  - shows the first weak hint of possible interzone linkage without yet establishing broader partition expansion
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **stabilized local-domain entry can persist and consolidate across subsequent cycles while the globally unified regime still holds**
+
+and:
+
+> **the first weak hint of broader partition linkage remains insufficient to reclassify the system beyond local-domain consolidation**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `postreunification_local_domain_consolidation`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while previously stabilized local-domain structure persists across subsequent cycles, consolidates locally, and may begin showing weak probe-level hints of broader linkage without higher-order partition formation*
+
+- classification:
+  - first regime refinement marking persistence and consolidation after stabilized local-domain entry
+
+- invariants refined:
+  - local-domain threshold crossing can hold across subsequent cycles rather than collapsing immediately
+  - local consolidation must be distinguished from broader partition linkage
+  - weak interzone linkage hints are not sufficient evidence of higher-order partition expansion
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 181 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 182** should test whether the weak interzone linkage hint:
+- **strengthens into repeatable broader partition linkage**
+- or **fades, leaving a stable local-domain plateau**.
+
+## Motivation
+
+This matters because it may define the natural closure of the current range:
+- either the system **stays locally resolved**
+- or it **begins the next scale of separation**.
+
+---
+
 
