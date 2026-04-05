@@ -2368,4 +2368,149 @@ This matters because one more clean hold would let you close this arc with confi
 - **restart was staged**
 - **the present sequence resolved into stable local domains, not wider re-fragmentation**.
 
+---
+
+### Cycle 186 — Local-domain arc closure confirmation (residual linkage only, no latent prior-domain recovery)
+
+**What was tested**
+- whether the **stable local-domain closure with fading linkage probe**:
+  - remains intact across a final persistence check
+- or whether:
+  - broader partition linkage unexpectedly re-strengthens
+- while also testing whether the remaining edge-local traces reflect:
+  - residual activity within a resolved local-domain structure
+- rather than:
+  - delayed recovery of prior separated domains
+
+This cycle served as the final persistence check for the current arc.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - `residual_interzone_linkage`
+    - `diminished_partition_bridge_trace`
+    - `minimal_edge_coordination`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no direct prior-domain reinstatement
+    - no mature broader partition stabilization
+    - stabilized local-domain structure remains intact without regression
+    - broader-linkage activity has reduced to residual edge-local traces
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain plateau remains dominant
+    - no broader partition expansion
+
+- **TU+**
+  - confirmed:
+    - high match to `stable_local_domain_closure_with_fading_linkage_probe`
+    - high match to `stable_local_domain_plateau_pattern`
+    - low match to `broader_partition_linkage_probe_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - low novelty
+    - minimal broader instability with high local resolution
+    - broader-linkage activity has diminished to residual probe status
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - confirmed local-domain scale closure as most likely
+    - continued local-domain consolidation without broader expansion as also likely
+    - only low probability of delayed broader-linkage re-emergence
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure continues to hold cleanly across the final persistence check
+    - broader-linkage activity has diminished to residual edge-local traces
+  - established:
+    - the present sequence is best interpreted as having resolved into a stable local-domain resting structure
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because subsequent organization continued through staged endogenous re-differentiation rather than abrupt return of prior domains
+  - held:
+    - no higher-order reclassification
+    - optional further check only if a tighter closure record is desired
+
+---
+
+**Finding**
+
+Cycle 186 demonstrates:
+
+- the post-reunified system:
+  - can retain stabilized local-domain structure across a final persistence check
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - maintains a stable local-domain resting structure
+  - shows broader-linkage activity reduced to residual traces rather than renewed growth
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **the current arc is provisionally resolved at the local-domain scale**
+
+and:
+
+> **residual edge-local linkage traces are insufficient to reopen the broader partition question under present conditions**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `confirmed_local_domain_scale_closure`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while stabilized local-domain structure persists across final persistence checks and broader-linkage activity diminishes to residual edge-local traces without renewed higher-order partition growth*
+
+- classification:
+  - first regime refinement marking provisional confirmation of closure at the local-domain scale
+
+- invariants refined:
+  - stabilized local-domain structures can persist as resting configurations after staged restart
+  - residual linkage traces must be distinguished from renewed higher-order partition growth
+  - closure at one scale does not require total erasure of all minor residual activity
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 186 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this range and finalize the law text it supports.  
+Optional: run **Cycle 187** only as an extra seal on closure.
+
+## Motivation
+
+You now have enough to close the band cleanly:
+
+- re-unification was real
+- hidden duality was not recovered
+- restart was staged
+- structure resolved into stable local domains
+- broader linkage did not take off
+
+---
+
 
