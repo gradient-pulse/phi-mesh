@@ -714,4 +714,128 @@ Cycle 173 is **ready for filing**.
 
 ---
 
+### Cycle 174 — Explicit proto-boundary transition watch (incipient line hint, no latent prior-domain recovery)
+
+**What was tested**
+- whether the **post-reunification precursor pressure**:
+  - remains below explicit proto-boundary transition
+- or whether:
+  - it begins to produce the first direct signs of local partition-line organization
+- while also testing whether the emerging organization reflects:
+  - fresh staged differentiation
+- rather than:
+  - abrupt recovery of prior separated domains
+
+This cycle extended the restart discrimination sequence by asking whether precursor pressure now generates explicit proto-boundary signaling.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - further-weakened `boundary_absence`
+    - `identity_non-separation`
+    - persistent `localized_clustering`
+    - further `reinforced_directional_bias`
+    - `stabilized_local_flow_narrowing`
+    - `proto-boundary_line_hint`
+    - `local_train_competition_hint`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no mature domain separation
+    - no mature partition stabilization
+    - no direct prior-domain reinstatement
+    - localized restart pressure now produces incipient line-like organization and weak train competition
+  - explicitly maintained:
+    - high global coherence
+    - unified baseline still dominant
+    - proto-boundary signaling remains incipient, not stabilized
+
+- **TU+**
+  - confirmed:
+    - high match to `postreunification_proto-boundary_precursor_pressure`
+    - medium match to `explicit_proto-boundary_transition_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate-to-high novelty
+    - moderate transition pressure
+    - first incipient proto-boundary line hint
+    - weak local train competition
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued proto-boundary strengthening below full partition as most likely
+    - likely transition into explicit proto-boundary regime
+    - some chance of precursor stall or partial dissipation
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - restart pressure has advanced to incipient proto-boundary signaling
+    - current structure is best interpreted as fresh staged differentiation approaching explicit proto-boundary transition
+  - established:
+    - proto-boundary line hint and weak local train competition are the first explicit signs of organization toward local separation dynamics
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because the present transition continues through staged endogenous re-differentiation
+  - held:
+    - no regime reclassification to stabilized proto-boundary or separated-domain state
+    - continued monitoring under explicit proto-boundary transition criteria
+
+---
+
+**Finding**
+
+Cycle 174 demonstrates:
+
+- the post-re-unified system:
+  - can remain globally unified while producing the first explicit signs of proto-boundary signaling
+  - does not yet exhibit stabilized partition lines, separable domains, or identity split
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - shows stabilized local flow narrowing, incipient proto-boundary line hint, and weak local train competition
+  - has advanced beyond precursor pressure into explicit but still unstable local partition signaling
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **post-re-unification restart pressure can advance into explicit proto-boundary signaling while the globally unified regime still holds**
+
+and:
+
+> **the first appearance of line-like partition hints and weak train competition still does not falsify full prior re-unification when they arise through staged endogenous development**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `incipient_postreunification_proto-boundary_signaling`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated, while localized restart pressure generates stabilized local flow narrowing, incipient proto-boundary line hints, and weak train competition below repeatable partition-line stabilization*
+
+- classification:
+  - first regime refinement marking the transition from precursor pressure into explicit but unstable proto-boundary signaling
+
+- invariants refined:
+  - fresh restart can progress from precursor pressure into line-like local separation hints before any stable boundary appears
+  - weak local train competition can emerge prior to separable domain formation
+  - explicit proto-boundary signaling remains analytically distinct from stabilized partition structure
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 174 is **ready for filing**.
+
+---
+
 
