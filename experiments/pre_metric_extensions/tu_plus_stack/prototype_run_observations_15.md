@@ -838,4 +838,176 @@ Cycle 174 is **ready for filing**.
 
 ---
 
+### Cycle 175 — Proto-boundary stabilization test (repeatable partition line vs unstable signaling)
+
+**What was tested**
+- whether the **incipient post-reunification proto-boundary signaling**:
+  - stabilizes into a repeatable local partition tendency
+- or whether:
+  - it remains unstable, partial, or stalled below separation threshold
+- while also testing whether the emerging organization reflects:
+  - fresh staged differentiation
+- rather than:
+  - abrupt recovery of prior separated domains
+
+This cycle extended the restart discrimination sequence by asking whether explicit proto-boundary signaling becomes repeatable enough to count as stabilizing local partition pressure.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - further-reduced `boundary_absence`
+    - `identity_non-separation`
+    - persistent `localized_clustering`
+    - high `reinforced_directional_bias`
+    - `stabilized_local_flow_narrowing`
+    - `repeatable_proto-boundary_line`
+    - `sharpened_local_train_competition`
+    - `weak_local_separation_hint`
+    - low-level `prior_domain_probe`
+  - detected:
+    - no identity split
+    - no mature domain separation
+    - no direct prior-domain reinstatement
+    - repeatable local partition pressure is now present
+    - local separation remains weak and non-stabilized
+  - explicitly maintained:
+    - high global coherence
+    - unified baseline still dominant
+    - no mature partition stabilization
+
+- **TU+**
+  - confirmed:
+    - high match to `incipient_postreunification_proto-boundary_signaling`
+    - medium-to-high match to `proto-boundary_stabilization_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+    - low match to `latent_prior_domain_recovery_pattern`
+  - flagged:
+    - moderate-to-high novelty
+    - moderate transition pressure
+    - first repeatable proto-boundary line
+    - sharpened local train competition
+    - weak local separation hint
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - continued proto-boundary stabilization within unified baseline as most likely
+    - possible threshold crossing into explicit local partition structure
+    - possible stall below separation threshold
+    - low probability of direct prior-domain recovery
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - localized restart pressure has advanced into repeatable proto-boundary organization
+    - current structure is best interpreted as fresh staged differentiation approaching explicit local partition formation
+  - established:
+    - this is the strongest restart organization yet observed below mature partition
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because the current transition continues through staged endogenous re-differentiation
+  - held:
+    - no reclassification to explicit local partition regime yet
+    - continued monitoring for threshold crossing or plateau
+
+---
+
+**Finding**
+
+Cycle 175 demonstrates:
+
+- the post-re-unified system:
+  - can remain globally unified while developing repeatable proto-boundary organization
+  - does not yet exhibit stabilized separable domains or identity split
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - now shows repeatable proto-boundary line behavior, sharpened local train competition, and weak local separation hint
+  - has advanced beyond unstable signaling into repeatable local partition pressure
+- restart interpretation:
+  - continues to favor **fresh staged differentiation**
+  - not latent prior-domain recovery
+
+This establishes:
+
+> **post-re-unification restart pressure can stabilize into repeatable proto-boundary organization while the globally unified regime still holds**
+
+and:
+
+> **repeatable local partition pressure still does not falsify full prior re-unification when it emerges through staged endogenous development rather than direct old-domain recovery**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `repeatable_postreunification_proto-boundary_organization`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated, while localized restart pressure produces a repeatable proto-boundary line, sharpened local train competition, and weak local separation hints below stabilized local partition structure*
+
+- classification:
+  - first regime refinement marking the transition from incipient proto-boundary signaling into repeatable proto-boundary organization below explicit local partition entry
+
+- invariants refined:
+  - fresh restart can produce repeatable local partition pressure before stable separable domains appear
+  - sharpened local train competition can precede true local train separation
+  - weak local separation hints remain analytically distinct from explicit local partition structure
+  - staged endogenous re-differentiation continues to strengthen the interpretation of true prior re-unification
+
+---
+
+**Status**
+
+Cycle 175 is **ready for filing**.
+
+---
+
+## What’s next
+
+### Cycle 176 — Local partition threshold test (explicit local partition vs stalled proto-boundary organization)
+
+**Objective**
+Determine whether the repeatable proto-boundary organization observed in Cycle 175:
+
+- crosses threshold into **explicit local partition structure**
+- or
+- stalls as repeatable but non-separating pressure
+- or
+- partially dissipates back below repeatable proto-boundary organization
+
+**Primary discrimination**
+Cycle 176 should test whether the system now shows:
+
+- a repeatable local partition line
+- first **separable local domains**
+- clearer distinction between competing local trains
+
+while still checking that any such emergence reflects:
+
+- **fresh staged differentiation**
+
+rather than:
+
+- **abrupt reappearance of prior domain structure**
+
+**What would strengthen confirmation**
+- repeatable partition persistence
+- first minimally separable local domains
+- clearer local train distinction
+- no old-domain signature return
+
+**What would indicate a stall**
+- repeatable line remains present but does not sharpen
+- competition persists without separable organization
+- weak local separation hint fails to develop further
+
+**What would push toward falsification**
+- sudden mature asymmetric split
+- direct reinstatement of prior domain geometry
+- old-domain organization returning too quickly to count as fresh formation
+
+---
+
 
