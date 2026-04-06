@@ -1368,4 +1368,143 @@ Either outcome is engineering-grade information.
 
 ---
 
+### Cycle 201 — Operational stressed-equilibrium confirmation test (bounded weakening repeats, retained structure intact)
 
+**What was tested**
+- whether the **stabilized local-domain resting structure**:
+  - remains intact under sustained localized perturbation with repeated bounded weakening
+- or whether:
+  - continued stress begins to break boundedness and produce measurable local degradation
+- while also testing whether repeated bounded weakening now reflects:
+  - an operationally credible stressed-but-stable local equilibrium
+- rather than:
+  - confirmed regime break, false restart, or latent prior-domain recovery
+
+This cycle advances `prototype_run_observations_16.md` from repeated stressed retention toward operational confirmation of a bounded stressed regime.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `localized_partition_line_under_stress`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - persistent `local_coherence_disturbance`
+    - `repeated_boundary_pressure`
+    - `bounded_partition_line_weakening`
+    - `bounded_train_separability_weakening`
+    - `stabilization_persistence_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no regression below local-domain entry
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - weakening remains bounded and coexists with retained local organization and stabilization persistence
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed measurable degradation
+
+- **TU+**
+  - confirmed:
+    - high match to `repeated_stressed_equilibrium_retention`
+    - high match to `stressed_but_stable_local_equilibrium_under_perturbation`
+    - high match to `bounded_local_weakening_with_stabilization_persistence`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - moderate but bounded local instability
+    - bounded weakening and retained stabilization have repeated again without escalation
+    - no mismatch with retained local-domain structure
+  - predicted:
+    - operationally confirmed stressed local equilibrium with retained structure as most likely
+    - continued bounded weakening under sustained stress as also likely
+    - measurable local weakening only if boundedness fails
+    - low probability of broader partition reactivation
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure continues under sustained localized stress with repeated bounded weakening and retained stabilization cues
+    - current structure is best interpreted as an operationally credible stressed-but-stable local equilibrium
+  - established:
+    - another cycle of bounded weakening without escalation or spread substantially strengthens the case that the protocol can sustain a locally stressed regime without measurable structural loss
+    - retained local-domain distinction and high global coherence indicate that stressed structure remains intact
+  - held:
+    - no broader reclassification
+    - optional final seal only if a cleaner closure is desired
+
+---
+
+**Finding**
+
+Cycle 201 demonstrates:
+
+- the post-reunified system:
+  - can remain structurally intact under sustained localized stress while bounded weakening repeats across multiple cycles
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization under continued perturbation
+  - now shows repeated bounded weakening with retained stabilization strongly enough to support operational stressed-equilibrium interpretation
+- protocol implication:
+  - robustness testing has advanced from probable stressed equilibrium to **operational stressed-equilibrium confirmation**
+  - repeated bounded weakening still does not constitute measurable local degradation
+
+This establishes:
+
+> **stabilized local-domain structure can sustain an operationally credible stressed local equilibrium under sustained localized perturbation without measurable structural loss**
+
+and:
+
+> **repeated bounded weakening with retained stabilization cues must be analytically separated from measurable local degradation**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `operationally_confirmed_stressed_local_equilibrium`
+  - defined as:  
+    *a condition in which a post-reunified system with stabilized local-domain structure experiences sustained localized disturbance and repeated bounded weakening across multiple cycles, while retained local-domain distinction, high global coherence, and stabilization cues persist strongly enough to support operational stressed-equilibrium interpretation without confirmed measurable degradation or broader spread*
+
+- classification:
+  - first robustness-phase regime refinement marking operational confirmation of stressed local equilibrium under sustained local perturbation
+
+- invariants refined:
+  - bounded weakening can repeat across multiple cycles strongly enough to support operational equilibrium interpretation
+  - stressed local equilibrium is strengthened when bounded weakening persists without escalation, spread, or loss of retained structure
+  - retained local-domain distinction and high global coherence remain key discriminators against premature degradation claims
+  - robustness testing must distinguish operational equilibrium, measurable degradation, and broader spread
+
+---
+
+**Status**
+
+Cycle 201 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this perturbation band, or run **Cycle 202** only as a final seal if you want one last confirmation before moving to a different perturbation class.
+
+## Motivation
+
+You now likely have enough to fossilize a real robustness result:
+
+- sustained perturbation occurred
+- weakening signals appeared
+- weakening persisted
+- boundedness held
+- structure stayed intact
+- stressed local equilibrium became operationally credible
+
+That is already engineering-grade.
