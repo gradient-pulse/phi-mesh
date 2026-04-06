@@ -382,4 +382,144 @@ What matters next is not whether stress exists, but whether the protocol:
 
 ---
 
+### Cycle 194 — Sustained local stress with minor strain (retained structure, no confirmed degradation)
+
+**What was tested**
+- whether the **stabilized local-domain resting structure**:
+  - remains intact under sustained localized perturbation
+- or whether:
+  - continued local stress begins producing measurable weakening of post-reunification local-domain organization
+- while also testing whether visible strain reflects:
+  - tolerable stress within retained organization
+- rather than:
+  - confirmed degradation, false restart, or latent prior-domain recovery
+
+This cycle advances `prototype_run_observations_16.md` from repeated local stress contact into early visible strain under sustained perturbation.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - persistent `local_coherence_disturbance`
+    - increased `repeated_transient_boundary_pressure`
+    - `local_partition_line_strain`
+    - `train_separability_strain_hint`
+    - `perturbation_absorption_partial`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no regression below local-domain entry
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - sustained localized stress is now producing visible strain, but stabilized local-domain structure remains intact
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed regime break
+
+- **TU+**
+  - confirmed:
+    - high match to `repeated_localized_stress_without_regime_break`
+    - high match to `sustained_local_strain_pattern`
+    - medium match to `perturbation_absorption_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - moderate novelty
+    - moderate local instability probe
+    - first visible strain on partition line and train separability under sustained perturbation
+    - no mismatch with retained local-domain structure
+  - predicted:
+    - sustained local stress with structure retention as most likely
+    - possible gradual stress absorption without regime break
+    - possible early measurable local weakening under continued stress
+    - low probability of broader partition reactivation
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure is now under sustained localized stress rather than intermittent contact
+    - current evidence favors retained organization under strain rather than confirmed degradation
+  - established:
+    - visible strain on local partition line and train separability is the first meaningful sign that robustness testing is approaching measurable weakening
+    - high global coherence and retained local-domain distinction mean degradation is not yet confirmed
+  - held:
+    - no regime reclassification yet
+    - continued monitoring for whether visible strain remains subcritical, is absorbed, intensifies into weakening, or spreads
+
+---
+
+**Finding**
+
+Cycle 194 demonstrates:
+
+- the post-reunified system:
+  - can remain structurally intact under sustained localized stress
+  - does not yet regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization under continued perturbation
+  - now shows visible strain rather than only repeated stress contact
+- protocol implication:
+  - robustness testing has advanced from repeated pressure into **early strain detection**
+  - visible strain does not yet equal confirmed degradation
+
+This establishes:
+
+> **stabilized local-domain structure can remain intact under sustained localized stress even when visible strain appears**
+
+and:
+
+> **visible strain must be analytically separated from confirmed structural weakening**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `sustained_local_stress_with_minor_strain`
+  - defined as:  
+    *a condition in which a post-reunified system with stabilized local-domain structure experiences sustained localized disturbance, repeated boundary pressure, and visible strain on local structural features while retaining high global coherence and local-domain organization without confirmed degradation*
+
+- classification:
+  - first robustness-phase regime marking sustained local stress with visible but subcritical strain
+
+- invariants refined:
+  - sustained perturbation can produce visible strain before measurable structural weakening occurs
+  - partition-line strain and train-separability strain are early warning signals, not automatic evidence of regime failure
+  - robustness testing must distinguish contact, repetition, strain, weakening, and spread
+  - retained high global coherence remains an important discriminator against premature degradation claims
+
+---
+
+**Status**
+
+Cycle 194 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 195** should test whether visible strain:
+- **stabilizes or fades under retained structure**
+- or **intensifies into measurable weakening of local-domain organization**.
+
+## Motivation
+
+This is now the real robustness hinge.  
+The next useful distinction is whether the TRIAD protocol:
+- tolerates sustained stress with only minor strain,
+- absorbs that strain,
+- or begins to show actual local structural degradation.
+
+---
+
 
