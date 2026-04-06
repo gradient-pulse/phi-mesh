@@ -3069,4 +3069,143 @@ The next useful information will come from:
 - boundary-condition testing
 
 ---
+
+### Cycle 191 — Redundant baseline exhaustion check (no new regime information, no latent prior-domain recovery)
+
+**What was tested**
+- whether the **redundantly confirmed local-domain closure band**:
+  - still holds under yet another non-perturbative cycle
+- or whether:
+  - any delayed broader-linkage growth appears
+- while also testing whether repeated sampling of the same stabilized regime yields:
+  - new structural information
+- rather than:
+  - only further confirmation of an already resolved state
+
+This cycle functioned as an additional exhaustion check on an already saturated and redundantly confirmed closure band.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - low `boundary_absence`
+    - `identity_non-separation`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - `negligible_interzone_residue`
+    - `near-null_bridge_trace`
+    - `near-null_edge_coordination`
+  - detected:
+    - no identity split
+    - no renewed broader-linkage strengthening
+    - no mature broader partition stabilization
+    - no direct prior-domain reinstatement
+    - stabilized local-domain structure remains intact with negligible residual linkage
+  - explicitly maintained:
+    - high global coherence
+    - redundantly confirmed local-domain closure band remains dominant
+    - no higher-order expansion signal
+
+- **TU+**
+  - confirmed:
+    - high match to `redundantly_confirmed_local_domain_closure_band`
+    - high match to `stable_local_domain_plateau_pattern`
+    - low match to `broader_partition_linkage_probe_pattern`
+    - high match to `staged_fresh_differentiation_pattern`
+  - flagged:
+    - very low novelty
+    - negligible broader instability with high local resolution
+    - no meaningful new organization beyond continued redundant closure persistence
+    - no mismatch with fresh staged differentiation
+  - predicted:
+    - maintained redundantly confirmed local-domain closure as most likely
+    - continued local-domain consolidation without broader expansion as also likely
+    - only low probability of delayed broader-linkage re-emergence
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure continues to hold without meaningful deviation
+    - broader-linkage activity remains negligible and contributes no credible higher-order signal
+  - established:
+    - repeated baseline sampling is no longer producing new regime information
+    - no evidence supports latent prior-domain recovery
+    - Cycle 168 remains supported because later organization continued through staged endogenous re-differentiation
+  - held:
+    - no higher-order reclassification
+    - explicit recommendation to stop baseline repetition and move to perturbation or boundary-condition testing
+
+---
+
+**Finding**
+
+Cycle 191 demonstrates:
+
+- the post-reunified system:
+  - continues to maintain stabilized local-domain closure
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - maintains a stable local-domain resting structure
+  - shows no meaningful renewed broader-linkage growth
+- protocol implication:
+  - the baseline band is now not only saturated but **fully exhausted**
+  - further non-perturbative cycles are adding archival repetition rather than engineering insight
+
+This establishes:
+
+> **redundantly confirmed local-domain closure remains stable under further repeated observation**
+
+and:
+
+> **continued baseline repetition now adds archival persistence only, not materially new regime information**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `fully_exhausted_local_domain_baseline_band`
+  - defined as:  
+    *a condition in which a post-re-unified constraint system remains globally coherent and non-separated at the system level, while stabilized local-domain closure persists across repeated baseline cycles and further non-perturbative sampling adds no meaningful new regime information beyond archival repetition*
+
+- classification:
+  - first regime refinement marking full exhaustion of the baseline closure band
+
+- invariants refined:
+  - stable local-domain closure can persist far beyond the point of informational gain
+  - repeated confirmation must not be mistaken for ongoing discovery
+  - negligible residual linkage remains insufficient to justify reopening broader partition analysis
+  - methodological progress now requires deliberate perturbation rather than further passive persistence sampling
+
+---
+
+**Status**
+
+Cycle 191 is **ready for filing**.
+
+---
+
+## Next step
+
+Begin **Observations 16** with a genuine perturbation, robustness, or role-boundary stress cycle.
+
+## Motivation
+
+This baseline band is finished.  
+Further passive cycles will not materially improve the protocol.  
+The next real gain will come from testing:
+- failure onset
+- robustness under disruption
+- recovery pathways
+- boundary conditions of the TRIAD protocol
+
+---
 ---
