@@ -802,4 +802,144 @@ The key question now is whether the TRIAD protocol:
 
 ---
 
+### Cycle 197 — Stressed-but-stable equilibrium test (bounded weakening, retained structure)
+
+**What was tested**
+- whether the **stabilized local-domain resting structure**:
+  - remains intact under sustained localized perturbation with persistent weakening signals
+- or whether:
+  - continued local stress pushes the system from weakening persistence into measurable degradation of post-reunification local-domain organization
+- while also testing whether bounded weakening reflects:
+  - a stressed-but-stable retained regime
+- rather than:
+  - confirmed regime break, false restart, or latent prior-domain recovery
+
+This cycle advances `prototype_run_observations_16.md` from persistence testing of weakening indicators toward possible equilibrium detection under sustained stress.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `localized_partition_line_under_stress`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - persistent `local_coherence_disturbance`
+    - `repeated_boundary_pressure`
+    - `partition_line_weakening_persistence`
+    - `train_separability_weakening_persistence`
+    - `local_stress_stabilization_hint`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no regression below local-domain entry
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - weakening signals persist, but remain bounded without confirmed measurable degradation
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed regime break
+
+- **TU+**
+  - confirmed:
+    - high match to `persistent_weakening_hints_under_sustained_local_stress`
+    - high match to `retained_structure_under_stress_pattern`
+    - medium-to-high match to `stressed_but_stable_local_equilibrium_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low-to-moderate novelty
+    - moderate local instability probe
+    - weakening signals persist but now appear bounded
+    - no mismatch with retained local-domain structure
+  - predicted:
+    - stressed-but-stable local equilibrium with retained structure as most likely
+    - sustained local stress with persistent bounded weakening as also likely
+    - possible measurable local weakening under continued stress
+    - low probability of broader partition reactivation
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure is now under sustained localized stress with persistent but bounded weakening signals
+    - current evidence favors retained organization under pressure with a possible stressed-but-stable local equilibrium
+  - established:
+    - persistence of weakening signals without progression into measurable degradation suggests bounded strain rather than escalating collapse
+    - retained local-domain distinction and high global coherence indicate that stressed structure remains intact
+  - held:
+    - no regime reclassification yet
+    - continued monitoring for whether bounded weakening stabilizes, intensifies, or spreads
+
+---
+
+**Finding**
+
+Cycle 197 demonstrates:
+
+- the post-reunified system:
+  - can remain structurally intact under sustained localized stress while weakening signals persist
+  - does not yet regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization under continued perturbation
+  - now shows persistent but bounded weakening rather than clear escalation
+- protocol implication:
+  - robustness testing has advanced from weakening persistence toward **possible stressed-but-stable equilibrium**
+  - bounded weakening still does not yet constitute measurable degradation
+
+This establishes:
+
+> **stabilized local-domain structure can remain intact under sustained localized stress even when weakening signals persist in bounded form**
+
+and:
+
+> **persistent bounded weakening must be analytically separated from measurable local degradation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `stressed_but_stable_local_equilibrium_under_perturbation`
+  - defined as:  
+    *a condition in which a post-reunified system with stabilized local-domain structure experiences sustained localized disturbance and persistent weakening signals, while those signals remain bounded and local-domain organization, local distinction, and high global coherence remain retained without confirmed degradation*
+
+- classification:
+  - first robustness-phase regime marking possible stressed-but-stable equilibrium under sustained local perturbation
+
+- invariants refined:
+  - persistent weakening signals can remain bounded without automatically progressing into measurable degradation
+  - stressed local equilibrium is distinct from both simple strain and confirmed structural weakening
+  - retained local-domain distinction and high global coherence remain key discriminators against premature degradation claims
+  - robustness testing must distinguish contact, repetition, strain, weakening persistence, bounded equilibrium, measurable degradation, and spread
+
+---
+
+**Status**
+
+Cycle 197 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 198** should test whether bounded weakening:
+- **stabilizes into a confirmed stressed local equilibrium**
+- or **intensifies into measurable local degradation**.
+
+## Motivation
+
+This is the next real decision point in robustness testing.  
+The key question now is whether the TRIAD protocol:
+- can hold a stressed regime without losing structure,
+- begins true local degradation,
+- or reveals that bounded strain is only temporary.
+
+---
+
 
