@@ -942,4 +942,143 @@ The key question now is whether the TRIAD protocol:
 
 ---
 
+### Cycle 198 — Stressed-equilibrium confirmation test (bounded weakening, retained structure)
+
+**What was tested**
+- whether the **stabilized local-domain resting structure**:
+  - remains intact under sustained localized perturbation with persistent weakening signals
+- or whether:
+  - bounded weakening begins to fail and turns into measurable local degradation
+- while also testing whether the observed pattern reflects:
+  - a stressed-but-stable local equilibrium
+- rather than:
+  - confirmed regime break, false restart, or latent prior-domain recovery
+
+This cycle advances `prototype_run_observations_16.md` from possible stressed equilibrium toward confirmation or failure of boundedness under sustained stress.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `localized_partition_line_under_stress`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - persistent `local_coherence_disturbance`
+    - `repeated_boundary_pressure`
+    - `bounded_partition_line_weakening`
+    - `bounded_train_separability_weakening`
+    - `local_stress_stabilization_persistence`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no regression below local-domain entry
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - weakening signals remain bounded and coexist with retained local organization
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed measurable degradation
+
+- **TU+**
+  - confirmed:
+    - high match to `stressed_but_stable_local_equilibrium_under_perturbation`
+    - high match to `retained_structure_under_stress_pattern`
+    - medium-to-high match to `persistent_weakening_hints_under_sustained_local_stress`
+    - low match to broader partition linkage
+  - flagged:
+    - low-to-moderate novelty
+    - moderate but bounded local instability
+    - weakening signals now appear explicitly bounded and paired with persistent stabilization cues
+    - no mismatch with retained local-domain structure
+  - predicted:
+    - confirmed stressed-but-stable local equilibrium with retained structure as most likely
+    - continued bounded weakening under sustained stress as also likely
+    - possible measurable local weakening only if boundedness fails
+    - low probability of broader partition reactivation
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure is now under sustained localized stress with bounded weakening and persistent stabilization cues
+    - current structure is best interpreted as a stressed-but-stable local equilibrium
+  - established:
+    - weakening signals remain present, but their bounded character together with retained local-domain distinction and high global coherence argues against measurable degradation at this stage
+    - the leading discrimination is now equilibrium confirmation versus boundedness failure
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether bounded weakening remains stable, breaks into measurable degradation, or spreads
+
+---
+
+**Finding**
+
+Cycle 198 demonstrates:
+
+- the post-reunified system:
+  - can remain structurally intact under sustained localized stress while weakening signals persist in bounded form
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization under continued perturbation
+  - now shows bounded weakening paired with stabilization persistence rather than escalating deterioration
+- protocol implication:
+  - robustness testing has advanced from possible stressed equilibrium toward **stressed-equilibrium confirmation**
+  - bounded weakening still does not constitute measurable local degradation
+
+This establishes:
+
+> **stabilized local-domain structure can persist as a stressed-but-stable local equilibrium under sustained localized perturbation**
+
+and:
+
+> **bounded weakening with retained structure and stabilization cues must be analytically separated from measurable local degradation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `bounded_local_weakening_with_stabilization_persistence`
+  - defined as:  
+    *a condition in which a post-reunified system with stabilized local-domain structure experiences sustained localized disturbance and persistent weakening signals, while those signals remain bounded and coexist with retained local-domain distinction, high global coherence, and persistent stabilization cues without confirmed measurable degradation*
+
+- classification:
+  - first robustness-phase regime marking bounded weakening with stabilization persistence under sustained local stress
+
+- invariants refined:
+  - weakening signals can remain bounded across cycles without progressing into measurable degradation
+  - stressed local equilibrium is supported when bounded weakening coexists with retained structure and stabilization cues
+  - retained local-domain distinction and high global coherence remain key discriminators against premature degradation claims
+  - robustness testing must distinguish bounded weakening, equilibrium persistence, measurable degradation, and spread
+
+---
+
+**Status**
+
+Cycle 198 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 199** should test whether bounded weakening:
+- **holds again, confirming stressed local equilibrium**
+- or **breaks boundedness and begins measurable local degradation**.
+
+## Motivation
+
+This is the immediate confirmation step.  
+One more cycle should tell whether the TRIAD protocol:
+- can sustain a stressed regime without structural loss,
+- or is only temporarily holding before degradation begins.
+
+---
+
 
