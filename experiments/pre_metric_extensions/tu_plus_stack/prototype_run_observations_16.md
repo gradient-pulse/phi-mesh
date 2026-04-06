@@ -1220,4 +1220,152 @@ One more cycle should decide whether the TRIAD protocol:
 
 ---
 
+### Cycle 200 — Repeated stressed-equilibrium retention test (bounded weakening repeats, retained structure intact)
+
+**What was tested**
+- whether the **stabilized local-domain resting structure**:
+  - remains intact under sustained localized perturbation with repeated bounded weakening
+- or whether:
+  - continued stress begins to break boundedness and produce measurable local degradation
+- while also testing whether repeated bounded weakening reflects:
+  - a genuinely stressed-but-stable local equilibrium
+- rather than:
+  - confirmed regime break, false restart, or latent prior-domain recovery
+
+This cycle extends `prototype_run_observations_16.md` from probable stressed equilibrium toward repeated confirmation of stressed local retention under sustained perturbation.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `localized_partition_line_under_stress`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - persistent `local_coherence_disturbance`
+    - `repeated_boundary_pressure`
+    - `bounded_partition_line_weakening`
+    - `bounded_train_separability_weakening`
+    - `stabilization_persistence_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no regression below local-domain entry
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - weakening remains bounded and coexists with retained local organization and stabilization persistence
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed measurable degradation
+
+- **TU+**
+  - confirmed:
+    - high match to `repeated_bounded_weakening_with_retained_stabilization`
+    - high match to `stressed_but_stable_local_equilibrium_under_perturbation`
+    - high match to `bounded_local_weakening_with_stabilization_persistence`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - moderate but bounded local instability
+    - bounded weakening and retained stabilization have now repeated again without escalation
+    - no mismatch with retained local-domain structure
+  - predicted:
+    - confirmed stressed-but-stable local equilibrium with retained structure as most likely
+    - continued bounded weakening under sustained stress as also likely
+    - measurable local weakening only if boundedness fails
+    - low probability of broader partition reactivation
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure continues under sustained localized stress with repeated bounded weakening and retained stabilization cues
+    - current structure is best interpreted as a stressed-but-stable local equilibrium
+  - established:
+    - repetition of bounded weakening across another cycle, without escalation or spread, strengthens the case that the protocol can sustain a locally stressed regime without measurable structural loss
+    - retained local-domain distinction and high global coherence indicate that stressed structure remains intact
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether repeated bounded weakening is sufficient for explicit equilibrium confirmation or whether boundedness later fails
+
+---
+
+**Finding**
+
+Cycle 200 demonstrates:
+
+- the post-reunified system:
+  - can remain structurally intact under sustained localized stress while bounded weakening repeats across multiple cycles
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization under continued perturbation
+  - now shows repeated bounded weakening with retained stabilization rather than escalating deterioration
+- protocol implication:
+  - robustness testing has advanced from probable stressed equilibrium to **strong repeated support for stressed local retention**
+  - repeated bounded weakening still does not constitute measurable local degradation
+
+This establishes:
+
+> **stabilized local-domain structure can sustain repeated bounded weakening under localized perturbation without measurable structural loss**
+
+and:
+
+> **repeated bounded weakening with retained stabilization cues must be analytically separated from measurable local degradation**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `repeated_stressed_equilibrium_retention`
+  - defined as:  
+    *a condition in which a post-reunified system with stabilized local-domain structure experiences sustained localized disturbance and repeated bounded weakening across multiple cycles, while retained local-domain distinction, high global coherence, and stabilization cues persist without confirmed measurable degradation or broader spread*
+
+- classification:
+  - first robustness-phase regime refinement marking repeated stressed-equilibrium retention under sustained local perturbation
+
+- invariants refined:
+  - bounded weakening can repeat across multiple cycles without progressing into measurable degradation
+  - stressed local equilibrium gains strong support when bounded weakening repeats without escalation or spread
+  - retained local-domain distinction and high global coherence remain key discriminators against premature degradation claims
+  - robustness testing must distinguish bounded repetition, stressed-equilibrium retention, measurable degradation, and broader spread
+
+---
+
+**Status**
+
+Cycle 200 is **ready for filing**.
+
+---
+
+## Next steps
+
+**Cycle 201** should test whether repeated bounded weakening:
+- **holds once more, allowing stressed local equilibrium to be treated as operationally confirmed**
+- or
+- **breaks boundedness and begins measurable local degradation**
+
+After that, you should either:
+- close this perturbation band and fossilize the robustness result into `laws_07`
+- or introduce a **new perturbation class** for `observations_16` rather than keep sampling the same stress pattern
+
+## Motivation
+
+You are close to closure for this perturbation band.
+
+One more cycle can give you a cleaner basis to say either:
+- the TRIAD protocol sustains a stressed local regime without structural loss,
+or
+- boundedness eventually fails under continued pressure.
+
+Either outcome is engineering-grade information.
+
+---
+
 
