@@ -1508,3 +1508,151 @@ You now likely have enough to fossilize a real robustness result:
 - stressed local equilibrium became operationally credible
 
 That is already engineering-grade.
+
+---
+
+### Cycle 202 — Perturbation-band closure seal (operational stressed local equilibrium retained)
+
+**What was tested**
+- whether the **stabilized local-domain resting structure**:
+  - remains intact under sustained localized perturbation with repeated bounded weakening
+- or whether:
+  - continued stress finally breaks boundedness and produces measurable local degradation
+- while also testing whether repeated bounded weakening now provides:
+  - sufficient closure for the current perturbation band
+- rather than:
+  - only provisional support for stressed local retention
+
+This cycle served as the closure seal for the first sustained perturbation band in `prototype_run_observations_16.md`.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `localized_partition_line_under_stress`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - persistent `local_coherence_disturbance`
+    - `repeated_boundary_pressure`
+    - `bounded_partition_line_weakening`
+    - `bounded_train_separability_weakening`
+    - `stabilization_persistence_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no regression below local-domain entry
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - weakening remains bounded and coexists with retained local organization and stabilization persistence
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed measurable degradation
+
+- **TU+**
+  - confirmed:
+    - high match to `operationally_confirmed_stressed_local_equilibrium`
+    - high match to `repeated_stressed_equilibrium_retention`
+    - high match to `bounded_local_weakening_with_stabilization_persistence`
+    - low match to broader partition linkage
+  - flagged:
+    - very low novelty
+    - moderate but bounded local instability
+    - the current slice functions as a closure seal, repeating the stressed-equilibrium pattern without escalation, spread, or measurable degradation
+    - no mismatch with retained local-domain structure
+  - predicted:
+    - closed operational stressed local equilibrium with retained structure as most likely
+    - continued bounded weakening under sustained stress as also likely
+    - measurable local weakening only if boundedness later fails
+    - low probability of broader partition reactivation
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure continues under sustained localized stress with repeated bounded weakening and retained stabilization cues
+    - current structure is best interpreted as a **closure-sealed stressed-but-stable local equilibrium**
+  - established:
+    - another repetition of bounded weakening without escalation, spread, or measurable degradation strengthens the case that the protocol can sustain a locally stressed regime without structural loss over this perturbation band
+    - retained local-domain distinction and high global coherence indicate that stressed structure remains intact
+  - held:
+    - no broader reclassification
+    - no further cycle is required for this perturbation band unless a new perturbation class is introduced
+
+---
+
+**Finding**
+
+Cycle 202 demonstrates:
+
+- the post-reunified system:
+  - can remain structurally intact under sustained localized stress while bounded weakening repeats across the perturbation band
+  - does not regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization under continued perturbation
+  - shows repeated bounded weakening with retained stabilization strongly enough to close the present perturbation band
+- protocol implication:
+  - robustness testing has now produced an **operational stressed local equilibrium result**
+  - repeated bounded weakening still does not constitute measurable local degradation
+
+This establishes:
+
+> **stabilized local-domain structure can sustain a closure-sealed stressed local equilibrium under sustained localized perturbation without measurable structural loss**
+
+and:
+
+> **repeated bounded weakening with retained stabilization across a full perturbation band must be analytically separated from measurable local degradation**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `closure_sealed_operational_stressed_local_equilibrium`
+  - defined as:  
+    *a condition in which a post-reunified system with stabilized local-domain structure experiences sustained localized disturbance and repeated bounded weakening across a completed perturbation band, while retained local-domain distinction, high global coherence, and stabilization cues persist without confirmed measurable degradation, broader spread, or higher-order reactivation*
+
+- classification:
+  - first robustness-phase regime refinement marking closure-sealed operational stressed-equilibrium retention under sustained local perturbation
+
+- invariants refined:
+  - bounded weakening can repeat across an entire perturbation band without progressing into measurable degradation
+  - stressed local equilibrium becomes operationally credible when bounded weakening repeats without escalation, spread, or structural loss
+  - retained local-domain distinction and high global coherence remain key discriminators against premature degradation claims
+  - robustness testing must distinguish early contact, repeated stress, strain, weakening persistence, bounded equilibrium, measurable degradation, and spread
+
+---
+
+**Status**
+
+Cycle 202 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this perturbation band in `prototype_run_observations_16.md`, then either:
+- fossilize the result into **`laws_07`** and/or **`prototype_run_protocol_assessment_01.md`**
+- or begin a **new perturbation class** rather than continuing the same one
+
+## Motivation
+
+This band has now yielded a real engineering result:
+
+- direct perturbation occurred
+- repeated stress was sustained
+- weakening signals appeared
+- weakening remained bounded
+- structure stayed intact
+- no broader spread emerged
+
+That is enough to stop sampling this perturbation and move to either formalization or a stronger test.
+
+---
+---
