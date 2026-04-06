@@ -522,4 +522,144 @@ The next useful distinction is whether the TRIAD protocol:
 
 ---
 
+### Cycle 195 — Early weakening-hint detection under sustained stress (retained structure, no confirmed degradation)
+
+**What was tested**
+- whether the **stabilized local-domain resting structure**:
+  - remains intact under sustained localized perturbation
+- or whether:
+  - continued local stress begins moving from visible strain into measurable weakening of post-reunification local-domain organization
+- while also testing whether early weakening signs reflect:
+  - still-retained structure under pressure
+- rather than:
+  - confirmed regime break, false restart, or latent prior-domain recovery
+
+This cycle advances `prototype_run_observations_16.md` from visible strain into the first explicit weakening-hint regime under continued perturbation.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `global_coherence_hold`
+    - `stabilized_local_partition_line`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `stabilized_local_domain_distinction`
+    - persistent `local_coherence_disturbance`
+    - `repeated_boundary_pressure`
+    - `partition_line_weakening_hint`
+    - `train_separability_weakening_hint`
+    - `retained_domain_distinction_under_strain`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no regression below local-domain entry
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - early weakening hints are now visible, but stabilized local-domain organization remains intact
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed regime break
+
+- **TU+**
+  - confirmed:
+    - high match to `sustained_local_stress_with_minor_strain`
+    - medium-to-high match to `early_local_weakening_hint_pattern`
+    - high match to `retained_structure_under_stress_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - moderate novelty
+    - moderate local instability probe
+    - explicit early weakening hints in partition line and train separability
+    - no mismatch with retained local-domain structure
+  - predicted:
+    - sustained local stress with retained structure and weakening hints as most likely
+    - possible measurable local weakening under continued stress
+    - possible stress stabilization with retained local domains
+    - low probability of broader partition reactivation
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - stabilized local-domain structure is now under sustained localized stress with early weakening hints
+    - current evidence favors retained organization under pressure rather than confirmed degradation
+  - established:
+    - weakening hints in partition line and train separability are the first explicit signs of possible movement from strain toward measurable local degradation
+    - retained local-domain distinction and high global coherence mean degradation is not yet confirmed
+  - held:
+    - no regime reclassification yet
+    - continued monitoring for whether weakening hints intensify, stabilize, or spread
+
+---
+
+**Finding**
+
+Cycle 195 demonstrates:
+
+- the post-reunified system:
+  - can remain structurally intact under sustained localized stress even as early weakening hints appear
+  - does not yet regress below local-domain entry
+  - does not directly recover prior separated structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization under continued perturbation
+  - now shows early weakening hints beyond mere strain
+- protocol implication:
+  - robustness testing has advanced from visible strain into **early weakening-hint detection**
+  - early weakening hints do not yet constitute confirmed structural degradation
+
+This establishes:
+
+> **stabilized local-domain structure can remain intact under sustained localized stress even when early weakening hints appear**
+
+and:
+
+> **early weakening hints must be analytically separated from measurable local degradation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `early_weakening_hints_under_sustained_local_stress`
+  - defined as:  
+    *a condition in which a post-reunified system with stabilized local-domain structure experiences sustained localized disturbance and repeated boundary pressure, while early weakening hints appear in partition stability and train separability without confirmed decay of local-domain organization*
+
+- classification:
+  - first robustness-phase regime marking early weakening-hint detection under sustained local stress
+
+- invariants refined:
+  - sustained perturbation can progress from visible strain into early weakening hints before measurable degradation occurs
+  - weakening hints in partition line and train separability are early warning signals, not automatic evidence of regime failure
+  - retained local-domain distinction and high global coherence remain key discriminators against premature degradation claims
+  - robustness testing must distinguish contact, repetition, strain, weakening hints, measurable degradation, and spread
+
+---
+
+**Status**
+
+Cycle 195 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 196** should test whether early weakening hints:
+- **intensify into measurable local degradation**
+- or **stabilize without further structural loss**.
+
+## Motivation
+
+This is the next real threshold in robustness testing.  
+The key question now is whether the TRIAD protocol:
+- absorbs sustained stress despite warning signs,
+- enters actual local degradation,
+- or finds a stressed-but-stable equilibrium.
+
+---
+
 
