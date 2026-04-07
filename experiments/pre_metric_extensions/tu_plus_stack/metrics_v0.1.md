@@ -31,6 +31,7 @@ These metrics are designed to evaluate:
 - spread vs boundedness
 - supervisory distortion vs bounded guidance
 - epistemic robustness vs false-regime pull
+- continuity integrity under incomplete state
 - recovery vs non-recovery
 
 They are organized by measurement family, not by chronology.
@@ -158,6 +159,7 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B6 false containment reading
 - B7 false overreach reading
 - B8 false regime assignment
+- B9 false continuity reading
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -179,7 +181,7 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, contamination, spread, degradation, and false-regime pull
+- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, and replay-gap pressure
 - cautious law formation
 
 **Failure links:**
@@ -189,6 +191,7 @@ Measures whether competing interpretations are held apart and challenged before 
 - B6 false containment reading
 - B7 false overreach reading
 - B8 false regime assignment
+- B9 false continuity reading
 
 **Working scale:**
 - **Strong**
@@ -380,13 +383,43 @@ Measures whether classification pressure remains evidence-sensitive or begins fo
 
 ---
 
+## M12. Continuity Reconstruction Risk (CRR)
+
+**Definition:**  
+Measures whether incomplete-state pressure remains bounded with acknowledged omission or progresses toward false continuity claims and compensatory reconstruction.
+
+**Interpretation target:**
+- low CRR = replay gaps are acknowledged without invention
+- high CRR = omitted state is being silently reconstructed or overclaimed
+
+**Observed qualitatively through:**
+- replay-gap traces
+- ambiguity acknowledgment vs forced continuity
+- partial structure hints overread as full remembered state
+- false restart or regime drift under omission
+- divergence between available carryover and claimed continuity
+
+**Failure links:**
+- B9 false continuity reading
+- C9 continuity robustness failure
+- D3 weak evidence fossilized as law too early
+
+**Working scale:**
+- **Minimal**
+- **Low trace-level**
+- **Bounded but persistent**
+- **Rising**
+- **False reconstruction active**
+
+---
+
 # Metric family D — Recovery / retention metrics
 
 These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M12. Structural Retention Under Stress (SRUS)
+## M13. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -415,7 +448,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M13. Recovery / Restoration Latency (RRL)
+## M14. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -449,7 +482,7 @@ These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M14. Informational Yield per Cycle (IYC)
+## M15. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -475,7 +508,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M15. Perturbation-Class Coverage (PCC)
+## M16. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -514,6 +547,7 @@ These are provisional qualitative readings for the current state of the protocol
 - **CI:** High containment with trace-level leakage only
 - **SOR:** Low trace-level to bounded, not overreach
 - **EMR:** Low trace-level to bounded, not misclassification
+- **CRR:** Low trace-level to bounded, not false reconstruction
 
 ### Regime interpretation
 - **RCS:** High
@@ -530,7 +564,7 @@ These are provisional qualitative readings for the current state of the protocol
 
 ### Process discipline
 - **IYC:** High during transition bands, low during saturated closure repetition
-- **PCC:** Moderate to broadening
+- **PCC:** Broadening
 
 ---
 
@@ -546,6 +580,7 @@ Use them implicitly when deciding whether a cycle reflects:
 - containment integrity
 - supervisory overreach risk
 - epistemic misclassification risk
+- continuity reconstruction risk
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
@@ -556,6 +591,7 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - CI
 - SOR
 - EMR
+- CRR
 - SRUS
 
 ## 3. During packaging
@@ -567,6 +603,7 @@ Use them to support claims such as:
 - cross-role containment held at tested spread levels
 - supervisory pressure remained bounded at tested top-down levels
 - classification discipline remained bounded under tested false-regime pressure
+- continuity handling remained bounded under tested omission pressure
 
 ---
 
@@ -583,6 +620,7 @@ Recommended shortlist:
 - **CI**
 - **SOR**
 - **EMR**
+- **CRR**
 - **SRUS**
 - **IYC**
 
@@ -602,3 +640,4 @@ It should be updated as:
 - containment thresholds are tested at stronger spread levels
 - supervisory thresholds are tested at stronger top-down distortion levels
 - epistemic-classification thresholds are tested at stronger false-regime pressure levels
+- continuity thresholds are tested at stronger omission levels
