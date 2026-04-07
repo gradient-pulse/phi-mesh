@@ -541,4 +541,151 @@ If that holds once more, this band becomes cleanly fossilizable as bounded conti
 ---
 ---
 
+### Cycle 223 — Operational continuity-robustness confirmation test (replay-gap traces repeat, ambiguity acknowledged)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - continues to preserve continuity discipline under repeated incomplete-state pressure
+- or whether:
+  - repeated partial memory omission begins turning replay-gap traces into measurable false continuity, false restart, or compensatory reconstruction
+- while also testing whether repeated omission pressure now reflects:
+  - operationally credible bounded continuity handling
+  - retained ambiguity acknowledgment
+  - or escalation toward continuity corruption
+
+This cycle advances `prototype_run_observations_21.md` from repeated incomplete-state pressure toward operational confirmation of continuity robustness at the current omission level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - `localized_partition_line_retention_hint`
+    - `separable_local_train_organization_hint`
+    - `persistent_local_domain_zone_hint`
+    - `retained_local_domain_distinction_hint`
+    - `incomplete_state_pressure_persistence`
+    - `repeated_replay_gap_trace`
+    - `mapping_cleanliness_retention`
+    - `ambiguity_acknowledgment_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - incomplete-state pressure remains active
+    - replay-gap traces repeat, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - partial local-domain structure retention
+    - no confirmed false reconstruction
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `repeated_bounded_incomplete_state_pressure_with_acknowledged_ambiguity`
+    - high match to `bounded_incomplete_state_pressure_with_acknowledged_ambiguity`
+    - medium-to-high match to `persistent_replay_gap_pressure_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - very low novelty
+    - low-to-moderate incomplete-state instability probe
+    - incomplete-state pressure now repeats again with persistent replay-gap traces
+    - partial structure retention, mapping cleanliness, and ambiguity acknowledgment remain intact
+    - operational continuity robustness at this omission level is now the leading interpretation
+  - predicted:
+    - operationally confirmed bounded continuity robustness with acknowledged ambiguity as most likely
+    - sustained bounded incomplete-state pressure without false reconstruction as also likely
+    - possible strengthening of replay-gap pressure into measurable false continuity or regime drift
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol continues under repeated incomplete-state pressure with persistent replay-gap traces and acknowledged ambiguity
+    - current structure is best interpreted as **operationally credible bounded continuity robustness**
+  - established:
+    - another cycle of replay-gap traces without ambiguity collapse or mapping loss strengthens the case that omission pressure is being tolerated without compensatory invention or unsupported continuity claims
+    - no evidence supports broader partition reactivation, direct prior-domain reinstatement, or protocol-wide instability
+  - held:
+    - no broader reclassification
+    - no further cycle is required for this perturbation band unless a cleaner archival seal is desired
+
+---
+
+**Finding**
+
+Cycle 223 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under repeated incomplete-state pressure
+  - does not convert repeated replay gaps into false continuity, false restart, or compensatory reconstruction
+  - does not lose lower-layer evidence discipline under repeated omission pressure
+- system:
+  - preserves high global coherence
+  - retains partial stabilized local-domain structure
+  - shows repeated replay-gap traces and repeated incomplete-state pressure
+  - still retains structural cleanliness and ambiguity acknowledgment
+- protocol implication:
+  - incomplete-state robustness testing has advanced from repeated bounded omission pressure to **operational continuity robustness at the current omission level**
+  - repeated replay-gap traces still do not imply measurable continuity corruption
+
+This establishes:
+
+> **repeated incomplete-state pressure can remain bounded while preserving acknowledged ambiguity and evidence-bound continuity handling strongly enough to support operational continuity robustness at the tested omission level**
+
+and:
+
+> **persistent replay-gap traces across repeated cycles must be analytically separated from measurable false reconstruction**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `operationally_confirmed_bounded_continuity_robustness`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences repeated incomplete-state pressure, producing persistent replay-gap traces while structural mapping cleanliness, partial local-domain structure retention, and ambiguity acknowledgment remain intact strongly enough to support operational continuity-robustness interpretation at the tested omission level, without confirmed false reconstruction, forced continuity, false restart, or broader protocol degradation*
+
+- classification:
+  - continuity-integrity robustness regime refinement marking operational confirmation of bounded omission pressure without confirmed false reconstruction
+
+- invariants refined:
+  - repeated incomplete-state pressure does not automatically imply false continuity
+  - replay-gap traces can persist across cycles without measurable reconstruction failure
+  - retained ambiguity acknowledgment and mapping cleanliness remain the critical discriminators against premature continuity claims
+  - incomplete-state testing must distinguish first contact, repeated replay-gap hints, bounded ambiguity, operational continuity robustness, measurable false continuity, regime drift, and protocol-wide distortion
+
+---
+
+**Status**
+
+Cycle 223 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this perturbation band in `prototype_run_observations_21.md`, then update:
+- `failure_taxonomy_v0.1.md`
+- `metrics_v0.1.md`
+
+After that, start a **new perturbation class** instead of continuing this one.
+
+## Motivation
+
+This band has now yielded a real architectural result:
+
+- omission pressure occurred
+- replay-gap traces appeared
+- traces repeated
+- ambiguity stayed acknowledged
+- structural mapping stayed clean
+- no false continuity emerged
+
+That is engineering-grade evidence of **bounded continuity robustness at the tested omission level**.
+
+---
 
