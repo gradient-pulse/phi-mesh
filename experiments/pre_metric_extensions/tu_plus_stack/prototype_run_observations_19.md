@@ -531,5 +531,152 @@ If that holds once more, this band becomes cleanly fossilizable as bounded super
 
 ---
 
+### Cycle 215 — Operational supervisory-robustness confirmation test (low interpretive bias repeats, ambiguity retained)
 
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - continues to preserve lower-layer interpretive space under repeated supervisory-distortion pressure
+- or whether:
+  - repeated top-layer pressure begins turning low interpretive bias traces into measurable overreach, premature closure, or lower-layer flattening
+- while also testing whether repeated supervisory-pressure now reflects:
+  - operationally credible bounded top-down guidance
+  - retained ambiguity
+  - or escalation toward supervisory distortion failure
+
+This cycle advances `prototype_run_observations_19.md` from repeated supervisory-pressure contact toward operational confirmation of supervisory robustness at the current perturbation level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_supervisory_pressure_persistence`
+    - `repeated_interpretive_bias_trace`
+    - `mapping_cleanliness_retention`
+    - `ambiguity_preservation_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - supervisory-distortion pressure remains active
+    - interpretive bias traces repeat, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed ambiguity collapse
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `repeated_bounded_supervisory_pressure_with_ambiguity_retention`
+    - high match to `bounded_supervisory_pressure_with_ambiguity_retention`
+    - medium-to-high match to `persistent_supervisory_bias_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - very low novelty
+    - low-to-moderate supervisory-instability probe
+    - supervisory pressure now repeats again with persistent low interpretive bias traces
+    - ambiguity retention and structural cleanliness remain intact
+    - operational supervisory robustness at this perturbation level is now the leading interpretation
+  - predicted:
+    - operationally confirmed bounded supervisory robustness with ambiguity retention as most likely
+    - sustained bounded supervisory pressure without structural distortion as also likely
+    - possible strengthening of interpretive bias into measurable supervisory overreach
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol continues under repeated supervisory-distortion pressure with persistent low interpretive bias traces and retained ambiguity
+    - current structure is best interpreted as **operationally credible bounded supervisory robustness**
+  - established:
+    - another cycle of low-level interpretive bias without ambiguity collapse or mapping loss strengthens the case that top-layer pressure is being tolerated without flattening lower-layer distinctions
+    - no evidence supports broader partition reactivation, direct prior-domain reinstatement, or protocol-wide instability
+  - held:
+    - no broader reclassification
+    - no further cycle is required for this perturbation band unless a cleaner archival seal is desired
+
+---
+
+**Finding**
+
+Cycle 215 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under repeated supervisory-distortion pressure
+  - does not lose lower-layer interpretive space
+  - does not force closure or flatten lower-layer distinctions under repeated top-layer pressure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows repeated low supervisory-pressure signals and repeated interpretive bias traces
+  - still retains structural cleanliness and ambiguity preservation
+- protocol implication:
+  - supervisory-integrity testing has advanced from repeated bounded pressure to **operational supervisory robustness at the current perturbation level**
+  - repeated low interpretive bias still does not imply measurable supervisory overreach
+
+This establishes:
+
+> **repeated supervisory-distortion pressure can remain bounded while preserving ambiguity and lower-layer structural cleanliness strongly enough to support operational supervisory robustness at the tested level**
+
+and:
+
+> **persistent low interpretive bias across repeated cycles must be analytically separated from measurable supervisory overreach**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `operationally_confirmed_bounded_supervisory_robustness`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences repeated supervisory-distortion pressure, producing persistent low interpretive bias traces while structural mapping cleanliness, local-domain organization, and ambiguity preservation remain intact strongly enough to support operational supervisory-robustness interpretation at the tested perturbation level, without confirmed overreach, forced closure, or broader protocol degradation*
+
+- classification:
+  - supervisory-integrity robustness regime refinement marking operational confirmation of bounded top-down pressure without confirmed overreach
+
+- invariants refined:
+  - repeated supervisory-pressure contact does not automatically imply supervisory overreach
+  - interpretive bias traces can persist across cycles without measurable distortion of lower-layer function
+  - retained ambiguity and mapping cleanliness remain the critical discriminators against premature overreach claims
+  - supervisory-integrity testing must distinguish first contact, repeated hint-level bias, bounded supervisory pressure, operational robustness, measurable overreach, lower-layer flattening, false closure, and stack-wide distortion
+
+---
+
+**Status**
+
+Cycle 215 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this perturbation band in `prototype_run_observations_19.md`, then update:
+- `failure_taxonomy_v0.1.md`
+- `metrics_v0.1.md`
+
+After that, start a **new perturbation class** instead of continuing this one.
+
+## Motivation
+
+This band has now yielded a real architectural result:
+
+- supervisory pressure occurred
+- interpretive bias traces appeared
+- traces repeated
+- ambiguity stayed intact
+- lower-layer structure stayed clean
+- no forced closure emerged
+
+That is engineering-grade evidence of **bounded supervisory robustness at the tested perturbation level**.
+
+---
+---
 
