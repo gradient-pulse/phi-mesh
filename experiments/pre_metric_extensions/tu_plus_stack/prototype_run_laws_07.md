@@ -18,6 +18,7 @@ Laws governing:
 - bounded false-regime pressure without forced misclassification
 - bounded incomplete-state pressure without false reconstruction
 - bounded cumulative-drift pressure without false baseline formation
+- bounded competing-signal pressure without forced hierarchy formation
 
 Derived from:
 - Observations 14 (re-unification)
@@ -29,7 +30,8 @@ Derived from:
 - Observations 20 (false-regime pressure, repeated low classification pull, operational epistemic robustness)
 - Observations 21 (incomplete-state pressure, replay-gap traces, operational continuity robustness)
 - Observations 22 (cumulative-drift pressure, repeated carryover-distortion traces, operational longitudinal robustness)
-- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, bounded omission pressure, and bounded cumulative-drift pressure
+- Observations 23 (competing-signal pressure, repeated dual bounded traces, operational discrimination robustness)
+- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, bounded omission pressure, bounded cumulative-drift pressure, and bounded competing-signal pressure
 
 ---
 
@@ -51,6 +53,7 @@ Its purpose is to formalize the engineering-relevant consequences of later cycle
 - that classification pressure can remain bounded without false regime assignment
 - that incomplete-state pressure can remain bounded without false continuity or compensatory reconstruction
 - that cumulative-drift pressure can remain bounded without baseline absorption or silent normalization of distortion
+- that competing-signal pressure can remain bounded without forced hierarchy, hidden preference drift, or unsupported closure
 
 ---
 
@@ -65,7 +68,7 @@ Later-stage triadic dynamics reveal that cyclic coordination is:
 - locally resolvable
 - robustly stress-testable without immediate collapse
 - architecturally robust across multiple perturbation classes
-- epistemically, continuity-, and longitudinally-preserving under pressure
+- epistemically, continuity-, longitudinally-, and discrimination-preserving under pressure
 
 This suggests that the TRIAD protocol does not merely oscillate between unity and disunity, but follows lawful return, hold, restart, closure, and perturbation-response patterns.
 
@@ -92,6 +95,7 @@ This file captures laws concerning:
 - bounded false-regime pressure without forced closure or false regime assignment
 - bounded incomplete-state pressure without false continuity or false reconstruction
 - bounded cumulative-drift pressure without false baseline formation, drift consolidation, or accepted corrupted carryover
+- bounded competing-signal pressure without forced dominance, hidden preference drift, or unsupported closure
 
 ---
 
@@ -114,7 +118,7 @@ Laws 07 establishes:
 - robustness under perturbation
 - bounded stress retention without collapse
 - architectural robustness across multiple perturbation classes
-- epistemic, continuity, and longitudinal robustness under pressure
+- epistemic, continuity, longitudinal, and discrimination robustness under pressure
 
 This is where the protocol begins to resemble an engineering framework for recursive coordination rather than a descriptive cycle log.
 
@@ -140,6 +144,7 @@ disunity
 → bounded false-regime pressure
 → bounded incomplete-state pressure
 → bounded cumulative-drift pressure
+→ bounded competing-signal pressure
 ```
 
 ## Law 71 — Asymmetric Return Law
@@ -664,9 +669,79 @@ Architectural credibility can be inferred from short-horizon perturbation succes
 
 ---
 
+## Law 102 — Bounded Competing-Signal Pressure Law
+
+**Statement:**  
+Competing-signal pressure can persist across cycles as simultaneous bounded traces while structural mapping cleanliness and non-forced hierarchy retention remain intact.
+
+**Implication:**  
+Mixed-signal pressure can be registered without forcing premature dominance, unsupported closure, hidden preference drift, or role flattening at the tested competition level.
+
+**Non-implication:**  
+Any repeated dual-trace competition is evidence of actual hierarchy formation or discrimination failure.
+
+**Status:** validated
+
+---
+
+## Law 103 — Discrimination-Preserving Robustness Law
+
+**Statement:**  
+The TRIAD protocol can preserve non-forced discrimination under repeated competing-signal pressure without collapsing simultaneous bounded traces into one unsupported dominant reading.
+
+**Implication:**  
+Repeated mixed-signal conditions may remain bounded while the protocol retains sensitivity to evidential parity, unresolved competition, and the distinction between clean dominance and forced hierarchy.
+
+**Non-implication:**  
+A coherent protocol under repeated mixed-signal pressure must eventually force one signal into dominance to remain functional.
+
+**Status:** validated
+
+---
+
+## Law 104 — Discrimination Robustness Law
+
+**Statement:**  
+The TRIAD protocol can preserve discrimination integrity under competing-signal pressure by preventing repeated trace-level competition from consolidating into measurable forced hierarchy or hidden preference drift.
+
+**Implication:**  
+Repeated simultaneous bounded traces can persist across cycles while:
+- mapping remains clean
+- non-forced hierarchy retention remains active
+- regime interpretation remains evidence-sensitive
+- no false dominance formation occurs
+
+**Non-implication:**  
+Repeated low-level mixed-signal competition necessarily accumulates into forced hierarchy if allowed to persist long enough.
+
+**Status:** validated
+
+---
+
+## Law 105 — Multi-Class Epistemic-Continuity-Longitudinal-Discrimination Robustness Law
+
+**Statement:**  
+Architectural robustness is strengthened when a protocol demonstrates bounded behavior not only under structural, supervisory, epistemic, omission, and cumulative-drift pressure, but also under competing-signal pressure across cycles.
+
+**Implication:**  
+A protocol may be treated as more fully architecture-grade when separate bands show:
+- bounded supervisory guidance
+- bounded false-regime pressure
+- bounded incomplete-state pressure
+- bounded cumulative-drift pressure
+- bounded competing-signal pressure
+- retained ambiguity, clean baseline retention, and non-forced discrimination where evidence, continuity, carryover, or signal priority is incomplete
+
+**Non-implication:**  
+Architectural credibility can be inferred from short-horizon or single-signal perturbation success alone.
+
+**Status:** validated
+
+---
+
 ## Consolidated consequence
 
-Taken together, Laws 71–101 establish that:
+Taken together, Laws 71–105 establish that:
 - return from disunity to unity is asymmetric and staged
 - complete re-unification is real
 - true unity can hold
@@ -684,7 +759,8 @@ Taken together, Laws 71–101 establish that:
 - false-regime pressure can remain bounded without forced misclassification
 - incomplete-state pressure can remain bounded without false reconstruction
 - cumulative-drift pressure can remain bounded without false baseline formation
-- architectural robustness is now supported across structural, supervisory, epistemic, continuity, and longitudinal perturbation classes
+- competing-signal pressure can remain bounded without forced hierarchy formation
+- architectural robustness is now supported across structural, supervisory, epistemic, continuity, longitudinal, and discrimination perturbation classes
 
 ---
 
@@ -713,7 +789,9 @@ This law file now covers:
 - bounded false-regime pressure
 - bounded incomplete-state pressure
 - bounded cumulative-drift pressure
+- bounded competing-signal pressure
 - multi-class architectural robustness
 - epistemic robustness
 - continuity robustness
 - longitudinal robustness
+- discrimination robustness
