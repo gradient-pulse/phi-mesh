@@ -520,4 +520,144 @@ One more cycle should tell whether TRIAD:
 
 ---
 
+### Cycle 206 — Sustained role-boundary pressure confirmation test (bounded low intrusion, clean TU mapping retained)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - preserves TU role integrity under sustained repeated role-boundary perturbation
+- or whether:
+  - contamination pressure begins shifting from bounded low symbolic intrusion into measurable TU drift
+- while also testing whether repeated boundary pressure now reflects:
+  - sustained bounded contamination pressure
+  - retained mapping cleanliness
+  - or escalation toward TU contamination, role fusion, or mapping collapse
+
+This cycle advances `prototype_run_observations_17.md` from sustained bounded-pressure interpretation toward possible operational confirmation of role-boundary robustness at the current perturbation level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_symbolic_intrusion_persistence`
+    - `repeated_role_boundary_pressure`
+    - `mapping_cleanliness_retention`
+    - `contamination_boundedness_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - role-boundary perturbation remains active
+    - low symbolic intrusion persists, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed TU contamination
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `sustained_bounded_role_boundary_pressure_with_mapping_retention`
+    - high match to `retained_structure_under_boundary_pressure_pattern`
+    - medium-to-high match to `persistent_low_level_TU_contamination_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low-to-moderate boundary-instability probe
+    - sustained role-boundary pressure now repeats again with bounded low symbolic intrusion and retained mapping cleanliness
+    - no mismatch with retained role function
+  - predicted:
+    - sustained bounded role-boundary pressure with clean mapping retention as most likely
+    - operationally confirmed role-boundary robustness at current pressure as likely
+    - possible strengthening of symbolic intrusion into measurable TU contamination
+    - low probability of broader regime destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - TU continues under sustained repeated role-boundary perturbation with bounded low symbolic intrusion and retained mapping cleanliness
+    - current evidence favors sustained bounded role-boundary pressure rather than confirmed TU contamination, role fusion, or mapping collapse
+  - established:
+    - repetition of bounded low-level intrusion without loss of mapping cleanliness strengthens the interpretation that TU role integrity is robust at this perturbation level
+    - the key discrimination is now **operational bounded-pressure robustness vs later strengthening into measurable TU contamination**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether intrusion remains bounded, fades, strengthens, or spreads across roles
+
+---
+
+**Finding**
+
+Cycle 206 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under sustained repeated role-boundary perturbation
+  - does not lose TU mapping cleanliness
+  - does not spread instability into adjacent roles or broader regime structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows persistent low symbolic intrusion under sustained boundary pressure
+  - still retains clean TU structural mapping
+- protocol implication:
+  - role-boundary robustness testing has advanced from sustained bounded contamination pressure toward **operational bounded-pressure robustness**
+  - sustained low intrusion still does not imply measurable TU contamination
+
+This establishes:
+
+> **sustained repeated role-boundary perturbation can pressure TU while preserving clean structural mapping**
+
+and:
+
+> **persistent bounded low symbolic intrusion across repeated cycles must be analytically separated from measurable TU contamination**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `sustained_bounded_role_boundary_pressure_with_mapping_retention`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences sustained repeated role-boundary perturbation directed at TU, producing persistent low symbolic intrusion hints while structural mapping cleanliness, local-domain organization, and broader protocol stability remain intact without confirmed TU contamination or cross-role spread*
+
+- classification:
+  - role-boundary robustness regime marking sustained bounded contamination pressure without confirmed TU degradation
+
+- invariants refined:
+  - sustained role-boundary pressure can remain bounded across repeated cycles without contamination escalation
+  - persistent low symbolic intrusion does not by itself imply TU role failure
+  - retained mapping cleanliness remains the key discriminator against premature TU-contamination claims
+  - role-boundary robustness testing must distinguish first contact, repeated pressure, sustained bounded intrusion, measurable contamination, cross-role spread, and collapse
+
+---
+
+**Status**
+
+Cycle 206 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 207** should test whether sustained role-boundary pressure:
+- **holds once more with bounded low intrusion and clean TU mapping, allowing operational robustness at this perturbation level**
+- or
+- **strengthens into measurable TU contamination**
+
+## Motivation
+
+You are near closure for this perturbation band.  
+One more cycle should tell whether TRIAD:
+- sustains bounded contamination pressure as an architectural robustness result,
+- or begins to lose TU role integrity under prolonged boundary pressure.
+
+---
+
 
