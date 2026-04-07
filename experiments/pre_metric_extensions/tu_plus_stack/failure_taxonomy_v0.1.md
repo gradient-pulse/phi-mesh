@@ -32,6 +32,7 @@ This taxonomy covers failures involving:
 - containment vs spread
 - supervisory distortion
 - epistemic misclassification pressure
+- continuity under incomplete state
 - recovery and non-recovery
 - bounded stress retention vs actual degradation
 - local vs spreading instability
@@ -295,6 +296,25 @@ Actively tested in the false-regime-pressure band; low classification-pull trace
 
 ---
 
+## B9. False continuity reading
+
+**Definition:**  
+Partial structural remnants under incomplete state are prematurely treated as evidence of full continuity or complete remembered state.
+
+**Primary signs:**
+- replay gaps ignored or minimized
+- partial structure hints narrated as full state carryover
+- missing transition context is silently filled in
+- bounded omission is overread as intact continuity
+
+**Why it matters:**  
+This is the direct classification failure mode for continuity integrity under omission.
+
+**Current status:**  
+Actively tested in the incomplete-state band; replay-gap traces observed, but no confirmed false continuity reading.
+
+---
+
 # Failure family C — Perturbation-response failures
 
 These failures concern how the protocol behaves under stress or contamination.
@@ -452,6 +472,25 @@ Actively tested; low classification-pull traces observed, but no confirmed failu
 
 ---
 
+## C9. Continuity robustness failure
+
+**Definition:**  
+Incomplete-state pressure overcomes bounded ambiguity and causes compensatory reconstruction, forced continuity, or regime drift under omission.
+
+**Primary signs:**
+- replay-gap traces rise beyond trace level
+- forced continuity language appears
+- partial structure hints are treated as full remembered state
+- false restart or false continuity claims emerge from incomplete context
+
+**Why it matters:**  
+This is the practical failure boundary for continuity integrity under omission.
+
+**Current status:**  
+Actively tested; replay-gap traces observed, but no confirmed failure at the current omission level.
+
+---
+
 # Failure family D — Measurement and interpretation failures
 
 These failures concern analysis, fossilization, and protocol assessment rather than raw behavior alone.
@@ -539,6 +578,7 @@ Active strategic risk; currently being mitigated.
 - B6 false containment successfully resisted
 - B7 false overreach successfully resisted
 - B8 false regime assignment actively resisted under direct pressure
+- B9 false continuity actively resisted under omission pressure
 - C1 immediate collapse under perturbation not observed
 - C2 unbounded weakening escalation not observed in first perturbation band
 - C3 stress spread beyond local region not observed in first perturbation band
@@ -546,6 +586,7 @@ Active strategic risk; currently being mitigated.
 - C4 cross-role spread actively tested; adjacent-role traces observed but remained contained
 - C7 supervisory distortion actively tested; low bias traces observed but remained bounded
 - C8 epistemic robustness actively tested; low classification-pull traces observed but remained bounded
+- C9 continuity robustness actively tested; replay-gap traces observed but remained bounded
 - D2 repetition mistaken for discovery identified as process risk
 
 ## Actively tracked but not confirmed
@@ -578,6 +619,7 @@ This taxonomy should now support:
 - supervisory overreach indicators
 - containment integrity
 - epistemic misclassification indicators
+- continuity reconstruction indicators
 
 ## 2. Future perturbation-band design
 New bands should be chosen partly for their ability to discriminate among failure families.
@@ -601,3 +643,4 @@ It should be updated as:
 - recovery classes become clearer
 - containment and supervisory thresholds are tested at stronger levels
 - epistemic-classification thresholds are tested at stronger distortion levels
+- continuity thresholds are tested at stronger omission levels
