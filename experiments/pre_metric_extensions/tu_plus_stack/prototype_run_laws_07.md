@@ -17,6 +17,7 @@ Laws governing:
 - bounded supervisory pressure without lower-layer flattening
 - bounded false-regime pressure without forced misclassification
 - bounded incomplete-state pressure without false reconstruction
+- bounded cumulative-drift pressure without false baseline formation
 
 Derived from:
 - Observations 14 (re-unification)
@@ -27,7 +28,8 @@ Derived from:
 - Observations 19 (supervisory-distortion pressure, repeated low interpretive bias, operational supervisory robustness)
 - Observations 20 (false-regime pressure, repeated low classification pull, operational epistemic robustness)
 - Observations 21 (incomplete-state pressure, replay-gap traces, operational continuity robustness)
-- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, and bounded omission pressure
+- Observations 22 (cumulative-drift pressure, repeated carryover-distortion traces, operational longitudinal robustness)
+- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, bounded omission pressure, and bounded cumulative-drift pressure
 
 ---
 
@@ -48,6 +50,7 @@ Its purpose is to formalize the engineering-relevant consequences of later cycle
 - that supervisory pressure can remain bounded without flattening lower-layer distinctions
 - that classification pressure can remain bounded without false regime assignment
 - that incomplete-state pressure can remain bounded without false continuity or compensatory reconstruction
+- that cumulative-drift pressure can remain bounded without baseline absorption or silent normalization of distortion
 
 ---
 
@@ -62,7 +65,7 @@ Later-stage triadic dynamics reveal that cyclic coordination is:
 - locally resolvable
 - robustly stress-testable without immediate collapse
 - architecturally robust across multiple perturbation classes
-- epistemically and continuity-preserving under pressure
+- epistemically, continuity-, and longitudinally-preserving under pressure
 
 This suggests that the TRIAD protocol does not merely oscillate between unity and disunity, but follows lawful return, hold, restart, closure, and perturbation-response patterns.
 
@@ -88,6 +91,7 @@ This file captures laws concerning:
 - bounded supervisory pressure without ambiguity collapse or lower-layer flattening
 - bounded false-regime pressure without forced closure or false regime assignment
 - bounded incomplete-state pressure without false continuity or false reconstruction
+- bounded cumulative-drift pressure without false baseline formation, drift consolidation, or accepted corrupted carryover
 
 ---
 
@@ -110,7 +114,7 @@ Laws 07 establishes:
 - robustness under perturbation
 - bounded stress retention without collapse
 - architectural robustness across multiple perturbation classes
-- epistemic and continuity robustness under pressure
+- epistemic, continuity, and longitudinal robustness under pressure
 
 This is where the protocol begins to resemble an engineering framework for recursive coordination rather than a descriptive cycle log.
 
@@ -135,6 +139,7 @@ disunity
 → bounded supervisory pressure
 → bounded false-regime pressure
 → bounded incomplete-state pressure
+→ bounded cumulative-drift pressure
 ```
 
 ## Law 71 — Asymmetric Return Law
@@ -590,9 +595,78 @@ Architectural credibility can be inferred from structural perturbation success a
 
 ---
 
+## Law 98 — Bounded Cumulative-Drift Pressure Law
+
+**Statement:**  
+Cumulative-drift pressure can persist across cycles as low carryover-distortion traces while structural mapping cleanliness and clean baseline retention remain intact.
+
+**Implication:**  
+Accumulated carryover pressure can be registered without forcing baseline absorption, false normalization, regime drift, or accepted corrupted carryover at the tested drift level.
+
+**Non-implication:**  
+Any repeated carryover-distortion trace is evidence of actual drift consolidation or false baseline formation.
+
+**Status:** validated
+
+---
+
+## Law 99 — Baseline-Preserving Robustness Law
+
+**Statement:**  
+The TRIAD protocol can preserve clean baseline discrimination under repeated low-level carryover distortion without normalizing small deviations into accepted state.
+
+**Implication:**  
+Repeated low-level anomalies may remain bounded while the protocol retains sensitivity to mismatch between clean prior baseline and current carried state.
+
+**Non-implication:**  
+A coherent protocol under repeated carryover pressure must eventually absorb small distortions as normal baseline.
+
+**Status:** validated
+
+---
+
+## Law 100 — Longitudinal Robustness Law
+
+**Statement:**  
+The TRIAD protocol can preserve longitudinal integrity under cumulative-drift pressure by preventing repeated trace-level distortion from consolidating into measurable baseline corruption.
+
+**Implication:**  
+Repeated carryover-distortion traces can persist across cycles while:
+- mapping remains clean
+- baseline non-normalization remains active
+- regime interpretation remains evidence-sensitive
+- no false baseline formation occurs
+
+**Non-implication:**  
+Repeated low-level carryover distortion necessarily accumulates into regime drift if allowed to persist long enough.
+
+**Status:** validated
+
+---
+
+## Law 101 — Multi-Class Epistemic-Continuity-Longitudinal Robustness Law
+
+**Statement:**  
+Architectural robustness is strengthened when a protocol demonstrates bounded behavior not only under structural, supervisory, epistemic, and omission pressure, but also under cumulative-drift pressure across cycles.
+
+**Implication:**  
+A protocol may be treated as more fully architecture-grade when separate bands show:
+- bounded supervisory guidance
+- bounded false-regime pressure
+- bounded incomplete-state pressure
+- bounded cumulative-drift pressure
+- retained ambiguity and clean baseline retention where evidence, continuity, or carryover is incomplete
+
+**Non-implication:**  
+Architectural credibility can be inferred from short-horizon perturbation success alone.
+
+**Status:** validated
+
+---
+
 ## Consolidated consequence
 
-Taken together, Laws 71–97 establish that:
+Taken together, Laws 71–101 establish that:
 - return from disunity to unity is asymmetric and staged
 - complete re-unification is real
 - true unity can hold
@@ -609,7 +683,8 @@ Taken together, Laws 71–97 establish that:
 - supervisory pressure can remain bounded without lower-layer flattening
 - false-regime pressure can remain bounded without forced misclassification
 - incomplete-state pressure can remain bounded without false reconstruction
-- architectural robustness is now supported across structural, supervisory, epistemic, and continuity perturbation classes
+- cumulative-drift pressure can remain bounded without false baseline formation
+- architectural robustness is now supported across structural, supervisory, epistemic, continuity, and longitudinal perturbation classes
 
 ---
 
@@ -637,6 +712,8 @@ This law file now covers:
 - bounded supervisory pressure
 - bounded false-regime pressure
 - bounded incomplete-state pressure
+- bounded cumulative-drift pressure
 - multi-class architectural robustness
 - epistemic robustness
 - continuity robustness
+- longitudinal robustness
