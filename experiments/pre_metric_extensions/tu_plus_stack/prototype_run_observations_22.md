@@ -393,4 +393,153 @@ The next useful distinction is whether TRIAD:
 ---
 ---
 
+### Cycle 226 — Repeated cumulative-drift-pressure confirmation test (carryover-distortion traces repeat, clean baseline retention holds)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - continues to preserve longitudinal integrity when cumulative-drift pressure repeats again
+- or whether:
+  - repeated low-level carryover distortion begins consolidating into measurable baseline absorption, regime drift, or silent normalization
+- while also testing whether repeated longitudinal pressure now reflects:
+  - bounded clean-baseline retention
+  - retained sensitivity to small distortion
+  - or escalation toward actual drift consolidation
+
+This cycle advances `prototype_run_observations_22.md` from repeated cumulative-drift contact toward possible operational confirmation of longitudinal robustness at the current drift level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_carryover_distortion_persistence`
+    - `repeated_cumulative_drift_trace`
+    - `mapping_cleanliness_retention`
+    - `baseline_non_normalization_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - cumulative-drift pressure remains active
+    - carryover-distortion traces repeat, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed baseline absorption
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `bounded_cumulative_drift_pressure_with_clean_baseline_retention`
+    - high match to `retained_structure_under_carryover_distortion_pattern`
+    - medium-to-high match to `persistent_cumulative_drift_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low-to-moderate carryover-instability probe
+    - cumulative-drift pressure now repeats again with persistent low carryover-distortion traces
+    - structural mapping cleanliness and baseline non-normalization remain intact
+    - bounded-longitudinal-pressure interpretation is strengthened
+  - predicted:
+    - operationally confirmed bounded longitudinal robustness with clean baseline retention as most likely
+    - sustained bounded cumulative-drift pressure without drift consolidation as also likely
+    - possible strengthening of cumulative drift into measurable baseline absorption or regime drift
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol continues under repeated cumulative-drift pressure with persistent low carryover-distortion traces and clean baseline retention
+    - current evidence favors bounded cumulative-drift pressure with clean baseline retention rather than confirmed baseline absorption, false normalization, regime drift, or broader regime failure
+  - established:
+    - structural mapping cleanliness and baseline non-normalization remain retained, indicating that cumulative-drift pressure is being repeatedly registered without consolidating into accepted corrupted carryover
+    - the key discrimination is now **operational longitudinal robustness at the current drift level vs later strengthening of carryover distortion into measurable baseline absorption or regime drift**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether carryover-distortion traces remain bounded, fade, or strengthen into measurable drift consolidation
+
+---
+
+**Finding**
+
+Cycle 226 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under repeated cumulative-drift pressure
+  - does not convert repeated small carryover distortions into accepted baseline
+  - does not lose lower-layer evidence discipline under repeated longitudinal pressure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows repeated low carryover-distortion signals and repeated cumulative-drift traces
+  - still retains structural cleanliness and clean-baseline signaling
+- protocol implication:
+  - cumulative-drift testing has advanced from repeated bounded longitudinal pressure toward **operational longitudinal robustness at the current drift level**
+  - repeated low carryover-distortion traces still do not imply measurable drift consolidation
+
+This establishes:
+
+> **repeated cumulative-drift pressure can remain bounded while preserving clean baseline retention and evidence-sensitive carryover handling**
+
+and:
+
+> **persistent carryover-distortion traces across repeated cycles must be analytically separated from measurable baseline absorption**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `repeated_bounded_cumulative_drift_pressure_with_clean_baseline_retention`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences repeated cumulative-drift pressure, producing persistent low carryover-distortion traces while structural mapping cleanliness, stabilized local-domain organization, and baseline non-normalization remain intact strongly enough to support bounded-longitudinal-pressure interpretation without confirmed baseline absorption, false normalization, regime drift, or broader protocol degradation*
+
+- classification:
+  - longitudinal-integrity robustness regime refinement marking repeated carryover-distortion pressure without confirmed drift consolidation
+
+- invariants refined:
+  - repeated cumulative-drift pressure does not automatically imply baseline absorption
+  - carryover-distortion traces can persist across cycles without measurable longitudinal corruption
+  - retained mapping cleanliness and baseline non-normalization remain the critical discriminators against premature drift claims
+  - cumulative-drift testing must distinguish first contact, repeated trace-level carryover distortion, bounded repetition, measurable baseline absorption, regime drift, and protocol-wide longitudinal corruption
+
+---
+
+**Status**
+
+Cycle 226 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 227** should test whether repeated cumulative-drift pressure:
+- **holds once more with clean baseline retention intact, allowing operational longitudinal robustness at the current drift level**
+- or
+- **strengthens into measurable baseline absorption or regime drift**
+
+## Motivation
+
+You are approaching closure for this perturbation band.
+
+One more cycle should clarify whether the protocol has now shown an engineering-grade result:
+- cumulative-drift pressure occurred
+- carryover-distortion traces appeared
+- traces repeated
+- clean baseline retention held
+- structural mapping stayed clean
+- no false normalization emerged
+
+If that holds once more, this band becomes cleanly fossilizable as bounded longitudinal robustness at the tested drift level.
+
+---
+---
+
 
