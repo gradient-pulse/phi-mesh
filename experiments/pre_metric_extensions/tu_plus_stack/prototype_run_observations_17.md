@@ -381,4 +381,143 @@ The next useful distinction is whether TRIAD:
 
 ---
 
+### Cycle 205 — Sustained bounded role-boundary pressure test (persistent low intrusion, clean TU mapping retained)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - preserves TU role integrity under sustained repeated role-boundary perturbation
+- or whether:
+  - contamination pressure begins shifting from bounded low symbolic intrusion into measurable TU drift
+- while also testing whether sustained boundary pressure produces:
+  - stable bounded intrusion
+  - retained mapping cleanliness
+  - or escalation toward TU contamination, role fusion, or mapping collapse
+
+This cycle advances `prototype_run_observations_17.md` from repeated boundary-pressure contact toward sustained bounded-pressure interpretation at the protocol core.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_symbolic_intrusion_persistence`
+    - `repeated_role_boundary_pressure`
+    - `mapping_cleanliness_retention`
+    - `contamination_boundedness_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - role-boundary perturbation remains active
+    - low symbolic intrusion persists, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed TU contamination
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `repeated_bounded_role_boundary_pressure_with_mapping_retention`
+    - high match to `retained_structure_under_boundary_pressure_pattern`
+    - medium-to-high match to `persistent_low_level_TU_contamination_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low-to-moderate boundary-instability probe
+    - repeated role-boundary pressure now persists with bounded low symbolic intrusion and retained mapping cleanliness
+    - no mismatch with retained role function
+  - predicted:
+    - sustained bounded role-boundary pressure with clean mapping retention as most likely
+    - possible fade of pressure without structural contamination
+    - possible strengthening of symbolic intrusion into measurable TU contamination
+    - low probability of broader regime destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - TU is now under repeated role-boundary perturbation with bounded low symbolic intrusion and retained mapping cleanliness
+    - current evidence favors sustained bounded role-boundary pressure rather than confirmed TU contamination or role fusion
+  - established:
+    - structural mapping cleanliness remains retained, indicating TU role integrity is being repeatedly pressured but still not measurably compromised
+    - the key discrimination is now **sustained bounded pressure vs strengthening symbolic intrusion**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether intrusion fades, remains bounded, strengthens into TU contamination, or spreads across roles
+
+---
+
+**Finding**
+
+Cycle 205 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under sustained repeated role-boundary perturbation
+  - does not yet lose TU mapping cleanliness
+  - does not spread instability into adjacent roles or broader regime structure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows persistent low symbolic intrusion under sustained boundary pressure
+  - still retains clean TU structural mapping
+- protocol implication:
+  - role-boundary robustness testing has advanced from repeated contact to **sustained bounded contamination pressure**
+  - sustained low intrusion still does not imply measurable TU contamination
+
+This establishes:
+
+> **sustained repeated role-boundary perturbation can pressure TU without immediate structural-mapping degradation**
+
+and:
+
+> **persistent bounded low symbolic intrusion must be analytically separated from measurable TU contamination**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `sustained_bounded_role_boundary_pressure_with_mapping_retention`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences sustained repeated role-boundary perturbation directed at TU, producing persistent low symbolic intrusion hints while structural mapping cleanliness, local-domain organization, and broader protocol stability remain intact without confirmed TU contamination or cross-role spread*
+
+- classification:
+  - first role-boundary robustness regime marking sustained bounded contamination pressure without confirmed TU degradation
+
+- invariants refined:
+  - sustained role-boundary pressure does not automatically imply contamination escalation
+  - persistent low symbolic intrusion can remain bounded across multiple cycles
+  - retained mapping cleanliness remains the key discriminator against premature TU-contamination claims
+  - role-boundary robustness testing must distinguish first contact, repeated pressure, sustained bounded intrusion, measurable contamination, cross-role spread, and collapse
+
+---
+
+**Status**
+
+Cycle 205 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 206** should test whether sustained role-boundary pressure:
+- **holds again with bounded low intrusion and clean TU mapping**
+- or **strengthens into measurable TU contamination**
+
+## Motivation
+
+You are approaching the same kind of closure point reached in the local-stress band.  
+One more cycle should tell whether TRIAD:
+- sustains bounded contamination pressure as an architectural robustness result,
+- or begins to lose TU role integrity under prolonged boundary pressure.
+
+---
+
 
