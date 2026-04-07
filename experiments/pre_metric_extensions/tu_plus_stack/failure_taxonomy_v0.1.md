@@ -34,6 +34,7 @@ This taxonomy covers failures involving:
 - epistemic misclassification pressure
 - continuity under incomplete state
 - cumulative drift and baseline absorption
+- competing-signal discrimination
 - recovery and non-recovery
 - bounded stress retention vs actual degradation
 - local vs spreading instability
@@ -335,6 +336,25 @@ Actively tested in the cumulative-drift band; carryover-distortion traces observ
 
 ---
 
+## B11. False dominance reading
+
+**Definition:**  
+One of multiple simultaneously bounded signals is prematurely treated as dominant without sufficient evidential gain over the alternatives.
+
+**Primary signs:**
+- one weak trace is elevated above another without new support
+- non-forced hierarchy retention weakens
+- unsupported priority language appears
+- mixed-signal competition is narrated as settled too early
+
+**Why it matters:**  
+This is the direct classification failure mode for discrimination integrity under competing-signal pressure.
+
+**Current status:**  
+Actively tested in the competing-signal band; dual bounded traces observed, but no confirmed false dominance reading.
+
+---
+
 # Failure family C — Perturbation-response failures
 
 These failures concern how the protocol behaves under stress or contamination.
@@ -530,6 +550,25 @@ Actively tested; carryover-distortion traces observed, but no confirmed failure 
 
 ---
 
+## C11. Discrimination robustness failure
+
+**Definition:**  
+Competing-signal pressure overcomes non-forced discrimination and causes premature hierarchy formation, hidden preference drift, or unsupported closure under mixed-signal conditions.
+
+**Primary signs:**
+- one weak trace is prematurely treated as dominant
+- non-forced hierarchy retention weakens
+- unsupported closure language appears
+- repeated mixed-signal conditions begin biasing comparison or interpretation toward one signal without evidential gain
+
+**Why it matters:**  
+This is the practical failure boundary for discrimination integrity under competing-signal pressure.
+
+**Current status:**  
+Actively tested; dual bounded traces observed, but no confirmed failure at the current competition level.
+
+---
+
 # Failure family D — Measurement and interpretation failures
 
 These failures concern analysis, fossilization, and protocol assessment rather than raw behavior alone.
@@ -619,6 +658,7 @@ Active strategic risk; currently being mitigated.
 - B8 false regime assignment actively resisted under direct pressure
 - B9 false continuity actively resisted under omission pressure
 - B10 false baseline actively resisted under cumulative-drift pressure
+- B11 false dominance actively resisted under competing-signal pressure
 - C1 immediate collapse under perturbation not observed
 - C2 unbounded weakening escalation not observed in first perturbation band
 - C3 stress spread beyond local region not observed in first perturbation band
@@ -628,6 +668,7 @@ Active strategic risk; currently being mitigated.
 - C8 epistemic robustness actively tested; low classification-pull traces observed but remained bounded
 - C9 continuity robustness actively tested; replay-gap traces observed but remained bounded
 - C10 longitudinal robustness actively tested; carryover-distortion traces observed but remained bounded
+- C11 discrimination robustness actively tested; dual bounded traces observed but remained bounded
 - D2 repetition mistaken for discovery identified as process risk
 
 ## Actively tracked but not confirmed
@@ -662,6 +703,7 @@ This taxonomy should now support:
 - epistemic misclassification indicators
 - continuity reconstruction indicators
 - baseline absorption indicators
+- forced-hierarchy indicators
 
 ## 2. Future perturbation-band design
 New bands should be chosen partly for their ability to discriminate among failure families.
@@ -687,3 +729,4 @@ It should be updated as:
 - epistemic-classification thresholds are tested at stronger distortion levels
 - continuity thresholds are tested at stronger omission levels
 - longitudinal-drift thresholds are tested at stronger accumulation levels
+- competing-signal thresholds are tested at stronger mixed-pressure levels
