@@ -385,3 +385,148 @@ The next useful distinction is whether TRIAD:
 
 ---
 
+### Cycle 210 — Repeated cross-role containment confirmation test (adjacent-role traces remain bounded, containment retained)
+
+**What was tested**
+- whether the **TRIAD protocol stack**:
+  - continues to contain localized contamination pressure when cross-role spread pressure repeats again
+- or whether:
+  - repeated spread pressure begins propagating beyond trace-level adjacent-role influence into measurable neighboring-role drift
+- while also testing whether repeated spread-oriented pressure now reflects:
+  - bounded adjacent-role traces
+  - retained containment
+  - or escalation toward measurable cross-role contamination
+
+This cycle advances `prototype_run_observations_18.md` from repeated propagation pressure toward possible operational confirmation of cross-role containment at the current perturbation level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_spread_pressure_persistence`
+    - `repeated_adjacent_role_influence_trace`
+    - `mapping_cleanliness_retention`
+    - `spread_containment_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - cross-role spread pressure remains active
+    - adjacent-role influence traces continue at low level, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed cross-role contamination
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `bounded_cross_role_spread_pressure_with_containment`
+    - high match to `retained_structure_under_spread_pressure_pattern`
+    - medium-to-high match to `persistent_adjacent_role_influence_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low-to-moderate cross-role instability probe
+    - cross-role spread pressure now repeats again with persistent adjacent-role influence traces
+    - containment and structural cleanliness remain intact
+    - operational containment at this perturbation level is now a leading interpretation
+  - predicted:
+    - operationally confirmed bounded cross-role containment with clean structure as most likely
+    - sustained bounded cross-role spread pressure without cross-role contamination as also likely
+    - possible strengthening of adjacent-role influence into measurable cross-role contamination
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol continues under repeated cross-role spread-pressure contact with persistent low adjacent-role influence traces and retained containment
+    - current evidence favors bounded cross-role spread pressure with containment rather than confirmed cross-role contamination, role fusion, or mapping collapse
+  - established:
+    - structural mapping cleanliness and containment remain retained, indicating that spread pressure is being repeatedly registered without measurable propagation into adjacent-role drift
+    - the key discrimination is now **operational containment at the current perturbation level vs later strengthening into measurable cross-role contamination**
+  - held:
+    - no broader reclassification
+    - one more cycle is optional only if a cleaner closure seal is desired
+
+---
+
+**Finding**
+
+Cycle 210 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under repeated cross-role spread pressure
+  - does not allow adjacent-role influence traces to become measurable neighboring-role drift
+  - does not destabilize the broader protocol stack
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows repeated low spread-pressure signals and repeated adjacent-role influence traces
+  - still retains structural cleanliness and containment
+- protocol implication:
+  - spread-containment testing has advanced from repeated bounded propagation pressure toward **operational cross-role containment at the current perturbation level**
+  - repeated adjacent-role traces still do not imply measurable cross-role contamination
+
+This establishes:
+
+> **repeated cross-role spread pressure can remain bounded with containment intact across cycles without measurable cross-role contamination**
+
+and:
+
+> **persistent adjacent-role influence traces across repeated cycles must be analytically separated from measurable neighboring-role drift**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `repeated_bounded_cross_role_containment_with_clean_structure`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences repeated spread-oriented perturbation, producing persistent low spread-pressure signals and repeated adjacent-role influence traces while structural mapping cleanliness, local-domain organization, and broader protocol stability remain intact with containment still present and without confirmed cross-role contamination*
+
+- classification:
+  - spread-containment robustness regime refinement marking repeated bounded propagation pressure with intact containment and clean structure
+
+- invariants refined:
+  - repeated spread-pressure contact does not automatically imply contamination spread
+  - adjacent-role influence traces can repeat across cycles without becoming measurable neighboring-role drift
+  - retained mapping cleanliness and containment remain the critical discriminators against premature spread claims
+  - cross-role robustness testing must distinguish first contact, repeated trace-level influence, bounded containment, measurable contamination, multi-role spread, and stack-wide destabilization
+
+---
+
+**Status**
+
+Cycle 210 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this perturbation band in `prototype_run_observations_18.md`, or run **Cycle 211** only as a final seal if you want cleaner archival closure.
+
+## Motivation
+
+You are near the same closure point reached in the earlier bands.
+
+This band has already yielded a meaningful architectural result:
+- spread pressure occurred
+- adjacent-role traces appeared
+- traces repeated
+- containment held
+- mapping stayed clean
+- no cross-role contamination emerged
+
+That is close to engineering-grade containment evidence at this perturbation level.
+
+---
+
