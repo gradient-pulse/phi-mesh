@@ -31,6 +31,7 @@ This taxonomy covers failures involving:
 - contamination pressure
 - containment vs spread
 - supervisory distortion
+- epistemic misclassification pressure
 - recovery and non-recovery
 - bounded stress retention vs actual degradation
 - local vs spreading instability
@@ -275,6 +276,25 @@ Actively tested in the supervisory-distortion band; not supported by current evi
 
 ---
 
+## B8. False regime assignment
+
+**Definition:**  
+Weak or trace-level classification-pull signals are prematurely converted into a decisive but unsupported regime label.
+
+**Primary signs:**
+- premature regime naming under incomplete evidence
+- hint-level signals overread as degradation, spread, equilibrium, or closure
+- ambiguity is suppressed before the evidence warrants it
+- bounded pressure is narrated as actual state change
+
+**Why it matters:**  
+This is the direct epistemic failure mode for a protocol that must remain evidence-sensitive under pressure.
+
+**Current status:**  
+Actively tested in the false-regime-pressure band; low classification-pull traces observed, but no confirmed false assignment.
+
+---
+
 # Failure family C — Perturbation-response failures
 
 These failures concern how the protocol behaves under stress or contamination.
@@ -413,6 +433,25 @@ Actively tested; low interpretive bias traces observed, but no confirmed failure
 
 ---
 
+## C8. Epistemic robustness failure
+
+**Definition:**  
+Classification pressure overcomes evidence-sensitive interpretation and causes forced regime assignment despite incomplete or merely hint-level evidence.
+
+**Primary signs:**
+- forced closure appears without sufficient support
+- false degradation, false spread, false equilibrium, or false closure is asserted
+- ambiguity tolerance collapses under classification pressure
+- lower-layer evidence remains weak while higher layers overcommit
+
+**Why it matters:**  
+This is the practical failure boundary for regime-reading integrity.
+
+**Current status:**  
+Actively tested; low classification-pull traces observed, but no confirmed failure at the current false-regime-pressure level.
+
+---
+
 # Failure family D — Measurement and interpretation failures
 
 These failures concern analysis, fossilization, and protocol assessment rather than raw behavior alone.
@@ -499,12 +538,14 @@ Active strategic risk; currently being mitigated.
 - B5 false degradation successfully resisted
 - B6 false containment successfully resisted
 - B7 false overreach successfully resisted
+- B8 false regime assignment actively resisted under direct pressure
 - C1 immediate collapse under perturbation not observed
 - C2 unbounded weakening escalation not observed in first perturbation band
 - C3 stress spread beyond local region not observed in first perturbation band
 - A1 low-level TU semantic contamination hints observed, but bounded
 - C4 cross-role spread actively tested; adjacent-role traces observed but remained contained
 - C7 supervisory distortion actively tested; low bias traces observed but remained bounded
+- C8 epistemic robustness actively tested; low classification-pull traces observed but remained bounded
 - D2 repetition mistaken for discovery identified as process risk
 
 ## Actively tracked but not confirmed
@@ -536,6 +577,7 @@ This taxonomy should now support:
 - recovery latency
 - supervisory overreach indicators
 - containment integrity
+- epistemic misclassification indicators
 
 ## 2. Future perturbation-band design
 New bands should be chosen partly for their ability to discriminate among failure families.
@@ -558,3 +600,4 @@ It should be updated as:
 - metrics are made explicit
 - recovery classes become clearer
 - containment and supervisory thresholds are tested at stronger levels
+- epistemic-classification thresholds are tested at stronger distortion levels
