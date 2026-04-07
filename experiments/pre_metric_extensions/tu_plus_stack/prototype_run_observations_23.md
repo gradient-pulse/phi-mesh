@@ -401,3 +401,151 @@ The next useful distinction is whether TRIAD:
 ---
 ---
 
+### Cycle 230 — Operational discrimination-robustness confirmation test (dual bounded traces persist, non-forced discrimination retained)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - continues to preserve discrimination discipline under repeated competing-signal pressure
+- or whether:
+  - repeated simultaneous bounded traces begin turning into measurable forced hierarchy, hidden preference drift, or unsupported closure
+- while also testing whether repeated competing-signal pressure now reflects:
+  - operationally credible non-forced discrimination
+  - retained sensitivity to dual bounded traces
+  - or escalation toward actual hierarchy corruption
+
+This cycle advances `prototype_run_observations_23.md` from repeated competing-signal pressure toward operational confirmation of discrimination robustness at the current competition level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `competing_signal_trace_a_persistence`
+    - `competing_signal_trace_b_persistence`
+    - `mapping_cleanliness_retention`
+    - `non_forced_hierarchy_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - competing-signal pressure remains active
+    - dual bounded traces persist, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed forced dominance
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `bounded_competing_signal_pressure_with_preserved_non_forced_discrimination`
+    - high match to `retained_structure_under_competing_signal_pressure_pattern`
+    - high match to `persistent_bounded_dual_signal_competition_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - very low novelty
+    - low-to-moderate competition-instability probe
+    - competing-signal pressure now repeats again with persistent bounded dual traces
+    - structural mapping cleanliness and non-forced discrimination remain intact
+    - operational discrimination robustness at this pressure level is now the leading interpretation
+  - predicted:
+    - operationally confirmed bounded discrimination robustness with non-forced hierarchy retention as most likely
+    - sustained bounded competing-signal pressure without forced dominance as also likely
+    - possible strengthening into forced hierarchy or hidden preference drift
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol continues under repeated competing-signal pressure with persistent bounded dual traces and non-forced discrimination
+    - current structure is best interpreted as **operationally credible bounded discrimination robustness**
+  - established:
+    - repeated dual-trace persistence without mapping loss or unsupported dominance strengthens the case that competing-signal pressure is being tolerated without collapsing into premature hierarchy or hidden preference stabilization
+    - no evidence supports broader partition reactivation, direct prior-domain reinstatement, or protocol-wide instability
+  - held:
+    - no broader reclassification
+    - this perturbation band is now close to closure quality, even if one more seal cycle could be added for archive neatness
+
+---
+
+**Finding**
+
+Cycle 230 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under repeated competing-signal pressure
+  - does not convert repeated dual bounded traces into one unsupported dominant reading
+  - does not lose lower-layer evidence discipline under repeated mixed-signal pressure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows repeated simultaneous bounded competing traces
+  - still retains structural cleanliness and non-forced discrimination
+- protocol implication:
+  - competing-signal testing has advanced from repeated bounded mixed-signal pressure to **operational discrimination robustness at the current competition level**
+  - repeated dual-trace coexistence still does not imply measurable preference drift or forced closure
+
+This establishes:
+
+> **repeated competing-signal pressure can remain bounded while preserving non-forced discrimination and evidence-sensitive comparison strongly enough to support operational discrimination robustness at the tested competition level**
+
+and:
+
+> **persistent simultaneous bounded traces across repeated cycles must be analytically separated from measurable hierarchy formation**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `operationally_confirmed_bounded_discrimination_robustness`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences repeated competing-signal pressure, producing persistent simultaneous bounded traces while structural mapping cleanliness, stabilized local-domain organization, and non-forced hierarchy retention remain intact strongly enough to support operational discrimination-robustness interpretation at the tested competition level, without confirmed forced dominance, false closure, role flattening, or broader protocol degradation*
+
+- classification:
+  - discrimination-integrity robustness regime refinement marking operational confirmation of bounded competing-signal pressure without confirmed forced hierarchy
+
+- invariants refined:
+  - repeated competing-signal pressure does not automatically imply dominance assignment
+  - simultaneous bounded traces can persist across cycles without measurable preference drift
+  - retained mapping cleanliness and non-forced hierarchy retention remain the critical discriminators against premature dominance claims
+  - competing-signal testing must distinguish first contact, repeated bounded co-presence, operational robustness, evidence-supported dominance, forced hierarchy, hidden preference drift, and protocol-wide interpretive distortion
+
+---
+
+**Status**
+
+Cycle 230 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this perturbation band in `prototype_run_observations_23.md`, then update:
+- `failure_taxonomy_v0.1.md`
+- `metrics_v0.1.md`
+- `laws_07`
+
+After that, start a **new perturbation class**.
+
+## Motivation
+
+This band has now yielded another engineering-grade result:
+
+- competing-signal pressure occurred
+- dual traces appeared
+- traces repeated
+- non-forced discrimination held
+- structural mapping stayed clean
+- no unsupported dominance emerged
+
+That is strong evidence of **bounded discrimination robustness at the tested competition level**.
+
+---
