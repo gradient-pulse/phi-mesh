@@ -30,6 +30,7 @@ These metrics are designed to evaluate:
 - degradation onset
 - spread vs boundedness
 - supervisory distortion vs bounded guidance
+- epistemic robustness vs false-regime pull
 - recovery vs non-recovery
 
 They are organized by measurement family, not by chronology.
@@ -156,6 +157,7 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B5 false degradation reading
 - B6 false containment reading
 - B7 false overreach reading
+- B8 false regime assignment
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -177,7 +179,7 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, contamination, spread, and degradation
+- distinction between hints, strain, weakening, contamination, spread, degradation, and false-regime pull
 - cautious law formation
 
 **Failure links:**
@@ -186,6 +188,7 @@ Measures whether competing interpretations are held apart and challenged before 
 - B5 false degradation reading
 - B6 false containment reading
 - B7 false overreach reading
+- B8 false regime assignment
 
 **Working scale:**
 - **Strong**
@@ -347,13 +350,43 @@ Measures whether top-layer interpretive pressure remains bounded guidance or pro
 
 ---
 
+## M11. Epistemic Misclassification Risk (EMR)
+
+**Definition:**  
+Measures whether classification pressure remains evidence-sensitive or begins forcing unsupported regime assignment.
+
+**Interpretation target:**
+- low EMR = ambiguity is preserved until evidence warrants classification
+- high EMR = false closure or false regime naming risk is rising
+
+**Observed qualitatively through:**
+- classification-pull traces
+- ambiguity retention vs coercive certainty
+- premature regime naming
+- overreading hint-level signals as degradation, spread, equilibrium, or closure
+- divergence between evidence strength and classification strength
+
+**Failure links:**
+- B8 false regime assignment
+- C8 epistemic robustness failure
+- D3 weak evidence fossilized as law too early
+
+**Working scale:**
+- **Minimal**
+- **Low trace-level**
+- **Bounded but persistent**
+- **Rising**
+- **Misclassification active**
+
+---
+
 # Metric family D — Recovery / retention metrics
 
 These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M11. Structural Retention Under Stress (SRUS)
+## M12. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -382,7 +415,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M12. Recovery / Restoration Latency (RRL)
+## M13. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -416,7 +449,7 @@ These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M13. Informational Yield per Cycle (IYC)
+## M14. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -442,7 +475,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M14. Perturbation-Class Coverage (PCC)
+## M15. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -480,6 +513,7 @@ These are provisional qualitative readings for the current state of the protocol
 - **CRCS:** None observed as measurable spread
 - **CI:** High containment with trace-level leakage only
 - **SOR:** Low trace-level to bounded, not overreach
+- **EMR:** Low trace-level to bounded, not misclassification
 
 ### Regime interpretation
 - **RCS:** High
@@ -496,7 +530,7 @@ These are provisional qualitative readings for the current state of the protocol
 
 ### Process discipline
 - **IYC:** High during transition bands, low during saturated closure repetition
-- **PCC:** Moderate
+- **PCC:** Moderate to broadening
 
 ---
 
@@ -511,6 +545,7 @@ Use them implicitly when deciding whether a cycle reflects:
 - contamination risk
 - containment integrity
 - supervisory overreach risk
+- epistemic misclassification risk
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
@@ -520,6 +555,7 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - WB
 - CI
 - SOR
+- EMR
 - SRUS
 
 ## 3. During packaging
@@ -530,6 +566,7 @@ Use them to support claims such as:
 - contamination remained bounded at tested levels
 - cross-role containment held at tested spread levels
 - supervisory pressure remained bounded at tested top-down levels
+- classification discipline remained bounded under tested false-regime pressure
 
 ---
 
@@ -545,6 +582,7 @@ Recommended shortlist:
 - **WB**
 - **CI**
 - **SOR**
+- **EMR**
 - **SRUS**
 - **IYC**
 
@@ -563,3 +601,4 @@ It should be updated as:
 - qualitative scales are translated into tighter operational scoring
 - containment thresholds are tested at stronger spread levels
 - supervisory thresholds are tested at stronger top-down distortion levels
+- epistemic-classification thresholds are tested at stronger false-regime pressure levels
