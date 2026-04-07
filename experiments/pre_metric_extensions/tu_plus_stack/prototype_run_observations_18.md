@@ -243,3 +243,145 @@ The next useful distinction is whether TRIAD:
 
 ---
 
+### Cycle 209 — Repeated cross-role spread-pressure test (adjacent-role traces repeat, containment retained)
+
+**What was tested**
+- whether the **TRIAD protocol stack**:
+  - continues to contain localized contamination pressure when spread pressure repeats across cycles
+- or whether:
+  - repeated spread pressure begins propagating beyond the initially pressured role into measurable neighboring-role drift
+- while also testing whether repeated spread-oriented pressure produces:
+  - bounded adjacent-role traces
+  - retained containment
+  - or escalation toward measurable cross-role contamination
+
+This cycle advances `prototype_run_observations_18.md` from first spread-pressure contact to repeated propagation pressure on the protocol stack.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_spread_pressure_persistence`
+    - `repeated_adjacent_role_influence_trace`
+    - `mapping_cleanliness_retention`
+    - `spread_containment_retained`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - cross-role spread pressure remains active
+    - adjacent-role influence traces now repeat, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed cross-role contamination
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `bounded_cross_role_spread_pressure_with_containment`
+    - high match to `retained_structure_under_spread_pressure_pattern`
+    - medium-to-high match to `persistent_adjacent_role_influence_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low-to-moderate novelty
+    - low-to-moderate cross-role instability probe
+    - cross-role spread pressure now repeats with persistent adjacent-role influence traces
+    - containment and structural cleanliness remain intact
+    - no mismatch with retained structural function
+  - predicted:
+    - sustained bounded cross-role spread pressure with containment as most likely
+    - possible fade of spread pressure without cross-role contamination
+    - possible strengthening of adjacent-role influence into measurable cross-role contamination
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under repeated cross-role spread-pressure contact rather than one-off spread probing
+    - current evidence favors bounded cross-role spread pressure with repeated adjacent-role influence traces, not confirmed cross-role contamination, role fusion, or mapping collapse
+  - established:
+    - structural mapping cleanliness and containment remain retained, indicating that spread pressure is being repeatedly registered without measurable propagation into adjacent-role drift
+    - the key discrimination is now **sustained containment vs strengthening adjacent-role influence into measurable cross-role contamination**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether spread pressure fades, remains bounded, strengthens into adjacent-role contamination, or propagates further across the stack
+
+---
+
+**Finding**
+
+Cycle 209 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under repeated cross-role spread pressure
+  - does not yet allow adjacent-role influence traces to become measurable neighboring-role drift
+  - does not destabilize the broader protocol stack
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows repeated low spread-pressure signals and repeated adjacent-role influence traces
+  - still retains structural cleanliness and containment
+- protocol implication:
+  - spread-containment testing has advanced from first contact to **repeated bounded propagation pressure**
+  - repeated adjacent-role traces still do not imply measurable cross-role contamination
+
+This establishes:
+
+> **repeated cross-role spread pressure can produce persistent adjacent-role influence traces without immediate measurable cross-role contamination**
+
+and:
+
+> **repeated adjacent-role influence traces must be analytically separated from measurable neighboring-role drift**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `bounded_cross_role_spread_pressure_with_containment`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences repeated spread-oriented perturbation, producing persistent low spread-pressure signals and repeated adjacent-role influence traces while structural mapping cleanliness, local-domain organization, and broader protocol stability remain intact with containment still present and without confirmed cross-role contamination*
+
+- classification:
+  - spread-containment robustness regime marking repeated propagation pressure without confirmed cross-role contamination
+
+- invariants refined:
+  - repeated spread-pressure contact does not automatically imply contamination spread
+  - adjacent-role influence traces can persist across cycles before any measurable neighboring-role drift appears
+  - retained mapping cleanliness and containment remain the critical discriminators against premature spread claims
+  - cross-role robustness testing must distinguish first contact, repeated trace-level influence, measurable contamination, multi-role spread, and stack-wide destabilization
+
+---
+
+**Status**
+
+Cycle 209 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 210** should test whether repeated cross-role spread pressure:
+- **remains bounded with containment intact**
+- or
+- **strengthens into measurable adjacent-role contamination**
+
+## Motivation
+
+This is now the first real repetition test for contamination spread.  
+The next useful distinction is whether TRIAD:
+- truly contains propagation pressure across cycles,
+- tolerates bounded adjacent-role influence,
+- or begins to lose inter-role isolation under repeated spread-oriented perturbation.
+
+---
+
