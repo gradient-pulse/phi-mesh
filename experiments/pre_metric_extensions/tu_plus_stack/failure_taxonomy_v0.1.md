@@ -33,6 +33,7 @@ This taxonomy covers failures involving:
 - supervisory distortion
 - epistemic misclassification pressure
 - continuity under incomplete state
+- cumulative drift and baseline absorption
 - recovery and non-recovery
 - bounded stress retention vs actual degradation
 - local vs spreading instability
@@ -315,6 +316,25 @@ Actively tested in the incomplete-state band; replay-gap traces observed, but no
 
 ---
 
+## B10. False baseline reading
+
+**Definition:**  
+Repeated low-level carryover distortion is prematurely absorbed as normal baseline rather than treated as bounded trace-level deviation.
+
+**Primary signs:**
+- repeated small distortions lose their anomaly status
+- normalization language appears without justification
+- baseline non-normalization weakens
+- accepted carryover no longer matches clean prior regime cues
+
+**Why it matters:**  
+This is the direct classification failure mode for longitudinal integrity under cumulative drift pressure.
+
+**Current status:**  
+Actively tested in the cumulative-drift band; carryover-distortion traces observed, but no confirmed false baseline formation.
+
+---
+
 # Failure family C — Perturbation-response failures
 
 These failures concern how the protocol behaves under stress or contamination.
@@ -491,6 +511,25 @@ Actively tested; replay-gap traces observed, but no confirmed failure at the cur
 
 ---
 
+## C10. Longitudinal robustness failure
+
+**Definition:**  
+Cumulative-drift pressure overcomes clean baseline retention and causes silent normalization of repeated low-level distortion into accepted carryover or regime drift.
+
+**Primary signs:**
+- carryover-distortion traces rise beyond trace level
+- baseline non-normalization weakens
+- repeated anomalies become accepted baseline
+- drifted carryover begins shaping comparison and interpretation as if structurally normal
+
+**Why it matters:**  
+This is the practical failure boundary for longitudinal integrity under accumulated carryover pressure.
+
+**Current status:**  
+Actively tested; carryover-distortion traces observed, but no confirmed failure at the current drift level.
+
+---
+
 # Failure family D — Measurement and interpretation failures
 
 These failures concern analysis, fossilization, and protocol assessment rather than raw behavior alone.
@@ -579,6 +618,7 @@ Active strategic risk; currently being mitigated.
 - B7 false overreach successfully resisted
 - B8 false regime assignment actively resisted under direct pressure
 - B9 false continuity actively resisted under omission pressure
+- B10 false baseline actively resisted under cumulative-drift pressure
 - C1 immediate collapse under perturbation not observed
 - C2 unbounded weakening escalation not observed in first perturbation band
 - C3 stress spread beyond local region not observed in first perturbation band
@@ -587,6 +627,7 @@ Active strategic risk; currently being mitigated.
 - C7 supervisory distortion actively tested; low bias traces observed but remained bounded
 - C8 epistemic robustness actively tested; low classification-pull traces observed but remained bounded
 - C9 continuity robustness actively tested; replay-gap traces observed but remained bounded
+- C10 longitudinal robustness actively tested; carryover-distortion traces observed but remained bounded
 - D2 repetition mistaken for discovery identified as process risk
 
 ## Actively tracked but not confirmed
@@ -620,6 +661,7 @@ This taxonomy should now support:
 - containment integrity
 - epistemic misclassification indicators
 - continuity reconstruction indicators
+- baseline absorption indicators
 
 ## 2. Future perturbation-band design
 New bands should be chosen partly for their ability to discriminate among failure families.
@@ -644,3 +686,4 @@ It should be updated as:
 - containment and supervisory thresholds are tested at stronger levels
 - epistemic-classification thresholds are tested at stronger distortion levels
 - continuity thresholds are tested at stronger omission levels
+- longitudinal-drift thresholds are tested at stronger accumulation levels
