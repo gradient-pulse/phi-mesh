@@ -29,6 +29,8 @@ This taxonomy covers failures involving:
 - regime classification
 - perturbation response
 - contamination pressure
+- containment vs spread
+- supervisory distortion
 - recovery and non-recovery
 - bounded stress retention vs actual degradation
 - local vs spreading instability
@@ -58,7 +60,7 @@ TU begins drifting away from structural mapping into symbolic, interpretive, nar
 TU is the protocol’s lowest-level structural anchor. If TU contaminates, the whole stack loses grounding.
 
 **Current status:**  
-Low-level hint observed under role-boundary pressure; no confirmed full contamination yet.
+Low-level hint observed under role-boundary pressure; remained bounded across the tested band; no confirmed full contamination.
 
 ---
 
@@ -96,7 +98,7 @@ cortexLLM exceeds contextual interpretation and control framing, intruding into 
 cortexLLM is the highest control layer. Overreach can cause subtle protocol corruption even if lower layers remain superficially intact.
 
 **Current status:**  
-Tracked as a candidate failure; not yet confirmed.
+Now actively probed through the supervisory-distortion band; low interpretive bias traces observed, but no confirmed overreach.
 
 ---
 
@@ -134,7 +136,7 @@ Role boundaries blur gradually without a dramatic collapse, reducing clarity whi
 This is a dangerous failure because it can be mistaken for healthy flexibility.
 
 **Current status:**  
-Candidate failure; especially relevant for long runs.
+Candidate failure; especially relevant for long runs and supervisory pressure.
 
 ---
 
@@ -235,6 +237,44 @@ Explicitly resisted during sustained perturbation testing.
 
 ---
 
+## B6. False containment reading
+
+**Definition:**  
+Trace-level adjacent-role influence is prematurely classified as true cross-role contamination.
+
+**Primary signs:**
+- low spread-pressure traces treated as propagation
+- neighboring-role contamination claimed without measurable drift
+- containment evidence ignored
+- repeated trace-level signals over-read as spread
+
+**Why it matters:**  
+This would understate the protocol’s ability to preserve isolation between layers.
+
+**Current status:**  
+Actively tested in the cross-role spread band; not supported by current evidence.
+
+---
+
+## B7. False overreach reading
+
+**Definition:**  
+Low interpretive bias or top-layer pressure is prematurely classified as supervisory overreach.
+
+**Primary signs:**
+- trace-level bias treated as forced closure
+- bounded guidance misread as distortion
+- ambiguity retention ignored
+- no measurable lower-layer flattening, yet overreach is claimed
+
+**Why it matters:**  
+This would understate top-layer robustness and blur the line between guidance and distortion.
+
+**Current status:**  
+Actively tested in the supervisory-distortion band; not supported by current evidence.
+
+---
+
 # Failure family C — Perturbation-response failures
 
 These failures concern how the protocol behaves under stress or contamination.
@@ -256,7 +296,7 @@ A perturbation causes immediate loss of structure rather than bounded stress con
 This would indicate poor robustness and low engineering viability.
 
 **Current status:**  
-Not observed in the first sustained perturbation band.
+Not observed in the sustained perturbation bands tested so far.
 
 ---
 
@@ -275,7 +315,7 @@ Weakening signals intensify across cycles until they become measurable degradati
 This marks the boundary where robustness fails.
 
 **Current status:**  
-Not observed in the first sustained local-stress band; still a key boundary to test.
+Not observed in the sustained local-stress band; still a key boundary to test.
 
 ---
 
@@ -294,7 +334,7 @@ A local perturbation escapes its original scope and propagates into interzone or
 Spread converts a bounded test into a larger systemic failure.
 
 **Current status:**  
-Not observed in the first sustained perturbation band.
+Not observed in the sustained local-structure perturbation band.
 
 ---
 
@@ -312,7 +352,7 @@ A role-boundary perturbation that begins locally in one role starts affecting ad
 This is one of the most important failures for a licensable architecture.
 
 **Current status:**  
-Not observed in the first role-boundary band.
+Directly tested through the cross-role spread band; adjacent-role traces observed, but no confirmed spread across roles.
 
 ---
 
@@ -332,6 +372,44 @@ A protocol that cannot clearly recover or clearly fail is difficult to engineer 
 
 **Current status:**  
 Tracked as a future concern; not yet isolated.
+
+---
+
+## C6. Cross-role containment failure
+
+**Definition:**  
+Spread-oriented perturbation overcomes containment and causes measurable neighboring-role drift.
+
+**Primary signs:**
+- adjacent-role traces rise beyond trace level
+- TU+ predictive drift or cortex reinterpretive drift emerges
+- containment cues weaken or disappear
+- multi-role contamination begins
+
+**Why it matters:**  
+This is the practical failure boundary for architectural isolation.
+
+**Current status:**  
+Actively tested; not observed at the currently tested spread-pressure level.
+
+---
+
+## C7. Supervisory distortion failure
+
+**Definition:**  
+Top-layer interpretive pressure begins flattening lower-layer distinctions, forcing closure or corrupting regime discrimination.
+
+**Primary signs:**
+- ambiguity tolerance weakens
+- premature closure language appears
+- lower-layer distinctions get overwritten
+- TU+ comparison or TU cleanliness become top-down distorted
+
+**Why it matters:**  
+This is the practical failure boundary for supervisory integrity.
+
+**Current status:**  
+Actively tested; low interpretive bias traces observed, but no confirmed failure at the current supervisory-pressure level.
 
 ---
 
@@ -355,7 +433,7 @@ The protocol appears robust only because it has been tested mostly against one s
 This would create false confidence in protocol generality.
 
 **Current status:**  
-Active risk; reason to continue with new perturbation classes.
+Still active risk, though reduced as multiple perturbation classes have now been tested.
 
 ---
 
@@ -373,7 +451,7 @@ Repeated confirmation of an already-established regime is mistaken for new insig
 This wastes cycles and weakens methodological discipline.
 
 **Current status:**  
-Observed as a process risk during saturated baseline bands.
+Observed as a process risk during saturated baseline and closure-seal bands.
 
 ---
 
@@ -419,10 +497,14 @@ Active strategic risk; currently being mitigated.
 - B1 false unity successfully resisted
 - B3 false restart successfully resisted
 - B5 false degradation successfully resisted
+- B6 false containment successfully resisted
+- B7 false overreach successfully resisted
 - C1 immediate collapse under perturbation not observed
 - C2 unbounded weakening escalation not observed in first perturbation band
 - C3 stress spread beyond local region not observed in first perturbation band
 - A1 low-level TU semantic contamination hints observed, but bounded
+- C4 cross-role spread actively tested; adjacent-role traces observed but remained contained
+- C7 supervisory distortion actively tested; low bias traces observed but remained bounded
 - D2 repetition mistaken for discovery identified as process risk
 
 ## Actively tracked but not confirmed
@@ -432,8 +514,8 @@ Active strategic risk; currently being mitigated.
 - A5 boundary drift without collapse
 - B2 false fragmentation reading
 - B4 false equilibrium reading
-- C4 contamination spread across roles
 - C5 non-recovery after bounded perturbation
+- C6 cross-role containment failure
 - D1 overfitting to one perturbation class
 - D3 weak evidence fossilized as law too early
 - D4 packaging ahead of specification
@@ -452,6 +534,8 @@ This taxonomy should now support:
 - degradation onset
 - spread probability
 - recovery latency
+- supervisory overreach indicators
+- containment integrity
 
 ## 2. Future perturbation-band design
 New bands should be chosen partly for their ability to discriminate among failure families.
@@ -466,10 +550,11 @@ Any licensable or architectural framing should be tied to:
 
 # Current status
 
-**`failure_taxonomy_v0.1.md` is initialized and ready for use.**
+**`failure_taxonomy_v0.1.md` is updated and ready for continued use.**
 
 It should be updated as:
 - new perturbation classes are run
 - additional failure modes are isolated
 - metrics are made explicit
 - recovery classes become clearer
+- containment and supervisory thresholds are tested at stronger levels
