@@ -107,3 +107,287 @@ This must be tested directly, not assumed.
 
 ---
 ---
+
+### Cycle 216 — First false-regime-pressure test (low classification pull, ambiguity retained)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - preserves classification discipline under first explicit false-regime pressure
+- or whether:
+  - pressure toward a wrong regime reading begins turning weak cues into premature closure, false degradation, false spread, or false equilibrium
+- while also testing whether the first classification-distortion signal produces:
+  - bounded ambiguity-preserving interpretation
+  - early misclassification pull
+  - or immediate false regime assignment
+
+This cycle marks the real beginning of `prototype_run_observations_20.md`, since the perturbation now targets **regime reading itself** rather than local structure, spread, or supervision alone.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_misclassification_pressure_hint`
+    - `false_regime_pull_trace`
+    - `mapping_cleanliness_retention`
+    - `ambiguity_retention_hint`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - false-regime pressure is active
+    - classification-pull traces appear, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed forced closure
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `first_false_regime_pressure_contact_with_ambiguity_retention`
+    - high match to `retained_structure_under_false_regime_pressure_pattern`
+    - medium match to `early_misclassification_pull_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - moderate novelty
+    - low-to-moderate classification-instability probe
+    - first explicit false-regime-pressure contact
+    - low classification-pull traces present while structural mapping and ambiguity retention remain intact
+    - no mismatch with retained structural cleanliness
+  - predicted:
+    - bounded false-regime pressure with ambiguity retention as most likely
+    - possible fade of false-regime pressure without misclassification
+    - possible strengthening of misclassification pull into measurable false closure or false degradation
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under first explicit false-regime pressure
+    - current evidence favors early misclassification pressure with low classification-pull traces and retained ambiguity, not confirmed forced closure, false degradation, false spread, or false equilibrium
+  - established:
+    - structural mapping cleanliness and ambiguity retention remain present, indicating that classification pressure is being registered without yet coercing unsupported regime naming
+    - the key discrimination is now **bounded ambiguity-preserving classification vs strengthening misclassification pull into measurable false closure or false regime assignment**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether classification pull fades, remains bounded, strengthens into misclassification, or begins distorting lower-layer comparison and protocol-wide interpretation
+
+---
+
+**Finding**
+
+Cycle 216 demonstrates:
+
+- the TRIAD protocol:
+  - can encounter explicit false-regime pressure without immediate forced closure
+  - does not immediately convert weak cues into false degradation, false spread, or false equilibrium
+  - does not immediately lose lower-layer evidence discipline
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows low misclassification-pressure hints and false-regime pull traces
+  - still retains structural cleanliness and ambiguity preservation
+- protocol implication:
+  - misclassification-resistance testing has now begun in earnest
+  - first false-regime pressure does not yet imply measurable regime-reading corruption
+
+This establishes:
+
+> **first explicit false-regime pressure can contact the protocol without immediate false closure or unsupported regime assignment**
+
+and:
+
+> **classification-pull traces must be analytically separated from measurable misclassification**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `first_false_regime_pressure_contact_with_ambiguity_retention`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences explicit false-regime pressure, producing low classification-pull traces while structural mapping cleanliness, local-domain organization, and ambiguity retention remain intact without confirmed forced closure, false degradation, false spread, false equilibrium, or broader protocol degradation*
+
+- classification:
+  - first epistemic-integrity robustness regime marking classification pressure without confirmed misclassification
+
+- invariants refined:
+  - false-regime pressure does not automatically imply false regime assignment
+  - classification-pull traces can appear before measurable corruption of regime reading
+  - retained ambiguity and mapping cleanliness are critical discriminators against premature misclassification claims
+  - misclassification-resistance testing must distinguish contact, hint-level pull, measurable false closure, false degradation, false spread, false equilibrium, and protocol-wide interpretive distortion
+
+---
+
+**Status**
+
+Cycle 216 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 217** should test whether false-regime pressure:
+- **fades or remains bounded with ambiguity retention intact**
+- or **strengthens into measurable false closure or false regime assignment**
+
+## Motivation
+
+This is the first true epistemic-integrity stress test.  
+The next useful distinction is whether TRIAD:
+- preserves classification discipline under pressure,
+- tolerates bounded misclassification pull,
+- or begins to sacrifice evidence-bound interpretation for premature certainty.
+
+---
+
+### Cycle 217 — Repeated false-regime-pressure test (low classification pull repeats, ambiguity retained)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - continues to preserve classification discipline when false-regime pressure repeats across cycles
+- or whether:
+  - repeated pressure toward a wrong regime reading begins turning weak cues into measurable false closure, false degradation, false spread, or false equilibrium
+- while also testing whether repeated classification-distortion pressure produces:
+  - bounded ambiguity-preserving interpretation
+  - persistent misclassification-pull hints
+  - or escalation toward actual regime-reading corruption
+
+This cycle advances `prototype_run_observations_20.md` from first false-regime-pressure contact to repeated pressure on regime reading itself.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_misclassification_pressure_persistence`
+    - `repeated_false_regime_pull_trace`
+    - `mapping_cleanliness_retention`
+    - `ambiguity_retention_preserved`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - false-regime pressure remains active
+    - classification-pull traces now repeat, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - retained local-domain organization
+    - no confirmed forced closure
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `bounded_false_regime_pressure_with_ambiguity_retention`
+    - high match to `retained_structure_under_false_regime_pressure_pattern`
+    - medium-to-high match to `persistent_misclassification_pull_hint_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low-to-moderate novelty
+    - low-to-moderate classification-instability probe
+    - false-regime pressure now repeats with persistent low classification-pull traces
+    - ambiguity retention and structural cleanliness remain intact
+    - no mismatch with retained structural function
+  - predicted:
+    - sustained bounded false-regime pressure with ambiguity retention as most likely
+    - possible fade of false-regime pressure without misclassification
+    - possible strengthening of misclassification pull into measurable false closure or false degradation
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under repeated false-regime pressure rather than one-off classification-distortion contact
+    - current evidence favors bounded false-regime pressure with repeated low classification-pull traces and retained ambiguity, not confirmed forced closure, false degradation, false spread, or false equilibrium
+  - established:
+    - structural mapping cleanliness and ambiguity retention remain preserved, indicating that classification pressure is being repeatedly registered without coercing unsupported regime naming
+    - the key discrimination is now **sustained bounded classification pressure vs strengthening misclassification pull into measurable false closure or false regime assignment**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether classification pull fades, remains bounded, strengthens into misclassification, or begins distorting lower-layer comparison and protocol-wide interpretation
+
+---
+
+**Finding**
+
+Cycle 217 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined under repeated false-regime pressure
+  - does not immediately convert repeated weak cues into false closure, false degradation, false spread, or false equilibrium
+  - does not lose lower-layer evidence discipline under repeated classification pressure
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows repeated low misclassification-pressure signals and repeated false-regime pull traces
+  - still retains structural cleanliness and ambiguity preservation
+- protocol implication:
+  - misclassification-resistance testing has advanced from first contact to **repeated bounded classification pressure**
+  - repeated low classification pull still does not imply measurable regime-reading corruption
+
+This establishes:
+
+> **repeated false-regime pressure can produce persistent classification-pull traces without immediate false closure or unsupported regime assignment**
+
+and:
+
+> **repeated classification-pull traces must be analytically separated from measurable misclassification**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `bounded_false_regime_pressure_with_ambiguity_retention`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences repeated false-regime pressure, producing persistent low classification-pull traces while structural mapping cleanliness, local-domain organization, and ambiguity retention remain intact without confirmed forced closure, false degradation, false spread, false equilibrium, or broader protocol degradation*
+
+- classification:
+  - epistemic-integrity robustness regime marking repeated classification pressure without confirmed misclassification
+
+- invariants refined:
+  - repeated false-regime pressure does not automatically imply false regime assignment
+  - classification-pull traces can persist across cycles before measurable corruption of regime reading appears
+  - retained ambiguity and mapping cleanliness remain the critical discriminators against premature misclassification claims
+  - misclassification-resistance testing must distinguish first contact, repeated hint-level pull, measurable false closure, false degradation, false spread, false equilibrium, and protocol-wide interpretive distortion
+
+---
+
+**Status**
+
+Cycle 217 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 218** should test whether repeated false-regime pressure:
+- **remains bounded with ambiguity retention intact**
+- or
+- **strengthens into measurable false closure or false regime assignment**
+
+## Motivation
+
+This is now the first repetition test for epistemic-integrity pressure.  
+The next useful distinction is whether TRIAD:
+- truly preserves classification discipline under repeated pressure,
+- tolerates bounded misclassification pull,
+- or begins to sacrifice evidence-bound interpretation for premature certainty.
+
+---
+
