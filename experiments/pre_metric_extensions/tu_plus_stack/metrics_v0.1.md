@@ -32,6 +32,7 @@ These metrics are designed to evaluate:
 - supervisory distortion vs bounded guidance
 - epistemic robustness vs false-regime pull
 - continuity integrity under incomplete state
+- longitudinal integrity under cumulative drift
 - recovery vs non-recovery
 
 They are organized by measurement family, not by chronology.
@@ -160,6 +161,7 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B7 false overreach reading
 - B8 false regime assignment
 - B9 false continuity reading
+- B10 false baseline reading
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -181,7 +183,7 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, and replay-gap pressure
+- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, and carryover-distortion pressure
 - cautious law formation
 
 **Failure links:**
@@ -192,6 +194,7 @@ Measures whether competing interpretations are held apart and challenged before 
 - B7 false overreach reading
 - B8 false regime assignment
 - B9 false continuity reading
+- B10 false baseline reading
 
 **Working scale:**
 - **Strong**
@@ -413,13 +416,43 @@ Measures whether incomplete-state pressure remains bounded with acknowledged omi
 
 ---
 
+## M13. Baseline Absorption Risk (BAR)
+
+**Definition:**  
+Measures whether cumulative-drift pressure remains bounded with clean baseline retention or progresses toward normalization of repeated small distortions.
+
+**Interpretation target:**
+- low BAR = repeated low-level deviations remain recognizable as deviations
+- high BAR = distorted carryover is being accepted as normal baseline
+
+**Observed qualitatively through:**
+- carryover-distortion traces
+- baseline non-normalization vs silent normalization
+- repeated anomalies losing anomaly status
+- drifted carryover shaping comparison or interpretation as if structurally normal
+- divergence between clean prior baseline and accepted current carryover
+
+**Failure links:**
+- B10 false baseline reading
+- C10 longitudinal robustness failure
+- D3 weak evidence fossilized as law too early
+
+**Working scale:**
+- **Minimal**
+- **Low trace-level**
+- **Bounded but persistent**
+- **Rising**
+- **Baseline absorption active**
+
+---
+
 # Metric family D — Recovery / retention metrics
 
 These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M13. Structural Retention Under Stress (SRUS)
+## M14. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -448,7 +481,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M14. Recovery / Restoration Latency (RRL)
+## M15. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -482,7 +515,7 @@ These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M15. Informational Yield per Cycle (IYC)
+## M16. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -508,7 +541,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M16. Perturbation-Class Coverage (PCC)
+## M17. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -548,6 +581,7 @@ These are provisional qualitative readings for the current state of the protocol
 - **SOR:** Low trace-level to bounded, not overreach
 - **EMR:** Low trace-level to bounded, not misclassification
 - **CRR:** Low trace-level to bounded, not false reconstruction
+- **BAR:** Low trace-level to bounded, not baseline absorption
 
 ### Regime interpretation
 - **RCS:** High
@@ -581,6 +615,7 @@ Use them implicitly when deciding whether a cycle reflects:
 - supervisory overreach risk
 - epistemic misclassification risk
 - continuity reconstruction risk
+- baseline absorption risk
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
@@ -592,6 +627,7 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - SOR
 - EMR
 - CRR
+- BAR
 - SRUS
 
 ## 3. During packaging
@@ -604,6 +640,7 @@ Use them to support claims such as:
 - supervisory pressure remained bounded at tested top-down levels
 - classification discipline remained bounded under tested false-regime pressure
 - continuity handling remained bounded under tested omission pressure
+- carryover integrity remained bounded under tested cumulative-drift pressure
 
 ---
 
@@ -621,6 +658,7 @@ Recommended shortlist:
 - **SOR**
 - **EMR**
 - **CRR**
+- **BAR**
 - **SRUS**
 - **IYC**
 
@@ -641,3 +679,4 @@ It should be updated as:
 - supervisory thresholds are tested at stronger top-down distortion levels
 - epistemic-classification thresholds are tested at stronger false-regime pressure levels
 - continuity thresholds are tested at stronger omission levels
+- longitudinal-drift thresholds are tested at stronger accumulation levels
