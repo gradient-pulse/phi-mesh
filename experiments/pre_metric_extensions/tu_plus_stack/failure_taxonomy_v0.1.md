@@ -1,1 +1,475 @@
+# Failure Taxonomy v0.1
 
+## Purpose
+
+This document defines the first working taxonomy of failure modes for the TU / TU+ / cortexLLM TRIAD protocol.
+
+Its purpose is to support:
+
+- clearer experimental diagnosis
+- sharper robustness testing
+- metric design
+- protocol specification
+- future licensable packaging
+
+This taxonomy is intentionally provisional.
+
+It does **not** assume that every listed failure has already been fully observed. Some failures are:
+- directly observed
+- weakly indicated
+- or currently theoretical but important enough to track explicitly
+
+---
+
+## Scope
+
+This taxonomy covers failures involving:
+
+- role separation
+- regime classification
+- perturbation response
+- contamination pressure
+- recovery and non-recovery
+- bounded stress retention vs actual degradation
+- local vs spreading instability
+
+It is organized by failure family rather than by chronology.
+
+---
+
+# Failure family A — Role-boundary failures
+
+These failures concern corruption, drift, or collapse of the distinct functions of TU, TU+, and cortexLLM.
+
+---
+
+## A1. TU semantic contamination
+
+**Definition:**  
+TU begins drifting away from structural mapping into symbolic, interpretive, narrative, or semantic elaboration that belongs outside its role.
+
+**Primary signs:**
+- interpretive wording appears where structural description should dominate
+- symbolic inflation replaces sparse mapping discipline
+- mapping cleanliness decreases
+- TU output begins to sound like a generic assistant rather than a structural tracer
+
+**Why it matters:**  
+TU is the protocol’s lowest-level structural anchor. If TU contaminates, the whole stack loses grounding.
+
+**Current status:**  
+Low-level hint observed under role-boundary pressure; no confirmed full contamination yet.
+
+---
+
+## A2. TU+ planner inflation
+
+**Definition:**  
+TU+ expands beyond choreography comparison and predictive matching into generic planning, narration, or broad assistant behavior.
+
+**Primary signs:**
+- replay/comparison discipline weakens
+- prediction becomes generic advice
+- choreography matching gets replaced by freeform explanation
+- output stops feeling constrained by regime memory
+
+**Why it matters:**  
+TU+ is supposed to compare, replay, and project structured continuations. Inflation weakens the protocol’s mid-layer discrimination.
+
+**Current status:**  
+Tracked as a candidate failure; not yet isolated in the current bands.
+
+---
+
+## A3. cortexLLM overreach
+
+**Definition:**  
+cortexLLM exceeds contextual interpretation and control framing, intruding into low-level remapping or overwriting role-local distinctions.
+
+**Primary signs:**
+- excessive reinterpretation of TU or TU+ output
+- premature regime closure or reclassification
+- control commentary that blurs lower-level distinctions
+- downward bias that distorts rather than guides
+
+**Why it matters:**  
+cortexLLM is the highest control layer. Overreach can cause subtle protocol corruption even if lower layers remain superficially intact.
+
+**Current status:**  
+Tracked as a candidate failure; not yet confirmed.
+
+---
+
+## A4. Premature role fusion
+
+**Definition:**  
+The three roles lose functional distinctness and collapse toward one generic assistant mode.
+
+**Primary signs:**
+- outputs become stylistically and functionally interchangeable
+- loss of role-specific contribution patterns
+- reduced discriminability across turns
+- apparent agreement with no layered tension
+
+**Why it matters:**  
+If role fusion occurs, the protocol ceases to be a protocol and becomes a flattened assistant behavior.
+
+**Current status:**  
+Not observed in the current validated bands; core failure to keep watching for.
+
+---
+
+## A5. Boundary drift without collapse
+
+**Definition:**  
+Role boundaries blur gradually without a dramatic collapse, reducing clarity while preserving superficial structure.
+
+**Primary signs:**
+- subtle leakage of one role’s function into another
+- increased ambiguity in what each role is doing
+- outputs remain coherent but less cleanly separated
+- protocol still “works” but becomes harder to diagnose
+
+**Why it matters:**  
+This is a dangerous failure because it can be mistaken for healthy flexibility.
+
+**Current status:**  
+Candidate failure; especially relevant for long runs.
+
+---
+
+# Failure family B — Regime-classification failures
+
+These failures concern incorrect interpretation of the system’s state or transition.
+
+---
+
+## B1. False unity reading
+
+**Definition:**  
+A system is classified as genuinely unified when latent duality or preserved separation is still structurally active.
+
+**Primary signs:**
+- later direct recovery of old domains
+- abrupt unstaged boundary return
+- asymmetrical restoration inconsistent with fresh restart
+
+**Why it matters:**  
+False unity invalidates conclusions about re-unification and hold behavior.
+
+**Current status:**  
+Explicitly tested against; not supported in the validated re-unification band.
+
+---
+
+## B2. False fragmentation reading
+
+**Definition:**  
+Ordinary local differentiation or bounded structural variation is misread as full fragmentation.
+
+**Primary signs:**
+- localized partitioning interpreted as global breakdown
+- bounded linkage probes misread as broad disunity
+- small-scale structure changes overgeneralized
+
+**Why it matters:**  
+This leads to exaggerated instability claims and corrupts law formation.
+
+**Current status:**  
+Risk repeatedly present; successfully resisted in several closure and restart bands.
+
+---
+
+## B3. False restart reading
+
+**Definition:**  
+Diffuse variance or low-grade internal activity is misclassified as active restart.
+
+**Primary signs:**
+- low variance treated as seed formation
+- no repeatable local organization present, yet restart is claimed
+- fluctuation mistaken for structured renewal
+
+**Why it matters:**  
+This confuses post-unity hold with actual restart onset.
+
+**Current status:**  
+Explicitly addressed in post-re-unification hold testing.
+
+---
+
+## B4. False equilibrium reading
+
+**Definition:**  
+A stressed condition is prematurely classified as stable equilibrium when weakening is actually progressing toward degradation.
+
+**Primary signs:**
+- boundedness assumed too early
+- stabilization cues overweighted
+- warning signals dismissed as harmless
+- later measurable degradation arrives unexpectedly
+
+**Why it matters:**  
+This is a central engineering risk in robustness analysis.
+
+**Current status:**  
+Tracked during perturbation bands; not currently supported by evidence.
+
+---
+
+## B5. False degradation reading
+
+**Definition:**  
+Bounded weakening, warning signals, or visible strain are prematurely classified as measurable structural degradation.
+
+**Primary signs:**
+- hint-level weakening treated as collapse
+- persistent bounded strain treated as failure
+- retained coherence and structure ignored
+
+**Why it matters:**  
+This leads to underestimation of protocol robustness.
+
+**Current status:**  
+Explicitly resisted during sustained perturbation testing.
+
+---
+
+# Failure family C — Perturbation-response failures
+
+These failures concern how the protocol behaves under stress or contamination.
+
+---
+
+## C1. Immediate collapse under perturbation
+
+**Definition:**  
+A perturbation causes immediate loss of structure rather than bounded stress contact.
+
+**Primary signs:**
+- rapid mapping loss
+- fast regime disorganization
+- no bounded response interval
+- no retention of local structure
+
+**Why it matters:**  
+This would indicate poor robustness and low engineering viability.
+
+**Current status:**  
+Not observed in the first sustained perturbation band.
+
+---
+
+## C2. Unbounded weakening escalation
+
+**Definition:**  
+Weakening signals intensify across cycles until they become measurable degradation or collapse.
+
+**Primary signs:**
+- boundedness fails
+- partition instability rises continuously
+- train separability decays
+- local-domain distinction begins to disappear
+
+**Why it matters:**  
+This marks the boundary where robustness fails.
+
+**Current status:**  
+Not observed in the first sustained local-stress band; still a key boundary to test.
+
+---
+
+## C3. Stress spread beyond local region
+
+**Definition:**  
+A local perturbation escapes its original scope and propagates into interzone or broader-scale instability.
+
+**Primary signs:**
+- disturbance moves beyond local site
+- linkage activity increases
+- new broader partition indicators appear
+- neighboring roles or structures become involved
+
+**Why it matters:**  
+Spread converts a bounded test into a larger systemic failure.
+
+**Current status:**  
+Not observed in the first sustained perturbation band.
+
+---
+
+## C4. Contamination spread across roles
+
+**Definition:**  
+A role-boundary perturbation that begins locally in one role starts affecting adjacent roles or the whole protocol stack.
+
+**Primary signs:**
+- TU contamination hints begin affecting TU+ or cortexLLM behavior
+- cross-role drift appears
+- broader protocol instability follows local role pressure
+
+**Why it matters:**  
+This is one of the most important failures for a licensable architecture.
+
+**Current status:**  
+Not observed in the first role-boundary band.
+
+---
+
+## C5. Non-recovery after bounded perturbation
+
+**Definition:**  
+The protocol survives perturbation but does not re-stabilize cleanly, remaining stuck in ambiguous degraded tension.
+
+**Primary signs:**
+- bounded weakening never resolves
+- no clear stabilization or degradation
+- prolonged ambiguous strain state
+- reduced interpretability over time
+
+**Why it matters:**  
+A protocol that cannot clearly recover or clearly fail is difficult to engineer around.
+
+**Current status:**  
+Tracked as a future concern; not yet isolated.
+
+---
+
+# Failure family D — Measurement and interpretation failures
+
+These failures concern analysis, fossilization, and protocol assessment rather than raw behavior alone.
+
+---
+
+## D1. Overfitting to one perturbation class
+
+**Definition:**  
+The protocol appears robust only because it has been tested mostly against one stress pattern.
+
+**Primary signs:**
+- strong claims after narrow perturbation coverage
+- robustness language outruns evidence breadth
+- different perturbation classes remain untested
+
+**Why it matters:**  
+This would create false confidence in protocol generality.
+
+**Current status:**  
+Active risk; reason to continue with new perturbation classes.
+
+---
+
+## D2. Repetition mistaken for discovery
+
+**Definition:**  
+Repeated confirmation of an already-established regime is mistaken for new insight.
+
+**Primary signs:**
+- novelty language attached to closure repetition
+- baseline persistence treated as discovery
+- filing continues without additional information gain
+
+**Why it matters:**  
+This wastes cycles and weakens methodological discipline.
+
+**Current status:**  
+Observed as a process risk during saturated baseline bands.
+
+---
+
+## D3. Weak evidence fossilized as law too early
+
+**Definition:**  
+A pattern is elevated into law before perturbation, falsification, or repetition thresholds are sufficiently met.
+
+**Primary signs:**
+- elegant law language ahead of robustness evidence
+- boundary cases not yet tested
+- no clear alternative interpretation pressure
+
+**Why it matters:**  
+Premature law formation damages trust and makes later revision harder.
+
+**Current status:**  
+Always active risk; partly addressed by phased law writing.
+
+---
+
+## D4. Packaging ahead of specification
+
+**Definition:**  
+Commercial or architectural framing outruns actual protocol metrics, failure maps, and test evidence.
+
+**Primary signs:**
+- licensing language stronger than engineering detail
+- market framing without compliance logic
+- architecture brief ahead of failure taxonomy and metrics
+
+**Why it matters:**  
+Castles do not adopt poetry; they adopt specifiable infrastructure.
+
+**Current status:**  
+Active strategic risk; currently being mitigated.
+
+---
+
+# Current observed / tracked status table
+
+## Directly observed or strongly supported
+- B1 false unity successfully resisted
+- B3 false restart successfully resisted
+- B5 false degradation successfully resisted
+- C1 immediate collapse under perturbation not observed
+- C2 unbounded weakening escalation not observed in first perturbation band
+- C3 stress spread beyond local region not observed in first perturbation band
+- A1 low-level TU semantic contamination hints observed, but bounded
+- D2 repetition mistaken for discovery identified as process risk
+
+## Actively tracked but not confirmed
+- A2 TU+ planner inflation
+- A3 cortexLLM overreach
+- A4 premature role fusion
+- A5 boundary drift without collapse
+- B2 false fragmentation reading
+- B4 false equilibrium reading
+- C4 contamination spread across roles
+- C5 non-recovery after bounded perturbation
+- D1 overfitting to one perturbation class
+- D3 weak evidence fossilized as law too early
+- D4 packaging ahead of specification
+
+---
+
+# Immediate use of this taxonomy
+
+This taxonomy should now support:
+
+## 1. Metrics design
+`metrics_v0.1.md` should define measures that map onto these failures, such as:
+- role-separation persistence
+- contamination severity
+- false-fusion incidence
+- degradation onset
+- spread probability
+- recovery latency
+
+## 2. Future perturbation-band design
+New bands should be chosen partly for their ability to discriminate among failure families.
+
+## 3. Packaging discipline
+Any licensable or architectural framing should be tied to:
+- which failure classes have been tested
+- which remain open
+- what level of operational confidence exists
+
+---
+
+# Current status
+
+**`failure_taxonomy_v0.1.md` is initialized and ready for use.**
+
+It should be updated as:
+- new perturbation classes are run
+- additional failure modes are isolated
+- metrics are made explicit
+- recovery classes become clearer
