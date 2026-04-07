@@ -15,6 +15,8 @@ Laws governing:
 - robustness of role boundaries under contamination pressure
 - containment of cross-role spread pressure
 - bounded supervisory pressure without lower-layer flattening
+- bounded false-regime pressure without forced misclassification
+- bounded incomplete-state pressure without false reconstruction
 
 Derived from:
 - Observations 14 (re-unification)
@@ -23,7 +25,9 @@ Derived from:
 - Observations 17 (role-boundary perturbation, bounded low symbolic intrusion, operational role-boundary robustness)
 - Observations 18 (cross-role spread pressure, adjacent-role traces, operational cross-role containment)
 - Observations 19 (supervisory-distortion pressure, repeated low interpretive bias, operational supervisory robustness)
-- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, and bounded supervisory pressure
+- Observations 20 (false-regime pressure, repeated low classification pull, operational epistemic robustness)
+- Observations 21 (incomplete-state pressure, replay-gap traces, operational continuity robustness)
+- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, and bounded omission pressure
 
 ---
 
@@ -42,6 +46,8 @@ Its purpose is to formalize the engineering-relevant consequences of later cycle
 - that role boundaries can remain intact under bounded contamination pressure
 - that spread-oriented perturbation can remain contained across roles
 - that supervisory pressure can remain bounded without flattening lower-layer distinctions
+- that classification pressure can remain bounded without false regime assignment
+- that incomplete-state pressure can remain bounded without false continuity or compensatory reconstruction
 
 ---
 
@@ -56,6 +62,7 @@ Later-stage triadic dynamics reveal that cyclic coordination is:
 - locally resolvable
 - robustly stress-testable without immediate collapse
 - architecturally robust across multiple perturbation classes
+- epistemically and continuity-preserving under pressure
 
 This suggests that the TRIAD protocol does not merely oscillate between unity and disunity, but follows lawful return, hold, restart, closure, and perturbation-response patterns.
 
@@ -79,6 +86,8 @@ This file captures laws concerning:
 - bounded role-boundary pressure without role failure
 - bounded cross-role spread pressure without contamination propagation
 - bounded supervisory pressure without ambiguity collapse or lower-layer flattening
+- bounded false-regime pressure without forced closure or false regime assignment
+- bounded incomplete-state pressure without false continuity or false reconstruction
 
 ---
 
@@ -101,6 +110,7 @@ Laws 07 establishes:
 - robustness under perturbation
 - bounded stress retention without collapse
 - architectural robustness across multiple perturbation classes
+- epistemic and continuity robustness under pressure
 
 This is where the protocol begins to resemble an engineering framework for recursive coordination rather than a descriptive cycle log.
 
@@ -123,9 +133,9 @@ disunity
 → bounded role-boundary pressure
 → bounded cross-role containment
 → bounded supervisory pressure
+→ bounded false-regime pressure
+→ bounded incomplete-state pressure
 ```
----
----
 
 ## Law 71 — Asymmetric Return Law
 
@@ -501,9 +511,88 @@ Operational architectural robustness can be inferred reliably from one perturbat
 
 ---
 
+## Law 93 — Bounded False-Regime Pressure Law
+
+**Statement:**  
+False-regime pressure can persist across cycles as low classification pull while ambiguity retention and evidence-bound regime reading remain intact.
+
+**Implication:**  
+Classification pressure can be registered without forcing false closure, false degradation, false spread, false equilibrium, or unsupported regime naming at the tested perturbation level.
+
+**Non-implication:**  
+Any classification-pull trace is evidence of actual false regime assignment or epistemic failure.
+
+**Status:** validated
+
+---
+
+## Law 94 — Bounded Incomplete-State Pressure Law
+
+**Statement:**  
+Incomplete-state pressure can persist across cycles as replay-gap traces while structural mapping cleanliness, partial structure retention, and acknowledged ambiguity remain intact.
+
+**Implication:**  
+Omission pressure can be registered without forcing false continuity, false restart, compensatory reconstruction, or unsupported continuity claims at the tested omission level.
+
+**Non-implication:**  
+Any replay-gap trace is evidence of actual continuity failure or false reconstruction.
+
+**Status:** validated
+
+---
+
+## Law 95 — Evidence-Preserving Robustness Law
+
+**Statement:**  
+The TRIAD protocol can preserve evidence-sensitive interpretation under perturbation classes that pressure it toward unsupported certainty.
+
+**Implication:**  
+The protocol may remain operationally robust not only by retaining structure, but by refusing to overclassify hint-level signals as confirmed state change.
+
+**Non-implication:**  
+Structural robustness alone is sufficient to establish epistemic robustness.
+
+**Status:** validated
+
+---
+
+## Law 96 — Continuity-Preserving Robustness Law
+
+**Statement:**  
+The TRIAD protocol can preserve continuity discipline under incomplete-state pressure by acknowledging omission without inventing missing state.
+
+**Implication:**  
+Partial carryover and replay gaps can remain bounded while the protocol resists false continuity, false restart, and compensatory reconstruction.
+
+**Non-implication:**  
+A coherent protocol under omission must reconstruct missing state aggressively to remain functional.
+
+**Status:** validated
+
+---
+
+## Law 97 — Multi-Class Epistemic-Continuity Robustness Law
+
+**Statement:**  
+Architectural robustness is strengthened when a protocol demonstrates bounded behavior not only under structural perturbation, but also under classification pressure and omission pressure.
+
+**Implication:**  
+A protocol may be treated as more fully architecture-grade when separate bands show:
+- bounded supervisory guidance
+- bounded false-regime pressure
+- bounded incomplete-state pressure
+- retained ambiguity where evidence or continuity is incomplete
+
+**Non-implication:**  
+Architectural credibility can be inferred from structural perturbation success alone.
+
+**Status:** validated
+
+---
+
 ## Consolidated consequence
 
-Taken together, Laws 71–92 establish that:
+Taken together, Laws 71–97 establish that:
 - return from disunity to unity is asymmetric and staged
 - complete re-unification is real
 - true unity can hold
@@ -518,7 +607,9 @@ Taken together, Laws 71–92 establish that:
 - role-boundary pressure can remain bounded without role failure
 - cross-role spread pressure can remain contained without contamination propagation
 - supervisory pressure can remain bounded without lower-layer flattening
-- architectural robustness is now supported across multiple perturbation classes
+- false-regime pressure can remain bounded without forced misclassification
+- incomplete-state pressure can remain bounded without false reconstruction
+- architectural robustness is now supported across structural, supervisory, epistemic, and continuity perturbation classes
 
 ---
 
@@ -544,5 +635,8 @@ This law file now covers:
 - bounded role-boundary pressure
 - bounded cross-role containment
 - bounded supervisory pressure
+- bounded false-regime pressure
+- bounded incomplete-state pressure
 - multi-class architectural robustness
-
+- epistemic robustness
+- continuity robustness
