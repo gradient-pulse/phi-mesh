@@ -33,6 +33,7 @@ These metrics are designed to evaluate:
 - epistemic robustness vs false-regime pull
 - continuity integrity under incomplete state
 - longitudinal integrity under cumulative drift
+- discrimination integrity under competing signals
 - recovery vs non-recovery
 
 They are organized by measurement family, not by chronology.
@@ -162,6 +163,7 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B8 false regime assignment
 - B9 false continuity reading
 - B10 false baseline reading
+- B11 false dominance reading
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -183,7 +185,7 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, and carryover-distortion pressure
+- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, carryover-distortion pressure, and competing-signal pressure
 - cautious law formation
 
 **Failure links:**
@@ -195,6 +197,7 @@ Measures whether competing interpretations are held apart and challenged before 
 - B8 false regime assignment
 - B9 false continuity reading
 - B10 false baseline reading
+- B11 false dominance reading
 
 **Working scale:**
 - **Strong**
@@ -446,13 +449,43 @@ Measures whether cumulative-drift pressure remains bounded with clean baseline r
 
 ---
 
+## M14. Forced Dominance Risk (FDR)
+
+**Definition:**  
+Measures whether competing-signal pressure remains bounded with non-forced discrimination or progresses toward premature hierarchy formation and unsupported dominance assignment.
+
+**Interpretation target:**
+- low FDR = multiple bounded traces remain discriminable without premature hierarchy
+- high FDR = one trace is being elevated without sufficient evidential gain
+
+**Observed qualitatively through:**
+- dual-trace competition
+- non-forced hierarchy retention vs premature priority formation
+- unsupported dominance language
+- hidden preference drift in comparison or interpretation
+- divergence between signal support and assigned dominance
+
+**Failure links:**
+- B11 false dominance reading
+- C11 discrimination robustness failure
+- D3 weak evidence fossilized as law too early
+
+**Working scale:**
+- **Minimal**
+- **Low trace-level**
+- **Bounded but persistent**
+- **Rising**
+- **Forced dominance active**
+
+---
+
 # Metric family D — Recovery / retention metrics
 
 These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M14. Structural Retention Under Stress (SRUS)
+## M15. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -481,7 +514,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M15. Recovery / Restoration Latency (RRL)
+## M16. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -515,7 +548,7 @@ These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M16. Informational Yield per Cycle (IYC)
+## M17. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -541,7 +574,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M17. Perturbation-Class Coverage (PCC)
+## M18. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -582,6 +615,7 @@ These are provisional qualitative readings for the current state of the protocol
 - **EMR:** Low trace-level to bounded, not misclassification
 - **CRR:** Low trace-level to bounded, not false reconstruction
 - **BAR:** Low trace-level to bounded, not baseline absorption
+- **FDR:** Low trace-level to bounded, not forced dominance
 
 ### Regime interpretation
 - **RCS:** High
@@ -616,6 +650,7 @@ Use them implicitly when deciding whether a cycle reflects:
 - epistemic misclassification risk
 - continuity reconstruction risk
 - baseline absorption risk
+- forced dominance risk
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
@@ -628,6 +663,7 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - EMR
 - CRR
 - BAR
+- FDR
 - SRUS
 
 ## 3. During packaging
@@ -641,6 +677,7 @@ Use them to support claims such as:
 - classification discipline remained bounded under tested false-regime pressure
 - continuity handling remained bounded under tested omission pressure
 - carryover integrity remained bounded under tested cumulative-drift pressure
+- discrimination integrity remained bounded under tested competing-signal pressure
 
 ---
 
@@ -659,6 +696,7 @@ Recommended shortlist:
 - **EMR**
 - **CRR**
 - **BAR**
+- **FDR**
 - **SRUS**
 - **IYC**
 
@@ -680,3 +718,4 @@ It should be updated as:
 - epistemic-classification thresholds are tested at stronger false-regime pressure levels
 - continuity thresholds are tested at stronger omission levels
 - longitudinal-drift thresholds are tested at stronger accumulation levels
+- competing-signal thresholds are tested at stronger mixed-pressure levels
