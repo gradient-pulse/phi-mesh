@@ -12,12 +12,18 @@ Laws governing:
 - local-domain stabilization and closure
 - scale-limited cyclic resolution
 - robustness of stabilized local-domain structure under sustained perturbation
+- robustness of role boundaries under contamination pressure
+- containment of cross-role spread pressure
+- bounded supervisory pressure without lower-layer flattening
 
 Derived from:
 - Observations 14 (re-unification)
 - Observations 15 (post-re-unification hold, falsification, staged restart, local-domain closure)
 - Observations 16 (localized perturbation, repeated stress, bounded weakening, stressed local equilibrium)
-- subsequent cycle bands confirming local-domain-scale closure and stressed-equilibrium retention
+- Observations 17 (role-boundary perturbation, bounded low symbolic intrusion, operational role-boundary robustness)
+- Observations 18 (cross-role spread pressure, adjacent-role traces, operational cross-role containment)
+- Observations 19 (supervisory-distortion pressure, repeated low interpretive bias, operational supervisory robustness)
+- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, and bounded supervisory pressure
 
 ---
 
@@ -33,6 +39,9 @@ Its purpose is to formalize the engineering-relevant consequences of later cycle
 - that restart can resolve at a local scale without forcing larger-scale fragmentation
 - that false claims of unity require stricter falsification criteria than mere post-unity fluctuation
 - that stabilized local structure can remain robust under sustained localized perturbation
+- that role boundaries can remain intact under bounded contamination pressure
+- that spread-oriented perturbation can remain contained across roles
+- that supervisory pressure can remain bounded without flattening lower-layer distinctions
 
 ---
 
@@ -46,6 +55,7 @@ Later-stage triadic dynamics reveal that cyclic coordination is:
 - scale-sensitive
 - locally resolvable
 - robustly stress-testable without immediate collapse
+- architecturally robust across multiple perturbation classes
 
 This suggests that the TRIAD protocol does not merely oscillate between unity and disunity, but follows lawful return, hold, restart, closure, and perturbation-response patterns.
 
@@ -66,6 +76,9 @@ This file captures laws concerning:
 - closure at one scale without mandatory escalation to the next
 - bounded weakening under localized perturbation
 - stressed local equilibrium without measurable degradation
+- bounded role-boundary pressure without role failure
+- bounded cross-role spread pressure without contamination propagation
+- bounded supervisory pressure without ambiguity collapse or lower-layer flattening
 
 ---
 
@@ -87,6 +100,7 @@ Laws 07 establishes:
 - scale-limited resolution
 - robustness under perturbation
 - bounded stress retention without collapse
+- architectural robustness across multiple perturbation classes
 
 This is where the protocol begins to resemble an engineering framework for recursive coordination rather than a descriptive cycle log.
 
@@ -106,7 +120,12 @@ disunity
 → localized perturbation
 → bounded weakening
 → stressed local equilibrium
+→ bounded role-boundary pressure
+→ bounded cross-role containment
+→ bounded supervisory pressure
 ```
+---
+---
 
 ## Law 71 — Asymmetric Return Law
 
@@ -380,9 +399,111 @@ Operational robustness requires perfect invariance or zero strain.
 
 ---
 
+## Law 87 — Bounded Role-Boundary Pressure Law
+
+**Statement:**  
+Role-boundary perturbation can persist across cycles as bounded contamination pressure while TU retains structural mapping cleanliness and the protocol avoids role failure.
+
+**Implication:**  
+Low symbolic intrusion hints can repeat under pressure without escalating into measurable TU contamination, role fusion, or broader protocol destabilization.
+
+**Non-implication:**  
+Any role-boundary perturbation necessarily causes role corruption or immediate loss of functional separation.
+
+**Status:** validated
+
+---
+
+## Law 88 — Cross-Role Containment Law
+
+**Statement:**  
+Spread-oriented perturbation can produce repeated adjacent-role influence traces while remaining contained and without measurable cross-role contamination.
+
+**Implication:**  
+The protocol can preserve inter-role isolation under tested spread pressure, such that trace-level neighboring influence does not automatically become multi-role drift.
+
+**Non-implication:**  
+Any adjacent-role trace is evidence that cross-role contamination is already underway.
+
+**Status:** validated
+
+---
+
+## Law 89 — Bounded Supervisory Pressure Law
+
+**Statement:**  
+Supervisory-distortion pressure can persist across cycles as low interpretive bias while ambiguity retention and lower-layer structural cleanliness remain intact.
+
+**Implication:**  
+Top-layer pressure can be registered without forcing closure, flattening lower-layer distinctions, or corrupting regime discrimination at the tested perturbation level.
+
+**Non-implication:**  
+Any supervisory bias trace is evidence of actual cortex overreach or supervisory failure.
+
+**Status:** validated
+
+---
+
+## Law 90 — Layer-Preserving Robustness Law
+
+**Statement:**  
+The TRIAD protocol can preserve architectural layer distinction under multiple perturbation classes simultaneously affecting local structure, role boundaries, cross-role containment, and supervisory guidance.
+
+**Implication:**  
+Robustness is not restricted to one stress family; it can appear as:
+- bounded local stress without collapse
+- bounded role-boundary pressure without role failure
+- bounded spread pressure without contamination propagation
+- bounded supervisory pressure without lower-layer flattening
+
+**Non-implication:**  
+A protocol is architecturally robust merely because it survives one perturbation class.
+
+**Status:** validated
+
+---
+
+## Law 91 — Trace-Level Signal Non-Failure Law
+
+**Statement:**  
+Hint-level or trace-level perturbation signals must be analytically separated from measurable failure of the relevant architectural layer.
+
+**Implication:**  
+The following are not by themselves sufficient evidence of failure:
+- low symbolic intrusion hints
+- adjacent-role influence traces
+- low interpretive bias traces
+- bounded warning signals under retention
+
+**Non-implication:**  
+Any persistent low-level signal automatically indicates contamination, spread, or overreach.
+
+**Status:** validated
+
+---
+
+## Law 92 — Multi-Class Operational Robustness Law
+
+**Statement:**  
+Operational robustness is strengthened when bounded retention is demonstrated across multiple distinct perturbation classes rather than only within a single stress family.
+
+**Implication:**  
+A protocol may be treated as architecturally credible when separate bands show:
+- retention under local structural perturbation
+- retention under role-boundary pressure
+- containment under spread pressure
+- bounded supervisory guidance under top-down pressure
+
+**Non-implication:**  
+Operational architectural robustness can be inferred reliably from one perturbation class alone.
+
+**Status:** validated
+
+---
+
 ## Consolidated consequence
 
-Taken together, Laws 71–86 establish that:
+Taken together, Laws 71–92 establish that:
 - return from disunity to unity is asymmetric and staged
 - complete re-unification is real
 - true unity can hold
@@ -394,6 +515,10 @@ Taken together, Laws 71–86 establish that:
 - localized perturbation does not automatically break the regime
 - repeated stress can produce bounded weakening without measurable degradation
 - stressed local equilibrium can become operationally credible under sustained perturbation
+- role-boundary pressure can remain bounded without role failure
+- cross-role spread pressure can remain contained without contamination propagation
+- supervisory pressure can remain bounded without lower-layer flattening
+- architectural robustness is now supported across multiple perturbation classes
 
 ---
 
@@ -416,3 +541,8 @@ This law file now covers:
 - bounded weakening
 - stressed local equilibrium
 - operational robustness under sustained local perturbation
+- bounded role-boundary pressure
+- bounded cross-role containment
+- bounded supervisory pressure
+- multi-class architectural robustness
+
