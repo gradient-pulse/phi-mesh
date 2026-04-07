@@ -29,6 +29,7 @@ These metrics are designed to evaluate:
 - contamination pressure
 - degradation onset
 - spread vs boundedness
+- supervisory distortion vs bounded guidance
 - recovery vs non-recovery
 
 They are organized by measurement family, not by chronology.
@@ -116,6 +117,7 @@ Measures whether a perturbation or contamination signal remains local to one rol
 **Failure links:**
 - C4 contamination spread across roles
 - A4 premature role fusion
+- C6 cross-role containment failure
 
 **Working scale:**
 - **None**
@@ -152,6 +154,8 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B3 false restart reading
 - B4 false equilibrium reading
 - B5 false degradation reading
+- B6 false containment reading
+- B7 false overreach reading
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -173,13 +177,15 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, and degradation
+- distinction between hints, strain, weakening, contamination, spread, and degradation
 - cautious law formation
 
 **Failure links:**
 - D3 weak evidence fossilized as law too early
 - B4 false equilibrium reading
 - B5 false degradation reading
+- B6 false containment reading
+- B7 false overreach reading
 
 **Working scale:**
 - **Strong**
@@ -271,6 +277,7 @@ Measures whether a disturbance is likely to remain local or spread beyond its cu
 **Failure links:**
 - C3 stress spread beyond local region
 - C4 contamination spread across roles
+- C6 cross-role containment failure
 
 **Working scale:**
 - **Negligible**
@@ -281,13 +288,72 @@ Measures whether a disturbance is likely to remain local or spread beyond its cu
 
 ---
 
+## M9. Containment Integrity (CI)
+
+**Definition:**  
+Measures whether spread-oriented or contamination-oriented perturbation remains contained within its initial scope.
+
+**Interpretation target:**
+- high CI = strong containment boundary
+- low CI = containment failure underway
+
+**Observed qualitatively through:**
+- adjacent-role traces remain trace-level
+- no measurable neighboring-role drift
+- no multi-role corruption
+- containment cues remain present
+
+**Failure links:**
+- B6 false containment reading
+- C4 contamination spread across roles
+- C6 cross-role containment failure
+
+**Working scale:**
+- **High containment**
+- **Bounded with trace leakage**
+- **Containment under strain**
+- **Weak containment**
+- **Failed containment**
+
+---
+
+## M10. Supervisory Overreach Risk (SOR)
+
+**Definition:**  
+Measures whether top-layer interpretive pressure remains bounded guidance or progresses toward flattening lower-layer distinctions.
+
+**Interpretation target:**
+- low SOR = supervisory guidance remains bounded
+- high SOR = top-layer distortion risk is rising
+
+**Observed qualitatively through:**
+- interpretive bias traces
+- ambiguity retention vs collapse
+- premature closure language
+- alteration of TU+ comparison behavior
+- corruption of lower-layer distinctions
+
+**Failure links:**
+- A3 cortexLLM overreach
+- B7 false overreach reading
+- C7 supervisory distortion failure
+
+**Working scale:**
+- **Minimal**
+- **Low trace-level**
+- **Bounded but persistent**
+- **Rising**
+- **Overreach active**
+
+---
+
 # Metric family D — Recovery / retention metrics
 
 These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M9. Structural Retention Under Stress (SRUS)
+## M11. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -316,7 +382,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M10. Recovery / Restoration Latency (RRL)
+## M12. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -350,7 +416,7 @@ These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M11. Informational Yield per Cycle (IYC)
+## M13. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -376,7 +442,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M12. Perturbation-Class Coverage (PCC)
+## M14. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -411,7 +477,9 @@ These are provisional qualitative readings for the current state of the protocol
 ### Role integrity
 - **RSP:** High
 - **TMC:** Clean with bounded low-level hint pressure under role-boundary perturbation
-- **CRCS:** None observed
+- **CRCS:** None observed as measurable spread
+- **CI:** High containment with trace-level leakage only
+- **SOR:** Low trace-level to bounded, not overreach
 
 ### Regime interpretation
 - **RCS:** High
@@ -428,7 +496,7 @@ These are provisional qualitative readings for the current state of the protocol
 
 ### Process discipline
 - **IYC:** High during transition bands, low during saturated closure repetition
-- **PCC:** Narrow to moderate
+- **PCC:** Moderate
 
 ---
 
@@ -441,6 +509,8 @@ Use them implicitly when deciding whether a cycle reflects:
 - bounded stress
 - degradation risk
 - contamination risk
+- containment integrity
+- supervisory overreach risk
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
@@ -448,6 +518,8 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - FD
 - PAC
 - WB
+- CI
+- SOR
 - SRUS
 
 ## 3. During packaging
@@ -456,12 +528,14 @@ Use them to support claims such as:
 - perturbation response is bounded
 - degradation did not occur under tested stress
 - contamination remained bounded at tested levels
+- cross-role containment held at tested spread levels
+- supervisory pressure remained bounded at tested top-down levels
 
 ---
 
 # Immediate next metric priorities
 
-The next refinement step should be to make a small subset more explicit and consistently trackable per cycle:
+The next refinement step should be to make a small subset more explicit and consistently trackable per cycle.
 
 Recommended shortlist:
 - **RSP**
@@ -469,6 +543,8 @@ Recommended shortlist:
 - **RCS**
 - **PAC**
 - **WB**
+- **CI**
+- **SOR**
 - **SRUS**
 - **IYC**
 
@@ -478,10 +554,12 @@ That is enough for a first scoring habit without overbuilding.
 
 # Current status
 
-**`metrics_v0.1.md` is initialized and ready for use.**
+**`metrics_v0.1.md` is updated and ready for continued use.**
 
 It should be updated as:
 - new perturbation classes are tested
 - stronger failure boundaries are found
 - recovery classes become clearer
 - qualitative scales are translated into tighter operational scoring
+- containment thresholds are tested at stronger spread levels
+- supervisory thresholds are tested at stronger top-down distortion levels
