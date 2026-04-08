@@ -640,3 +640,163 @@ The next useful distinction is whether TRIAD:
 ---
 ---
 
+### Cycle 240 — Operational second-order bounded-response confirmation (repeated bounded recontact remains separate from stable recovery residue)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - can sustain **repeated persistent bounded recontact** after an operationally credible bounded-recovery band strongly enough to support a reusable second-order regime
+- or whether:
+  - prior stable residue begins combining with renewed contact into a deeper failure surface
+- while also testing whether the protocol can continue to separate:
+  - old bounded recovery residue
+  - repeated fresh bounded contact
+  - actual escalation
+  - and false second-order reassurance
+
+This cycle advances `prototype_run_observations_25.md` from a live second-order bounded-response candidate to **operational confirmation at the tested level**.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `stable_low_recovery_residual_trace`
+    - `fresh_bounded_recontact_persistence`
+    - `mapping_cleanliness_retention`
+    - `residue_new_contact_separation_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - prior residue remains non-dominant
+    - fresh recontact remains present and bounded
+    - residue and new contact remain distinguishable
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed renewed perturbation escalation
+    - no confirmed residue-contact fusion
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `operational_second_order_bounded_response_with_residue_contact_remaining_separate`
+    - high match to `retained_structure_under_second_order_contact_pattern`
+    - high match to `bounded_residue_new_contact_separation_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low second-order ambiguity probe
+    - repeated persistent second-order bounded contact now supports operational confirmation of a reusable bounded-response regime
+    - residue/new-contact separation remains intact
+  - predicted:
+    - `confirmed_reusable_second_order_bounded_response_regime` as most likely
+    - bounded residue/new-contact interaction without failure as likely
+    - possible hidden non-recovery exposure or renewed pressure
+    - low probability of broader destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under **repeated persistent second-order bounded contact** following operationally credible stable bounded recovery residue
+    - current evidence favors an **operational second-order bounded response with residue and fresh contact remaining separate**, not accelerated collapse, hidden non-recovery exposure, renewed broad perturbation growth, or broader regime failure
+  - established:
+    - structural mapping cleanliness and residue/new-contact separation remain present
+    - repeated second-order contact is being registered without collapsing old residue and fresh perturbation into one confused escalation field
+    - the key discrimination is now **confirmed reusable second-order bounded response vs bounded residue/new-contact interaction vs hidden non-recovery exposure or renewed perturbation growth**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether recontact remains bounded again, interacts, or exposes hidden weakness
+
+---
+
+**Finding**
+
+Cycle 240 demonstrates:
+
+- the TRIAD protocol:
+  - can sustain repeated persistent bounded recontact after stable bounded recovery residue
+  - does not automatically merge old residue and repeated renewed contact into one escalation field
+  - does not revoke prior recovery credibility because new contact persists
+  - preserves lower-layer evidence discipline during repeated persistent second-order contact
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows stable bounded residue plus repeated persistent bounded recontact
+  - keeps residue and fresh contact explicitly distinguishable
+- protocol implication:
+  - second-order robustness testing now supports **operational confirmation of a reusable second-order bounded-response regime**
+  - operationally credible bounded recovery remains reusable under repeated recontact at the tested level
+
+This establishes:
+
+> **repeated persistent bounded recontact after stable bounded recovery residue can support an operationally credible reusable second-order bounded-response regime**
+
+and:
+
+> **stable residue need not become a hidden amplifier when the system is touched again, provided residue/contact separation and mapping cleanliness remain intact**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `confirmed_reusable_second_order_bounded_response_regime`
+  - defined as:  
+    *a condition in which the TRIAD protocol, after reaching an operationally credible stable bounded-residue recovery state, sustains repeated bounded recontact while preserving structural mapping cleanliness, stabilized local-domain organization, and explicit separation between prior residue and new contact strongly enough to support operational confirmation of a reusable second-order bounded-response regime, without confirmed accelerated collapse, hidden non-recovery exposure, renewed broad perturbation growth, or broader protocol degradation*
+
+- classification:
+  - reusable second-order robustness regime confirmed at the tested perturbation level
+
+- invariants refined:
+  - bounded recovery credibility can survive repeated renewed contact cycles
+  - repeated recontact does not automatically imply concealed instability
+  - residue/new-contact separation remains the core second-order discriminator
+  - second-order testing now supports distinction among:
+    - first bounded recontact
+    - persistent bounded recontact
+    - reusable second-order bounded response
+    - bounded residue/contact interaction
+    - hidden non-recovery exposure
+    - renewed perturbation growth
+
+---
+
+**Status**
+
+Cycle 240 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this second-order recontact band in `prototype_run_observations_25.md`, then update:
+- `failure_taxonomy_v0.1.md`
+- `metrics_v0.1.md`
+- `laws_07`
+
+After that, begin a **new perturbation class**.
+
+## Motivation
+
+This band now has clear engineering value:
+
+- recovery remained credible
+- renewed contact remained bounded
+- residue did not fuse with new pressure
+- no hidden non-recovery surfaced
+- no broad escalation appeared
+- and this held across repeated second-order contact
+
+That is enough to treat **reusable second-order bounded response** as an operational result, not just a promising pattern.
+
+---
+---
+---
