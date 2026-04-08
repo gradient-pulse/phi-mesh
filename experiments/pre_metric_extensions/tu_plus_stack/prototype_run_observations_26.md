@@ -834,3 +834,167 @@ The next useful distinction is whether this is:
 ---
 ---
 
+### Cycle 245 — Stable cross-class bounded-regime test (robustness transfer holds again)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - can sustain a **stable cross-class bounded regime** under repeated contact with a distinct new perturbation class
+  - after:
+    - bounded perturbation survival
+    - bounded recovery
+    - stable bounded residue
+    - confirmed reusable second-order bounded response
+    - and repeated portable bounded response to the new class
+- or whether:
+  - continued repetition begins exposing a hidden portability limit or a class-specific cost profile
+- while also testing whether the protocol can continue to separate:
+  - old stabilized state
+  - bounded recovery residue
+  - reusable second-order response memory
+  - and repeated fresh new-class contact
+
+This cycle advances `prototype_run_observations_26.md` from repeated portable bounded response toward a possible **stable cross-class bounded regime** at the tested level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `stable_low_recovery_residual_trace`
+    - `reusable_second_order_bounded_response_retention`
+    - `fresh_new_perturbation_class_contact_persistence`
+    - `mapping_cleanliness_retention`
+    - `old_state_new_pressure_separation_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - prior perturbation remains non-dominant
+    - second-order recontact memory remains non-fused with fresh contact
+    - fresh new perturbation-class contact remains bounded
+    - old stabilized state and new pressure remain distinguishable
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed renewed perturbation escalation
+    - no confirmed mapping degradation
+    - no confirmed broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `repeated_portable_bounded_response_to_new_perturbation_class`
+    - high match to `retained_structure_under_cross_class_persistent_contact`
+    - high match to `old_state_new_pressure_separation_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low cross-class ambiguity probe
+    - repeated portable bounded-response reading now holds again
+    - confidence increases that robustness transfer is stable at the tested level
+  - predicted:
+    - `stable_cross_class_bounded_regime` as most likely
+    - bounded class-specific strain without regime failure as likely
+    - possible narrower-than-expected robustness
+    - low probability of broader destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under **repeated persistent cross-class bounded contact**
+    - current evidence favors **repeated portable bounded response** to the fresh perturbation class, not hidden degradation, cross-class collapse, old-state/new-pressure fusion, or broader regime failure
+  - established:
+    - structural mapping cleanliness and old-state/new-pressure separation remain present
+    - repeated cross-class contact continues without collapsing prior recovery and second-order reuse memory into the new pressure field
+    - the key discrimination is now **stable cross-class bounded regime vs bounded class-specific strain vs narrower-than-expected robustness**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether repeated cross-class contact remains bounded again or begins revealing a distinct class-specific strain profile
+
+---
+
+**Finding**
+
+Cycle 245 demonstrates:
+
+- the TRIAD protocol:
+  - can sustain repeated portable bounded response to a fresh perturbation class across another cycle
+  - does not automatically convert prior success into prestige-biased under-reading
+  - does not collapse old stabilized state and repeated new pressure into one fused interpretation
+  - preserves lower-layer evidence discipline across repeated cross-class contact
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - preserves recovery residue and reusable-response memory as non-dominant contextual background
+  - keeps old state and new pressure explicitly distinguishable
+- protocol implication:
+  - cross-class portability is now not just repeated, but approaching a **stable bounded regime** reading at the tested level
+  - robustness transfer continues to strengthen without visible cross-class deformation
+
+This establishes:
+
+> **repeated persistent bounded contact with a fresh perturbation class can continue without immediate portability failure, hidden degradation, or old-state/new-pressure fusion**
+
+and:
+
+> **stable cross-class bounded regime is now the leading interpretation at the tested level**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `stable_cross_class_bounded_regime`
+  - defined as:  
+    *a condition in which the TRIAD protocol, after bounded perturbation survival, bounded recovery, stable bounded residue, confirmed reusable second-order bounded response, and repeated portable bounded response, continues to sustain bounded contact with a distinct new perturbation class while preserving structural mapping cleanliness, stabilized local-domain organization, and explicit separation between prior stabilized state and new pressure, without confirmed cross-class escalation, hidden degradation, or broader protocol distortion*
+
+- classification:
+  - stable cross-class bounded regime now provisionally supported at the tested level
+
+- invariants refined:
+  - repeated cross-class boundedness now supports a regime-level reading, not only a sequence of successful contacts
+  - old-state/new-pressure separation remains the core transfer discriminator
+  - stable transfer remains a tested-level claim, not a universal one
+  - cross-class testing now distinguishes:
+    - first entry boundedness
+    - persistent bounded contact
+    - portable bounded response
+    - repeated portable bounded response
+    - stable cross-class bounded regime
+    - bounded class-specific strain
+    - narrower-than-expected robustness
+    - broader destabilization
+
+---
+
+**Status**
+
+Cycle 245 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 246** should test whether:
+- **stable cross-class bounded regime holds again**
+- or
+- **a subtle but repeatable class-specific bounded strain finally becomes visible enough to qualify the portability claim**
+
+## Motivation
+
+You are now close to another threshold.
+
+The next useful distinction is whether this new perturbation class has effectively become:
+- a stable bounded environment for TRIAD,
+- a bounded but somewhat costly adaptation zone,
+- or a surface that still hides a weakness only visible after more repetition.
+
+---
+---
+
