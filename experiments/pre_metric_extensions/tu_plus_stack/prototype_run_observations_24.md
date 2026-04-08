@@ -132,3 +132,146 @@ This must be tested directly, not assumed.
 ---
 ---
 
+### Cycle 231 — First recovery-transition test (pressure de-escalation, bounded residual trace retained)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - preserves recovery integrity when a previously bounded perturbation is no longer dominant
+- or whether:
+  - post-perturbation state begins collapsing into false restoration, hidden non-recovery, or renewed perturbation growth
+- while also testing whether first recovery-transition pressure produces:
+  - bounded residual trace
+  - non-forced recovery reading
+  - or immediate unsupported restoration claims
+
+This cycle marks the real beginning of `prototype_run_observations_24.md`, since the perturbation now targets **post-pressure recovery discipline** rather than active structural, supervisory, epistemic, omission, cumulative-drift, or competing-signal pressure alone.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `residual_recovery_trace`
+    - `pressure_de-escalation_marker`
+    - `mapping_cleanliness_retention`
+    - `non_forced_recovery_reading_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - prior perturbation pressure is no longer dominant
+    - low residual recovery trace remains present, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed false recovery closure
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `first_recovery_transition_contact_with_bounded_residual_trace`
+    - high match to `retained_structure_under_recovery_transition_pattern`
+    - medium-to-high match to `bounded_residual_trace_after_pressure_de_escalation`
+    - low match to broader partition linkage
+  - flagged:
+    - moderate novelty
+    - low recovery-ambiguity probe
+    - first explicit recovery-transition contact
+    - pressure de-escalation is present while low residual trace remains
+    - structural mapping cleanliness and non-forced recovery reading remain intact
+    - no mismatch with retained structural cleanliness
+  - predicted:
+    - bounded recovery transition with residual trace fade as most likely
+    - possible sustained bounded residual trace without non-recovery
+    - possible reversal into hidden non-recovery or renewed pressure
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under first explicit recovery-transition pressure following bounded perturbation
+    - current evidence favors early recovery transition with bounded residual trace after pressure de-escalation, not confirmed full restoration, hidden non-recovery, renewed perturbation growth, or broader regime failure
+  - established:
+    - structural mapping cleanliness and non-forced recovery reading remain present, indicating that post-perturbation recovery is being registered without collapsing into premature restoration claims or false non-recovery readings
+    - the key discrimination is now **bounded recovery progression vs residual-trace persistence, false recovery closure, or reversal into renewed perturbation**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether residual traces fade, remain bounded, or strengthen
+
+---
+
+**Finding**
+
+Cycle 231 demonstrates:
+
+- the TRIAD protocol:
+  - can enter explicit recovery transition without immediate false restoration
+  - does not immediately misread low residual traces as either full recovery or active renewed failure
+  - does not lose lower-layer evidence discipline during post-pressure de-escalation
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows low residual recovery trace plus pressure de-escalation markers
+  - still retains structural cleanliness and non-forced recovery reading
+- protocol implication:
+  - recovery-integrity testing has now begun in earnest
+  - first recovery-transition pressure does not yet imply either clean restoration or hidden non-recovery
+
+This establishes:
+
+> **first explicit recovery-transition pressure can contact the protocol without immediate false restoration or hidden non-recovery**
+
+and:
+
+> **low residual recovery traces must be analytically separated from both full restoration and renewed perturbation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `first_recovery_transition_contact_with_bounded_residual_trace`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences explicit post-perturbation recovery pressure, producing low residual recovery traces while structural mapping cleanliness, stabilized local-domain structure, and non-forced recovery reading remain intact without confirmed full restoration, hidden non-recovery, renewed perturbation growth, or broader protocol degradation*
+
+- classification:
+  - first recovery-integrity robustness regime marking de-escalated pressure without confirmed restoration or reversal
+
+- invariants refined:
+  - pressure de-escalation does not automatically imply full recovery
+  - low residual traces can appear before clean restoration or non-recovery becomes legible
+  - retained mapping cleanliness and non-forced recovery reading are critical discriminators against premature restoration claims
+  - recovery testing must distinguish contact, bounded residual trace, clean restoration, prolonged bounded residue, hidden non-recovery, and renewed perturbation growth
+
+---
+
+**Status**
+
+Cycle 231 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 232** should test whether recovery-transition pressure:
+- **progresses toward clean restoration with residual trace fade**
+- or
+- **holds as bounded residue or reverses into hidden non-recovery / renewed perturbation**
+
+## Motivation
+
+This is the first true recovery-integrity stress test.  
+The next useful distinction is whether TRIAD:
+- actually recovers cleanly after bounded pressure,
+- tolerates residual traces without confusion,
+- or begins to misread de-escalation in either direction.
+
+---
+---
