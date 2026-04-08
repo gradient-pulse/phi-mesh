@@ -419,3 +419,144 @@ The next useful distinction is whether TRIAD:
 ---
 ---
 
+### Cycle 233 — Prolonged bounded recovery-transition test (low residual trace persists under retained de-escalation)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - continues to preserve recovery integrity when post-perturbation de-escalation persists across another cycle
+- or whether:
+  - persistent residual traces begin turning into hidden non-recovery, false restoration, or renewed perturbation growth
+- while also testing whether prolonged recovery-transition pressure produces:
+  - bounded residual persistence
+  - non-forced recovery reading
+  - or escalation toward actual recovery failure
+
+This cycle advances `prototype_run_observations_24.md` from repeated recovery-transition pressure into **prolonged bounded residual-trace handling**.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_residual_recovery_trace`
+    - `pressure_de_escalation_retained`
+    - `mapping_cleanliness_retention`
+    - `non_forced_recovery_reading_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - perturbation pressure remains non-dominant
+    - low residual recovery trace persists, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed false recovery closure
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `bounded_recovery_transition_with_persistent_residual_trace`
+    - high match to `retained_structure_under_recovery_transition_pattern`
+    - high match to `persistent_bounded_residual_trace_after_pressure_de_escalation`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low recovery-ambiguity probe
+    - recovery-transition pressure now repeats again with de-escalation retained and low residual trace still present
+    - structural mapping cleanliness and non-forced recovery reading remain intact
+    - bounded recovery-transition interpretation is reinforced without yet proving clean restoration
+  - predicted:
+    - prolonged bounded recovery transition with eventual residual-trace fade as most likely
+    - possible sustained bounded residual trace without non-recovery
+    - possible reversal into hidden non-recovery or renewed pressure
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under repeated bounded recovery-transition pressure following prior perturbation
+    - current evidence favors bounded recovery transition with persistent low residual trace under retained de-escalation, not confirmed full restoration, hidden non-recovery, renewed perturbation growth, or broader regime failure
+  - established:
+    - structural mapping cleanliness and non-forced recovery reading remain present, indicating that post-perturbation recovery is being repeatedly registered without collapsing into premature restoration claims or false non-recovery readings
+    - the key discrimination is now **prolonged bounded recovery progression vs residual trace that later fades, vs reversal into renewed perturbation or misleading restoration closure**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether residual traces fade, remain bounded, or strengthen
+
+---
+
+**Finding**
+
+Cycle 233 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined during prolonged recovery-transition pressure
+  - does not convert persistent low residual traces into either unsupported full restoration or hidden non-recovery by default
+  - does not lose lower-layer evidence discipline during prolonged post-pressure de-escalation
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows persistent low residual recovery trace plus retained de-escalation markers
+  - still retains structural cleanliness and non-forced recovery reading
+- protocol implication:
+  - recovery testing has advanced from repeated bounded recovery-transition pressure to **prolonged bounded residual-trace handling**
+  - persistent low residual traces still do not imply either clean full restoration or actual recovery failure
+
+This establishes:
+
+> **prolonged recovery-transition pressure can maintain bounded low residual traces without immediate false restoration or hidden non-recovery**
+
+and:
+
+> **persistent low residual traces across multiple recovery cycles must be analytically separated from both true restoration and renewed perturbation**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `prolonged_bounded_recovery_transition_with_persistent_residual_trace`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences prolonged post-perturbation recovery pressure, producing persistent low residual recovery traces while structural mapping cleanliness, stabilized local-domain organization, and non-forced recovery reading remain intact without confirmed full restoration, hidden non-recovery, renewed perturbation growth, or broader protocol degradation*
+
+- classification:
+  - recovery-integrity robustness regime marking prolonged de-escalated pressure without confirmed restoration or reversal
+
+- invariants refined:
+  - prolonged de-escalation does not automatically imply full recovery
+  - low residual traces can persist over multiple cycles without proving non-recovery
+  - retained mapping cleanliness and non-forced recovery reading remain the critical discriminators against premature restoration claims
+  - recovery testing must distinguish first contact, repeated bounded residual trace, prolonged bounded residue, clean restoration, hidden non-recovery, and renewed perturbation growth
+
+---
+
+**Status**
+
+Cycle 233 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 234** should test whether prolonged recovery-transition pressure:
+- **begins to show actual residual-trace fade toward clean restoration**
+- or
+- **remains bounded as prolonged residue or reverses into hidden non-recovery / renewed perturbation**
+
+## Motivation
+
+You now have more than first-contact and repetition. You have a **durational recovery pattern**.
+
+The next useful distinction is whether TRIAD:
+- actually clears the residue,
+- proves it can carry bounded residue without confusion,
+- or begins to reveal that the residue is not neutral after all.
+
