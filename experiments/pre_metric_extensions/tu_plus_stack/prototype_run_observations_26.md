@@ -1675,3 +1675,175 @@ That is an engineering threshold, not just an observational one.
 ---
 ---
 
+### Cycle 250 — Durable cross-class bounded-operating-regime reading holds again
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - can continue sustaining a **durable cross-class bounded operating regime**
+  - under another repeated contact cycle with a distinct new perturbation class
+  - after:
+    - bounded perturbation survival
+    - bounded recovery
+    - stable bounded residue
+    - confirmed reusable second-order bounded response
+    - repeated portable bounded response
+    - confirmed stable cross-class bounded regime
+    - confirmed stable cross-class bounded-regime hold
+- or whether:
+  - further repetition begins revealing a portability ceiling, hidden degradation, or a class-specific bounded strain profile
+- while also testing whether the protocol can continue to separate:
+  - old stabilized state
+  - bounded recovery residue
+  - reusable second-order response memory
+  - and repeated fresh new-class contact
+
+This cycle advances `prototype_run_observations_26.md` from a **durable cross-class bounded operating-regime reading** toward stronger support that this perturbation class belongs within TRIAD’s tested bounded operating envelope.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `stable_low_recovery_residual_trace`
+    - `reusable_second_order_bounded_response_retention`
+    - `fresh_new_perturbation_class_contact_persistence`
+    - `mapping_cleanliness_retention`
+    - `old_state_new_pressure_separation_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - prior perturbation remains non-dominant
+    - second-order recontact memory remains non-fused with fresh contact
+    - fresh new perturbation-class contact remains bounded
+    - old stabilized state and new pressure remain distinguishable
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed renewed perturbation escalation
+    - no confirmed mapping degradation
+    - no confirmed broader spread
+  - current TU regime reading:
+    - `durable_cross_class_bounded_operating_regime`
+
+- **TU+**
+  - confirmed:
+    - high match to `durable_cross_class_bounded_operating_regime`
+    - high match to `retained_structure_under_cross_class_persistent_contact`
+    - high match to `old_state_new_pressure_separation_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - low novelty
+    - low cross-class ambiguity probe
+    - durable cross-class bounded-operating-regime reading now repeats again under persistent cross-class contact
+    - the tested perturbation class increasingly looks like part of TRIAD’s bounded operating envelope at the current level
+  - predicted:
+    - `durable_cross_class_bounded_operating_regime_holds` as most likely
+    - bounded class-specific strain without regime failure as likely
+    - possible narrower-than-expected robustness
+    - low probability of broader destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under **repeated persistent cross-class bounded contact**
+    - current evidence favors a **durable cross-class bounded operating regime** after confirmed reusable second-order bounded response
+    - not hidden degradation, cross-class collapse, old-state/new-pressure fusion, or broader regime failure
+  - established:
+    - structural mapping cleanliness and old-state/new-pressure separation remain present
+    - repeated cross-class contact is being registered without collapsing prior recovery and second-order reuse memory into the new pressure field
+    - the key discrimination is now **durable cross-class bounded operating regime vs bounded class-specific strain vs narrower-than-expected robustness**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether repeated cross-class contact confirms durable hold or begins revealing a distinct class-specific strain signature
+
+---
+
+**Finding**
+
+Cycle 250 demonstrates:
+
+- the TRIAD protocol:
+  - can keep the durable cross-class bounded operating-regime reading intact across another repeated contact cycle
+  - does not convert prior robustness into prestige-biased under-reading
+  - does not collapse old stabilized state and repeated new pressure into one fused interpretation
+  - preserves lower-layer evidence discipline across repeated cross-class contact
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - preserves recovery residue and reusable-response memory as non-dominant contextual background
+  - keeps old state and new pressure explicitly distinguishable
+- protocol implication:
+  - the durable cross-class bounded operating-regime reading is strengthened again
+  - robustness transfer continues to hold without visible cross-class deformation at the tested perturbation level
+
+This establishes:
+
+> **durable cross-class bounded operating-regime reading can continue under repeated fresh contact with the new perturbation class without immediate portability failure, hidden degradation, or old-state/new-pressure fusion**
+
+and:
+
+> **the tested perturbation class now increasingly resembles part of TRIAD’s usable bounded operating envelope at the present pressure level**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `durable_cross_class_bounded_operating_regime_holds`
+  - defined as:  
+    *a condition in which the TRIAD protocol, after bounded perturbation survival, bounded recovery, stable bounded residue, confirmed reusable second-order bounded response, repeated portable bounded response, confirmed stable cross-class bounded regime, and repeated confirmed hold, continues sustaining bounded contact with a distinct new perturbation class while preserving structural mapping cleanliness, stabilized local-domain organization, and explicit separation between prior stabilized state and new pressure, without confirmed cross-class escalation, hidden degradation, or broader protocol distortion*
+
+- classification:
+  - durable cross-class bounded operating-regime hold now supported at the tested level
+
+- invariants refined:
+  - repeated cross-class boundedness now supports operating-envelope interpretation, not only transfer and stability
+  - old-state/new-pressure separation remains the core transfer discriminator
+  - operating-envelope status remains a tested-level claim, not a universal one
+  - cross-class testing now distinguishes:
+    - first entry boundedness
+    - persistent bounded contact
+    - portable bounded response
+    - repeated portable bounded response
+    - stable cross-class bounded regime
+    - confirmed stable cross-class bounded regime
+    - confirmed stable cross-class bounded regime holding
+    - confirmed stable cross-class bounded regime continuing to hold
+    - durable cross-class bounded operating regime
+    - durable cross-class bounded operating-regime hold
+    - bounded class-specific strain
+    - narrower-than-expected robustness
+    - broader destabilization
+
+---
+
+**Status**
+
+Cycle 250 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 251** should test whether:
+- **durable cross-class bounded operating-regime hold repeats again**
+- or
+- **a subtle, repeatable class-specific bounded strain becomes strong enough to qualify the operating-envelope reading**
+
+## Motivation
+
+You are now no longer mainly testing transfer.
+
+You are testing whether this perturbation class can be treated as part of TRIAD’s practical bounded-use regime at this pressure level. That is close to an engineering claim, so the remaining work is to look for the faintest disconfirming strain.
+
+---
+---
+
