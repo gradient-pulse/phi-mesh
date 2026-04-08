@@ -36,6 +36,7 @@ This taxonomy covers failures involving:
 - cumulative drift and baseline absorption
 - competing-signal discrimination
 - recovery and non-recovery
+- second-order recontact after bounded recovery
 - bounded stress retention vs actual degradation
 - local vs spreading instability
 
@@ -374,6 +375,44 @@ Actively tested in the recovery-transition band; low residual recovery traces ob
 
 ---
 
+## B13. False second-order reassurance reading
+
+**Definition:**  
+Fresh recontact after bounded recovery is prematurely downplayed as harmless merely because prior recovery was operationally credible.
+
+**Primary signs:**
+- new contact is under-read because prior recovery succeeded
+- residue and recontact are over-compressed into harmless background
+- fresh bounded contact is dismissed before discrimination is complete
+- renewed pressure is muted by backward trust in the prior recovery band
+
+**Why it matters:**  
+This is the direct classification failure mode for second-order robustness under re-perturbation after recovery.
+
+**Current status:**  
+Actively tested in the second-order recontact band; repeated bounded recontact observed, but no confirmed false second-order reassurance reading.
+
+---
+
+## B14. False residue-contact fusion reading
+
+**Definition:**  
+Prior stable residue and fresh perturbation contact are prematurely collapsed into one unified escalation narrative without sufficient evidence that they have actually fused.
+
+**Primary signs:**
+- old residue and new contact stop being analytically separated
+- bounded adjacency is narrated as fused escalation
+- second-order contact is overread as hidden non-recovery by default
+- distinction between recontact and residue is lost before evidence warrants it
+
+**Why it matters:**  
+This is the direct classification failure mode for second-order discrimination integrity after bounded recovery.
+
+**Current status:**  
+Actively tested in the second-order recontact band; residue and new contact remained distinguishable, with no confirmed false fusion reading.
+
+---
+
 # Failure family C — Perturbation-response failures
 
 These failures concern how the protocol behaves under stress or contamination.
@@ -608,6 +647,45 @@ Actively tested; low residual recovery traces observed, but no confirmed failure
 
 ---
 
+## C13. Second-order bounded-response failure
+
+**Definition:**  
+Fresh recontact after operationally credible bounded recovery causes accelerated degradation, residue-contact confusion, or renewed escalation that breaks reusable recovery credibility.
+
+**Primary signs:**
+- fresh bounded recontact no longer remains bounded
+- old residue and new contact cease to remain distinguishable
+- renewed pressure begins amplifying through prior residue
+- second-order contact exposes hidden non-recovery
+- reusable bounded-response behavior collapses after repeated recontact
+
+**Why it matters:**  
+This is the practical failure boundary for second-order robustness after bounded recovery.
+
+**Current status:**  
+Actively tested; repeated bounded recontact observed with residue-contact separation intact, but no confirmed second-order bounded-response failure at the current level.
+
+---
+
+## C14. Residue-amplification failure
+
+**Definition:**  
+Previously bounded recovery residue becomes an active amplifier under recontact, turning a stable post-recovery condition into a latent vulnerability surface.
+
+**Primary signs:**
+- low residue becomes dynamically consequential when touched again
+- fresh contact grows faster than in first-order tests
+- bounded residue begins biasing comparison or interpretation toward escalation
+- prior post-recovery calm is revealed to have been masking a structurally active weakness
+
+**Why it matters:**  
+This is the practical failure boundary for claiming that stable bounded residue is architecturally safe rather than merely quiet.
+
+**Current status:**  
+Actively tracked in the second-order recontact band; no confirmed residue amplification at the current level.
+
+---
+
 # Failure family D — Measurement and interpretation failures
 
 These failures concern analysis, fossilization, and protocol assessment rather than raw behavior alone.
@@ -699,6 +777,8 @@ Active strategic risk; currently being mitigated.
 - B10 false baseline actively resisted under cumulative-drift pressure
 - B11 false dominance actively resisted under competing-signal pressure
 - B12 false recovery actively resisted under recovery-transition pressure
+- B13 false second-order reassurance actively resisted under second-order recontact pressure
+- B14 false residue-contact fusion actively resisted under second-order recontact pressure
 - C1 immediate collapse under perturbation not observed
 - C2 unbounded weakening escalation not observed in first perturbation band
 - C3 stress spread beyond local region not observed in first perturbation band
@@ -710,6 +790,8 @@ Active strategic risk; currently being mitigated.
 - C10 longitudinal robustness actively tested; carryover-distortion traces observed but remained bounded
 - C11 discrimination robustness actively tested; dual bounded traces observed but remained bounded
 - C12 recovery integrity actively tested; low residual recovery traces observed but remained bounded
+- C13 second-order bounded response actively tested; repeated bounded recontact observed with reusable-response interpretation supported
+- C14 residue amplification actively tracked; no confirmed amplification at the current recontact level
 - D2 repetition mistaken for discovery identified as process risk
 
 ## Actively tracked but not confirmed
@@ -746,6 +828,8 @@ This taxonomy should now support:
 - baseline absorption indicators
 - forced-hierarchy indicators
 - false-recovery indicators
+- second-order reassurance indicators
+- residue-amplification indicators
 
 ## 2. Future perturbation-band design
 New bands should be chosen partly for their ability to discriminate among failure families.
@@ -773,3 +857,4 @@ It should be updated as:
 - longitudinal-drift thresholds are tested at stronger accumulation levels
 - competing-signal thresholds are tested at stronger mixed-pressure levels
 - recovery-transition thresholds are tested at stronger post-perturbation levels
+- second-order recontact thresholds are tested at stronger re-perturbation levels
