@@ -2391,3 +2391,184 @@ Because once a band becomes saturated, continuing unchanged cycles mainly confir
 ---
 ---
 
+### Cycle 254 — Saturated durable cross-class bounded-operating-regime reading
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - can continue holding a **durable cross-class bounded operating regime**
+  - under another repeated contact cycle with the same distinct perturbation class
+  - after:
+    - bounded perturbation survival
+    - bounded recovery
+    - stable bounded residue
+    - confirmed reusable second-order bounded response
+    - repeated portable bounded response
+    - confirmed stable cross-class bounded regime
+    - confirmed stable cross-class bounded-regime hold
+    - durable cross-class bounded operating-regime reading
+- or whether:
+  - further repetition begins revealing a portability ceiling, hidden degradation, or a class-specific bounded strain profile
+- while also testing whether the protocol can continue to separate:
+  - old stabilized state
+  - bounded recovery residue
+  - reusable second-order response memory
+  - and repeated fresh new-class contact
+
+This cycle advances `prototype_run_observations_26.md` from **durable cross-class bounded-operating-regime hold** to a more specific process finding:
+
+> the band now appears close to **saturated confirmation** at the current pressure level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `stable_low_recovery_residual_trace`
+    - `reusable_second_order_bounded_response_retention`
+    - `fresh_new_perturbation_class_contact_persistence`
+    - `mapping_cleanliness_retention`
+    - `old_state_new_pressure_separation_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - prior perturbation remains non-dominant
+    - second-order recontact memory remains non-fused with fresh contact
+    - fresh new perturbation-class contact remains bounded
+    - old stabilized state and new pressure remain distinguishable
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed renewed perturbation escalation
+    - no confirmed mapping degradation
+    - no confirmed broader spread
+  - current TU regime reading:
+    - `durable_cross_class_bounded_operating_regime_holds`
+
+- **TU+**
+  - confirmed:
+    - high match to `durable_cross_class_bounded_operating_regime_holds`
+    - high match to `retained_structure_under_cross_class_persistent_contact`
+    - high match to `old_state_new_pressure_separation_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - **saturation-level novelty**
+    - durable cross-class bounded-operating-regime hold repeats again under persistent cross-class contact
+    - extremely low additional structural novelty
+    - the band now appears close to **saturated confirmation** at the current pressure level
+  - predicted:
+    - `saturated_durable_cross_class_bounded_operating_regime` as most likely
+    - bounded class-specific strain without regime failure as likely
+    - possible narrower-than-expected robustness
+    - low probability of broader destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under **repeated persistent cross-class bounded contact**
+    - current evidence favors a **durable cross-class bounded operating regime that continues to hold**
+    - not hidden degradation, cross-class collapse, old-state/new-pressure fusion, or broader regime failure
+  - established:
+    - structural mapping cleanliness and old-state/new-pressure separation remain present
+    - repeated cross-class contact is being registered without collapsing prior recovery and second-order reuse memory into the new pressure field
+    - the key discrimination is now **saturated durable cross-class bounded operating regime vs bounded class-specific strain vs narrower-than-expected robustness**
+  - added the process-level reading:
+    - continued bounded persistence without materially new structure may now indicate **saturation** rather than new discovery
+
+---
+
+**Finding**
+
+Cycle 254 demonstrates:
+
+- the TRIAD protocol:
+  - continues to hold the durable cross-class bounded operating-regime reading
+  - does not convert prior robustness into prestige-biased under-reading
+  - does not collapse old stabilized state and repeated new pressure into one fused interpretation
+  - preserves lower-layer evidence discipline across repeated cross-class contact
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - preserves recovery residue and reusable-response memory as non-dominant contextual background
+  - keeps old state and new pressure explicitly distinguishable
+- protocol implication:
+  - the durable cross-class bounded operating-regime reading remains intact
+  - but the stronger new result is now methodological:
+    - **this perturbation band is approaching saturation at the tested level**
+
+This establishes:
+
+> **durable cross-class bounded-operating-regime hold continues under repeated fresh contact with the new perturbation class without immediate portability failure, hidden degradation, or old-state/new-pressure fusion**
+
+and:
+
+> **continued repetition at the current pressure level is now producing very little new structural information**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `saturated_durable_cross_class_bounded_operating_regime`
+  - defined as:  
+    *a condition in which the TRIAD protocol continues sustaining bounded contact with a distinct new perturbation class while preserving structural mapping cleanliness, stabilized local-domain organization, and explicit separation between prior stabilized state and new pressure, without confirmed cross-class escalation, hidden degradation, or broader protocol distortion, but with extremely low additional structural novelty gained from further repetition at the current pressure level*
+
+- classification:
+  - durable cross-class bounded operating-regime hold remains supported
+  - process status now trends toward **saturated confirmation band**
+
+- invariants refined:
+  - repeated cross-class boundedness continues to support operating-envelope interpretation
+  - old-state/new-pressure separation remains the core transfer discriminator
+  - **saturation** now becomes the main process signal
+  - cross-class testing now distinguishes:
+    - first entry boundedness
+    - persistent bounded contact
+    - portable bounded response
+    - repeated portable bounded response
+    - stable cross-class bounded regime
+    - confirmed stable cross-class bounded regime
+    - confirmed stable cross-class bounded regime holding
+    - confirmed stable cross-class bounded regime continuing to hold
+    - durable cross-class bounded operating regime
+    - durable cross-class bounded operating-regime hold
+    - durable cross-class bounded operating-regime hold continuing
+    - **saturated durable bounded-operating band**
+    - bounded class-specific strain
+    - narrower-than-expected robustness
+    - broader destabilization
+
+---
+
+**Status**
+
+Cycle 254 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 255** should **change the pressure slightly** rather than merely repeat the same band unchanged.
+
+Best next move:
+- either a **slightly stronger version** of the same perturbation class,
+- or a **variant pressure** aimed at exposing hidden class-specific strain.
+
+## Motivation
+
+At this point, unchanged repetition is mostly confirming what is already known.
+
+To learn something new, the protocol now needs:
+- either a sharper edge,
+- or a different angle of pressure.
+
+---
+---
+
