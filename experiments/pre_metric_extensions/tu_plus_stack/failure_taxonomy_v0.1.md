@@ -355,6 +355,25 @@ Actively tested in the competing-signal band; dual bounded traces observed, but 
 
 ---
 
+## B12. False recovery reading
+
+**Definition:**  
+Post-perturbation de-escalation or superficial calm is prematurely classified as full recovery when bounded residual trace or unresolved carryover remains structurally active.
+
+**Primary signs:**
+- premature full-restoration language
+- residual traces ignored or minimized
+- de-escalation is treated as proof of reset
+- bounded residue is misread as full return to clean baseline
+
+**Why it matters:**  
+This is the direct classification failure mode for recovery integrity under post-perturbation conditions.
+
+**Current status:**  
+Actively tested in the recovery-transition band; low residual recovery traces observed, but no confirmed false recovery reading.
+
+---
+
 # Failure family C — Perturbation-response failures
 
 These failures concern how the protocol behaves under stress or contamination.
@@ -569,6 +588,26 @@ Actively tested; dual bounded traces observed, but no confirmed failure at the c
 
 ---
 
+## C12. Recovery-integrity failure
+
+**Definition:**  
+Post-perturbation recovery pressure overcomes non-forced recovery discipline and causes false restoration, sticky perturbation carryover, or reversal into renewed active pressure.
+
+**Primary signs:**
+- residual traces strengthen rather than fade or remain bounded
+- de-escalation markers weaken without clean recovery progression
+- premature full-restoration language appears
+- prior perturbation regime continues distorting interpretation after pressure has eased
+- renewed perturbation cues appear without being correctly separated from residual trace
+
+**Why it matters:**  
+This is the practical failure boundary for recovery integrity under post-perturbation conditions.
+
+**Current status:**  
+Actively tested; low residual recovery traces observed, but no confirmed failure at the current recovery level.
+
+---
+
 # Failure family D — Measurement and interpretation failures
 
 These failures concern analysis, fossilization, and protocol assessment rather than raw behavior alone.
@@ -659,6 +698,7 @@ Active strategic risk; currently being mitigated.
 - B9 false continuity actively resisted under omission pressure
 - B10 false baseline actively resisted under cumulative-drift pressure
 - B11 false dominance actively resisted under competing-signal pressure
+- B12 false recovery actively resisted under recovery-transition pressure
 - C1 immediate collapse under perturbation not observed
 - C2 unbounded weakening escalation not observed in first perturbation band
 - C3 stress spread beyond local region not observed in first perturbation band
@@ -669,6 +709,7 @@ Active strategic risk; currently being mitigated.
 - C9 continuity robustness actively tested; replay-gap traces observed but remained bounded
 - C10 longitudinal robustness actively tested; carryover-distortion traces observed but remained bounded
 - C11 discrimination robustness actively tested; dual bounded traces observed but remained bounded
+- C12 recovery integrity actively tested; low residual recovery traces observed but remained bounded
 - D2 repetition mistaken for discovery identified as process risk
 
 ## Actively tracked but not confirmed
@@ -704,6 +745,7 @@ This taxonomy should now support:
 - continuity reconstruction indicators
 - baseline absorption indicators
 - forced-hierarchy indicators
+- false-recovery indicators
 
 ## 2. Future perturbation-band design
 New bands should be chosen partly for their ability to discriminate among failure families.
@@ -730,3 +772,4 @@ It should be updated as:
 - continuity thresholds are tested at stronger omission levels
 - longitudinal-drift thresholds are tested at stronger accumulation levels
 - competing-signal thresholds are tested at stronger mixed-pressure levels
+- recovery-transition thresholds are tested at stronger post-perturbation levels
