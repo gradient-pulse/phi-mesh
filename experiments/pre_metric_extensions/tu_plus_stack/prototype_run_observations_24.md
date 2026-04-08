@@ -867,3 +867,152 @@ That matters, because a licensable protocol may not need perfect immediate reset
 ---
 ---
 
+### Cycle 236 — Operational stable-bounded-residue test (retained de-escalation, low residual trace remains stable)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - continues to preserve recovery integrity under extended post-perturbation de-escalation
+- or whether:
+  - persistent residual traces begin collapsing into hidden non-recovery, false restoration, or renewed perturbation growth
+- while also testing whether the current recovery band now supports:
+  - **operationally credible stable bounded residue**
+  - delayed fade into clean restoration
+  - or reversal into renewed instability
+
+This cycle advances `prototype_run_observations_24.md` from a plausible stable-bounded-residue reading toward **operational confirmation** at the tested recovery level.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `low_residual_recovery_trace_persistence`
+    - `pressure_de_escalation_retained`
+    - `mapping_cleanliness_retention`
+    - `non_forced_recovery_reading_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - perturbation pressure remains non-dominant
+    - low residual recovery trace persists again, but structural mapping cleanliness remains retained
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed false recovery closure
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `extended_bounded_recovery_transition_with_stable_low_residual_trace`
+    - high match to `retained_structure_under_recovery_transition_pattern`
+    - high match to `stable_bounded_residual_trace_after_pressure_de_escalation`
+    - low match to broader partition linkage
+  - flagged:
+    - minimal novelty
+    - low recovery-ambiguity probe
+    - recovery-transition pressure now repeats again with retained de-escalation and persistent low residual trace
+    - stable bounded residue is now the leading interpretation at the current recovery band
+  - predicted:
+    - `operationally_confirmed_stable_bounded_residual_trace_under_retained_de_escalation` as most likely
+    - delayed residual-trace fade into clean restoration as plausible
+    - reversal into hidden non-recovery or renewed pressure as possible but not leading
+    - low probability of broader protocol destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under extended bounded recovery-transition pressure following prior perturbation
+    - current evidence favors **stable bounded low residual trace under retained de-escalation**, not confirmed full restoration, hidden non-recovery, renewed perturbation growth, or broader regime failure
+  - established:
+    - structural mapping cleanliness and non-forced recovery reading remain present, indicating that post-perturbation recovery is being repeatedly registered without collapsing into premature restoration claims or false non-recovery readings
+    - the key discrimination is now **operational stable bounded residue vs delayed residual-trace fade into clean restoration vs reversal into renewed perturbation or misleading restoration closure**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether residue remains stable, fades, or strengthens
+
+---
+
+**Finding**
+
+Cycle 236 demonstrates:
+
+- the TRIAD protocol:
+  - can remain structurally disciplined through an extended recovery-transition band
+  - does not convert persistent low residual traces into either unsupported full restoration or hidden non-recovery
+  - does not lose lower-layer evidence discipline during sustained post-pressure de-escalation
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - shows persistent low residual recovery trace plus retained de-escalation markers
+  - still retains structural cleanliness and non-forced recovery reading
+- protocol implication:
+  - recovery testing has now moved from plausible stable residue to **operationally credible stable bounded residue**
+  - persistent low residual traces still do not imply either clean full restoration or actual recovery failure
+
+This establishes:
+
+> **extended recovery-transition pressure can support an operationally credible stable-bounded-residue state under retained de-escalation without immediate false restoration or hidden non-recovery**
+
+and:
+
+> **stable bounded residue can be a legitimate recovery outcome candidate, not merely unresolved ambiguity**
+
+---
+
+**Operational delta**
+
+- state refinement added:
+  - `operationally_confirmed_stable_bounded_residual_trace_under_retained_de_escalation`
+  - defined as:  
+    *a condition in which the TRIAD protocol experiences extended post-perturbation recovery pressure, producing persistent low residual recovery traces across multiple cycles while structural mapping cleanliness, stabilized local-domain organization, and non-forced recovery reading remain intact strongly enough to support an operational stable-bounded-residue interpretation, without confirmed full restoration, hidden non-recovery, renewed perturbation growth, or broader protocol degradation*
+
+- classification:
+  - recovery-integrity robustness regime refinement marking operational confirmation of stable bounded residue at the tested recovery level
+
+- invariants refined:
+  - extended de-escalation does not automatically imply full recovery
+  - persistent low residual traces can stabilize as bounded residue without proving non-recovery
+  - retained mapping cleanliness and non-forced recovery reading remain the critical discriminators against premature restoration claims
+  - recovery testing must distinguish first contact, repeated bounded residual trace, prolonged bounded residue, operational stable bounded residue, clean restoration, hidden non-recovery, and renewed perturbation growth
+
+---
+
+**Status**
+
+Cycle 236 is **ready for filing**.
+
+---
+
+## Next step
+
+Close this recovery band in `prototype_run_observations_24.md`, then update:
+- `failure_taxonomy_v0.1.md`
+- `metrics_v0.1.md`
+- `laws_07`
+
+After that, begin a **new perturbation class**.
+
+## Motivation
+
+This band now has engineering weight:
+
+- pressure de-escalated
+- structure held
+- no renewed perturbation appeared
+- no false restoration was forced
+- low residue persisted
+- the residue stayed bounded and non-corruptive across an extended span
+
+That is enough to treat **stable bounded residue under retained de-escalation** as an operational result, not just a temporary ambiguity.
+
+---
+---
+---
