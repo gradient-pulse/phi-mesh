@@ -20,6 +20,7 @@ Laws governing:
 - bounded cumulative-drift pressure without false baseline formation
 - bounded competing-signal pressure without forced hierarchy formation
 - bounded recovery-transition pressure without false restoration or hidden non-recovery
+- bounded second-order recontact pressure after bounded recovery
 
 Derived from:
 - Observations 14 (re-unification)
@@ -33,7 +34,8 @@ Derived from:
 - Observations 22 (cumulative-drift pressure, repeated carryover-distortion traces, operational longitudinal robustness)
 - Observations 23 (competing-signal pressure, repeated dual bounded traces, operational discrimination robustness)
 - Observations 24 (recovery-transition pressure, repeated bounded residual trace, operational recovery robustness)
-- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, bounded omission pressure, bounded cumulative-drift pressure, bounded competing-signal pressure, and bounded recovery-transition pressure
+- Observations 25 (second-order recontact after bounded recovery, repeated bounded recontact, operational reusable second-order robustness)
+- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, bounded omission pressure, bounded cumulative-drift pressure, bounded competing-signal pressure, bounded recovery-transition pressure, and bounded second-order recontact pressure
 
 ---
 
@@ -57,6 +59,7 @@ Its purpose is to formalize the engineering-relevant consequences of later cycle
 - that cumulative-drift pressure can remain bounded without baseline absorption or silent normalization of distortion
 - that competing-signal pressure can remain bounded without forced hierarchy, hidden preference drift, or unsupported closure
 - that recovery-transition pressure can remain bounded without false restoration, sticky perturbation carryover, or hidden non-recovery
+- that fresh recontact after bounded recovery can remain bounded without residue-contact fusion, false reassurance, hidden non-recovery exposure, or reusable-response collapse
 
 ---
 
@@ -71,7 +74,7 @@ Later-stage triadic dynamics reveal that cyclic coordination is:
 - locally resolvable
 - robustly stress-testable without immediate collapse
 - architecturally robust across multiple perturbation classes
-- epistemically, continuity-, longitudinally-, discrimination-, and recovery-preserving under pressure
+- epistemically, continuity-, longitudinally-, discrimination-, recovery-, and second-order-preserving under pressure
 
 This suggests that the TRIAD protocol does not merely oscillate between unity and disunity, but follows lawful return, hold, restart, closure, and perturbation-response patterns.
 
@@ -100,6 +103,7 @@ This file captures laws concerning:
 - bounded cumulative-drift pressure without false baseline formation, drift consolidation, or accepted corrupted carryover
 - bounded competing-signal pressure without forced dominance, hidden preference drift, or unsupported closure
 - bounded recovery-transition pressure without false restoration, sticky perturbation carryover, hidden non-recovery, or renewed perturbation growth
+- bounded second-order recontact pressure without residue-contact fusion, false second-order reassurance, hidden non-recovery exposure, or residue amplification
 
 ---
 
@@ -122,7 +126,7 @@ Laws 07 establishes:
 - robustness under perturbation
 - bounded stress retention without collapse
 - architectural robustness across multiple perturbation classes
-- epistemic, continuity, longitudinal, discrimination, and recovery robustness under pressure
+- epistemic, continuity, longitudinal, discrimination, recovery, and second-order robustness under pressure
 
 This is where the protocol begins to resemble an engineering framework for recursive coordination rather than a descriptive cycle log.
 
@@ -150,6 +154,7 @@ disunity
 → bounded cumulative-drift pressure
 → bounded competing-signal pressure
 → bounded recovery-transition pressure
+→ bounded second-order recontact pressure
 ```
 
 ## Law 71 — Asymmetric Return Law
@@ -742,6 +747,8 @@ Architectural credibility can be inferred from short-horizon or single-signal pe
 
 **Status:** validated
 
+---
+
 ## Law 106 — Bounded Recovery-Transition Pressure Law
 
 **Statement:**  
@@ -767,7 +774,7 @@ Repeated recovery-transition conditions may remain bounded while the protocol re
 - clean restoration
 - bounded residual trace
 - stable bounded residue
-- and renewed perturbation
+- renewed perturbation
 
 **Non-implication:**  
 A coherent protocol under repeated recovery-transition pressure must either fully reset immediately or else be treated as non-recovered.
@@ -838,63 +845,121 @@ Architectural credibility can be inferred from short-horizon perturbation succes
 
 ---
 
-## Consolidated consequence
+## Law 111 — Bounded Second-Order Recontact Law
 
-Taken together, Laws 71–110 establish that:
-- return from disunity to unity is asymmetric and staged
-- complete re-unification is real
-- true unity can hold
-- false-unity claims require strict falsification criteria
-- restart after unity is staged and local-first
-- local-domain stabilization can resolve without larger-scale fragmentation
-- residual broader-linkage probing does not imply escalation
-- baseline confirmation can saturate
-- localized perturbation does not automatically break the regime
-- repeated stress can produce bounded weakening without measurable degradation
-- stressed local equilibrium can become operationally credible under sustained perturbation
-- role-boundary pressure can remain bounded without role failure
-- cross-role spread pressure can remain contained without contamination propagation
-- supervisory pressure can remain bounded without lower-layer flattening
-- false-regime pressure can remain bounded without forced misclassification
-- incomplete-state pressure can remain bounded without false reconstruction
-- cumulative-drift pressure can remain bounded without false baseline formation
-- competing-signal pressure can remain bounded without forced hierarchy formation
-- recovery-transition pressure can remain bounded without false restoration or hidden non-recovery
-- stable bounded residue can be an operationally credible recovery outcome
-- architectural robustness is now supported across structural, supervisory, epistemic, continuity, longitudinal, discrimination, and recovery perturbation classes
+**Statement:**  
+Fresh bounded recontact can occur after operationally credible bounded recovery while prior residue and new contact remain distinguishable and structurally non-fused.
+
+**Implication:**  
+A protocol that has recovered into a stable bounded-residue state may be touched again without automatically:
+- accelerating into collapse
+- exposing hidden non-recovery
+- fusing old residue with new contact
+- or losing boundedness at the tested recontact level
+
+**Non-implication:**  
+Any fresh recontact after bounded recovery is evidence that prior recovery was false or only superficially quiet.
+
+**Status:** validated
 
 ---
 
-## Current status of Laws 07
+## Law 112 — Residue–Contact Separation Law
 
-**Laws 07 is updated and finalized for the current band.**
+**Statement:**  
+Under second-order recontact pressure, prior bounded residue and fresh bounded contact can remain analytically separable across repeated cycles.
 
-This law file now covers:
-- asymmetric return
-- complete re-unification
-- unified hold
-- falsifiable true unity
-- staged restart
-- local-domain resolution
-- scale-limited closure
-- saturated baseline confirmation
-- localized perturbation contact
-- repeated local stress
-- early weakening hints
-- bounded weakening
-- stressed local equilibrium
-- operational robustness under sustained local perturbation
-- bounded role-boundary pressure
-- bounded cross-role containment
-- bounded supervisory pressure
+**Implication:**  
+A protocol may preserve discrimination between:
+- old residual trace
+- new perturbation contact
+- bounded interaction
+- genuine renewed escalation
+
+without collapsing these into one undifferentiated failure narrative.
+
+**Non-implication:**  
+Once recontact occurs after recovery, prior residue and new contact must be treated as one fused escalation field.
+
+**Status:** validated
+
+---
+
+## Law 113 — Second-Order Reassurance Falsification Law
+
+**Statement:**  
+Successful bounded recovery does not by itself justify downplaying fresh recontact; second-order reassurance remains valid only while new contact stays bounded and residue/contact separation remains intact.
+
+**Implication:**  
+A prior successful recovery band must not be used as automatic proof that fresh recontact is harmless; fresh contact still requires direct boundedness testing.
+
+**Non-implication:**  
+Because recovery previously succeeded, renewed bounded contact may be safely dismissed without renewed discrimination.
+
+**Status:** validated
+
+---
+
+## Law 114 — Reusable Second-Order Bounded-Response Law
+
+**Statement:**  
+The TRIAD protocol can sustain repeated bounded recontact after operationally credible bounded recovery strongly enough to support a reusable second-order bounded-response regime at the tested level.
+
+**Implication:**  
+A recovered protocol may remain architecturally reusable when repeated fresh contact shows:
+- preserved global coherence
+- retained local-domain structure
+- preserved mapping cleanliness
+- retained residue/contact separation
+- no renewed broad perturbation growth
+- no hidden non-recovery exposure
+
+**Non-implication:**  
+A protocol must return to a perfectly residue-free baseline before any claim of reusable post-recovery bounded response can be made.
+
+**Status:** validated
+
+---
+
+## Law 115 — Second-Order Robustness Law
+
+**Statement:**  
+Architectural robustness is strengthened when a protocol demonstrates bounded behavior not only under perturbation and recovery, but also under fresh repeated recontact after bounded recovery.
+
+**Implication:**  
+A protocol may be treated as more fully architecture-grade when separate bands show:
+- bounded perturbation survival
+- bounded recovery transition
+- stable bounded residue
+- bounded second-order recontact
+- preserved discrimination between residue and new contact
+- no residue amplification at the tested recontact level
+
+**Non-implication:**  
+Architectural credibility can be inferred from first-order perturbation and recovery success alone.
+
+**Status:** validated
+
+---
+
+## Law 116 — Multi-Class Epistemic-Continuity-Longitudinal-Discrimination-Recovery-Second-Order Robustness Law
+
+**Statement:**  
+Architectural robustness is strengthened when a protocol demonstrates bounded behavior not only under structural, supervisory, epistemic, omission, cumulative-drift, competing-signal, and recovery-transition pressure, but also under second-order recontact pressure across cycles.
+
+**Implication:**  
+A protocol may be treated as more fully architecture-grade when separate bands show:
+- bounded supervisory guidance
 - bounded false-regime pressure
 - bounded incomplete-state pressure
 - bounded cumulative-drift pressure
 - bounded competing-signal pressure
 - bounded recovery-transition pressure
-- multi-class architectural robustness
-- epistemic robustness
-- continuity robustness
-- longitudinal robustness
-- discrimination robustness
-- recovery robustness
+- bounded second-order recontact pressure
+- retained ambiguity, clean baseline retention, non-forced discrimination, non-forced recovery reading, and residue/contact separation where evidence, continuity, carryover, signal priority, restoration state, or renewed contact state is incomplete
+
+**Non-implication:**  
+Architectural credibility can be inferred from short-horizon perturbation success, immediate-reset behavior, or one-off post-recovery survival alone.
+
+**Status:** validated
+
