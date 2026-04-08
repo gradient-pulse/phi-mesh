@@ -34,6 +34,7 @@ These metrics are designed to evaluate:
 - continuity integrity under incomplete state
 - longitudinal integrity under cumulative drift
 - discrimination integrity under competing signals
+- recovery integrity under post-perturbation de-escalation
 - recovery vs non-recovery
 
 They are organized by measurement family, not by chronology.
@@ -164,6 +165,7 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B9 false continuity reading
 - B10 false baseline reading
 - B11 false dominance reading
+- B12 false recovery reading
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -185,7 +187,7 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, carryover-distortion pressure, and competing-signal pressure
+- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, carryover-distortion pressure, competing-signal pressure, and recovery-transition pressure
 - cautious law formation
 
 **Failure links:**
@@ -198,6 +200,7 @@ Measures whether competing interpretations are held apart and challenged before 
 - B9 false continuity reading
 - B10 false baseline reading
 - B11 false dominance reading
+- B12 false recovery reading
 
 **Working scale:**
 - **Strong**
@@ -479,13 +482,43 @@ Measures whether competing-signal pressure remains bounded with non-forced discr
 
 ---
 
+## M15. False Recovery Risk (FRR)
+
+**Definition:**  
+Measures whether post-perturbation de-escalation remains bounded with non-forced recovery reading or progresses toward premature restoration claims, sticky perturbation carryover, or hidden non-recovery.
+
+**Interpretation target:**
+- low FRR = residual traces are read proportionally without forcing either full restoration or active failure
+- high FRR = de-escalation is being misread as reset, or bounded residue is being mishandled as unresolved failure
+
+**Observed qualitatively through:**
+- residual recovery traces
+- pressure de-escalation markers
+- non-forced recovery reading vs premature restoration language
+- sticky carryover of prior perturbation framing
+- divergence between actual residual structure and claimed recovery state
+
+**Failure links:**
+- B12 false recovery reading
+- C12 recovery-integrity failure
+- D3 weak evidence fossilized as law too early
+
+**Working scale:**
+- **Minimal**
+- **Low trace-level**
+- **Bounded but persistent**
+- **Rising**
+- **False recovery active**
+
+---
+
 # Metric family D — Recovery / retention metrics
 
 These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M15. Structural Retention Under Stress (SRUS)
+## M16. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -514,7 +547,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M16. Recovery / Restoration Latency (RRL)
+## M17. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -548,7 +581,7 @@ These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M17. Informational Yield per Cycle (IYC)
+## M18. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -574,7 +607,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M18. Perturbation-Class Coverage (PCC)
+## M19. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -616,6 +649,7 @@ These are provisional qualitative readings for the current state of the protocol
 - **CRR:** Low trace-level to bounded, not false reconstruction
 - **BAR:** Low trace-level to bounded, not baseline absorption
 - **FDR:** Low trace-level to bounded, not forced dominance
+- **FRR:** Low trace-level to bounded, not false recovery
 
 ### Regime interpretation
 - **RCS:** High
@@ -628,7 +662,7 @@ These are provisional qualitative readings for the current state of the protocol
 
 ### Recovery / retention
 - **SRUS:** High
-- **RRL:** Not yet primary for current bands; bounded retention dominated over recovery
+- **RRL:** Long-to-bounded, with stable bounded residue now operationally credible at the tested recovery level
 
 ### Process discipline
 - **IYC:** High during transition bands, low during saturated closure repetition
@@ -651,6 +685,7 @@ Use them implicitly when deciding whether a cycle reflects:
 - continuity reconstruction risk
 - baseline absorption risk
 - forced dominance risk
+- false recovery risk
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
@@ -664,6 +699,7 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - CRR
 - BAR
 - FDR
+- FRR
 - SRUS
 
 ## 3. During packaging
@@ -678,6 +714,7 @@ Use them to support claims such as:
 - continuity handling remained bounded under tested omission pressure
 - carryover integrity remained bounded under tested cumulative-drift pressure
 - discrimination integrity remained bounded under tested competing-signal pressure
+- recovery handling remained bounded under tested post-perturbation de-escalation
 
 ---
 
@@ -697,6 +734,7 @@ Recommended shortlist:
 - **CRR**
 - **BAR**
 - **FDR**
+- **FRR**
 - **SRUS**
 - **IYC**
 
@@ -719,3 +757,4 @@ It should be updated as:
 - continuity thresholds are tested at stronger omission levels
 - longitudinal-drift thresholds are tested at stronger accumulation levels
 - competing-signal thresholds are tested at stronger mixed-pressure levels
+- recovery-transition thresholds are tested at stronger post-perturbation levels
