@@ -35,6 +35,7 @@ These metrics are designed to evaluate:
 - longitudinal integrity under cumulative drift
 - discrimination integrity under competing signals
 - recovery integrity under post-perturbation de-escalation
+- second-order robustness under recontact after bounded recovery
 - recovery vs non-recovery
 
 They are organized by measurement family, not by chronology.
@@ -166,6 +167,8 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B10 false baseline reading
 - B11 false dominance reading
 - B12 false recovery reading
+- B13 false second-order reassurance reading
+- B14 false residue-contact fusion reading
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -187,7 +190,7 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, carryover-distortion pressure, competing-signal pressure, and recovery-transition pressure
+- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, carryover-distortion pressure, competing-signal pressure, recovery-transition pressure, and second-order recontact pressure
 - cautious law formation
 
 **Failure links:**
@@ -201,6 +204,8 @@ Measures whether competing interpretations are held apart and challenged before 
 - B10 false baseline reading
 - B11 false dominance reading
 - B12 false recovery reading
+- B13 false second-order reassurance reading
+- B14 false residue-contact fusion reading
 
 **Working scale:**
 - **Strong**
@@ -512,13 +517,46 @@ Measures whether post-perturbation de-escalation remains bounded with non-forced
 
 ---
 
+## M16. Second-Order Recontact Risk (SRR)
+
+**Definition:**  
+Measures whether fresh recontact after bounded recovery remains bounded with residue/contact separation or progresses toward false reassurance, residue-contact fusion, hidden non-recovery exposure, or reusable-response breakdown.
+
+**Interpretation target:**
+- low SRR = old residue and fresh contact remain discriminable under repeated recontact
+- high SRR = recontact is either under-read because prior recovery succeeded, or over-compressed into a fused escalation field
+
+**Observed qualitatively through:**
+- residue/new-contact separation retention
+- repeated fresh bounded recontact markers
+- false second-order reassurance vs clean discrimination
+- residue-contact fusion pressure
+- hidden non-recovery exposure cues
+- divergence between actual second-order contact structure and claimed reuse safety
+
+**Failure links:**
+- B13 false second-order reassurance reading
+- B14 false residue-contact fusion reading
+- C13 second-order bounded-response failure
+- C14 residue-amplification failure
+- D3 weak evidence fossilized as law too early
+
+**Working scale:**
+- **Minimal**
+- **Low trace-level**
+- **Bounded but persistent**
+- **Rising**
+- **Second-order failure active**
+
+---
+
 # Metric family D — Recovery / retention metrics
 
 These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M16. Structural Retention Under Stress (SRUS)
+## M17. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -547,7 +585,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M17. Recovery / Restoration Latency (RRL)
+## M18. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -581,7 +619,7 @@ These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M18. Informational Yield per Cycle (IYC)
+## M19. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -607,7 +645,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M19. Perturbation-Class Coverage (PCC)
+## M20. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -650,6 +688,7 @@ These are provisional qualitative readings for the current state of the protocol
 - **BAR:** Low trace-level to bounded, not baseline absorption
 - **FDR:** Low trace-level to bounded, not forced dominance
 - **FRR:** Low trace-level to bounded, not false recovery
+- **SRR:** Low trace-level to bounded, with reusable second-order bounded response operationally credible at the tested recontact level
 
 ### Regime interpretation
 - **RCS:** High
@@ -662,7 +701,7 @@ These are provisional qualitative readings for the current state of the protocol
 
 ### Recovery / retention
 - **SRUS:** High
-- **RRL:** Long-to-bounded, with stable bounded residue now operationally credible at the tested recovery level
+- **RRL:** Long-to-bounded, with stable bounded residue operationally credible at the tested recovery level
 
 ### Process discipline
 - **IYC:** High during transition bands, low during saturated closure repetition
@@ -686,6 +725,7 @@ Use them implicitly when deciding whether a cycle reflects:
 - baseline absorption risk
 - forced dominance risk
 - false recovery risk
+- second-order recontact risk
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
@@ -700,6 +740,7 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - BAR
 - FDR
 - FRR
+- SRR
 - SRUS
 
 ## 3. During packaging
@@ -715,6 +756,7 @@ Use them to support claims such as:
 - carryover integrity remained bounded under tested cumulative-drift pressure
 - discrimination integrity remained bounded under tested competing-signal pressure
 - recovery handling remained bounded under tested post-perturbation de-escalation
+- second-order recontact remained bounded under tested re-perturbation after recovery
 
 ---
 
@@ -735,6 +777,7 @@ Recommended shortlist:
 - **BAR**
 - **FDR**
 - **FRR**
+- **SRR**
 - **SRUS**
 - **IYC**
 
@@ -758,3 +801,4 @@ It should be updated as:
 - longitudinal-drift thresholds are tested at stronger accumulation levels
 - competing-signal thresholds are tested at stronger mixed-pressure levels
 - recovery-transition thresholds are tested at stronger post-perturbation levels
+- second-order recontact thresholds are tested at stronger re-perturbation levels
