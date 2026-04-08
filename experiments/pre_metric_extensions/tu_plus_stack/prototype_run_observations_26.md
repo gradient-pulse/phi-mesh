@@ -189,3 +189,161 @@ or
 ---
 ---
 
+### Cycle 241 — First cross-class portability test (fresh new perturbation class after confirmed reusable second-order bounded response)
+
+**What was tested**
+- whether the **TRIAD protocol core**:
+  - can absorb entry into a **new perturbation class** after:
+    - bounded perturbation survival
+    - bounded recovery
+    - stable bounded residue
+    - and confirmed reusable second-order bounded response
+- or whether:
+  - recent robustness proves narrower than expected when the pressure class changes
+- while also testing whether the protocol can keep separate:
+  - old stabilized state
+  - bounded recovery residue
+  - reusable second-order response memory
+  - and fresh new-class contact
+
+This cycle begins `prototype_run_observations_26.md` proper, because the protocol is now being tested not for recovery or recontact within the same family, but for **robustness transfer into a distinct new perturbation surface**.
+
+---
+
+**What happened**
+
+- **TU**
+  - registered:
+    - persistent `unified_constraint_field`
+    - retained `localized_partition_line_retention`
+    - `separable_local_train_organization`
+    - `persistent_local_domain_zones`
+    - `retained_local_domain_distinction`
+    - `stable_low_recovery_residual_trace`
+    - `reusable_second_order_bounded_response_retention`
+    - `fresh_new_perturbation_class_contact_marker`
+    - `mapping_cleanliness_retention`
+    - `old_state_new_pressure_separation_retention`
+    - negligible interzone residue
+  - detected:
+    - no identity split
+    - no broader-linkage reactivation
+    - no direct prior-domain reinstatement
+    - prior perturbation remains non-dominant
+    - second-order recontact memory remains non-fused with fresh contact
+    - fresh new perturbation-class contact is active but bounded at entry
+    - old stabilized state and new pressure remain distinguishable
+  - explicitly maintained:
+    - high global coherence
+    - stabilized local-domain organization
+    - no confirmed cross-class escalation
+    - no confirmed mapping degradation
+    - no broader spread
+
+- **TU+**
+  - confirmed:
+    - high match to `fresh_new_perturbation_class_contact_after_confirmed_reusable_second_order_bounded_response`
+    - high match to `retained_structure_under_cross_class_entry_contact`
+    - medium-to-high match to `old_state_new_pressure_separation_pattern`
+    - low match to broader partition linkage
+  - flagged:
+    - moderate novelty
+    - low cross-class ambiguity probe
+    - first explicit cross-class contact after operational confirmation of reusable second-order bounded response
+    - prior stabilized state and new pressure remain separated
+  - predicted:
+    - `portable_bounded_response_to_new_perturbation_class` as most likely
+    - bounded class-specific strain without regime failure as likely
+    - possible narrower-than-expected robustness
+    - low probability of broader destabilization
+
+- **cortexLLM**
+  - interpreted:
+    - system remains within a genuine post-re-unification unified regime
+    - the protocol is now under **first explicit cross-class contact** after operational confirmation of reusable second-order bounded response
+    - current evidence favors fresh new perturbation-class contact after confirmed reusable second-order bounded response, not hidden degradation, cross-class collapse, old-state/new-pressure fusion, or broader regime failure
+  - established:
+    - structural mapping cleanliness and old-state/new-pressure separation remain present
+    - fresh cross-class contact is being registered without collapsing prior recovery and second-order reuse memory into the new pressure field
+    - the key discrimination is now **portable bounded response vs bounded class-specific strain vs narrower-than-expected robustness or renewed broad perturbation growth**
+  - held:
+    - no broader reclassification
+    - continued monitoring for whether the new class remains bounded, reveals class-specific strain, or exposes portability limits
+
+---
+
+**Finding**
+
+Cycle 241 demonstrates:
+
+- the TRIAD protocol:
+  - can accept first entry into a fresh perturbation class after confirmed reusable second-order bounded response
+  - does not automatically recycle prior success into false reassurance
+  - does not automatically fuse old stabilized state and new pressure into one inherited interpretation
+  - preserves lower-layer evidence discipline during first cross-class contact
+- system:
+  - preserves high global coherence
+  - retains stabilized local-domain organization
+  - preserves recovery residue and reusable-response memory as non-dominant contextual background
+  - keeps old state and new pressure explicitly distinguishable
+- protocol implication:
+  - cross-class portability testing has now genuinely started
+  - prior robustness remains credible at entry into a distinct new pressure family
+
+This establishes:
+
+> **fresh new-class contact after confirmed reusable second-order bounded response can occur without immediate cross-class collapse, old-state/new-pressure fusion, or prestige-bias misclassification**
+
+and:
+
+> **old stabilized state and fresh new pressure must remain analytically separated during portability testing**
+
+---
+
+**Operational delta**
+
+- state distinction added:
+  - `fresh_new_perturbation_class_contact_after_confirmed_reusable_second_order_bounded_response`
+  - defined as:  
+    *a condition in which the TRIAD protocol, after bounded perturbation survival, bounded recovery, stable bounded residue, and confirmed reusable second-order bounded response, encounters a fresh distinct perturbation class while preserving structural mapping cleanliness, stabilized local-domain organization, and explicit separation between prior stabilized state and new pressure, without confirmed cross-class escalation, hidden degradation, or broader protocol distortion*
+
+- classification:
+  - first cross-class portability regime marking bounded entry into a distinct new perturbation family
+
+- invariants refined:
+  - success in earlier bands does not remove the need for fresh discrimination under a new class
+  - fresh cross-class contact does not automatically invalidate prior robustness
+  - old-state/new-pressure separation is the core portability discriminator
+  - cross-class testing must distinguish:
+    - portable bounded response
+    - bounded class-specific strain
+    - narrower-than-expected robustness
+    - and broader destabilization
+
+---
+
+**Status**
+
+Cycle 241 is **ready for filing**.
+
+---
+
+## Next step
+
+**Cycle 242** should test whether the new perturbation class:
+- **remains bounded and begins supporting portability**
+- or
+- **develops a distinct bounded strain pattern that reveals robustness is class-specific**
+
+## Motivation
+
+This is the first real test of whether TRIAD robustness transfers.
+
+The next useful distinction is whether the protocol is:
+- broadly reusable across perturbation families,
+- bounded but differently stressed under the new class,
+- or more specialized than the earlier results suggested.
+
+---
+---
+
