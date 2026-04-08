@@ -560,3 +560,6 @@ The next useful distinction is whether TRIAD:
 - proves it can carry bounded residue without confusion,
 - or begins to reveal that the residue is not neutral after all.
 
+---
+---
+
