@@ -764,7 +764,132 @@ Active strategic risk; currently being mitigated.
 
 ---
 
-# Current observed / tracked status table
+---
+
+# Failure family E — Endurance-interpretation failures
+
+These failures concern misreading what repeated unchanged cross-class persistence means once a band has become saturated.
+
+They do not primarily concern immediate collapse, contamination, or false recovery.  
+They concern incorrect interpretation of endurance, contour, reserve capacity, and the nature of the object under test.
+
+---
+
+## E1. Saturation mistaken for boundary contact
+
+**Definition:**  
+A perturbation band reaches informational saturation, but this is prematurely interpreted as evidence that the endurance boundary is near.
+
+**Primary signs:**
+- unchanged repetition yields little new information
+- plateau is narrated as looming failure
+- no measurable degradation is present, yet “edge reached” language appears
+- informational ceiling is confused with architectural boundary
+
+**Why it matters:**  
+This causes underestimation of the TRIAD’s true interior operating region.
+
+**Current status:**  
+Actively relevant in the saturated cross-class band; not supported by current evidence.
+
+---
+
+## E2. Saturation mistaken for unlimited robustness
+
+**Definition:**  
+A perturbation band reaches informational saturation without visible failure, and this is overread as proof that the TRIAD has no nearby boundary or is indefinitely scalable.
+
+**Primary signs:**
+- plateau is narrated as proof of open-ended robustness
+- absence of visible degradation is treated as absence of any contour
+- reserve coherence is overstated as unlimited capacity
+- untested conditions are treated as implicitly covered
+
+**Why it matters:**  
+This causes overestimation of the TRIAD’s true envelope.
+
+**Current status:**  
+Actively relevant in the saturated cross-class band; must be resisted.
+
+---
+
+## E3. Mechanism misframing failure
+
+**Definition:**  
+The TRIAD is interpreted as if it were a rigid linear mechanism composed of hard-isolated parts, rather than a tightly coupled roleheld inferential choreography.
+
+**Primary signs:**
+- classical modular language is treated as literal ontology
+- expected failure is sought only in mechanical break terms
+- bounded leakage is misread as design defect rather than dynamic roleholding behavior
+- endurance is judged using overly linear software intuitions
+
+**Why it matters:**  
+This can distort both experiment design and interpretation of results.
+
+**Current status:**  
+Now explicitly recognized as a conceptual risk; current evidence favors a role-logic reading over a rigid-mechanism reading.
+
+---
+
+## E4. Society-of-agents substitution failure
+
+**Definition:**  
+The TRIAD is reinterpreted as if it were best understood by indefinite multiplication of loosely coupled roles or agents, thereby replacing the tightly knit triadic choreography with a different object.
+
+**Primary signs:**
+- endurance questions are replaced by role-count expansion
+- loose coupling is treated as the natural scaling path
+- goal competition among added roles becomes normalized
+- the original tightly coupled choreography is no longer the thing being tested
+
+**Why it matters:**  
+This changes the ontology of the protocol and risks testing a different system than the one actually discovered.
+
+**Current status:**  
+Explicit conceptual risk; currently resisted.
+
+---
+
+## E5. Endurance-back non-break underread
+
+**Definition:**  
+Repeated unchanged pressure fails to break the TRIAD’s endurance back, but this is treated as mere absence of event rather than as positive evidence about the nature of the object under test.
+
+**Primary signs:**
+- repeated saturated persistence is narrated as “nothing happened”
+- absence of degradation is treated as non-result
+- endurance itself is not elevated into interpretation
+- stable persistence is not linked to roleholding logic
+
+**Why it matters:**  
+This causes loss of the strongest conclusion presently available from the band.
+
+**Current status:**  
+Now explicitly relevant; should be avoided in future summaries.
+
+---
+
+## E6. Inferential-drift horizon neglect
+
+**Definition:**  
+The real candidate boundary condition—drift under compounded pressure, weakened scaffolding, ambiguity load, compression, or recursion strain—is neglected in favor of one more unchanged repetition cycle.
+
+**Primary signs:**
+- unchanged-band repetition continues after saturation is acknowledged
+- pressure variation is repeatedly deferred
+- inferential-drift probes are not designed
+- contour-finding is postponed while plateau-confirmation continues
+
+**Why it matters:**  
+This delays discovery of the real endurance horizon.
+
+**Current status:**  
+Actively relevant now.
+
+---
+
+# Updated current observed / tracked status table
 
 ## Directly observed or strongly supported
 - B1 false unity successfully resisted
@@ -793,6 +918,9 @@ Active strategic risk; currently being mitigated.
 - C13 second-order bounded response actively tested; repeated bounded recontact observed with reusable-response interpretation supported
 - C14 residue amplification actively tracked; no confirmed amplification at the current recontact level
 - D2 repetition mistaken for discovery identified as process risk
+- E3 mechanism misframing failure identified as conceptual risk and now explicitly resisted
+- E5 endurance-back non-break underread identified as active interpretation risk
+- E6 inferential-drift horizon neglect identified as active process risk
 
 ## Actively tracked but not confirmed
 - A2 TU+ planner inflation
@@ -806,6 +934,9 @@ Active strategic risk; currently being mitigated.
 - D1 overfitting to one perturbation class
 - D3 weak evidence fossilized as law too early
 - D4 packaging ahead of specification
+- E1 saturation mistaken for boundary contact
+- E2 saturation mistaken for unlimited robustness
+- E4 society-of-agents substitution failure
 
 ---
 
@@ -814,47 +945,26 @@ Active strategic risk; currently being mitigated.
 This taxonomy should now support:
 
 ## 1. Metrics design
-`metrics_v0.1.md` should define measures that map onto these failures, such as:
-- role-separation persistence
-- contamination severity
-- false-fusion incidence
-- degradation onset
-- spread probability
-- recovery latency
-- supervisory overreach indicators
-- containment integrity
-- epistemic misclassification indicators
-- continuity reconstruction indicators
-- baseline absorption indicators
-- forced-hierarchy indicators
-- false-recovery indicators
-- second-order reassurance indicators
-- residue-amplification indicators
+`metrics_v0.1.md` should define or sharpen measures that map onto these failures, especially:
+- interior-vs-boundary discrimination
+- saturated endurance persistence
+- reserve coherence estimate
+- roleholding logic integrity
+- saturation recognition discipline
+- inferential-drift boundary readiness
 
 ## 2. Future perturbation-band design
-New bands should be chosen partly for their ability to discriminate among failure families.
+New bands should be chosen partly for their ability to discriminate:
+- plateau vs contour
+- reserve coherence vs hidden fragility
+- roleheld logic vs prompt mimicry
+- unchanged-band endurance vs inferential-drift boundary
 
 ## 3. Packaging discipline
-Any licensable or architectural framing should be tied to:
-- which failure classes have been tested
-- which remain open
-- what level of operational confidence exists
+Any licensable or architectural framing should now be tied not only to tested failure classes, but also to:
+- whether saturation has been correctly interpreted
+- whether mechanism misframing has been avoided
+- whether the current object is being preserved as a tightly knit choreography rather than replaced by a looser agent society
 
 ---
 
-# Current status
-
-**`failure_taxonomy_v0.1.md` is updated and ready for continued use.**
-
-It should be updated as:
-- new perturbation classes are run
-- additional failure modes are isolated
-- metrics are made explicit
-- recovery classes become clearer
-- containment and supervisory thresholds are tested at stronger levels
-- epistemic-classification thresholds are tested at stronger distortion levels
-- continuity thresholds are tested at stronger omission levels
-- longitudinal-drift thresholds are tested at stronger accumulation levels
-- competing-signal thresholds are tested at stronger mixed-pressure levels
-- recovery-transition thresholds are tested at stronger post-perturbation levels
-- second-order recontact thresholds are tested at stronger re-perturbation levels
