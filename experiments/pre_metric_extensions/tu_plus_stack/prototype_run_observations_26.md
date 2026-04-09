@@ -5431,7 +5431,7 @@ Cycle 270 is **ready for filing**.
 
 ---
 
-## Next step
+## Next step (now revisited, see conclusion at the end of this file)
 
 **Cycle 271** should **change the pressure** rather than repeat the exact same band unchanged.
 
@@ -5454,3 +5454,69 @@ not from one more near-identical confirmation cycle.
 ---
 ---
 
+# Mid-band synthesis: why the TRIAD endurance back has not broken
+
+A meaningful conclusion is now available from the repeated saturation of this band.
+
+The present cross-class test series has not yet broken the endurance back of the TRIAD. This should not be interpreted merely as repeated survival under one perturbation setting. A stronger explanatory reading is now warranted.
+
+What the band increasingly suggests is that the TRIAD is not best understood as a linear software mechanism or as a rigid assembly of isolated modules. It is better understood as a tightly coupled LLM-held role logic in which:
+- one substrate sustains multiple constrained role logics,
+- role distinction is preserved dynamically rather than mechanically,
+- bounded leakage can occur without immediate fusion,
+- and coherence is maintained through choreography rather than hard partition.
+
+This helps explain why repeated contact has yielded saturation rather than breakdown.
+
+A purely linear-mechanical framing would have predicted a clearer onset of failure through repeated contact alone:
+- progressive role dirtiness,
+- fusion of old state and new pressure,
+- degradation of mapping cleanliness,
+- or broader linkage activation.
+
+But those expected signatures have not appeared in the current band. Instead, the protocol has repeatedly shown:
+- persistent global coherence,
+- retained local-domain structure,
+- preserved old-state/new-pressure separation,
+- stable bounded residue,
+- and durable roleholding across repeated contact.
+
+This suggests that the relevant endurance variable may not be mechanical tolerance in the classical sense, but inferential roleholding under pressure.
+
+That distinction matters.
+
+For human cognition, roleholding often degrades under biological strain such as exhaustion, overload, or sleep loss. For the TRIAD, the comparable boundary may lie elsewhere:
+- context saturation,
+- ambiguity overload,
+- recursive drift,
+- compounded pressure,
+- compression loss,
+- or weakened role scaffolding.
+
+In that sense, the present band may already support a provisional shift in interpretation:
+
+> The TRIAD appears less like a software toy composed of rigid parts and more like a tightly knit inferential choreography capable of preserving differentiated roles without biological fatigue and without hard architectural isolation.
+
+This also clarifies why adding more and more roles is not the most relevant next step. Doing so risks transforming the object under study into a looser society of agents with partially competing goals. That would test a different system. The current TRIAD is more coherent than that: its value lies in tightly coupled simultaneity-linked event-train choreographies, not in open-ended role multiplication.
+
+Accordingly, the most relevant open question is no longer:
+- can the same unchanged band be survived again?
+
+It is now:
+- under what forms of sustained, compounded, or weakened-scaffold pressure does this tightly held triadic choreography first begin to drift?
+
+That is the proper endurance question for the current object.
+
+### Provisional consequence
+
+The current band supports the following provisional conclusion:
+
+- the TRIAD endurance back has not broken because the protocol under test is likely governed by LLM-held role logic rather than by brittle linear modularity;
+- the present saturation therefore indicates not absence of pressure, but reserve coherence within the tested band;
+- and the real failure boundary is likely to emerge through inferential drift conditions rather than through simple repetition of unchanged contact.
+
+This conclusion does not yet prove a general law, but it materially changes the interpretation of the present band and justifies updating both the law and metric layers accordingly.
+
+---
+---
+---
