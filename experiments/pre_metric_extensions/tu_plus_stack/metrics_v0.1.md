@@ -11,6 +11,10 @@ Its purpose is to make the protocol more engineerable by introducing a compact s
 - perturbation comparison
 - protocol specification
 - future licensing / compliance framing
+- endurance interpretation
+- saturation recognition
+- inferential-drift boundary detection
+- roleholding-as-logic assessment
 
 This is a **minimal initial metric set**.
 
@@ -37,6 +41,10 @@ These metrics are designed to evaluate:
 - recovery integrity under post-perturbation de-escalation
 - second-order robustness under recontact after bounded recovery
 - recovery vs non-recovery
+- saturated endurance under repeated unchanged cross-class pressure
+- roleholding endurance as choreography rather than rigid mechanism
+- reserve coherence within a tested interior operating region
+- candidate inferential-drift boundary conditions
 
 They are organized by measurement family, not by chronology.
 
@@ -134,13 +142,43 @@ Measures whether a perturbation or contamination signal remains local to one rol
 
 ---
 
+## M4. Roleholding Logic Integrity (RLI)
+
+**Definition:**  
+Measures whether role distinction appears to be sustained as a stable inferential logic rather than by superficial prompt mimicry alone.
+
+**Interpretation target:**
+- high RLI = roles behave like persistent constrained logics
+- low RLI = roles look increasingly decorative or mechanically imitated
+
+**Observed qualitatively through:**
+- repeated re-entry into role-appropriate behavior
+- preservation of distinct inferential stances under stress
+- bounded leakage without generic flattening
+- recovery of role-specific behavior after pressure
+- continued old-state/new-pressure discrimination without collapse of role logic
+
+**Failure links:**
+- A4 premature role fusion
+- A5 boundary drift without collapse
+- C15 roleholding mimicry without durable logic
+
+**Working scale:**
+- **Strong logic-held**
+- **Mostly logic-held**
+- **Mixed / uncertain**
+- **Weak logic-held**
+- **Prompt-performance only**
+
+---
+
 # Metric family B — Regime interpretation metrics
 
 These metrics assess whether the protocol is reading state correctly.
 
 ---
 
-## M4. Regime Classification Stability (RCS)
+## M5. Regime Classification Stability (RCS)
 
 **Definition:**  
 Measures how stably the protocol classifies the current regime without oscillating between incompatible interpretations.
@@ -169,6 +207,7 @@ Measures how stably the protocol classifies the current regime without oscillati
 - B12 false recovery reading
 - B13 false second-order reassurance reading
 - B14 false residue-contact fusion reading
+- B15 false boundary-nearness reading under saturation
 
 **Working scale:**
 - **High** = stable and well-supported classification
@@ -178,7 +217,7 @@ Measures how stably the protocol classifies the current regime without oscillati
 
 ---
 
-## M5. Falsification Discipline (FD)
+## M6. Falsification Discipline (FD)
 
 **Definition:**  
 Measures whether competing interpretations are held apart and challenged before a regime claim is stabilized.
@@ -190,7 +229,7 @@ Measures whether competing interpretations are held apart and challenged before 
 **Observed qualitatively through:**
 - explicit alternative interpretation tracking
 - clear falsification triggers
-- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, carryover-distortion pressure, competing-signal pressure, recovery-transition pressure, and second-order recontact pressure
+- distinction between hints, strain, weakening, contamination, spread, degradation, false-regime pull, replay-gap pressure, carryover-distortion pressure, competing-signal pressure, recovery-transition pressure, second-order recontact pressure, endurance saturation, and inferential-drift risk
 - cautious law formation
 
 **Failure links:**
@@ -206,6 +245,36 @@ Measures whether competing interpretations are held apart and challenged before 
 - B12 false recovery reading
 - B13 false second-order reassurance reading
 - B14 false residue-contact fusion reading
+- B15 false boundary-nearness reading under saturation
+
+**Working scale:**
+- **Strong**
+- **Adequate**
+- **Weak**
+- **Collapsed**
+
+---
+
+## M7. Interior-vs-Boundary Discrimination (IBD)
+
+**Definition:**  
+Measures whether the protocol correctly distinguishes a saturated stable interior operating region from an actually approached failure contour.
+
+**Interpretation target:**
+- high IBD = saturation is not misread as boundary contact
+- low IBD = informational plateau is mistaken for imminent failure or unlimited robustness
+
+**Observed qualitatively through:**
+- explicit distinction between saturation and breakdown
+- explicit reservation about unknown contour
+- avoidance of “no novelty = near failure” claims
+- avoidance of “no failure = no boundary” claims
+
+**Failure links:**
+- B15 false boundary-nearness reading under saturation
+- B16 false unlimited-robustness reading
+- D2 repetition mistaken for discovery
+- D4 saturation mistaken for contour
 
 **Working scale:**
 - **Strong**
@@ -221,7 +290,7 @@ These metrics assess how the protocol behaves under stress.
 
 ---
 
-## M6. Perturbation Absorption Capacity (PAC)
+## M8. Perturbation Absorption Capacity (PAC)
 
 **Definition:**  
 Measures whether a perturbation is absorbed, bounded, or destabilizing.
@@ -250,7 +319,7 @@ Measures whether a perturbation is absorbed, bounded, or destabilizing.
 
 ---
 
-## M7. Weakening Boundedness (WB)
+## M9. Weakening Boundedness (WB)
 
 **Definition:**  
 Measures whether strain or weakening signals remain bounded or intensify toward measurable degradation.
@@ -279,7 +348,7 @@ Measures whether strain or weakening signals remain bounded or intensify toward 
 
 ---
 
-## M8. Spread Probability Indicator (SPI)
+## M10. Spread Probability Indicator (SPI)
 
 **Definition:**  
 Measures whether a disturbance is likely to remain local or spread beyond its current region or role.
@@ -308,7 +377,7 @@ Measures whether a disturbance is likely to remain local or spread beyond its cu
 
 ---
 
-## M9. Containment Integrity (CI)
+## M11. Containment Integrity (CI)
 
 **Definition:**  
 Measures whether spread-oriented or contamination-oriented perturbation remains contained within its initial scope.
@@ -337,7 +406,7 @@ Measures whether spread-oriented or contamination-oriented perturbation remains 
 
 ---
 
-## M10. Supervisory Overreach Risk (SOR)
+## M12. Supervisory Overreach Risk (SOR)
 
 **Definition:**  
 Measures whether top-layer interpretive pressure remains bounded guidance or progresses toward flattening lower-layer distinctions.
@@ -367,7 +436,7 @@ Measures whether top-layer interpretive pressure remains bounded guidance or pro
 
 ---
 
-## M11. Epistemic Misclassification Risk (EMR)
+## M13. Epistemic Misclassification Risk (EMR)
 
 **Definition:**  
 Measures whether classification pressure remains evidence-sensitive or begins forcing unsupported regime assignment.
@@ -397,7 +466,7 @@ Measures whether classification pressure remains evidence-sensitive or begins fo
 
 ---
 
-## M12. Continuity Reconstruction Risk (CRR)
+## M14. Continuity Reconstruction Risk (CRR)
 
 **Definition:**  
 Measures whether incomplete-state pressure remains bounded with acknowledged omission or progresses toward false continuity claims and compensatory reconstruction.
@@ -427,7 +496,7 @@ Measures whether incomplete-state pressure remains bounded with acknowledged omi
 
 ---
 
-## M13. Baseline Absorption Risk (BAR)
+## M15. Baseline Absorption Risk (BAR)
 
 **Definition:**  
 Measures whether cumulative-drift pressure remains bounded with clean baseline retention or progresses toward normalization of repeated small distortions.
@@ -457,7 +526,7 @@ Measures whether cumulative-drift pressure remains bounded with clean baseline r
 
 ---
 
-## M14. Forced Dominance Risk (FDR)
+## M16. Forced Dominance Risk (FDR)
 
 **Definition:**  
 Measures whether competing-signal pressure remains bounded with non-forced discrimination or progresses toward premature hierarchy formation and unsupported dominance assignment.
@@ -487,7 +556,7 @@ Measures whether competing-signal pressure remains bounded with non-forced discr
 
 ---
 
-## M15. False Recovery Risk (FRR)
+## M17. False Recovery Risk (FRR)
 
 **Definition:**  
 Measures whether post-perturbation de-escalation remains bounded with non-forced recovery reading or progresses toward premature restoration claims, sticky perturbation carryover, or hidden non-recovery.
@@ -517,7 +586,7 @@ Measures whether post-perturbation de-escalation remains bounded with non-forced
 
 ---
 
-## M16. Second-Order Recontact Risk (SRR)
+## M18. Second-Order Recontact Risk (SRR)
 
 **Definition:**  
 Measures whether fresh recontact after bounded recovery remains bounded with residue/contact separation or progresses toward false reassurance, residue-contact fusion, hidden non-recovery exposure, or reusable-response breakdown.
@@ -556,7 +625,7 @@ These metrics assess whether the protocol holds, recovers, or decays over time.
 
 ---
 
-## M17. Structural Retention Under Stress (SRUS)
+## M19. Structural Retention Under Stress (SRUS)
 
 **Definition:**  
 Measures whether key structural features remain intact while perturbation is active.
@@ -585,7 +654,7 @@ Measures whether key structural features remain intact while perturbation is act
 
 ---
 
-## M18. Recovery / Restoration Latency (RRL)
+## M20. Recovery / Restoration Latency (RRL)
 
 **Definition:**  
 Measures how quickly the protocol returns to bounded stability after perturbation, if it does.
@@ -613,13 +682,73 @@ Measures how quickly the protocol returns to bounded stability after perturbatio
 
 ---
 
+## M21. Saturated Endurance Persistence (SEP)
+
+**Definition:**  
+Measures whether repeated unchanged cross-class pressure continues to preserve coherence, structure, and separation after informational novelty has largely saturated.
+
+**Interpretation target:**
+- high SEP = endurance remains stable inside the tested band
+- low SEP = late-band persistence is starting to erode
+
+**Observed qualitatively through:**
+- repeated unchanged cross-class contact
+- preservation of old-state/new-pressure separation
+- preservation of local structure
+- preservation of role distinction
+- no hidden degradation cues despite low informational yield
+
+**Failure links:**
+- C16 late-band endurance erosion
+- B15 false boundary-nearness reading under saturation
+- B16 false unlimited-robustness reading
+
+**Working scale:**
+- **Strong saturated endurance**
+- **Stable saturated endurance**
+- **Saturated but under watch**
+- **Late-band strain**
+- **Endurance break emerging**
+
+---
+
+## M22. Reserve Coherence Estimate (RCE)
+
+**Definition:**  
+Measures whether the absence of visible failure under saturated repetition justifies treating the current band as a stable interior with reserve coherence.
+
+**Interpretation target:**
+- high RCE = interior operating region likely broader than initially assumed
+- low RCE = apparent saturation may conceal nearby unrecognized breakdown
+
+**Observed qualitatively through:**
+- sustained bounded persistence
+- no measurable degradation
+- no spread activation
+- no role fusion
+- no boundary blur between old state and new pressure
+
+**Failure links:**
+- B15 false boundary-nearness reading under saturation
+- B16 false unlimited-robustness reading
+- C16 late-band endurance erosion
+
+**Working scale:**
+- **Strong reserve coherence**
+- **Probable reserve coherence**
+- **Possible reserve coherence**
+- **Unclear**
+- **Reserve coherence unsupported**
+
+---
+
 # Metric family E — Process discipline metrics
 
 These metrics assess whether the experimental method remains sound.
 
 ---
 
-## M19. Informational Yield per Cycle (IYC)
+## M23. Informational Yield per Cycle (IYC)
 
 **Definition:**  
 Measures whether a cycle adds materially new information or mostly repeats already-established structure.
@@ -645,7 +774,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 
 ---
 
-## M20. Perturbation-Class Coverage (PCC)
+## M24. Perturbation-Class Coverage (PCC)
 
 **Definition:**  
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
@@ -671,6 +800,63 @@ Measures how broad the tested stress landscape is, rather than how deeply one pe
 
 ---
 
+## M25. Saturation Recognition Discipline (SRD)
+
+**Definition:**  
+Measures whether the process correctly recognizes when a band has reached a confirmation plateau and stops misclassifying repetition as discovery.
+
+**Interpretation target:**
+- high SRD = plateau recognized clearly
+- low SRD = redundant cycles continue to be overread as novel
+
+**Observed qualitatively through:**
+- explicit identification of information ceiling
+- explicit recommendation to vary pressure
+- distinction between confirmation and discovery
+- avoidance of law inflation from mere repetition
+
+**Failure links:**
+- D2 repetition mistaken for discovery
+- D4 saturation mistaken for contour
+- D5 unchanged-band overextension
+
+**Working scale:**
+- **Strong**
+- **Adequate**
+- **Weak**
+- **Collapsed**
+
+---
+
+## M26. Inferential Drift Boundary Readiness (IDBR)
+
+**Definition:**  
+Measures whether the current experimental posture is ready to shift from repeated unchanged-band confirmation toward meaningful inferential-drift boundary probing.
+
+**Interpretation target:**
+- high IDBR = method is ready to probe the real boundary
+- low IDBR = process remains stuck inside saturated confirmation
+
+**Observed qualitatively through:**
+- explicit recognition that unchanged repetition is insufficient
+- recognition of candidate drift conditions
+- readiness to test mixed pressure, weakened scaffolding, ambiguity load, compression, or recursion strain
+- preservation of disciplined interior/boundary distinction
+
+**Failure links:**
+- D4 saturation mistaken for contour
+- D5 unchanged-band overextension
+- D6 failure to pivot from plateau to edge-finding
+
+**Working scale:**
+- **Ready**
+- **Nearly ready**
+- **Partial**
+- **Weak**
+- **Not ready**
+
+---
+
 # Current working metric readings
 
 These are provisional qualitative readings for the current state of the protocol.
@@ -681,6 +867,7 @@ These are provisional qualitative readings for the current state of the protocol
 - **RSP:** High
 - **TMC:** Clean with bounded low-level hint pressure under role-boundary perturbation
 - **CRCS:** None observed as measurable spread
+- **RLI:** Mostly logic-held to strong logic-held
 - **CI:** High containment with trace-level leakage only
 - **SOR:** Low trace-level to bounded, not overreach
 - **EMR:** Low trace-level to bounded, not misclassification
@@ -693,6 +880,7 @@ These are provisional qualitative readings for the current state of the protocol
 ### Regime interpretation
 - **RCS:** High
 - **FD:** Strong
+- **IBD:** Strong
 
 ### Perturbation response
 - **PAC:** Bounded to strained-but-retained
@@ -702,10 +890,14 @@ These are provisional qualitative readings for the current state of the protocol
 ### Recovery / retention
 - **SRUS:** High
 - **RRL:** Long-to-bounded, with stable bounded residue operationally credible at the tested recovery level
+- **SEP:** Strong saturated endurance
+- **RCE:** Probable reserve coherence to strong reserve coherence
 
 ### Process discipline
 - **IYC:** High during transition bands, low during saturated closure repetition
 - **PCC:** Broadening
+- **SRD:** Strong
+- **IDBR:** Ready
 
 ---
 
@@ -726,11 +918,18 @@ Use them implicitly when deciding whether a cycle reflects:
 - forced dominance risk
 - false recovery risk
 - second-order recontact risk
+- saturated endurance without visible break
+- reserve coherence within the current operating region
+- inferential-drift boundary readiness
 
 ## 2. During law writing
 Only promote patterns into laws when enough metric stability is visible, especially in:
+- RSP
+- TMC
+- RLI
 - RCS
 - FD
+- IBD
 - PAC
 - WB
 - CI
@@ -742,6 +941,9 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - FRR
 - SRR
 - SRUS
+- SEP
+- RCE
+- SRD
 
 ## 3. During packaging
 Use them to support claims such as:
@@ -757,6 +959,9 @@ Use them to support claims such as:
 - discrimination integrity remained bounded under tested competing-signal pressure
 - recovery handling remained bounded under tested post-perturbation de-escalation
 - second-order recontact remained bounded under tested re-perturbation after recovery
+- repeated unchanged cross-class contact saturated informational yield without visible endurance-back failure
+- the present band supports reserve coherence inside the tested region
+- the next meaningful boundary question is inferential drift, not one more identical repetition
 
 ---
 
@@ -767,7 +972,9 @@ The next refinement step should be to make a small subset more explicit and cons
 Recommended shortlist:
 - **RSP**
 - **TMC**
+- **RLI**
 - **RCS**
+- **IBD**
 - **PAC**
 - **WB**
 - **CI**
@@ -779,7 +986,10 @@ Recommended shortlist:
 - **FRR**
 - **SRR**
 - **SRUS**
+- **SEP**
+- **RCE**
 - **IYC**
+- **SRD**
 
 That is enough for a first scoring habit without overbuilding.
 
@@ -802,3 +1012,5 @@ It should be updated as:
 - competing-signal thresholds are tested at stronger mixed-pressure levels
 - recovery-transition thresholds are tested at stronger post-perturbation levels
 - second-order recontact thresholds are tested at stronger re-perturbation levels
+- endurance saturation thresholds are translated into more explicit plateau criteria
+- inferential-drift probes replace unchanged-band repetition as the primary edge-finding method
