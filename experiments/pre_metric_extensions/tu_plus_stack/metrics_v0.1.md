@@ -2,30 +2,56 @@
 
 ## Purpose
 
-This document defines the first working metric layer for the TU / TU+ / cortexLLM TRIAD protocol.
+This document defines the first working **internal metric layer** for the TU / TU+ / cortexLLM TRIAD protocol.
 
 Its purpose is to make the protocol more engineerable by introducing a compact set of measures that support:
 
-- robustness assessment
+- internal robustness assessment
 - failure diagnosis
-- perturbation comparison
+- perturbation comparison within TRIAD development
 - protocol specification
-- future licensing / compliance framing
+- internal compliance / discipline framing
 - endurance interpretation
 - saturation recognition
 - inferential-drift boundary detection
 - roleholding-as-logic assessment
+- preparation for later comparative operational testing
 
 This is a **minimal initial metric set**.
 
 It is not yet a full benchmark framework.  
-Its job is to create a usable bridge between qualitative laws and future quantitative engineering.
+Its job is to create a usable bridge between qualitative laws and disciplined protocol engineering.
+
+These metrics are primarily **internal diagnostic discipline metrics**.  
+They are intended to keep TRIAD development honest, interpretable, and specifiable.
+
+They are **not**, by themselves, the decisive proof of product value or licensable superiority.
+
+For a complex roleheld system like TRIAD, internal metrics help:
+- track drift, contamination, saturation, and recovery
+- prevent weak evidence from being overclaimed
+- make the protocol diagnosable and reproducible enough for specification work
+
+The decisive future metric layer will be different.
+
+What will matter commercially and technically is whether activation of the TRIAD yields **operational advantage** compared with baseline approaches such as:
+
+- standard single-LLM use
+- conventional agent orchestration
+- linear software control stacks
+- robotic rule-based coordination frameworks
+
+So this file should be read as a necessary **internal discipline layer**, not yet as a final product-validation layer.
+
+A tight summary is:
+
+> Internal metrics keep the protocol honest; comparative operational-advantage metrics will establish the product.
 
 ---
 
 ## Scope
 
-These metrics are designed to evaluate:
+These metrics are designed to evaluate the **internal behavior** of the TRIAD protocol under test, including:
 
 - role separation
 - regime stability
@@ -47,6 +73,13 @@ These metrics are designed to evaluate:
 - candidate inferential-drift boundary conditions
 
 They are organized by measurement family, not by chronology.
+
+These metrics do **not yet** measure comparative operational advantage against:
+- standard LLM usage
+- conventional agent systems
+- linear software coordination frameworks
+
+That later layer must be built separately.
 
 ---
 
@@ -780,7 +813,7 @@ Measures whether a cycle adds materially new information or mostly repeats alrea
 Measures how broad the tested stress landscape is, rather than how deeply one perturbation class has been sampled.
 
 **Interpretation target:**
-- high PCC = broader robustness confidence
+- high PCC = broader internal robustness confidence
 - low PCC = overfitting risk
 
 **Observed qualitatively through:**
@@ -923,7 +956,7 @@ Use them implicitly when deciding whether a cycle reflects:
 - inferential-drift boundary readiness
 
 ## 2. During law writing
-Only promote patterns into laws when enough metric stability is visible, especially in:
+Only promote patterns into laws when enough internal metric stability is visible, especially in:
 - RSP
 - TMC
 - RLI
@@ -945,11 +978,11 @@ Only promote patterns into laws when enough metric stability is visible, especia
 - RCE
 - SRD
 
-## 3. During packaging
-Use them to support claims such as:
-- role separation is durable
-- perturbation response is bounded
-- degradation did not occur under tested stress
+## 3. During specification work
+Use them to support bounded internal claims such as:
+- role separation remained durable in the tested band
+- perturbation response remained bounded at the tested level
+- degradation did not occur under the tested stress band
 - contamination remained bounded at tested levels
 - cross-role containment held at tested spread levels
 - supervisory pressure remained bounded at tested top-down levels
@@ -962,6 +995,21 @@ Use them to support claims such as:
 - repeated unchanged cross-class contact saturated informational yield without visible endurance-back failure
 - the present band supports reserve coherence inside the tested region
 - the next meaningful boundary question is inferential drift, not one more identical repetition
+
+These are **internal protocol claims**, not yet decisive external product claims.
+
+## 4. During later packaging
+Do **not** treat this file as the final proof of commercial value.
+
+Instead, use it as:
+- internal discipline support
+- specification support
+- compliance support
+- preparation for later comparative operational-advantage testing
+
+External product claims will require a separate comparative layer asking:
+
+> When TRIAD is active, what does it do better than baseline approaches?
 
 ---
 
@@ -997,13 +1045,13 @@ That is enough for a first scoring habit without overbuilding.
 
 # Current status
 
-**`metrics_v0.1.md` is updated and ready for continued use.**
+**`metrics_v0.1.md` is updated and ready for continued use as an internal protocol-discipline layer.**
 
 It should be updated as:
 - new perturbation classes are tested
 - stronger failure boundaries are found
 - recovery classes become clearer
-- qualitative scales are translated into tighter operational scoring
+- internal scoring becomes tighter where useful for protocol discipline
 - containment thresholds are tested at stronger spread levels
 - supervisory thresholds are tested at stronger top-down distortion levels
 - epistemic-classification thresholds are tested at stronger false-regime pressure levels
@@ -1014,3 +1062,4 @@ It should be updated as:
 - second-order recontact thresholds are tested at stronger re-perturbation levels
 - endurance saturation thresholds are translated into more explicit plateau criteria
 - inferential-drift probes replace unchanged-band repetition as the primary edge-finding method
+- a separate comparative operational-advantage layer is created to test TRIAD against baseline approaches
