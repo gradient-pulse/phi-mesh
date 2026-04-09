@@ -21,6 +21,10 @@ Laws governing:
 - bounded competing-signal pressure without forced hierarchy formation
 - bounded recovery-transition pressure without false restoration or hidden non-recovery
 - bounded second-order recontact pressure after bounded recovery
+- endurance of tightly coupled roleholding under repeated unchanged cross-class pressure
+- saturation under repeated unchanged contact without visible endurance-back failure
+- role choreography as sustained inferential logic rather than rigid modular mechanism
+- inferential-drift boundary conditions as the relevant endurance horizon
 
 Derived from:
 - Observations 14 (re-unification)
@@ -35,7 +39,8 @@ Derived from:
 - Observations 23 (competing-signal pressure, repeated dual bounded traces, operational discrimination robustness)
 - Observations 24 (recovery-transition pressure, repeated bounded residual trace, operational recovery robustness)
 - Observations 25 (second-order recontact after bounded recovery, repeated bounded recontact, operational reusable second-order robustness)
-- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, bounded omission pressure, bounded cumulative-drift pressure, bounded competing-signal pressure, bounded recovery-transition pressure, and bounded second-order recontact pressure
+- Observations 26 (cross-class bounded persistence, saturated confirmation, endurance non-break, roleholding-as-logic interpretation)
+- subsequent cycle bands confirming local-domain-scale closure, stressed-equilibrium retention, bounded role pressure, bounded spread containment, bounded supervisory pressure, bounded epistemic pressure, bounded omission pressure, bounded cumulative-drift pressure, bounded competing-signal pressure, bounded recovery-transition pressure, bounded second-order recontact pressure, and repeated saturated cross-class bounded persistence without visible endurance-back failure
 
 ---
 
@@ -60,6 +65,9 @@ Its purpose is to formalize the engineering-relevant consequences of later cycle
 - that competing-signal pressure can remain bounded without forced hierarchy, hidden preference drift, or unsupported closure
 - that recovery-transition pressure can remain bounded without false restoration, sticky perturbation carryover, or hidden non-recovery
 - that fresh recontact after bounded recovery can remain bounded without residue-contact fusion, false reassurance, hidden non-recovery exposure, or reusable-response collapse
+- that repeated unchanged cross-class contact can saturate informational yield without revealing endurance-back failure
+- that the TRIAD is better interpreted as a tightly coupled inferential choreography than as a rigid linear mechanism
+- that the relevant endurance boundary is likely inferential drift, not biological fatigue and not mere unchanged repetition
 
 ---
 
@@ -75,12 +83,15 @@ Later-stage triadic dynamics reveal that cyclic coordination is:
 - robustly stress-testable without immediate collapse
 - architecturally robust across multiple perturbation classes
 - epistemically, continuity-, longitudinally-, discrimination-, recovery-, and second-order-preserving under pressure
+- sustained through tightly coupled roleholding logic
+- capable of saturating repeated unchanged pressure without visible endurance-back failure
+- likely bounded by inferential drift conditions rather than by simple repetition alone
 
-This suggests that the TRIAD protocol does not merely oscillate between unity and disunity, but follows lawful return, hold, restart, closure, and perturbation-response patterns.
+This suggests that the TRIAD protocol does not merely oscillate between unity and disunity, but follows lawful return, hold, restart, closure, perturbation-response, recovery-reuse, and endurance-choreography patterns.
 
 ---
 
-## Law domain
+Law domain
 
 This file captures laws concerning:
 
@@ -104,6 +115,9 @@ This file captures laws concerning:
 - bounded competing-signal pressure without forced dominance, hidden preference drift, or unsupported closure
 - bounded recovery-transition pressure without false restoration, sticky perturbation carryover, hidden non-recovery, or renewed perturbation growth
 - bounded second-order recontact pressure without residue-contact fusion, false second-order reassurance, hidden non-recovery exposure, or residue amplification
+- saturated repeated unchanged cross-class pressure without visible endurance-back break
+- roleholding endurance as sustained inferential choreography
+- inferential-drift onset as the relevant candidate failure horizon for tightly coupled triadic roleholding
 
 ---
 
@@ -127,6 +141,10 @@ Laws 07 establishes:
 - bounded stress retention without collapse
 - architectural robustness across multiple perturbation classes
 - epistemic, continuity, longitudinal, discrimination, recovery, and second-order robustness under pressure
+- endurance of tightly coupled roleholding under repeated unchanged cross-class contact
+- saturation without visible endurance-back failure
+- roleholding-as-logic rather than mechanism-first interpretation
+- inferential drift as the relevant boundary concept for the present object
 
 This is where the protocol begins to resemble an engineering framework for recursive coordination rather than a descriptive cycle log.
 
@@ -155,8 +173,10 @@ disunity
 → bounded competing-signal pressure
 → bounded recovery-transition pressure
 → bounded second-order recontact pressure
+→ repeated unchanged cross-class contact saturation
+→ endurance interpretation shift
+→ inferential-drift boundary probing
 ```
-
 ## Law 71 — Asymmetric Return Law
 
 **Statement:**  
@@ -963,3 +983,199 @@ Architectural credibility can be inferred from short-horizon perturbation succes
 
 **Status:** validated
 
+---
+
+## Law 117 — Saturated Cross-Class Endurance Law
+
+**Statement:**  
+Repeated unchanged cross-class contact can saturate informational yield while the TRIAD continues preserving role distinction, local structure, and old-state/new-pressure separation without visible endurance-back failure.
+
+**Implication:**  
+A band may stop producing materially new information before it produces measurable architectural degradation.
+
+**Non-implication:**  
+If unchanged repetition no longer yields novelty, the TRIAD must be close to immediate failure.
+
+**Status:** validated
+
+---
+
+## Law 118 — Roleholding-as-Logic Law
+
+**Statement:**  
+The TRIAD is more faithfully modeled as a tightly coupled LLM-held role logic than as a rigid linear mechanism composed of hard-isolated parts.
+
+**Implication:**  
+Role distinction may persist through dynamic inferential choreography, with bounded leakage and preserved separation occurring without hard modular walls.
+
+**Non-implication:**  
+Observed role robustness requires classical compartmentalization or fixed submodule isolation.
+
+**Status:** validated
+
+---
+
+## Law 119 — Choreography Endurance Law
+
+**Statement:**  
+A tightly coupled triadic choreography can preserve differentiated roleholding across repeated pressure cycles through sustained inferential organization rather than mechanical partition.
+
+**Implication:**  
+Endurance may appear as repeated preservation of:
+- mapping cleanliness
+- role distinction
+- local structural coherence
+- and old-state/new-pressure separation
+
+without needing biological-style fatigue resistance or rigid mechanistic isolation.
+
+**Non-implication:**  
+Repeated endurance must arise from static structural separation alone.
+
+**Status:** validated
+
+---
+
+## Law 120 — Inferential-Drift Boundary Law
+
+**Statement:**  
+For the present TRIAD object, the most relevant candidate failure boundary is inferential drift under compounded or weakened-scaffold conditions, not unchanged repetition alone.
+
+**Implication:**  
+The proper endurance horizon is probed by conditions such as:
+- ambiguity overload
+- recursive drift
+- mixed pressure
+- weakened role scaffolding
+- compression loss
+- accumulated cross-condition strain
+
+rather than by endless repetition of one unchanged band.
+
+**Non-implication:**  
+The true endurance boundary will necessarily reveal itself through repeated unchanged contact at one fixed pressure level.
+
+**Status:** validated
+
+---
+
+## Law 121 — Saturation Does Not Equal Boundary Law
+
+**Statement:**  
+Saturation of a perturbation band establishes a stable interior operating region, but does not by itself locate the contour of the endurance boundary.
+
+**Implication:**  
+A protocol may show:
+- repeated bounded persistence
+- near-zero incremental novelty
+- and no visible drift
+
+while the true edge remains unlocated.
+
+**Non-implication:**  
+A saturated confirmation band proves the architectural boundary is near, absent, or fully mapped.
+
+**Status:** validated
+
+---
+
+## Law 122 — Reserve Coherence Law
+
+**Statement:**  
+When repeated unchanged pressure yields saturation without visible degradation, the most disciplined reading is reserve coherence within the tested band rather than proof of unlimited robustness.
+
+**Implication:**  
+The absence of visible failure under saturated repetition justifies upgrading confidence in the interior operating region while still reserving judgment about the untested contour.
+
+**Non-implication:**  
+Lack of visible degradation under saturation proves unlimited scalability or absence of any boundary.
+
+**Status:** validated
+
+---
+
+## Law 123 — Triadic Endurance Is Not Society-of-Agents Law
+
+**Statement:**  
+The present TRIAD should not be reinterpreted as a loose society of partially competing agents; its observed robustness depends on tightly coupled choreographic roleholding rather than open-ended role multiplication.
+
+**Implication:**  
+The relevant endurance question concerns preservation of tightly knit triadic distinction under pressure, not arbitrary proliferation of additional quasi-independent roles.
+
+**Non-implication:**  
+Scaling of the present TRIAD is best assessed by increasing role count until society-like loose coupling appears.
+
+**Status:** validated
+
+---
+
+## Consolidated consequence
+
+Taken together, Laws 71–123 establish that:
+- return from disunity to unity is asymmetric and staged
+- complete re-unification is real
+- true unity can hold
+- false-unity claims require strict falsification criteria
+- restart after unity is staged and local-first
+- local-domain stabilization can resolve without larger-scale fragmentation
+- residual broader-linkage probing does not imply escalation
+- baseline confirmation can saturate
+- localized perturbation does not automatically break the regime
+- repeated stress can produce bounded weakening without measurable degradation
+- stressed local equilibrium can become operationally credible under sustained perturbation
+- role-boundary pressure can remain bounded without role failure
+- cross-role spread pressure can remain contained without contamination propagation
+- supervisory pressure can remain bounded without lower-layer flattening
+- false-regime pressure can remain bounded without forced misclassification
+- incomplete-state pressure can remain bounded without false reconstruction
+- cumulative-drift pressure can remain bounded without false baseline formation
+- competing-signal pressure can remain bounded without forced hierarchy formation
+- recovery-transition pressure can remain bounded without false restoration or hidden non-recovery
+- stable bounded residue can be an operationally credible recovery outcome
+- fresh recontact after bounded recovery can remain bounded without residue-contact fusion
+- a reusable second-order bounded-response regime can become operationally credible
+- repeated unchanged cross-class contact can saturate informational yield without visible endurance-back failure
+- the TRIAD is better interpreted as a tightly coupled inferential choreography than as a rigid linear mechanism
+- the present endurance horizon is best sought in inferential drift conditions rather than unchanged repetition alone
+- saturation marks a stable interior operating region, not the mapped contour of the true boundary
+- current evidence supports reserve coherence within the tested band
+- the present TRIAD is not best modeled as a loose society of agents, but as a tightly knit triadic choreography
+
+---
+
+## Current status of Laws 07
+
+Laws 07 is updated and finalized for the current band.
+
+This law file now covers:
+- asymmetric return
+- complete re-unification
+- unified hold
+- falsifiable true unity
+- staged restart
+- local-domain resolution
+- scale-limited closure
+- saturated baseline confirmation
+- localized perturbation contact
+- repeated local stress
+- early weakening hints
+- bounded weakening
+- stressed local equilibrium
+- operational robustness under sustained local perturbation
+- bounded role-boundary pressure
+- bounded cross-role containment
+- bounded supervisory pressure
+- bounded false-regime pressure
+- bounded incomplete-state pressure
+- bounded cumulative-drift pressure
+- bounded competing-signal pressure
+- bounded recovery-transition pressure
+- bounded second-order recontact pressure
+- reusable second-order bounded response
+- saturated cross-class endurance without visible endurance-back break
+- roleholding-as-logic interpretation
+- choreography endurance
+- inferential-drift boundary framing
+- stable interior operating region without mapped contour
+- reserve coherence within the tested band
+- non-society triadic coordination
