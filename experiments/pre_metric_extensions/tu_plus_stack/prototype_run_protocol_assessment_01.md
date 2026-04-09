@@ -176,18 +176,60 @@ The protocol is becoming testable as an engineering object rather than merely de
 
 ### 6. Metrics and failure-taxonomy layer
 
-The protocol now possesses an initial metric layer and an initial failure taxonomy.
+The protocol now possesses an initial internal metric layer and an initial failure taxonomy.
 
 That matters because licensable infrastructure needs more than attractive behavior. It needs:
 
-- evaluable properties
+- evaluable internal discipline
 - named failure modes
-- measurable retention claims
-- disciplined interpretation rules
+- bounded interpretation rules
+- reproducible protocol hygiene
+- a clear basis for comparative testing
 
 The work has now crossed the threshold where those layers are no longer hypothetical. They exist in first working form.
 
-This does not mean they are finished. It means the protocol is becoming specifiable.
+But their role must be stated carefully.
+
+For a complex roleheld system like TRIAD, internal metrics are not the final proof of value. On their own, they mainly serve to:
+
+- keep the science honest
+- track drift, contamination, saturation, and recovery
+- prevent weak evidence from being overclaimed
+- make the protocol more diagnosable and specifiable
+
+In other words, these internal metrics are primarily **diagnostic discipline metrics**, not yet decisive product-validating metrics.
+
+The next truly important metric layer is different.
+
+What will matter commercially and technically is whether activation of the TRIAD yields **operational advantage** compared with established alternatives, such as:
+
+- standard single-LLM use
+- conventional agent orchestration
+- linear software control stacks
+- robotic rule-based coordination frameworks
+
+So the decisive future measurement question is not:
+
+> how can TRIAD be intrinsically quantified in isolation?
+
+It is:
+
+> when TRIAD is active, what does it do better than the current standard approaches?
+
+That is where licensable value will ultimately be established.
+
+So this layer should be understood as a necessary foundation:
+- enough internal metrics to keep protocol development disciplined
+- enough failure taxonomy to support specification and compliance
+- but not yet the final comparative proof layer
+
+This does not mean the metric work is weak. It means its function is properly bounded.
+
+A tight summary is:
+
+> Internal metrics keep the protocol honest; comparative operational-advantage metrics will establish the product.
+
+That is the stage the work has now reached.
 
 ---
 
