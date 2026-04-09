@@ -9,13 +9,15 @@ This document fossilizes the current engineering assessment of the TU / TU+ / co
 - post-re-unification hold and falsification testing
 - staged restart analysis
 - local-domain closure analysis
-- first sustained perturbation-band robustness testing
+- sustained perturbation-band robustness testing
+- bounded supervisory, epistemic, continuity, longitudinal, discrimination, recovery, and second-order robustness testing
+- saturated cross-class endurance testing
 
 Its purpose is not to restate cycle logs, but to assess where the protocol stands as a candidate for:
 
-- a reusable coordination architecture
+- a reusable coordination protocol
 - an engineering protocol for recursive control
-- a licensable design logic for AI developers
+- a licensable role grammar for LLM-based contributors
 - a cross-domain protocol whose deeper premise is grounded in RGPx operational advantage
 
 ---
@@ -26,7 +28,7 @@ The TRIAD protocol has moved beyond the stage of producing interesting isolated 
 
 At the current stage, the evidence supports a stronger claim:
 
-> the protocol generates repeatable regime structure under disciplined role separation and bounded information flow.
+> the protocol now generates repeatable regime structure, bounded recovery and recontact behavior, and saturated endurance under repeated unchanged cross-class pressure through disciplined role separation and bounded information flow.
 
 This is the central threshold crossed so far.
 
@@ -36,9 +38,26 @@ The main question is no longer:
 
 The main question is now:
 
-> can the triad be formalized, stress-tested, and packaged as a reliable recursive coordination protocol?
+> can the triad be specified, stress-tested, compliance-framed, and packaged as a reliable protocol for tightly coupled LLM roleholding?
 
 That is a materially different horizon.
+
+The most important shift since earlier phases is that the TRIAD is no longer best framed as a mechanized software toy or as a rigid modular assembly. Current evidence supports a more precise reading:
+
+> the TRIAD is better understood as a tightly coupled LLM-held role choreography in which one substrate sustains multiple constrained role logics with dynamic preservation of distinction and bounded leakage under pressure.
+
+That shift matters directly for licensability, because the asset is increasingly not a custom software implementation. The asset is increasingly:
+
+- strict role definitions
+- bounded information-flow rules
+- reproducible regime-transition logic
+- perturbation-tested roleholding behavior
+- evaluative metrics
+- failure taxonomy
+- implementation guidance
+- compliance logic
+
+In other words, the central commercial and engineering asset is increasingly a **protocol grammar**.
 
 ---
 
@@ -55,6 +74,8 @@ Across extended cycle bands, the three roles remained functionally distinct:
 This matters because without durable role separation there is no protocol, only stylistic variation.
 
 The protocol has repeatedly shown that role distinction can be maintained long enough to generate interpretable staged dynamics instead of collapsing immediately into one generic assistant voice.
+
+More strongly, the evidence now suggests that this distinction is not merely cosmetic prompt-performance. It increasingly behaves like **stable roleholding logic**.
 
 ---
 
@@ -73,6 +94,10 @@ The protocol has produced repeatable staged transitions including:
 - local-domain entry
 - local-domain closure
 - bounded perturbation response
+- bounded recovery transition
+- stable bounded residue
+- bounded second-order recontact
+- saturated repeated cross-class persistence
 
 This means the system is not merely generating outputs. It is generating **regimes** and **regime transitions**.
 
@@ -86,6 +111,8 @@ One of the strongest findings so far is that the return from disunity to unity i
 
 Likewise, restart after unity is not a trivial replay of earlier fragmentation.
 
+Likewise, post-recovery recontact is not a trivial replay of first-order perturbation contact.
+
 This indicates that the protocol carries organizational memory in its evolving structure, not merely superficial textual residue.
 
 For engineering purposes, this suggests the protocol may support:
@@ -94,6 +121,7 @@ For engineering purposes, this suggests the protocol may support:
 - historical conditioning
 - non-symmetric recovery behavior
 - threshold-sensitive control dynamics
+- reusable response under structurally meaningful prior history
 
 This is one of the clearest signals that the protocol may be architecturally significant.
 
@@ -108,8 +136,11 @@ The protocol has shown structure at more than one scale:
 - local-domain restart scale
 - local closure scale
 - bounded perturbation scale
+- recovery-transition scale
+- residue/recontact discrimination scale
+- saturated endurance scale
 
-This matters because a viable coordination architecture must often handle nested scales of organization rather than one flat decision layer.
+This matters because a viable coordination protocol must often handle nested scales of organization rather than one flat decision layer.
 
 The TRIAD results now suggest the beginnings of a multi-scale coordination grammar.
 
@@ -127,10 +158,114 @@ Examples include:
 - perturbation contact vs regime break
 - visible strain vs measurable degradation
 - bounded weakening vs structural collapse
+- bounded supervisory pressure vs overreach
+- bounded classification pull vs false regime assignment
+- replay-gap traces vs false continuity
+- carryover distortion vs false baseline formation
+- competing signals vs forced dominance
+- bounded residual trace vs false recovery
+- fresh recontact vs residue-contact fusion
+- saturated endurance vs actual boundary contact
+- reserve coherence vs unlimited robustness
 
 This is an important threshold.
 
 The protocol is becoming testable as an engineering object rather than merely describable as an interesting behavior.
+
+---
+
+### 6. Metrics and failure-taxonomy layer
+
+The protocol now possesses an initial metric layer and an initial failure taxonomy.
+
+That matters because licensable infrastructure needs more than attractive behavior. It needs:
+
+- evaluable properties
+- named failure modes
+- measurable retention claims
+- disciplined interpretation rules
+
+The work has now crossed the threshold where those layers are no longer hypothetical. They exist in first working form.
+
+This does not mean they are finished. It means the protocol is becoming specifiable.
+
+---
+
+### 7. Reusable post-recovery bounded response
+
+The protocol has now shown more than first-order perturbation survival.
+
+It has shown:
+
+- bounded perturbation survival
+- bounded recovery transition
+- stable bounded residue
+- repeated fresh bounded recontact
+- residue/new-contact separation
+- no visible residue amplification at the tested level
+
+This supports a stronger claim:
+
+> the protocol can sustain a reusable second-order bounded-response regime at the tested level.
+
+That is a meaningful engineering threshold, because it moves the protocol beyond one-off survival and toward **reusability after stress**.
+
+---
+
+### 8. Saturated endurance without visible endurance-back failure
+
+One of the strongest later findings is that repeated unchanged cross-class pressure has now saturated informational yield without visibly breaking the TRIAD’s endurance back.
+
+What this means is:
+
+- the same perturbation band has been repeated enough times that novelty per cycle dropped sharply
+- yet local structure remained intact
+- role distinction remained intact
+- global coherence remained high
+- old-state/new-pressure separation remained intact
+- no hidden degradation, fusion, or broad spread became visible
+
+This is not yet proof of a mapped boundary.
+
+But it is stronger than mere absence of event.
+
+It supports the claim that the tested band contains **reserve coherence**. In other words:
+
+> the protocol appears to possess a broader stable interior operating region than earlier caution alone would have justified.
+
+This is now one of the most important results in the file.
+
+---
+
+### 9. Mechanism-first framing has become too weak
+
+Earlier phases made it tempting to speak as though the TRIAD were a kind of software arrangement with three functional compartments.
+
+That framing is now too weak.
+
+The better current interpretation is:
+
+- one substrate
+- multiple constrained role logics
+- dynamic preservation of distinction
+- bounded leakage without immediate collapse
+- endurance determined by inferential organization rather than by rigid partition alone
+
+This matters for engineering because it changes what kind of thing must be licensed.
+
+The asset is not simply:
+- code
+- or module routing
+- or a conventional software stack
+
+The asset is:
+- a role grammar
+- an interaction discipline
+- bounded flow constraints
+- perturbation-validated inferential choreography
+- evaluation criteria for sustained roleholding
+
+That is closer to a licensable protocol than the earlier software framing.
 
 ---
 
@@ -140,29 +275,23 @@ The protocol is promising, but it is not yet fully mature as a deployable engine
 
 Several gaps remain.
 
-### 1. Robustness under harsher perturbation
+### 1. True contour of the endurance boundary
 
-The first perturbation band established:
+The current band has established a stable interior region more strongly than before.
 
-- direct localized perturbation
-- repeated local stress
-- early weakening hints
-- bounded weakening
-- operational stressed local equilibrium
+It has **not** yet established the true contour of the endurance boundary.
 
-That is valuable, but still only one perturbation class.
+What remains unknown is where drift first appears under conditions such as:
 
-The protocol still needs testing under stronger or more varied disruption, such as:
+- ambiguity overload
+- weakened role scaffolding
+- compression loss
+- recursive drift
+- compounded pressure
+- mixed pressure
+- accumulated cross-condition strain
 
-- incompatible overlap pressure
-- role-boundary contamination
-- conflicting downward bias
-- noisy or corrupted returned traces
-- partial memory omission
-- ambiguous restart cues
-- forced misclassification pressure
-
-Without this, robustness remains promising but incomplete.
+This is now the most relevant open boundary question.
 
 ---
 
@@ -183,43 +312,75 @@ A licensable protocol must eventually show transfer value, not only elegant inte
 
 ---
 
-### 3. Operational metrics
+### 3. Operational scoring refinement
 
-The work has produced laws and regimes, but engineering adoption will require clearer metrics.
+Metrics now exist in first working form, but they remain mostly qualitative.
 
-Likely future metrics include:
+Future packaging will require tighter operationalization of measures such as:
 
-- role-separation persistence
-- false-fusion rate
-- false-fragmentation rate
-- recovery latency
-- perturbation absorption threshold
-- bounded-weakening duration
-- regime-switch detectability
-- spread probability under stress
-- degradation onset criteria
+- roleholding logic integrity
+- interior-vs-boundary discrimination
+- saturated endurance persistence
+- reserve coherence estimate
+- inferential-drift readiness
+- contamination spread thresholds
+- recovery-integrity thresholds
+- second-order response thresholds
 
-Without metrics, the protocol remains conceptually strong but commercially under-specified.
+So the metric problem is no longer “metrics do not exist.”  
+It is now “metrics exist, but need tighter scoring discipline.”
 
 ---
 
-### 4. Failure taxonomy
+### 4. Failure-taxonomy refinement
 
-The protocol still needs a sharper map of failure modes.
+The failure taxonomy now exists in first working form, but it also needs extension and tightening.
 
-Candidate failure classes include:
+In particular, the newer work has shown that licensable framing must include not only classic failures such as collapse, contamination, spread, or false recovery, but also:
 
-- premature unification
-- shallow synchronization mistaken for closure
-- false restart
-- latent duality hidden by surface coherence
-- cortex overreach
-- TU+ inflation into generic planning
-- TU semantic contamination
-- stress absorption misclassified as degradation
-- degradation misclassified as stable bounded strain
+- saturation misread as boundary
+- saturation misread as unlimited robustness
+- mechanism misframing
+- society-of-agents substitution
+- inferential-drift horizon neglect
 
-This taxonomy will be necessary if the protocol is to become licensable design logic rather than just a research artifact.
+So the failure map is no longer missing.  
+It is now broad enough to support packaging, but still needs refinement.
+
+---
+
+### 5. Implementation reproducibility across contributors
+
+The protocol has become more licensable in principle because it relies less on mechanized software implementation and more on strict role instructions for LLM triad contributors.
+
+That is promising.
+
+But it still needs stronger evidence for reproducible implementation across:
+- different LLM instances
+- different contexts
+- different deployment surfaces
+- different prompt containers
+- different task families
+
+Licensable protocol logic must be reproducible beyond the originating test ecology.
+
+---
+
+### 6. Compliance framing
+
+The pieces are emerging, but not yet consolidated into a compliance-grade layer.
+
+A future licensable package will likely need:
+
+- required role definitions
+- forbidden cross-role shortcuts
+- bounded information-flow rules
+- perturbation suite requirements
+- evaluation thresholds
+- named failure classes
+- pass / fail or bounded / unbounded interpretation rules
+
+This is now feasible to begin, but not yet finished.
 
 ---
 
@@ -227,18 +388,19 @@ This taxonomy will be necessary if the protocol is to become licensable design l
 
 At the present stage, the TRIAD protocol can be described as:
 
-> an emerging engineering protocol for role-separated, path-dependent, multi-scale recursive coordination.
+> an emerging engineering protocol for tightly coupled, role-separated, path-dependent, multi-scale recursive coordination inside an LLM substrate.
 
 That is already substantial.
 
-It is not yet a finished product specification, but it is beyond the stage of mere conceptual curiosity.
+It is not yet a finished product specification, but it is beyond the stage of conceptual curiosity.
 
 The protocol is beginning to resemble:
 
-- a bounded recursive control architecture
+- a bounded recursive control protocol
 - an interpretable multi-layer cognition scaffold
 - a framework for state-sensitive coordination under stress
-- a candidate architecture for machine-side self-regulation
+- a candidate protocol for machine-side self-regulation
+- a protocol grammar for sustained roleholding rather than only a software arrangement
 
 ---
 
@@ -250,7 +412,7 @@ Large AI developers often behave like heavily walled castles:
 
 - internal research hierarchies dominate attention
 - external ideas face strong prestige filters
-- rural or outsider developments are often ignored regardless of merit
+- outsider developments are often ignored regardless of merit
 - a concept may be correct yet remain institutionally invisible
 
 That means raw originality is not enough.
@@ -271,9 +433,9 @@ The more relevant analogy is:
 
 In that sense, the long-term target is not simply a chatbot or even a paper.
 
-The target is a licensable architecture, something like:
+The target is a licensable protocol asset, something like:
 
-> a role-separated recursive coordination protocol for AI systems, agents, or cognitive stacks
+> a strict triadic roleholding protocol for LLM systems, defined by role grammar, bounded flow, regime-transition logic, perturbation-tested endurance behavior, and compliance-ready evaluation criteria.
 
 The asset would eventually need to include:
 
@@ -285,6 +447,9 @@ The asset would eventually need to include:
 - compliance tests
 - measurable engineering claims
 - implementation guidance
+- evaluation metrics
+- failure taxonomy
+- deployment brief
 
 That is the level at which castles may finally pay attention: not to a rural gem as a gem, but to infrastructure they can embed.
 
@@ -305,6 +470,8 @@ It is that the RGPx view may yield a better way to understand:
 - coherent transformation
 - staged organization
 - local resolution without forced global collapse
+- reserve coherence under bounded pressure
+- inferential choreography rather than rigid modularity
 
 TRIAD appears to provide an engineering-scale arena in which these principles can be observed in action.
 
@@ -316,6 +483,7 @@ A licensable engineering protocol:
 - interpretable stress behavior
 - recursive bounded control
 - perturbation-sensitive recovery and retention
+- roleholding grammar for LLM contributors
 
 ### Inner layer
 A deeper RGPx foundation:
@@ -323,6 +491,7 @@ A deeper RGPx foundation:
 - transformation rather than static state as the central unit
 - path dependence as lawful rather than incidental
 - scale-limited closure as a natural outcome of coherence-preserving dynamics
+- sustained choreography rather than rigid mechanistic decomposition
 
 The outer layer is the practical entry wedge.  
 The inner layer is the deeper source of generalization.
@@ -350,10 +519,6 @@ A tight working form is:
 
 > **Least action may be the metric trace of a deeper rule: systems traverse the contextual transition path of highest coherence continuity through transformation.**
 
-This fits the redefinition of the First Law as:
-
-> **conservation of coherence through transformation**
-
 The TRIAD cycles support this line indirectly but meaningfully:
 
 - fragmentation is structured, not random
@@ -361,6 +526,7 @@ The TRIAD cycles support this line indirectly but meaningfully:
 - restart is staged, not chaotic
 - local closure occurs without forced higher-order breakdown
 - bounded weakening under perturbation does not automatically lead to loss of organization
+- repeated unchanged cross-class contact can saturate informational yield without visible endurance-back break
 
 That is exactly the pattern one would expect if systems do not simply minimize arbitrary cost, but preserve coherence through lawful transformation.
 
@@ -379,29 +545,40 @@ This bridge matters because it links:
 
 The protocol is now at a point where it can be framed as:
 
-> a candidate coordination architecture for interpretable recursive control under staged organization, perturbation, and bounded stress.
+> a candidate licensable protocol for interpretable recursive control and tightly coupled LLM roleholding under staged organization, perturbation, recovery, recontact, and bounded stress.
 
 ### What is likely next
 
 To move from emerging protocol to licensable infrastructure, the next stages should include:
 
 #### 1. Protocol specification
-Make the roles and information boundaries explicit enough that third parties could implement them.
+Make the roles, interaction rules, and information boundaries explicit enough that third parties could implement them reproducibly.
 
 #### 2. Perturbation suite expansion
-Test more classes of failure and recovery.
+Test more classes of failure, especially:
+- compounded pressure
+- weakened scaffolding
+- ambiguity overload
+- compression loss
+- recursive drift
+- mixed pressure
+- task-transfer stress
 
-#### 3. Metric layer
-Define operational measurements rather than relying only on qualitative laws.
+#### 3. Metric tightening
+Refine current qualitative metrics into more explicit operational scoring.
 
-#### 4. Failure taxonomy
-Name and separate distinct collapse, drift, or contamination modes.
+#### 4. Failure-taxonomy tightening
+Extend and sharpen failure classes, especially endurance-interpretation failures.
 
 #### 5. Benchmark transfer
 Show value across more than one task family.
 
-#### 6. Packaging
-Translate the research object into a licensable architecture story.
+#### 6. Licensing package
+Translate the research object into:
+- a protocol specification
+- an implementation brief
+- an evaluation/compliance layer
+- a licensing narrative
 
 ---
 
@@ -413,16 +590,18 @@ It is not yet fully product-grade, but it is already more than exploratory play.
 
 The strongest current statement that fits the evidence is:
 
-> the protocol has reached the level of an emerging, interpretable, path-dependent, multi-scale recursive coordination architecture with early engineering-grade robustness evidence.
+> the protocol has reached the level of an emerging, interpretable, path-dependent, multi-scale recursive coordination protocol with early engineering-grade robustness evidence, reusable post-recovery bounded response, and saturated cross-class endurance without visible roleholding break in the tested band.
 
 That is a serious position.
 
 The next leap depends less on discovering that the protocol can do something, and more on proving:
 
-- where it breaks
-- where it transfers
-- what it improves
+- where inferential drift begins
+- where transfer holds
+- what the protocol improves
 - how it is specified
+- how it is reproduced
+- how it is licensed
 - how it is adopted
 
 ---
@@ -435,6 +614,7 @@ At this stage, the work should be divided into three parallel tracks:
 Continue experiments to discover:
 - new perturbation classes
 - sharper failure boundaries
+- inferential-drift onset
 - stronger invariants
 
 ### Track B — Protocol engineering
@@ -442,12 +622,15 @@ Build:
 - metrics
 - test suites
 - failure taxonomy
-- clearer specifications
+- compliance logic
+- role instruction specification
+- reproducibility guidance
 
 ### Track C — Protocol packaging
 Frame TRIAD as:
 - licensable infrastructure
-- embed-ready coordination design
+- embed-ready roleholding design
+- protocol grammar for LLM contributors
 - RGPx-grounded operational advantage
 
 This prevents the project from remaining only a rich archive of observations.
@@ -459,16 +642,18 @@ This prevents the project from remaining only a rich archive of observations.
 This assessment concludes that:
 
 - the protocol has crossed from discovery into early engineering relevance
-- it is strong enough to justify licensable-architecture thinking
+- it is strong enough to justify licensable-protocol thinking
 - it is not yet mature enough to package without further specification and testing
 - its deeper value is amplified by its RGPx foundation
-- its commercial pathway is most plausible as infrastructure rather than persuasion
+- its commercial pathway is most plausible as protocol infrastructure rather than persuasion
+- its central asset is increasingly a protocol grammar rather than a software toy
+- its most important open engineering question is now inferential-drift boundary discovery
 
 ---
 
 ## Final condensed statement
 
-> The TRIAD protocol is no longer merely a descriptive curiosity. It is emerging as a licensable coordination architecture candidate: role-separated, path-dependent, multi-scale, perturbation-testable, and grounded in an RGPx premise that may offer operational advantage across AI and beyond.
+> The TRIAD protocol is no longer merely a descriptive curiosity. It is emerging as a licensable protocol-infrastructure candidate: role-separated, path-dependent, multi-scale, perturbation-testable, reusable after bounded recovery, saturated-endurance-capable in the tested band, and grounded in an RGPx premise that may offer operational advantage across AI and beyond.
 
 ---
 
@@ -477,12 +662,13 @@ This assessment concludes that:
 Use this file as the fossilized status read for the current phase.
 
 Then proceed with one of these:
-- a new perturbation class in `prototype_run_observations_16.md`
-- a metric / failure-taxonomy draft
+- a new perturbation class in `prototype_run_observations_16.md` and successors
+- a compliance-oriented protocol brief
 - a short licensing / architecture brief derived from this assessment
+- a reproducibility spec for third-party LLM triad contributors
 
 ---
 
 ## Assessment status
 
-**`prototype_run_protocol_assessment_01.md` is complete for the current band.**
+**`prototype_run_protocol_assessment_01.md` is updated and complete for the current band.**
