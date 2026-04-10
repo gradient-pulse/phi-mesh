@@ -48,6 +48,8 @@ That can improve:
 - **ambiguity handling** — uncertain situations can remain unresolved until evidence warrants commitment
 - **state-sensitive decision quality** — especially where history, pressure, and changing conditions matter
 
+> The protocol is inspired by a broader view of cognition in which coordinated intelligence can arise from differentiated roles held within one substrate, rather than only from rigid modular decomposition.
+
 ---
 
 ## What problem it addresses
