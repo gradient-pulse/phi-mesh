@@ -31,6 +31,7 @@ It appears especially relevant for:
 - long-horizon orchestration systems
 - robotics supervisory layers
 - autonomous-system edge-case reasoning
+- industrial monitoring and adaptive control support
 - high-uncertainty human-AI coordination environments
 
 The commercial proposition is simple:
@@ -43,6 +44,7 @@ Current stage:
 - first law layer
 - first internal metric layer
 - first failure taxonomy
+- architecture note and front-package draft
 - early packaging path as licensable protocol infrastructure
 
 Current ask:
