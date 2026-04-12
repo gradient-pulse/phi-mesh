@@ -2,7 +2,7 @@
 
 T-Protocol is a licensable coordination protocol for LLM-based systems.
 
-It is not a new foundation model, not a conventional agent swarm, and not a rigid software pipeline. It is an **embed-ready coordination grammar** that sits around an LLM and improves:
+It is not a new foundation model, not a conventional agent swarm, and not a rigid software pipeline. It is an **embed-ready coordination grammar** that sits around an LLM and is designed to improve:
 
 - interpretable coordination
 - continuity over time
@@ -41,7 +41,7 @@ Current stage:
 - defined role structure
 - repeated observed regime behavior
 - first law layer
-- first metric layer
+- first internal metric layer
 - first failure taxonomy
 - early packaging path as licensable protocol infrastructure
 
