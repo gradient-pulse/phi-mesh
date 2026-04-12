@@ -713,3 +713,383 @@ A sensible maturity path is:
 
 This sequence is recommended to reduce premature overreach.
 
+## 11. Licensing Scope
+
+T-Protocol is intended to be licensed as a defined protocol asset.
+
+The licensed subject matter is not limited to a single prompt or document.  
+It consists of the protocol grammar as a coordinated whole, including:
+
+- role definitions
+- bounded information-flow rules
+- feedback and state-update logic
+- operating modes
+- implementation discipline
+- compliance conditions
+- approved deployment framing
+
+### 11.1 What a license grants
+
+A valid license may grant the right to:
+
+- implement T-Protocol within defined systems or products
+- deploy the protocol internally or commercially under agreed terms
+- use the defined triadic coordination grammar in approved application classes
+- access protected implementation materials
+- represent a system as T-Protocol-based only when compliance conditions are met
+
+### 11.2 What a license does not automatically grant
+
+A license does not automatically grant the right to:
+
+- disclose protected protocol-defining materials publicly
+- sublicense the protocol to third parties without permission
+- rebrand a materially altered implementation as faithful T-Protocol
+- publish detailed implementation instructions outside agreed terms
+- claim compliance or superiority without satisfying the required evaluation conditions
+
+### 11.3 Public, protected, and licensed material
+
+For practical use, T-Protocol materials should be handled in three layers:
+
+**Public conversation layer**
+- short note
+- architecture note
+- high-level positioning
+- non-sensitive diagrams or category explanations
+
+**Protected protocol review layer**
+- detailed role specifications
+- bounded-flow rules
+- feedback discipline
+- operating rules
+- compliance logic
+- implementation guidance
+
+**Licensed implementation layer**
+- full usable protocol package
+- approved implementation materials
+- deployment-specific guidance
+- compliance and review procedures
+- any exact or near-operational prompt/instruction materials required for faithful use
+
+### 11.4 Faithful-use condition
+
+Use of the T-Protocol name should be limited to implementations that remain materially faithful to:
+
+- the triadic role structure
+- bounded information flow
+- recursive feedback discipline
+- separation-preserving interpretation rules
+- approved operating and compliance conditions
+
+An implementation that materially abandons these conditions should not be represented as a valid T-Protocol implementation.
+
+### 11.5 Licensing objective
+
+The purpose of licensing is not only revenue capture.
+
+It is also to preserve:
+
+- protocol identity
+- implementation quality
+- bounded claims
+- controlled disclosure
+- faithful category formation
+
+Licensing is therefore part of technical governance, not only commercial packaging.
+
+---
+
+## 12. Support Materials Index
+
+The front package is the usable and licensable implementation-facing layer.
+
+It is supported by a separate substantiation layer that records how the protocol was derived, tested, and disciplined.
+
+The support materials are not required for ordinary first use, but they may be relevant for:
+
+- diligence
+- technical review
+- partnership evaluation
+- protected assessment
+- later certification or trust-building processes
+
+### 12.1 Protocol-origin materials
+
+These materials document how the protocol emerged and stabilized, including:
+
+- role-development materials for TU / TU+ / cortexLLM
+- architecture notes
+- protocol assessments
+- packaging notes
+
+### 12.2 Observation materials
+
+These materials record repeated protocol behavior across cycle bands, including:
+
+- regime discovery
+- re-unification
+- hold behavior
+- staged restart
+- local-domain closure
+- perturbation response
+- recovery and recontact
+- saturated endurance
+
+### 12.3 Law materials
+
+These materials formalize recurring validated patterns, including:
+
+- return asymmetry
+- bounded perturbation behavior
+- recovery and second-order behavior
+- saturated endurance
+- roleholding-as-logic interpretation
+- inferential-drift boundary framing
+
+### 12.4 Metric materials
+
+These materials support internal discipline and protocol diagnosis, including:
+
+- role integrity metrics
+- regime interpretation metrics
+- perturbation-response metrics
+- endurance and saturation metrics
+- process-discipline metrics
+
+These are internal protocol-discipline metrics, not yet the final comparative product-value layer.
+
+### 12.5 Failure taxonomy materials
+
+These materials document named failure classes, including:
+
+- role-boundary failures
+- regime-classification failures
+- perturbation-response failures
+- interpretation and packaging failures
+- endurance-interpretation failures
+
+### 12.6 Comparative and future materials
+
+Later materials may include:
+
+- comparative operational-advantage testing
+- benchmark results against baseline approaches
+- application transfer studies
+- deployment case notes
+- compliance refinements
+
+### 12.7 Support-material handling principle
+
+Support materials should be disclosed selectively.
+
+They are primarily intended for:
+- protected review
+- substantiation
+- disciplined technical understanding
+
+They are not all part of the public conversation layer, and not all need to be exposed to every potential licensee.
+
+---
+
+## 13. Contact / Discussion Path
+
+T-Protocol discussions should proceed in stages.
+
+The purpose of staged discussion is to:
+
+- preserve disclosure discipline
+- keep the object legible
+- match detail level to seriousness of interest
+- avoid exposing implementation-grade material too early
+
+### 13.1 Stage 1 — Public conversation
+
+This stage is intended for:
+
+- first contact
+- investor conversations
+- strategic discussions
+- industrial relevance checks
+- high-level category explanation
+
+Typical materials:
+- short conversation note
+- one-page architecture note
+- clean commercial framing
+- limited high-level use-case explanation
+
+Typical question at this stage:
+- does this category make sense?
+- is the protocol strategically legible?
+- is there plausible industrial or infrastructure value?
+
+### 13.2 Stage 2 — Protected review
+
+This stage is intended for:
+
+- serious technical interest
+- diligence conversations
+- partner exploration
+- implementation review under confidentiality
+
+Typical materials:
+- detailed front-package materials
+- role specifications
+- bounded-flow rules
+- feedback logic
+- compliance framing
+- selected support materials
+
+Typical question at this stage:
+- is the protocol technically coherent, protectable, and potentially implementable?
+
+### 13.3 Stage 3 — Licensing discussion
+
+This stage is intended for:
+
+- commercial implementation interest
+- pilot design
+- license-structure discussion
+- deployment-scope negotiation
+- review of permitted and restricted use
+
+Typical materials:
+- licensed implementation package
+- agreed deployment mode
+- implementation guidance
+- compliance procedures
+- commercial terms
+
+Typical question at this stage:
+- under what terms can the protocol be validly implemented and used?
+
+### 13.4 Stage 4 — Deployment and review
+
+This stage is intended for:
+
+- bounded implementation
+- pilot or production use
+- compliance review
+- refinement under actual deployment conditions
+- later comparative operational testing
+
+Typical question at this stage:
+- does the implementation remain protocol-faithful and operationally valuable in its intended setting?
+
+### 13.5 Contact posture
+
+Discussions should remain:
+
+- calm
+- object-first
+- bounded in claim strength
+- non-defensive
+- sensitive to disclosure level
+
+The recommended strategy is:
+- define the category publicly
+- review the protocol under protection
+- license the implementation-grade substance
+
+---
+
+## 14. Appendix Note on Public vs Protected Materials
+
+This appendix clarifies the disclosure logic of the T-Protocol package.
+
+T-Protocol is not only an idea.  
+It is becoming a defined and potentially licensable protocol asset.
+
+That means not all materials should be disclosed at the same level.
+
+### 14.1 Public materials
+
+Public materials are intended to:
+
+- explain the category
+- open conversation
+- establish legibility
+- make the existence of the protocol clear
+- support first-stage strategic interest
+
+Examples:
+- short note
+- one-page architecture note
+- high-level category framing
+- non-sensitive simplified diagrams
+
+Public materials should **not** be sufficient to reconstruct a faithful implementation of the protocol.
+
+### 14.2 Protected materials
+
+Protected materials are intended for:
+
+- confidentiality-based review
+- serious diligence
+- technical exploration
+- trusted investor or partner assessment
+
+Examples:
+- detailed role specifications
+- bounded-flow rules
+- feedback discipline
+- deployment modes in practical detail
+- compliance logic
+- selected supporting evidence
+
+Protected materials may be sufficiently detailed that a capable team could begin reconstructive implementation work. They should therefore not be distributed casually.
+
+### 14.3 Licensed materials
+
+Licensed materials are the full implementation-grade substance of the protocol.
+
+They are intended for:
+- actual protocol use
+- controlled deployment
+- bounded pilot or commercial implementation
+- faithful category formation
+
+Examples:
+- full implementation-facing package
+- approved operating materials
+- detailed deployment guidance
+- implementation review logic
+- compliance-bound use rights
+
+### 14.4 Internal materials
+
+Internal materials remain part of the origin, substantiation, and research archive.
+
+Examples:
+- broader observation history
+- internal drafting history
+- law development history
+- metric development history
+- deeper conceptual and RGPx framing materials not needed for ordinary use
+
+These materials may support confidence and credibility, but they do not all need to be part of outward-facing distribution.
+
+### 14.5 Disclosure principle
+
+A practical disclosure rule is:
+
+> If a document would allow a capable team to reconstruct a meaningful version of T-Protocol, it should not be treated as ordinary public material.
+
+This principle is intended to preserve:
+- protocol identity
+- implementation quality
+- category control
+- licensing value
+
+### 14.6 Packaging principle
+
+T-Protocol should therefore be handled as a layered package:
+
+- **public conversation layer** — explains the object
+- **protected protocol review layer** — evaluates the object
+- **licensed implementation layer** — enables valid use of the object
+- **internal substantiation layer** — proves the object was not invented yesterday
+
+This layered handling is part of the protocol’s commercial and technical discipline.
