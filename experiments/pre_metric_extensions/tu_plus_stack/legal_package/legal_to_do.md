@@ -1,0 +1,9 @@
+-	naming options
+-	trademark questions
+-	protocol disclosure boundaries
+-	invention record / timestamping
+-	public vs protected vs licensed-only map
+-	faithful implementation definition
+-	license scope questions
+-	modification / sublicense questions
+-	jurisdiction / entity questions
