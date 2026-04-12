@@ -748,7 +748,7 @@ It consists of the protocol grammar as a coordinated whole, including:
 - compliance conditions
 - approved deployment framing
 
-### 11.1 What a license grants
+### 11.1 What a license may grant
 
 A valid license may grant the right to:
 
@@ -766,11 +766,11 @@ A license does not automatically grant the right to:
 - sublicense the protocol to third parties without permission
 - rebrand a materially altered implementation as faithful T-Protocol
 - publish detailed implementation instructions outside agreed terms
-- claim compliance or superiority without satisfying the required evaluation conditions
+- claim compliance or superiority without satisfying required evaluation conditions
 
-### 11.3 Public, protected, and licensed material
+### 11.3 Disclosure classes
 
-For practical use, T-Protocol materials should be handled in three layers:
+For practical use, T-Protocol materials should be handled in distinct disclosure classes:
 
 **Public conversation layer**
 - short note
@@ -784,14 +784,14 @@ For practical use, T-Protocol materials should be handled in three layers:
 - feedback discipline
 - operating rules
 - compliance logic
-- implementation guidance
+- implementation guidance necessary for evaluation
 
 **Licensed implementation layer**
 - full usable protocol package
 - approved implementation materials
 - deployment-specific guidance
 - compliance and review procedures
-- any exact or near-operational prompt/instruction materials required for faithful use
+- exact or near-operational prompt/instruction materials required for faithful use
 
 ### 11.4 Faithful-use condition
 
@@ -954,6 +954,11 @@ This stage is intended for:
 - partner exploration
 - implementation review under confidentiality
 
+Entry into this stage should normally require:
+- a confidentiality understanding, NDA, or equivalent protected-review condition
+- a clear reason for deeper access
+- selective disclosure only of materials necessary for evaluation
+
 Typical materials:
 - detailed front-package materials
 - role specifications
@@ -964,6 +969,11 @@ Typical materials:
 
 Typical question at this stage:
 - is the protocol technically coherent, protectable, and potentially implementable?
+
+Protected review should not automatically include:
+- full implementation-grade substance
+- unrestricted redistribution rights
+- exact prompt-equivalent materials unless specifically governed
 
 ### 13.3 Stage 3 — Licensing discussion
 
@@ -998,22 +1008,16 @@ This stage is intended for:
 Typical question at this stage:
 - does the implementation remain protocol-faithful and operationally valuable in its intended setting?
 
-### 13.5 Contact posture
-
-Discussions should remain:
-
-- calm
-- object-first
-- bounded in claim strength
-- non-defensive
-- sensitive to disclosure level
-
-The recommended strategy is:
-- define the category publicly
-- review the protocol under protection
-- license the implementation-grade substance
-
 ---
+
+## 14. Appendix Note on Public vs Protected Materials
+
+This appendix clarifies the disclosure logic of the T-Protocol package.
+
+T-Protocol is not only an idea.  
+It is becoming a defined and potentially licensable protocol asset.
+
+That means not all materials should be disclosed at the same level.
 
 ## 14. Appendix Note on Public vs Protected Materials
 
@@ -1111,5 +1115,3 @@ T-Protocol should therefore be handled as a layered package:
 - **protected protocol review layer** — evaluates the object
 - **licensed implementation layer** — enables valid use of the object
 - **internal substantiation layer** — proves the object was not invented yesterday
-
-This layered handling is part of the protocol’s commercial and technical discipline.
