@@ -74,6 +74,49 @@ This makes it especially relevant where standard systems tend to:
 
 ---
 
+## Where it can matter first
+
+T-Protocol is best seen as infrastructure for **state-sensitive coordination under uncertainty**.
+
+The strongest early application areas are likely to be:
+
+### 1. Enterprise decision copilots
+For systems that must:
+- preserve continuity over multiple interactions
+- handle partially resolved situations
+- avoid premature closure on weak evidence
+- support human decision quality under changing conditions
+
+### 2. Long-horizon orchestration systems
+For systems that must:
+- coordinate over time rather than answer once
+- preserve bounded state across cycles
+- distinguish local disturbance from actual escalation
+- support planning with memory of prior state
+
+### 3. Robotics and autonomy supervisory layers
+For systems that must:
+- interpret novelty and anomaly
+- handle uncertain or weakly classified signals
+- preserve ambiguity until evidence improves
+- support safer edge-case reasoning above the reflex layer
+
+### 4. Industrial monitoring and adaptive control support
+For systems that must:
+- detect structured deviation without overreacting
+- manage recovery after disturbance
+- preserve continuity under repeated changing inputs
+- avoid flattening noise, drift, and true failure into one class
+
+### 5. High-uncertainty human-AI coordination environments
+For systems that must:
+- support repeated collaborative judgment
+- maintain interpretability
+- preserve unresolved alternatives when warranted
+- improve coordination quality rather than only response fluency
+
+---
+
 ## What makes it commercially interesting
 
 T-Protocol is closer to infrastructure than to an app.
@@ -100,11 +143,12 @@ T-Protocol sits around a base LLM.
 
 A simplified stack looks like this:
 
-**application input**  
+**application / environment input**  
 → **T-Protocol role layer**  
 → **base LLM**  
-→ **T-Protocol feedback / state update**  
-→ **application output / next-state readiness**
+→ **downstream application, control, or actuation layer**  
+with  
+**feedback / state update** returning into the protocol
 
 So the base model remains the generative engine.
 
@@ -144,23 +188,6 @@ This matters commercially because it allows deployment to be matched to latency,
 
 ---
 
-## Best-fit application areas
-
-T-Protocol is especially promising for:
-
-- enterprise decision copilots
-- long-horizon orchestration systems
-- anomaly-aware supervisory systems
-- robotics supervisory layers
-- autonomous-vehicle edge-case reasoning support
-- industrial monitoring and adaptive control support
-- high-uncertainty human-AI coordination environments
-
-It is generally not intended to replace ultra-low-latency reflex control.  
-Its strength is in supervisory, interpretive, and recursive coordination layers.
-
----
-
 ## Why now
 
 The opportunity is timely because AI deployment is shifting from isolated generation toward:
@@ -186,9 +213,9 @@ It now has:
 - a defined role structure
 - observed regime behavior across repeated runs
 - a first law layer
-- a first metric layer
+- a first internal metric layer
 - a first failure taxonomy
-- a first architecture note
+- a front-package architecture
 - a clearer packaging path as a licensable protocol
 
 What is still ahead:
