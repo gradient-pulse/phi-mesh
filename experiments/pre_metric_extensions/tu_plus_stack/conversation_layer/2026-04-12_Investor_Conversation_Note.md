@@ -218,12 +218,12 @@ It now has:
 - a front-package architecture
 - a clearer packaging path as a licensable protocol
 
-What is still ahead:
+Near-term priorities are clear:
 
-- broader application transfer
-- comparative operational benchmarking
-- further boundary testing
-- compliance and licensing formalization
+- validate early application fit
+- run focused baseline comparisons
+- complete targeted boundary testing
+- finalize protection and licensing structure
 
 So this is an **emerging infrastructure candidate**, not yet a mass-market product.
 
