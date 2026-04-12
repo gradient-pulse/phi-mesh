@@ -7,11 +7,11 @@ T-Protocol is a licensable coordination protocol for LLM-based systems.
 It is not a replacement for the base model.  
 It is a structured **roleholding and recursive feedback layer** placed around an LLM to improve:
 
-- interpretability
-- bounded decision formation
-- ambiguity handling
-- recovery under pressure
-- state-sensitive coordination over time
+- interpretable coordination
+- continuity across cycles
+- recovery after disturbance
+- ambiguity handling before premature closure
+- state-sensitive decision quality under uncertainty
 
 At its core, T-Protocol organizes one model substrate through a strict triadic role grammar:
 
@@ -19,7 +19,7 @@ At its core, T-Protocol organizes one model substrate through a strict triadic r
 - **TU+** — comparison / continuation / choreography layer
 - **cortexLLM** — contextual interpretation / control layer
 
-These roles are kept distinct by bounded information flow and explicit operating discipline.
+These roles are kept distinct through bounded information flow and recursive feedback rules.
 
 ---
 
@@ -31,7 +31,7 @@ A standard LLM system often behaves as:
 
 T-Protocol changes this into:
 
-**input → role-structured processing → generation → output → protocol-mediated feedback → updated next-state processing**
+**input → triadic role processing → generation → feedback-mediated state update → next-cycle readiness**
 
 This matters because output is not treated as a disposable end product.  
 It becomes part of the evolving state of the system.
@@ -43,46 +43,53 @@ That gives the system a stronger operational sense of continuity:
 - what remains unresolved
 - what requires reinterpretation under new conditions
 
-In this sense, T-Protocol acts as a **recursive coordination membrane** around the base model.
+In this sense, T-Protocol acts as a **recursive coordination layer** around the base model.
 
 ---
 
 ## Where it sits in the stack
 
-T-Protocol sits **above** the base LLM and **below** the application logic.
+T-Protocol sits **above** the base LLM and **below** the application or deployment layer.
 
 ### Simplified position
 
-**Application input**  
-→ **T-Protocol role layer**  
-→ **Base LLM**  
-→ **T-Protocol feedback / state update**  
-→ **Application output / next-cycle readiness**
+**Application / environment input**  
+→ **T-Protocol triadic role layer**  
+→ **Base LLM / model**  
+→ **Downstream application, control, or actuation layer**  
+with  
+**feedback / state update** returning into the protocol
 
 This means the base LLM remains the generative engine, while T-Protocol governs:
 - how signals are structured
 - how roles remain distinct
 - how outputs are interpreted
 - how outputs re-enter the next cycle
-- how ambiguity, recovery, and novel signals are handled
+- how ambiguity, recovery, and renewed contact are handled
 
 ---
 
 ## Why this matters
 
-T-Protocol is designed for cases where raw generation is not enough.
+Most current AI coordination systems still rely on relatively linear orchestration:
+- fixed module handoffs
+- brittle routing
+- weak continuity between one output and the next state
+- poor handling of novelty, ambiguity, and out-of-distribution signals
 
-Its intended value is strongest when a system must handle:
+T-Protocol takes a different route.
 
-- path-dependent decision contexts
-- ambiguous or weakly classified signals
-- staged recovery after disruption
-- non-trivial state continuity
-- bounded reinterpretation instead of premature closure
-- repeated interaction under stress
-- inputs outside clean training-distribution expectations
+Instead of treating coordination as a chain of software parts, it treats coordination as **bounded roleholding within one model substrate**.
 
-In these cases, the protocol aims to improve not just output quality, but **coordination quality**.
+That can improve:
+
+- **interpretable coordination** — clearer internal role structure rather than one undifferentiated model response
+- **continuity** — outputs are fed back as part of evolving state
+- **recovery** — the system can distinguish bounded residue, fresh contact, and renewed escalation more cleanly
+- **ambiguity handling** — uncertain situations can remain unresolved until evidence warrants commitment
+- **state-sensitive decision quality** — especially where history, pressure, and changing conditions matter
+
+The protocol is also consistent with a broader view of cognition in which coordinated intelligence can arise from differentiated roles held within one substrate, rather than only from rigid modular decomposition.
 
 ---
 
@@ -98,24 +105,12 @@ For:
 - workflow support
 - fast decision assistance
 
-Characteristics:
-- compact role prompts
-- shallow recursion
-- low latency overhead
-- basic feedback continuity
-
 ### Standard mode
 For:
 - planning
 - enterprise coordination
 - long-horizon state management
-- multi-step interpretation tasks
-
-Characteristics:
-- fuller role activation
-- structured feedback loops
-- stronger continuity handling
-- bounded ambiguity retention
+- multi-step interpretation
 
 ### High-integrity mode
 For:
@@ -124,12 +119,6 @@ For:
 - autonomous systems
 - safety-relevant anomaly handling
 - edge-case interpretation
-
-Characteristics:
-- tighter role separation
-- stronger feedback discipline
-- explicit recovery / recontact handling
-- stricter bounded-flow and evaluation rules
 
 T-Protocol is therefore best understood as a **configurable protocol layer**, not a single fixed runtime pattern.
 
@@ -150,18 +139,18 @@ Examples:
 - anomaly-aware autonomous supervisors
 - robotics supervisory interpretation layers
 - vehicle or machine edge-case reasoning layers
-- stateful adaptive control support systems
+- industrial monitoring and adaptive control support systems
 
 It is generally **not** intended as a replacement for ultra-low-latency reflex control.  
 Its strength is supervisory and coordination logic, not raw motor reflex execution.
 
 ---
 
-## What the license gives
+## What the license covers
 
-A T-Protocol license would govern the use of a defined protocol package, not merely a text prompt.
+A T-Protocol license is not just permission to use a phrase or prompt.
 
-The licensed package can include:
+It governs use of a defined protocol package, including:
 
 - the named T-Protocol architecture
 - role definitions for TU / TU+ / cortexLLM
@@ -178,60 +167,43 @@ In short:
 
 ---
 
-## What the license does not require
-
-A licensee does **not** need the full research archive to use the protocol.
-
-They do not need to absorb:
-- the full observation history
-- the entire law-development trail
-- all internal debates
-- all research fossils
-
-Those remain supporting evidence and substantiation.
-
-The usable package should be a distilled implementation layer.
-
----
-
 ## Package structure
 
-### Front package — license-facing
-This is the implementation and commercial layer.
+### Public conversation layer
+Used to explain the category:
+- short note
+- one-page architecture note
+- high-level framing
+- non-sensitive diagrams
 
-It should include:
-- architecture note
-- protocol definition
+### Protected protocol review layer
+Used for serious evaluation under confidentiality:
 - role specifications
+- bounded-flow rules
+- feedback discipline
 - operating rules
-- deployment modes
-- compliance checklist
-- evaluation criteria
-- licensing terms
-- implementation guide
+- implementation guidance
 
-### Back package — substantiation layer
-This is the evidence and credibility layer.
+### Licensed implementation layer
+Used for actual deployment:
+- full usable protocol package
+- approved implementation materials
+- compliance procedures
+- deployment-specific guidance
 
-It should include:
-- role origins
+### Internal substantiation layer
+Used to support trust and diligence:
 - observations
 - laws
 - metrics
 - failure taxonomy
 - protocol assessments
-- validation notes
-- deeper RGPx rationale
-
-The front package is what customers use.  
-The back package is what supports trust, diligence, and later technical review.
+- deeper rationale
 
 ---
 
-## Clean commercial summary
+## Clean summary
 
 T-Protocol is best framed as:
 
 > a licensable, configurable recursive roleholding protocol layer for LLM-based systems, designed to improve interpretable coordination, continuity, recovery, and ambiguity handling through bounded triadic processing and feedback-mediated state update.
-
-That is the core architecture proposition.
