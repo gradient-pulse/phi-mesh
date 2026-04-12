@@ -310,6 +310,26 @@ Mode selection should depend on:
 
 The protocol should be applied at the level of interpretive and supervisory coordination appropriate to the deployment, not forced into raw reflex-control loops where simpler fast control layers belong.
 
+### 5.4 Mode selection matrix
+
+| Criterion | Light Mode | Standard Mode | High-Integrity Mode |
+|---|---|---|---|
+| **Latency tolerance** | Low latency required | Moderate latency acceptable | Higher latency acceptable if interpretive quality improves |
+| **Cost tolerance** | Lower protocol overhead preferred | Moderate protocol overhead acceptable | Higher protocol overhead justified |
+| **Ambiguity retention need** | Limited but useful | Important | Critical |
+| **Feedback depth** | Shallow | Moderate | Deep / explicit |
+| **State continuity need** | Basic | Strong | Strong and safety-relevant |
+| **Recovery / recontact tracking** | Minimal | Present | Explicit and disciplined |
+| **Evaluation strictness** | Basic internal checks | Stronger internal checks | Highest internal discipline and review |
+| **Novelty / OOD exposure** | Low to moderate | Moderate to high | High |
+| **Typical application class** | Conversational support, workflow assistance, fast decision aid | Planning, enterprise coordination, long-horizon state handling | Supervisory autonomy, robotics oversight, edge-case interpretation, safety-relevant coordination |
+| **Best use principle** | Use when speed matters most and limited protocol depth is enough | Use when decision quality under uncertainty justifies fuller triadic processing | Use when ambiguity, novelty, recovery discipline, and failure cost justify maximum protocol discipline |
+
+**Mode selection rule:**  
+Select the lowest mode that still preserves the continuity, ambiguity handling, recovery discipline, and interpretive quality required by the application.
+
+The protocol should be applied at the supervisory and interpretive layer appropriate to the deployment, not forced into raw reflex-control loops where simpler fast control layers belong.
+
 ---
 
 ## 6. Feedback and State Update Logic
