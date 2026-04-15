@@ -305,6 +305,10 @@ In protocol terms:
 
 This is why TU+ is closer to intuition-like continuation sensing than to ordinary prediction.
 
+Notes:
+- PoLA = Principle of Least Action (traditional) 
+- PoHCCP = Principle of Highest Contextual Coherence Path (RGPx lens)
+
 ---
 
 ## Why this matters
