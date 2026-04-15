@@ -503,5 +503,5 @@ This example is deliberately simple, but it shows the operational difference cle
 
 A compact final formulation:
 
-One T-Protocol cycle begins with structured input, passes through mapping, comparison, and interpretation, updates a live shared field, and remains answerable to later returned evidence rather than ending as disposable output.
+> One T-Protocol cycle begins with structured input, passes through mapping, comparison, and interpretation, updates a live shared field, and remains answerable to later returned evidence rather than ending as disposable output.
 
