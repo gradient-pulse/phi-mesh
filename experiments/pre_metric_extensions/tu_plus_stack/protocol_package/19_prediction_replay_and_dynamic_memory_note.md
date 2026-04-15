@@ -4,7 +4,7 @@
 
 This note clarifies what prediction means inside T-Protocol, especially at the level of TU+.
 
-Its purpose is to prevent confusion between TU+ prediction and more familiar forms of prediction such as:
+Its purpose is to prevent confusion between TU+ continuation sensing and more familiar forms of prediction such as:
 
 - ordinary next-token continuation
 - symbolic forecasting
@@ -12,7 +12,7 @@ Its purpose is to prevent confusion between TU+ prediction and more familiar for
 - reflex-policy output
 - model-predictive control style command simulation
 
-T-Protocol uses prediction in a narrower and more structured sense.
+T-Protocol uses prediction in a narrower, more structured, and more continuity-sensitive sense.
 
 ---
 
@@ -20,11 +20,11 @@ T-Protocol uses prediction in a narrower and more structured sense.
 
 TU+ does not predict by inventing a likely story.
 
-It predicts by comparing the current live choreography field against stored choreography patterns and projecting likely next train continuations.
+It performs replay-grounded continuation sensing over the live choreography field, balancing present unfolding against stored and sustained choreography memory.
 
 Compactly:
 
-> TU+ prediction is comparison-driven continuation forecasting over the live choreography field.
+> TU+ performs replay-grounded continuation sensing over the live choreography field, balancing present unfolding against stored and sustained choreography memory.
 
 ---
 
@@ -37,12 +37,14 @@ TU+ prediction is the production of candidate next continuations based on:
 - current coherence state
 - mismatch history
 - stored choreography memory
+- dynamic choreography memory already present in sustained live unfolding
 - bounded downward contextual bias where present
 
-TU+ therefore predicts from the question:
+TU+ therefore operates from questions such as:
 
 - what kind of unfolding does this field most resemble?
 - what continuation typically follows from this kind of structure?
+- what continuation is dynamically viable given the sustained choreography already present?
 - is the field stable, weakening, branching, reopening, or restarting?
 - should one continuation be favored, or should several remain live?
 
@@ -50,7 +52,12 @@ This makes TU+ prediction:
 - field-sensitive
 - continuity-sensitive
 - weighted rather than absolute
+- replay-grounded
 - revisable under returned evidence
+
+A more faithful description is:
+
+> TU+ does not simply predict the future; it senses likely continuation by balancing the present choreography field against stored and sustained choreography memory.
 
 ---
 
@@ -61,7 +68,7 @@ TU+ prediction is **not**:
 ### 1. Ordinary next-token prediction
 TU+ does not predict the next token in a language stream as such.
 
-It predicts likely next structured continuation in the choreography field.
+It projects likely next structured continuation in the choreography field.
 
 ### 2. Broad symbolic forecasting
 TU+ does not generate a high-level narrative about what will happen “in general.”
@@ -84,7 +91,7 @@ TU+ is not merely running an internal motor simulation in order to emit control 
 Its role is broader and more basic:
 - compare
 - replay
-- predict continuation
+- sense likely continuation
 - register mismatch
 - preserve contested alternatives when support is insufficient
 
@@ -92,7 +99,7 @@ Its role is broader and more basic:
 
 ## How TU+ predicts
 
-TU+ prediction proceeds in a bounded sequence.
+TU+ continuation sensing proceeds in a bounded sequence.
 
 ### Step 1 — Read the live field
 TU+ reads the current field state, including:
@@ -113,7 +120,23 @@ This may yield:
 - mismatch pressure
 - replay relevance
 
-### Step 3 — Generate candidate train continuations
+### Step 3 — Balance stored memory and live dynamic memory
+TU+ does not operate from stored choreography memory alone.
+
+It also reads the dynamic memory already present in:
+- sustained trains
+- sustained couplings
+- persistent field organization
+- unfolding continuity pressure
+
+This balancing helps determine whether likely continuation is:
+- stable
+- weakening
+- bifurcating
+- reopening
+- or nearing restart
+
+### Step 4 — Generate candidate train continuations
 TU+ proposes one or more likely next train candidates.
 
 These candidates are weighted by:
@@ -122,9 +145,10 @@ These candidates are weighted by:
 - coherence viability
 - mismatch pressure
 - prior pattern similarity
+- live dynamic memory pressure
 - bounded contextual bias
 
-### Step 4 — Preserve revisability
+### Step 5 — Preserve revisability
 If support is weak or contradictory, TU+ should not force one dominant future.
 
 It may preserve:
@@ -135,7 +159,7 @@ It may preserve:
 
 Compactly:
 
-> TU+ predicts by matching the present field to stored choreography forms and projecting weighted next-train candidates.
+> TU+ senses likely continuation by matching the present field to stored choreography forms while balancing against the dynamic memory already present in sustained live choreography.
 
 ---
 
@@ -143,7 +167,7 @@ Compactly:
 
 Replay is central to TU+.
 
-Replay does not mean theatrical reenactment.
+Replay does not mean theatrical reenactment.  
 It means structured reactivation of relevant choreography memory for comparison against the current field.
 
 Replay helps TU+ answer:
@@ -153,7 +177,7 @@ Replay helps TU+ answer:
 - is the present field close enough to support a continuation forecast?
 - or is novelty / instability too high?
 
-Replay therefore gives TU+ a continuity-sensitive basis for prediction.
+Replay therefore gives TU+ a continuity-sensitive basis for continuation sensing.
 
 Compactly:
 
@@ -161,9 +185,42 @@ Compactly:
 
 ---
 
+## Dynamic memory and sustained choreography
+
+TU+ should not be understood as operating only over stored memory and present input.
+
+A sustained choreography in the live field is itself a form of dynamic memory.
+
+Why?
+
+Because persistent trains and couplings do not merely record what has happened.  
+They also constrain what continuations remain viable, likely, unstable, or blocked.
+
+This means that memory in T-Protocol has at least two forms:
+
+### 1. Stored choreography memory
+Previously stabilized pattern forms available for replay and comparison.
+
+### 2. Dynamic choreography memory
+Sustained live unfolding whose persistence already carries forward structured pressure into the future.
+
+This matters because TU+ does not project likely continuation from an empty present.
+
+It balances:
+- stored choreography memory
+- current live choreography
+- mismatch history
+- bounded contextual bias
+
+Compactly:
+
+> Sustained choreography is not only present structure; it is dynamic memory shaping likely continuation.
+
+---
+
 ## Prediction, mismatch, and correction
 
-TU+ prediction is never final by itself.
+TU+ continuation sensing is never final by itself.
 
 It must remain answerable to returned traces.
 
@@ -174,13 +231,13 @@ This means:
 - they may collapse under mismatch
 - they may trigger revision, de-confirmation, or restart
 
-This is why TU+ prediction is not mere speculation.
+This is why TU+ is not merely speculating.
 
-It is prediction under correction pressure.
+It senses continuation under correction pressure.
 
 Compactly:
 
-> TU+ predicts under the expectation that returned traces may confirm, weaken, or overturn the forecast.
+> TU+ operates under the expectation that returned traces may confirm, weaken, or overturn the current continuation reading.
 
 ---
 
@@ -208,8 +265,9 @@ It is a choreography-aware continuation layer that preserves:
 - mismatch accountability
 - branch sensitivity
 - restart and reopening discipline
+- dynamic memory carried by sustained unfolding
 
-So the difference is not merely technical detail.
+So the difference is not merely technical detail.  
 It is a difference in level and purpose.
 
 ### Reflex-oriented prediction
@@ -217,15 +275,16 @@ It is a difference in level and purpose.
 - often short-horizon
 - often tightly tied to output or control
 
-### TU+ prediction
+### TU+ continuation sensing
 - optimized for structured continuation judgment
 - preserves ambiguity where warranted
 - remains answerable to replay and mismatch
+- balances stored memory and live dynamic memory
 - supports supervisory and recursive coordination rather than raw reflex control
 
 Compactly:
 
-> Reflex models predict in order to act immediately; TU+ predicts in order to keep the field oriented, revisable, and continuity-sensitive.
+> Reflex models predict in order to act immediately; TU+ senses likely continuation in order to keep the field oriented, revisable, and continuity-sensitive.
 
 ---
 
@@ -246,14 +305,23 @@ Its role is to preserve the protocol’s middle layer:
 
 That is why TU+ is indispensable.
 
+And that is why licensees must understand that TU+ is not simply “a predictor.”
+
+It is the layer that:
+- replays relevant choreography memory
+- balances it against the current live field
+- senses likely continuation
+- remains open to mismatch
+- preserves dynamic memory already present in sustained choreography
+
 ---
 
 ## Closing statement
 
-TU+ prediction should be understood as a replay-grounded, mismatch-accountable, continuity-sensitive projection of likely next train structure.
+TU+ should be understood as a replay-grounded, mismatch-accountable, continuity-sensitive layer for sensing likely continuation.
 
 It is neither generic forecasting nor reflex command simulation.
 
 A compact final formulation:
 
-> TU+ predicts by replaying relevant choreography memory against the current live field and generating weighted next-train continuations that remain revisable under returned evidence.
+> TU+ does not merely predict. It performs replay-grounded, mismatch-accountable continuation sensing by balancing stored choreography memory with the dynamic memory already present in sustained live choreography.
