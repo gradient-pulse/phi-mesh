@@ -179,7 +179,7 @@ Minimum ingredients may include:
 
 Compactly:
 
-> Coherence is the degree to which trains and choreographies remain viably coupled as a whole.
+> Coherence is the degree to which trains and choreographies remain viably coupled as a whole across unfolding time.
 
 ---
 
