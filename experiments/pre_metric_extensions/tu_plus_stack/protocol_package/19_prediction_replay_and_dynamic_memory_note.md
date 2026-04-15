@@ -288,6 +288,25 @@ Compactly:
 
 ---
 
+## PoHCCP and continuation sensing
+
+The deepest candidate rule under TU+ continuation sensing is not mere extrapolation.
+
+It is the selection of the path of highest contextual coherence through present transformation.
+
+This aligns with the broader RGPx reinterpretation of PoLA:
+
+- not as a primitive metric extremization rule first
+- but as the trace, in metric language, of a deeper coherence-selective principle
+
+In protocol terms:
+
+> TU+ senses likely continuation by favoring the path of highest contextual coherence available in the present transforming field.
+
+This is why TU+ is closer to intuition-like continuation sensing than to ordinary prediction.
+
+---
+
 ## Why this matters
 
 Without this distinction, TU+ may be misunderstood as:
@@ -324,4 +343,4 @@ It is neither generic forecasting nor reflex command simulation.
 
 A compact final formulation:
 
-> TU+ does not merely predict. It performs replay-grounded, mismatch-accountable continuation sensing by balancing stored choreography memory with the dynamic memory already present in sustained live choreography.
+> TU+ does not merely predict. It performs replay-grounded, mismatch-accountable continuation sensing by balancing stored choreography memory with the dynamic memory already present in sustained live choreography and favoring the path of highest contextual coherence through transformation.
