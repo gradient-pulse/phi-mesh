@@ -488,6 +488,7 @@ It is:
 ## Minimal lessons for licensees
 
 A licensee should take from this example that:
+
 	1.	TU, TU+, and cortexLLM do different work
 	2.	the shared state is the real memory field of the protocol
 	3.	prediction matters
