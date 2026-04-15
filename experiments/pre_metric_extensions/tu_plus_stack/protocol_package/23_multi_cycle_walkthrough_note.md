@@ -10,6 +10,17 @@ A full multi-cycle worked example may be added later.
 
 ---
 
+## Scope
+
+This walkthrough is illustrative, not exhaustive.
+
+It is a compact teaching corridor designed to make the protocol mechanics legible.
+It does not attempt to reproduce the much larger bounded testing history through which the protocol was developed and stress-tested across many cycles.
+
+That broader testing history belongs to the substantiation and assessment layers, not to this explanatory note.
+
+---
+
 ## Why this note exists
 
 A single cycle shows the protocol mechanics.
