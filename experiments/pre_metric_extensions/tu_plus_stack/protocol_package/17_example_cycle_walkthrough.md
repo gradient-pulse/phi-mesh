@@ -451,37 +451,37 @@ This returned trace is then integrated into the next cycle.
 ### Case A — prediction broadly supported
 
 If the returned trace fits the predicted “pause/hold” continuation:
-	•	confidence in the relevant predicted train may rise
-	•	mismatch remains low
-	•	the pattern may strengthen toward provisional confirmation
+-	confidence in the relevant predicted train may rise
+-	mismatch remains low
+-	the pattern may strengthen toward provisional confirmation
 
 ### Case B — prediction weakened
 
 If instead the returned trace showed sudden leftward motion:
-	•	mismatch would be logged
-	•	the predicted train would weaken
-	•	a mild revision or branch split might follow
+-	mismatch would be logged
+-	the predicted train would weaken
+-	a mild revision or branch split might follow
 
 This is the core difference between:
-	•	ordinary one-shot generation
+-	ordinary one-shot generation
 and
-	•	T-Protocol’s recursive accountability
+-	T-Protocol’s recursive accountability
 
 ---
 
 ## What this walkthrough shows
 
 This single example shows that T-Protocol is not just:
-	•	three prompts
-	•	three voices
-	•	a summarization trick
+-	three prompts
+-	three voices
+-	a summarization trick
 
 It is:
-	•	a structured live field
-	•	with differentiated roles
-	•	acting on bounded state
-	•	across cycles
-	•	with prediction accountable to return evidence
+-	a structured live field
+-	with differentiated roles
+-	acting on bounded state
+-	across cycles
+-	with prediction accountable to return evidence
 
 ---
 
