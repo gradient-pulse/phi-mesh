@@ -227,7 +227,7 @@ TU+:
 }
 ```
 
-## What TU+ has done
+### What TU+ has done
 
 TU+ has:
 -	recognized a partial pattern resemblance
