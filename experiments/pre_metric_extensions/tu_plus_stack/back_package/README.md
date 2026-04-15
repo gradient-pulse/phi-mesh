@@ -80,3 +80,6 @@ The back package substantiates the product.
 
 The front package tells others what T-Protocol is.  
 The back package shows why that claim is serious.
+
+> The deeper developmental trail of prototype observations and law emergence is preserved separately in research_package/, so that the back package can remain focused on substantiation and review structure.
+
