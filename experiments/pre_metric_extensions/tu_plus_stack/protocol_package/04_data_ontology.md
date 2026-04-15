@@ -103,24 +103,26 @@ Compactly:
 
 ### 4. Coupling
 
-Coupling is the relational status between trains.
+Coupling is not mere proximity, resemblance, or symbolic association.
 
-It may be:
-- tentative
-- strengthening
-- stable
-- weakening
-- fragmented
-- dissolved
+Coupling begins when events in distinct trains occur simultaneously or near-simultaneously, within the relevant coherence window, strongly enough that the trains can no longer be treated as fully independent.
+
+It may first appear as:
+- tentative simultaneity
+- recurrent near-simultaneity
+- coordinated relation change
+- mutual adjustment in unfolding
+
+A coupling may later strengthen, stabilize, weaken, fragment, or dissolve.
 
 **Protocol function**
-- preserves relational structure without forcing symbolic overcommitment
-- distinguishes weak possibility from stable relational organization
-- supports reopening, de-confirmation, and recoupling
+- marks the emergence of relational structure across trains
+- provides the basis for choreography formation
+- supports prediction, confirmation, weakening, reopening, and dissolution
 
 Compactly:
 
-> Coupling is the evolving relational bond structure among trains.
+> Coupling is structured simultaneous or near-simultaneous unfolding across trains, within a coherence window, sufficient to support a relational reading.
 
 ---
 
