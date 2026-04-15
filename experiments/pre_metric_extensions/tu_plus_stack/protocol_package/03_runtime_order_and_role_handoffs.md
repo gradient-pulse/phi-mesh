@@ -209,6 +209,8 @@ The update must:
 - preserve history without letting it dominate fresh evidence
 - avoid replacing the whole state with prose
 
+Detailed feedback, reweighting, decay, and restart rules are defined in 06_feedback_and_state_update_rules.md.
+
 ### Required result
 At the end of the update, the state must be ready for:
 - continuation
