@@ -1,4 +1,4 @@
-# T-Protocol — Prediction and Replay Note v1
+# T-Protocol — Prediction, Replay, and Dynamic Memory Note v1
 
 ## Purpose
 
