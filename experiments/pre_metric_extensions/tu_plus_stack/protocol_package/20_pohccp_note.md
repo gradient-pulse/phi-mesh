@@ -265,7 +265,7 @@ The deeper rule is:
 
 From this perspective, PoLA becomes the metric shadow of a deeper selection principle.
 
-That deeper selection principle is what PoHCCP names in protocol language.
+In protocol language, PoHCCP is the working name for that deeper coherence-selective principle.
 
 Compactly:
 
