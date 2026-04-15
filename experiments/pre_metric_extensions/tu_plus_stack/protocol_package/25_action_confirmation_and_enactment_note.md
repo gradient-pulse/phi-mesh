@@ -378,3 +378,8 @@ It is where:
 A compact final formulation:
 
 > The action-confirmation and enactment layer is where candidate continuation becomes accountable to consequence and where recursive coordination becomes operational.
+
+> The mistake was to keep looking for the end of the envelope, as if T-Protocol were a bounded Cartesian contraption. The better view is that it is a bounded but live recursive system whose identity lies in its lawful coherence, not in a static outer shell.
+
+> T-Protocol is bounded, but not boxed.
+
