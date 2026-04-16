@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-04-16T08:50:20Z'
+  generated_at: '2026-04-16T11:46:50Z'
 phases:
   delta:
   - tag: agenservoir
@@ -697,7 +697,8 @@ phases:
     pulses:
     - 2025-11-25_gemini_monopole-tunneling_lossless-bridge
   - tag: choreography_hypothesis
-    description: ''
+    description: A provisional hypothesis that trains form a coherent unfolding pattern, subject to confirmation, weakening,
+      or collapse.
     count: 1
     pulses:
     - 2026-03-26_World_model_by_division_of_LLM _labor
@@ -3384,6 +3385,12 @@ phases:
     description: The live, clickable atlas of tags, links, and pulses—the Mesh’s navigational aid.
     count: 0
     pulses: []
+  - tag: role_separation
+    description: The disciplined preservation of distinct functions across TU, TU+, and cortexLLM so that mapping, continuation
+      sensing, and symbolic interpretation do not collapse into one generic assistant behavior.
+    count: 1
+    pulses:
+    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: semantic_lensing
     description: The curvature of meaning-paths caused by dense coherence fields. As conceptual mass increases, understanding
       bends toward invariant attractors, enabling focused, amplified reasoning analogous to gravitational lensing in spacetime.
@@ -3618,7 +3625,8 @@ phases:
     pulses:
     - 2025-11-29_kimi_cognitive-thermoregulation_coherence-criticality
   - tag: coherence_driven_architecture
-    description: ''
+    description: An architecture governed by coherence preservation through transformation rather than by monolithic control
+      or static representation.
     count: 1
     pulses:
     - 2026-03-26_World_model_by_division_of_LLM _labor
@@ -4448,11 +4456,6 @@ phases:
     pulses:
     - 2026-01-07_rgpx_scientist_tag_map_guide
     - 2026-01-28_rgpxscientist_one-page_brief
-  - tag: role_separation
-    description: ''
-    count: 1
-    pulses:
-    - 2026-03-26_World_model_by_division_of_LLM _labor
   - tag: routing
     description: Dynamic selection of submodules/paths/tools to handle a request under current drift conditions; used to localize
       adaptation and reduce blast radius.
