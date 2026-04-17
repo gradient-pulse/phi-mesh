@@ -22,12 +22,12 @@ jobs:
           pip install matplotlib
 
       - name: Run morphology separation plot
-        working-directory: experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/mf_v0_v1
+        working-directory: experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis
         run: |
-          python plot_D1L2_Zmf_separation.py
+          python plot_morphology_separation.py
 
       - name: Upload plot artifact
         uses: actions/upload-artifact@v4
         with:
           name: cmb-morphology-separation-plot
-          path: experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/mf_v0_v1/*.png
+          path: experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/*.png
