@@ -25,9 +25,10 @@ jobs:
         working-directory: experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis
         run: |
           python plot_morphology_separation.py
+          ls -la
 
       - name: Upload plot artifact
         uses: actions/upload-artifact@v4
         with:
           name: cmb-morphology-separation-plot
-          path: experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/*.png
+          path: experiments/rgpx_proof_proto/cmb_phase_dagger/results/topology_mf_v0_v1/controls/_analysis/cmb_morphology_separation.png
