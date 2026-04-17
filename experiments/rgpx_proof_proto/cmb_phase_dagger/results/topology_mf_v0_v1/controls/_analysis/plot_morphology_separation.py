@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Data from your CSV (copy directly)
-
 lmax = np.array([128, 192, 256, 320])
 
 # Observed
@@ -23,24 +21,38 @@ l_D1_std = np.array([10.36, 14.76, 31.25, 48.14])
 l_Z = np.array([88.48, 146.40, 223.10, 329.57])
 l_Z_std = np.array([52.85, 85.45, 117.30, 151.82])
 
-
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8, 6))
 
 # Gaussian
-plt.errorbar(g_D1, g_Z, xerr=g_D1_std, yerr=g_Z_std,
-             fmt='o', color='black', label='Gaussian')
+plt.errorbar(
+    g_D1, g_Z,
+    xerr=g_D1_std, yerr=g_Z_std,
+    fmt='o', color='black', label='Gaussian'
+)
 
 # LCDM
-plt.errorbar(l_D1, l_Z, xerr=l_D1_std, yerr=l_Z_std,
-             fmt='o', color='blue', label='ΛCDM')
+plt.errorbar(
+    l_D1, l_Z,
+    xerr=l_D1_std, yerr=l_Z_std,
+    fmt='o', color='blue', label='ΛCDM'
+)
 
 # Observed
 plt.scatter(obs_D1, obs_Z, color='red', s=80, label='Observed')
+
+# Optional: label points by lmax
+for i, ell in enumerate(lmax):
+    plt.annotate(str(ell), (obs_D1[i], obs_Z[i]), xytext=(5, 5), textcoords="offset points", fontsize=8)
+    plt.annotate(str(ell), (l_D1[i], l_Z[i]), xytext=(5, 5), textcoords="offset points", fontsize=8)
+    plt.annotate(str(ell), (g_D1[i], g_Z[i]), xytext=(5, 5), textcoords="offset points", fontsize=8)
 
 plt.xlabel('D1_L2')
 plt.ylabel('Z_mf')
 plt.title('Morphology Separation (CMB Lensing)')
 plt.legend()
 plt.grid(True)
+plt.tight_layout()
 
-plt.show()
+outfile = "cmb_morphology_separation.png"
+plt.savefig(outfile, dpi=300, bbox_inches="tight")
+print(f"Saved: {outfile}")
