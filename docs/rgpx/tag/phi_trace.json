@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-04-16T11:59:19Z",
+  "generated_at": "2026-04-18T12:56:04Z",
   "tag": "phi_trace",
-  "count": 305,
+  "count": 309,
   "items": [
     {
       "slug": "2025-11-10_phi-trace_closure",
@@ -1527,6 +1527,26 @@
       "slug": "2026-04-16_phi_trace_autoscan",
       "date": "2026-04-16",
       "title": "Φ–Trace Autoscan — 2026-04-16"
+    },
+    {
+      "slug": "2026-04-17_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-04-17",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-04-17_phi_trace_autoscan",
+      "date": "2026-04-17",
+      "title": "Φ–Trace Autoscan — 2026-04-17"
+    },
+    {
+      "slug": "2026-04-18_phi_pulse_memory_bifurcation_echo",
+      "date": "2026-04-18",
+      "title": "Φ–Pulse Δτ₊₇ — memory_bifurcation echo forecast"
+    },
+    {
+      "slug": "2026-04-18_phi_trace_autoscan",
+      "date": "2026-04-18",
+      "title": "Φ–Trace Autoscan — 2026-04-18"
     }
   ]
 }
