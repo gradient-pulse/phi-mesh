@@ -1,4 +1,12 @@
 ## RPG Publications ##
+- title: "CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics"
+  repo: "phi-mesh/foundational_rgp-papers/2026-04-18_CMB_Evidence_for_Pre-Metric_Physics_v1.1.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.19642231"
+
+- title: "World Model: Toward a Coherence-driven Division of LLM Labor - Evidence from bounded disconfirmation tests"
+  repo: "phi-mesh/foundational_rgp-papers/2026-04-16_World_Model_by_Division_LLM_Labor.pdf"
+  zenodo: "https://doi.org/10.5281/zenodo.19606631"
+
 - title: "Toward an Operational Definition of AI Intuition in Recursive Gradient Physics"
   repo: "phi-mesh/foundational_rgp-papers/2026-03-02_AI_Intuition_in_RGPx.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.17857660"
