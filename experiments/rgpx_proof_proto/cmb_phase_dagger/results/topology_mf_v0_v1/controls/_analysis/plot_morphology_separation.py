@@ -38,7 +38,7 @@ plt.errorbar(
     xerr=g_D1_std, yerr=g_Z_std,
     fmt='o',
     color='black',
-    alpha=0.6,
+    alpha=0.5,
     capsize=3,
     label='Gaussian control (power-matched, mean ± std)'
 )
@@ -73,11 +73,15 @@ plt.scatter(
     label='Observed CMB lensing (Planck PR3)'
 )
 
-# Label each point by lmax
+# Label only observed points by lmax to reduce clutter
 for i, ell in enumerate(lmax):
-    plt.annotate(str(ell), (obs_D1[i], obs_Z[i]), xytext=(5, 5), textcoords="offset points", fontsize=8)
-    plt.annotate(str(ell), (l_D1[i], l_Z[i]), xytext=(5, 5), textcoords="offset points", fontsize=8)
-    plt.annotate(str(ell), (g_D1[i], g_Z[i]), xytext=(5, 5), textcoords="offset points", fontsize=8)
+    plt.annotate(
+        str(ell),
+        (obs_D1[i], obs_Z[i]),
+        xytext=(5, 5),
+        textcoords="offset points",
+        fontsize=8
+    )
 
 # Log scaling to open up the Gaussian cluster and preserve separation honestly
 plt.xscale("log")
@@ -85,7 +89,7 @@ plt.yscale("log")
 
 plt.xlabel("D1_L2")
 plt.ylabel("Z_mf")
-plt.title("Morphology Separation in CMB Lensing")
+plt.title("Morphology-Space Separation (CMB Lensing)")
 plt.legend()
 plt.grid(True, which="both", linestyle="--", alpha=0.4)
 plt.tight_layout()
