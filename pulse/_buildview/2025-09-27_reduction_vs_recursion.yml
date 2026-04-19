@@ -1,0 +1,21 @@
+title: 'From Reduction to Recursion — Manifold Muon Meets RGP'
+summary: >-
+  🚀 Murati’s company, Thinking Machines, introduces manifold Muon — a training method that
+  constrains weights to the Stiefel manifold and stabilizes updates with the spectral norm. The goal: more reliable AI models, less erratic training, and a pathway toward consistency
+  in outputs. It’s an elegant engineering advance. Yet, as Alfred North Whitehead reminded us,
+  reality is not made of **points in space** but of processes in motion. Recursive Gradient Processing (RGP) builds on that insight. Where Muon stabilizes the point,
+  RGP shifts focus from point approximation → to path appreciation — from reduction → to recursion.
+  Together, these approaches highlight a future where AI is not only stable and reliable, but also rhythmically adaptive to the environments it inhabits.
+tags:
+  - rgp
+  - recursion
+  - reduction
+  - manifold
+  - ai_models
+  - whitehead
+  - thinking_machines
+  - murati
+papers:
+  - https://doi.org/10.5281/zenodo.17186038
+podcasts:
+  - https://github.com/gradient-pulse/phi-mesh/blob/main/visuals/2025-09-28_reduction_vs_recursion.png
