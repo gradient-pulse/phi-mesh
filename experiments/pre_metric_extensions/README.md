@@ -48,6 +48,18 @@ This branch is where that claim is being made testable.
 
 ---
 
+## Conceptual trigger
+
+A key conceptual trigger for this branch was the question of whether AI intuition can be defined operationally as continuity-sensitive stabilization rather than as opaque “magic.”
+
+That line is developed in:
+
+📄 [Toward an Operational Definition of AI Intuition in Recursive Gradient Physics (RGPx)](https://doi.org/10.5281/zenodo.18838921)
+
+The present branch pushes that question into architecture: whether such stabilization requires a deeper guidance layer built around temporal coherence, revision, and role-bounded coordination across unfolding time.
+
+---
+
 ## Main subfolder
 
 ### `tu_plus_stack/`
