@@ -57,7 +57,7 @@ The bounded architectural note is here:
 ## Selected anchors
 
 - 📄 [Toward an Operational Definition of AI Intuition in Recursive Gradient Physics (RGPx)](https://doi.org/10.5281/zenodo.18838921)
-- 📄 [CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics](https://doi.org/10.5281/zenodo.18759993)
+- 📄 [CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics](https://doi.org/10.5281/zenodo.19642231)
 - 📄 [Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier](https://doi.org/10.5281/zenodo.17566097)
 
 More: [foundational_rgp-papers/README.md](foundational_rgp-papers/README.md)
