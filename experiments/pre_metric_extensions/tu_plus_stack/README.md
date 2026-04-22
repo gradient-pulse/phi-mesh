@@ -79,7 +79,7 @@ Conversation-derived preparation and supporting notes.
 
 ## Position
 
-T-Protocol should be understood here not as a new foundation model, but as a **coordination layer** designed to improve continuity, revision, recovery, and coherence across unfolding time.
+T-Protocol should be understood here not as a new foundation model, but as a **coordination layer** designed to preserve continuity, revision, recovery, and coherence across unfolding time.
 
 This repository area preserves both:
 - the protocol-facing package meant for serious review
