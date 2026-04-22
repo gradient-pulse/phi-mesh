@@ -3,7 +3,7 @@
   repo: "phi-mesh/foundational_rgp-papers/2026-04-18_CMB_Evidence_for_Pre-Metric_Physics_v1.1.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.19642231"
 
-- title: "World Model: Toward a Coherence-driven Division of LLM Labor - Evidence from bounded disconfirmation tests"
+- title: "World Model: Toward a Coherence-driven Division of LLM Labor"
   repo: "phi-mesh/foundational_rgp-papers/2026-04-16_World_Model_by_Division_LLM_Labor.pdf"
   zenodo: "https://doi.org/10.5281/zenodo.19606631"
 
