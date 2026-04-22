@@ -50,7 +50,7 @@ Recent work in `experiments/pre_metric_extensions/tu_plus_stack/` explores wheth
 
 The bounded architectural note is here:
 
-📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19145919)
+📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19606631)
 
 ---
 
