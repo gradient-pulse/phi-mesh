@@ -2,181 +2,93 @@
 
 ## Purpose
 
-This subfolder hosts the emerging **coherence-driven division of LLM labor** within the broader pre-metric extensions branch.
+This subfolder hosts the development environment behind **T-Protocol**, a coherence-driven coordination architecture for AI systems.
 
-The working claim is that a useful world-model-like awareness-support stack may require three distinct, role-bounded layers:
+It brings together the materials from which the protocol, its supporting packages, and its research trail were organized.
 
-1. **TU** — a mindless choreography mapper  
-2. **TU+** — a specialized choreography-aware predictor / comparer / replay layer  
-3. **cortexLLM** — a symbolic interpreter and context-framing layer
+The central architectural division is:
 
-These layers are not meant to collapse into one assistant.
-They are meant to operate over a **shared structured state** across bounded recursive cycles.
+1. **TU** — structural mapping  
+2. **TU+** — continuation sensing, comparison, and revision  
+3. **cortexLLM** — symbolic interpretation and contextual framing  
 
-This folder exists to make that stack explicit, modular, and testable.
-
----
-
-## Why this subfolder exists
-
-The broader `pre_metric_extensions` branch explores pre-metric guidance, temporal units, and choreography-sensitive architectures in general.
-
-This subfolder narrows that work to a more specific engineering path:
-
-- how a temporal unit might map unfolding choreographies
-- how an intermediate TU+ layer might compare and predict choreography development
-- how a higher symbolic layer might interpret that field without remapping it
-- how persistent structured state may allow bounded escape from one-shot prompt prison
-- how bounded dry-run cycles can test promotion, stress, and collapse of choreography hypotheses
-
-This is therefore the branch-inside-the-branch for the **TU / TU+ / cortexLLM** architecture.
+These roles are intended to remain distinct and to operate over structured state across recursive cycles.
 
 ---
 
-## Current architecture
+## What this folder now contains
 
-The current stack is:
+This folder no longer functions as a loose prototype workspace alone.
 
-- **TU**  
-  maps traces, motion-tokens, trains, couplings, persistence, decay, restart, and field structure
+It now contains the organized materials behind:
 
-- **TU+**  
-  compares current unfolding choreographies with stored patterns, predicts likely continuation, tracks mismatch, and emits attention / replay / revision signals
+- the **protocol package**
+- the **prompt package**
+- the **legal package**
+- the **front package**
+- the **back package**
+- the **research package**
+- the **development history**
 
-- **cortexLLM**  
-  interprets significance, frames context, sends bounded downward bias, and critiques the evolving field without overwriting the lower structural mapping
-
-A compact formulation:
-
-> TU maps unfolding choreography structure. TU+ compares, predicts, and revises candidate unfolding choreographies across sources and time. cortexLLM interprets the resulting field symbolically.
-
----
-
-## What has changed in this branch
-
-The architecture is no longer only conceptual.
-
-It has now been pushed into a bounded prototype logic environment with:
-
-- role-bounded prompts
-- shared-state schema
-- structured handoffs
-- toy run transcript
-- bounded disconfirmation tests across multiple cycles
-
-Those tests showed, in bounded form, that the triad can:
-
-- preserve role separation
-- maintain continuity through shared state
-- absorb mismatch without collapsing
-- represent weak coupling
-- dissolve unsupported relational hypotheses
-- reopen previously weakened hypotheses
-- provisionally confirm joint choreography
-- stress and later de-confirm joint choreography into a new stable reading
-
-That makes this folder the main proof environment for the triad.
+Together, these document the emergence, testing, packaging, and positioning of T-Protocol as a licensable coordination layer.
 
 ---
 
-## Current files
+## Why this folder still matters
 
-### `tu_plus_architecture_note.md`
-Core architecture note for the stack.
+Although the protocol has now been packaged more cleanly, this subfolder remains the root technical environment in which the architecture was clarified and structured.
 
-It defines:
-- why TU alone is not enough
-- the division of labor between TU, TU+, and cortexLLM
-- why TU+ should remain specialized
-- why shared structured state matters
-- falsifiable prototype directions
+It is therefore the working home of:
 
-### `shared_state_schema.md`
-Defines the shared state object used by the prompt-instantiated TU / TU+ / cortexLLM triad.
-
-This is the key runtime object that lets the architecture recurse across cycles without collapsing into free prose.
-
-### `Toy_run_transcript.md`
-A bounded toy run showing one full TU → TU+ → cortexLLM loop with explicit shared-state updates.
-
-### `openai_responses_api_prototype_plan.md`
-Minimal note on how the triad can be run as a prompt-instantiated prototype in the current OpenAI environment.
-
-### `prototype_run_observations_01.md`
-Cycle-by-cycle observations from the bounded dry-run sequence.
-
-This is currently the most important evidence file in the folder.
+- role definitions
+- shared-state logic
+- runtime and feedback rules
+- transition and invariant logic
+- conformance and deployment guidance
+- supporting research notes and validation trail
 
 ---
 
-## First practical route
+## Folder structure
 
-The strongest first test path remains:
+### `front_package/`
+Short, outward-facing explanatory material for first review.
 
-- bounded unfolding input
-- TU choreography mapping
-- TU+ predictive / replay comparison
-- cortexLLM interpretation and downward bias
-- return traces or next input slice
-- mismatch update
-- repeated bounded cycles
+### `protocol_package/`
+Core protocol definition and implementation-facing documentation.
 
-Video remains the strongest eventual first serious input path because it already supplies:
+### `prompt_package/`
+Role prompts and prompt-instantiated materials for bounded execution.
 
-- time
-- simultaneity
-- persistence
-- interruption
-- drift
-- recurrence
+### `legal_package/`
+Protection, licensing, and legal-positioning notes.
 
-But the first successful prototype route has been narrower:
-- hand-authored frame-sequence summaries
-- role-bounded prompts
-- shared structured state
-- bounded recursive evaluation
+### `back_package/`
+Supporting indices, evidence structure, and substantiation layer.
 
----
+### `research_package/`
+Assessments, taxonomies, validation scope, and deeper technical/research material.
 
-## Discipline note
+### `development_history/`
+Earlier notes, prototype artifacts, and historical development trail retained for continuity.
 
-This subfolder should remain disciplined.
-
-It should not become:
-- generic consciousness speculation
-- vague embodiment talk
-- another all-purpose agent folder
-- loose multi-agent enthusiasm without role boundaries
-
-It is specifically for the architecture in which:
-
-- choreography structure is mapped first
-- awareness-support is handled by a narrow intermediate layer
-- symbolic meaning remains with the higher layer
-- recursion is preserved through shared state
-- revision is governed by coherence rather than by free-form narration
+### `conversation_layer/`
+Conversation-derived preparation and supporting notes.
 
 ---
 
-## Relation to the Zenodo note
+## Position
 
-This folder now directly underlies the Zenodo note:
+T-Protocol should be understood here not as a new foundation model, but as a **coordination layer** designed to improve continuity, revision, recovery, and coherence across unfolding time.
 
-**World Model: Toward a Coherence-Driven Division of LLM Labor**  
-**Evidence from bounded disconfirmation tests**  
-DOI: `10.5281/zenodo.19145919`
-
-The Zenodo note is the bounded public fossil.
-This folder is the working prototype environment behind it.
+This repository area preserves both:
+- the protocol-facing package meant for serious review
+- and the underlying technical trail from which that package emerged
 
 ---
 
 ## Closing statement
 
-This subfolder records the current best initiation recipe for a coherence-driven division of LLM labor.
+This subfolder is the organized working home of the TU / TU+ / cortexLLM architecture and the packaged materials that now define **T-Protocol**.
 
-It exists to answer one practical question:
-
-> What is the smallest layered architecture in which unfolding choreographies can be mapped, predicted, revised, stressed, and interpreted symbolically without collapsing into one generic assistant?
-
-That is the purpose of the TU+ stack.
+It should be read as the source environment behind a licensable protocol direction, rather than as a loose collection of experimental notes.
