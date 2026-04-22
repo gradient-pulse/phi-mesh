@@ -69,7 +69,7 @@ It now contains the organized materials behind **T-Protocol**, including:
 This branch underlies the bounded Zenodo note:
 
 **World Model: Toward a Coherence-Driven Division of LLM Labor**  
-DOI: `10.5281/zenodo.19145919`
+DOI: `10.5281/zenodo.19606631`
 
 That note is the public fossil.  
 This branch remains the working environment behind it.
