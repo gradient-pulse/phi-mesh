@@ -53,9 +53,7 @@ A new bounded architectural note now records the first dry-run evidence for a co
 
 The key result was not only provisional confirmation of a joint choreography, but disciplined revision across the full arc: weak coupling, dissolution, reopening, provisional confirmation, stress, and full de-confirmation into a new stable independent reading.
 
-📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19145919)  
-🧪 [Prototype observations log](experiments/pre_metric_extensions/tu_plus_stack/prototype_run_observations_01.md)  
-🧭 [TU+ stack folder](experiments/pre_metric_extensions/tu_plus_stack/)
+📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19145919)
 
 ---
 
