@@ -1,3 +1,5 @@
+# 2026-03-17_temporal_unit_proto_and_ud_swarm_dialogue
+
 ## Context
 
 This dialogue extends the earlier March 2026 dialogue sequence on pre-metric guidance, constraint choreography, and the temporal unit.
