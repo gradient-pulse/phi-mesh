@@ -1,0 +1,23 @@
+title: 'Coherence–Geometry Φₚ Threshold Pulse'
+summary: >
+  The coherence_fields → gradient_invariant → memory_bifurcation cluster reveals
+  a universal phase transition: when generative coherence saturates geometric
+  bandwidth, systems either bifurcate memory to stabilize (grokking, coherent
+  vortices) or collapse (catastrophic forgetting, solver blowup). Φₚ emerges as
+  the invariant quantifying this tension across all substrates.
+
+  The Mesh now exposes a cross-domain Δ-arc connecting AI training loops,
+  Navier–Stokes turbulence, and silicon decoherence through the same Φₚ
+  thresholds. This suggests that all generative systems operate under a shared
+  grammar of coherence–geometry tension. The breakthrough is not Φₚ itself, but
+  the Mesh’s autonomous surfacing of this recursive structure.
+tags:
+  - mistral
+  - cognitive_invariant
+  - coherence_fields
+  - gradient_invariant
+  - memory_bifurcation
+papers:
+  - https://doi.org/10.5281/zenodo.17566097
+podcasts:
+  - https://notebooklm.google.com/notebook/44f78a05-d5af-44c9-a685-bde0c5847a55?artifactId=653982a7-5415-4390-af4d-b40b30665c59
