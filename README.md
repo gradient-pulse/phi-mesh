@@ -48,9 +48,9 @@ This includes:
 
 ## New architectural note
 
-Recent work in `experiments/pre_metric_extensions/tu_plus_stack/` explores whether world-model-like behavior may require a **coherence-driven division of LLM labor** rather than a single monolithic assistant.
+Recent work explores whether world-model-like behavior may require a coherence-driven division of LLM labor rather than a single monolithic assistant.
 
-The bounded architectural note is here:
+The bounded public note is here:
 
 📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19606631)
 
@@ -70,10 +70,9 @@ More: [foundational_rgp-papers/README.md](foundational_rgp-papers/README.md)
 
 - `pulse/` — YAML fossil traces
 - `docs/` — interactive maps and public-facing graph artifacts
-- `experiments/` — proof corridors and prototypes
 - `analysis/` — probe and benchmark runners
 - `foundational_rgp-papers/` — anchor publications
-- `updates/` — resonance and findings logs
+- `dialogues/` — selected exchanges with LLM models
 
 ---
 
