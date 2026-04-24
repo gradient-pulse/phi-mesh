@@ -1,12 +1,17 @@
 {
-  "generated_at": "2026-04-24T12:46:31Z",
+  "generated_at": "2026-04-24T12:48:26Z",
   "tag": "cortexllm",
-  "count": 1,
+  "count": 2,
   "items": [
     {
       "slug": "2026-03-26_World_model_by_division_of_LLM _labor",
       "date": "2026-03-26",
       "title": "World model by division of LLM labor"
+    },
+    {
+      "slug": "2026-04-24_memory_actualization_not_externalization",
+      "date": "2026-04-24",
+      "title": "Memory Actualization, Not Externalization"
     }
   ]
 }

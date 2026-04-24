@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-24T12:46:31Z",
-  "count": 622,
+  "generated_at": "2026-04-24T12:48:26Z",
+  "count": 623,
   "items": [
     {
       "slug": "2019-06-03_machine_life_from_membranes",
@@ -8369,6 +8369,23 @@
         "autoscan",
         "memory_bifurcation",
         "gradient_invariant"
+      ]
+    },
+    {
+      "slug": "2026-04-24_memory_actualization_not_externalization",
+      "date": "2026-04-24",
+      "title": "Memory Actualization, Not Externalization",
+      "tags": [
+        "triad_protocol",
+        "t_protocol",
+        "memory_actualization",
+        "event_trains",
+        "choreography",
+        "cognitive_continuity",
+        "externalization_contrast",
+        "tu",
+        "tu_plus",
+        "cortexllm"
       ]
     },
     {
