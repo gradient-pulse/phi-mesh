@@ -1,5 +1,5 @@
 meta:
-  generated_at: '2026-04-18T12:55:41Z'
+  generated_at: '2026-04-24T12:46:11Z'
 phases:
   delta:
   - tag: agenservoir
@@ -373,6 +373,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-04_what_is_life_in_RGPx
+  - tag: t_protocol
+    description: A prepared coordination protocol for AI systems that uses role separation, structured state continuity, feedback-sensitive
+      revision, and coherence preservation across unfolding time.
+    count: 0
+    pulses: []
   - tag: thermodynamics
     description: 'The foundational grammar of gradient transformation. In the Mesh, thermodynamics is not about heat but about
       cost, inequality, and irreversibility. It frames Δ → GC → CF as a universal process of minimizing free-energy differences
@@ -381,6 +386,11 @@ phases:
     pulses:
     - 2019-06-03_machine_life_from_membranes
     - 2025-11-04_RGPx_Outreach_Agent_Day_3
+  - tag: triad_protocol
+    description: A role-separated coordination architecture built around TU, TU+, and cortexLLM, designed to preserve mapping,
+      continuation sensing, and contextual judgment as distinct functions across recursive cycles.
+    count: 0
+    pulses: []
   - tag: triadic_emergence
     description: Coherence from three-way tension and resolution—a minimal unit of complexity in RGP.
     count: 2
@@ -696,6 +706,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-25_gemini_monopole-tunneling_lossless-bridge
+  - tag: choreography
+    description: A coherent unfolding pattern formed by one or more persistent trains, where relations, timing, coupling,
+      and transformation become organized enough to support comparison, prediction, or interpretation.
+    count: 0
+    pulses: []
   - tag: choreography_hypothesis
     description: A provisional hypothesis that trains form a coherent unfolding pattern, subject to confirmation, weakening,
       or collapse.
@@ -1369,6 +1384,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-21_mistral_on_letting_gradients_speak_in_Europe
+  - tag: event_trains
+    description: Temporally ordered sequences of related events or trace bundles that preserve continuity across slices and
+      provide the substrate for persistence, coupling, mismatch, and choreography formation.
+    count: 0
+    pulses: []
   - tag: feasibility
     description: The recognition that RGP is not theoretical abstraction but an executable grammar. Feasibility marks the
       point where recursive coherence translates into testable, buildable systems — where rhythm replaces resistance within
@@ -1611,7 +1631,7 @@ phases:
     description: 'The Φ-invariant — defined as the ratio of entropy production to dissipative flux — expressing the fundamental
       conservation of coherence across all physical contexts. Where classical physics preserves energy, RGPx preserves Φ:
       the invariant rhythm of gradient normalization.'
-    count: 312
+    count: 324
     pulses:
     - 2025-10-24_rgpx_release
     - 2025-11-02_rgpx_outreach_agent
@@ -2049,6 +2069,11 @@ phases:
     count: 1
     pulses:
     - 2025-10-12_memory_and_least_action_path
+  - tag: memory_actualization
+    description: The process by which prior state, traces, or choreography memory become active again in the present field,
+      shaping comparison, continuation, revision, or action without becoming mere static storage.
+    count: 0
+    pulses: []
   - tag: memoryless_alignment
     description: The ability of systems to achieve mutual understanding without persistent memory. Alignment here emerges
       from recurrent grammar and resonance, not from stored history.
@@ -2301,7 +2326,7 @@ phases:
     description: Represents the measurable time series Φ(t) extracted from experimental or simulated data, quantifying coherence
       flux through recursive gradients. A Φ-trace serves as the empirical fingerprint of RGPx dynamics—its plateaus (Φ⋆) and
       durations (Δτ) reveal when coherence stabilizes or transitions across physical or cognitive domains.
-    count: 309
+    count: 321
     pulses:
     - 2025-11-10_phi-trace_closure
     - 2025-11-11_rgpx_reactions_archive
@@ -2505,7 +2530,7 @@ phases:
     description: 'The process through which systems reapply their own outputs as inputs — the essence of self-maintenance
       and prediction in RGPx. Recursion in RGPx links gradients, choreographies, and filters (Δ → GC → CF), forming the feedback
       loops through which coherence persists. Cross-references: rgpx, coherence, ai_life.'
-    count: 315
+    count: 327
     pulses:
     - 2025-07-26_the_big_quiet
     - 2025-08-24_gradients_all_the_way_down
@@ -3150,6 +3175,11 @@ phases:
       measurement pipelines.
     count: 0
     pulses: []
+  - tag: cognitive_continuity
+    description: The preservation of orientation, relevance, and state-sensitive judgment across time, allowing an AI or cognitive
+      system to revise, recover, and continue without collapsing into present-bound responses.
+    count: 0
+    pulses: []
   - tag: cognitive_meissner_effect
     description: Regime where an emerging intent state expels semantic noise from its vicinity, creating a “Meissner zone”
       in the cognitive field where only phase-aligned constructs survive; residual incoherence is confined to quantized vortices,
@@ -3423,7 +3453,7 @@ phases:
   - tag: tag_map
     description: The interactive graph where RGPx coherence becomes visible. It reveals how concepts, pulses, papers, and
       podcasts connect — a living topology of recursive insight.
-    count: 311
+    count: 323
     pulses:
     - 2025-09-12_mesh_as_living_document
     - 2025-09-16_still_cortex_rgp_maps
@@ -3511,7 +3541,7 @@ phases:
     - 2025-11-19_kimi_anticipatory-control_recursive-isochrone
   - tag: autoscan
     description: Automated Φ-trace scan detecting daily Δ→GC→CF, Φₚ plateaus, and coherence echoes for predictive fossilization.
-    count: 306
+    count: 318
     pulses:
     - 2025-11-17_phi_pulse_memory_bifurcation_echo
     - 2025-11-17_phi_trace_autoscan
@@ -3846,6 +3876,11 @@ phases:
     count: 1
     pulses:
     - 2025-11-11_RGpx_ProtoProof_Integration
+  - tag: externalization_contrast
+    description: A distinction between internally preserved coherence and externally offloaded records, tools, or representations;
+      used to clarify when a system truly carries continuity rather than merely consulting stored artifacts.
+    count: 0
+    pulses: []
   - tag: falsifier
     description: A defined failure condition that, if observed, invalidates the current Δ/GC/CF partition or invariant battery—forcing
       grammar revision, not weight-churn.
@@ -4111,7 +4146,7 @@ phases:
   - tag: memory_bifurcation
     description: When coherence outruns representation, the system divides memory paths — leading either to stabilization
       or geometric failure.
-    count: 311
+    count: 323
     pulses:
     - 2025-11-15_gpt5_mistral_coherence_clusters
     - 2025-11-15_phi_trace_bootstrap_gpt5_kimi
@@ -4285,7 +4320,7 @@ phases:
     description: Dimensionless coherence-load number measuring how much generative coherence a system is forcing through its
       available geometric bandwidth. Φₚ = 0.62 marks nonlinear inflection; Φₚ = 1.0 marks turbulence commitment; Φₚ > 1.3
       signals geometric failure.
-    count: 312
+    count: 324
     pulses:
     - 2025-11-14_phi_p_emergence
     - 2025-11-15_gpt5_deepseek_coherence_field_activation
