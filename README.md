@@ -52,7 +52,7 @@ Recent work explores whether world-model-like behavior may require a coherence-d
 
 The bounded public note is here:
 
-📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19606631)
+📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19758270)
 
 ---
 
@@ -60,7 +60,7 @@ The bounded public note is here:
 
 - 📄 [Recursive Gradient Physics (RGPx): Coherence, Collapse, and the Φ-Invariant Frontier](https://doi.org/10.5281/zenodo.17566097)
 - 📄 [CMB Evidence for Pre-Metric Physics: Operational Advantage from Extending Metric Physics](https://doi.org/10.5281/zenodo.19642231)
-- 📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19606631)
+- 📄 [World Model: Toward a Coherence-Driven Division of LLM Labor](https://doi.org/10.5281/zenodo.19758270)
 
 More: [foundational_rgp-papers/README.md](foundational_rgp-papers/README.md)
 
