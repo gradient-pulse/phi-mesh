@@ -1,0 +1,267 @@
+# T-Protocol — Initial Invention Brief  
+## For patentability / FTO assessment
+
+**Status:** Confidential / protected review  
+**Prepared by:** Marcus van der Erve  
+**Purpose:** Initial orientation for patentability and freedom-to-operate assessment  
+**Subject:** T-Protocol — a role-bounded coordination protocol for AI systems preserving coherence across unfolding time
+
+---
+
+## 1. One-sentence description
+
+T-Protocol is a coordination architecture for AI systems that uses role separation, structured state continuity, feedback-sensitive revision, mismatch handling, and recovery discipline to preserve coherent orientation across unfolding time.
+
+---
+
+## 2. Problem addressed
+
+Current LLM and agent systems can perform well locally, but often fail when they must remain coherent across time.
+
+Typical failure modes include:
+
+- losing thread across long interactions
+- treating more context as if it were the same as time
+- flattening ambiguity too early
+- confusing temporary signals with real structural change
+- giving fluent answers without preserving constraint history
+- failing to distinguish disturbance from underlying structure
+- weak recovery after mismatch, correction, or changed conditions
+- collapsing multiple reasoning functions into one generic assistant behavior
+
+The core problem is not only lack of intelligence or data.  
+It is lack of a disciplined runtime architecture for preserving coherence across unfolding situations.
+
+---
+
+## 3. Core invention idea
+
+T-Protocol introduces a role-bounded coordination structure in which different functions remain distinct across recursive cycles.
+
+The working triad is:
+
+1. **TU** — structural mapping layer  
+   Maps events, traces, trains, couplings, persistence, interruption, restart, and field structure.
+
+2. **TU+** — continuation / comparison / revision layer  
+   Compares current unfolding structure with prior patterns, detects mismatch, predicts likely continuation, flags instability, and supports revision.
+
+3. **cortexLLM** — symbolic interpretation / contextual framing layer  
+   Interprets significance, frames action or decision context, applies bounded downward bias, and avoids overwriting lower-level mapping.
+
+The novelty is not merely “multiple agents.”  
+The novelty lies in the protocol discipline governing role separation, state continuity, feedback-sensitive revision, mismatch handling, and coherence preservation across time.
+
+---
+
+## 4. What distinguishes T-Protocol from generic LLM orchestration
+
+T-Protocol should not be assessed as ordinary multi-agent prompting or generic agent orchestration.
+
+It differs in several ways:
+
+### 4.1 Role-bounded division of labor
+The roles are not interchangeable assistants.  
+Each role has a distinct function and forbidden overreach.
+
+### 4.2 Structured state continuity
+The system preserves state across cycles in structured form rather than relying only on conversational memory or long context.
+
+### 4.3 Mismatch as operational signal
+Mismatch between predicted continuation and returned trace is not treated as simple error.  
+It modifies the active state and affects future continuation.
+
+### 4.4 Recovery discipline
+The protocol tracks degradation, bounded perturbation, residual trace, recovery, and recontact rather than simply restarting or apologizing.
+
+### 4.5 Coherence across unfolding time
+The protocol is designed for situations where the state of the world, task, user, or environment changes through time and must be interpreted as a continuous unfolding rather than as isolated snapshots.
+
+---
+
+## 5. Technical effect sought
+
+The intended technical effect is improved operation of AI systems under temporally evolving, constraint-sensitive conditions.
+
+Potential measurable effects include:
+
+- improved continuity across multi-step tasks
+- reduced collapse into generic assistant behavior
+- improved handling of mismatch and correction
+- better preservation of ambiguity until sufficient evidence is available
+- better recovery after perturbation or partial failure
+- better separation between transient noise and structurally relevant change
+- improved coordination of AI components operating over shared state
+- improved reliability in domains where evolving constraints matter
+
+Possible application domains include:
+
+- robotic control and embodied action
+- medical imaging under motion or artifact
+- corporate AI assistants and long-running workflows
+- engineering reasoning under physical/operational constraints
+- personal AI assistants requiring continuity across apps, devices, and time
+- scientific AI systems requiring stable interpretation across evolving data
+
+---
+
+## 6. Candidate claim areas for legal assessment
+
+The following are not formal claims, but candidate areas for patent attorney analysis.
+
+### A. Computer-implemented method
+A method for coordinating one or more language-model-based components through role-bounded processing cycles, structured state handoffs, mismatch evaluation, and feedback-sensitive state revision.
+
+### B. System architecture
+A system comprising distinct functional layers for structural mapping, continuation comparison/revision, and symbolic contextual interpretation, operating over a shared structured state.
+
+### C. State update mechanism
+A structured state grammar that preserves event trains, role outputs, mismatch history, recovery state, and contextual framing across cycles.
+
+### D. Mismatch and recovery mechanism
+A method for comparing predicted continuation with returned trace structure and updating future processing through bounded correction, residual tracking, recovery, and recontact handling.
+
+### E. Conformance / failure taxonomy
+A method for evaluating whether a role-separated AI coordination system remains within protocol bounds, including detection of role fusion, semantic contamination, false continuity, false recovery, and coherence loss.
+
+### F. Technical deployments
+Specific implementations in robotics, imaging, engineering constraint reasoning, enterprise assistants, or device-level personal assistants where technical effects can be measured.
+
+---
+
+## 7. Materials already available
+
+A substantial body of supporting material already exists, though not yet in formal patent-claim format.
+
+Available materials include:
+
+- role definitions
+- runtime logic
+- structured state grammar
+- feedback and update rules
+- failure taxonomy
+- conformance framing
+- test-cycle observations
+- test-cycle laws
+- development history
+- application examples
+- public academic note
+- dated repository trail
+- slide decks for protected review
+
+The current material is therefore not starting from scratch.  
+It needs conversion into patent-ready structure: novelty framing, claim language, prior-art positioning, and disclosure strategy.
+
+---
+
+## 8. Validation trail
+
+The protocol has been developed and stress-tested through repeated bounded test cycles.
+
+This produced:
+
+- sustained role separation
+- observed regime transitions
+- bounded perturbation behavior
+- recovery and recontact observations
+- failure modes
+- extracted laws
+- conformance logic
+- an organized protocol package
+
+The test record should be treated as a dated developmental and validation trail, not as a final commercial benchmark.
+
+---
+
+## 9. Public disclosure status
+
+Some related material is already public, including academic notes and repository materials.
+
+However, the organized protected protocol package, implementation-facing runtime grammar, conformance structure, and detailed package organization have not been publicly presented as a full licensable implementation package.
+
+A disclosure timeline should be prepared separately, including:
+
+- Zenodo publications
+- GitHub commits
+- public posts
+- slide decks sent privately
+- emails and private transmissions
+- protected package organization dates
+
+This timeline is important for assessing novelty, grace-period issues, and claim strategy.
+
+---
+
+## 10. What should be searched
+
+The patentability / FTO search should not only search for generic terms such as:
+
+- multi-agent LLM
+- AI orchestration
+- agent workflow
+- LLM tool use
+- persistent memory
+
+It should specifically search for prior art involving:
+
+- role-bounded LLM coordination
+- structured shared state across recursive AI cycles
+- mismatch-driven state revision in LLM systems
+- recovery discipline in AI agent workflows
+- AI systems preserving temporal continuity across changing contexts
+- separation of structural mapping, continuation prediction, and symbolic interpretation
+- conformance testing for role-separated AI systems
+- AI coordination protocols with explicit failure taxonomy and recovery logic
+
+---
+
+## 11. Key distinction to preserve
+
+The invention should not be reduced to:
+
+- “three agents”
+- “multi-agent prompting”
+- “LLM orchestration”
+- “workflow automation”
+- “memory plus tools”
+- “agent with verifier”
+
+The core distinction is:
+
+**a protocol architecture for preserving coherent orientation across unfolding time through role-bounded processing, structured state continuity, mismatch-sensitive revision, and recovery discipline.**
+
+---
+
+## 12. Immediate questions for patent counsel
+
+1. Which parts of T-Protocol appear potentially patentable?
+2. Which parts are likely excluded as abstract ideas unless tied to technical effect?
+3. What is the strongest claim framing: method, system, computer-readable medium, technical deployment, or combination?
+4. What public disclosure risks already exist?
+5. What can still be protected?
+6. What filing route is recommended?
+7. Should a provisional / priority filing be prepared quickly?
+8. What materials should be withheld from further public disclosure?
+9. What estimated cost range applies for:
+   - initial assessment
+   - prior-art / patentability search
+   - first filing
+   - broader European / international strategy
+
+---
+
+## 13. Current objective
+
+The immediate objective is not broad publication.
+
+The immediate objective is to determine whether T-Protocol contains protectable technical subject matter and, if so, to file an appropriate application before wider disclosure or commercial discussions proceed further.
+
+---
+
+## 14. Compact summary
+
+T-Protocol is a prepared coordination architecture for AI systems that aims to solve the present-lock problem of monolithic LLMs.
+
+It does this through role-bounded processing, structured state continuity, mismatch-sensitive revision, recovery discipline, and coherence preservation across unfolding time.
+
+The requested legal assessment is whether this architecture can be protected as a concrete computer-implemented method/system with technical effect, and how best to proceed with patentability, FTO, and filing strategy.
